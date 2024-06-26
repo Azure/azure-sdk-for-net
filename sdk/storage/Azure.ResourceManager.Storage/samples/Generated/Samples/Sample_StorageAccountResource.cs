@@ -1087,7 +1087,7 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (StoragePrivateLinkResourceData item in storageAccount.GetPrivateLinkResourcesAsync())
+            await foreach (StorageStoragePrivateLinkResourceData item in storageAccount.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

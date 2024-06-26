@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
         /// <returns> A new <see cref="Logic.LogicWorkflowData"/> instance for mocking. </returns>
-        public static LogicWorkflowData LogicWorkflowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, LogicWorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, LogicWorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, LogicSku sku = null, LogicResourceReference integrationAccount = null, LogicResourceReference integrationServiceEnvironment = null, BinaryData definition = null, IDictionary<string, LogicWorkflowParameterInfo> parameters = null)
+        public static LogicWorkflowData LogicWorkflowData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, LogicWorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, LogicWorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, LogicLogicSku sku = null, LogicResourceReference integrationAccount = null, LogicResourceReference integrationServiceEnvironment = null, BinaryData definition = null, IDictionary<string, LogicWorkflowParameterInfo> parameters = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, LogicWorkflowParameterInfo>();
@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.Logic.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LogicSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicLogicSku"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="plan"> The reference to plan. </param>
-        /// <returns> A new <see cref="Models.LogicSku"/> instance for mocking. </returns>
-        public static LogicSku LogicSku(LogicSkuName name = default, LogicResourceReference plan = null)
+        /// <returns> A new <see cref="Models.LogicLogicSku"/> instance for mocking. </returns>
+        public static LogicLogicSku LogicLogicSku(LogicSkuName name = default, LogicResourceReference plan = null)
         {
-            return new LogicSku(name, plan, serializedAdditionalRawData: null);
+            return new LogicLogicSku(name, plan, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicResourceReference"/>. </summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
         /// <returns> A new <see cref="Logic.LogicWorkflowVersionData"/> instance for mocking. </returns>
-        public static LogicWorkflowVersionData LogicWorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, LogicWorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, LogicWorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, LogicSku sku = null, LogicResourceReference integrationAccount = null, BinaryData definition = null, IDictionary<string, LogicWorkflowParameterInfo> parameters = null)
+        public static LogicWorkflowVersionData LogicWorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, LogicWorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, LogicWorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, LogicLogicSku sku = null, LogicResourceReference integrationAccount = null, BinaryData definition = null, IDictionary<string, LogicWorkflowParameterInfo> parameters = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, LogicWorkflowParameterInfo>();

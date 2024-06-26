@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            RedisEnterpriseSku sku = default;
+            RedisEnterpriseRedisEnterpriseSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             RedisEnterpriseTlsVersion? minimumTlsVersion = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseProvisioningStatus? provisioningState = default;
             RedisEnterpriseClusterResourceState? resourceState = default;
             string redisVersion = default;
-            IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
+            IReadOnlyList<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    sku = RedisEnterpriseSku.DeserializeRedisEnterpriseSku(property.Value, options);
+                    sku = RedisEnterpriseRedisEnterpriseSku.DeserializeRedisEnterpriseRedisEnterpriseSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             {
                                 continue;
                             }
-                            List<RedisEnterprisePrivateEndpointConnectionData> array = new List<RedisEnterprisePrivateEndpointConnectionData>();
+                            List<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData> array = new List<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(item, options));
+                                array.Add(RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterpriseRedisEnterprisePrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 provisioningState,
                 resourceState,
                 redisVersion,
-                privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(),
+                privateEndpointConnections ?? new ChangeTrackingList<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData>(),
                 serializedAdditionalRawData);
         }
 

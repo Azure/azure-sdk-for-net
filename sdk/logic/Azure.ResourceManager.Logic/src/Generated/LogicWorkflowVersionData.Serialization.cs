@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Logic
             string accessEndpoint = default;
             FlowEndpointsConfiguration endpointsConfiguration = default;
             FlowAccessControlConfiguration accessControl = default;
-            LogicSku sku = default;
+            LogicLogicSku sku = default;
             LogicResourceReference integrationAccount = default;
             BinaryData definition = default;
             IDictionary<string, LogicWorkflowParameterInfo> parameters = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            sku = LogicSku.DeserializeLogicSku(property0.Value, options);
+                            sku = LogicLogicSku.DeserializeLogicLogicSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("integrationAccount"u8))

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
             string name = default;
             ComputePublicIPAddressSku sku = default;
             int? idleTimeoutInMinutes = default;
-            ComputeDeleteOption? deleteOption = default;
+            DeleteOption? deleteOption = default;
             VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineIPTag> ipTags = default;
             WritableSubResource publicIPPrefix = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            deleteOption = new ComputeDeleteOption(property0.Value.GetString());
+                            deleteOption = new DeleteOption(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"u8))

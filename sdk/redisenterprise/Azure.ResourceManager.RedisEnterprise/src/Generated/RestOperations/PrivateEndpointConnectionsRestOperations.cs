@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisEnterprisePrivateEndpointConnectionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case 200:
                     {
-                        RedisEnterprisePrivateEndpointConnectionListResult value = default;
+                        RedisEnterpriseRedisEnterprisePrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RedisEnterprisePrivateEndpointConnectionListResult.DeserializeRedisEnterprisePrivateEndpointConnectionListResult(document.RootElement);
+                        value = RedisEnterpriseRedisEnterprisePrivateEndpointConnectionListResult.DeserializeRedisEnterpriseRedisEnterprisePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisEnterprisePrivateEndpointConnectionListResult> List(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionListResult> List(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case 200:
                     {
-                        RedisEnterprisePrivateEndpointConnectionListResult value = default;
+                        RedisEnterpriseRedisEnterprisePrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RedisEnterprisePrivateEndpointConnectionListResult.DeserializeRedisEnterprisePrivateEndpointConnectionListResult(document.RootElement);
+                        value = RedisEnterpriseRedisEnterprisePrivateEndpointConnectionListResult.DeserializeRedisEnterpriseRedisEnterprisePrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisEnterprisePrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case 200:
                     {
-                        RedisEnterprisePrivateEndpointConnectionData value = default;
+                        RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(document.RootElement);
+                        value = RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterpriseRedisEnterprisePrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RedisEnterprisePrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisEnterprisePrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public Response<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case 200:
                     {
-                        RedisEnterprisePrivateEndpointConnectionData value = default;
+                        RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(document.RootElement);
+                        value = RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterpriseRedisEnterprisePrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RedisEnterprisePrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RedisEnterprisePrivateEndpointConnectionData data)
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             return uri;
         }
 
-        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RedisEnterprisePrivateEndpointConnectionData data)
+        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PutAsync(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RedisEnterprisePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> PutAsync(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Put(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RedisEnterprisePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public Response Put(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

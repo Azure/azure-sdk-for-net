@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of PostgreSqlFlexibleServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PostgreSqlFlexibleServerResources and their operations over a PostgreSqlFlexibleServerResource. </returns>
-        public virtual PostgreSqlFlexibleServerCollection GetPostgreSqlFlexibleServers()
+        /// <summary> Gets a collection of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResources and their operations over a PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource. </returns>
+        public virtual PostgreSqlFlexibleServersPostgreSqlFlexibleServerCollection GetPostgreSqlFlexibleServersPostgreSqlFlexibleServers()
         {
-            return GetCachedClient(client => new PostgreSqlFlexibleServerCollection(client, Id));
+            return GetCachedClient(client => new PostgreSqlFlexibleServersPostgreSqlFlexibleServerCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PostgreSqlFlexibleServerResource>> GetPostgreSqlFlexibleServerAsync(string serverName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource>> GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            return await GetPostgreSqlFlexibleServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await GetPostgreSqlFlexibleServersPostgreSqlFlexibleServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// <description><see cref="PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServer(string serverName, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersPostgreSqlFlexibleServer(string serverName, CancellationToken cancellationToken = default)
         {
-            return GetPostgreSqlFlexibleServers().Get(serverName, cancellationToken);
+            return GetPostgreSqlFlexibleServersPostgreSqlFlexibleServers().Get(serverName, cancellationToken);
         }
     }
 }

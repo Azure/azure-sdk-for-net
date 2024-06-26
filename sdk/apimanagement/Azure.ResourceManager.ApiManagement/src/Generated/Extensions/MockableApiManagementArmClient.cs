@@ -527,15 +527,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ApiManagementApiManagementPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementApiManagementPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementApiManagementPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource"/> object. </returns>
-        public virtual ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementApiManagementPrivateLinkResource"/> object. </returns>
+        public virtual ApiManagementApiManagementPrivateLinkResource GetApiManagementApiManagementPrivateLinkResource(ResourceIdentifier id)
         {
-            ApiManagementPrivateLinkResource.ValidateResourceId(id);
-            return new ApiManagementPrivateLinkResource(Client, id);
+            ApiManagementApiManagementPrivateLinkResource.ValidateResourceId(id);
+            return new ApiManagementApiManagementPrivateLinkResource(Client, id);
         }
 
         /// <summary>

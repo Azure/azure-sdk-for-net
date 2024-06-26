@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="mountType"> Mounting type. </param>
         /// <param name="roleType"> Role type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeMountPointMap(ResourceIdentifier shareId, ResourceIdentifier roleId, string mountPoint, DataBoxEdgeMountType? mountType, DataBoxEdgeRoleType? roleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataBoxEdgeMountPointMap(ResourceIdentifier shareId, ResourceIdentifier roleId, string mountPoint, DataBoxEdgeMountType? mountType, RoleType? roleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShareId = shareId;
             RoleId = roleId;
@@ -87,6 +87,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Mounting type. </summary>
         public DataBoxEdgeMountType? MountType { get; }
         /// <summary> Role type. </summary>
-        public DataBoxEdgeRoleType? RoleType { get; }
+        public RoleType? RoleType { get; }
     }
 }

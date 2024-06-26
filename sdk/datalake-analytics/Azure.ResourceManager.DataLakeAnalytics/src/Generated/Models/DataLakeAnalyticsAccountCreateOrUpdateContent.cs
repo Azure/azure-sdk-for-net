@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.queryStoreRetention
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataLakeAnalyticsAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, string defaultDataLakeStoreAccount, IList<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts, IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> storageAccounts, IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> computePolicies, IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, int? maxJobCount, int? maxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataLakeAnalyticsAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, string defaultDataLakeStoreAccount, IList<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts, IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> storageAccounts, IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> computePolicies, IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> firewallRules, DataLakeAnalyticsFirewallState? firewallState, FirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, int? maxJobCount, int? maxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Tags = tags;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallAllowAzureIps
         /// </summary>
-        public DataLakeAnalyticsFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
+        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
         /// <summary>
         /// The commitment tier for the next month.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.newTier

@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Media
             MediaKeyDelivery keyDelivery = default;
             MediaServicesPublicNetworkAccess? publicNetworkAccess = default;
             MediaServicesProvisioningState? provisioningState = default;
-            IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
+            IReadOnlyList<MediaMediaServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             MediaServicesMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -333,10 +333,10 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
+                            List<MediaMediaServicesPrivateEndpointConnectionData> array = new List<MediaMediaServicesPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item, options));
+                                array.Add(MediaMediaServicesPrivateEndpointConnectionData.DeserializeMediaMediaServicesPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Media
                 keyDelivery,
                 publicNetworkAccess,
                 provisioningState,
-                privateEndpointConnections ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(),
+                privateEndpointConnections ?? new ChangeTrackingList<MediaMediaServicesPrivateEndpointConnectionData>(),
                 minimumTlsVersion,
                 serializedAdditionalRawData);
         }

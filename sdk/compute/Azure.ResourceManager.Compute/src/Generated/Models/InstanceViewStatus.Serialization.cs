@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string code = default;
-            ComputeStatusLevelType? level = default;
+            StatusLevelType? level = default;
             string displayStatus = default;
             string message = default;
             DateTimeOffset? time = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    level = property.Value.GetString().ToComputeStatusLevelType();
+                    level = property.Value.GetString().ToStatusLevelType();
                     continue;
                 }
                 if (property.NameEquals("displayStatus"u8))

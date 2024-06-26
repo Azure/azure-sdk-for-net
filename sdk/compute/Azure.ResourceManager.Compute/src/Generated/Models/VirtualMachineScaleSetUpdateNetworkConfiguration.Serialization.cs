@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default;
             IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default;
             bool? enableIPForwarding = default;
-            ComputeDeleteOption? deleteOption = default;
+            DeleteOption? deleteOption = default;
             ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
             ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            deleteOption = new ComputeDeleteOption(property0.Value.GetString());
+                            deleteOption = new DeleteOption(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("auxiliaryMode"u8))

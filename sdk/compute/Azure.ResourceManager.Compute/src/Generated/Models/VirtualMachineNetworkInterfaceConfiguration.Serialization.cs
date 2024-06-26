@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             bool? primary = default;
-            ComputeDeleteOption? deleteOption = default;
+            DeleteOption? deleteOption = default;
             bool? enableAcceleratedNetworking = default;
             bool? disableTcpStateTracking = default;
             bool? enableFpga = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            deleteOption = new ComputeDeleteOption(property0.Value.GetString());
+                            deleteOption = new DeleteOption(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableAcceleratedNetworking"u8))

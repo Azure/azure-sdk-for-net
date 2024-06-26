@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
         /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
         /// <param name="name"> Unique name of the default agent pool in the context of the provisioned cluster. Default value is &lt;clusterName&gt;-nodepool1. </param>
-        internal HybridContainerServiceNamedAgentPoolProfile(HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods, IDictionary<string, BinaryData> serializedAdditionalRawData, int? count, string vmSize, string kubernetesVersion, string name) : base(osType, osSku, nodeLabels, nodeTaints, maxCount, minCount, enableAutoScaling, maxPods, serializedAdditionalRawData)
+        internal HybridContainerServiceNamedAgentPoolProfile(OSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods, IDictionary<string, BinaryData> serializedAdditionalRawData, int? count, string vmSize, string kubernetesVersion, string name) : base(osType, osSku, nodeLabels, nodeTaints, maxCount, minCount, enableAutoScaling, maxPods, serializedAdditionalRawData)
         {
             Count = count;
             VmSize = vmSize;

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, WritableSubResource publicIPPrefix, ComputeDeleteOption? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, WritableSubResource publicIPPrefix, DeleteOption? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
-        public ComputeDeleteOption? DeleteOption { get; set; }
+        public DeleteOption? DeleteOption { get; set; }
     }
 }

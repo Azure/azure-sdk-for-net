@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.LabServices
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabVirtualMachineImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabVirtualMachineImageResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabServicesLabVirtualMachineImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabServicesLabVirtualMachineImageResource.CreateResourceIdentifier" /> to create a <see cref="LabServicesLabVirtualMachineImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLabServicesArmClient.GetLabVirtualMachineImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesArmClient.GetLabServicesLabVirtualMachineImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LabVirtualMachineImageResource"/> object. </returns>
-        public static LabVirtualMachineImageResource GetLabVirtualMachineImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LabServicesLabVirtualMachineImageResource"/> object. </returns>
+        public static LabServicesLabVirtualMachineImageResource GetLabServicesLabVirtualMachineImageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableLabServicesArmClient(client).GetLabVirtualMachineImageResource(id);
+            return GetMockableLabServicesArmClient(client).GetLabServicesLabVirtualMachineImageResource(id);
         }
 
         /// <summary>

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.OperationalInsights
             int? totalRetentionInDays = default;
             int? archiveRetentionInDays = default;
             OperationalInsightsTableSearchResults searchResults = default;
-            OperationalInsightsTableRestoredLogs restoredLogs = default;
+            OperationalInsightsOperationalInsightsTableRestoredLogs restoredLogs = default;
             OperationalInsightsTableResultStatistics resultStatistics = default;
             OperationalInsightsTablePlan? plan = default;
             string lastPlanModifiedDate = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            restoredLogs = OperationalInsightsTableRestoredLogs.DeserializeOperationalInsightsTableRestoredLogs(property0.Value, options);
+                            restoredLogs = OperationalInsightsOperationalInsightsTableRestoredLogs.DeserializeOperationalInsightsOperationalInsightsTableRestoredLogs(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resultStatistics"u8))

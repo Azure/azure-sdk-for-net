@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricServiceFabricServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricServiceFabricServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricServiceFabricServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricServiceResource"/> object. </returns>
-        public virtual ServiceFabricServiceResource GetServiceFabricServiceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricServiceFabricServiceResource"/> object. </returns>
+        public virtual ServiceFabricServiceFabricServiceResource GetServiceFabricServiceFabricServiceResource(ResourceIdentifier id)
         {
-            ServiceFabricServiceResource.ValidateResourceId(id);
-            return new ServiceFabricServiceResource(Client, id);
+            ServiceFabricServiceFabricServiceResource.ValidateResourceId(id);
+            return new ServiceFabricServiceFabricServiceResource(Client, id);
         }
     }
 }

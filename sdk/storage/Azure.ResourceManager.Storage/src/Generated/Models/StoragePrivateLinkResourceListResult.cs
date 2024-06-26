@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResourceListResult"/>. </summary>
         internal StoragePrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<StoragePrivateLinkResourceData>();
+            Value = new ChangeTrackingList<StorageStoragePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StoragePrivateLinkResourceListResult(IReadOnlyList<StoragePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StoragePrivateLinkResourceListResult(IReadOnlyList<StorageStoragePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Array of private link resources. </summary>
         [WirePath("value")]
-        public IReadOnlyList<StoragePrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<StorageStoragePrivateLinkResourceData> Value { get; }
     }
 }

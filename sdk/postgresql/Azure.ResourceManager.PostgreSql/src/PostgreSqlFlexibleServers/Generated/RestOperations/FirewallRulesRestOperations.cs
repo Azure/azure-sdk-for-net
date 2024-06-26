@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, PostgreSqlFlexibleServerFirewallRuleData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, PostgreSqlFlexibleServerFirewallRuleData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, PostgreSqlFlexibleServerFirewallRuleData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, PostgreSqlFlexibleServerFirewallRuleData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlFlexibleServerFirewallRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -291,13 +291,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerFirewallRuleData value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PostgreSqlFlexibleServerFirewallRuleData)null, message.Response);
+                    return Response.FromValue((PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlFlexibleServerFirewallRuleData> Get(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData> Get(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -324,13 +324,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerFirewallRuleData value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PostgreSqlFlexibleServerFirewallRuleData)null, message.Response);
+                    return Response.FromValue((PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlFlexibleServerFirewallRuleListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -391,9 +391,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerFirewallRuleListResult value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlFlexibleServerFirewallRuleListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -420,9 +420,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerFirewallRuleListResult value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PostgreSqlFlexibleServerFirewallRuleListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -473,9 +473,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerFirewallRuleListResult value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PostgreSqlFlexibleServerFirewallRuleListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -504,9 +504,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case 200:
                     {
-                        PostgreSqlFlexibleServerFirewallRuleListResult value = default;
+                        PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
+                        value = PostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerFirewallRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

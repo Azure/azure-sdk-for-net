@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerService
             ManagedClusterApiServerAccessProfile apiServerAccessProfile = default;
             ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile = default;
-            IList<ContainerServicePrivateLinkResourceData> privateLinkResources = default;
+            IList<ContainerServiceContainerServicePrivateLinkResourceData> privateLinkResources = default;
             bool? disableLocalAccounts = default;
             ManagedClusterHttpProxyConfig httpProxyConfig = default;
             ManagedClusterSecurityProfile securityProfile = default;
@@ -712,10 +712,10 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
+                            List<ContainerServiceContainerServicePrivateLinkResourceData> array = new List<ContainerServiceContainerServicePrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item, options));
+                                array.Add(ContainerServiceContainerServicePrivateLinkResourceData.DeserializeContainerServiceContainerServicePrivateLinkResourceData(item, options));
                             }
                             privateLinkResources = array;
                             continue;
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.ContainerService
                 apiServerAccessProfile,
                 diskEncryptionSetId,
                 identityProfile ?? new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>(),
-                privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>(),
+                privateLinkResources ?? new ChangeTrackingList<ContainerServiceContainerServicePrivateLinkResourceData>(),
                 disableLocalAccounts,
                 httpProxyConfig,
                 securityProfile,

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<PostgreSqlFlexibleServerConfigurationData> value = default;
+            IReadOnlyList<PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<PostgreSqlFlexibleServerConfigurationData> array = new List<PostgreSqlFlexibleServerConfigurationData>();
+                    List<PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData> array = new List<PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerConfigurationData.DeserializePostgreSqlFlexibleServerConfigurationData(item, options));
+                        array.Add(PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData.DeserializePostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlFlexibleServerConfigurationListResult(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerConfigurationData>(), nextLink, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerConfigurationListResult(value ?? new ChangeTrackingList<PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             IReadOnlyList<string> specificPlanIdsLimitation = default;
             bool? updateSuppressedDueIdempotence = default;
             IReadOnlyDictionary<string, Uri> iconFileUris = default;
-            IReadOnlyList<PrivateStorePlan> plans = default;
+            IReadOnlyList<MarketplacePrivateStorePlan> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    List<PrivateStorePlan> array = new List<PrivateStorePlan>();
+                    List<MarketplacePrivateStorePlan> array = new List<MarketplacePrivateStorePlan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item, options));
+                        array.Add(MarketplacePrivateStorePlan.DeserializeMarketplacePrivateStorePlan(item, options));
                     }
                     plans = array;
                     continue;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 specificPlanIdsLimitation ?? new ChangeTrackingList<string>(),
                 updateSuppressedDueIdempotence,
                 iconFileUris ?? new ChangeTrackingDictionary<string, Uri>(),
-                plans ?? new ChangeTrackingList<PrivateStorePlan>(),
+                plans ?? new ChangeTrackingList<MarketplacePrivateStorePlan>(),
                 serializedAdditionalRawData);
         }
 

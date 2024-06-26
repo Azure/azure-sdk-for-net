@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the FirewallPolicy data model.
     /// FirewallPolicy Resource.
     /// </summary>
-    public partial class FirewallPolicyData : NetworkTrackedResourceData
+    public partial class FirewallPolicyData : NetworkNetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
         public FirewallPolicyData()

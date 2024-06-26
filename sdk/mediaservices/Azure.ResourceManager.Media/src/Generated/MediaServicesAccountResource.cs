@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Media
             return GetMediaServicesAccountFilters().Get(filterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MediaServicesPrivateLinkResources in the MediaServicesAccount. </summary>
-        /// <returns> An object representing collection of MediaServicesPrivateLinkResources and their operations over a MediaServicesPrivateLinkResource. </returns>
-        public virtual MediaServicesPrivateLinkResourceCollection GetMediaServicesPrivateLinkResources()
+        /// <summary> Gets a collection of MediaMediaServicesPrivateLinkResources in the MediaServicesAccount. </summary>
+        /// <returns> An object representing collection of MediaMediaServicesPrivateLinkResources and their operations over a MediaMediaServicesPrivateLinkResource. </returns>
+        public virtual MediaMediaServicesPrivateLinkResourceCollection GetMediaMediaServicesPrivateLinkResources()
         {
-            return GetCachedClient(client => new MediaServicesPrivateLinkResourceCollection(client, Id));
+            return GetCachedClient(client => new MediaMediaServicesPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MediaServicesPrivateLinkResource>> GetMediaServicesPrivateLinkResourceAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaMediaServicesPrivateLinkResource>> GetMediaMediaServicesPrivateLinkResourceAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetMediaServicesPrivateLinkResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMediaMediaServicesPrivateLinkResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateLinkResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,47 +223,16 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MediaServicesPrivateLinkResource> GetMediaServicesPrivateLinkResource(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MediaMediaServicesPrivateLinkResource> GetMediaMediaServicesPrivateLinkResource(string name, CancellationToken cancellationToken = default)
         {
-            return GetMediaServicesPrivateLinkResources().Get(name, cancellationToken);
+            return GetMediaMediaServicesPrivateLinkResources().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MediaServicesPrivateEndpointConnectionResources in the MediaServicesAccount. </summary>
-        /// <returns> An object representing collection of MediaServicesPrivateEndpointConnectionResources and their operations over a MediaServicesPrivateEndpointConnectionResource. </returns>
-        public virtual MediaServicesPrivateEndpointConnectionCollection GetMediaServicesPrivateEndpointConnections()
+        /// <summary> Gets a collection of MediaMediaServicesPrivateEndpointConnectionResources in the MediaServicesAccount. </summary>
+        /// <returns> An object representing collection of MediaMediaServicesPrivateEndpointConnectionResources and their operations over a MediaMediaServicesPrivateEndpointConnectionResource. </returns>
+        public virtual MediaMediaServicesPrivateEndpointConnectionCollection GetMediaMediaServicesPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new MediaServicesPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the details of a private endpoint connection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MediaServicesPrivateEndpointConnectionResource>> GetMediaServicesPrivateEndpointConnectionAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetMediaServicesPrivateEndpointConnections().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new MediaMediaServicesPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -283,7 +252,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MediaServicesPrivateEndpointConnectionResource"/></description>
+        /// <description><see cref="MediaMediaServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,9 +261,40 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MediaServicesPrivateEndpointConnectionResource> GetMediaServicesPrivateEndpointConnection(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaMediaServicesPrivateEndpointConnectionResource>> GetMediaMediaServicesPrivateEndpointConnectionAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetMediaServicesPrivateEndpointConnections().Get(name, cancellationToken);
+            return await GetMediaMediaServicesPrivateEndpointConnections().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the details of a private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaMediaServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MediaMediaServicesPrivateEndpointConnectionResource> GetMediaMediaServicesPrivateEndpointConnection(string name, CancellationToken cancellationToken = default)
+        {
+            return GetMediaMediaServicesPrivateEndpointConnections().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of MediaAssetResources in the MediaServicesAccount. </summary>

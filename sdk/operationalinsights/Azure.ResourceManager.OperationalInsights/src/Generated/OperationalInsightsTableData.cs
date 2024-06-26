@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
         /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, bool? isRetentionInDaysAsDefault, bool? isTotalRetentionInDaysAsDefault, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsOperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, bool? isRetentionInDaysAsDefault, bool? isTotalRetentionInDaysAsDefault, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RetentionInDays = retentionInDays;
             TotalRetentionInDays = totalRetentionInDays;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public OperationalInsightsTableSearchResults SearchResults { get; set; }
         /// <summary> Parameters of the restore operation that initiated this table. </summary>
         [WirePath("properties.restoredLogs")]
-        public OperationalInsightsTableRestoredLogs RestoredLogs { get; set; }
+        public OperationalInsightsOperationalInsightsTableRestoredLogs RestoredLogs { get; set; }
         /// <summary> Search job execution statistics. </summary>
         [WirePath("properties.resultStatistics")]
         public OperationalInsightsTableResultStatistics ResultStatistics { get; }

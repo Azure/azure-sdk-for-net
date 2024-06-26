@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     /// <summary>
-    /// The DataLakeAnalyticsHiveMetastore.
+    /// The HiveMetastore.
     /// Serialized Name: HiveMetastore
     /// </summary>
     public partial class DataLakeAnalyticsHiveMetastore : ResourceData

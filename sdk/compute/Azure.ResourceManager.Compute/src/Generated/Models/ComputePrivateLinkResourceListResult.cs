@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ComputePrivateLinkResourceListResult"/>. </summary>
         internal ComputePrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<ComputePrivateLinkResourceData>();
+            Value = new ChangeTrackingList<ComputeComputePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputePrivateLinkResourceListResult(IReadOnlyList<ComputePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputePrivateLinkResourceListResult(IReadOnlyList<ComputeComputePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<ComputePrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<ComputeComputePrivateLinkResourceData> Value { get; }
     }
 }

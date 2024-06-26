@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            MonitorOdataType odataType = "Unknown";
+            OdataType odataType = "Unknown";
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("odata.type"u8))
                 {
-                    odataType = new MonitorOdataType(property.Value.GetString());
+                    odataType = new OdataType(property.Value.GetString());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

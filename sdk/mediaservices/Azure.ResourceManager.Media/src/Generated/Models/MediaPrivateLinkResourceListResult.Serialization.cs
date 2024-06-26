@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            IReadOnlyList<MediaServicesPrivateLinkResourceData> value = default;
+            IReadOnlyList<MediaMediaServicesPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    List<MediaServicesPrivateLinkResourceData> array = new List<MediaServicesPrivateLinkResourceData>();
+                    List<MediaMediaServicesPrivateLinkResourceData> array = new List<MediaMediaServicesPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(item, options));
+                        array.Add(MediaMediaServicesPrivateLinkResourceData.DeserializeMediaMediaServicesPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MediaPrivateLinkResourceListResult(value ?? new ChangeTrackingList<MediaServicesPrivateLinkResourceData>(), serializedAdditionalRawData);
+            return new MediaPrivateLinkResourceListResult(value ?? new ChangeTrackingList<MediaMediaServicesPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

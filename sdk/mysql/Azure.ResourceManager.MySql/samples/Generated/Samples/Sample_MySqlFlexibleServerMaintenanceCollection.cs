@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerMaintenanceResource
-            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
+            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
 
             // invoke the operation
             string maintenanceName = "_T9Q-TS8";
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerMaintenanceResource
-            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
+            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
 
             // invoke the operation
             string maintenanceName = "_T9Q-TS8";
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerMaintenanceResource
-            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
+            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
 
             // invoke the operation
             string maintenanceName = "_T9Q-TS8";
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this MySqlFlexibleServerResource created on azure
-            // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
+            // this example assumes you already have this MySqlFlexibleServersMySqlFlexibleServerResource created on azure
+            // for more information of creating MySqlFlexibleServersMySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServersMySqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
-            ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
+            ResourceIdentifier mySqlFlexibleServersMySqlFlexibleServerResourceId = MySqlFlexibleServersMySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlFlexibleServersMySqlFlexibleServerResource mySqlFlexibleServersMySqlFlexibleServer = client.GetMySqlFlexibleServersMySqlFlexibleServerResource(mySqlFlexibleServersMySqlFlexibleServerResourceId);
 
             // get the collection of this MySqlFlexibleServerMaintenanceResource
-            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
+            MySqlFlexibleServerMaintenanceCollection collection = mySqlFlexibleServersMySqlFlexibleServer.GetMySqlFlexibleServerMaintenances();
 
             // invoke the operation and iterate over the result
             await foreach (MySqlFlexibleServerMaintenanceResource item in collection.GetAllAsync())

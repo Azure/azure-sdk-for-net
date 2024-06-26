@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceListResult"/>. </summary>
         internal DesktopVirtualizationPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<DesktopVirtualizationPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DesktopVirtualizationPrivateLinkResourceListResult(IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DesktopVirtualizationPrivateLinkResourceListResult(IReadOnlyList<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<DesktopVirtualizationDesktopVirtualizationPrivateLinkResourceData> Value { get; }
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
     }

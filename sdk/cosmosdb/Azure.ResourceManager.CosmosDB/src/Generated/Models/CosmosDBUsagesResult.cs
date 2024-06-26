@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CosmosDBUsagesResult"/>. </summary>
         internal CosmosDBUsagesResult()
         {
-            Value = new ChangeTrackingList<CosmosDBBaseUsage>();
+            Value = new ChangeTrackingList<CosmosDBCosmosDBBaseUsage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBUsagesResult"/>. </summary>
         /// <param name="value"> The list of usages for the database. A usage is a point in time metric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBUsagesResult(IReadOnlyList<CosmosDBBaseUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBUsagesResult(IReadOnlyList<CosmosDBCosmosDBBaseUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of usages for the database. A usage is a point in time metric. </summary>
-        public IReadOnlyList<CosmosDBBaseUsage> Value { get; }
+        public IReadOnlyList<CosmosDBCosmosDBBaseUsage> Value { get; }
     }
 }

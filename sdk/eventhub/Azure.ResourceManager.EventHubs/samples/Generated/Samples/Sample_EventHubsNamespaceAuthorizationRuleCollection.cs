@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
             {
                 Rights =
 {
-EventHubsAccessRight.Listen,EventHubsAccessRight.Send
+AccessRight.Listen,AccessRight.Send
 },
             };
             ArmOperation<EventHubsNamespaceAuthorizationRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, authorizationRuleName, data);

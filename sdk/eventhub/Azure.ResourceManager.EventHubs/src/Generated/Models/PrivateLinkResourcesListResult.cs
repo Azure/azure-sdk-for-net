@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/>. </summary>
         internal PrivateLinkResourcesListResult()
         {
-            Value = new ChangeTrackingList<EventHubsPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<EventHubsEventHubsPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/>. </summary>
         /// <param name="value"> A collection of private link resources. </param>
         /// <param name="nextLink"> A link for the next page of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourcesListResult(IReadOnlyList<EventHubsPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateLinkResourcesListResult(IReadOnlyList<EventHubsEventHubsPrivateLinkResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> A collection of private link resources. </summary>
         [WirePath("value")]
-        public IReadOnlyList<EventHubsPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<EventHubsEventHubsPrivateLinkResourceData> Value { get; }
         /// <summary> A link for the next page of private link resources. </summary>
         [WirePath("nextLink")]
         public string NextLink { get; }

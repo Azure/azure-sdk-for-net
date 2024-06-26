@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of <see cref="EventHubsAuthorizationRuleData"/>. </summary>
         public EventHubsAuthorizationRuleData()
         {
-            Rights = new ChangeTrackingList<EventHubsAccessRight>();
+            Rights = new ChangeTrackingList<AccessRight>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsAuthorizationRuleData"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<EventHubsAccessRight> rights, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EventHubsAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<AccessRight> rights, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Rights = rights;
             Location = location;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> The rights associated with the rule. </summary>
         [WirePath("properties.rights")]
-        public IList<EventHubsAccessRight> Rights { get; }
+        public IList<AccessRight> Rights { get; }
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }

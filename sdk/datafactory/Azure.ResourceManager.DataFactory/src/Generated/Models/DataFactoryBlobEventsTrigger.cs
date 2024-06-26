@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
-        public DataFactoryBlobEventsTrigger(IEnumerable<DataFactoryBlobEventType> events, string scope)
+        public DataFactoryBlobEventsTrigger(IEnumerable<BlobEventType> events, string scope)
         {
             Argument.AssertNotNull(events, nameof(events));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="ignoreEmptyBlobs"> If set to true, blobs with zero bytes will be ignored. </param>
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
-        internal DataFactoryBlobEventsTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string blobPathBeginsWith, string blobPathEndsWith, bool? ignoreEmptyBlobs, IList<DataFactoryBlobEventType> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal DataFactoryBlobEventsTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string blobPathBeginsWith, string blobPathEndsWith, bool? ignoreEmptyBlobs, IList<BlobEventType> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             BlobPathBeginsWith = blobPathBeginsWith;
             BlobPathEndsWith = blobPathEndsWith;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> If set to true, blobs with zero bytes will be ignored. </summary>
         public bool? IgnoreEmptyBlobs { get; set; }
         /// <summary> The type of events that cause this trigger to fire. </summary>
-        public IList<DataFactoryBlobEventType> Events { get; }
+        public IList<BlobEventType> Events { get; }
         /// <summary> The ARM resource ID of the Storage Account. </summary>
         public string Scope { get; set; }
     }

@@ -129,22 +129,22 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricServiceFabricServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricServiceFabricServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricServiceFabricServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetServiceFabricServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceFabricArmClient.GetServiceFabricServiceFabricServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceFabricServiceResource"/> object. </returns>
-        public static ServiceFabricServiceResource GetServiceFabricServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricServiceFabricServiceResource"/> object. </returns>
+        public static ServiceFabricServiceFabricServiceResource GetServiceFabricServiceFabricServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceFabricArmClient(client).GetServiceFabricServiceResource(id);
+            return GetMockableServiceFabricArmClient(client).GetServiceFabricServiceFabricServiceResource(id);
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeIotRole()
         {
             ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
-            Kind = DataBoxEdgeRoleType.IoT;
+            Kind = RoleType.IoT;
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeIotRole"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="hostPlatformType"> Platform where the Iot runtime is hosted. </param>
         /// <param name="computeResource"> Resource allocation. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal EdgeIotRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxEdgeOSPlatformType? hostPlatform, EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails, IList<DataBoxEdgeMountPointMap> shareMappings, IotEdgeAgentInfo iotEdgeAgentInfo, HostPlatformType? hostPlatformType, EdgeComputeResourceInfo computeResource, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        internal EdgeIotRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxEdgeOSPlatformType? hostPlatform, EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails, IList<DataBoxEdgeMountPointMap> shareMappings, IotEdgeAgentInfo iotEdgeAgentInfo, HostPlatformType? hostPlatformType, EdgeComputeResourceInfo computeResource, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             HostPlatform = hostPlatform;
             IotDeviceDetails = iotDeviceDetails;

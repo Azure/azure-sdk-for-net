@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ScVmm
             string inventoryItemId = default;
             string uuid = default;
             ResourceIdentifier vmmServerId = default;
-            ScVmmOSType? osType = default;
+            OSType? osType = default;
             string osName = default;
             string computerName = default;
             int? memoryMB = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ScVmm
                             {
                                 continue;
                             }
-                            osType = new ScVmmOSType(property0.Value.GetString());
+                            osType = new OSType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osName"u8))

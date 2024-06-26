@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             IList<FirewallRuleForDataLakeStoreAccountUpdateContent> firewallRules = default;
             IList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent> virtualNetworkRules = default;
             DataLakeStoreFirewallState? firewallState = default;
-            DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
+            FirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
             IList<TrustedIdProviderForDataLakeStoreAccountUpdateContent> trustedIdProviders = default;
             DataLakeStoreTrustedIdProviderState? trustedIdProviderState = default;
             DataLakeStoreCommitmentTierType? newTier = default;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             {
                                 continue;
                             }
-                            firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeStoreFirewallAllowAzureIPsState();
+                            firewallAllowAzureIPs = property0.Value.GetString().ToFirewallAllowAzureIPsState();
                             continue;
                         }
                         if (property0.NameEquals("trustedIdProviders"u8))

@@ -272,7 +272,7 @@ PublicIPAddressConfiguration = new VirtualMachineScaleSetUpdatePublicIPAddressCo
 Name = "a",
 IdleTimeoutInMinutes = 3,
 DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings("aaaaaaaaaaaaaaaaaa"),
-DeleteOption = ComputeDeleteOption.Delete,
+DeleteOption = DeleteOption.Delete,
 },
 PrivateIPAddressVersion = IPVersion.IPv4,
 ApplicationGatewayBackendAddressPools =
@@ -306,7 +306,7 @@ Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myRe
 }
 },
 EnableIPForwarding = true,
-DeleteOption = ComputeDeleteOption.Delete,
+DeleteOption = DeleteOption.Delete,
 }
 },
                         NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,

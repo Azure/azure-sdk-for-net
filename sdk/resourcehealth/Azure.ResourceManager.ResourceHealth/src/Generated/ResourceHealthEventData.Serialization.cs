@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.ResourceHealth
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ResourceHealthEventTypeValue? eventType = default;
+            EventTypeValue? eventType = default;
             EventSubTypeValue? eventSubType = default;
-            ResourceHealthEventSourceValue? eventSource = default;
-            ResourceHealthEventStatusValue? status = default;
+            EventSourceValue? eventSource = default;
+            EventStatusValue? status = default;
             string title = default;
             string summary = default;
             string header = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            eventType = new ResourceHealthEventTypeValue(property0.Value.GetString());
+                            eventType = new EventTypeValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventSubType"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            eventSource = new ResourceHealthEventSourceValue(property0.Value.GetString());
+                            eventSource = new EventSourceValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            status = new ResourceHealthEventStatusValue(property0.Value.GetString());
+                            status = new EventStatusValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("title"u8))

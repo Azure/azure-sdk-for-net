@@ -375,12 +375,12 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InstancePoolUsage> GetUsagesAsync(bool? expandChildren = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlInstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlInstancePoolUsage> GetUsagesAsync(bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _usagesRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => InstancePoolUsage.DeserializeInstancePoolUsage(e), _usagesClientDiagnostics, Pipeline, "InstancePoolResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SqlInstancePoolUsage.DeserializeSqlInstancePoolUsage(e), _usagesClientDiagnostics, Pipeline, "InstancePoolResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -402,12 +402,12 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InstancePoolUsage> GetUsages(bool? expandChildren = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlInstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlInstancePoolUsage> GetUsages(bool? expandChildren = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _usagesRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expandChildren);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => InstancePoolUsage.DeserializeInstancePoolUsage(e), _usagesClientDiagnostics, Pipeline, "InstancePoolResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SqlInstancePoolUsage.DeserializeSqlInstancePoolUsage(e), _usagesClientDiagnostics, Pipeline, "InstancePoolResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

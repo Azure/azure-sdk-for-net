@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Monitor.Models
         public MetricAlertSingleResourceMultipleMetricCriteria()
         {
             AllOf = new ChangeTrackingList<MetricCriteria>();
-            OdataType = MonitorOdataType.MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria;
+            OdataType = OdataType.MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria;
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>. </summary>
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="allOf"> The list of metric criteria for this 'all of' operation. </param>
-        internal MetricAlertSingleResourceMultipleMetricCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties, IList<MetricCriteria> allOf) : base(odataType, additionalProperties)
+        internal MetricAlertSingleResourceMultipleMetricCriteria(OdataType odataType, IDictionary<string, BinaryData> additionalProperties, IList<MetricCriteria> allOf) : base(odataType, additionalProperties)
         {
             AllOf = allOf;
             OdataType = odataType;

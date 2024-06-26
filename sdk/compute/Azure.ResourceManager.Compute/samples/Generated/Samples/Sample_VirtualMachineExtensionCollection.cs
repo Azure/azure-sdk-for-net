@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Samples
 new InstanceViewStatus()
 {
 Code = "aaaaaaaaaaaaaaaaaaaaaaa",
-Level = ComputeStatusLevelType.Info,
+Level = StatusLevelType.Info,
 DisplayStatus = "aaaaaa",
 Message = "a",
 Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
@@ -77,7 +77,7 @@ Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),
 new InstanceViewStatus()
 {
 Code = "aaaaaaaaaaaaaaaaaaaaaaa",
-Level = ComputeStatusLevelType.Info,
+Level = StatusLevelType.Info,
 DisplayStatus = "aaaaaa",
 Message = "a",
 Time = DateTimeOffset.Parse("2021-11-30T12:58:26.522Z"),

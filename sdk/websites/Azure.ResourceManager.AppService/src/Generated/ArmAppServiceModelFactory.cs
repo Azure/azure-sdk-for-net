@@ -1303,16 +1303,16 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppServicePrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceAppServicePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of a private link resource. </param>
-        /// <returns> A new <see cref="Models.AppServicePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static AppServicePrivateLinkResourceData AppServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppServicePrivateLinkResourceProperties properties = null)
+        /// <returns> A new <see cref="Models.AppServiceAppServicePrivateLinkResourceData"/> instance for mocking. </returns>
+        public static AppServiceAppServicePrivateLinkResourceData AppServiceAppServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppServiceAppServicePrivateLinkResourceProperties properties = null)
         {
-            return new AppServicePrivateLinkResourceData(
+            return new AppServiceAppServicePrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
@@ -1321,17 +1321,17 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppServicePrivateLinkResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceAppServicePrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> GroupId of a private link resource. </param>
         /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
         /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>
-        /// <returns> A new <see cref="Models.AppServicePrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static AppServicePrivateLinkResourceProperties AppServicePrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.AppServiceAppServicePrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static AppServiceAppServicePrivateLinkResourceProperties AppServiceAppServicePrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new AppServicePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new AppServiceAppServicePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServicePlanData"/>. </summary>

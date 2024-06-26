@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
         /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName name)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, QuotaName name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}";
             return new ResourceIdentifier(resourceId);

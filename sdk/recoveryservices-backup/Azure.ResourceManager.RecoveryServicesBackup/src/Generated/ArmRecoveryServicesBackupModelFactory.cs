@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="properties"> PrivateEndpointConnectionResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupPrivateEndpointConnectionProperties properties = null, ETag? eTag = null)
+        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RecoveryServicesBackupBackupPrivateEndpointConnectionProperties properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 

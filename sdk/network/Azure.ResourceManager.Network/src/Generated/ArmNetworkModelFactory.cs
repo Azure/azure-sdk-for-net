@@ -697,18 +697,18 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkNetworkTrackedResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
-        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="Models.NetworkNetworkTrackedResourceData"/> instance for mocking. </returns>
+        public static NetworkNetworkTrackedResourceData NetworkNetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkTrackedResourceData(
+            return new NetworkNetworkTrackedResourceData(
                 id,
                 name,
                 resourceType,

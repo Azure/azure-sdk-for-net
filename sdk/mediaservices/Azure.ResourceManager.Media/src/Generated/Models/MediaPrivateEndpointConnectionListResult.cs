@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of <see cref="MediaPrivateEndpointConnectionListResult"/>. </summary>
         internal MediaPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<MediaMediaServicesPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MediaPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MediaPrivateEndpointConnectionListResult(IReadOnlyList<MediaServicesPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MediaPrivateEndpointConnectionListResult(IReadOnlyList<MediaMediaServicesPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<MediaServicesPrivateEndpointConnectionData> Value { get; }
+        public IReadOnlyList<MediaMediaServicesPrivateEndpointConnectionData> Value { get; }
     }
 }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             }
             string adminPassword = default;
             string computerName = default;
-            ScVmmOSType? osType = default;
+            OSType? osType = default;
             string osSku = default;
             string osVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                     {
                         continue;
                     }
-                    osType = new ScVmmOSType(property.Value.GetString());
+                    osType = new OSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osSku"u8))

@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rgLongTermRetention";
             string serverName = "pgsqlltrtestserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlLtrServerBackupOperationResource
-            PostgreSqlLtrServerBackupOperationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlLtrServerBackupOperations();
+            PostgreSqlLtrServerBackupOperationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlLtrServerBackupOperations();
 
             // invoke the operation
             string backupName = "backup1";
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rgLongTermRetention";
             string serverName = "pgsqlltrtestserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlLtrServerBackupOperationResource
-            PostgreSqlLtrServerBackupOperationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlLtrServerBackupOperations();
+            PostgreSqlLtrServerBackupOperationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlLtrServerBackupOperations();
 
             // invoke the operation
             string backupName = "backup1";
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rgLongTermRetention";
             string serverName = "pgsqlltrtestserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlLtrServerBackupOperationResource
-            PostgreSqlLtrServerBackupOperationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlLtrServerBackupOperations();
+            PostgreSqlLtrServerBackupOperationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlLtrServerBackupOperations();
 
             // invoke the operation
             string backupName = "backup1";
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            // this example assumes you already have this PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rgLongTermRetention";
             string serverName = "pgsqlltrtestserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            ResourceIdentifier postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServersPostgreSqlFlexibleServerResource postgreSqlFlexibleServersPostgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServersPostgreSqlFlexibleServerResource(postgreSqlFlexibleServersPostgreSqlFlexibleServerResourceId);
 
             // get the collection of this PostgreSqlLtrServerBackupOperationResource
-            PostgreSqlLtrServerBackupOperationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlLtrServerBackupOperations();
+            PostgreSqlLtrServerBackupOperationCollection collection = postgreSqlFlexibleServersPostgreSqlFlexibleServer.GetPostgreSqlLtrServerBackupOperations();
 
             // invoke the operation and iterate over the result
             await foreach (PostgreSqlLtrServerBackupOperationResource item in collection.GetAllAsync())

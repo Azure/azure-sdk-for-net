@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogicWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, LogicWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicSku sku, LogicResourceReference integrationAccount, LogicResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, LogicWorkflowParameterInfo> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal LogicWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, LogicWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicLogicSku sku, LogicResourceReference integrationAccount, LogicResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, LogicWorkflowParameterInfo> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The access control configuration. </summary>
         public FlowAccessControlConfiguration AccessControl { get; set; }
         /// <summary> The sku. </summary>
-        public LogicSku Sku { get; }
+        public LogicLogicSku Sku { get; }
         /// <summary> The integration account. </summary>
         public LogicResourceReference IntegrationAccount { get; set; }
         /// <summary> The integration service environment. </summary>

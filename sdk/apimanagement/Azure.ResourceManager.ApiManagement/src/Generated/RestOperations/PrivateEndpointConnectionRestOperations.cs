@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="privateLinkSubResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementPrivateLinkResourceData>> GetPrivateLinkResourceAsync(string subscriptionId, string resourceGroupName, string serviceName, string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementApiManagementPrivateLinkResourceData>> GetPrivateLinkResourceAsync(string subscriptionId, string resourceGroupName, string serviceName, string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -581,13 +581,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiManagementPrivateLinkResourceData value = default;
+                        ApiManagementApiManagementPrivateLinkResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(document.RootElement);
+                        value = ApiManagementApiManagementPrivateLinkResourceData.DeserializeApiManagementApiManagementPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiManagementPrivateLinkResourceData)null, message.Response);
+                    return Response.FromValue((ApiManagementApiManagementPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="privateLinkSubResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementPrivateLinkResourceData> GetPrivateLinkResource(string subscriptionId, string resourceGroupName, string serviceName, string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        public Response<ApiManagementApiManagementPrivateLinkResourceData> GetPrivateLinkResource(string subscriptionId, string resourceGroupName, string serviceName, string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -614,13 +614,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiManagementPrivateLinkResourceData value = default;
+                        ApiManagementApiManagementPrivateLinkResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(document.RootElement);
+                        value = ApiManagementApiManagementPrivateLinkResourceData.DeserializeApiManagementApiManagementPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiManagementPrivateLinkResourceData)null, message.Response);
+                    return Response.FromValue((ApiManagementApiManagementPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

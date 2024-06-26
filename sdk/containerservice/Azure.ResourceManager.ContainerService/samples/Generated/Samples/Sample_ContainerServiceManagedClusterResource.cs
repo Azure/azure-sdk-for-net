@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ContainerServicePrivateLinkResourceData item in containerServiceManagedCluster.GetPrivateLinkResourcesAsync())
+            await foreach (ContainerServiceContainerServicePrivateLinkResourceData item in containerServiceManagedCluster.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -653,11 +653,11 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
 
             // invoke the operation
-            ContainerServicePrivateLinkResourceData data = new ContainerServicePrivateLinkResourceData()
+            ContainerServiceContainerServicePrivateLinkResourceData data = new ContainerServiceContainerServicePrivateLinkResourceData()
             {
                 Name = "management",
             };
-            ContainerServicePrivateLinkResourceData result = await containerServiceManagedCluster.ResolvePrivateLinkServiceIdAsync(data);
+            ContainerServiceContainerServicePrivateLinkResourceData result = await containerServiceManagedCluster.ResolvePrivateLinkServiceIdAsync(data);
 
             Console.WriteLine($"Succeeded: {result}");
         }

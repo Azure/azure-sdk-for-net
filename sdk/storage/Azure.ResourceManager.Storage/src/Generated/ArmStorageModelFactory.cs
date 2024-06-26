@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobInventoryPolicySchema(isEnabled, destination, ruleType, rules?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StoragePrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageStoragePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -619,13 +619,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.StoragePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static StoragePrivateLinkResourceData StoragePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.StorageStoragePrivateLinkResourceData"/> instance for mocking. </returns>
+        public static StorageStoragePrivateLinkResourceData StorageStoragePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new StoragePrivateLinkResourceData(
+            return new StorageStoragePrivateLinkResourceData(
                 id,
                 name,
                 resourceType,

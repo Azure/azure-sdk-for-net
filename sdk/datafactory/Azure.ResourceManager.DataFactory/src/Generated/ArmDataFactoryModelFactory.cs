@@ -1449,12 +1449,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <returns> A new <see cref="Models.DataFactoryBlobEventsTrigger"/> instance for mocking. </returns>
-        public static DataFactoryBlobEventsTrigger DataFactoryBlobEventsTrigger(string description = null, DataFactoryTriggerRuntimeState? runtimeState = null, IEnumerable<BinaryData> annotations = null, IDictionary<string, BinaryData> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string blobPathBeginsWith = null, string blobPathEndsWith = null, bool? ignoreEmptyBlobs = null, IEnumerable<DataFactoryBlobEventType> events = null, string scope = null)
+        public static DataFactoryBlobEventsTrigger DataFactoryBlobEventsTrigger(string description = null, DataFactoryTriggerRuntimeState? runtimeState = null, IEnumerable<BinaryData> annotations = null, IDictionary<string, BinaryData> additionalProperties = null, IEnumerable<TriggerPipelineReference> pipelines = null, string blobPathBeginsWith = null, string blobPathEndsWith = null, bool? ignoreEmptyBlobs = null, IEnumerable<BlobEventType> events = null, string scope = null)
         {
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
             pipelines ??= new List<TriggerPipelineReference>();
-            events ??= new List<DataFactoryBlobEventType>();
+            events ??= new List<BlobEventType>();
 
             return new DataFactoryBlobEventsTrigger(
                 "BlobEventsTrigger",

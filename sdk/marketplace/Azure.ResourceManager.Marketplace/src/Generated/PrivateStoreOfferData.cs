@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
             IconFileUris = new ChangeTrackingDictionary<string, Uri>();
-            Plans = new ChangeTrackingList<PrivateStorePlan>();
+            Plans = new ChangeTrackingList<MarketplacePrivateStorePlan>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IDictionary<string, Uri> iconFileUris, IList<PrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IDictionary<string, Uri> iconFileUris, IList<MarketplacePrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
@@ -113,6 +113,6 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Icon File Uris. </summary>
         public IDictionary<string, Uri> IconFileUris { get; }
         /// <summary> Offer plans. </summary>
-        public IList<PrivateStorePlan> Plans { get; }
+        public IList<MarketplacePrivateStorePlan> Plans { get; }
     }
 }

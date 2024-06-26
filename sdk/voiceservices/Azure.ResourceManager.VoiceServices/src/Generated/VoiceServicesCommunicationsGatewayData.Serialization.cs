@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.VoiceServices
             VoiceServicesCommunicationsGatewayStatus? status = default;
             IList<VoiceServicesServiceRegionProperties> serviceLocations = default;
             VoiceServicesCommunicationsGatewayConnectivity? connectivity = default;
-            IList<VoiceServicesTeamsCodec> codecs = default;
+            IList<TeamsCodec> codecs = default;
             VoiceServicesEmergencyCallType? e911Type = default;
             IList<VoiceServicesCommunicationsPlatform> platforms = default;
             BinaryData apiBridge = default;
@@ -316,10 +316,10 @@ namespace Azure.ResourceManager.VoiceServices
                             {
                                 continue;
                             }
-                            List<VoiceServicesTeamsCodec> array = new List<VoiceServicesTeamsCodec>();
+                            List<TeamsCodec> array = new List<TeamsCodec>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new VoiceServicesTeamsCodec(item.GetString()));
+                                array.Add(new TeamsCodec(item.GetString()));
                             }
                             codecs = array;
                             continue;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.VoiceServices
                 status,
                 serviceLocations ?? new ChangeTrackingList<VoiceServicesServiceRegionProperties>(),
                 connectivity,
-                codecs ?? new ChangeTrackingList<VoiceServicesTeamsCodec>(),
+                codecs ?? new ChangeTrackingList<TeamsCodec>(),
                 e911Type,
                 platforms ?? new ChangeTrackingList<VoiceServicesCommunicationsPlatform>(),
                 apiBridge,

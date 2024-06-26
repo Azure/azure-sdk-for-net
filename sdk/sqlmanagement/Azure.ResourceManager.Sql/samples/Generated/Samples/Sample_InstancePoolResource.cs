@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation and iterate over the result
             bool? expandChildren = true;
-            await foreach (InstancePoolUsage item in instancePool.GetUsagesAsync(expandChildren: expandChildren))
+            await foreach (SqlInstancePoolUsage item in instancePool.GetUsagesAsync(expandChildren: expandChildren))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             InstancePoolResource instancePool = client.GetInstancePoolResource(instancePoolResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (InstancePoolUsage item in instancePool.GetUsagesAsync())
+            await foreach (SqlInstancePoolUsage item in instancePool.GetUsagesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

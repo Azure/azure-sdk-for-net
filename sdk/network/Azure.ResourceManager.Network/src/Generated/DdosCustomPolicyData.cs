@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the DdosCustomPolicy data model.
     /// A DDoS custom policy in a resource group.
     /// </summary>
-    public partial class DdosCustomPolicyData : NetworkTrackedResourceData
+    public partial class DdosCustomPolicyData : NetworkNetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
         public DdosCustomPolicyData()

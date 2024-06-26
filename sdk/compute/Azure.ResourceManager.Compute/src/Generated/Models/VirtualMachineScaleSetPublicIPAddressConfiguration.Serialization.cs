@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
             IList<VirtualMachineScaleSetIPTag> ipTags = default;
             WritableSubResource publicIPPrefix = default;
             IPVersion? publicIPAddressVersion = default;
-            ComputeDeleteOption? deleteOption = default;
+            DeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            deleteOption = new ComputeDeleteOption(property0.Value.GetString());
+                            deleteOption = new DeleteOption(property0.Value.GetString());
                             continue;
                         }
                     }

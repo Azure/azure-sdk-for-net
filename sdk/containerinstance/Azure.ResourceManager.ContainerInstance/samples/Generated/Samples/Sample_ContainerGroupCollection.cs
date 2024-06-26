@@ -423,7 +423,7 @@ Add =
 },
 },
 }
-            }, ContainerInstanceOperatingSystemType.Linux)
+            }, OperatingSystemType.Linux)
             {
                 ImageRegistryCredentials =
 {
@@ -488,7 +488,7 @@ EnvironmentVariables =
 {
 },
 }
-            }, ContainerInstanceOperatingSystemType.Linux)
+            }, OperatingSystemType.Linux)
             {
                 ImageRegistryCredentials =
 {
@@ -574,7 +574,7 @@ EnvironmentVariables =
 {
 },
 }
-            }, ContainerInstanceOperatingSystemType.Linux)
+            }, OperatingSystemType.Linux)
             {
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
@@ -664,7 +664,7 @@ IsReadOnly = true,
 }
 },
 }
-            }, ContainerInstanceOperatingSystemType.Linux)
+            }, OperatingSystemType.Linux)
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
                 {
@@ -775,7 +775,7 @@ Command =
 "/bin/sh","-c","sleep 10"
 },
 }
-            }, ContainerInstanceOperatingSystemType.Linux)
+            }, OperatingSystemType.Linux)
             {
                 RestartPolicy = ContainerGroupRestartPolicy.Never,
                 Sku = ContainerGroupSku.Standard,

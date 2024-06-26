@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="recommendedActions"> Lists actions the user can take based on the current availabilityState of the resource. </param>
         /// <param name="serviceImpactingEvents"> Lists the service impacting events that may be affecting the health of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceHealthAvailabilityStatusProperties(AvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AvailabilityState = availabilityState;
             Title = title;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> Availability status of the resource. When it is null, this availabilityStatus object represents an availability impacting event. </summary>
-        public ResourceHealthAvailabilityStateValue? AvailabilityState { get; }
+        public AvailabilityStateValue? AvailabilityState { get; }
         /// <summary> Title description of the availability status. </summary>
         public string Title { get; }
         /// <summary> Summary description of the availability status. </summary>

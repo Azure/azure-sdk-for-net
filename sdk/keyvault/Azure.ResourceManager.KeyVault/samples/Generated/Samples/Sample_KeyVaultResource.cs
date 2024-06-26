@@ -262,7 +262,7 @@ IdentityAccessCertificatePermission.Get
             KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (KeyVaultPrivateLinkResourceData item in keyVault.GetPrivateLinkResourcesAsync())
+            await foreach (KeyVaultKeyVaultPrivateLinkResourceData item in keyVault.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

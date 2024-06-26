@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            IReadOnlyList<MediaServicesPrivateEndpointConnectionData> value = default;
+            IReadOnlyList<MediaMediaServicesPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
+                    List<MediaMediaServicesPrivateEndpointConnectionData> array = new List<MediaMediaServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item, options));
+                        array.Add(MediaMediaServicesPrivateEndpointConnectionData.DeserializeMediaMediaServicesPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MediaPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(), serializedAdditionalRawData);
+            return new MediaPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<MediaMediaServicesPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

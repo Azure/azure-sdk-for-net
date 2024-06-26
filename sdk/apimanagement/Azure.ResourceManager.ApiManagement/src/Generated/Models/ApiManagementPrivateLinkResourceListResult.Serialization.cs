@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiManagementPrivateLinkResourceData> value = default;
+            IReadOnlyList<ApiManagementApiManagementPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<ApiManagementPrivateLinkResourceData> array = new List<ApiManagementPrivateLinkResourceData>();
+                    List<ApiManagementApiManagementPrivateLinkResourceData> array = new List<ApiManagementApiManagementPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(item, options));
+                        array.Add(ApiManagementApiManagementPrivateLinkResourceData.DeserializeApiManagementApiManagementPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiManagementPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ApiManagementPrivateLinkResourceData>(), serializedAdditionalRawData);
+            return new ApiManagementPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ApiManagementApiManagementPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

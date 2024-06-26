@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified RedisEnterprise cluster. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RedisEnterpriseSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null)
+        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RedisEnterpriseRedisEnterpriseSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
-            privateEndpointConnections ??= new List<RedisEnterprisePrivateEndpointConnectionData>();
+            privateEndpointConnections ??= new List<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData>();
 
             return new RedisEnterpriseClusterData(
                 id,
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="privateEndpointId"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RedisEnterprisePrivateLinkServiceConnectionState connectionState = null, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RedisEnterpriseRedisEnterprisePrivateLinkServiceConnectionState connectionState = null, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new RedisEnterprisePrivateEndpointConnectionData(
+            return new RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified RedisEnterprise cluster. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseClusterPatch"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null)
+        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseRedisEnterpriseSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null)
         {
             tags ??= new Dictionary<string, string>();
-            privateEndpointConnections ??= new List<RedisEnterprisePrivateEndpointConnectionData>();
+            privateEndpointConnections ??= new List<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData>();
 
             return new RedisEnterpriseClusterPatch(
                 sku,
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseDataAccessKeys(primaryKey, secondaryKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterprisePrivateLinkResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseRedisEnterprisePrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -233,13 +233,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.RedisEnterprisePrivateLinkResource"/> instance for mocking. </returns>
-        public static RedisEnterprisePrivateLinkResource RedisEnterprisePrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.RedisEnterpriseRedisEnterprisePrivateLinkResource"/> instance for mocking. </returns>
+        public static RedisEnterpriseRedisEnterprisePrivateLinkResource RedisEnterpriseRedisEnterprisePrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new RedisEnterprisePrivateLinkResource(
+            return new RedisEnterpriseRedisEnterprisePrivateLinkResource(
                 id,
                 name,
                 resourceType,

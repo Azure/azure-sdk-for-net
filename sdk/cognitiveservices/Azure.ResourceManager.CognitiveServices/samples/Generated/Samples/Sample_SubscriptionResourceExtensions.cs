@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("WestUS");
-            await foreach (ServiceAccountUsage item in subscriptionResource.GetUsagesAsync(location))
+            await foreach (CognitiveServicesServiceAccountUsage item in subscriptionResource.GetUsagesAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

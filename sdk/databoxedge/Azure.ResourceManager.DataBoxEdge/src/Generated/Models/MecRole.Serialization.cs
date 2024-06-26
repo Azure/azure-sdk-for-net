@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            DataBoxEdgeRoleType kind = default;
+            RoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new DataBoxEdgeRoleType(property.Value.GetString());
+                    kind = new RoleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

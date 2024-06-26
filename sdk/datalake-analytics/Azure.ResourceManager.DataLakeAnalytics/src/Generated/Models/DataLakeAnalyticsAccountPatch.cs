@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.queryStoreRetention
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataLakeAnalyticsAccountPatch(IDictionary<string, string> tags, IList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent> dataLakeStoreAccounts, IList<StorageAccountForDataLakeAnalyticsAccountUpdateContent> storageAccounts, IList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent> computePolicies, IList<FirewallRuleForDataLakeAnalyticsAccountUpdateContent> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, int? maxJobCount, int? maxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataLakeAnalyticsAccountPatch(IDictionary<string, string> tags, IList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent> dataLakeStoreAccounts, IList<StorageAccountForDataLakeAnalyticsAccountUpdateContent> storageAccounts, IList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent> computePolicies, IList<FirewallRuleForDataLakeAnalyticsAccountUpdateContent> firewallRules, DataLakeAnalyticsFirewallState? firewallState, FirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, int? maxJobCount, int? maxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             DataLakeStoreAccounts = dataLakeStoreAccounts;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.firewallAllowAzureIps
         /// </summary>
-        public DataLakeAnalyticsFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
+        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
         /// <summary>
         /// The commitment tier to use for next month.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.newTier

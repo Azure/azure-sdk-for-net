@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of <see cref="MediaPrivateLinkResourceListResult"/>. </summary>
         internal MediaPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<MediaServicesPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<MediaMediaServicesPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MediaPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MediaPrivateLinkResourceListResult(IReadOnlyList<MediaServicesPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MediaPrivateLinkResourceListResult(IReadOnlyList<MediaMediaServicesPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<MediaServicesPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<MediaMediaServicesPrivateLinkResourceData> Value { get; }
     }
 }

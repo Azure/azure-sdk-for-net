@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             CognitiveServicesAccountResource cognitiveServicesAccount = client.GetCognitiveServicesAccountResource(cognitiveServicesAccountResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceAccountUsage item in cognitiveServicesAccount.GetUsagesAsync())
+            await foreach (CognitiveServicesServiceAccountUsage item in cognitiveServicesAccount.GetUsagesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

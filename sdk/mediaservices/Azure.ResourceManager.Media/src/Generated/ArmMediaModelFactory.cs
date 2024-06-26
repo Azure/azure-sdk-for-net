@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version allowed for this account's requests. This is an optional property. If unspecified, a secure default value will be used. </param>
         /// <returns> A new <see cref="Media.MediaServicesAccountData"/> instance for mocking. </returns>
-        public static MediaServicesAccountData MediaServicesAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, Guid? mediaServicesAccountId = null, IEnumerable<MediaServicesStorageAccount> storageAccounts = null, MediaStorageAuthentication? storageAuthentication = null, AccountEncryption encryption = null, MediaAccessControl keyDeliveryAccessControl = null, MediaServicesPublicNetworkAccess? publicNetworkAccess = null, MediaServicesProvisioningState? provisioningState = null, IEnumerable<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = null, MediaServicesMinimumTlsVersion? minimumTlsVersion = null)
+        public static MediaServicesAccountData MediaServicesAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, Guid? mediaServicesAccountId = null, IEnumerable<MediaServicesStorageAccount> storageAccounts = null, MediaStorageAuthentication? storageAuthentication = null, AccountEncryption encryption = null, MediaAccessControl keyDeliveryAccessControl = null, MediaServicesPublicNetworkAccess? publicNetworkAccess = null, MediaServicesProvisioningState? provisioningState = null, IEnumerable<MediaMediaServicesPrivateEndpointConnectionData> privateEndpointConnections = null, MediaServicesMinimumTlsVersion? minimumTlsVersion = null)
         {
             tags ??= new Dictionary<string, string>();
             storageAccounts ??= new List<MediaServicesStorageAccount>();
-            privateEndpointConnections ??= new List<MediaServicesPrivateEndpointConnectionData>();
+            privateEndpointConnections ??= new List<MediaMediaServicesPrivateEndpointConnectionData>();
 
             return new MediaServicesAccountData(
                 id,
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
             return new KeyVaultProperties(keyIdentifier, currentKeyIdentifier, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Media.MediaServicesPrivateEndpointConnectionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaMediaServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="privateEndpointId"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="Media.MediaServicesPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static MediaServicesPrivateEndpointConnectionData MediaServicesPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, MediaPrivateLinkServiceConnectionState connectionState = null, MediaPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Media.MediaMediaServicesPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static MediaMediaServicesPrivateEndpointConnectionData MediaMediaServicesPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, MediaPrivateLinkServiceConnectionState connectionState = null, MediaPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new MediaServicesPrivateEndpointConnectionData(
+            return new MediaMediaServicesPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version allowed for this account's requests. This is an optional property. If unspecified, a secure default value will be used. </param>
         /// <returns> A new <see cref="Models.MediaServicesAccountPatch"/> instance for mocking. </returns>
-        public static MediaServicesAccountPatch MediaServicesAccountPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, Guid? mediaServiceId = null, IEnumerable<MediaServicesStorageAccount> storageAccounts = null, MediaStorageAuthentication? storageAuthentication = null, AccountEncryption encryption = null, MediaAccessControl keyDeliveryAccessControl = null, MediaServicesPublicNetworkAccess? publicNetworkAccess = null, MediaServicesProvisioningState? provisioningState = null, IEnumerable<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = null, MediaServicesMinimumTlsVersion? minimumTlsVersion = null)
+        public static MediaServicesAccountPatch MediaServicesAccountPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, Guid? mediaServiceId = null, IEnumerable<MediaServicesStorageAccount> storageAccounts = null, MediaStorageAuthentication? storageAuthentication = null, AccountEncryption encryption = null, MediaAccessControl keyDeliveryAccessControl = null, MediaServicesPublicNetworkAccess? publicNetworkAccess = null, MediaServicesProvisioningState? provisioningState = null, IEnumerable<MediaMediaServicesPrivateEndpointConnectionData> privateEndpointConnections = null, MediaServicesMinimumTlsVersion? minimumTlsVersion = null)
         {
             tags ??= new Dictionary<string, string>();
             storageAccounts ??= new List<MediaServicesStorageAccount>();
-            privateEndpointConnections ??= new List<MediaServicesPrivateEndpointConnectionData>();
+            privateEndpointConnections ??= new List<MediaMediaServicesPrivateEndpointConnectionData>();
 
             return new MediaServicesAccountPatch(
                 tags,
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Media.Models
             return new EdgeUsageDataEventHub(name, @namespace, token, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Media.MediaServicesPrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Media.MediaMediaServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Media.MediaServicesPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static MediaServicesPrivateLinkResourceData MediaServicesPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Media.MediaMediaServicesPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static MediaMediaServicesPrivateLinkResourceData MediaMediaServicesPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new MediaServicesPrivateLinkResourceData(
+            return new MediaMediaServicesPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,

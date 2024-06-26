@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            HybridContainerServiceExtendedLocationType? type = default;
+            ExtendedLocationType? type = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    type = new HybridContainerServiceExtendedLocationType(property.Value.GetString());
+                    type = new ExtendedLocationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

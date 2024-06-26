@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the RouteFilter data model.
     /// Route Filter Resource.
     /// </summary>
-    public partial class RouteFilterData : NetworkTrackedResourceData
+    public partial class RouteFilterData : NetworkNetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="RouteFilterData"/>. </summary>
         public RouteFilterData()

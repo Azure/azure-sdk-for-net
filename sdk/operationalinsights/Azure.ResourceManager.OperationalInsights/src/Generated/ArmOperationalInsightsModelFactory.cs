@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
         /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
-        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? retentionInDays = null, int? totalRetentionInDays = null, int? archiveRetentionInDays = null, OperationalInsightsTableSearchResults searchResults = null, OperationalInsightsTableRestoredLogs restoredLogs = null, OperationalInsightsTableResultStatistics resultStatistics = null, OperationalInsightsTablePlan? plan = null, string lastPlanModifiedDate = null, OperationalInsightsSchema schema = null, OperationalInsightsTableProvisioningState? provisioningState = null, bool? isRetentionInDaysAsDefault = null, bool? isTotalRetentionInDaysAsDefault = null)
+        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? retentionInDays = null, int? totalRetentionInDays = null, int? archiveRetentionInDays = null, OperationalInsightsTableSearchResults searchResults = null, OperationalInsightsOperationalInsightsTableRestoredLogs restoredLogs = null, OperationalInsightsTableResultStatistics resultStatistics = null, OperationalInsightsTablePlan? plan = null, string lastPlanModifiedDate = null, OperationalInsightsSchema schema = null, OperationalInsightsTableProvisioningState? provisioningState = null, bool? isRetentionInDaysAsDefault = null, bool? isTotalRetentionInDaysAsDefault = null)
         {
             return new OperationalInsightsTableData(
                 id,
@@ -663,15 +663,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableRestoredLogs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsOperationalInsightsTableRestoredLogs"/>. </summary>
         /// <param name="startRestoreOn"> The timestamp to start the restore from (UTC). </param>
         /// <param name="endRestoreOn"> The timestamp to end the restore by (UTC). </param>
         /// <param name="sourceTable"> The table to restore data from. </param>
         /// <param name="azureAsyncOperationId"> Search results table async operation id. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsTableRestoredLogs"/> instance for mocking. </returns>
-        public static OperationalInsightsTableRestoredLogs OperationalInsightsTableRestoredLogs(DateTimeOffset? startRestoreOn = null, DateTimeOffset? endRestoreOn = null, string sourceTable = null, Guid? azureAsyncOperationId = null)
+        /// <returns> A new <see cref="Models.OperationalInsightsOperationalInsightsTableRestoredLogs"/> instance for mocking. </returns>
+        public static OperationalInsightsOperationalInsightsTableRestoredLogs OperationalInsightsOperationalInsightsTableRestoredLogs(DateTimeOffset? startRestoreOn = null, DateTimeOffset? endRestoreOn = null, string sourceTable = null, Guid? azureAsyncOperationId = null)
         {
-            return new OperationalInsightsTableRestoredLogs(startRestoreOn, endRestoreOn, sourceTable, azureAsyncOperationId, serializedAdditionalRawData: null);
+            return new OperationalInsightsOperationalInsightsTableRestoredLogs(startRestoreOn, endRestoreOn, sourceTable, azureAsyncOperationId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsTableResultStatistics"/>. </summary>

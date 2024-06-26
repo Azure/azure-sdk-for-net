@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<AppServicePrivateLinkResourceData> value = default;
+            IReadOnlyList<AppServiceAppServicePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AppServicePrivateLinkResourceData> array = new List<AppServicePrivateLinkResourceData>();
+                    List<AppServiceAppServicePrivateLinkResourceData> array = new List<AppServiceAppServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData(item, options));
+                        array.Add(AppServiceAppServicePrivateLinkResourceData.DeserializeAppServiceAppServicePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

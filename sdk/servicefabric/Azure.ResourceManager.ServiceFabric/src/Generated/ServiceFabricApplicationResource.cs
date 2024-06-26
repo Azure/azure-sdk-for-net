@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.ServiceFabric
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServiceFabricServiceResources in the ServiceFabricApplication. </summary>
-        /// <returns> An object representing collection of ServiceFabricServiceResources and their operations over a ServiceFabricServiceResource. </returns>
-        public virtual ServiceFabricServiceCollection GetServiceFabricServices()
+        /// <summary> Gets a collection of ServiceFabricServiceFabricServiceResources in the ServiceFabricApplication. </summary>
+        /// <returns> An object representing collection of ServiceFabricServiceFabricServiceResources and their operations over a ServiceFabricServiceFabricServiceResource. </returns>
+        public virtual ServiceFabricServiceFabricServiceCollection GetServiceFabricServiceFabricServices()
         {
-            return GetCachedClient(client => new ServiceFabricServiceCollection(client, Id));
+            return GetCachedClient(client => new ServiceFabricServiceFabricServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricServiceResource"/></description>
+        /// <description><see cref="ServiceFabricServiceFabricServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricServiceResource>> GetServiceFabricServiceAsync(string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricServiceFabricServiceResource>> GetServiceFabricServiceFabricServiceAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            return await GetServiceFabricServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceFabricServiceFabricServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricServiceResource"/></description>
+        /// <description><see cref="ServiceFabricServiceFabricServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceFabricServiceResource> GetServiceFabricService(string serviceName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricServiceFabricServiceResource> GetServiceFabricServiceFabricService(string serviceName, CancellationToken cancellationToken = default)
         {
-            return GetServiceFabricServices().Get(serviceName, cancellationToken);
+            return GetServiceFabricServiceFabricServices().Get(serviceName, cancellationToken);
         }
 
         /// <summary>

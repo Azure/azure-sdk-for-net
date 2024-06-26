@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            ResourceHealthAvailabilityStateValue? availabilityState = default;
+            AvailabilityStateValue? availabilityState = default;
             string title = default;
             string summary = default;
             string detailedStatus = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    availabilityState = new ResourceHealthAvailabilityStateValue(property.Value.GetString());
+                    availabilityState = new AvailabilityStateValue(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("title"u8))

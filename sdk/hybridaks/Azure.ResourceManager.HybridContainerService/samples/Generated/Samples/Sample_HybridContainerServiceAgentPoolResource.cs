@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             // invoke the operation
             HybridContainerServiceAgentPoolData data = new HybridContainerServiceAgentPoolData()
             {
-                OSType = HybridContainerServiceOSType.Linux,
+                OSType = OSType.Linux,
                 NodeLabels =
 {
 ["env"] = "dev",

@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of <see cref="BotServicePrivateLinkResourceListResult"/>. </summary>
         internal BotServicePrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<BotServicePrivateLinkResourceData>();
+            Value = new ChangeTrackingList<BotServiceBotServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BotServicePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotServicePrivateLinkResourceListResult(IReadOnlyList<BotServicePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotServicePrivateLinkResourceListResult(IReadOnlyList<BotServiceBotServicePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<BotServicePrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<BotServiceBotServicePrivateLinkResourceData> Value { get; }
     }
 }

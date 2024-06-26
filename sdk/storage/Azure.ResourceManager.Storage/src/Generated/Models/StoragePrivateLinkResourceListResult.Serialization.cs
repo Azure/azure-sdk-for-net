@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            IReadOnlyList<StoragePrivateLinkResourceData> value = default;
+            IReadOnlyList<StorageStoragePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    List<StoragePrivateLinkResourceData> array = new List<StoragePrivateLinkResourceData>();
+                    List<StorageStoragePrivateLinkResourceData> array = new List<StorageStoragePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePrivateLinkResourceData.DeserializeStoragePrivateLinkResourceData(item, options));
+                        array.Add(StorageStoragePrivateLinkResourceData.DeserializeStorageStoragePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StoragePrivateLinkResourceListResult(value ?? new ChangeTrackingList<StoragePrivateLinkResourceData>(), serializedAdditionalRawData);
+            return new StoragePrivateLinkResourceListResult(value ?? new ChangeTrackingList<StorageStoragePrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

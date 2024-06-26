@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
     /// A class representing a collection of <see cref="MySqlFlexibleServerAadAdministratorResource"/> and their operations.
-    /// Each <see cref="MySqlFlexibleServerAadAdministratorResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
-    /// To get a <see cref="MySqlFlexibleServerAadAdministratorCollection"/> instance call the GetMySqlFlexibleServerAadAdministrators method from an instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// Each <see cref="MySqlFlexibleServerAadAdministratorResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/>.
+    /// To get a <see cref="MySqlFlexibleServerAadAdministratorCollection"/> instance call the GetMySqlFlexibleServerAadAdministrators method from an instance of <see cref="MySqlFlexibleServersMySqlFlexibleServerResource"/>.
     /// </summary>
     public partial class MySqlFlexibleServerAadAdministratorCollection : ArmCollection, IEnumerable<MySqlFlexibleServerAadAdministratorResource>, IAsyncEnumerable<MySqlFlexibleServerAadAdministratorResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
+            if (id.ResourceType != MySqlFlexibleServersMySqlFlexibleServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServersMySqlFlexibleServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>

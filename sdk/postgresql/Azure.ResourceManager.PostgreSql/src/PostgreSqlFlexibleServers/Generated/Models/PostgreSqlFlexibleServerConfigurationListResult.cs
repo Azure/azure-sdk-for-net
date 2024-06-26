@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerConfigurationListResult"/>. </summary>
         internal PostgreSqlFlexibleServerConfigurationListResult()
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerConfigurationData>();
+            Value = new ChangeTrackingList<PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of server configurations. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerConfigurationListResult(IReadOnlyList<PostgreSqlFlexibleServerConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerConfigurationListResult(IReadOnlyList<PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The list of server configurations. </summary>
-        public IReadOnlyList<PostgreSqlFlexibleServerConfigurationData> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServersPostgreSqlFlexibleServerConfigurationData> Value { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }

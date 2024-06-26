@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public RedisEnterpriseClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterPatch"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified RedisEnterprise cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseClusterPatch(RedisEnterpriseRedisEnterpriseSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The SKU to create, which affects price, performance, and features. </summary>
-        public RedisEnterpriseSku Sku { get; set; }
+        public RedisEnterpriseRedisEnterpriseSku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
@@ -111,6 +111,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Version of redis the cluster supports, e.g. '6'. </summary>
         public string RedisVersion { get; }
         /// <summary> List of private endpoint connections associated with the specified RedisEnterprise cluster. </summary>
-        public IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<RedisEnterpriseRedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

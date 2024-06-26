@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            IReadOnlyList<ContainerServicePrivateLinkResourceData> value = default;
+            IReadOnlyList<ContainerServiceContainerServicePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
+                    List<ContainerServiceContainerServicePrivateLinkResourceData> array = new List<ContainerServiceContainerServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item, options));
+                        array.Add(ContainerServiceContainerServicePrivateLinkResourceData.DeserializeContainerServiceContainerServicePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerServicePrivateLinkResourcesListResult(value ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>(), serializedAdditionalRawData);
+            return new ContainerServicePrivateLinkResourcesListResult(value ?? new ChangeTrackingList<ContainerServiceContainerServicePrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateLinkResourcesListResult>.Write(ModelReaderWriterOptions options)

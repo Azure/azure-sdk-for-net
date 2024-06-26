@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageListResult"/>. </summary>
         internal ServiceAccountUsageListResult()
         {
-            Value = new ChangeTrackingList<ServiceAccountUsage>();
+            Value = new ChangeTrackingList<CognitiveServicesServiceAccountUsage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Usages. </param>
         /// <param name="value"> The list of usages for Cognitive Service account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountUsageListResult(string nextLink, IReadOnlyList<ServiceAccountUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceAccountUsageListResult(string nextLink, IReadOnlyList<CognitiveServicesServiceAccountUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string NextLink { get; }
         /// <summary> The list of usages for Cognitive Service account. </summary>
         [WirePath("value")]
-        public IReadOnlyList<ServiceAccountUsage> Value { get; }
+        public IReadOnlyList<CognitiveServicesServiceAccountUsage> Value { get; }
     }
 }

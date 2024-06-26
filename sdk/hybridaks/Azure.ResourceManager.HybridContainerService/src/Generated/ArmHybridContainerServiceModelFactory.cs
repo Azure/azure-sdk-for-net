@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
         /// <param name="name"> Unique name of the default agent pool in the context of the provisioned cluster. Default value is &lt;clusterName&gt;-nodepool1. </param>
         /// <returns> A new <see cref="Models.HybridContainerServiceNamedAgentPoolProfile"/> instance for mocking. </returns>
-        public static HybridContainerServiceNamedAgentPoolProfile HybridContainerServiceNamedAgentPoolProfile(HybridContainerServiceOSType? osType = null, HybridContainerServiceOSSku? osSku = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, int? maxCount = null, int? minCount = null, bool? enableAutoScaling = null, int? maxPods = null, int? count = null, string vmSize = null, string kubernetesVersion = null, string name = null)
+        public static HybridContainerServiceNamedAgentPoolProfile HybridContainerServiceNamedAgentPoolProfile(OSType? osType = null, HybridContainerServiceOSSku? osSku = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, int? maxCount = null, int? minCount = null, bool? enableAutoScaling = null, int? maxPods = null, int? count = null, string vmSize = null, string kubernetesVersion = null, string name = null)
         {
             nodeLabels ??= new Dictionary<string, string>();
             nodeTaints ??= new List<string>();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="upgrades"> List of available kubernetes versions for upgrade. </param>
         /// <returns> A new <see cref="Models.ProvisionedClusterPoolUpgradeProfile"/> instance for mocking. </returns>
-        public static ProvisionedClusterPoolUpgradeProfile ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion = null, HybridContainerServiceOSType? osType = null, IEnumerable<ProvisionedClusterPoolUpgradeProfileProperties> upgrades = null)
+        public static ProvisionedClusterPoolUpgradeProfile ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion = null, OSType? osType = null, IEnumerable<ProvisionedClusterPoolUpgradeProfileProperties> upgrades = null)
         {
             upgrades ??= new List<ProvisionedClusterPoolUpgradeProfileProperties>();
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="provisioningState"> The status of the latest long running operation for the agent pool. </param>
         /// <param name="status"> The observed status of the agent pool. </param>
         /// <returns> A new <see cref="HybridContainerService.HybridContainerServiceAgentPoolData"/> instance for mocking. </returns>
-        public static HybridContainerServiceAgentPoolData HybridContainerServiceAgentPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, HybridContainerServiceExtendedLocation extendedLocation = null, HybridContainerServiceOSType? osType = null, HybridContainerServiceOSSku? osSku = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, int? maxCount = null, int? minCount = null, bool? enableAutoScaling = null, int? maxPods = null, int? count = null, string vmSize = null, string kubernetesVersion = null, HybridContainerServiceResourceProvisioningState? provisioningState = null, AgentPoolProvisioningStatus status = null)
+        public static HybridContainerServiceAgentPoolData HybridContainerServiceAgentPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, HybridContainerServiceExtendedLocation extendedLocation = null, OSType? osType = null, HybridContainerServiceOSSku? osSku = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, int? maxCount = null, int? minCount = null, bool? enableAutoScaling = null, int? maxPods = null, int? count = null, string vmSize = null, string kubernetesVersion = null, HybridContainerServiceResourceProvisioningState? provisioningState = null, AgentPoolProvisioningStatus status = null)
         {
             tags ??= new Dictionary<string, string>();
             nodeLabels ??= new Dictionary<string, string>();
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="ready"> Whether the kubernetes version image is ready or not. </param>
         /// <param name="errorMessage"> The error message for version not being ready. </param>
         /// <returns> A new <see cref="Models.KubernetesVersionReadiness"/> instance for mocking. </returns>
-        public static KubernetesVersionReadiness KubernetesVersionReadiness(HybridContainerServiceOSType? osType = null, HybridContainerServiceOSSku? osSku = null, bool? ready = null, string errorMessage = null)
+        public static KubernetesVersionReadiness KubernetesVersionReadiness(OSType? osType = null, HybridContainerServiceOSSku? osSku = null, bool? ready = null, string errorMessage = null)
         {
             return new KubernetesVersionReadiness(osType, osSku, ready, errorMessage, serializedAdditionalRawData: null);
         }

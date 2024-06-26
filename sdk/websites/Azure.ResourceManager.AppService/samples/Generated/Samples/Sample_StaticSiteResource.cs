@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteResource staticSite = client.GetStaticSiteResource(staticSiteResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AppServicePrivateLinkResourceData item in staticSite.GetPrivateLinkResourcesAsync())
+            await foreach (AppServiceAppServicePrivateLinkResourceData item in staticSite.GetPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

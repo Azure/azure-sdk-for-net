@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the NetworkProfile data model.
     /// Network profile resource.
     /// </summary>
-    public partial class NetworkProfileData : NetworkTrackedResourceData
+    public partial class NetworkProfileData : NetworkNetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkProfileData"/>. </summary>
         public NetworkProfileData()

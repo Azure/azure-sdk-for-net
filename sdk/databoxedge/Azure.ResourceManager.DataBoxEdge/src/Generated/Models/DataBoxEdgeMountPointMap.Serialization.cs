@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier roleId = default;
             string mountPoint = default;
             DataBoxEdgeMountType? mountType = default;
-            DataBoxEdgeRoleType? roleType = default;
+            RoleType? roleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    roleType = new DataBoxEdgeRoleType(property.Value.GetString());
+                    roleType = new RoleType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

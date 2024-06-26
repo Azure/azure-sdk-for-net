@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
         /// <returns> A new <see cref="Models.InstanceViewStatus"/> instance for mocking. </returns>
-        public static InstanceViewStatus InstanceViewStatus(string code = null, HciStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
+        public static InstanceViewStatus InstanceViewStatus(string code = null, StatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
         {
             return new InstanceViewStatus(
                 code,
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
         /// <returns> A new <see cref="Models.ExtensionInstanceViewStatus"/> instance for mocking. </returns>
-        public static ExtensionInstanceViewStatus ExtensionInstanceViewStatus(string code = null, HciStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
+        public static ExtensionInstanceViewStatus ExtensionInstanceViewStatus(string code = null, StatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
         {
             return new ExtensionInstanceViewStatus(
                 code,
