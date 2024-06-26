@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿ // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Reflection;
@@ -28,8 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     public static class OpenTelemetryBuilderExtensions
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
-
-        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
 
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
@@ -135,39 +133,24 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             builder.WithLogging(
                     logging => logging.AddProcessor(sp =>
                     {
-                        bool enableLogSampling = false;
-                        try
-                        {
-                            var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
-                            bool.TryParse(enableLogSamplingEnvVar, out enableLogSampling);
-                        }
-                        catch (Exception ex)
-                        {
-                            AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
-                        }
-
                         var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().CurrentValue;
                         var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
                         azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
 
                         var exporter = new AzureMonitorLogExporter(azureMonitorExporterOptions);
-                        var logProcessor = enableLogSampling
-                            ? new LogFilteringProcessor(exporter)
-                            : new BatchLogRecordExportProcessor(exporter);
 
                         if (azureMonitorOptions.EnableLiveMetrics)
                         {
                             var manager = sp.GetRequiredService<Manager>();
-                            var liveMetricsProcessor = new LiveMetricsLogProcessor(manager);
 
                             return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
                             {
-                                liveMetricsProcessor,
-                                logProcessor
+                                new LiveMetricsLogProcessor(manager),
+                                new BatchLogRecordExportProcessor(exporter)
                             });
                         }
 
-                        return logProcessor;
+                        return new BatchLogRecordExportProcessor(exporter);
                     }),
                     options => options.IncludeFormattedMessage = true);
 
