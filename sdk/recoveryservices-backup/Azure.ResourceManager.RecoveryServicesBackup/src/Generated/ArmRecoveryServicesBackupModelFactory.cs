@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupResourceConfigResource properties. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceConfigData"/> instance for mocking. </returns>
-        public static BackupResourceConfigData BackupResourceConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupResourceConfigProperties properties = null, ETag? etag = null)
+        public static BackupResourceConfigData BackupResourceConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupResourceConfigProperties properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -116,9 +116,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupGenericProtectionIntent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadSqlAutoProtectionIntent"/> and <see cref="RecoveryServiceVaultProtectionIntent"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/> instance for mocking. </returns>
-        public static BackupProtectionIntentData BackupProtectionIntentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericProtectionIntent properties = null, ETag? etag = null)
+        public static BackupProtectionIntentData BackupProtectionIntentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericProtectionIntent properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupResourceVaultConfigResource properties. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceVaultConfigData"/> instance for mocking. </returns>
-        public static BackupResourceVaultConfigData BackupResourceVaultConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupResourceVaultConfigProperties properties = null, ETag? etag = null)
+        public static BackupResourceVaultConfigData BackupResourceVaultConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupResourceVaultConfigProperties properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupResourceEncryptionConfigExtendedResource properties. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedData"/> instance for mocking. </returns>
-        public static BackupResourceEncryptionConfigExtendedData BackupResourceEncryptionConfigExtendedData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupResourceEncryptionConfigExtendedProperties properties = null, ETag? etag = null)
+        public static BackupResourceEncryptionConfigExtendedData BackupResourceEncryptionConfigExtendedData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupResourceEncryptionConfigExtendedProperties properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupResourceEncryptionConfigResource properties. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.BackupResourceEncryptionConfigExtendedCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static BackupResourceEncryptionConfigExtendedCreateOrUpdateContent BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupResourceEncryptionConfig properties = null, ETag? etag = null)
+        public static BackupResourceEncryptionConfigExtendedCreateOrUpdateContent BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupResourceEncryptionConfig properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -249,9 +249,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> PrivateEndpointConnectionResource properties. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupPrivateEndpointConnectionProperties properties = null, ETag? etag = null)
+        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupPrivateEndpointConnectionProperties properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -324,9 +324,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="Models.BackupGenericProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.FileshareProtectedItem"/>, <see cref="Models.IaasVmProtectedItem"/>, <see cref="Models.VmWorkloadProtectedItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="Models.DpmProtectedItem"/>, <see cref="Models.GenericProtectedItem"/>, <see cref="Models.MabFileFolderProtectedItem"/>, <see cref="Models.IaasClassicComputeVmProtectedItem"/>, <see cref="Models.IaasComputeVmProtectedItem"/> and <see cref="Models.SqlProtectedItem"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
-        public static BackupProtectedItemData BackupProtectedItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericProtectedItem properties = null, ETag? etag = null)
+        public static BackupProtectedItemData BackupProtectedItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericProtectedItem properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupGenericRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/> and <see cref="IaasVmRecoveryPoint"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/> instance for mocking. </returns>
-        public static BackupRecoveryPointData BackupRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericRecoveryPoint properties = null, ETag? etag = null)
+        public static BackupRecoveryPointData BackupRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericRecoveryPoint properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -432,9 +432,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="RestoreContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareRestoreContent"/>, <see cref="WorkloadPointInTimeRestoreContent"/>, <see cref="WorkloadRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSapHanaRestoreContent"/>, <see cref="WorkloadSapHanaRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlPointInTimeRestoreContent"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlRestoreContent"/>, <see cref="WorkloadSqlRestoreWithRehydrateContent"/>, <see cref="IaasVmRestoreContent"/> and <see cref="IaasVmRestoreWithRehydrationContent"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.TriggerRestoreContent"/> instance for mocking. </returns>
-        public static TriggerRestoreContent TriggerRestoreContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RestoreContent properties = null, ETag? etag = null)
+        public static TriggerRestoreContent TriggerRestoreContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RestoreContent properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -462,9 +462,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupGenericProtectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="VmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/> instance for mocking. </returns>
-        public static BackupProtectionPolicyData BackupProtectionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericProtectionPolicy properties = null, ETag? etag = null)
+        public static BackupProtectionPolicyData BackupProtectionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericProtectionPolicy properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -492,9 +492,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupGenericJob"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/> and <see cref="VaultBackupJob"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupJobData"/> instance for mocking. </returns>
-        public static BackupJobData BackupJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericJob properties = null, ETag? etag = null)
+        public static BackupJobData BackupJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericJob properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -522,9 +522,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupGenericEngine"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupEngineData"/> instance for mocking. </returns>
-        public static BackupEngineData BackupEngineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericEngine properties = null, ETag? etag = null)
+        public static BackupEngineData BackupEngineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericEngine properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -552,9 +552,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="ProtectableContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageProtectableContainer"/> and <see cref="VmAppContainerProtectableContainer"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.ProtectableContainerResource"/> instance for mocking. </returns>
-        public static ProtectableContainerResource ProtectableContainerResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProtectableContainer properties = null, ETag? etag = null)
+        public static ProtectableContainerResource ProtectableContainerResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProtectableContainer properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -582,9 +582,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupGenericProtectionContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BackupServerContainer"/>, <see cref="SqlContainer"/>, <see cref="WorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/> instance for mocking. </returns>
-        public static BackupProtectionContainerData BackupProtectionContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericProtectionContainer properties = null, ETag? etag = null)
+        public static BackupProtectionContainerData BackupProtectionContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupGenericProtectionContainer properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -612,9 +612,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="WorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VmWorkloadItem"/>, <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="VmWorkloadSqlDatabaseWorkloadItem"/> and <see cref="VmWorkloadSqlInstanceWorkloadItem"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadItemResource"/> instance for mocking. </returns>
-        public static WorkloadItemResource WorkloadItemResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkloadItem properties = null, ETag? etag = null)
+        public static WorkloadItemResource WorkloadItemResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkloadItem properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -642,9 +642,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="BackupContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareBackupContent"/>, <see cref="WorkloadBackupContent"/> and <see cref="IaasVmBackupContent"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.TriggerBackupContent"/> instance for mocking. </returns>
-        public static TriggerBackupContent TriggerBackupContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupContent properties = null, ETag? etag = null)
+        public static TriggerBackupContent TriggerBackupContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BackupContent properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -672,9 +672,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="IlrContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareProvisionIlrContent"/> and <see cref="IaasVmIlrRegistrationContent"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.ProvisionIlrConnectionContent"/> instance for mocking. </returns>
-        public static ProvisionIlrConnectionContent ProvisionIlrConnectionContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IlrContent properties = null, ETag? etag = null)
+        public static ProvisionIlrConnectionContent ProvisionIlrConnectionContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IlrContent properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -702,9 +702,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
         /// </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>
-        public static WorkloadProtectableItemResource WorkloadProtectableItemResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkloadProtectableItem properties = null, ETag? etag = null)
+        public static WorkloadProtectableItemResource WorkloadProtectableItemResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkloadProtectableItem properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -738,9 +738,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/> instance for mocking. </returns>
-        public static ResourceGuardProxyData ResourceGuardProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceGuardProxyProperties properties = null, ETag? etag = null)
+        public static ResourceGuardProxyData ResourceGuardProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceGuardProxyProperties properties = null, ETag? eTag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 location,
                 properties,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 

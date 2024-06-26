@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.DataFactory
         /// Please note <see cref="DataFactoryCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataFactoryManagedIdentityCredentialProperties"/> and <see cref="ServicePrincipalCredential"/>.
         /// </param>
-        /// <param name="etag"> Etag identifies change in the resource. </param>
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryServiceCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryCredential properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataFactoryServiceCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryCredential properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ETag = etag;
+            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

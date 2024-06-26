@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <summary> Initializes a new instance of <see cref="MultiContextAndPlansContent"/>. </summary>
         /// <param name="offerId"> The offer ID which contains the plans. </param>
-        /// <param name="etag"> The offer's eTag. </param>
+        /// <param name="eTag"> The offer's eTag. </param>
         /// <param name="plansContext"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MultiContextAndPlansContent(string offerId, ETag? etag, IList<ContextAndPlansDetails> plansContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MultiContextAndPlansContent(string offerId, ETag? eTag, IList<ContextAndPlansDetails> plansContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OfferId = offerId;
-            ETag = etag;
+            ETag = eTag;
             PlansContext = plansContext;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }

@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Marketplace
             string uniqueOfferId = default;
             string offerDisplayName = default;
             string publisherDisplayName = default;
-            ETag? etag = default;
+            ETag? eTag = default;
             Guid? privateStoreId = default;
             DateTimeOffset? createdAt = default;
             DateTimeOffset? modifiedAt = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Marketplace
                             {
                                 continue;
                             }
-                            etag = new ETag(property0.Value.GetString());
+                            eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateStoreId"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Marketplace
                 uniqueOfferId,
                 offerDisplayName,
                 publisherDisplayName,
-                etag,
+                eTag,
                 privateStoreId,
                 createdAt,
                 modifiedAt,

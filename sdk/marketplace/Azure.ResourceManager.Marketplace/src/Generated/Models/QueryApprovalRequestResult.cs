@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of <see cref="QueryApprovalRequestResult"/>. </summary>
         /// <param name="uniqueOfferId"> Gets or sets unique offer id. </param>
         /// <param name="plansDetails"> Gets or sets the plans details. </param>
-        /// <param name="etag"> Gets or sets e-tag field. </param>
+        /// <param name="eTag"> Gets or sets e-tag field. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryApprovalRequestResult(string uniqueOfferId, IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails, ETag? etag, long? messageCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QueryApprovalRequestResult(string uniqueOfferId, IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails, ETag? eTag, long? messageCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UniqueOfferId = uniqueOfferId;
             PlansDetails = plansDetails;
-            ETag = etag;
+            ETag = eTag;
             MessageCode = messageCode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }

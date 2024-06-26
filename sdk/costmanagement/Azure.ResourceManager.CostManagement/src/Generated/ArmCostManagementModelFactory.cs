@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. Note: this option is currently available only for Microsoft Customer Agreement commerce scopes. </param>
         /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
         /// <param name="schedule"> Has schedule information for the export. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementExportData"/> instance for mocking. </returns>
-        public static CostManagementExportData CostManagementExportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExportFormatType? format = null, ExportDeliveryDestination deliveryInfoDestination = null, ExportDefinition definition = null, IEnumerable<ExportRun> runHistoryValue = null, bool? partitionData = null, DateTimeOffset? nextRunTimeEstimate = null, ExportSchedule schedule = null, ETag? etag = null)
+        public static CostManagementExportData CostManagementExportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExportFormatType? format = null, ExportDeliveryDestination deliveryInfoDestination = null, ExportDefinition definition = null, IEnumerable<ExportRun> runHistoryValue = null, bool? partitionData = null, DateTimeOffset? nextRunTimeEstimate = null, ExportSchedule schedule = null, ETag? eTag = null)
         {
             runHistoryValue ??= new List<ExportRun>();
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 partitionData,
                 nextRunTimeEstimate,
                 schedule,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="fileName"> The name of the exported file. </param>
         /// <param name="runSettings"> The export settings that were in effect for this run. </param>
         /// <param name="error"> The details of any error. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ExportRun"/> instance for mocking. </returns>
-        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExportRunExecutionType? executionType = null, ExportRunExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? etag = null)
+        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExportRunExecutionType? executionType = null, ExportRunExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
         {
             return new ExportRun(
                 id,
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 fileName,
                 runSettings,
                 error,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="timePeriod"> Has time period for pulling data for the report. </param>
         /// <param name="dataSet"> Has definition for data in this report config. </param>
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementViewData"/> instance for mocking. </returns>
-        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, ResourceIdentifier scope = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string dateRange = null, string currency = null, ViewChartType? chart = null, AccumulatedType? accumulated = null, ViewMetricType? metric = null, IEnumerable<ViewKpiProperties> kpis = null, IEnumerable<ViewPivotProperties> pivots = null, ViewReportType? typePropertiesQueryType = null, ReportTimeframeType? timeframe = null, ReportConfigTimePeriod timePeriod = null, ReportConfigDataset dataSet = null, bool? includeMonetaryCommitment = null, ETag? etag = null)
+        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, ResourceIdentifier scope = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string dateRange = null, string currency = null, ViewChartType? chart = null, AccumulatedType? accumulated = null, ViewMetricType? metric = null, IEnumerable<ViewKpiProperties> kpis = null, IEnumerable<ViewPivotProperties> pivots = null, ViewReportType? typePropertiesQueryType = null, ReportTimeframeType? timeframe = null, ReportConfigTimePeriod timePeriod = null, ReportConfigDataset dataSet = null, bool? includeMonetaryCommitment = null, ETag? eTag = null)
         {
             kpis ??= new List<ViewKpiProperties>();
             pivots ??= new List<ViewPivotProperties>();
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 timePeriod,
                 dataSet,
                 includeMonetaryCommitment,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
         /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementAlertData"/> instance for mocking. </returns>
-        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? closeOn = null, DateTimeOffset? modifiedOn = null, string statusModificationUserName = null, DateTimeOffset? statusModifiedOn = null, ETag? etag = null)
+        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? closeOn = null, DateTimeOffset? modifiedOn = null, string statusModificationUserName = null, DateTimeOffset? statusModifiedOn = null, ETag? eTag = null)
         {
             return new CostManagementAlertData(
                 id,
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 modifiedOn,
                 statusModificationUserName,
                 statusModifiedOn,
-                etag,
+                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -384,10 +384,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="rows"> Array of rows. </param>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="sku"> SKU of the resource. </param>
-        /// <param name="etag"> ETag of the resource. </param>
+        /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ForecastResult"/> instance for mocking. </returns>
-        public static ForecastResult ForecastResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nextLink = null, IEnumerable<ForecastColumn> columns = null, IEnumerable<IList<BinaryData>> rows = null, AzureLocation? location = null, string sku = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static ForecastResult ForecastResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nextLink = null, IEnumerable<ForecastColumn> columns = null, IEnumerable<IList<BinaryData>> rows = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             columns ??= new List<ForecastColumn>();
             rows ??= new List<IList<BinaryData>>();
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 rows?.ToList(),
                 location,
                 sku,
-                etag,
+                eTag,
                 tags,
                 serializedAdditionalRawData: null);
         }
@@ -433,10 +433,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="sku"> SKU of the resource. </param>
-        /// <param name="etag"> ETag of the resource. </param>
+        /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.CostManagementDimension"/> instance for mocking. </returns>
-        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? isFilterEnabled = null, bool? isGroupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? isFilterEnabled = null, bool? isGroupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             data ??= new List<string>();
             tags ??= new Dictionary<string, string>();
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 nextLink,
                 location,
                 sku,
-                etag,
+                eTag,
                 tags,
                 serializedAdditionalRawData: null);
         }
@@ -483,10 +483,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="rows"> Array of rows. </param>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="sku"> SKU of the resource. </param>
-        /// <param name="etag"> ETag of the resource. </param>
+        /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.QueryResult"/> instance for mocking. </returns>
-        public static QueryResult QueryResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nextLink = null, IEnumerable<QueryColumn> columns = null, IEnumerable<IList<BinaryData>> rows = null, AzureLocation? location = null, string sku = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static QueryResult QueryResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nextLink = null, IEnumerable<QueryColumn> columns = null, IEnumerable<IList<BinaryData>> rows = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             columns ??= new List<QueryColumn>();
             rows ??= new List<IList<BinaryData>>();
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 rows?.ToList(),
                 location,
                 sku,
-                etag,
+                eTag,
                 tags,
                 serializedAdditionalRawData: null);
         }
@@ -549,10 +549,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="scope"> Cost Management scope like 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
         /// <param name="status"> Status of the scheduled action. </param>
         /// <param name="viewId"> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </param>
-        /// <param name="etag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </param>
+        /// <param name="eTag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </param>
         /// <param name="kind"> Kind of the scheduled action. </param>
         /// <returns> A new <see cref="CostManagement.ScheduledActionData"/> instance for mocking. </returns>
-        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<ScheduledActionFileFormat> fileFormats = null, NotificationProperties notification = null, string notificationEmail = null, ScheduleProperties schedule = null, ResourceIdentifier scope = null, ScheduledActionStatus? status = null, ResourceIdentifier viewId = null, ETag? etag = null, ScheduledActionKind? kind = null)
+        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<ScheduledActionFileFormat> fileFormats = null, NotificationProperties notification = null, string notificationEmail = null, ScheduleProperties schedule = null, ResourceIdentifier scope = null, ScheduledActionStatus? status = null, ResourceIdentifier viewId = null, ETag? eTag = null, ScheduledActionKind? kind = null)
         {
             fileFormats ??= new List<ScheduledActionFileFormat>();
 
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 scope,
                 status,
                 viewId,
-                etag,
+                eTag,
                 kind,
                 serializedAdditionalRawData: null);
         }

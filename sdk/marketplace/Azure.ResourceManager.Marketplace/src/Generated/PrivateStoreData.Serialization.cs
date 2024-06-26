@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Marketplace
             SystemData systemData = default;
             PrivateStoreAvailability? availability = default;
             Guid? privateStoreId = default;
-            ETag? etag = default;
+            ETag? eTag = default;
             string privateStoreName = default;
             Guid? tenantId = default;
             bool? isGov = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Marketplace
                             {
                                 continue;
                             }
-                            etag = new ETag(property0.Value.GetString());
+                            eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateStoreName"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Marketplace
                 systemData,
                 availability,
                 privateStoreId,
-                etag,
+                eTag,
                 privateStoreName,
                 tenantId,
                 isGov,

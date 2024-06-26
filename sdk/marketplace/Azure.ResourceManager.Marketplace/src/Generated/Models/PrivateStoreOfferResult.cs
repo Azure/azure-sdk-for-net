@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="uniqueOfferId"> Offers unique id. </param>
         /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
-        /// <param name="etag"> Identifier for purposes of race condition. </param>
+        /// <param name="eTag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreId"> Private store unique id. </param>
         /// <param name="createdOn"> Private store offer creation date. </param>
         /// <param name="modifiedOn"> Private store offer modification date. </param>
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? etag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
             PublisherDisplayName = publisherDisplayName;
-            ETag = etag;
+            ETag = eTag;
             PrivateStoreId = privateStoreId;
             CreatedOn = createdOn;
             ModifiedOn = modifiedOn;

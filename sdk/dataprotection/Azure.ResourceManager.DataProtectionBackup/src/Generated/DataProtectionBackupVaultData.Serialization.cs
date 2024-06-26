@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
             DataProtectionBackupVaultProperties properties = default;
             ManagedServiceIdentity identity = default;
-            ETag? etag = default;
+            ETag? eTag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 location,
                 properties,
                 identity,
-                etag,
+                eTag,
                 serializedAdditionalRawData);
         }
 
