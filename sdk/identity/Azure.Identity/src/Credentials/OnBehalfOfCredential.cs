@@ -86,6 +86,30 @@ namespace Azure.Identity
             : this(tenantId, clientId, clientSecret, userAssertion, options, null, null)
         { }
 
+        /// <summary>
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified client assertion.
+        /// </summary>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientAssertionCallback">An asynchronous callback returning a valid client assertion used to authenticate the service principal.</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
+        public OnBehalfOfCredential(string tenantId, string clientId, Func<CancellationToken, Task<string>> clientAssertionCallback, string userAssertion, OnBehalfOfCredentialOptions options = null)
+            : this(tenantId, clientId, null, clientAssertionCallback, userAssertion, options, null, null)
+        { }
+
+        /// <summary>
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified client assertion.
+        /// </summary>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientAssertionCallback">A synchronous callback returning a valid client assertion used to authenticate the service principal.</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
+        public OnBehalfOfCredential(string tenantId, string clientId, Func<string> clientAssertionCallback, string userAssertion, OnBehalfOfCredentialOptions options = null)
+            : this(tenantId, clientId, clientAssertionCallback, null, userAssertion, options, null, null)
+        { }
+
         internal OnBehalfOfCredential(
             string tenantId,
             string clientId,
@@ -151,6 +175,35 @@ namespace Azure.Identity
             _clientSecret = clientSecret;
             _userAssertion = new UserAssertion(userAssertion);
             Client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
+
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
+        }
+
+        internal OnBehalfOfCredential(
+            string tenantId,
+            string clientId,
+            Func<string> clientAssertionCallback,
+            Func<CancellationToken, Task<string>> clientAssertionCallbackAsync,
+            string userAssertion,
+            OnBehalfOfCredentialOptions options,
+            CredentialPipeline pipeline,
+            MsalConfidentialClient client)
+        {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+
+            options ??= new OnBehalfOfCredentialOptions();
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
+            _clientId = clientId;
+            _userAssertion = new UserAssertion(userAssertion);
+            Client = client switch
+            {
+                not null => client,
+                _ when clientAssertionCallback is not null => new MsalConfidentialClient(_pipeline, _tenantId, _clientId, clientAssertionCallback, options),
+                _ when clientAssertionCallbackAsync is not null => new MsalConfidentialClient(_pipeline, _tenantId, _clientId, clientAssertionCallbackAsync, options),
+                _ => throw new ArgumentNullException($"nameof(clientAssertionCallback)")
+            };
 
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);

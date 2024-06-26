@@ -3,12 +3,11 @@ parameters:
   ArmTemplateParameters: '@{}'
   DeleteAfterHours: 8
   Location: ''
+  EnvVars: {}
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
   ServiceConnection: not-specified
   ResourceType: test
   UseFederatedAuth: false
-  SubscriptionConfigurationFilePath: ''
-
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -47,6 +46,7 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
         azurePowerShellVersion: LatestVersion
@@ -54,18 +54,9 @@ steps:
         ScriptType: InlineScript
         Inline: |
           eng/common/scripts/Import-AzModules.ps1
-
-          if ('${{ parameters.SubscriptionConfigurationFilePath }}' -ne '') {
-            $subscriptionConfiguration = `
-              Get-Content '${{ parameters.SubscriptionConfigurationFilePath }}' `
-              | ConvertFrom-Json -AsHashtable;
-          } else {
-            # Multiline string termination ('@) needs to be at the beginning
-            # of the line
-            $subscriptionConfiguration = @'
-              ${{ parameters.SubscriptionConfiguration }}
+          $subscriptionConfiguration = @'
+            ${{ parameters.SubscriptionConfiguration }}
           '@ | ConvertFrom-Json -AsHashtable;
-          }
 
           # The subscriptionConfiguration may have ArmTemplateParameters defined, so
           # pass those in via the ArmTemplateParameters flag, and handle any
@@ -84,7 +75,6 @@ steps:
   - ${{ else }}:
     - pwsh: |
         eng/common/scripts/Import-AzModules.ps1
-
         $subscriptionConfiguration = @'
           ${{ parameters.SubscriptionConfiguration }}
         '@ | ConvertFrom-Json -AsHashtable;
@@ -106,3 +96,4 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        ${{ insert }}: ${{ parameters.EnvVars }}
