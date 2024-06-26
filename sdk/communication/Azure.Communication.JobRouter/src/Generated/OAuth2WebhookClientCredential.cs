@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OAuth2WebhookClientCredential"/>. </summary>
-        internal OAuth2WebhookClientCredential()
+        public OAuth2WebhookClientCredential()
         {
         }
 

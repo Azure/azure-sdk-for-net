@@ -116,14 +116,5 @@ namespace Azure.AI.ContentSafety
 
             return new AddOrUpdateTextBlocklistItemsResult(blocklistItems?.ToList(), serializedAdditionalRawData: null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklist"/>. </summary>
-        /// <param name="name"> Text blocklist name. </param>
-        /// <param name="description"> Text blocklist description. </param>
-        /// <returns> A new <see cref="ContentSafety.TextBlocklist"/> instance for mocking. </returns>
-        public static TextBlocklist TextBlocklist(string name = null, string description = null)
-        {
-            return new TextBlocklist(name, description, serializedAdditionalRawData: null);
-        }
     }
 }
