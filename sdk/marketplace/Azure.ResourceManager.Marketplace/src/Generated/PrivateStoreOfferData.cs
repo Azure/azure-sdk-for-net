@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="uniqueOfferId"> Offers unique id. </param>
         /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
-        /// <param name="eTag"> Identifier for purposes of race condition. </param>
+        /// <param name="etag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreId"> Private store unique id. </param>
         /// <param name="createdOn"> Private store offer creation date. </param>
         /// <param name="modifiedOn"> Private store offer modification date. </param>
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IDictionary<string, Uri> iconFileUris, IList<PrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PrivateStoreOfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? etag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IDictionary<string, Uri> iconFileUris, IList<PrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
             PublisherDisplayName = publisherDisplayName;
-            ETag = eTag;
+            ETag = etag;
             PrivateStoreId = privateStoreId;
             CreatedOn = createdOn;
             ModifiedOn = modifiedOn;
