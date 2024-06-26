@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.AI.OpenAI.FineTuning;
 using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
+using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.Core.TestFramework;
 using OpenAI.Chat;
 using OpenAI.Files;
@@ -22,8 +23,6 @@ namespace Azure.AI.OpenAI.Tests;
 
 public class FineTuningTests : AoaiTestBase<FineTuningClient>
 {
-    private const string KEY_FINE_TUNED = "fine_tuned_model";
-
     public FineTuningTests(bool isAsync) : base(isAsync)
     { }
 
@@ -56,10 +55,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     [RecordedTest]
     public async Task CheckpointsFineTuning()
     {
-        string fineTunedModel = TestConfig.GetConfig<FineTuningClient>(KEY_FINE_TUNED)
-                ?.GetValueOrDefault<string>(KEY_FINE_TUNED)!;
-        Assert.That(fineTunedModel, !Is.Null.Or.Empty);
-
+        string fineTunedModel = GetFineTunedModel();
         FineTuningClient client = GetTestClient();
 
         // Check if the model exists by searching all jobs
@@ -94,10 +90,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     [RecordedTest]
     public async Task EventsFineTuning()
     {
-        string fineTunedModel = TestConfig.GetConfig<FineTuningClient>(KEY_FINE_TUNED)
-                ?.GetValueOrDefault<string>(KEY_FINE_TUNED)!;
-        Assert.That(fineTunedModel, !Is.Null.Or.Empty);
-
+        string fineTunedModel = GetFineTunedModel();
         FineTuningClient client = GetTestClient();
 
         // Check if the model exists by searching all jobs
@@ -147,7 +140,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         var fineTuningFile = Assets.FineTuning;
 
         FineTuningClient client = GetTestClient();
-        FileClient fileClient = GetChildTestClient<FileClient>(client);
+        FileClient fileClient = GetTestClientFrom<FileClient>(client);
 
         // upload training data
         OpenAIFileInfo uploadedFile = await UploadAndWaitForCompleteOrFail(fileClient, fineTuningFile.RelativePath);
@@ -155,7 +148,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         // Create the fine tuning job
         using var requestContent = new FineTuningOptions()
         {
-            Model = TestConfig.GetDeploymentNameFor<FineTuningClient>(),
+            Model = client.DeploymentOrThrow(),
             TrainingFile = uploadedFile.Id
         }.ToBinaryContent();
 
@@ -163,7 +156,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         FineTuningJob job = ValidateAndParse<FineTuningJob>(result);
         Assert.That(job.ID, !(Is.Null.Or.Empty));
 
-        using RunOnScopeExit _ = new(async () =>
+        await using RunOnScopeExit _ = new(async () =>
         {
             bool deleted = await DeleteJobAndVerifyAsync(client, job.ID);
             Assert.True(deleted, "Failed to delete fine tuning job: {0}", job.ID);
@@ -202,14 +195,13 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     }
 
     [RecordedTest]
-    [Category("LongRunning")]
-    // CAUTION: This test can take up 30 *minutes* to run in live mode
+    [Category("LongRunning")] // CAUTION: This test can take up 30 *minutes* to run in live mode
     public async Task CreateAndDeleteFineTuning()
     {
         var fineTuningFile = Assets.FineTuning;
 
         FineTuningClient client = GetTestClient();
-        FileClient fileClient = GetChildTestClient<FileClient>(client);
+        FileClient fileClient = GetTestClientFrom<FileClient>(client);
 
         // upload training data
         OpenAIFileInfo uploadedFile = await UploadAndWaitForCompleteOrFail(fileClient, fineTuningFile.RelativePath);
@@ -218,7 +210,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         // Create the fine tuning job
         using var requestContent = new FineTuningOptions()
         {
-            Model = TestConfig.GetDeploymentNameFor<FineTuningClient>(),
+            Model = client.DeploymentOrThrow(),
             TrainingFile = uploadedFile.Id
         }.ToBinaryContent();
 
@@ -239,13 +231,13 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     }
 
     [RecordedTest]
-    [Category("LongRunning")]
-    // CAUTION: This test can take around 10 to 15 *minutes* in live mode to run
+    [Category("LongRunning")] // CAUTION: This test can take around 10 to 15 *minutes* in live mode to run
+    [LiveOnly(Reason = "Some clients are not correctly hooked up to the test proxy yet")]
     public async Task DeployAndChatWithModel()
     {
         AzureDeploymentClient deploymentClient = GetDeploymentModelClient();
         string? deploymentName = null;
-        using RunOnScopeExit _ = new(async () =>
+        await using RunOnScopeExit _ = new(async () =>
         {
             if (deploymentName != null)
             {
@@ -253,10 +245,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             }
         });
 
-        string fineTunedModel = TestConfig.GetConfig<FineTuningClient>(KEY_FINE_TUNED)
-            ?.GetValueOrDefault<string>(KEY_FINE_TUNED)!;
-        Assert.That(fineTunedModel, !Is.Null.Or.Empty);
-
+        string fineTunedModel = GetFineTunedModel();
         FineTuningClient client = GetTestClient();
 
         // Check if the model exists by searching all jobs
@@ -289,10 +278,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.That(deployment.Properties.ProvisioningState, Is.EqualTo("Succeeded"));
 
         // Run a chat completion test
-        AzureOpenAIClient topLevel = new AzureOpenAIClient(
-            TestConfig.GetEndpointFor<FineTuningClient>(),
-            TestConfig.GetApiKeyFor<FineTuningClient>());
-        ChatClient chatClient = InstrumentClient(topLevel.GetChatClient(deploymentName));
+        ChatClient chatClient = GetTestClientFrom<ChatClient>(client, deploymentName);
 
         ChatCompletion completion = await chatClient.CompleteChatAsync(
         [
@@ -326,27 +312,18 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
 
     private AzureDeploymentClient GetDeploymentModelClient()
     {
-        var config = TestConfig.GetConfig<FineTuningClient>("subscription_id", "resource_group")
-            ?? throw new KeyNotFoundException("Could not find any configuration for the client");
+        var config = TestConfig.GetConfig<FineTuningClient>()
+            ?? throw new KeyNotFoundException("Could not find any configuration for the fine tuning client");
         AzureDeploymentClient client = new(config);
         return InstrumentClient(client);
     }
 
-    private Task<T> WaitUntilReturnLast<T>(T initialValue, Func<Task<ClientResult<T>>> getAsync, Predicate<T> stopCondition, TimeSpan? waitTimeBetweenRequests = null, TimeSpan? maxWait = null)
-        => WaitUntilReturnLast(initialValue, new Func<Task<T>>(async () => await getAsync().ConfigureAwait(false)), stopCondition, waitTimeBetweenRequests, maxWait);
-
-    private async Task<T> WaitUntilReturnLast<T>(T initialValue, Func<Task<T>> getAsync, Predicate<T> stopCondition, TimeSpan? waitTimeBetweenRequests = null, TimeSpan? maxWait = null)
+    private string GetFineTunedModel()
     {
-        DateTimeOffset stopTime = DateTimeOffset.Now + (maxWait ?? TimeSpan.FromMinutes(2));
-
-        T result = initialValue;
-        while (!stopCondition(result) && DateTimeOffset.Now < stopTime)
-        {
-            await Task.Delay(waitTimeBetweenRequests ?? TimeSpan.FromSeconds(2)).ConfigureAwait(false);
-            result = result = await getAsync().ConfigureAwait(false);
-        }
-
-        return result;
+        string? model = TestConfig.GetConfig<FineTuningClient>()
+            ?.GetValue<string>("fine_tuned_model");
+        Assert.That(model, !(Is.Null.Or.Empty), "Failed to find the already fine tuned model to use");
+        return model!;
     }
 
     private async Task<OpenAIFileInfo> UploadAndWaitForCompleteOrFail(FileClient fileClient, string path)
@@ -425,7 +402,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             ErrorOptions = ClientErrorBehaviors.NoThrow
         };
 
-        var rawClient = Uninstrument(client);
+        var rawClient = GetOriginal(client);
 
         bool success = false;
         while (DateTimeOffset.Now < stopTime)

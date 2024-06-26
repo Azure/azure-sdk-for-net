@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.Core.TestFramework;
 using OpenAI;
 using OpenAI.Files;
@@ -41,7 +42,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         bool deleted = await client.DeleteVectorStoreAsync(vectorStore);
         Assert.That(deleted, Is.True);
 
-        IReadOnlyList<OpenAIFileInfo> testFiles = await GetNewTestFilesAsync(5);
+        IReadOnlyList<OpenAIFileInfo> testFiles = await GetNewTestFilesAsync(client.GetConfigOrThrow(), 5);
 
         vectorStore = await client.CreateVectorStoreAsync(new VectorStoreCreationOptions()
         {
@@ -145,7 +146,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         VectorStore vectorStore = await client.CreateVectorStoreAsync();
         Validate(vectorStore);
 
-        IReadOnlyList<OpenAIFileInfo> files = await GetNewTestFilesAsync(3);
+        IReadOnlyList<OpenAIFileInfo> files = await GetNewTestFilesAsync(client.GetConfigOrThrow(), 3);
 
         foreach (OpenAIFileInfo file in files)
         {
@@ -188,7 +189,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         VectorStore vectorStore = await client.CreateVectorStoreAsync();
         Validate(vectorStore);
 
-        IReadOnlyList<OpenAIFileInfo> testFiles = await GetNewTestFilesAsync(3);
+        IReadOnlyList<OpenAIFileInfo> testFiles = await GetNewTestFilesAsync(client.GetConfigOrThrow(), 3);
 
         VectorStoreBatchFileJob batchJob = await client.CreateBatchFileJobAsync(vectorStore, testFiles);
         Assert.Multiple(() =>
@@ -198,10 +199,11 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             Assert.That(batchJob.Status, Is.EqualTo(VectorStoreBatchFileJobStatus.InProgress));
         });
 
-        for (int i = 0; i < 10 && (await client.GetBatchFileJobAsync(batchJob)).Value.Status != VectorStoreBatchFileJobStatus.Completed; i++)
-        {
-            Thread.Sleep(500);
-        }
+        batchJob = await WaitUntilReturnLast(
+            batchJob,
+            () => client.GetBatchFileJobAsync(batchJob),
+            b => b.Status != VectorStoreBatchFileJobStatus.InProgress);
+        Assert.That(batchJob.Status, Is.EqualTo(VectorStoreBatchFileJobStatus.Completed));
 
         AsyncPageableCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
             c => c.GetFileAssociations(batchJob),
@@ -220,14 +222,14 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         }
     }
 
-    private async Task<IReadOnlyList<OpenAIFileInfo>> GetNewTestFilesAsync(int count)
+    private async Task<IReadOnlyList<OpenAIFileInfo>> GetNewTestFilesAsync(IConfiguration config, int count)
     {
-        AzureOpenAIClient azureClient = GetTestTopLevelClient(null, new()
+        AzureOpenAIClient azureClient = GetTestTopLevelClient(config, new()
         {
             ShouldOutputRequests = false,
             ShouldOutputResponses = false,
         });
-        FileClient client = InstrumentClient(azureClient.GetFileClient());
+        FileClient client = GetTestClient<FileClient>(azureClient, config);
 
         List<OpenAIFileInfo> files = [];
         for (int i = 0; i < count; i++)

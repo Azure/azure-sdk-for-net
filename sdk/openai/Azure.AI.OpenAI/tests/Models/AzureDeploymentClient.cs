@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -13,32 +14,54 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils;
+using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.Core;
-using Newtonsoft.Json.Linq;
-using OpenAI.FineTuning;
 
 namespace Azure.AI.OpenAI.Tests.Models;
 
 internal class AzureDeploymentClient : IDisposable
 {
+    private const string DEFAULT_API_VERSION = "2023-10-01-preview";
     private const string DEFAULT_SKU_NAME = "standard";
     private const int DEFAULT_CAPACITY = 1;
 
     private HttpClient _client;
-    private TestConfig.Config _config;
     private AccessToken? _cachedAuthToken;
+    private readonly string _subscriptionId;
+    private readonly string _resourceGroup;
+    private readonly string _resourceName;
+    private readonly string _endpointUrl;
+    private readonly string _apiVersion;
 
     protected AzureDeploymentClient()
     {
-        // for Moqing
+        // for mocking
         _client = new();
-        _config = new();
+        _subscriptionId = _resourceGroup = _resourceName = _endpointUrl = string.Empty;
+        _apiVersion = DEFAULT_API_VERSION;
     }
 
-    public AzureDeploymentClient(TestConfig.Config config)
+    public AzureDeploymentClient(IConfiguration config, string? apiVersion = null)
     {
+        if (config == null)
+        {
+            throw new ArgumentNullException(nameof(config));
+        }
+
         _client = new();
-        _config = config ?? throw new ArgumentNullException(nameof(config));
+
+        _subscriptionId = config.GetValueOrThrow<string>("subscription_id");
+        _resourceGroup = config.GetValueOrThrow<string>("resource_group");
+        _resourceName = config.Endpoint?.IdnHost.Split('.').FirstOrDefault()
+            ?? throw new KeyNotFoundException("Could extract the resource name from the endpoint URL in the config");
+
+        _endpointUrl = $"https://management.azure.com/subscriptions/{_subscriptionId}/resourceGroups/{_resourceGroup}/providers/Microsoft.CognitiveServices/accounts/{_resourceName}/deployments/";
+
+        _apiVersion = DEFAULT_API_VERSION;
+        if (!string.IsNullOrWhiteSpace(apiVersion))
+        {
+            _apiVersion = Uri.EscapeDataString(apiVersion);
+        }
     }
 
     public virtual AzureDeployedModel CreateDeployment(string deploymentName, string modelName, string? skuName = DEFAULT_SKU_NAME, int capacity = DEFAULT_CAPACITY, CancellationToken token = default)
@@ -178,6 +201,7 @@ internal class AzureDeploymentClient : IDisposable
                 ? await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false)
                 : response.Content.ReadAsStream(token);
 #else
+            // NOTE: .Net Framework's HttpClient does not have a synchronous ReadAsStream method
             await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 #endif
     }
@@ -187,15 +211,7 @@ internal class AzureDeploymentClient : IDisposable
         string requestId = Guid.NewGuid().ToString();
         string bearerToken = await GetOrRenewAuthTokenAsync(isAsync, requestId, token).ConfigureAwait(false);
 
-        // TODO FIXME: Find a way to do this that also works when we get recording running
-        string? subsId = _config.ExtensionData?.GetValueOrDefault("subscription_id").GetString();
-        string? rg = _config.ExtensionData?.GetValueOrDefault("resource_group").GetString();
-        string? resName = _config.Endpoint?.IdnHost.Split('.').FirstOrDefault();
-
-        string fullEndpoint =
-            $"https://management.azure.com/subscriptions/{subsId}/resourceGroups/{rg}/providers/Microsoft.CognitiveServices/accounts/{resName}/deployments/"
-            + pathPart
-            + "?api-version=2023-10-01-preview";
+        string fullEndpoint = _endpointUrl + pathPart + "?api-version=" + _apiVersion;
 
         request.RequestUri = new Uri(fullEndpoint);
         request.Headers.TryAddWithoutValidation("x-ms-client-request-id", requestId);
@@ -203,6 +219,7 @@ internal class AzureDeploymentClient : IDisposable
 
         HttpResponseMessage response;
 #if NET
+        // NOTE: .Net Framework's HttpClient does not have a synchronous Send method
         if (isAsync)
         {
 #endif
