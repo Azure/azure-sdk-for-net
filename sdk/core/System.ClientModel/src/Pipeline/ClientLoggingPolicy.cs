@@ -64,6 +64,17 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <summary>
     /// TODO.
     /// </summary>
+    /// <returns></returns>
+    protected virtual bool IsLoggingEnabled()
+    {
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Warning); // We only log warnings, information, and trace
+        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled();
+        return isLoggerEnabled || isEventSourceEnabled;
+    }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
     /// <param name="message"></param>
     protected virtual void OnLogRequest(PipelineMessage message) { }
 
@@ -141,10 +152,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Warning); // We only log warnings, information, and trace
-        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled();
-
-        if (!isLoggerEnabled && !isEventSourceEnabled)
+        if (!IsLoggingEnabled())
         {
             if (async)
             {
