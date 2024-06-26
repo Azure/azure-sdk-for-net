@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI;
-using OpenAI.Embeddings;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
-using System.Text;
+using OpenAI.Embeddings;
 
 namespace Azure.AI.OpenAI.Embeddings;
 

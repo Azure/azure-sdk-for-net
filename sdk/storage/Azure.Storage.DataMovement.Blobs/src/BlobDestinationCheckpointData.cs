@@ -14,6 +14,13 @@ namespace Azure.Storage.DataMovement.Blobs
     internal class BlobDestinationCheckpointData : BlobCheckpointData
     {
         /// <summary>
+        /// The type of blob.
+        /// </summary>
+        public DataTransferProperty<BlobType?> BlobType;
+        public bool PreserveBlobType;
+        public BlobType? BlobTypeValue;
+
+        /// <summary>
         /// The content headers for the destination blob.
         /// </summary>
         public DataTransferProperty<string> CacheControl;
@@ -67,8 +74,12 @@ namespace Azure.Storage.DataMovement.Blobs
             AccessTier? accessTier,
             DataTransferProperty<Metadata> metadata,
             DataTransferProperty<Tags> tags)
-            : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, blobType)
+            : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion)
         {
+            BlobType = blobType;
+            PreserveBlobType = blobType?.Preserve ?? true;
+            BlobTypeValue = blobType?.Value != default ? blobType.Value : default;
+
             AccessTierValue = accessTier;
 
             CacheControl = cacheControl;
