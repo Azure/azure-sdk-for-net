@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/informatica/ci.mgmt.yml
-    - sdk/informatica/Azure.ResourceManager.InformaticaDataManagement/
+    - sdk/informaticadatamanagement/ci.mgmt.yml
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: informatica
+    ServiceDirectory: informaticadatamanagement
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.InformaticaDataManagement
