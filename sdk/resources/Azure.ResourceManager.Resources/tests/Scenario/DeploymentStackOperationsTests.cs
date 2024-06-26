@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Tests
             var deploymentStack = Client.GetArmDeploymentStackResource(deploymentStackId);
 
             var deploymentStackData = CreateRGDeploymentStackDataWithTemplate();
-            DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
+            ArmDeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
 
             Assert.IsNotNull(deploymentStackValidateResult);
             await rg.DeleteAsync(WaitUntil.Completed);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Resources.Tests
             var deploymentStack = Client.GetArmDeploymentStackResource(deploymentStackId);
 
             var deploymentStackData = CreateSubDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
+            ArmDeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
             Assert.NotNull(deploymentStackValidateResult);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Resources.Tests
             var deploymentStack = Client.GetArmDeploymentStackResource(deploymentStackId);
 
             var deploymentStackData = CreateMGDeploymentStackDataWithTemplate(AzureLocation.WestUS);
-            DeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
+            ArmDeploymentStackValidateResult deploymentStackValidateResult = (await deploymentStack.ValidateStackAsync(WaitUntil.Completed, deploymentStackData)).Value;
             Assert.IsNotNull(deploymentStackValidateResult);
         }
     }

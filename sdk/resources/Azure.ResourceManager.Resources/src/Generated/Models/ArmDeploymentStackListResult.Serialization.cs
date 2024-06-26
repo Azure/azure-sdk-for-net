@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class DeploymentStackListResult : IUtf8JsonSerializable, IJsonModel<DeploymentStackListResult>
+    internal partial class ArmDeploymentStackListResult : IUtf8JsonSerializable, IJsonModel<ArmDeploymentStackListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentStackListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentStackListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeploymentStackListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmDeploymentStackListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentStackListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentStackListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentStackListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        DeploymentStackListResult IJsonModel<DeploymentStackListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArmDeploymentStackListResult IJsonModel<ArmDeploymentStackListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentStackListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentStackListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentStackListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeploymentStackListResult(document.RootElement, options);
+            return DeserializeArmDeploymentStackListResult(document.RootElement, options);
         }
 
-        internal static DeploymentStackListResult DeserializeDeploymentStackListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArmDeploymentStackListResult DeserializeArmDeploymentStackListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentStackListResult(value ?? new ChangeTrackingList<ArmDeploymentStackData>(), nextLink, serializedAdditionalRawData);
+            return new ArmDeploymentStackListResult(value ?? new ChangeTrackingList<ArmDeploymentStackData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -176,9 +176,9 @@ namespace Azure.ResourceManager.Resources.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<DeploymentStackListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArmDeploymentStackListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentStackListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -187,26 +187,26 @@ namespace Azure.ResourceManager.Resources.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentStackListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentStackListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeploymentStackListResult IPersistableModel<DeploymentStackListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArmDeploymentStackListResult IPersistableModel<ArmDeploymentStackListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentStackListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDeploymentStackListResult(document.RootElement, options);
+                        return DeserializeArmDeploymentStackListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentStackListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentStackListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeploymentStackListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmDeploymentStackListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

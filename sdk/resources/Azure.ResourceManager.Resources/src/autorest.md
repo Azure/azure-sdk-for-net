@@ -26,7 +26,18 @@ enable-bicep-serialization: true
 #  show-serialized-names: true
 
 rename-mapping:
+  # Deployment Stack Renames
   DeploymentStack: ArmDeploymentStack
+  DeploymentStackListResult: ArmDeploymentStackListResult
+  DeploymentStackProvisioingState: ArmDeploymentStackProvisioningState
+  DeploymentStackTemplateDefinition: ArmDeploymentStackTemplateDefinition
+  DeploymentStackValidateProperties: ArmDeploymentStackValidateProperties
+  DeploymentStackValidateResult: ArmDeploymentStackValidateResult
+  DeploymentStacksDebugSetting: ArmDeploymentStackDebugSetting
+  DeploymentStacksDeleteDetachEnum: ArmDeploymentStackDeleteDetachEnum
+  DeploymentStacksParametersLink: ArmDeploymentStackParametersLink
+  DeploymentStacksTemplateLink: ArmDeploymentStackTemplateLink
+
   DecompileOperationSuccessResponse: DecompileOperationSuccessResult
   FileDefinition: DecompiledFileDefinition
 

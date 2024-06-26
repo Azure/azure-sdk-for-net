@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentStackTemplateDefinition>> ExportTemplateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmDeploymentStackTemplateDefinition>> ExportTemplateAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackResource.ExportTemplate");
             scope.Start();
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentStackTemplateDefinition> ExportTemplate(CancellationToken cancellationToken = default)
+        public virtual Response<ArmDeploymentStackTemplateDefinition> ExportTemplate(CancellationToken cancellationToken = default)
         {
             using var scope = _armDeploymentStackDeploymentStacksClientDiagnostics.CreateScope("ArmDeploymentStackResource.ExportTemplate");
             scope.Start();
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="data"> Deployment stack to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeploymentStackValidateResult>> ValidateStackAsync(WaitUntil waitUntil, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArmDeploymentStackValidateResult>> ValidateStackAsync(WaitUntil waitUntil, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _armDeploymentStackDeploymentStacksRestClient.ValidateStackAtScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<DeploymentStackValidateResult>(new DeploymentStackValidateResultOperationSource(), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, _armDeploymentStackDeploymentStacksRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentStackValidateResult>(new ArmDeploymentStackValidateResultOperationSource(), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, _armDeploymentStackDeploymentStacksRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="data"> Deployment stack to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DeploymentStackValidateResult> ValidateStack(WaitUntil waitUntil, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArmDeploymentStackValidateResult> ValidateStack(WaitUntil waitUntil, ArmDeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _armDeploymentStackDeploymentStacksRestClient.ValidateStackAtScope(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new ResourcesArmOperation<DeploymentStackValidateResult>(new DeploymentStackValidateResultOperationSource(), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, _armDeploymentStackDeploymentStacksRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentStackValidateResult>(new ArmDeploymentStackValidateResultOperationSource(), _armDeploymentStackDeploymentStacksClientDiagnostics, Pipeline, _armDeploymentStackDeploymentStacksRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

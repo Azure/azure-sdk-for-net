@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of <see cref="ActionOnUnmanage"/>. </summary>
         /// <param name="resources"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
-        public ActionOnUnmanage(DeploymentStacksDeleteDetachEnum resources)
+        public ActionOnUnmanage(ArmDeploymentStackDeleteDetachEnum resources)
         {
             Resources = resources;
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="resourceGroups"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
         /// <param name="managementGroups"> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActionOnUnmanage(DeploymentStacksDeleteDetachEnum resources, DeploymentStacksDeleteDetachEnum? resourceGroups, DeploymentStacksDeleteDetachEnum? managementGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ActionOnUnmanage(ArmDeploymentStackDeleteDetachEnum resources, ArmDeploymentStackDeleteDetachEnum? resourceGroups, ArmDeploymentStackDeleteDetachEnum? managementGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Resources = resources;
             ResourceGroups = resourceGroups;
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
         [WirePath("resources")]
-        public DeploymentStacksDeleteDetachEnum Resources { get; set; }
+        public ArmDeploymentStackDeleteDetachEnum Resources { get; set; }
         /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
         [WirePath("resourceGroups")]
-        public DeploymentStacksDeleteDetachEnum? ResourceGroups { get; set; }
+        public ArmDeploymentStackDeleteDetachEnum? ResourceGroups { get; set; }
         /// <summary> Specifies an action for a newly unmanaged resource. Delete will attempt to delete the resource from Azure. Detach will leave the resource in it's current state. </summary>
         [WirePath("managementGroups")]
-        public DeploymentStacksDeleteDetachEnum? ManagementGroups { get; set; }
+        public ArmDeploymentStackDeleteDetachEnum? ManagementGroups { get; set; }
     }
 }

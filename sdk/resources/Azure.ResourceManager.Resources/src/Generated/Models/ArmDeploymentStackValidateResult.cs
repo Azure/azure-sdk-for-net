@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> List of Deployment stacks. </summary>
-    internal partial class DeploymentStackListResult
+    /// <summary> The Deployment stack validation result. </summary>
+    public partial class ArmDeploymentStackValidateResult : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +47,31 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentStackListResult"/>. </summary>
-        internal DeploymentStackListResult()
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackValidateResult"/>. </summary>
+        public ArmDeploymentStackValidateResult()
         {
-            Value = new ChangeTrackingList<ArmDeploymentStackData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentStackListResult"/>. </summary>
-        /// <param name="value"> An array of Deployment stacks. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackValidateResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The validation result details. </param>
+        /// <param name="error"> The error detail. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentStackListResult(IReadOnlyList<ArmDeploymentStackData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentStackValidateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentStackValidateProperties properties, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Properties = properties;
+            Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of Deployment stacks. </summary>
-        public IReadOnlyList<ArmDeploymentStackData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The validation result details. </summary>
+        [WirePath("properties")]
+        public ArmDeploymentStackValidateProperties Properties { get; set; }
+        /// <summary> The error detail. </summary>
+        [WirePath("error")]
+        public ResponseError Error { get; set; }
     }
 }

@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.Resources
             SystemData systemData = default;
             ResponseError error = default;
             BinaryData template = default;
-            DeploymentStacksTemplateLink templateLink = default;
+            ArmDeploymentStackTemplateLink templateLink = default;
             IDictionary<string, DeploymentParameter> parameters = default;
-            DeploymentStacksParametersLink parametersLink = default;
+            ArmDeploymentStackParametersLink parametersLink = default;
             ActionOnUnmanage actionOnUnmanage = default;
-            DeploymentStacksDebugSetting debugSetting = default;
+            ArmDeploymentStackDebugSetting debugSetting = default;
             bool? bypassStackOutOfSyncError = default;
             string deploymentScope = default;
             string description = default;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            templateLink = DeploymentStacksTemplateLink.DeserializeDeploymentStacksTemplateLink(property0.Value, options);
+                            templateLink = ArmDeploymentStackTemplateLink.DeserializeArmDeploymentStackTemplateLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            parametersLink = DeploymentStacksParametersLink.DeserializeDeploymentStacksParametersLink(property0.Value, options);
+                            parametersLink = ArmDeploymentStackParametersLink.DeserializeArmDeploymentStackParametersLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("actionOnUnmanage"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            debugSetting = DeploymentStacksDebugSetting.DeserializeDeploymentStacksDebugSetting(property0.Value, options);
+                            debugSetting = ArmDeploymentStackDebugSetting.DeserializeArmDeploymentStackDebugSetting(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bypassStackOutOfSyncError"u8))

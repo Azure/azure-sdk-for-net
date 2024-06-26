@@ -850,13 +850,13 @@ namespace Azure.ResourceManager.Resources.Models
             return new DecompiledFileDefinition(path, contents, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentStackTemplateDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentStackTemplateDefinition"/>. </summary>
         /// <param name="template"> The template content. Use this element to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
-        /// <returns> A new <see cref="Models.DeploymentStackTemplateDefinition"/> instance for mocking. </returns>
-        public static DeploymentStackTemplateDefinition DeploymentStackTemplateDefinition(BinaryData template = null, DeploymentStacksTemplateLink templateLink = null)
+        /// <returns> A new <see cref="Models.ArmDeploymentStackTemplateDefinition"/> instance for mocking. </returns>
+        public static ArmDeploymentStackTemplateDefinition ArmDeploymentStackTemplateDefinition(BinaryData template = null, ArmDeploymentStackTemplateLink templateLink = null)
         {
-            return new DeploymentStackTemplateDefinition(template, templateLink, serializedAdditionalRawData: null);
+            return new ArmDeploymentStackTemplateDefinition(template, templateLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentStackData"/>. </summary>
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="outputs"> The outputs of the deployment resource created by the deployment stack. </param>
         /// <param name="duration"> The duration of the last successful Deployment stack update. </param>
         /// <returns> A new <see cref="Resources.ArmDeploymentStackData"/> instance for mocking. </returns>
-        public static ArmDeploymentStackData ArmDeploymentStackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ResponseError error = null, BinaryData template = null, DeploymentStacksTemplateLink templateLink = null, IDictionary<string, DeploymentParameter> parameters = null, DeploymentStacksParametersLink parametersLink = null, ActionOnUnmanage actionOnUnmanage = null, string debugSettingDetailLevel = null, bool? bypassStackOutOfSyncError = null, string deploymentScope = null, string description = null, DenySettings denySettings = null, DeploymentStackProvisioningState? provisioningState = null, string correlationId = null, IEnumerable<SubResource> detachedResources = null, IEnumerable<SubResource> deletedResources = null, IEnumerable<ResourceReferenceExtended> failedResources = null, IEnumerable<ManagedResourceReference> resources = null, string deploymentId = null, BinaryData outputs = null, TimeSpan? duration = null)
+        public static ArmDeploymentStackData ArmDeploymentStackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ResponseError error = null, BinaryData template = null, ArmDeploymentStackTemplateLink templateLink = null, IDictionary<string, DeploymentParameter> parameters = null, ArmDeploymentStackParametersLink parametersLink = null, ActionOnUnmanage actionOnUnmanage = null, string debugSettingDetailLevel = null, bool? bypassStackOutOfSyncError = null, string deploymentScope = null, string description = null, DenySettings denySettings = null, DeploymentStackProvisioningState? provisioningState = null, string correlationId = null, IEnumerable<SubResource> detachedResources = null, IEnumerable<SubResource> deletedResources = null, IEnumerable<ResourceReferenceExtended> failedResources = null, IEnumerable<ManagedResourceReference> resources = null, string deploymentId = null, BinaryData outputs = null, TimeSpan? duration = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, DeploymentParameter>();
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.Resources.Models
                 parameters,
                 parametersLink,
                 actionOnUnmanage,
-                debugSettingDetailLevel != null ? new DeploymentStacksDebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null,
+                debugSettingDetailLevel != null ? new ArmDeploymentStackDebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null,
                 bypassStackOutOfSyncError,
                 deploymentScope,
                 description,
@@ -953,17 +953,17 @@ namespace Azure.ResourceManager.Resources.Models
             return new ManagedResourceReference(id, serializedAdditionalRawData: null, status, denyStatus);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentStackValidateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentStackValidateResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The validation result details. </param>
         /// <param name="error"> The error detail. </param>
-        /// <returns> A new <see cref="Models.DeploymentStackValidateResult"/> instance for mocking. </returns>
-        public static DeploymentStackValidateResult DeploymentStackValidateResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeploymentStackValidateProperties properties = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.ArmDeploymentStackValidateResult"/> instance for mocking. </returns>
+        public static ArmDeploymentStackValidateResult ArmDeploymentStackValidateResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentStackValidateProperties properties = null, ResponseError error = null)
         {
-            return new DeploymentStackValidateResult(
+            return new ArmDeploymentStackValidateResult(
                 id,
                 name,
                 resourceType,

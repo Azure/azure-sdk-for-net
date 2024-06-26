@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The debug setting. </summary>
-    internal partial class DeploymentStacksDebugSetting
+    /// <summary> List of Deployment stacks. </summary>
+    internal partial class ArmDeploymentStackListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,26 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentStacksDebugSetting"/>. </summary>
-        public DeploymentStacksDebugSetting()
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackListResult"/>. </summary>
+        internal ArmDeploymentStackListResult()
         {
+            Value = new ChangeTrackingList<ArmDeploymentStackData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentStacksDebugSetting"/>. </summary>
-        /// <param name="detailLevel"> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </param>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackListResult"/>. </summary>
+        /// <param name="value"> An array of Deployment stacks. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentStacksDebugSetting(string detailLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentStackListResult(IReadOnlyList<ArmDeploymentStackData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DetailLevel = detailLevel;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </summary>
-        [WirePath("detailLevel")]
-        public string DetailLevel { get; set; }
+        /// <summary> An array of Deployment stacks. </summary>
+        public IReadOnlyList<ArmDeploymentStackData> Value { get; }
+        /// <summary> The URL to use for getting the next set of results. </summary>
+        public string NextLink { get; }
     }
 }
