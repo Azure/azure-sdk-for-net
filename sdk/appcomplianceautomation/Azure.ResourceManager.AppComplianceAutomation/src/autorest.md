@@ -45,6 +45,7 @@ rename-mapping:
   ComplianceReportItem: AppComplianceReportItem
   ComplianceReportItem.resourceId: -|arm-id
   ComplianceReportItem.resourceType: -|resource-type
+  ComplianceReportItem.resourceStatusChangeDate: ResourceStatusChangedOn
   ComplianceResult: AppComplianceResult
   ContentType: WebhookContentType
   Control: AppComplianceControl
@@ -87,8 +88,10 @@ rename-mapping:
   Responsibility: CustomerResponsibility
   ResponsibilityEnvironment.AWS: Aws
   ResponsibilityEnvironment.GCP: Gcp
+  ResponsibilityResource: ResponsibilityResourceItem
   ResponsibilityResource.resourceId: -|arm-id
   ResponsibilityResource.resourceType: -|resource-type
+  ResponsibilityResource.resourceStatusChangeDate: ResourceStatusChangedOn
   Result: ReportResult
   Rule: QuestionRuleItem
   StatusItem: OverviewStatusItem
@@ -97,8 +100,6 @@ rename-mapping:
   TriggerEvaluationResponse: TriggerEvaluationResult
   QuickAssessment.resourceId: -|arm-id
   QuickAssessment.timestamp: CreatedOn
-  ComplianceReportItem.resourceStatusChangeDate: ResourceStatusChangedOn
-  ResponsibilityResource.resourceStatusChangeDate: ResourceStatusChangedOn
 
 override-operation-name:
   ProviderActions_CheckNameAvailability: CheckAppComplianceReportNameAvailability

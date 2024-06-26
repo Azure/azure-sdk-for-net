@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             ResponsibilityEnvironment? responsibilityEnvironment = default;
             int? failedResourceCount = default;
             int? totalResourceCount = default;
-            IReadOnlyList<ResponsibilityResource> resourceList = default;
+            IReadOnlyList<ResponsibilityResourceItem> resourceList = default;
             IReadOnlyList<RecommendationDetails> recommendationList = default;
             string guidance = default;
             string justification = default;
@@ -242,10 +242,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    List<ResponsibilityResource> array = new List<ResponsibilityResource>();
+                    List<ResponsibilityResourceItem> array = new List<ResponsibilityResourceItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResponsibilityResource.DeserializeResponsibilityResource(item, options));
+                        array.Add(ResponsibilityResourceItem.DeserializeResponsibilityResourceItem(item, options));
                     }
                     resourceList = array;
                     continue;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 responsibilityEnvironment,
                 failedResourceCount,
                 totalResourceCount,
-                resourceList ?? new ChangeTrackingList<ResponsibilityResource>(),
+                resourceList ?? new ChangeTrackingList<ResponsibilityResourceItem>(),
                 recommendationList ?? new ChangeTrackingList<RecommendationDetails>(),
                 guidance,
                 justification,

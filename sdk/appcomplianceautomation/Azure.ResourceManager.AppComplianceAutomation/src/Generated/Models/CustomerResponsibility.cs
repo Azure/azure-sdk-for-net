@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of <see cref="CustomerResponsibility"/>. </summary>
         internal CustomerResponsibility()
         {
-            ResourceList = new ChangeTrackingList<ResponsibilityResource>();
+            ResourceList = new ChangeTrackingList<ResponsibilityResourceItem>();
             RecommendationList = new ChangeTrackingList<RecommendationDetails>();
             EvidenceFiles = new ChangeTrackingList<string>();
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="justification"> The justification given by the user to clarify the reason. </param>
         /// <param name="evidenceFiles"> List of evidence file url. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomerResponsibility(string responsibilityId, string responsibilityTitle, string responsibilityDescription, ResponsibilityType? responsibilityType, ResponsibilitySeverity? responsibilitySeverity, ResponsibilityStatus? responsibilityStatus, ResponsibilityEnvironment? responsibilityEnvironment, int? failedResourceCount, int? totalResourceCount, IReadOnlyList<ResponsibilityResource> resourceList, IReadOnlyList<RecommendationDetails> recommendationList, string guidance, string justification, IReadOnlyList<string> evidenceFiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomerResponsibility(string responsibilityId, string responsibilityTitle, string responsibilityDescription, ResponsibilityType? responsibilityType, ResponsibilitySeverity? responsibilitySeverity, ResponsibilityStatus? responsibilityStatus, ResponsibilityEnvironment? responsibilityEnvironment, int? failedResourceCount, int? totalResourceCount, IReadOnlyList<ResponsibilityResourceItem> resourceList, IReadOnlyList<RecommendationDetails> recommendationList, string guidance, string justification, IReadOnlyList<string> evidenceFiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResponsibilityId = responsibilityId;
             ResponsibilityTitle = responsibilityTitle;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> The count of all resources. </summary>
         public int? TotalResourceCount { get; }
         /// <summary> List of resource. </summary>
-        public IReadOnlyList<ResponsibilityResource> ResourceList { get; }
+        public IReadOnlyList<ResponsibilityResourceItem> ResourceList { get; }
         /// <summary> List of recommendation. </summary>
         public IReadOnlyList<RecommendationDetails> RecommendationList { get; }
         /// <summary> The evidence upload guidance description. </summary>

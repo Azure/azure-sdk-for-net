@@ -436,9 +436,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="justification"> The justification given by the user to clarify the reason. </param>
         /// <param name="evidenceFiles"> List of evidence file url. </param>
         /// <returns> A new <see cref="Models.CustomerResponsibility"/> instance for mocking. </returns>
-        public static CustomerResponsibility CustomerResponsibility(string responsibilityId = null, string responsibilityTitle = null, string responsibilityDescription = null, ResponsibilityType? responsibilityType = null, ResponsibilitySeverity? responsibilitySeverity = null, ResponsibilityStatus? responsibilityStatus = null, ResponsibilityEnvironment? responsibilityEnvironment = null, int? failedResourceCount = null, int? totalResourceCount = null, IEnumerable<ResponsibilityResource> resourceList = null, IEnumerable<RecommendationDetails> recommendationList = null, string guidance = null, string justification = null, IEnumerable<string> evidenceFiles = null)
+        public static CustomerResponsibility CustomerResponsibility(string responsibilityId = null, string responsibilityTitle = null, string responsibilityDescription = null, ResponsibilityType? responsibilityType = null, ResponsibilitySeverity? responsibilitySeverity = null, ResponsibilityStatus? responsibilityStatus = null, ResponsibilityEnvironment? responsibilityEnvironment = null, int? failedResourceCount = null, int? totalResourceCount = null, IEnumerable<ResponsibilityResourceItem> resourceList = null, IEnumerable<RecommendationDetails> recommendationList = null, string guidance = null, string justification = null, IEnumerable<string> evidenceFiles = null)
         {
-            resourceList ??= new List<ResponsibilityResource>();
+            resourceList ??= new List<ResponsibilityResourceItem>();
             recommendationList ??= new List<RecommendationDetails>();
             evidenceFiles ??= new List<string>();
 
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResponsibilityResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResponsibilityResourceItem"/>. </summary>
         /// <param name="resourceId"> The Id of the resource. </param>
         /// <param name="accountId"> Account Id. For example - AWS account Id. </param>
         /// <param name="resourceType"> The type of the resource. e.g. "Microsoft.SignalRService/SignalR". </param>
@@ -468,12 +468,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="resourceStatus"> Resource status. </param>
         /// <param name="resourceStatusChangedOn"> The status change date for the resource. </param>
         /// <param name="recommendationIds"> List of recommendation id. </param>
-        /// <returns> A new <see cref="Models.ResponsibilityResource"/> instance for mocking. </returns>
-        public static ResponsibilityResource ResponsibilityResource(ResourceIdentifier resourceId = null, string accountId = null, ResourceType? resourceType = null, ReportResourceOrigin? resourceOrigin = null, ReportResourceStatus? resourceStatus = null, DateTimeOffset? resourceStatusChangedOn = null, IEnumerable<string> recommendationIds = null)
+        /// <returns> A new <see cref="Models.ResponsibilityResourceItem"/> instance for mocking. </returns>
+        public static ResponsibilityResourceItem ResponsibilityResourceItem(ResourceIdentifier resourceId = null, string accountId = null, ResourceType? resourceType = null, ReportResourceOrigin? resourceOrigin = null, ReportResourceStatus? resourceStatus = null, DateTimeOffset? resourceStatusChangedOn = null, IEnumerable<string> recommendationIds = null)
         {
             recommendationIds ??= new List<string>();
 
-            return new ResponsibilityResource(
+            return new ResponsibilityResourceItem(
                 resourceId,
                 accountId,
                 resourceType,

@@ -85,8 +85,8 @@ internal class TestConfig
             ?.Deployment
             ?? throw new KeyNotFoundException($"{typeof(TClient).FullName}: deployment");
 
-    public virtual Config? GetConfig<TClient>()
-        => GetConfig(ToKey<TClient>(), false);
+    public virtual Config? GetConfig<TClient>(params string[] additionalTypesToAdd)
+        => GetConfig(ToKey<TClient>(), false, additionalTypesToAdd);
 
     public virtual Config? GetConfig(string name, params string[] additionalTypesToAdd)
         => GetConfig(name, false, additionalTypesToAdd);
@@ -118,11 +118,25 @@ internal class TestConfig
                 ?? GetValueFromEnv<string>(name, SUFFIX_AOAI_API_KEY, ignoreDefault),
             ExtensionData = specificConfig?.ExtensionData
         };
+        
+        if (defaultConfig?.ExtensionData?.Count > 0)
+        {
+            flattenedConfig.ExtensionData ??= new Dictionary<string, JsonElement>();
+            
+            foreach (var kvp in defaultConfig.ExtensionData)
+            {
+                if (flattenedConfig.ExtensionData.ContainsKey(kvp.Key))
+                {
+                    continue;
+                }
+                
+                flattenedConfig.ExtensionData[kvp.Key] = kvp.Value;
+            }
+        }
 
         if (additionalTypesToAdd?.Length > 0)
         {
-            if (flattenedConfig.ExtensionData == null)
-                flattenedConfig.ExtensionData = new Dictionary<string, JsonElement>();
+            flattenedConfig.ExtensionData ??= new Dictionary<string, JsonElement>();
 
             foreach (var additionalType in additionalTypesToAdd)
             {
