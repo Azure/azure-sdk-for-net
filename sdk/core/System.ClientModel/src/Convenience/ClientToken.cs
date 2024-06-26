@@ -8,16 +8,27 @@ using System.Text;
 namespace System.ClientModel;
 
 #pragma warning disable CS1591
-
 public abstract class ClientToken
 {
     protected ClientToken() { }
 
-    //// Do we need this property?
-    //protected abstract PageToken FirstPageToken { get; }
-
-    // Does it need to be public?
     public abstract BinaryData ToBytes();
 }
+
+//public class ClientToken
+//{
+//    private readonly BinaryData? _bytes;
+
+//    protected ClientToken() { }
+
+//    public ClientToken(BinaryData bytes)
+//    {
+//        _bytes = bytes;
+//    }
+
+//    public virtual BinaryData ToBytes()
+//        => _bytes ??
+//           throw new InvalidOperationException("Unable to write token as bytes.");
+//}
 
 #pragma warning restore CS1591
