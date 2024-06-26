@@ -41,7 +41,7 @@ internal static partial class ClientModelLogMessages
     public static partial void RequestContentText(ILogger logger, string requestId, string content);
 
     [LoggerMessage(ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "Response")]
-    public static partial void Response(ILogger logger, string requestId, int status, string reasonPhrase, double seconds, string headers);
+    public static partial void Response(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
 
     // same
     [LoggerMessage(ResponseContentEvent, LogLevel.Information, "Response [{requestId}] content: {content}", EventName = "ResponseContent")]
@@ -57,7 +57,7 @@ internal static partial class ClientModelLogMessages
     public static partial void ResponseContentTextBlock(ILogger logger, string requestId, int blockNumber, string content);
 
     [LoggerMessage(ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "ErrorResponse")]
-    public static partial void ErrorResponse(ILogger logger, string requestId, int status, string reasonPhrase, double seconds, string headers);
+    public static partial void ErrorResponse(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
 
     [LoggerMessage(ErrorResponseContentEvent, LogLevel.Warning, "Error response [{requestId}] content: {content}", EventName = "ErrorResponseContent")]
     public static partial void ErrorResponseContent(ILogger logger, string requestId, byte[] content);

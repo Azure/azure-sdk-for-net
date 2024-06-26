@@ -4,8 +4,10 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +26,18 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly int _maxLength;
     private readonly PipelineMessageSanitizer _sanitizer;
     private readonly ILogger _logger;
+    private readonly string? _correlationIdHeaderName;
+    private readonly string _clientAssembly = "System-ClientModel";
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="clientAssembly"></param>
+    /// <param name="options"></param>
+    protected ClientLoggingPolicy(string clientAssembly, LoggingOptions? options = default) : this(options)
+    {
+        _clientAssembly = clientAssembly;
+    }
 
     /// <summary>
     /// TODO.
@@ -36,6 +50,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         _maxLength = loggingOptions.LoggedContentSizeLimit;
         _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
         _logger = loggingOptions.LoggerFactory.CreateLogger("System-ClientModel");
+        _correlationIdHeaderName = loggingOptions.CorrelationIdHeaderName;
     }
 
     /// <inheritdoc/>
@@ -46,9 +61,90 @@ public class ClientLoggingPolicy : PipelinePolicy
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
         await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    protected virtual void OnLogRequest(PipelineMessage message) { }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    protected virtual ValueTask OnLogRequestAsync(PipelineMessage message) => default;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    protected virtual void OnLogRequestContent(PipelineMessage message) { }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    protected virtual ValueTask OnLogRequestContentAsync(PipelineMessage message) => default;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="elapsed"></param>
+    protected virtual void OnLogResponse(PipelineMessage message, double elapsed) { }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="elapsed"></param>
+    protected virtual ValueTask OnLogResponseAsync(PipelineMessage message, double elapsed) => default;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="block"></param>
+    protected virtual void OnLogResponseContent(PipelineMessage message, int? block) { }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="block"></param>
+    /// <returns></returns>
+    protected virtual ValueTask OnLogResponseContentAsync(PipelineMessage message, int? block) => default;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="exception"></param>
+    protected virtual void OnLogResponseException(PipelineMessage message, Exception exception) { }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="exception"></param>
+    /// <returns></returns>
+    protected virtual ValueTask OnLogResponseExceptionAsync(PipelineMessage message, Exception exception) => default;
+
+    internal string? GetCorrelationIdFromHeaders(PipelineRequestHeaders keyValuePairs)
+    {
+        if (_correlationIdHeaderName == null)
+        {
+            return null;
+        }
+        keyValuePairs.TryGetValue(_correlationIdHeaderName, out var clientRequestId);
+        return clientRequestId;
+    }
+
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        if (!_logger.IsEnabled(LogLevel.Warning))
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Warning); // We only log warnings, information, and trace
+        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled();
+
+        if (!isLoggerEnabled && !isEventSourceEnabled)
         {
             if (async)
             {
@@ -67,21 +163,31 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         // If a request Id wasn't set, generate one so at least all the logs for this request and its corresponding response
         // can be correlated with each other.
-        string requestId = GetRequestIdFromHeaders(request.Headers) ?? Guid.NewGuid().ToString();
+        string requestId = GetCorrelationIdFromHeaders(request.Headers) ?? Guid.NewGuid().ToString();
 
         LogRequest(_logger, request, requestId);
-        if (_logContent)
-        {
-            await LogRequestContent(_logger, request, requestId, async, message.CancellationToken).ConfigureAwait(false);
-        }
 
         if (async)
         {
-            await OnLoggingRequestAsync(message).ConfigureAwait(false);
+            await OnLogRequestAsync(message).ConfigureAwait(false);
         }
         else
         {
-            OnLoggingRequest(message);
+            OnLogRequest(message);
+        }
+
+        if (_logContent)
+        {
+            await LogRequestContent(_logger, request, requestId, async, message.CancellationToken).ConfigureAwait(false);
+
+            if (async)
+            {
+                await OnLogRequestContentAsync(message).ConfigureAwait(false);
+            }
+            else
+            {
+                OnLogRequestContent(message);
+            }
         }
 
         var before = Stopwatch.GetTimestamp();
@@ -100,14 +206,17 @@ public class ClientLoggingPolicy : PipelinePolicy
         catch (Exception ex)
         {
             ClientModelLogMessages.ExceptionResponse(_logger, requestId, ex.ToString());
+            ClientModelEventSource.Log.ExceptionResponse(requestId, ex.ToString());
+
             if (async)
             {
-                await OnLoggingExceptionResponseAsync(message).ConfigureAwait(false);
+                await OnLogResponseExceptionAsync(message, ex).ConfigureAwait(false);
             }
             else
             {
-                OnLoggingExceptionResponse(message);
+                OnLogResponseException(message, ex);
             }
+
             throw;
         }
 
@@ -119,69 +228,54 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
-        string responseId = GetResponseIdFromHeaders(response.Headers) ?? requestId; // Use the request ID if there was no response id
+        string responseId = GetCorrelationIdFromHeaders(response.Headers) ?? requestId; // Use the request ID if there was no response id
 
         LogResponse(_logger, response, responseId, elapsed);
+
+        if (async)
+        {
+            await OnLogResponseAsync(message, elapsed).ConfigureAwait(false);
+        }
+        else
+        {
+            OnLogResponse(message, elapsed);
+        }
+
         if (_logContent)
         {
-            LogResponseContent(_logger, response, responseId, message.BufferResponse);
+            LogResponseContent(_logger, message, responseId, message.BufferResponse, async);
         }
 
         if (elapsed > RequestTooLongTime)
         {
             ClientModelLogMessages.ResponseDelay(_logger, responseId, elapsed);
+            ClientModelEventSource.Log.ResponseDelay(responseId, elapsed);
         }
-
-        // On log response
-    }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    protected virtual void OnLoggingRequest(PipelineMessage message) { }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <returns></returns>
-    protected virtual ValueTask OnLoggingRequestAsync(PipelineMessage message) => default;
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    protected virtual void OnLoggingExceptionResponse(PipelineMessage message) { }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <returns></returns>
-    protected virtual ValueTask OnLoggingExceptionResponseAsync(PipelineMessage message) => default;
-
-    internal string? GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs)
-    {
-        keyValuePairs.TryGetValue("x-ms-client-request-id", out var clientRequestId);
-        return clientRequestId;
     }
 
     private void LogRequest(ILogger logger, PipelineRequest request, string requestId)
     {
-        if (!logger.IsEnabled(LogLevel.Information))
+        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
+
+        if (!isLoggerEnabled && !isEventSourceEnabled)
         {
             return;
         }
 
         string uri = _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri);
         string headers = FormatHeaders(request.Headers, _sanitizer);
-        ClientModelLogMessages.Request(logger, requestId, request.Method, uri, headers, "System.ClientModel");
+
+        ClientModelLogMessages.Request(logger, requestId, request.Method, uri, headers, _clientAssembly);
+        ClientModelEventSource.Log.Request(requestId, request.Method, uri, headers, _clientAssembly);
     }
 
     private async Task LogRequestContent(ILogger logger, PipelineRequest request, string requestId, bool async, CancellationToken cancellationToken)
     {
-        if (!logger.IsEnabled(LogLevel.Information) || request.Content == null)
+        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
+
+        if (request.Content == null || !(isLoggerEnabled || isEventSourceEnabled))
         {
             return;
         }
@@ -210,17 +304,22 @@ public class ClientLoggingPolicy : PipelinePolicy
         if (requestTextEncoding != null)
         {
             string content = requestTextEncoding.GetString(bytes);
+            ClientModelEventSource.Log.RequestContentText(requestId, content);
             ClientModelLogMessages.RequestContentText(logger, requestId, content);
         }
         else // Log bytes
         {
+            ClientModelEventSource.Log.RequestContent(requestId, bytes);
             ClientModelLogMessages.RequestContent(logger, requestId, bytes);
         }
     }
 
     private void LogResponse(ILogger logger, PipelineResponse response, string responseId, double elapsed)
     {
-        bool isEnabled = response.IsError ? logger.IsEnabled(LogLevel.Warning) : logger.IsEnabled(LogLevel.Information);
+        bool isEnabled = response.IsError
+            ? (logger.IsEnabled(LogLevel.Warning) || ClientModelEventSource.Log.IsEnabled(EventLevel.Warning, EventKeywords.None))
+            : (logger.IsEnabled(LogLevel.Information) || ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None));
+
         if (!isEnabled)
         {
             return;
@@ -230,17 +329,23 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (response.IsError)
         {
-            ClientModelLogMessages.ErrorResponse(logger, responseId, response.Status, response.ReasonPhrase, elapsed, headers);
+            ClientModelLogMessages.ErrorResponse(logger, responseId, response.Status, response.ReasonPhrase, headers, elapsed);
+            ClientModelEventSource.Log.ErrorResponse(responseId, response.Status, response.ReasonPhrase, headers, elapsed);
         }
         else
         {
-            ClientModelLogMessages.Response(logger, responseId, response.Status, response.ReasonPhrase, elapsed, headers);
+            ClientModelLogMessages.Response(logger, responseId, response.Status, response.ReasonPhrase, headers, elapsed);
+            ClientModelEventSource.Log.Response(responseId, response.Status, response.ReasonPhrase, headers, elapsed);
         }
     }
 
-    private void LogResponseContent(ILogger logger, PipelineResponse response, string responseId, bool contentBuffered)
+    private async void LogResponseContent(ILogger logger, PipelineMessage message, string responseId, bool contentBuffered, bool async)
     {
-        if (!logger.IsEnabled(LogLevel.Information) || response.ContentStream == null)
+        PipelineResponse response = message.Response!;
+        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
+
+        if (response.ContentStream == null || !(isLoggerEnabled || isEventSourceEnabled))
         {
             return;
         }
@@ -262,6 +367,15 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             LogFormattedResponseContent(logger, response.IsError, responseId, bytes, responseTextEncoding);
 
+            if (async)
+            {
+                await OnLogResponseContentAsync(message, null).ConfigureAwait(false);
+            }
+            else
+            {
+                OnLogResponseContent(message, null);
+            }
+
             return;
         }
 
@@ -274,11 +388,22 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             LogFormattedResponseContent(logger, response.IsError, responseId, bytes, responseTextEncoding);
 
+            if (async)
+            {
+                await OnLogResponseContentAsync(message, null).ConfigureAwait(false);
+            }
+            else
+            {
+                OnLogResponseContent(message, null);
+            }
+
             return;
         }
 
-        response.ContentStream = new LoggingStream(logger, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding);
+        response.ContentStream = new LoggingStream(this, logger, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding, message);
     }
+
+    #region Formatting Helpers
 
     private static void LogFormattedResponseContent(ILogger logger, bool isError, string responseId, byte[] bytes, Encoding? encoding)
     {
@@ -286,22 +411,32 @@ public class ClientLoggingPolicy : PipelinePolicy
         {
             case (true, null):
                 ClientModelLogMessages.ErrorResponseContent(logger, responseId, bytes);
+                ClientModelEventSource.Log.ErrorResponseContent(responseId, bytes);
                 break;
             case (true, not null):
-                ClientModelLogMessages.ErrorResponseContentText(logger, responseId, encoding.GetString(bytes));
+                string encodedErrorContent = encoding.GetString(bytes);
+                ClientModelLogMessages.ErrorResponseContentText(logger, responseId, encodedErrorContent);
+                ClientModelEventSource.Log.ErrorResponseContentText(responseId, encodedErrorContent);
                 break;
             case (false, null):
                 ClientModelLogMessages.ResponseContent(logger, responseId, bytes);
+                ClientModelEventSource.Log.ResponseContent(responseId, bytes);
                 break;
             case (false, not null):
+                string encodedContent = encoding.GetString(bytes);
                 ClientModelLogMessages.ResponseContentText(logger, responseId, encoding.GetString(bytes));
+                ClientModelEventSource.Log.ResponseContentText(responseId, encodedContent);
                 break;
         }
     }
 
-    private string? GetResponseIdFromHeaders(PipelineResponseHeaders keyValuePairs)
+    private string? GetCorrelationIdFromHeaders(PipelineResponseHeaders keyValuePairs)
     {
-        keyValuePairs.TryGetValue("x-ms-client-request-id", out var clientRequestId);
+        if (_correlationIdHeaderName == null)
+        {
+            return null;
+        }
+        keyValuePairs.TryGetValue(_correlationIdHeaderName, out var clientRequestId);
         return clientRequestId;
     }
 
@@ -317,6 +452,8 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
         return stringBuilder.ToString();
     }
+
+    #endregion
 
     #region MaxLengthStream
     private class MaxLengthStream : MemoryStream
@@ -363,8 +500,10 @@ public class ClientLoggingPolicy : PipelinePolicy
         private readonly Encoding? _textEncoding;
         private int _blockNumber;
         private readonly ILogger _logger;
+        private readonly PipelineMessage _message;
+        private readonly ClientLoggingPolicy _policy;
 
-        public LoggingStream(ILogger logger, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
+        public LoggingStream(ClientLoggingPolicy policy, ILogger logger, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding, PipelineMessage message)
         {
             // Should only wrap non-seekable streams
             Debug.Assert(!originalStream.CanSeek);
@@ -375,6 +514,8 @@ public class ClientLoggingPolicy : PipelinePolicy
             _error = error;
             _textEncoding = textEncoding;
             _logger = logger;
+            _message = message;
+            _policy = policy;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
@@ -388,12 +529,12 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             var countToLog = result;
             DecrementLength(ref countToLog);
-            LogBuffer(buffer, offset, countToLog);
+            LogBuffer(buffer, offset, countToLog, false);
 
             return result;
         }
 
-        private void LogBuffer(byte[] buffer, int offset, int length)
+        private async void LogBuffer(byte[] buffer, int offset, int length, bool async)
         {
             if (length == 0 || buffer == null)
             {
@@ -417,16 +558,29 @@ public class ClientLoggingPolicy : PipelinePolicy
             {
                 case (true, null):
                     ClientModelLogMessages.ErrorResponseContentBlock(_logger, _requestId, _blockNumber, bytes);
+                    ClientModelEventSource.Log.ErrorResponseContentBlock(_requestId, _blockNumber, bytes);
                     break;
                 case (true, not null):
                     ClientModelLogMessages.ErrorResponseContentTextBlock(_logger, _requestId, _blockNumber, _textEncoding.GetString(bytes));
+                    ClientModelEventSource.Log.ErrorResponseContentTextBlock(_requestId, _blockNumber, _textEncoding.GetString(bytes));
                     break;
                 case (false, null):
                     ClientModelLogMessages.ResponseContentBlock(_logger, _requestId, _blockNumber, bytes);
+                    ClientModelEventSource.Log.ResponseContentBlock(_requestId, _blockNumber, bytes);
                     break;
                 case (false, not null):
                     ClientModelLogMessages.ResponseContentTextBlock(_logger, _requestId, _blockNumber, _textEncoding.GetString(bytes));
+                    ClientModelEventSource.Log.ResponseContentTextBlock(_requestId, _blockNumber, _textEncoding.GetString(bytes));
                     break;
+            }
+
+            if (async)
+            {
+                await _policy.OnLogResponseContentAsync(_message, _blockNumber).ConfigureAwait(false);
+            }
+            else
+            {
+                _policy.OnLogResponseContent(_message, _blockNumber);
             }
 
             _blockNumber++;
@@ -440,7 +594,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             var countToLog = result;
             DecrementLength(ref countToLog);
-            LogBuffer(buffer, offset, countToLog);
+            LogBuffer(buffer, offset, countToLog, true);
 
             return result;
         }
