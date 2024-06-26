@@ -17,112 +17,6 @@ namespace Azure.AI.Inference
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionsOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChatCompletionsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ChatCompletionsOptions)} does not support writing '{format}' format.");
-            }
-
-            writer.WriteStartObject();
-            writer.WritePropertyName("messages"u8);
-            writer.WriteStartArray();
-            foreach (var item in Messages)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(FrequencyPenalty))
-            {
-                writer.WritePropertyName("frequency_penalty"u8);
-                writer.WriteNumberValue(FrequencyPenalty.Value);
-            }
-            if (Optional.IsDefined(InternalShouldStreamResponse))
-            {
-                writer.WritePropertyName("stream"u8);
-                writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
-            }
-            if (Optional.IsDefined(PresencePenalty))
-            {
-                writer.WritePropertyName("presence_penalty"u8);
-                writer.WriteNumberValue(PresencePenalty.Value);
-            }
-            if (Optional.IsDefined(Temperature))
-            {
-                writer.WritePropertyName("temperature"u8);
-                writer.WriteNumberValue(Temperature.Value);
-            }
-            if (Optional.IsDefined(NucleusSamplingFactor))
-            {
-                writer.WritePropertyName("top_p"u8);
-                writer.WriteNumberValue(NucleusSamplingFactor.Value);
-            }
-            if (Optional.IsDefined(MaxTokens))
-            {
-                writer.WritePropertyName("max_tokens"u8);
-                writer.WriteNumberValue(MaxTokens.Value);
-            }
-            if (Optional.IsDefined(ResponseFormat))
-            {
-                writer.WritePropertyName("response_format"u8);
-                writer.WriteStringValue(ResponseFormat.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(StopSequences))
-            {
-                writer.WritePropertyName("stop"u8);
-                writer.WriteStartArray();
-                foreach (var item in StopSequences)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Tools))
-            {
-                writer.WritePropertyName("tools"u8);
-                writer.WriteStartArray();
-                foreach (var item in Tools)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ToolChoice))
-            {
-                writer.WritePropertyName("tool_choice"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ToolChoice);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (Optional.IsDefined(Seed))
-            {
-                writer.WritePropertyName("seed"u8);
-                writer.WriteNumberValue(Seed.Value);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
-        }
-
         ChatCompletionsOptions IJsonModel<ChatCompletionsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +49,7 @@ namespace Azure.AI.Inference
             IList<ChatCompletionsToolDefinition> tools = default;
             BinaryData toolChoice = default;
             long? seed = default;
+            string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,6 +173,11 @@ namespace Azure.AI.Inference
                     seed = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("model"u8))
+                {
+                    model = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -297,6 +197,7 @@ namespace Azure.AI.Inference
                 tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(),
                 toolChoice,
                 seed,
+                model,
                 serializedAdditionalRawData);
         }
 
