@@ -31,7 +31,7 @@
   ([#44682](https://github.com/Azure/azure-sdk-for-net/pull/44682))
 
 * Removed an experimental feature for logs emitted within an active tracing context to follow the Activity's sampling decision.
-  ([#](https://github.com/Azure/azure-sdk-for-net/pull/))
+  ([#44745](https://github.com/Azure/azure-sdk-for-net/pull/44745))
 
 ## 1.2.0 (2024-06-11)
 
