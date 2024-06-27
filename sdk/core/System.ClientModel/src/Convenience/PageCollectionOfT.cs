@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,8 +25,17 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     // instance in the implementation and not have to cast it.
     public abstract ClientToken FirstPageToken { get; }
 
+    public PageResult<T> GetPage()
+        => GetPageCore(FirstPageToken);
+
+    public PageResult<T> GetPage(ClientToken pageToken)
+    {
+        Argument.AssertNotNull(pageToken, nameof(pageToken));
+        return GetPageCore(pageToken);
+    }
+
     // Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
-    public abstract PageResult<T> GetPage(ClientToken pageToken);
+    public abstract PageResult<T> GetPageCore(ClientToken pageToken);
 
     public IEnumerable<T> GetAllValues()
     {
