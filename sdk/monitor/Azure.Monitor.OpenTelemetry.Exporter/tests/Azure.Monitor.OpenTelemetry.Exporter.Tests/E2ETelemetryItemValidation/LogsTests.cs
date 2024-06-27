@@ -57,6 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
+                        options.IncludeScopes = true;
                         options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
                         options.AddAzureMonitorLogExporterForTest(out telemetryItems);
                     });
@@ -64,12 +65,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             var logger = loggerFactory.CreateLogger(logCategoryName);
-            logger.Log(
-                logLevel: logLevel,
-                eventId: 0,
-                exception: null,
-                message: "Hello {name}.",
-                args: new object[] { "World" });
+
+            List<KeyValuePair<string, object>> scope = new()
+            {
+                new("scopeKey", "scopeValue")
+            };
+
+            using (logger.BeginScope(scope))
+            {
+                logger.Log(
+                    logLevel: logLevel,
+                    eventId: 0,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+            }
 
             // CLEANUP
             loggerFactory.Dispose();
@@ -83,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }},
+                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }, { "scopeKey", "scopeValue" } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
