@@ -14,7 +14,7 @@ namespace Azure.Maps.Timezone.Tests
         protected MapsTimezoneClient CreateClient()
         {
             return InstrumentClient(new MapsTimezoneClient(
-                credential: new AzureKeyCredential("0y5lxeFiXRuVKIgMJXiPe93iQK6_VO-1vJB3NuZTI8U"),
+                credential: new AzureKeyCredential("<My Subscription Key>"),
                 options: InstrumentClientOptions(new MapsTimezoneClientOptions())
              ));
         }
