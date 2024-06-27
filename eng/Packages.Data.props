@@ -163,7 +163,6 @@
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
     <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="6.35.0" />
-    <PackageReference Update="OpenAI" Version="2.0.0-beta.7" />
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
 
@@ -176,6 +175,10 @@
     <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Abstractions" Version="[2.1.1,6.0)" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
+    <PackageReference Update="OpenAI" Version="2.0.0-beta.7" />
   </ItemGroup>
 
   <!--
