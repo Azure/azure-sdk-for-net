@@ -285,7 +285,10 @@ function DeployStressPackage(
             Write-Host "Setting DOCKER_BUILDKIT=1"
             $env:DOCKER_BUILDKIT = 1
 
-            $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
+            # Force amd64 since that's what our AKS cluster is running. Without this you
+            # end up inheriting the default for our platform, which is bad when using ARM
+            # platforms.
+            $dockerBuildCmd = "docker", "build", "--platform", "linux/amd64", "-t", $imageTag, "-f", $dockerFile
             foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
                 $dockerBuildCmd += "--build-arg"
                 $dockerBuildCmd += "'$($buildArg.Key)'='$($buildArg.Value)'"

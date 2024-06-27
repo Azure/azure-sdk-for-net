@@ -10,11 +10,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Tests.Models;
 using Azure.AI.OpenAI.Tests.Utils;
+using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.AI.OpenAI.Tests.Utils.Pipeline;
 using Azure.Core.TestFramework;
 using OpenAI.Batch;
@@ -26,21 +26,6 @@ namespace Azure.AI.OpenAI.Tests;
 
 public class BatchTests : AoaiTestBase<BatchClient>
 {
-    private static readonly JsonSerializerOptions JSON_OPTIONS = new()
-    {
-        PropertyNamingPolicy = JsonHelpers.SnakeCaseLower,
-        PropertyNameCaseInsensitive = true,
-#if NETFRAMEWORK
-        IgnoreNullValues = true,
-#else
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-#endif
-        Converters =
-        {
-            new ModelReaderWriterConverter()
-        }
-    };
-
     public BatchTests(bool isAsync) : base(isAsync)
     { }
 
@@ -53,7 +38,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
     public async Task SimpleBatchCompletionsTest()
     {
         BatchClient batchClient = GetTestClient(new TestClientOptions(AzureOpenAIClientOptions.ServiceVersion.V2024_06_01));
-        await using BatchOperations ops = new(TestConfig);
+        await using BatchOperations ops = new(this, batchClient);
 
         // Create the batch operations to send and upload them
         ops.ChatClient.CompleteChat([new SystemChatMessage("You are a saccharine AI"), new UserChatMessage("Tell me about yourself")]);
@@ -62,7 +47,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
         string inputFileId = await ops.UploadBatchFileAsync();
 
         // Create the batch operation
-        using var requestContent = new BatchRequest()
+        using var requestContent = new BatchOptions()
         {
             InputFileId = inputFileId,
             Endpoint = ops.Operations.Select(o => o.Url).Distinct().First(),
@@ -133,68 +118,6 @@ public class BatchTests : AoaiTestBase<BatchClient>
 
     #region helper classes
 
-    private class BatchRequest
-    {
-        public string? InputFileId { get; set; }
-        public string? Endpoint { get; set; }
-        public string CompletionWindow { get; set; } = "24h";
-        public IDictionary<string, string> Metadata { get; } = new Dictionary<string, string>();
-
-        public BinaryContent ToBinaryContent()
-        {
-            using MemoryStream stream = new MemoryStream();
-            JsonHelpers.Serialize(stream, this, JSON_OPTIONS);
-
-            stream.Seek(0, SeekOrigin.Begin);
-            var data = BinaryData.FromStream(stream);
-            return BinaryContent.Create(data);
-        }
-    }
-
-    private class BatchResult<T>
-    {
-        public string? ID { get; init; }
-        public string? CustomId { get; init; }
-        public T? Response { get; init; }
-        public JsonElement? Error { get; init; }
-
-        public static IReadOnlyList<BatchResult<T>> From(BinaryData data)
-        {
-            List<BatchResult<T>> list = new();
-            using var reader = new StreamReader(data.ToStream(), Encoding.UTF8, false);
-            string? line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    break;
-                }
-
-                var entry = JsonSerializer.Deserialize<BatchResult<T>>(line, JSON_OPTIONS);
-                if (entry != null)
-                {
-                    list.Add(entry);
-                }
-            }
-
-            return list;
-        }
-    }
-
-    private class BatchObject
-    {
-        public static BatchObject From(BinaryData data)
-        {
-            return JsonSerializer.Deserialize<BatchObject>(data, JSON_OPTIONS)
-                ?? throw new InvalidOperationException("Response was null JSON");
-        }
-
-        public string? Status { get; set; }
-        public string? Id { get; set; }
-        public string? OutputFileID { get; set; }
-        public string? ErrorFileId { get; set; }
-    }
-
     private class BatchOperations : IAsyncDisposable
     {
         private MockPipeline _pipeline;
@@ -202,7 +125,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
         private string? _uploadId;
         private FileClient _fileClient;
 
-        public BatchOperations(TestConfig config)
+        public BatchOperations(AoaiTestBase<BatchClient> testBase, BatchClient batchClient)
         {
             _pipeline = new MockPipeline(MockPipeline.ReturnEmptyJson);
             _pipeline.OnRequest += HandleRequest;
@@ -210,23 +133,16 @@ public class BatchTests : AoaiTestBase<BatchClient>
 
             BatchFileName = "batch-" + Guid.NewGuid().ToString("D") + ".json";
 
-            var options = new TestClientOptions(AzureOpenAIClientOptions.ServiceVersion.V2024_06_01);
-
-            // get real file client
-            _fileClient = new AzureOpenAIClient(
-                config.GetEndpointFor<FileClient>(),
-                config.GetApiKeyFor<FileClient>(),
-                options)
-                .GetFileClient();
+            _fileClient = testBase.GetTestClientFrom<FileClient>(batchClient);
 
             // Generate the fake pipeline to capture requests and save them to a file later
             AzureOpenAIClient fakeTopLevel = new AzureOpenAIClient(
                 new Uri("https://not.a.real.endpoint.fake"),
-                new System.ClientModel.ApiKeyCredential("not.a.real.key"),
+                new ApiKeyCredential("not.a.real.key"),
                 new() { Transport = _pipeline.Transport });
 
-            ChatClient = fakeTopLevel.GetChatClient(config.GetDeploymentNameFor<ChatClient>());
-            EmbeddingClient = fakeTopLevel.GetEmbeddingClient(config.GetDeploymentNameFor<EmbeddingClient>());
+            ChatClient = fakeTopLevel.GetChatClient(testBase.TestConfig.GetConfig<ChatClient>().DeploymentOrThrow("chat client"));
+            EmbeddingClient = fakeTopLevel.GetEmbeddingClient(testBase.TestConfig.GetConfig<EmbeddingClient>().DeploymentOrThrow("embedding client"));
         }
 
         public string BatchFileName { get; }
@@ -242,7 +158,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
             }
 
             using MemoryStream stream = new MemoryStream();
-            JsonHelpers.Serialize(stream, _operations, JSON_OPTIONS);
+            JsonHelpers.Serialize(stream, _operations, JsonHelpers.OpenAIJsonOptions);
             stream.Seek(0, SeekOrigin.Begin);
             var data = BinaryData.FromStream(stream);
 
