@@ -11,7 +11,7 @@ namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
-public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
+internal abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
 {
     // Note page collections delay making a first request until either
     // GetPage is called or the collection is enumerated, so the constructor

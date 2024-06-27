@@ -39,6 +39,40 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
     {
     }
 
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="firstPage"></param>
+    /// <returns></returns>
+    public static AsyncCollectionResult<T> FromPageAsync(PageResult<T> firstPage)
+        => new AsyncPageableCollectionResult(firstPage);
+
     /// <inheritdoc/>
     public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
+
+    private class AsyncPageableCollectionResult : AsyncCollectionResult<T>
+    {
+        private readonly PageResult<T> _firstPage;
+
+        public AsyncPageableCollectionResult(PageResult<T> firstPage)
+        {
+            _firstPage = firstPage;
+            SetRawResponse(firstPage.GetRawResponse());
+        }
+
+        public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            PageResult<T> page = _firstPage;
+            bool hasMore = true;
+            while (hasMore)
+            {
+                foreach (T value in page.Values)
+                {
+                    yield return value;
+                }
+
+                page = await page.GetNextPageAsync().ConfigureAwait(false);
+            }
+        }
+    }
 }

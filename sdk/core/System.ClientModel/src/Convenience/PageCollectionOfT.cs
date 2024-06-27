@@ -11,7 +11,7 @@ namespace System.ClientModel;
 
 // This type is a client that defines a collection of elements and can
 // make service requests to retrieve specific pages
-public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
+internal abstract class PageCollection<T> : IEnumerable<PageResult<T>>
 {
     // Note page collections delay making a first request until either
     // GetPage is called or the collection is enumerated, so the constructor
