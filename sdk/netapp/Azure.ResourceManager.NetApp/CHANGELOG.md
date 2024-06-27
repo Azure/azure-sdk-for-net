@@ -1,16 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.6.0 ()
+## 1.6.0 (2026-06-27)
 
 ### Features Added
 
@@ -36,7 +26,7 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Upgraded api-version tag from 'package-netapp-2023-05-01' to 'package-preview-2023-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f5aa38d3f04996bfab6b32dd7e61f02de0c81a7d/specification/netapp/resource-manager/readme.md
 
 ### Other Changes
@@ -48,7 +38,7 @@
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
