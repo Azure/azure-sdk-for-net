@@ -2962,6 +2962,36 @@ namespace Azure.Storage.Files.DataLake
             });
 
         /// <summary>
+        /// For debugging purposes only.
+        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// If you use this method, call it immediately before
+        /// <see cref="GenerateSasUri(DataLakeSasPermissions, DateTimeOffset)"/>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="DataLakeFileSystemSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual string GenerateSasStringToSign(DataLakeFileSystemSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder(permissions, expiresOn)
+            {
+                FileSystemName = FileSystemName,
+                Path = Path,
+                IsDirectory = true
+            };
+
+            return dataLakeSasBuilder.ToStringToSign(ClientConfiguration.SharedKeyCredential);
+        }
+
+        /// <summary>
         /// The <see cref="GenerateSasUri(DataLakeSasBuilder)"/> returns a <see cref="Uri"/>
         /// that generates a DataLake Directory Service
         /// Shared Access Signature (SAS) Uri based on the Client properties

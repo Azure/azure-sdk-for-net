@@ -362,27 +362,7 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-
-            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign = string.Join("\n",
-                    Permissions,
-                    startTime,
-                    expiryTime,
-                    GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
-                    Identifier,
-                    IPRange.ToString(),
-                    SasExtensions.ToProtocolString(Protocol),
-                    Version,
-                    Resource,
-                    null, // snapshot
-                    EncryptionScope,
-                    CacheControl,
-                    ContentDisposition,
-                    ContentEncoding,
-                    ContentLanguage,
-                    ContentType);
+            string stringToSign = ToStringToSign(sharedKeyCredential);
 
             string signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
@@ -409,6 +389,42 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
+        /// For debugging purposes only.
+        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// If you use this method, call it immediately before <see cref="ToSasQueryParameters(StorageSharedKeyCredential)"/>.
+        /// </summary>
+        /// <param name="sharedKeyCredential">
+        /// The storage account's <see cref="StorageSharedKeyCredential"/>.
+        /// </param>
+        /// <returns>
+        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// </returns>
+        public string ToStringToSign(StorageSharedKeyCredential sharedKeyCredential)
+        {
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+
+            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            return string.Join("\n",
+                    Permissions,
+                    startTime,
+                    expiryTime,
+                    GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
+                    Identifier,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
+                    Version,
+                    Resource,
+                    null, // snapshot
+                    EncryptionScope,
+                    CacheControl,
+                    ContentDisposition,
+                    ContentEncoding,
+                    ContentLanguage,
+                    ContentType);
+        }
+
+        /// <summary>
         /// Use an account's <see cref="UserDelegationKey"/> to sign this
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
@@ -428,37 +444,7 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
-
-            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            string stringToSign = string.Join("\n",
-                Permissions,
-                startTime,
-                expiryTime,
-                GetCanonicalName(accountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
-                userDelegationKey.SignedObjectId,
-                userDelegationKey.SignedTenantId,
-                signedStart,
-                signedExpiry,
-                userDelegationKey.SignedService,
-                userDelegationKey.SignedVersion,
-                PreauthorizedAgentObjectId,
-                AgentObjectId,
-                CorrelationId,
-                IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
-                Version,
-                Resource,
-                null, // snapshot
-                EncryptionScope,
-                CacheControl,
-                ContentDisposition,
-                ContentEncoding,
-                ContentLanguage,
-                ContentType);
+            string stringToSign = ToStringToSign(userDelegationKey, accountName);
 
             string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
@@ -491,6 +477,54 @@ namespace Azure.Storage.Sas
                 directoryDepth: _directoryDepth,
                 encryptionScope: EncryptionScope);
             return p;
+        }
+
+        /// <summary>
+        /// For debugging purposes only.
+        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// If you use this method, call it immediately before <see cref="ToSasQueryParameters(UserDelegationKey, string)"/>.
+        /// </summary>
+        /// <param name="userDelegationKey">
+        /// A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// </param>
+        /// <param name="accountName">The name of the storage account.</param>
+        /// <returns>
+        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// </returns>
+        public string ToStringToSign(UserDelegationKey userDelegationKey, string accountName)
+        {
+            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+
+            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
+            return string.Join("\n",
+                Permissions,
+                startTime,
+                expiryTime,
+                GetCanonicalName(accountName, FileSystemName ?? string.Empty, Path ?? string.Empty),
+                userDelegationKey.SignedObjectId,
+                userDelegationKey.SignedTenantId,
+                signedStart,
+                signedExpiry,
+                userDelegationKey.SignedService,
+                userDelegationKey.SignedVersion,
+                PreauthorizedAgentObjectId,
+                AgentObjectId,
+                CorrelationId,
+                IPRange.ToString(),
+                SasExtensions.ToProtocolString(Protocol),
+                Version,
+                Resource,
+                null, // snapshot
+                EncryptionScope,
+                CacheControl,
+                ContentDisposition,
+                ContentEncoding,
+                ContentLanguage,
+                ContentType);
         }
 
         /// <summary>

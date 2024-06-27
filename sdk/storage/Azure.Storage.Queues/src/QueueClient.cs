@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -3135,6 +3136,34 @@ namespace Azure.Storage.Queues
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
             => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name });
+
+        /// <summary>
+        /// For debugging purposes only.
+        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// If you use this method, call it immediately before
+        /// <see cref="GenerateSasStringToSign(QueueSasPermissions, DateTimeOffset)"/>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="QueueSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual string GenerateSasStringToSign(QueueSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            QueueSasBuilder queueSasBuilder = new QueueSasBuilder(permissions, expiresOn)
+            {
+                QueueName = Name
+            };
+
+            return queueSasBuilder.ToStringToSign(ClientConfiguration.SharedKeyCredential);
+        }
 
         /// <summary>
         /// The <see cref="GenerateSasUri(QueueSasBuilder)"/> returns a
