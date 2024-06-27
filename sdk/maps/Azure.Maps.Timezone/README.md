@@ -135,7 +135,7 @@ Console.WriteLine(response);
 ```C# Snippet:GetTimezoneByCoordinates
 TimezoneBaseOptions options = new TimezoneBaseOptions();
 options.Options = TimezoneOptions.All;
-IList<double> coordinates = new[] { 25.0338053, 121.5640089 };
+GeoPosition coordinates = new GeoPosition(25.0338053, 121.5640089);
 var response =  client.GetTimezoneByCoordinates(coordinates, options);
 Console.WriteLine(response);
 ```

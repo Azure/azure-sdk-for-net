@@ -5,9 +5,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
 using Azure.Maps.Timezone.Models.Options;
@@ -187,13 +189,18 @@ namespace Azure.Maps.Timezone
         /// <param name="options"> Contains parameters for get timezone by id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual async Task<Response<TimezoneResult>> GetTimezoneByCoordinatesAsync(IEnumerable<double> coordinates, TimezoneBaseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TimezoneResult>> GetTimezoneByCoordinatesAsync(GeoPosition coordinates, TimezoneBaseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimezoneClient.GetTimezoneByCoordinates");
             scope.Start();
             try
             {
-                return await restClient.GetTimezoneByCoordinatesAsync(JsonFormat.Json, coordinates, options.AcceptLanguage, options?.Options, options?.TimeStamp, options?.DaylightSavingsTimeFrom, options?.DaylightSavingsTimeLastingYears, cancellationToken).ConfigureAwait(false);
+                var coord = new[]
+               {
+                     Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                     Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                 };
+                return await restClient.GetTimezoneByCoordinatesAsync(JsonFormat.Json, coord, options.AcceptLanguage, options?.Options, options?.TimeStamp, options?.DaylightSavingsTimeFrom, options?.DaylightSavingsTimeLastingYears, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -209,13 +216,18 @@ namespace Azure.Maps.Timezone
         /// <param name="options"> Contains parameters for get timezone by id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public virtual Response<TimezoneResult> GetTimezoneByCoordinates(IEnumerable<double> coordinates, TimezoneBaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<TimezoneResult> GetTimezoneByCoordinates(GeoPosition coordinates, TimezoneBaseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimezoneClient.GetTimezoneByCoordinates");
             scope.Start();
             try
             {
-                return restClient.GetTimezoneByCoordinates(JsonFormat.Json, coordinates, options.AcceptLanguage, options?.Options, options?.TimeStamp, options?.DaylightSavingsTimeFrom, options?.DaylightSavingsTimeLastingYears, cancellationToken);
+                var coord = new[]
+                {
+                     Convert.ToDouble(coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                     Convert.ToDouble(coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                 };
+                return restClient.GetTimezoneByCoordinates(JsonFormat.Json, coord, options.AcceptLanguage, options?.Options, options?.TimeStamp, options?.DaylightSavingsTimeFrom, options?.DaylightSavingsTimeLastingYears, cancellationToken);
             }
             catch (Exception e)
             {

@@ -10,6 +10,7 @@ using Azure.ResourceManager;
 using NUnit.Framework;
 using Azure.Maps.Timezone.Models.Options;
 using System.Collections.Generic;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Timezone.Tests.Samples
 {
@@ -98,7 +99,7 @@ namespace Azure.Maps.Timezone.Tests.Samples
             #region Snippet:GetTimezoneByCoordinates
             TimezoneBaseOptions options = new TimezoneBaseOptions();
             options.Options = TimezoneOptions.All;
-            IList<double> coordinates = new[] { 25.0338053, 121.5640089 };
+            GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
             var response =  client.GetTimezoneByCoordinates(coordinates, options);
             Console.WriteLine(response);
             #endregion
