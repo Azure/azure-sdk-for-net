@@ -65,15 +65,14 @@ public abstract class CollectionResult<T> : ClientResult, IEnumerable<T>
         public override IEnumerator<T> GetEnumerator()
         {
             PageResult<T> page = _firstPage;
-            bool hasMore = true;
-            while (hasMore)
+            while (page.HasNext)
             {
                 foreach (T value in page.Values)
                 {
                     yield return value;
                 }
 
-                page = page.GetNextPage();
+                page = (PageResult<T>)page.GetNext();
             }
         }
     }

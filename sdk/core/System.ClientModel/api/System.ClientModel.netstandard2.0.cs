@@ -64,14 +64,19 @@ namespace System.ClientModel
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
-    public abstract partial class PageResult<T> : System.ClientModel.ClientResult
+    public abstract partial class PageResult : System.ClientModel.ClientResult
     {
-        internal PageResult() { }
+        protected PageResult(bool hasNext, System.ClientModel.Primitives.PipelineResponse response) { }
+        public bool HasNext { get { throw null; } }
+        public abstract System.ClientModel.PageResult GetNext();
+        public abstract System.Threading.Tasks.Task<System.ClientModel.PageResult> GetNextAsync();
+    }
+    public abstract partial class PageResult<T> : System.ClientModel.PageResult
+    {
+        protected PageResult(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) : base (default(bool), default(System.ClientModel.Primitives.PipelineResponse)) { }
         public System.ClientModel.ContinuationToken? NextPageToken { get { throw null; } }
         public System.ClientModel.ContinuationToken PageToken { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
-        protected internal abstract System.ClientModel.PageResult<T> GetNextPage();
-        protected internal abstract System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetNextPageAsync();
     }
 }
 namespace System.ClientModel.Primitives

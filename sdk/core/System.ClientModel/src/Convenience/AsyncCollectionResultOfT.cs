@@ -63,15 +63,14 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
         public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             PageResult<T> page = _firstPage;
-            bool hasMore = true;
-            while (hasMore)
+            while (page.HasNext)
             {
                 foreach (T value in page.Values)
                 {
                     yield return value;
                 }
 
-                page = await page.GetNextPageAsync().ConfigureAwait(false);
+                page = (PageResult<T>)await page.GetNextAsync().ConfigureAwait(false);
             }
         }
     }

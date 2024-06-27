@@ -3,18 +3,18 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
-public abstract class PageResult<T> : ClientResult
+public abstract class PageResult<T> : PageResult
 {
-    private PageResult(IReadOnlyList<T> values,
+    protected PageResult(IReadOnlyList<T> values,
         ContinuationToken pageToken,
         ContinuationToken? nextPageToken,
-        PipelineResponse response) : base(response)
+        PipelineResponse response)
+        : base(nextPageToken is not null, response)
     {
         Values = values;
         PageToken = pageToken;
@@ -35,13 +35,6 @@ public abstract class PageResult<T> : ClientResult
 
     // If this is null, the current page is the last page in a collection.
     public ContinuationToken? NextPageToken { get; }
-
-    // Needed to support FromPage method on CollectionResult.
-    protected internal abstract PageResult<T> GetNextPage();
-    protected internal abstract Task<PageResult<T>> GetNextPageAsync();
-
-    //public static PageResult<T> Create(IReadOnlyList<T> values, ContinuationToken pageToken, ContinuationToken? nextPageToken, PipelineResponse response)
-    //    => new(values, pageToken, nextPageToken, response);
 }
 
 #pragma warning restore CS1591
