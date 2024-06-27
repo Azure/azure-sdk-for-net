@@ -1,20 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using ClientModel.Tests.Mocks;
 using ClientModel.Tests;
+using ClientModel.Tests.Mocks;
 using NUnit.Framework;
-using System.IO;
-using System.Threading;
 
 namespace System.ClientModel.Tests.Internal
 {
@@ -39,9 +36,9 @@ namespace System.ClientModel.Tests.Internal
 
         private TestClientEventListener _listener;
 
-        private const string SystemClientModelEventSourceName = "System.ClientModel";
+        private const string SystemClientModelEventSourceName = "System-ClientModel";
         private const string AzureCoreEventSourceName = "Azure-Core";
-        private const string ClientRequestIdHeaderName = "Client-Id";
+        private const string CorrelationIdHeaderName = "Client-Id";
 
         public ClientModelEventSourceTests(bool isAsync) : base(isAsync)
         {
@@ -108,7 +105,7 @@ namespace System.ClientModel.Tests.Internal
             StringAssert.Contains($"Date:3/28/2024{Environment.NewLine}", args.GetProperty<string>("headers"));
             StringAssert.Contains($"ETag:version1{Environment.NewLine}", args.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:REDACTED{Environment.NewLine}", args.GetProperty<string>("headers"));
-            Assert.AreEqual("", args.GetProperty<string>("clientAssembly"));
+            Assert.AreEqual("System-ClientModel", args.GetProperty<string>("clientAssembly"));
 
             args = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, args.Level);
@@ -118,73 +115,6 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(responseId.ToString(), requestId.ToString());
             Assert.AreEqual(args.GetProperty<int>("status"), 200);
             StringAssert.Contains($"Custom-Response-Header:REDACTED{Environment.NewLine}", args.GetProperty<string>("headers"));
-        }
-
-        [Test]
-        public async Task SourceCanWriteToCustomName()
-        {
-            string requestContent = "This is a request.";
-            string responseContent = "This is a response.";
-            string clientIdHeaderName = "x-ms-request-client-id";
-            string clientId = "client-123456789";
-            string clientAssemblyName = "Test-Azure-SDK";
-
-            var headers = new MockResponseHeaders(new Dictionary<string, string> { { clientIdHeaderName, clientId } });
-            var response = new MockPipelineResponse(200, mockHeaders: headers);
-            response.SetContent(responseContent);
-            var loggingOptions = new LoggingOptions
-            {
-                IsLoggingEnabled = true,
-                IsLoggingContentEnabled = true,
-                LoggedClientAssemblyName = clientAssemblyName,
-                RequestIdHeaderName = clientIdHeaderName
-            };
-            loggingOptions.AllowedHeaderNames.Add(clientIdHeaderName);
-
-            ClientPipelineOptions options = new()
-            {
-                Transport = new MockPipelineTransport("Transport", i => response),
-                LoggingPolicy = new AzureCoreLoggingPolicy(loggingOptions)
-            };
-
-            ClientPipeline pipeline = ClientPipeline.Create(options);
-
-            PipelineMessage message = pipeline.CreateMessage();
-            message.Request.Uri = new Uri("http://example.com");
-            message.Request.Headers.Add(clientIdHeaderName, clientId);
-            message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
-
-            await pipeline.SendSyncOrAsync(message, IsAsync);
-
-            EventWrittenEventArgs args = _listener.SingleEventById(RequestEvent);
-            Assert.AreEqual(EventLevel.Informational, args.Level);
-            Assert.AreEqual(AzureCoreEventSourceName, args.EventSource.Name);
-            Assert.AreEqual("Request", args.EventName);
-            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
-            Assert.AreEqual("http://example.com/", args.GetProperty<string>("uri"));
-            Assert.AreEqual("GET", args.GetProperty<string>("method"));
-            Assert.AreEqual(clientAssemblyName, args.GetProperty<string>("clientAssembly"));
-
-            args = _listener.SingleEventById(RequestContentEvent);
-            Assert.AreEqual(AzureCoreEventSourceName, args.EventSource.Name);
-            Assert.AreEqual(EventLevel.Verbose, args.Level);
-            Assert.AreEqual("RequestContent", args.EventName);
-            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
-            CollectionAssert.AreEqual("This is a request.", args.GetProperty<byte[]>("content"));
-
-            args = _listener.SingleEventById(ResponseEvent);
-            Assert.AreEqual(AzureCoreEventSourceName, args.EventSource.Name);
-            Assert.AreEqual(EventLevel.Informational, args.Level);
-            Assert.AreEqual("Response", args.EventName);
-            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
-            Assert.AreEqual(args.GetProperty<int>("status"), 200);
-
-            args = _listener.SingleEventById(ResponseContentEvent);
-            Assert.AreEqual(AzureCoreEventSourceName, args.EventSource.Name);
-            Assert.AreEqual(EventLevel.Verbose, args.Level);
-            Assert.AreEqual("ResponseContent", args.EventName);
-            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
-            CollectionAssert.AreEqual(responseContent, args.GetProperty<byte[]>("content"));
         }
 
         [Test]
@@ -203,10 +133,8 @@ namespace System.ClientModel.Tests.Internal
                 Transport = new MockPipelineTransport("Transport", i => response),
                 LoggingOptions = new LoggingOptions
                 {
-                    IsLoggingEnabled = true,
                     IsLoggingContentEnabled = true,
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName
+                    CorrelationIdHeaderName = CorrelationIdHeaderName
                 }
             };
             options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -218,7 +146,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Headers.Add("Custom-Header", "Value");
-            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
+            message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
             message.Request.Headers.Add("Date", "3/28/2024");
             message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
 
@@ -233,7 +161,6 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual("GET", args.GetProperty<string>("method"));
             StringAssert.Contains($"Date:3/28/2024{Environment.NewLine}", args.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", args.GetProperty<string>("headers"));
-            Assert.AreEqual("Test-SDK", args.GetProperty<string>("clientAssembly"));
 
             args = _listener.SingleEventById(RequestContentEvent);
             Assert.AreEqual(EventLevel.Verbose, args.Level);
@@ -269,10 +196,8 @@ namespace System.ClientModel.Tests.Internal
                 Transport = new MockPipelineTransport("Transport", (PipelineMessage i) => throw exception),
                 LoggingOptions = new LoggingOptions
                 {
-                    IsLoggingEnabled = true,
                     IsLoggingContentEnabled = true,
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName
+                    CorrelationIdHeaderName = CorrelationIdHeaderName
                 }
             };
 
@@ -282,7 +207,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Headers.Add("User-Agent", "agent");
-            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
+            message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
 
@@ -313,8 +238,7 @@ namespace System.ClientModel.Tests.Internal
                 {
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = int.MaxValue,
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    CorrelationIdHeaderName = CorrelationIdHeaderName,
                 }
             };
             options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -330,7 +254,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Headers.Add(clientId, clientId);
             message.Request.Headers.Add("Date", "3/28/2024");
             message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
-            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
+            message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -366,8 +290,7 @@ namespace System.ClientModel.Tests.Internal
                 {
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = int.MaxValue,
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName
+                    CorrelationIdHeaderName = CorrelationIdHeaderName
                 }
             };
 
@@ -377,7 +300,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Headers.Add("Custom-Header", "Value");
-            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
+            message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
             message.Request.Headers.Add("Date", "3/28/2024");
             message.Request.Headers.Add("Content-Type", "text/json");
             message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes(requestContent)));
@@ -408,8 +331,7 @@ namespace System.ClientModel.Tests.Internal
                 {
                     IsLoggingContentEnabled = false,
                     LoggedContentSizeLimit = int.MaxValue,
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    CorrelationIdHeaderName = CorrelationIdHeaderName,
                 }
             };
             options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -423,7 +345,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Headers.Add("Date", "3/28/2024");
             message.Request.Headers.Add("Content-Type", "text/json");
             message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-            message.Request.Headers.Add(ClientRequestIdHeaderName, "client1");
+            message.Request.Headers.Add(CorrelationIdHeaderName, "client1");
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -441,8 +363,7 @@ namespace System.ClientModel.Tests.Internal
                 Transport = new MockPipelineTransport("Transport", i => response),
                 LoggingOptions = new LoggingOptions
                 {
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName
+                    CorrelationIdHeaderName = CorrelationIdHeaderName
                 }
             };
 
@@ -452,7 +373,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-            message.Request.Headers.Add(ClientRequestIdHeaderName, "client-id");
+            message.Request.Headers.Add(CorrelationIdHeaderName, "client-id");
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -470,8 +391,7 @@ namespace System.ClientModel.Tests.Internal
                 Transport = new MockPipelineTransport("Transport", i => response),
                 LoggingOptions = new LoggingOptions
                 {
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName
+                    CorrelationIdHeaderName = CorrelationIdHeaderName
                 }
             };
 
@@ -682,8 +602,7 @@ namespace System.ClientModel.Tests.Internal
                 {
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = 5,
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName
+                    CorrelationIdHeaderName = CorrelationIdHeaderName
                 }
             };
 
@@ -694,7 +613,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
             message.Request.Headers.Add("Content-Type", "text/json");
-            message.Request.Headers.Add(ClientRequestIdHeaderName, "client1");
+            message.Request.Headers.Add(CorrelationIdHeaderName, "client1");
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -746,8 +665,7 @@ namespace System.ClientModel.Tests.Internal
                 Transport = new MockPipelineTransport("Transport", i => response),
                 LoggingOptions = new LoggingOptions
                 {
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName
+                    CorrelationIdHeaderName = CorrelationIdHeaderName
                 }
             };
             options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -760,7 +678,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
             message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
             message.Request.Headers.Add("Content-Type", "text/json");
-            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
+            message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
             message.Request.Headers.Add("Date", "4/18/2024");
             message.Request.Headers.Add("Custom-Header", "Value");
             message.Request.Headers.Add("Secret-Custom-Header", "Value");
@@ -777,7 +695,6 @@ namespace System.ClientModel.Tests.Internal
             StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
-            Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
@@ -802,8 +719,7 @@ namespace System.ClientModel.Tests.Internal
                 Transport = new MockPipelineTransport("Transport", i => response),
                 LoggingOptions = new LoggingOptions
                 {
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    CorrelationIdHeaderName = CorrelationIdHeaderName,
                 }
             };
             options.LoggingOptions.AllowedQueryParameters.Add("*");
@@ -816,7 +732,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
             message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
             message.Request.Headers.Add("Content-Type", "text/json");
-            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
+            message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
             message.Request.Headers.Add("Date", "4/18/2024");
             message.Request.Headers.Add("Secret-Custom-Header", "Value");
 
@@ -832,7 +748,6 @@ namespace System.ClientModel.Tests.Internal
             StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
-            Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
@@ -865,8 +780,7 @@ namespace System.ClientModel.Tests.Internal
                 {
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = maxLength,
-                    LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName
+                    CorrelationIdHeaderName = CorrelationIdHeaderName
                 }
             };
 
@@ -875,7 +789,7 @@ namespace System.ClientModel.Tests.Internal
             PipelineMessage message = pipeline.CreateMessage();
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
-            message.Request.Headers.Add(ClientRequestIdHeaderName, "client-id");
+            message.Request.Headers.Add(CorrelationIdHeaderName, "client-id");
 
             // These tests are essentially testing whether the logging policy works
             // correctly when responses are buffered (memory stream) and unbuffered
@@ -901,13 +815,6 @@ namespace System.ClientModel.Tests.Internal
             }
 
             return response;
-        }
-
-        private class AzureCoreLoggingPolicy : ClientLoggingPolicy
-        {
-            public AzureCoreLoggingPolicy(LoggingOptions options) : base("Azure-Core", new string[] { "Trait", "True" }, options)
-            {
-            }
         }
     }
 }

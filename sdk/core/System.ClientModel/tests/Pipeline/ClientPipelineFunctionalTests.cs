@@ -2,13 +2,16 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
@@ -433,9 +436,149 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
     #region Test default logging policy behavior
     [Test]
+    public async Task LogsRequestAndResponse()
+    {
+        using FunctionalTestsEventListener eventListener = new();
+
+        var options = new ClientPipelineOptions
+        {
+            LoggingOptions = new LoggingOptions
+            {
+                LoggerFactory = new TestLoggingFactory()
+            }
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                context.Response.StatusCode = 201;
+                await context.Response.WriteAsync("Hello World!");
+            });
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.BufferResponse = true;
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        foreach (string sourceName in new List<string>() { "System-ClientModel", "ClientModel.Tests.TestLoggingEventSource" })
+        {
+            // Request
+            EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == sourceName);
+            Assert.AreEqual(EventLevel.Informational, args.Level);
+            Assert.AreEqual("Request", args.EventName);
+
+            // Response
+            args = eventListener.SingleEventById(5, e => e.EventSource.Name == sourceName);
+            Assert.AreEqual(EventLevel.Informational, args.Level);
+            Assert.AreEqual("Response", args.EventName);
+            Assert.AreEqual(201, args.GetProperty<int>("status"));
+        }
+
+        // No other events should have been logged
+        Assert.AreEqual(4, eventListener.EventData.Count());
+    }
+
+    [Test]
     public void LogsRequestAndExceptionResponse()
     {
-        throw new NotImplementedException();
+        using FunctionalTestsEventListener eventListener = new();
+
+        var options = new ClientPipelineOptions
+        {
+            LoggingOptions = new LoggingOptions
+            {
+                LoggerFactory = new TestLoggingFactory()
+            }
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                await context.Response.WriteAsync("Hello World!");
+                throw new Exception("Error");
+            });
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.BufferResponse = true;
+
+        Assert.ThrowsAsync<AggregateException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
+
+        // Request Events
+        IEnumerable<EventWrittenEventArgs> args = eventListener.EventsById(1);
+        Assert.AreEqual(8, args.Count());
+
+        // Response Events
+        args = eventListener.EventsById(18);
+        Assert.AreEqual(8, args.Count());
+        foreach (EventWrittenEventArgs responseEventArgs in args)
+        {
+            Assert.AreEqual(EventLevel.Informational, responseEventArgs.Level);
+            Assert.AreEqual("ExceptionResponse", responseEventArgs.EventName);
+            Assert.True((responseEventArgs.GetProperty<string>("exception")).Contains("Exception"));
+        }
+
+        // No other events should have been logged
+        Assert.AreEqual(16, eventListener.EventData.Count());
+    }
+
+    [Test]
+    public async Task LogsRequestAndErrorResponse()
+    {
+        using FunctionalTestsEventListener eventListener = new();
+
+        var options = new ClientPipelineOptions
+        {
+            LoggingOptions = new LoggingOptions
+            {
+                LoggerFactory = new TestLoggingFactory()
+            }
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync("Bad Request");
+            });
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.BufferResponse = true;
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        foreach (string sourceName in new List<string>() { "System-ClientModel", "ClientModel.Tests.TestLoggingEventSource" })
+        {
+            // Request
+            EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == sourceName);
+            Assert.AreEqual(EventLevel.Informational, args.Level);
+            Assert.AreEqual("Request", args.EventName);
+
+            // Response
+            args = eventListener.SingleEventById(8, e => e.EventSource.Name == sourceName);
+            Assert.AreEqual(EventLevel.Warning, args.Level);
+            Assert.AreEqual("ErrorResponse", args.EventName);
+            Assert.AreEqual(args.GetProperty<int>("status"), 400);
+        }
+
+        // No other events should have been logged
+        Assert.AreEqual(4, eventListener.EventData.Count());
+    }
+
+    private class FunctionalTestsEventListener : TestClientEventListener
+    {
+        protected override void OnEventSourceCreated(EventSource eventSource)
+        {
+            if (eventSource.Name == "System-ClientModel" || eventSource.Name == "ClientModel.Tests.TestLoggingEventSource")
+            {
+                EnableEvents(eventSource, EventLevel.Informational);
+            }
+        }
     }
     #endregion
 
