@@ -322,6 +322,8 @@ using (logger.BeginScope(scope))
 }
 ```
 
+Note that if you define nested scopes with the same key or multiple keyvaluepairs with the same key, only the first value will be set.
+
 ## Troubleshooting
 
 The Azure Monitor Distro uses EventSource for its own internal logging. The logs are available to any EventListener by opting into the source named "OpenTelemetry-AzureMonitor-Exporter".

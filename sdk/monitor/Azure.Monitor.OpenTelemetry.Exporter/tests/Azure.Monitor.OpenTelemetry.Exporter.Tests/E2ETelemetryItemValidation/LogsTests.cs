@@ -66,12 +66,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ACT
             var logger = loggerFactory.CreateLogger(logCategoryName);
 
-            List<KeyValuePair<string, object>> scope = new()
+            List<KeyValuePair<string, object>> scope1 = new()
             {
-                new("scopeKey", "scopeValue")
+                new("scopeKey1", "scopeValue1"),
+                new("scopeKey1", "scopeValue2")
             };
 
-            using (logger.BeginScope(scope))
+            List<KeyValuePair<string, object>> scope2 = new()
+            {
+                new("scopeKey1", "scopeValue3")
+            };
+
+            using (logger.BeginScope(scope1))
+            using (logger.BeginScope(scope2))
             {
                 logger.Log(
                     logLevel: logLevel,
@@ -93,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }, { "scopeKey", "scopeValue" } },
+                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }, { "scopeKey1", "scopeValue1" } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
