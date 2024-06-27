@@ -66,6 +66,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if ((considerSystemProperties)
                 && ((instance.Offset != other.Offset)
+                    || (instance.GlobalOffset != other.GlobalOffset)
                     || (instance.EnqueuedTime != other.EnqueuedTime)
                     || (instance.PartitionKey != other.PartitionKey)
                     || (instance.SequenceNumber != other.SequenceNumber)))

@@ -44,6 +44,12 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol TrackLastEnqueuedEventProperties { get; } = AmqpConstants.Vendor + ":enable-receiver-runtime-metric";
 
         /// <summary>
+        ///   The capability for geo replication in a namespace, to associate with a link.
+        /// </summary>
+        ///
+        public static AmqpSymbol GeoReplication { get; } = AmqpConstants.Vendor + ":georeplication";
+
+        /// <summary>
         ///   The capability for opting-into idempotent publishing.
         /// </summary>
         ///

@@ -80,6 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "fakePart";
             var offset = 12345;
             var sequence = 9987;
+            var globalOffset = "124";
             var mockCheckpointStore = new Mock<CheckpointStore>();
             var mockProcessor = new MockCheckpointStoreProcessor(mockCheckpointStore.Object, 100, "fakeConsumer", "fakeNamespace", "fakeHub", Mock.Of<TokenCredential>());
 
@@ -91,7 +92,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     mockProcessor.Identifier,
                     It.Is<CheckpointPosition>(csp =>
-                        csp.SequenceNumber == sequence),
+                        csp.SequenceNumber == sequence
+                        && csp.GlobalOffset == globalOffset),
                     cancellationSource.Token))
                 .ThrowsAsync(expectedException);
 
@@ -107,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .ThrowsAsync(expectedExceptionOld);
 
             Assert.That(async () => await mockProcessor.InvokeOldUpdateCheckpointAsync(partitionId, offset, sequence, cancellationSource.Token), Throws.Exception.EqualTo(expectedExceptionOld));
-            Assert.That(async () => await mockProcessor.InvokeUpdateCheckpointAsync(partitionId, new CheckpointPosition(sequence), cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
+            Assert.That(async () => await mockProcessor.InvokeUpdateCheckpointAsync(partitionId, new CheckpointPosition(globalOffset, sequence), cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
         }
 
         /// <summary>

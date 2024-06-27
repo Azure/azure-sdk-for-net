@@ -11,8 +11,13 @@
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
 
+	<ItemGroup>
+		<!--TEMP REMOVE BEFORE RELEASE -->
+		<ProjectReference Include="..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
+	</ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" />
+    <!-- TEMP uncomment before release: <PackageReference Include="Azure.Messaging.EventHubs" />-->
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />

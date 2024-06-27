@@ -38,10 +38,61 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void DifferentPositionsAreNotEqual()
+        public void TheSamePositionAreEqualWithOffset()
+        {
+            var first = new CheckpointPosition("44", 121);
+            var second = new CheckpointPosition("44", 121);
+
+            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
+        ///   equality.
+        /// </summary>
+        ///
+        [Test]
+        public void DifferentPositionsAreNotEqualWithOffset()
+        {
+            var first = new CheckpointPosition("10");
+            var second = new CheckpointPosition("121");
+
+            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
+        ///   equality.
+        /// </summary>
+        ///
+        [Test]
+        public void DifferentPositionsAreNotEqualWithSequenceNumber()
         {
             var first = new CheckpointPosition(10);
             var second = new CheckpointPosition(121);
+
+            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
+        ///   equality.
+        /// </summary>
+        ///
+        [Test]
+        public void DifferentPositionsAreNotEqual()
+        {
+            var first = new CheckpointPosition(10);
+            var second = new CheckpointPosition("121");
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -58,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void GetHashCodeReturnsDifferentValuesForDifferentMembers()
         {
             var first = new CheckpointPosition(10);
-            var second = new CheckpointPosition(121);
+            var second = new CheckpointPosition("121");
 
             Assert.That(first.GetHashCode(), Is.Not.EqualTo(second.GetHashCode()));
         }
@@ -72,11 +123,13 @@ namespace Azure.Messaging.EventHubs.Tests
         public void FromEventSetsProperties()
         {
             var sequence = 4566;
-            var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, offset: 123);
+            var globalOffset = "4566";
+            var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, globalOffset: globalOffset);
 
             var checkpoint = CheckpointPosition.FromEvent(eventData);
 
             Assert.That(checkpoint.SequenceNumber, Is.EqualTo(sequence), "Sequence number should have been populated from the event.");
+            Assert.That(checkpoint.GlobalOffset, Is.EqualTo(globalOffset), "Global Offset should have been populated from the event.");
         }
 
         /// <summary>
@@ -88,10 +141,12 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ToStringReflectsTheState()
         {
             var sequence = 121;
+            var globalOffset = "124";
 
-            var checkpoint = new CheckpointPosition(sequence);
+            var checkpoint = new CheckpointPosition(globalOffset, sequence);
 
             Assert.That(checkpoint.ToString(), Contains.Substring($"[{sequence}]"), "The sequence should be represented.");
+            Assert.That(checkpoint.ToString(), Contains.Substring($"[{globalOffset}]"), "The global offset should be represented.");
         }
 
         /// <summary>
@@ -102,13 +157,14 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ToStringReflectsTheStateFromEventData()
         {
-            var offset = 400;
+            var globalOffset = "400";
             var sequence = 121;
-            var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, offset: offset);
+            var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, globalOffset: globalOffset);
 
             var checkpoint = CheckpointPosition.FromEvent(eventData);
 
             Assert.That(checkpoint.ToString(), Contains.Substring($"[{sequence}]"), "The sequence should be represented.");
+            Assert.That(checkpoint.ToString(), Contains.Substring($"[{globalOffset}]"), "The global offset should be represented.");
         }
     }
 }

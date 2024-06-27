@@ -23,9 +23,11 @@ namespace Azure.Messaging.EventHubs
         public override System.BinaryData Data { get { throw null; } set { } }
         public System.DateTimeOffset EnqueuedTime { get { throw null; } }
         public System.BinaryData EventBody { get { throw null; } set { } }
+        public string GlobalOffset { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool IsReadOnly { get { throw null; } }
         public string MessageId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public long Offset { get { throw null; } }
         public string PartitionKey { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
@@ -80,8 +82,11 @@ namespace Azure.Messaging.EventHubs
     }
     public partial class EventHubProperties
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal EventHubProperties(string name, System.DateTimeOffset createdOn, string[] partitionIds) { }
+        protected internal EventHubProperties(string name, System.DateTimeOffset createdOn, string[] partitionIds, bool isGeoReplicationEnabled) { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public bool IsGeoReplicationEnabled { get { throw null; } }
         public string Name { get { throw null; } }
         public string[] PartitionIds { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -139,14 +144,22 @@ namespace Azure.Messaging.EventHubs
     }
     public static partial class EventHubsModelFactory
     {
-        public static Azure.Messaging.EventHubs.EventData EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, string partitionKey = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Messaging.EventHubs.EventData EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties, string partitionKey, long sequenceNumber, long offset, System.DateTimeOffset enqueuedTime) { throw null; }
+        public static Azure.Messaging.EventHubs.EventData EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, string partitionKey = null, long sequenceNumber = (long)-9223372036854775808, string globalOffset = null, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Messaging.EventHubs.Producer.EventDataBatch EventDataBatch(long batchSizeBytes, System.Collections.Generic.IList<Azure.Messaging.EventHubs.EventData> batchEventStore, Azure.Messaging.EventHubs.Producer.CreateBatchOptions batchOptions = null, System.Func<Azure.Messaging.EventHubs.EventData, bool> tryAddCallback = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventHubs.EventHubProperties EventHubProperties(string name, System.DateTimeOffset createdOn, string[] partitionIds) { throw null; }
+        public static Azure.Messaging.EventHubs.EventHubProperties EventHubProperties(string name, System.DateTimeOffset createdOn, string[] partitionIds, bool isGeoReplicationEnabled) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber, long? lastOffset, System.DateTimeOffset? lastEnqueuedTime, System.DateTimeOffset? lastReceivedTime) { throw null; }
+        public static Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber, string lastGlobalOffset, System.DateTimeOffset? lastEnqueuedTime, System.DateTimeOffset? lastReceivedTime) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventHubs.Consumer.PartitionContext PartitionContext(string partitionId, Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties lastEnqueuedEventProperties = default(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties)) { throw null; }
         public static Azure.Messaging.EventHubs.Consumer.PartitionContext PartitionContext(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties lastEnqueuedEventProperties = default(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventHubs.PartitionProperties PartitionProperties(string eventHubName, string partitionId, bool isEmpty, long beginningSequenceNumber, long lastSequenceNumber, long lastOffset, System.DateTimeOffset lastEnqueuedTime) { throw null; }
+        public static Azure.Messaging.EventHubs.PartitionProperties PartitionProperties(string eventHubName, string partitionId, bool isEmpty, long beginningSequenceNumber, long lastSequenceNumber, string lastOffset, System.DateTimeOffset lastEnqueuedTime) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventHubs.Producer.PartitionPublishingProperties PartitionPublishingProperties(bool isIdempotentPublishingEnabled, long? producerGroupId, short? ownerLevel, int? lastPublishedSequenceNumber) { throw null; }
     }
@@ -184,11 +197,15 @@ namespace Azure.Messaging.EventHubs
     }
     public partial class PartitionProperties
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal PartitionProperties(string eventHubName, string partitionId, bool isEmpty, long beginningSequenceNumber, long lastSequenceNumber, long lastOffset, System.DateTimeOffset lastEnqueuedTime) { }
+        protected internal PartitionProperties(string eventHubName, string partitionId, bool isEmpty, long beginningSequenceNumber, long lastSequenceNumber, string lastGlobalOffset, System.DateTimeOffset lastEnqueuedTime) { }
         public long BeginningSequenceNumber { get { throw null; } }
         public string EventHubName { get { throw null; } }
         public string Id { get { throw null; } }
         public bool IsEmpty { get { throw null; } }
+        public string LastEnqueuedGlobalOffset { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public long LastEnqueuedOffset { get { throw null; } }
         public long LastEnqueuedSequenceNumber { get { throw null; } }
         public System.DateTimeOffset LastEnqueuedTime { get { throw null; } }
@@ -260,6 +277,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public static Azure.Messaging.EventHubs.Consumer.EventPosition FromEnqueuedTime(System.DateTimeOffset enqueuedTime) { throw null; }
+        public static Azure.Messaging.EventHubs.Consumer.EventPosition FromGlobalOffset(string globalOffset, bool isInclusive = true) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventHubs.Consumer.EventPosition FromOffset(long offset, bool isInclusive = true) { throw null; }
         public static Azure.Messaging.EventHubs.Consumer.EventPosition FromSequenceNumber(long sequenceNumber, bool isInclusive = true) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -271,9 +290,15 @@ namespace Azure.Messaging.EventHubs.Consumer
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct LastEnqueuedEventProperties : System.IEquatable<Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties>
     {
+        private object _dummy;
+        private int _dummyPrimitive;
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public LastEnqueuedEventProperties(long? lastSequenceNumber, long? lastOffset, System.DateTimeOffset? lastEnqueuedTime, System.DateTimeOffset? lastReceivedTime) { throw null; }
+        public LastEnqueuedEventProperties(long? lastSequenceNumber, string lastGlobalOffset, System.DateTimeOffset? lastEnqueuedTime, System.DateTimeOffset? lastReceivedTime) { throw null; }
         public System.DateTimeOffset? EnqueuedTime { get { throw null; } }
+        public string GlobalOffset { get { throw null; } }
         public System.DateTimeOffset? LastReceivedTime { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public long? Offset { get { throw null; } }
         public long? SequenceNumber { get { throw null; } }
         public bool Equals(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties other) { throw null; }
@@ -331,6 +356,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, System.Threading.CancellationToken cancellationToken);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, Azure.Messaging.EventHubs.Processor.CheckpointPosition startingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -393,6 +419,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string ConsumerGroup { get { throw null; } }
         protected bool EnableBatchTracing { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
+        protected Azure.Messaging.EventHubs.EventHubProperties EventHubProperties { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
         public string Identifier { get { throw null; } }
         public bool IsRunning { get { throw null; } protected set { } }
@@ -420,6 +447,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
         protected virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, Azure.Messaging.EventHubs.Processor.CheckpointPosition startingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected virtual System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected internal virtual System.Threading.Tasks.Task ValidateProcessingPreconditions(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -482,6 +510,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected override System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ListOwnershipAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, Azure.Messaging.EventHubs.Processor.CheckpointPosition startingPosition, System.Threading.CancellationToken cancellationToken) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected override System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
@@ -490,8 +519,12 @@ namespace Azure.Messaging.EventHubs.Processor
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct CheckpointPosition : System.IEquatable<Azure.Messaging.EventHubs.Processor.CheckpointPosition>
     {
+        private object _dummy;
         private int _dummyPrimitive;
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public CheckpointPosition(long sequenceNumber) { throw null; }
+        public CheckpointPosition(string globalOffset, long sequenceNumber = (long)-9223372036854775808) { throw null; }
+        public string GlobalOffset { get { throw null; } }
         public long SequenceNumber { get { throw null; } }
         public bool Equals(Azure.Messaging.EventHubs.Processor.CheckpointPosition other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

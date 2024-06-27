@@ -386,7 +386,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     systemProperties: new Dictionary<string, object>(), //arbitrary value
                     partitionKey: "sample-key",
                     sequenceNumber: 1000,
-                    offset: 1500,
+                    globalOffset: "1500",
                     enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
                 EventData eventData2 = EventHubsModelFactory.EventData(
@@ -394,7 +394,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     systemProperties: new Dictionary<string, object>(), //arbitrary value
                     partitionKey: "sample-key",
                     sequenceNumber: 1000,
-                    offset: 1500,
+                    globalOffset: "1500",
                     enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
                 // This creates a mock PartitionEvent to return from the consumer client.
@@ -480,7 +480,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     systemProperties: new Dictionary<string, object>(), //arbitrary value
                     partitionKey: $"sample-key-{index}",
                     sequenceNumber: 1234,
-                    offset: 234,
+                    globalOffset: "234",
                     enqueuedTime: DateTimeOffset.Parse("9:25 AM"));
 
                 receivedEvents.Add(eventData);

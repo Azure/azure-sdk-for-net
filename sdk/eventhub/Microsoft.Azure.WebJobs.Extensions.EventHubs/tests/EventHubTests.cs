@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         private static EventData GetSystemProperties(byte[] body, string partitionKey = "TestKey") =>
-            EventHubsModelFactory.EventData(new BinaryData(body), partitionKey: partitionKey, offset: 140, enqueuedTime: DateTimeOffset.MinValue, sequenceNumber: 4294967296, systemProperties: new Dictionary<string, object>()
+            EventHubsModelFactory.EventData(new BinaryData(body), partitionKey: partitionKey, globalOffset: "140", enqueuedTime: DateTimeOffset.MinValue, sequenceNumber: 4294967296, systemProperties: new Dictionary<string, object>()
             {
                 {"iothub-connection-device-id", "testDeviceId"},
                 {"iothub-enqueuedtime", DateTime.MinValue}

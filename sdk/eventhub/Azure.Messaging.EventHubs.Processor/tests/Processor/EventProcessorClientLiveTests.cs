@@ -394,7 +394,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Read the initial set back, marking the offset and sequence number of the last event in the initial set.
 
-            var startingOffset = 0L;
+            string startingGlobalOffset = "";
 
             await using (var consumer = new EventHubConsumerClient(scope.ConsumerGroups.First(), connectionString))
             {
@@ -402,7 +402,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (partitionEvent.Data.IsEquivalentTo(lastSourceEvent))
                     {
-                        startingOffset = partitionEvent.Data.Offset;
+                        startingGlobalOffset = partitionEvent.Data.GlobalOffset;
 
                         break;
                     }
@@ -425,7 +425,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             processor.PartitionInitializingAsync += args =>
             {
-                args.DefaultStartingPosition = EventPosition.FromOffset(startingOffset, false);
+                args.DefaultStartingPosition = EventPosition.FromGlobalOffset(startingGlobalOffset, false);
                 return Task.CompletedTask;
             };
 

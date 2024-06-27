@@ -590,7 +590,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Once sent, query the partition and determine the offset of the last enqueued event, then send the new set
                 // of events that should appear after the starting position.
 
-                long lastOffset;
+                string lastOffset;
                 EventPosition startingPosition;
 
                 await using (var producer = new EventHubProducerClient(connectionString))
@@ -598,8 +598,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     await SendEventsAsync(connectionString, seedEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
                     await Task.Delay(250);
 
-                    lastOffset = (await producer.GetPartitionPropertiesAsync(partition, cancellationSource.Token)).LastEnqueuedOffset;
-                    startingPosition = EventPosition.FromOffset(lastOffset, isInclusive);
+                    lastOffset = (await producer.GetPartitionPropertiesAsync(partition, cancellationSource.Token)).LastEnqueuedGlobalOffset;
+                    startingPosition = EventPosition.FromGlobalOffset(lastOffset, isInclusive);
 
                     await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
                 }
@@ -621,7 +621,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(readState.Events.Count, Is.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
-                    Assert.That(readState.Events.Values.Any(readEvent => readEvent.Offset == lastOffset), Is.EqualTo(isInclusive), $"The event with offset [{ lastOffset }] was { ((isInclusive) ? "not" : "") } in the set of read events, which is inconsistent with the inclusive flag.");
+                    Assert.That(readState.Events.Values.Any(readEvent => readEvent.GlobalOffset == lastOffset), Is.EqualTo(isInclusive), $"The event with offset [{ lastOffset }] was { ((isInclusive) ? "not" : "") } in the set of read events, which is inconsistent with the inclusive flag.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
@@ -2087,6 +2087,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedGlobalOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
                 }
             }
         }
