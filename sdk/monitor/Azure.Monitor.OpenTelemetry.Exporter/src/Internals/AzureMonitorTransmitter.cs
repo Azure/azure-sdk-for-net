@@ -172,9 +172,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     AzureMonitorOpenTelemetryExporterDataEventSource.Log.TelemetryItem(telemetryItems);
 
-                    using var httpMessage = async
-                        ? await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false)
-                        : _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
+                    using var httpMessage = async ?
+                    await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
+                    _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
                     result = HttpPipelineHelper.IsSuccess(httpMessage);
 
