@@ -3,6 +3,7 @@
 
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 using System.ClientModel;
@@ -28,7 +29,8 @@ namespace System.ClientModel.Tests.Options
             Assert.AreEqual(21, options.AllowedHeaderNames.Count);
             Assert.AreEqual(1, options.AllowedQueryParameters.Count);
             Assert.AreEqual(false, options.IsLoggingContentEnabled);
-            Assert.AreEqual(null, options.LoggerFactory);
+            Assert.IsInstanceOf(typeof(NullLoggerFactory), options.LoggerFactory);
+            Assert.AreEqual(null, options.CorrelationIdHeaderName);
         }
 
         [Test]
@@ -41,10 +43,11 @@ namespace System.ClientModel.Tests.Options
             options.Freeze();
 
             Assert.Throws<NotSupportedException>(() => options.AllowedHeaderNames.Add("ShouldNotAdd"));
+            Assert.Throws<NotSupportedException>(() => options.AllowedQueryParameters.Add("ShouldNotAdd"));
             Assert.Throws<InvalidOperationException>(() => options.LoggedContentSizeLimit = 5);
             Assert.Throws<InvalidOperationException>(() => options.IsLoggingContentEnabled = true);
-            Assert.Throws<NotSupportedException>(() => options.AllowedQueryParameters.Add("ShouldNotAdd"));
-            // Assert.Throws<InvalidOperationException>(() => options.LoggerFactory = ); TODO
+            Assert.Throws<InvalidOperationException>(() => options.CorrelationIdHeaderName = "ShouldNotSet");
+            Assert.Throws<InvalidOperationException>(() => options.LoggerFactory = new NullLoggerFactory());
         }
     }
 }

@@ -80,7 +80,7 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
     // configurations to event listener classes aren't reliably applied.
     // see: https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventlistener#remarks
 
-    private class TestEventListenerWarning : TestEventListener
+    private class TestEventListenerWarning : TestClientEventListener
     {
         protected override void OnEventSourceCreated(EventSource eventSource)
         {
@@ -91,7 +91,7 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
         }
     }
 
-    private class TestEventListenerVerbose : TestEventListener
+    private class TestEventListenerVerbose : TestClientEventListener
     {
         protected override void OnEventSourceCreated(EventSource eventSource)
         {
@@ -99,121 +99,6 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
             {
                 EnableEvents(eventSource, EventLevel.Verbose);
             }
-        }
-    }
-
-    private class TestEventListener : EventListener
-    {
-        private volatile bool _disposed;
-        private readonly ConcurrentQueue<EventWrittenEventArgs> _events = new();
-
-        protected override void OnEventWritten(EventWrittenEventArgs eventData)
-        {
-            // See: https://github.com/dotnet/corefx/issues/42600
-            if (eventData.EventId != -1 && !_disposed)
-            {
-                FormatPayload(eventData);
-                _events.Enqueue(eventData);
-            }
-        }
-
-        public EventWrittenEventArgs SingleEventById(int id, Func<EventWrittenEventArgs, bool>? filter = default) => EventsById(id).Single(filter ?? (_ => true));
-
-        public IEnumerable<EventWrittenEventArgs> EventsById(int id) => _events.Where(e => e.EventId == id);
-
-        public override void Dispose()
-        {
-            _disposed = true;
-            base.Dispose();
-        }
-
-        private static string FormatPayload(EventWrittenEventArgs eventData)
-        {
-            if (eventData.Payload == null || eventData.Payload.Count == 0)
-            {
-                return string.Empty;
-            }
-            var payloadArray = eventData.Payload.ToArray();
-            var loggerArgs =  payloadArray[payloadArray.Length];
-
-            StringBuilder stringBuilder = new StringBuilder();
-            if (loggerArgs is IReadOnlyList<KeyValuePair<string, string?>> arguments)
-            {
-                payloadArray = payloadArray.Take(payloadArray.Length - 1).ToArray();
-                ProcessPayloadArray(payloadArray);
-
-                stringBuilder = new StringBuilder();
-                stringBuilder.Append(eventData.EventName);
-
-                if (!string.IsNullOrWhiteSpace(eventData.Message))
-                {
-                    stringBuilder.AppendLine();
-                    stringBuilder.Append(nameof(eventData.Message)).Append(" = ").Append(eventData.Message);
-                }
-
-                for (int i = 0; i < arguments.Count; i++)
-                {
-                    stringBuilder.AppendLine();
-                    stringBuilder.Append(arguments[i].Key).Append(" = ").Append(arguments[i].Value);
-                }
-
-                return stringBuilder.ToString();
-            }
-
-            ProcessPayloadArray(payloadArray);
-
-            if (eventData.Message != null)
-            {
-                try
-                {
-                    return string.Format(CultureInfo.InvariantCulture, eventData.Message, payloadArray);
-                }
-                catch (FormatException)
-                {
-                }
-            }
-
-            stringBuilder.Append(eventData.EventName);
-
-            if (!string.IsNullOrWhiteSpace(eventData.Message))
-            {
-                stringBuilder.AppendLine();
-                stringBuilder.Append(nameof(eventData.Message)).Append(" = ").Append(eventData.Message);
-            }
-
-            if (eventData.PayloadNames != null)
-            {
-                for (int i = 0; i < eventData.PayloadNames.Count; i++)
-                {
-                    stringBuilder.AppendLine();
-                    stringBuilder.Append(eventData.PayloadNames[i]).Append(" = ").Append(payloadArray[i]);
-                }
-            }
-
-            return stringBuilder.ToString();
-        }
-
-        private static void ProcessPayloadArray(object?[] payloadArray)
-        {
-            for (int i = 0; i < payloadArray.Length; i++)
-            {
-                payloadArray[i] = FormatValue(payloadArray[i]);
-            }
-        }
-
-        private static object? FormatValue(object? o)
-        {
-            if (o is byte[] bytes)
-            {
-                var stringBuilder = new StringBuilder();
-                foreach (byte b in bytes)
-                {
-                    stringBuilder.AppendFormat(CultureInfo.InvariantCulture, "{0:X2}", b);
-                }
-
-                return stringBuilder.ToString();
-            }
-            return o;
         }
     }
     #endregion

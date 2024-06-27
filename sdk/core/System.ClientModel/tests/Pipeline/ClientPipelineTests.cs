@@ -279,7 +279,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
         Assert.AreEqual("Response:ClientBeforeTransportPolicyB", observations[index++]);
         Assert.AreEqual("Response:ClientBeforeTransportPolicyA", observations[index++]);
 
-        Assert.AreEqual("Request:LoggingPolicy", observations[index++]);
+        Assert.AreEqual("Response:LoggingPolicy", observations[index++]);
 
         Assert.AreEqual("Response:UserPerTryPolicyB", observations[index++]);
         Assert.AreEqual("Response:UserPerTryPolicyA", observations[index++]);
