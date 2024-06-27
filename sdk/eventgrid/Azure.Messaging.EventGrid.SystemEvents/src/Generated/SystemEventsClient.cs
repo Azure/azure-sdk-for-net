@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     // Data plane generated client.
     /// <summary> The SystemEvents service client. </summary>
-    public partial class SystemEventsClient
+    internal partial class SystemEventsClient
     {
         private readonly HttpPipeline _pipeline;
 

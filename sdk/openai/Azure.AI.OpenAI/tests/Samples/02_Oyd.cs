@@ -21,8 +21,6 @@ namespace Azure.AI.OpenAI.Samples;
 
 public partial class AzureOpenAISamples
 {
-    [Test]
-    [Ignore("Only for sample compilation validation")]
     public void OnYourDataSearch()
     {
         AzureOpenAIClient azureClient = new(

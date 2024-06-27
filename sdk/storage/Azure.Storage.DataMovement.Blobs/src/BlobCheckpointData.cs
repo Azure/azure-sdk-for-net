@@ -18,19 +18,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         public int Version;
 
-        /// <summary>
-        /// The type of blob.
-        /// </summary>
-        public DataTransferProperty<BlobType?> BlobType;
-        public bool PreserveBlobType;
-        public BlobType? BlobTypeValue;
-
-        public BlobCheckpointData(int version, DataTransferProperty<BlobType?> blobType)
+        public BlobCheckpointData(int version)
         {
             Version = version;
-            BlobType = blobType;
-            PreserveBlobType = blobType?.Preserve ?? true;
-            BlobTypeValue = blobType?.Value != default ? blobType.Value : default;
         }
     }
 }
