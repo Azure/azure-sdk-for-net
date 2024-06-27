@@ -60,6 +60,17 @@ namespace Azure.AI.OpenAI.Assistants
             return new ThreadInitializationMessage(role, content, fileIds?.ToList(), metadata, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Assistants.MessageTextAnnotation"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <param name="text"> The textual content associated with this text annotation item. </param>
+        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
+        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <returns> A new <see cref="Assistants.MessageTextAnnotation"/> instance for mocking. </returns>
+        public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null, int startIndex = default, int endIndex = default)
+        {
+            return new UnknownMessageTextAnnotation(type, text, startIndex, endIndex, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Assistants.CreateRunOptions"/>. </summary>
         /// <param name="assistantId"> The ID of the assistant that should run the thread. </param>
         /// <param name="overrideModelName"> The overridden model name that the assistant should use to run the thread. </param>
@@ -88,6 +99,15 @@ namespace Azure.AI.OpenAI.Assistants
                 overrideTools?.ToList(),
                 metadata,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.RequiredToolCall"/>. </summary>
+        /// <param name="type"> The object type for the required tool call. </param>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
+        /// <returns> A new <see cref="Assistants.RequiredToolCall"/> instance for mocking. </returns>
+        public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
+        {
+            return new UnknownRequiredToolCall(type, id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunError"/>. </summary>
@@ -124,35 +144,6 @@ namespace Azure.AI.OpenAI.Assistants
                 overrideTools?.ToList(),
                 metadata,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepError"/>. </summary>
-        /// <param name="code"> The error code for this error. </param>
-        /// <param name="message"> The human-readable text associated with this error. </param>
-        /// <returns> A new <see cref="Assistants.RunStepError"/> instance for mocking. </returns>
-        public static RunStepError RunStepError(RunStepErrorCode code = default, string message = null)
-        {
-            return new RunStepError(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Assistants.MessageTextAnnotation"/>. </summary>
-        /// <param name="type"> The object type. </param>
-        /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
-        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
-        /// <returns> A new <see cref="Assistants.MessageTextAnnotation"/> instance for mocking. </returns>
-        public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null, int startIndex = default, int endIndex = default)
-        {
-            return new UnknownMessageTextAnnotation(type, text, startIndex, endIndex, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Assistants.RequiredToolCall"/>. </summary>
-        /// <param name="type"> The object type for the required tool call. </param>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        /// <returns> A new <see cref="Assistants.RequiredToolCall"/> instance for mocking. </returns>
-        public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
-        {
-            return new UnknownRequiredToolCall(type, id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepMessageCreationDetails"/>. </summary>
@@ -227,6 +218,15 @@ namespace Azure.AI.OpenAI.Assistants
             retrieval ??= new Dictionary<string, string>();
 
             return new RunStepRetrievalToolCall("retrieval", id, serializedAdditionalRawData: null, retrieval);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepError"/>. </summary>
+        /// <param name="code"> The error code for this error. </param>
+        /// <param name="message"> The human-readable text associated with this error. </param>
+        /// <returns> A new <see cref="Assistants.RunStepError"/> instance for mocking. </returns>
+        public static RunStepError RunStepError(RunStepErrorCode code = default, string message = null)
+        {
+            return new RunStepError(code, message, serializedAdditionalRawData: null);
         }
     }
 }

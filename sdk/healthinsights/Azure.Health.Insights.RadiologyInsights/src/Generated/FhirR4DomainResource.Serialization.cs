@@ -122,7 +122,9 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 switch (discriminator.GetString())
                 {
+                    case "Condition": return FhirR4Condition.DeserializeFhirR4Condition(element, options);
                     case "Observation": return FhirR4Observation.DeserializeFhirR4Observation(element, options);
+                    case "ResearchStudy": return FhirR4ResearchStudy.DeserializeFhirR4ResearchStudy(element, options);
                 }
             }
             return UnknownFhirR4DomainResource.DeserializeUnknownFhirR4DomainResource(element, options);

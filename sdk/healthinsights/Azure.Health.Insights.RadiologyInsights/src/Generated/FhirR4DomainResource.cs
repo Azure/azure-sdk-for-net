@@ -14,7 +14,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     /// A resource with narrative, extensions, and contained resources
     /// Based on [FHIR DomainResource](https://www.hl7.org/fhir/domainresource.html)
     /// Please note <see cref="FhirR4DomainResource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="FhirR4Observation"/>.
+    /// The available derived classes include <see cref="FhirR4Condition"/>, <see cref="FhirR4Observation"/> and <see cref="FhirR4ResearchStudy"/>.
     /// </summary>
     public abstract partial class FhirR4DomainResource : FhirR4Resource
     {
