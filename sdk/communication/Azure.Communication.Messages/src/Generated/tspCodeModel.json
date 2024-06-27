@@ -1477,7 +1477,6 @@
    "Protocol": {
     "$id": "186"
    },
-   "Creatable": true,
    "Parameters": [
     {
      "$ref": "148"
@@ -1653,7 +1652,6 @@
    "Protocol": {
     "$id": "204"
    },
-   "Creatable": true,
    "Parameters": [
     {
      "$ref": "148"
