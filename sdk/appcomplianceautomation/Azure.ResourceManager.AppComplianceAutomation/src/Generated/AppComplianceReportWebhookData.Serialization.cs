@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,79 +50,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WebhookId))
-            {
-                writer.WritePropertyName("webhookId"u8);
-                writer.WriteStringValue(WebhookId);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
-            }
-            if (Optional.IsDefined(SendAllEvents))
-            {
-                writer.WritePropertyName("sendAllEvents"u8);
-                writer.WriteStringValue(SendAllEvents.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Events))
-            {
-                writer.WritePropertyName("events"u8);
-                writer.WriteStartArray();
-                foreach (var item in Events)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(PayloadUri))
-            {
-                writer.WritePropertyName("payloadUrl"u8);
-                writer.WriteStringValue(PayloadUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(ContentType))
-            {
-                writer.WritePropertyName("contentType"u8);
-                writer.WriteStringValue(ContentType.Value.ToString());
-            }
-            if (Optional.IsDefined(WebhookKey))
-            {
-                writer.WritePropertyName("webhookKey"u8);
-                writer.WriteStringValue(WebhookKey);
-            }
-            if (Optional.IsDefined(UpdateWebhookKey))
-            {
-                writer.WritePropertyName("updateWebhookKey"u8);
-                writer.WriteStringValue(UpdateWebhookKey.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(WebhookKeyEnabled))
-            {
-                writer.WritePropertyName("webhookKeyEnabled"u8);
-                writer.WriteStringValue(WebhookKeyEnabled.Value.ToString());
-            }
-            if (Optional.IsDefined(EnableSslVerification))
-            {
-                writer.WritePropertyName("enableSslVerification"u8);
-                writer.WriteStringValue(EnableSslVerification.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeliveryStatus))
-            {
-                writer.WritePropertyName("deliveryStatus"u8);
-                writer.WriteStringValue(DeliveryStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -159,27 +88,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 return null;
             }
+            AppComplianceReportWebhookProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string webhookId = default;
-            WebhookStatus? status = default;
-            Guid? tenantId = default;
-            SendAllEvent? sendAllEvents = default;
-            IList<WebhookNotificationEvent> events = default;
-            Uri payloadUrl = default;
-            WebhookContentType? contentType = default;
-            string webhookKey = default;
-            UpdateWebhookKey? updateWebhookKey = default;
-            WebhookKeyEnabled? webhookKeyEnabled = default;
-            EnableSslVerification? enableSslVerification = default;
-            WebhookDeliveryStatus? deliveryStatus = default;
-            AppComplianceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = AppComplianceReportWebhookProperties.DeserializeAppComplianceReportWebhookProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -204,132 +126,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("webhookId"u8))
-                        {
-                            webhookId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = new WebhookStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("tenantId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tenantId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("sendAllEvents"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sendAllEvents = new SendAllEvent(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("events"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WebhookNotificationEvent> array = new List<WebhookNotificationEvent>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new WebhookNotificationEvent(item.GetString()));
-                            }
-                            events = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("payloadUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            payloadUrl = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("contentType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            contentType = new WebhookContentType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("webhookKey"u8))
-                        {
-                            webhookKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("updateWebhookKey"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            updateWebhookKey = new UpdateWebhookKey(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("webhookKeyEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            webhookKeyEnabled = new WebhookKeyEnabled(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("enableSslVerification"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableSslVerification = new EnableSslVerification(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("deliveryStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deliveryStatus = new WebhookDeliveryStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new AppComplianceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -341,19 +137,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 name,
                 type,
                 systemData,
-                webhookId,
-                status,
-                tenantId,
-                sendAllEvents,
-                events ?? new ChangeTrackingList<WebhookNotificationEvent>(),
-                payloadUrl,
-                contentType,
-                webhookKey,
-                updateWebhookKey,
-                webhookKeyEnabled,
-                enableSslVerification,
-                deliveryStatus,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

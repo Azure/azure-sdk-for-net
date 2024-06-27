@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,24 +50,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Answers))
-            {
-                writer.WritePropertyName("answers"u8);
-                writer.WriteStartArray();
-                foreach (var item in Answers)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -104,16 +88,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 return null;
             }
+            AppComplianceReportScopingConfigurationProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<ScopingAnswer> answers = default;
-            AppComplianceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = AppComplianceReportScopingConfigurationProperties.DeserializeAppComplianceReportScopingConfigurationProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -138,41 +126,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("answers"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ScopingAnswer> array = new List<ScopingAnswer>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ScopingAnswer.DeserializeScopingAnswer(item, options));
-                            }
-                            answers = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new AppComplianceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -184,8 +137,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 name,
                 type,
                 systemData,
-                answers ?? new ChangeTrackingList<ScopingAnswer>(),
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

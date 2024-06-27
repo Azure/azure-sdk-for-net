@@ -52,9 +52,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportScopingConfigurationData"/>. </summary>
-        public AppComplianceReportScopingConfigurationData()
+        /// <param name="properties"> ScopingConfiguration property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public AppComplianceReportScopingConfigurationData(AppComplianceReportScopingConfigurationProperties properties)
         {
-            Answers = new ChangeTrackingList<ScopingAnswer>();
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportScopingConfigurationData"/>. </summary>
@@ -62,19 +66,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="answers"> List of scoping question answers. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="properties"> ScopingConfiguration property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceReportScopingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ScopingAnswer> answers, AppComplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppComplianceReportScopingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppComplianceReportScopingConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Answers = answers;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of scoping question answers. </summary>
-        public IList<ScopingAnswer> Answers { get; }
-        /// <summary> Azure lifecycle management. </summary>
-        public AppComplianceProvisioningState? ProvisioningState { get; }
+        /// <summary> Initializes a new instance of <see cref="AppComplianceReportScopingConfigurationData"/> for deserialization. </summary>
+        internal AppComplianceReportScopingConfigurationData()
+        {
+        }
+
+        /// <summary> ScopingConfiguration property. </summary>
+        public AppComplianceReportScopingConfigurationProperties Properties { get; set; }
     }
 }

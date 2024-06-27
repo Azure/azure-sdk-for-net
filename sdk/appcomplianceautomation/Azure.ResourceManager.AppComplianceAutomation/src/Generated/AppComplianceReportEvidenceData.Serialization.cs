@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,36 +50,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(EvidenceType))
-            {
-                writer.WritePropertyName("evidenceType"u8);
-                writer.WriteStringValue(EvidenceType.Value.ToString());
-            }
-            writer.WritePropertyName("filePath"u8);
-            writer.WriteStringValue(FilePath);
-            if (Optional.IsDefined(ExtraData))
-            {
-                writer.WritePropertyName("extraData"u8);
-                writer.WriteStringValue(ExtraData);
-            }
-            if (Optional.IsDefined(ControlId))
-            {
-                writer.WritePropertyName("controlId"u8);
-                writer.WriteStringValue(ControlId);
-            }
-            if (Optional.IsDefined(ResponsibilityId))
-            {
-                writer.WritePropertyName("responsibilityId"u8);
-                writer.WriteStringValue(ResponsibilityId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -116,20 +88,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 return null;
             }
+            AppComplianceReportEvidenceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            AppComplianceReportEvidenceType? evidenceType = default;
-            string filePath = default;
-            string extraData = default;
-            string controlId = default;
-            string responsibilityId = default;
-            AppComplianceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = AppComplianceReportEvidenceProperties.DeserializeAppComplianceReportEvidenceProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -154,56 +126,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("evidenceType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            evidenceType = new AppComplianceReportEvidenceType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("filePath"u8))
-                        {
-                            filePath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("extraData"u8))
-                        {
-                            extraData = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("controlId"u8))
-                        {
-                            controlId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("responsibilityId"u8))
-                        {
-                            responsibilityId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new AppComplianceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -215,12 +137,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 name,
                 type,
                 systemData,
-                evidenceType,
-                filePath,
-                extraData,
-                controlId,
-                responsibilityId,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

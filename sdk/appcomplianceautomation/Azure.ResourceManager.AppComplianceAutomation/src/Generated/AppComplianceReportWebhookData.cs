@@ -52,9 +52,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportWebhookData"/>. </summary>
-        public AppComplianceReportWebhookData()
+        /// <param name="properties"> Webhook property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public AppComplianceReportWebhookData(AppComplianceReportWebhookProperties properties)
         {
-            Events = new ChangeTrackingList<WebhookNotificationEvent>();
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportWebhookData"/>. </summary>
@@ -62,63 +66,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="webhookId"> Webhook id in database. </param>
-        /// <param name="status"> Webhook status. </param>
-        /// <param name="tenantId"> Tenant id. </param>
-        /// <param name="sendAllEvents"> whether to send notification under any event. </param>
-        /// <param name="events"> under which event notification should be sent. </param>
-        /// <param name="payloadUri"> webhook payload url. </param>
-        /// <param name="contentType"> content type. </param>
-        /// <param name="webhookKey"> webhook secret token. If not set, this field value is null; otherwise, please set a string value. </param>
-        /// <param name="updateWebhookKey"> whether to update webhookKey. </param>
-        /// <param name="webhookKeyEnabled"> whether webhookKey is enabled. </param>
-        /// <param name="enableSslVerification"> whether to enable ssl verification. </param>
-        /// <param name="deliveryStatus"> webhook deliveryStatus. </param>
-        /// <param name="provisioningState"> Azure Resource Provisioning State. </param>
+        /// <param name="properties"> Webhook property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceReportWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string webhookId, WebhookStatus? status, Guid? tenantId, SendAllEvent? sendAllEvents, IList<WebhookNotificationEvent> events, Uri payloadUri, WebhookContentType? contentType, string webhookKey, UpdateWebhookKey? updateWebhookKey, WebhookKeyEnabled? webhookKeyEnabled, EnableSslVerification? enableSslVerification, WebhookDeliveryStatus? deliveryStatus, AppComplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppComplianceReportWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppComplianceReportWebhookProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            WebhookId = webhookId;
-            Status = status;
-            TenantId = tenantId;
-            SendAllEvents = sendAllEvents;
-            Events = events;
-            PayloadUri = payloadUri;
-            ContentType = contentType;
-            WebhookKey = webhookKey;
-            UpdateWebhookKey = updateWebhookKey;
-            WebhookKeyEnabled = webhookKeyEnabled;
-            EnableSslVerification = enableSslVerification;
-            DeliveryStatus = deliveryStatus;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Webhook id in database. </summary>
-        public string WebhookId { get; }
-        /// <summary> Webhook status. </summary>
-        public WebhookStatus? Status { get; set; }
-        /// <summary> Tenant id. </summary>
-        public Guid? TenantId { get; }
-        /// <summary> whether to send notification under any event. </summary>
-        public SendAllEvent? SendAllEvents { get; set; }
-        /// <summary> under which event notification should be sent. </summary>
-        public IList<WebhookNotificationEvent> Events { get; }
-        /// <summary> webhook payload url. </summary>
-        public Uri PayloadUri { get; set; }
-        /// <summary> content type. </summary>
-        public WebhookContentType? ContentType { get; set; }
-        /// <summary> webhook secret token. If not set, this field value is null; otherwise, please set a string value. </summary>
-        public string WebhookKey { get; set; }
-        /// <summary> whether to update webhookKey. </summary>
-        public UpdateWebhookKey? UpdateWebhookKey { get; set; }
-        /// <summary> whether webhookKey is enabled. </summary>
-        public WebhookKeyEnabled? WebhookKeyEnabled { get; }
-        /// <summary> whether to enable ssl verification. </summary>
-        public EnableSslVerification? EnableSslVerification { get; set; }
-        /// <summary> webhook deliveryStatus. </summary>
-        public WebhookDeliveryStatus? DeliveryStatus { get; }
-        /// <summary> Azure Resource Provisioning State. </summary>
-        public AppComplianceProvisioningState? ProvisioningState { get; }
+        /// <summary> Initializes a new instance of <see cref="AppComplianceReportWebhookData"/> for deserialization. </summary>
+        internal AppComplianceReportWebhookData()
+        {
+        }
+
+        /// <summary> Webhook property. </summary>
+        public AppComplianceReportWebhookProperties Properties { get; set; }
     }
 }

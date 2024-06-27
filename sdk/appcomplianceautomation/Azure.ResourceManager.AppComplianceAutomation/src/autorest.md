@@ -20,9 +20,12 @@ sample-gen:
     - Report_SyncCertRecord
     - Evidence_CreateOrUpdate
     - Snapshot_Download
+    - ScopingConfiguration_CreateOrUpdate
+    - Webhook_CreateOrUpdate
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: false
 use-model-reader-writer: true
 
 #mgmt-debug: 
@@ -30,9 +33,12 @@ use-model-reader-writer: true
 
 rename-mapping:
   EvidenceResource: AppComplianceReportEvidence
+  EvidenceProperties: AppComplianceReportEvidenceProperties
   ReportResource: AppComplianceReport
   ScopingConfigurationResource: AppComplianceReportScopingConfiguration
+  ScopingConfigurationProperties: AppComplianceReportScopingConfigurationProperties
   SnapshotResource: AppComplianceReportSnapshot
+  SnapshotProperties: AppComplianceReportSnapshotProperties
   WebhookResource: AppComplianceReportWebhook
   WebhookProperties: AppComplianceReportWebhookProperties
   Category: AppComplianceCategory

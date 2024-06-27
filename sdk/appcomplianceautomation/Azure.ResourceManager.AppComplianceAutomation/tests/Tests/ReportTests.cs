@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
                 "sdkteststorageaccount",
                 null));
             DateTime univDateTime = new DateTime(2022, 01, 01, 0, 0, 0, DateTimeKind.Utc);
-            ArmOperation<AppComplianceReportResource> response = await reports.CreateOrUpdateAsync(WaitUntil.Completed, reportName, new AppComplianceReportData(new DateTimeOffset(univDateTime), "GMT Standard Time", resources));
+            ArmOperation<AppComplianceReportResource> response = await reports.CreateOrUpdateAsync(WaitUntil.Completed, reportName,
+                new AppComplianceReportData(new AppComplianceReportProperties(new DateTimeOffset(univDateTime), "GMT Standard Time", resources)));
 
             // get report
             Response<AppComplianceReportResource> getResponse = await reports.GetAsync(reportName);

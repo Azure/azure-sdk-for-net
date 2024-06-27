@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportEvidenceData"/>. </summary>
-        /// <param name="filePath"> The path of the file in storage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
-        public AppComplianceReportEvidenceData(string filePath)
+        /// <param name="properties"> Evidence property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public AppComplianceReportEvidenceData(AppComplianceReportEvidenceProperties properties)
         {
-            Argument.AssertNotNull(filePath, nameof(filePath));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            FilePath = filePath;
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportEvidenceData"/>. </summary>
@@ -66,21 +66,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="evidenceType"> Evidence type. </param>
-        /// <param name="filePath"> The path of the file in storage. </param>
-        /// <param name="extraData"> Extra data considered as evidence. </param>
-        /// <param name="controlId"> Control id. </param>
-        /// <param name="responsibilityId"> Responsibility id. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="properties"> Evidence property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceReportEvidenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppComplianceReportEvidenceType? evidenceType, string filePath, string extraData, string controlId, string responsibilityId, AppComplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppComplianceReportEvidenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppComplianceReportEvidenceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            EvidenceType = evidenceType;
-            FilePath = filePath;
-            ExtraData = extraData;
-            ControlId = controlId;
-            ResponsibilityId = responsibilityId;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,17 +79,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
         }
 
-        /// <summary> Evidence type. </summary>
-        public AppComplianceReportEvidenceType? EvidenceType { get; set; }
-        /// <summary> The path of the file in storage. </summary>
-        public string FilePath { get; set; }
-        /// <summary> Extra data considered as evidence. </summary>
-        public string ExtraData { get; set; }
-        /// <summary> Control id. </summary>
-        public string ControlId { get; set; }
-        /// <summary> Responsibility id. </summary>
-        public string ResponsibilityId { get; set; }
-        /// <summary> Azure lifecycle management. </summary>
-        public AppComplianceProvisioningState? ProvisioningState { get; }
+        /// <summary> Evidence property. </summary>
+        public AppComplianceReportEvidenceProperties Properties { get; set; }
     }
 }
