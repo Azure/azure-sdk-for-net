@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://github.com/Azure/azure-rest-api-specs/blob/b22c642b361e6d6e7d72a2347a09b0bcf6075d70/specification/storage/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/220ad9c6554fc7d6d10a89bdb441c1e3b36e3285/specification/storage/resource-manager/readme.md
 #tag: package-2023-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -348,11 +348,6 @@ directive:
     where: $.definitions.StorageAccountCheckNameAvailabilityParameters.properties.type
     transform: $["x-ms-constant"] = true;
 # maxpagesize should be int
-  - from: storageTaskAssignments.json
-    where: $.paths..parameters[?(@.name === "$maxpagesize")]
-    transform: >
-      $['type'] = "integer";
-      $['format'] = "int32";
   - from: blob.json
     where: $.paths..parameters[?(@.name === "$maxpagesize")]
     transform: >
