@@ -15,16 +15,22 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # $addDevVersion is a global variable set by a parameter in
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
+  $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
+  Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $ServiceProj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
-    $EngDir/service.proj `
+    $ServiceProj `
     /p:ServiceDirectory=$serviceDirectory `
     /p:AddDevVersion=$shouldAddDevVersion
 
   foreach ($projectOutput in $msbuildOutput)
   {
-    if (!$projectOutput) { continue }
+    if (!$projectOutput) {
+      Write-Host "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
+      continue
+    }
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
     if(!(Test-Path $pkgPath)) {
@@ -32,24 +38,10 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    # Add a step to extract namespaces
-    $namespaces = @()
-    # The namespaces currently only use for docs.ms toc, which is necessary for internal release.
-    if (Test-Path "$dllFolder/Release/netstandard2.0/") {
-      $defaultDll = Get-ChildItem "$dllFolder/Release/netstandard2.0/*" -Filter "$pkgName.dll" -Recurse
-      if ($defaultDll -and (Test-Path $defaultDll)) {
-        Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
-        $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
-      }
-    }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
-    if ($namespaces) {
-      $pkgProp = $pkgProp | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
-      Write-Verbose "Here are the namespaces: $($pkgProp.Namespaces)"
-    }
 
     $allPackageProps += $pkgProp
   }
