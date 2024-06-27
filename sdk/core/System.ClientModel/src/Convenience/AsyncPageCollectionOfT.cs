@@ -25,7 +25,7 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
     // instance in the implementation and not have to cast it.
     public abstract ClientToken FirstPageToken { get; }
 
-    public async Task<PageResult<T>> GetPageAsync()
+    public async Task<PageResult<T>> GetFirstPageAsync()
     => await GetPageAsyncCore(FirstPageToken).ConfigureAwait(false);
 
     public async Task<PageResult<T>> GetPageAsync(ClientToken pageToken)

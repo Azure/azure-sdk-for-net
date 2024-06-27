@@ -25,7 +25,7 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     // instance in the implementation and not have to cast it.
     public abstract ClientToken FirstPageToken { get; }
 
-    public PageResult<T> GetPage()
+    public PageResult<T> GetFirstPage()
         => GetPageCore(FirstPageToken);
 
     public PageResult<T> GetPage(ClientToken pageToken)
