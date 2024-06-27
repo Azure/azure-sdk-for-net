@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Response for services API service call. </summary>
+    /// <summary>
+    /// Response for services API service call.
+    /// Serialized Name: ServiceListResult
+    /// </summary>
     internal partial class ServiceListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceListResult"/>. </summary>
-        /// <param name="value"> A list of services. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of services.
+        /// Serialized Name: ServiceListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: ServiceListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServiceListResult(IReadOnlyList<MobileNetworkServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of services. </summary>
+        /// <summary>
+        /// A list of services.
+        /// Serialized Name: ServiceListResult.value
+        /// </summary>
         public IReadOnlyList<MobileNetworkServiceData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: ServiceListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

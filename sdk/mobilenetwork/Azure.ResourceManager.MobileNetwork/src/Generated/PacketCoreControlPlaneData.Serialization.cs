@@ -161,6 +161,11 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("homeNetworkPrivateKeysProvisioning"u8);
                 writer.WriteObjectValue(HomeNetworkPrivateKeysProvisioning, options);
             }
+            if (Optional.IsDefined(UserConsent))
+            {
+                writer.WritePropertyName("userConsent"u8);
+                writer.WriteObjectValue(UserConsent, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.MobileNetwork
             SignalingConfiguration signaling = default;
             BinaryData interopSettings = default;
             HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning = default;
+            UserConsentConfiguration userConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -430,6 +436,15 @@ namespace Azure.ResourceManager.MobileNetwork
                             homeNetworkPrivateKeysProvisioning = HomeNetworkPrivateKeysProvisioning.DeserializeHomeNetworkPrivateKeysProvisioning(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("userConsent"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            userConsent = UserConsentConfiguration.DeserializeUserConsentConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -465,6 +480,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 signaling,
                 interopSettings,
                 homeNetworkPrivateKeysProvisioning,
+                userConsent,
                 serializedAdditionalRawData);
         }
 

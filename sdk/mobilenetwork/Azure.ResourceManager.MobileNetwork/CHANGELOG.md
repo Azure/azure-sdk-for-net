@@ -1,14 +1,15 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2024-06-26)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2024-02' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/45ed7d13be79760a39301ff85cc0937f017329de/specification/mobilenetwork/resource-manager/readme.md
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.38.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.11.0 to 1.12.0
 
 ## 1.2.0 (2024-03-22)
 

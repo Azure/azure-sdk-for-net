@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Response for diagnostics package API service call. </summary>
+    /// <summary>
+    /// Response for diagnostics package API service call.
+    /// Serialized Name: DiagnosticsPackageListResult
+    /// </summary>
     internal partial class DiagnosticsPackageListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticsPackageListResult"/>. </summary>
-        /// <param name="value"> A list of diagnostics packages under a packet core control plane. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of diagnostics packages under a packet core control plane.
+        /// Serialized Name: DiagnosticsPackageListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: DiagnosticsPackageListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiagnosticsPackageListResult(IReadOnlyList<MobileNetworkDiagnosticsPackageData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of diagnostics packages under a packet core control plane. </summary>
+        /// <summary>
+        /// A list of diagnostics packages under a packet core control plane.
+        /// Serialized Name: DiagnosticsPackageListResult.value
+        /// </summary>
         public IReadOnlyList<MobileNetworkDiagnosticsPackageData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: DiagnosticsPackageListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
