@@ -33,6 +33,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private string transportUrl = "TRANSPORT_URL";
 
+        private string fileSourceUrl = "FILE_SOURCE_URL";
+
         private string cognitiveServiceEndpoint = "COGNITIVE_SERVICE_ENDPOINT";
 
         /// <summary>
@@ -84,6 +86,11 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// websocket url for automated testing
         /// </summary>
         public string TransportUrl => GetRecordedOptionalVariable(transportUrl, options => options.IsSecret("https://sanitized.skype.com"));
+
+        /// <summary>
+        /// file source for automated testing
+        /// </summary>
+        public string FileSourceUrl => GetRecordedOptionalVariable(fileSourceUrl, options => options.IsSecret("https://sanitized.skype.com/prompt.wav"));
 
         /// <summary>
         /// Cognitive service endpoint for automated testing

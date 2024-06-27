@@ -970,6 +970,7 @@ namespace Azure.Communication.CallAutomation
     public partial class PlayFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal PlayFailed() { }
+        public int? FailedPlaySourceIndex { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.PlayFailed Deserialize(string content) { throw null; }
     }
@@ -1032,6 +1033,7 @@ namespace Azure.Communication.CallAutomation
     public partial class RecognizeFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal RecognizeFailed() { }
+        public int? FailedPlaySourceIndex { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeFailed Deserialize(string content) { throw null; }
     }

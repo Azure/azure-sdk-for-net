@@ -16,6 +16,9 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
+        /// <summary> Contains the index of the failed play source. </summary>
+        public int? FailedPlaySourceIndex { get; internal set; }
+
         /// <summary> Initializes a new instance of RecognizeFailed. </summary>
         /// <param name="internalEvent"> RecognizeFailedInternal event </param>
         internal RecognizeFailed(RecognizeFailedInternal internalEvent)
@@ -26,6 +29,7 @@ namespace Azure.Communication.CallAutomation
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
             ReasonCode = new MediaEventReasonCode(ResultInformation.SubCode.ToString());
+            FailedPlaySourceIndex = internalEvent.FailedPlaySourceIndex;
         }
 
         /// <summary>
