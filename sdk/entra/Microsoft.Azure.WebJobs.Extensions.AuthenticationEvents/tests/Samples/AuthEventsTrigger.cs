@@ -8,16 +8,16 @@ namespace AuthEventsTrigger
 {
     public static class AuthEventsTrigger
     {
+        #region Snippet:AuthEventsTriggerExample
         #region Snippet:AuthEventsTriggerParameters
         [FunctionName("onTokenIssuanceStart")]
         public static WebJobsAuthenticationEventResponse Run(
         [WebJobsAuthenticationEventsTriggerAttribute(
-            AudienceAppId = "Enter custom authentication extension app ID here",
-            AuthorityUrl = "Enter authority URI here", 
-            AuthorizedPartyAppId = "Enter the Authorized Party App Id here")]WebJobsTokenIssuanceStartRequest request, ILogger log)
+            AudienceAppId = "<custom_authentication_extension_app_id>",
+            AuthorityUrl = "<authority_uri>", 
+            AuthorizedPartyAppId = "<authorized_party_app_id>")] WebJobsTokenIssuanceStartRequest request, ILogger log)
         #endregion
         {
-            #region Snippet:AuthEventsTriggerExample
             try
             {
                 // Checks if the request is successful and did the token validation pass
@@ -46,7 +46,7 @@ namespace AuthEventsTrigger
             { 
                 return request.Failed(ex);
             }
-            #endregion
         }
+        #endregion
     }
 }
