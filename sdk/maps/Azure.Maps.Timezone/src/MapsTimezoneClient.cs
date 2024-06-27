@@ -28,7 +28,7 @@ namespace Azure.Maps.Timezone
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics _clientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
         protected MapsTimezoneClient()
         {
             _clientDiagnostics = null;
@@ -36,7 +36,7 @@ namespace Azure.Maps.Timezone
             restClient = null;
         }
 
-        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
         public MapsTimezoneClient(AzureKeyCredential credential)
         {
@@ -49,7 +49,7 @@ namespace Azure.Maps.Timezone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public MapsTimezoneClient(AzureKeyCredential credential, MapsTimezoneClientOptions options)
@@ -63,7 +63,7 @@ namespace Azure.Maps.Timezone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         public MapsTimezoneClient(TokenCredential credential, string clientId)
@@ -78,7 +78,7 @@ namespace Azure.Maps.Timezone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <param name="options"> The options for configuring the client. </param>
@@ -94,7 +94,7 @@ namespace Azure.Maps.Timezone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
         /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
         /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
         public MapsTimezoneClient(AzureSasCredential credential)
@@ -108,7 +108,7 @@ namespace Azure.Maps.Timezone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
         /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
         /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
         /// <param name="options"> The options for configuring the client. </param>
@@ -123,7 +123,7 @@ namespace Azure.Maps.Timezone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
