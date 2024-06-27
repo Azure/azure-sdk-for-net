@@ -8,11 +8,13 @@
 
 ### Bugs Fixed
 
-* Fixed an issue where a `DuplicateKeyException` could be thrown if both
-  `LogRecord` and the `LogRecord.Attributes` collection contained `EventId` or
-  `EventName`. The method now checks if these keys exist before attempting to add
-  them, preventing the LogRecord from being dropped.
-  ([#](https://github.com/Azure/azure-sdk-for-net/pull/))
+* Fixed an issue where a `DuplicateKeyException` could be thrown if `EventId`
+  and `EventName` were present in both `LogRecord` (`LogRecord.EventId`,
+  `LogRecord.EventName`) and `LogRecord.Attributes`. The method now checks if
+  these keys exist before attempting to add them, ensuring that `EventId` and
+  `EventName` from `LogRecord.Attributes` are honored and preventing the
+  `LogRecord` from being dropped.
+  ([#44748](https://github.com/Azure/azure-sdk-for-net/pull/44748))
 
 ### Other Changes
 
