@@ -115,7 +115,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 #elif ASP_NET_CORE_DISTRO
                 AzureMonitorAspNetCoreEventSource.Log.SdkVersionCreateFailed(ex);
 #endif
-                return "dotnetU:otelU:extU"; // 'U' for Unknown
+
+                // Return a default value in case of failure.
+                // We don't think this will ever happen.
+                // We will monitor internal telemetry and if we detect this we may explore an alternative approach to collecting version numbers.
+                return "dotnetu:otelu:extu"; // 'u' for Unknown
             }
         }
     }
