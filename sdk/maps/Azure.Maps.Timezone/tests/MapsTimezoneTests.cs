@@ -6,6 +6,7 @@ using Azure.Maps.Timezone.Models.Options;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Timezone.Tests
 {
@@ -41,7 +42,7 @@ namespace Azure.Maps.Timezone.Tests
             var client = CreateClient();
             TimezoneBaseOptions options = new TimezoneBaseOptions();
             options.Options = TimezoneOptions.All;
-            IList<double> coordinates = new[] { 25.0338053, 121.5640089 };
+            GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
             var response = await client.GetTimezoneByCoordinatesAsync(coordinates, options);
             Assert.AreEqual(1, response.Value.TimeZones.Count);
             Assert.AreEqual("Asia/Taipei", response.Value.TimeZones[0].Id);
@@ -54,7 +55,7 @@ namespace Azure.Maps.Timezone.Tests
             var client = CreateClient();
             TimezoneBaseOptions options = new TimezoneBaseOptions();
             options.Options = TimezoneOptions.All;
-            IList<double> coordinates = new[] { 121.0, -100.0 };
+            GeoPosition coordinates = new GeoPosition(121.0, -100.0);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await client.GetTimezoneByCoordinatesAsync(coordinates, options));
             Assert.AreEqual(400, ex.Status);
