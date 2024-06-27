@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.18 (Unreleased)
+## 2.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,52 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.2 (2024-06-14)
+
+### Features Added
+
+- Per changes to the [OpenAI .NET client library](https://github.com/openai/openai-dotnet), most convenience methods now provide the direct ability to provide optional `CancellationTokens`, removing the need to use protocol methods
+
+### Breaking Changes
+
+- In support of `CancellationToken`s in methods, an overriden method signature for streaming chat completions was changed and a new minimum version dependency of 2.0.0-beta.5 is established for the OpenAI dependency. These styles of breaks will be extraordinarily rare.
+
+### Bugs Fixed
+
+- See breaking changes: when streaming chat completions, an error of "Unrecognized request argument supplied: stream_options" is introduced when using Azure.AI.OpenAI 2.0.0-beta.1 with OpenAI 2.0.0-beta.5+. This is fixed with the new version.
+
+## 2.0.0-beta.1 (2024-06-07)
+
+**Please note**: This update brings a *major* set of changes to the Azure.AI.OpenAI library.
+
+With the release of the official [OpenAI .NET client library](https://github.com/openai/openai-dotnet), the `Azure.AI.OpenAI` library has migrated to become a companion to OpenAI's package that offers Azure client configuration and strongly-typed extension support for Azure-specific request and response models.
+
+**We'd love your feedback:** our goal is to move the new `OpenAI` .NET library and its refreshed `Azure.AI.OpenAI` companion into a General Availability status as quickly as we can; we've heard loud and clear that the perpetual preview/prerelease status is an adoption blocker. To reach that goal, your feedback -- either on the issues here, in `azure-sdk-for-net`, or the issues on the new `openai-dotnet` OpenAI repository -- will be invaluable.
+
+### Features Added
+
+**OpenAI parity**: built on the OpenAI .NET library, full parity support is available for the breadth of common features, including:
+
+- Assistants V2 with streaming
+- Audio transcription/translation and text-to-speech generation
+- (Coming soon) Batch
+- Chat completion
+- Embeddings
+- Files
+- Fine-tuning
+- Image generation with dall-e-3
+- Vector stores
+
+**Azure OpenAI**: updated to the latest `2024-05-01-preview` service API, new features include:
+
+- Assistants v2 with streaming
+- Improved configuration for On Your Data
+- Expanded Responsible AI content filter annotations
+
+### Breaking Changes
+
+Given the nature of this update, breaking changes are extensive. Please see the README and the [OpenAI library README](https://github.com/openai/openai-dotnet/blob/master/README.md) for usage details. OpenAI's library carries forward many of the same design concepts as the Azure.AI.OpenAI library used as a standalone library, but considerable improvements have been made to the surface that will require significant code adjustments.
 
 ## 1.0.0-beta.17 (2024-05-03)
 
@@ -349,7 +395,7 @@ management, and align with the Azure SDK guidelines.
 ### Features Added
 
 - The Azure OpenAI "using your own data" feature is now supported. See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.com/azure/ai-services/openai/use-your-data-quickstart) for conceptual background and detailed setup instructions.
-  - Azure OpenAI chat extensions are configured via a new `AzureChatExtensionsOptions` property on `ChatCompletionsOptions`. When an `AzureChatExtensionsOptions` is provided, configured requests will only work with clients configured to use the Azure OpenAI Service, as the capabilities are unique to that service target.
+  - Azure OpenAI chat extensions are configured via a new `AzureChatExtensionsOptions` property on `ChatCompletionsOptions`. When an `AzureChatExtensionsOptions` is provided, configured requests will only work with clients configured to use the Azure OpenAI service, as the capabilities are unique to that service target.
   - `AzureChatExtensionsOptions` then has `AzureChatExtensionConfiguration` instances added to its `Extensions` property, with these instances representing the supplementary information needed for Azure OpenAI to use desired data sources to supplement chat completions behavior.
   - `ChatChoice` instances on a `ChatCompletions` response value that used chat extensions will then also have their `Message` property supplemented by an `AzureChatExtensionMessageContext` instance. This context contains a collection of supplementary `Messages` that describe the behavior of extensions that were used and supplementary response data, such as citations, provided along with the response.
   - See the README sample snippet for a simplified example of request/response use with "using your own data"

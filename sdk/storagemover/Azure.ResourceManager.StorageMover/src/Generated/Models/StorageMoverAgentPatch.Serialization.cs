@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(UploadLimitSchedule))
+            {
+                writer.WritePropertyName("uploadLimitSchedule"u8);
+                writer.WriteObjectValue(UploadLimitSchedule, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             string description = default;
+            UploadLimitSchedule uploadLimitSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,6 +97,15 @@ namespace Azure.ResourceManager.StorageMover.Models
                             description = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("uploadLimitSchedule"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            uploadLimitSchedule = UploadLimitSchedule.DeserializeUploadLimitSchedule(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -100,7 +115,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageMoverAgentPatch(description, serializedAdditionalRawData);
+            return new StorageMoverAgentPatch(description, uploadLimitSchedule, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverAgentPatch>.Write(ModelReaderWriterOptions options)
