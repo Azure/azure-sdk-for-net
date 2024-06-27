@@ -184,7 +184,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void PropertiesContainLoggerName()
+        public void PropertiesContainLoggerCategoryName()
         {
             var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
@@ -207,6 +207,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(properties.TryGetValue("CategoryName", out string loggedCategoryName));
             Assert.Equal(categoryName, loggedCategoryName);
             Assert.Single(properties);
+        }
+
+        [Fact]
+        public void ExceptionPropertiesContainLoggerCategoryName()
+        {
+            var logRecords = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+            try
+            {
+                throw new Exception("Test Exception");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Here's an error");
+            }
+
+            var properties = new ChangeTrackingDictionary<string, string>();
+            var message = LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
+
+            Assert.Equal("Test Exception", message);
+
+            Assert.True(properties.TryGetValue("CategoryName", out string categoryName));
+            Assert.EndsWith(nameof(LogsHelperTests), categoryName);
         }
 
         [Fact]
