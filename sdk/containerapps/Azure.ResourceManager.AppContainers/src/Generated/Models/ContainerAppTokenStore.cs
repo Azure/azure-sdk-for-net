@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the token store. </summary>
-    public partial class TokenStore
+    public partial class ContainerAppTokenStore
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TokenStore"/>. </summary>
-        public TokenStore()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTokenStore"/>. </summary>
+        public ContainerAppTokenStore()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TokenStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTokenStore"/>. </summary>
         /// <param name="isEnabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  The default is &lt;code&gt;false&lt;/code&gt;.
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="azureBlobStorage"> The configuration settings of the storage of the tokens if blob storage is used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, BlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, BlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;

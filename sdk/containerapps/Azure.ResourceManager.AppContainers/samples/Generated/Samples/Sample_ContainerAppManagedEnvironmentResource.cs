@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ContainerAppManagedEnvironmentResource containerAppManagedEnvironment = client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironmentResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AppContainersUsage item in containerAppManagedEnvironment.GetManagedEnvironmentUsagesAsync())
+            await foreach (ContainerAppUsage item in containerAppManagedEnvironment.GetManagedEnvironmentUsagesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

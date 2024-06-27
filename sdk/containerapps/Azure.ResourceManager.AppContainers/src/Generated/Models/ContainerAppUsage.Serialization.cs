@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class AppContainersUsage : IUtf8JsonSerializable, IJsonModel<AppContainersUsage>
+    public partial class ContainerAppUsage : IUtf8JsonSerializable, IJsonModel<ContainerAppUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppContainersUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AppContainersUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppContainersUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppContainersUsage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        AppContainersUsage IJsonModel<AppContainersUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppUsage IJsonModel<ContainerAppUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppContainersUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppContainersUsage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppContainersUsage(document.RootElement, options);
+            return DeserializeContainerAppUsage(document.RootElement, options);
         }
 
-        internal static AppContainersUsage DeserializeAppContainersUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppUsage DeserializeContainerAppUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            UsageUnit unit = default;
+            ContainerAppUsageUnit unit = default;
             float currentValue = default;
             float limit = default;
-            UsageName name = default;
+            ContainerAppUsageName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
                 {
-                    unit = new UsageUnit(property.Value.GetString());
+                    unit = new ContainerAppUsageUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currentValue"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = UsageName.DeserializeUsageName(property.Value, options);
+                    name = ContainerAppUsageName.DeserializeContainerAppUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,38 +106,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AppContainersUsage(unit, currentValue, limit, name, serializedAdditionalRawData);
+            return new ContainerAppUsage(unit, currentValue, limit, name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AppContainersUsage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppUsage>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppContainersUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppUsage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppContainersUsage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AppContainersUsage IPersistableModel<AppContainersUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppUsage IPersistableModel<ContainerAppUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppContainersUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppUsage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAppContainersUsage(document.RootElement, options);
+                        return DeserializeContainerAppUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppContainersUsage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppUsage)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AppContainersUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

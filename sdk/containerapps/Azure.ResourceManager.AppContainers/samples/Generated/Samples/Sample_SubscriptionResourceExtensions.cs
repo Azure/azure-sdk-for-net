@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westus");
-            await foreach (AppContainersUsage item in subscriptionResource.GetUsagesAsync(location))
+            await foreach (ContainerAppUsage item in subscriptionResource.GetUsagesAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

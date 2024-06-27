@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="cookieExpiration"> The configuration settings of the session cookie's expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppLogin(LoginRoutes routes, TokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppLogin(LoginRoutes routes, ContainerAppTokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Routes = routes;
             TokenStore = tokenStore;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The configuration settings of the token store. </summary>
-        public TokenStore TokenStore { get; set; }
+        public ContainerAppTokenStore TokenStore { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? PreserveUrlFragmentsForLogins { get; set; }
         /// <summary>

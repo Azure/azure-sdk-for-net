@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             LoginRoutes routes = default;
-            TokenStore tokenStore = default;
+            ContainerAppTokenStore tokenStore = default;
             bool? preserveUrlFragmentsForLogins = default;
             IList<string> allowedExternalRedirectUrls = default;
             ContainerAppCookieExpiration cookieExpiration = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    tokenStore = TokenStore.DeserializeTokenStore(property.Value, options);
+                    tokenStore = ContainerAppTokenStore.DeserializeContainerAppTokenStore(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preserveUrlFragmentsForLogins"u8))

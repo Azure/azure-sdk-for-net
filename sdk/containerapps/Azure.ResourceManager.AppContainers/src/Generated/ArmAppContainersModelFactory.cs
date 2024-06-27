@@ -909,24 +909,24 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppContainersUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        /// <returns> A new <see cref="Models.AppContainersUsage"/> instance for mocking. </returns>
-        public static AppContainersUsage AppContainersUsage(UsageUnit unit = default, float currentValue = default, float limit = default, UsageName name = null)
+        /// <returns> A new <see cref="Models.ContainerAppUsage"/> instance for mocking. </returns>
+        public static ContainerAppUsage ContainerAppUsage(ContainerAppUsageUnit unit = default, float currentValue = default, float limit = default, ContainerAppUsageName name = null)
         {
-            return new AppContainersUsage(unit, currentValue, limit, name, serializedAdditionalRawData: null);
+            return new ContainerAppUsage(unit, currentValue, limit, name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UsageName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppUsageName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
-        /// <returns> A new <see cref="Models.UsageName"/> instance for mocking. </returns>
-        public static UsageName UsageName(string value = null, string localizedValue = null)
+        /// <returns> A new <see cref="Models.ContainerAppUsageName"/> instance for mocking. </returns>
+        public static ContainerAppUsageName ContainerAppUsageName(string value = null, string localizedValue = null)
         {
-            return new UsageName(value, localizedValue, serializedAdditionalRawData: null);
+            return new ContainerAppUsageName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of ContainerAppAuthConfigData. </summary>

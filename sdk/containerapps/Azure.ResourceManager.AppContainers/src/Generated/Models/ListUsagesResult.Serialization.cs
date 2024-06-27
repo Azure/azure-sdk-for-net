@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IReadOnlyList<AppContainersUsage> value = default;
+            IReadOnlyList<ContainerAppUsage> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<AppContainersUsage> array = new List<AppContainersUsage>();
+                    List<ContainerAppUsage> array = new List<ContainerAppUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppContainersUsage.DeserializeAppContainersUsage(item, options));
+                        array.Add(ContainerAppUsage.DeserializeContainerAppUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ListUsagesResult(value ?? new ChangeTrackingList<AppContainersUsage>(), nextLink, serializedAdditionalRawData);
+            return new ListUsagesResult(value ?? new ChangeTrackingList<ContainerAppUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListUsagesResult>.Write(ModelReaderWriterOptions options)

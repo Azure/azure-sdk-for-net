@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The Usage Names. </summary>
-    public partial class UsageName
+    public partial class ContainerAppUsageName
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
-        internal UsageName()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppUsageName"/>. </summary>
+        internal ContainerAppUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppUsageName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UsageName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppUsageName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;

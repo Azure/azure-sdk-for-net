@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         internal ListUsagesResult()
         {
-            Value = new ChangeTrackingList<AppContainersUsage>();
+            Value = new ChangeTrackingList<ContainerAppUsage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         /// <param name="value"> The list of compute resource usages. </param>
         /// <param name="nextLink"> The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page of compute resource usage information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListUsagesResult(IReadOnlyList<AppContainersUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListUsagesResult(IReadOnlyList<ContainerAppUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The list of compute resource usages. </summary>
-        public IReadOnlyList<AppContainersUsage> Value { get; }
+        public IReadOnlyList<ContainerAppUsage> Value { get; }
         /// <summary> The URI to fetch the next page of compute resource usage information. Call ListNext() with this to fetch the next page of compute resource usage information. </summary>
         public string NextLink { get; }
     }
