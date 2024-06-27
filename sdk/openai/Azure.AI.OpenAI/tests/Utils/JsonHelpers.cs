@@ -106,6 +106,18 @@ internal static class JsonHelpers
 #endif
     }
 
+    public static JsonElement SerializeToElement<T>(T value, JsonSerializerOptions? options = null)
+    {
+#if NET6_0_OR_GREATER
+        return JsonSerializer.SerializeToElement(value, options);
+#else
+        using MemoryStream stream = new();
+        Serialize(stream, value, options);
+        stream.Seek(0, SeekOrigin.Begin);
+        return JsonDocument.Parse(stream).RootElement;
+#endif
+    }
+
     // Ported over from the source code for newer versions of System.Text.Json
     internal class SnakeCaseNamingPolicy : JsonNamingPolicy
     {

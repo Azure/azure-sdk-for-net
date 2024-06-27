@@ -4,21 +4,22 @@
 #nullable enable
 
 using System;
+using System.Threading.Tasks;
 
 namespace Azure.AI.OpenAI.Tests.Utils
 {
-    public class RunOnScopeExit : IDisposable
+    public class RunOnScopeExit : IAsyncDisposable
     {
-        private Action _action;
+        private Func<Task> _asyncFunc;
 
-        public RunOnScopeExit(Action action)
+        public RunOnScopeExit(Func<Task> asyncFunc)
         {
-            _action = action ?? throw new ArgumentNullException(nameof(action));
+            _asyncFunc = asyncFunc ?? throw new ArgumentNullException(nameof(asyncFunc));
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            _action();
+            await _asyncFunc().ConfigureAwait(false);
         }
     }
 }
