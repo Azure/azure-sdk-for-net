@@ -7,7 +7,7 @@ namespace Azure.Maps.Timezone.Tests
 {
     public class TimezoneClientLiveTestsBase : RecordedTestBase
     {
-        public TimezoneClientLiveTestsBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public TimezoneClientLiveTestsBase(bool isAsync) : base(isAsync)
         {
         }
 
