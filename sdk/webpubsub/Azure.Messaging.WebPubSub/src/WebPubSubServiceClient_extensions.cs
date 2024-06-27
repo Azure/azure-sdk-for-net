@@ -27,6 +27,7 @@ namespace Azure.Messaging.WebPubSub
     [CodeGenSuppress("RemoveUserFromGroupAsync", typeof(string), typeof(string), typeof(RequestContext))]
     public partial class WebPubSubServiceClient
     {
+        private readonly WebPubSubServiceClientOptions.ServiceVersion _apiVersionEnum;
         private AzureKeyCredential _credential;
         private TokenCredential _tokenCredential;
 
@@ -160,6 +161,7 @@ namespace Azure.Messaging.WebPubSub
             options ??= new WebPubSubServiceClientOptions();
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _apiVersion = options.Version;
+            _apiVersionEnum = options.VersionEnum;
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>

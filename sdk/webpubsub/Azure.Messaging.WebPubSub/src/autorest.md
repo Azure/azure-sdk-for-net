@@ -9,7 +9,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 title: WebPubSubServiceClient
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/1735a92bdc79b446385a36ba063ea5235680709f/specification/webpubsub/data-plane/WebPubSub/stable/2022-11-01/webpubsub.json
+- https://github.com/Azure/azure-rest-api-specs/blob/356aa5174e8eec6ed904bf5ff104595aec8c0411/specification/webpubsub/data-plane/WebPubSub/stable/2024-01-01/webpubsub.json
+
 credential-types: AzureKeyCredential
 credential-header-name: Ocp-Apim-Subscription-Key
 keep-non-overloadable-protocol-signature: true
@@ -21,6 +22,46 @@ directive:
 - from: swagger-document
   where: $..[?(@.name=="WebPubSubPermission")]
   transform: $.modelAsString = false;
+```
+
+### Restore the "host" parameter to be a string instead of a URL to avoid breaking change
+``` yaml
+directive:
+- from: swagger-document
+  where: $.x-ms-parameterized-host.parameters[0].format
+  transform: return "string";
+```
+
+### Remove Operations AddConnectionsToGroupsAsync and RemoveConnectionsFromGroups. Add them back if required.
+``` yaml
+directive:
+- remove-operation: WebPubSub_AddConnectionsToGroups
+- remove-operation: WebPubSub_RemoveConnectionsFromGroups
+```
+
+### Remove "messageTtlSeconds" parameter from all operations as it introduces breaking change.
+``` yaml
+directive:
+- where-operation: WebPubSub_SendToConnection
+  remove-parameter:
+    debug: true
+    in: query
+    name: messageTtlSeconds
+- where-operation: WebPubSub_SendToGroup
+  remove-parameter:
+    debug: true
+    in: query
+    name: messageTtlSeconds
+- where-operation: WebPubSub_SendToUser
+  remove-parameter:
+    debug: true
+    in: query
+    name: messageTtlSeconds
+- where-operation: WebPubSub_SendToAll
+  remove-parameter:
+    debug: true
+    in: query
+    name: messageTtlSeconds
 ```
 
 ### GenerateClientTokenImpl

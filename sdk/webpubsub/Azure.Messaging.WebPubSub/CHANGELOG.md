@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added method overloads `serviceClient.GetClientAccessUri`, `serviceClient.GetClientAccessUri` for MQTT clients.
+- 
 ### Breaking Changes
 
 ### Bugs Fixed
