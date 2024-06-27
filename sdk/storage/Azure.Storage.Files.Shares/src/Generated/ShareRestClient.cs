@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-08-04". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-11-04". </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, ShareTokenIntent? fileRequestIntent = null)
@@ -775,7 +775,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateGetPermissionRequest(string filePermissionKey, int? timeout)
+        internal HttpMessage CreateGetPermissionRequest(string filePermissionKey, FilePermissionKeyFormat? filePermissionKeyFormat, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -790,6 +790,10 @@ namespace Azure.Storage.Files.Shares
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
+            if (filePermissionKeyFormat != null)
+            {
+                request.Headers.Add("x-ms-file-permission-format", filePermissionKeyFormat.Value.ToSerialString());
+            }
             request.Headers.Add("x-ms-version", _version);
             if (_fileRequestIntent != null)
             {
@@ -801,17 +805,18 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Returns the permission (security descriptor) for a given key. </summary>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. </param>
+        /// <param name="filePermissionKeyFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePermissionKey"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders>> GetPermissionAsync(string filePermissionKey, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders>> GetPermissionAsync(string filePermissionKey, FilePermissionKeyFormat? filePermissionKeyFormat = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (filePermissionKey == null)
             {
                 throw new ArgumentNullException(nameof(filePermissionKey));
             }
 
-            using var message = CreateGetPermissionRequest(filePermissionKey, timeout);
+            using var message = CreateGetPermissionRequest(filePermissionKey, filePermissionKeyFormat, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ShareGetPermissionHeaders(message.Response);
             switch (message.Response.Status)
@@ -830,17 +835,18 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Returns the permission (security descriptor) for a given key. </summary>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. </param>
+        /// <param name="filePermissionKeyFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePermissionKey"/> is null. </exception>
-        public ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> GetPermission(string filePermissionKey, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<SharePermission, ShareGetPermissionHeaders> GetPermission(string filePermissionKey, FilePermissionKeyFormat? filePermissionKeyFormat = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (filePermissionKey == null)
             {
                 throw new ArgumentNullException(nameof(filePermissionKey));
             }
 
-            using var message = CreateGetPermissionRequest(filePermissionKey, timeout);
+            using var message = CreateGetPermissionRequest(filePermissionKey, filePermissionKeyFormat, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ShareGetPermissionHeaders(message.Response);
             switch (message.Response.Status)

@@ -452,10 +452,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
-            Response<string> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
+            Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
 
             // Assert
-            Assert.AreEqual(permission, getResponse.Value);
+            Assert.AreEqual(permission, getResponse.Value.Permission);
         }
 
         [RecordedTest]
@@ -473,10 +473,42 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
-            Response<string> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
+            Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
 
             // Assert
-            Assert.AreEqual(permission, getResponse.Value);
+            Assert.AreEqual(permission, getResponse.Value.Permission);
+        }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(FilePermissionKeyFormat.Sddl)]
+        [TestCase(FilePermissionKeyFormat.Binary)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
+        public async Task CreateAndGetPermissionAsync_FilePermissionKeyFormat(FilePermissionKeyFormat? filePermissionKeyFormat)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Arrange
+            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+
+            // Act
+            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
+            Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey, filePermissionKeyFormat);
+
+            // Assert
+
+            if (filePermissionKeyFormat == null || filePermissionKeyFormat == FilePermissionKeyFormat.Sddl)
+            {
+                Assert.AreEqual(permission, getResponse.Value.Permission);
+                Assert.AreEqual(FilePermissionKeyFormat.Sddl, getResponse.Value.PermissionKeyFormat);
+            }
+            else
+            {
+                Assert.AreEqual(
+                    "AQAUhGwAAACIAAAAAAAAABQAAAACAFgAAwAAAAAAFAD/AR8AAQEAAAAAAAUSAAAAAAAYAP8BHwABAgAAAAAABSAAAAAgAgAAAAAkAKkAEgABBQAAAAAABRUAAABZUbgXZnJdJWRjOwuMmS4AAQUAAAAAAAUVAAAAoGXPfnhLm1/nfIdwr/1IAQEFAAAAAAAFFQAAAKBlz354S5tf53yHcAECAAA=",
+                    getResponse.Value.Permission);
+            }
         }
 
         [RecordedTest]
