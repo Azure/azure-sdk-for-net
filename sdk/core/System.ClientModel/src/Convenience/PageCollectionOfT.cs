@@ -23,19 +23,16 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     // Note that this is abstract rather than providing the field in the base
     // type because it means the implementation can hold the field as a subtype
     // instance in the implementation and not have to cast it.
-    public abstract ClientToken FirstPageToken { get; }
+    public abstract ContinuationToken FirstPageToken { get; }
 
-    public PageResult<T> GetFirstPage()
-        => GetPageCore(FirstPageToken);
-
-    public PageResult<T> GetPage(ClientToken pageToken)
+    public PageResult<T> GetPage(ContinuationToken pageToken)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
         return GetPageCore(pageToken);
     }
 
     // Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
-    public abstract PageResult<T> GetPageCore(ClientToken pageToken);
+    public abstract PageResult<T> GetPageCore(ContinuationToken pageToken);
 
     public IEnumerable<T> GetAllValues()
     {

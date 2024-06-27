@@ -11,8 +11,8 @@ namespace System.ClientModel;
 public class PageResult<T> : ClientResult
 {
     private PageResult(IReadOnlyList<T> values,
-        ClientToken pageToken,
-        ClientToken? nextPageToken,
+        ContinuationToken pageToken,
+        ContinuationToken? nextPageToken,
         PipelineResponse response) : base(response)
     {
         Values = values;
@@ -30,12 +30,12 @@ public class PageResult<T> : ClientResult
     // in it.
     // This is useful because I can cache this and retrive both the
     // full collection this page is in and/or the current page.
-    public ClientToken PageToken { get; }
+    public ContinuationToken PageToken { get; }
 
     // If this is null, the current page is the last page in a collection.
-    public ClientToken? NextPageToken { get; }
+    public ContinuationToken? NextPageToken { get; }
 
-    public static PageResult<T> Create(IReadOnlyList<T> values, ClientToken pageToken, ClientToken? nextPageToken, PipelineResponse response)
+    public static PageResult<T> Create(IReadOnlyList<T> values, ContinuationToken pageToken, ContinuationToken? nextPageToken, PipelineResponse response)
         => new(values, pageToken, nextPageToken, response);
 }
 

@@ -23,19 +23,16 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
     // Note that this is abstract rather than providing the field in the base
     // type because it means the implementation can hold the field as a subtype
     // instance in the implementation and not have to cast it.
-    public abstract ClientToken FirstPageToken { get; }
+    public abstract ContinuationToken FirstPageToken { get; }
 
-    public async Task<PageResult<T>> GetFirstPageAsync()
-    => await GetPageAsyncCore(FirstPageToken).ConfigureAwait(false);
-
-    public async Task<PageResult<T>> GetPageAsync(ClientToken pageToken)
+    public async Task<PageResult<T>> GetPageAsync(ContinuationToken pageToken)
     {
         Argument.AssertNotNull(pageToken, nameof(pageToken));
         return await GetPageAsyncCore(FirstPageToken).ConfigureAwait(false);
     }
 
     // Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
-    public abstract Task<PageResult<T>> GetPageAsyncCore(ClientToken pageToken);
+    public abstract Task<PageResult<T>> GetPageAsyncCore(ContinuationToken pageToken);
 
     public async IAsyncEnumerable<T> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {

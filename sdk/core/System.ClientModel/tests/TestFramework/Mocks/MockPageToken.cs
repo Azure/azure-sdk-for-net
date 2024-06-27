@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockPageToken : ClientToken
+public class MockPageToken : ContinuationToken
 {
     // TODO
 }

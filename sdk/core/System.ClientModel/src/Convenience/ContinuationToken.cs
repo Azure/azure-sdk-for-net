@@ -5,18 +5,18 @@ namespace System.ClientModel;
 
 #pragma warning disable CS1591
 
-public class ClientToken
+public class ContinuationToken
 {
     private readonly BinaryData? _bytes;
 
-    protected ClientToken() { }
+    protected ContinuationToken() { }
 
-    protected ClientToken(BinaryData bytes)
+    protected ContinuationToken(BinaryData bytes)
     {
         _bytes = bytes;
     }
 
-    public static ClientToken FromBytes(BinaryData bytes) => new(bytes);
+    public static ContinuationToken FromBytes(BinaryData bytes) => new(bytes);
 
     public virtual BinaryData ToBytes() => _bytes ??
         throw new InvalidOperationException("Unable to write token as bytes.");
