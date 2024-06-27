@@ -72,15 +72,6 @@ foreach ($packageInfoFile in $packageInfoFiles) {
             $foundError = $true
             continue
         }
-        if ($foundDlls.Length -gt 1) {
-            $errorString = "$dllName was found $($foundDlls.Length) times in the subdirectories of $artifactsBinDir. Paths found:\n"
-            foreach ($foundDll in $foundDlls) {
-                $errorString = $errorString + "$founDll\n"
-            }
-            LogError $errorString
-            $foundError = $true
-            continue
-        }
         $defaultDll = $foundDlls[0]
         Write-Host "dll file path: $($defaultDll.FullName)"
         $namespaces = @(Get-NamespacesFromDll $defaultDll)
