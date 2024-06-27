@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="exportPolicy"> Set of export policy rules. </param>
         /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="snapshotId"> UUID v4 or resource identifier used to identify the Snapshot. </param>
+        /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
-        /// <param name="backupId"> UUID v4 or resource identifier used to identify the Backup. </param>
+        /// <param name="backupId"> Resource identifier used to identify the Backup. </param>
         /// <param name="baremetalTenantId"> Unique Baremetal Tenant Identifier. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <param name="networkFeatures"> Network features available to the volume, or current state of update. </param>
@@ -237,11 +237,11 @@ namespace Azure.ResourceManager.NetApp.Models
         public IList<string> ProtocolTypes { get; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
-        /// <summary> UUID v4 or resource identifier used to identify the Snapshot. </summary>
+        /// <summary> Resource identifier used to identify the Snapshot. </summary>
         public string SnapshotId { get; set; }
         /// <summary> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </summary>
         public bool? DeleteBaseSnapshot { get; set; }
-        /// <summary> UUID v4 or resource identifier used to identify the Backup. </summary>
+        /// <summary> Resource identifier used to identify the Backup. </summary>
         public string BackupId { get; set; }
         /// <summary> Unique Baremetal Tenant Identifier. </summary>
         public string BaremetalTenantId { get; }
