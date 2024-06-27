@@ -28,22 +28,6 @@ namespace Azure.Data.SchemaRegistry
         public abstract bool TryValidate(object data, Type dataType, string schemaDefinition, out IEnumerable<Exception> validationErrors);
 
         /// <summary>
-        /// Validates that <paramref name="data"/> is valid according to <paramref name="schemaDefinition"/>. If the object is not valid,
-        /// this method throws an <see cref="AggregateException"/> containing all of the validation errors.
-        /// </summary>
-        /// <param name="data">The data to validate.</param>
-        /// <param name="dataType">The type of data to validate.</param>
-        /// <param name="schemaDefinition">The schema definition to validate against.</param>
-        /// <exception cref="AggregateException"> <paramref name="data"/> is not valid according to the <paramref name="schemaDefinition"/>.</exception>
-        public virtual void Validate(object data, Type dataType, string schemaDefinition)
-        {
-            if (!TryValidate(data, dataType, schemaDefinition, out var errors))
-            {
-                throw new AggregateException("The validate method determined the object was invalid according to the schema.", errors);
-            }
-        }
-
-        /// <summary>
         /// Generates a schema from <paramref name="dataType"/> and returns it as a string.
         /// </summary>
         /// <param name="dataType">The type of the data to use when generating the schema.</param>
