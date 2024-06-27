@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             string status = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? lastUpdated = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             IReadOnlyList<SearchSort> sort = default;
             long? requestTime = default;
             string aggregatedValueField = default;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sort"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 status,
                 startTime,
                 lastUpdated,
-                eTag,
+                etag,
                 sort ?? new ChangeTrackingList<SearchSort>(),
                 requestTime,
                 aggregatedValueField,

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ChargeSummaryKind kind = "Unknown";
-            ETag? eTag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 type,
                 systemData,
                 kind,
-                eTag,
+                etag,
                 serializedAdditionalRawData);
         }
 

@@ -59,6 +59,7 @@ acronym-mapping:
   URI: Uri
   MWS: Mws
   Etag: ETag|etag
+  ETag: ETag|eTag
   Db: DB|db
   CMK: Cmk
   ASC: Asc
