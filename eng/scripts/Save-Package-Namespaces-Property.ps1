@@ -73,7 +73,7 @@ foreach ($packageInfoFile in $packageInfoFiles) {
             continue
         }
         if ($foundDlls.Length -gt 1) {
-            $errorString = "$dllName was found $($dlls.Length) times in the subdirectories of $artifactsBinDir. Paths found:\n"
+            $errorString = "$dllName was found $($foundDlls.Length) times in the subdirectories of $artifactsBinDir. Paths found:\n"
             foreach ($foundDll in $foundDlls) {
                 $errorString = $errorString + "$founDll\n"
             }
