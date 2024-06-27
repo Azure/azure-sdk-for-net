@@ -1,8 +1,8 @@
-# Azure Maps Render client library for .NET
+# Azure Maps Timezone client library for .NET
 
-Azure Maps Render is a library that can fetch image tiles and copyright information.
+Azure Maps Timezone is a library which contains Azure Maps Timezone APIs.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/render) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Timezone/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/timezone) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
 
 ## Getting started
 
@@ -11,7 +11,7 @@ Azure Maps Render is a library that can fetch image tiles and copyright informat
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Maps.Rendering --prerelease
+dotnet add package Azure.Maps.Timezone --prerelease
 ```
 
 ### Prerequisites
@@ -26,34 +26,32 @@ az maps account create --kind "Gen2" --account-name "myMapAccountName" --resourc
 
 ### Authenticate the client
 
-There are 2 ways to authenticate the client: Shared key authentication and Azure AD.
+There are 2 ways to authenticate the client: Shared key authentication and Azure MicrosoftEntra.
 
 #### Shared Key authentication
 
 * Go to Azure Maps account > Authentication tab
 * Copy `Primary Key` or `Secondary Key` under **Shared Key authentication** section
 
-```C# Snippet:InstantiateRenderClientViaSubscriptionKey
-// Create a MapsRenderingClient that will authenticate through Subscription Key (Shared key)
+```C# Snippet:InstantiateTimezoneClientViaSubscriptionKey
+// Create a SearchClient that will authenticate through Subscription Key (Shared key)
 AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
-MapsRenderingClient client = new MapsRenderingClient(credential);
+MapsTimezoneClient client = new MapsTimezoneClient(credential);
 ```
 
 #### Azure AD authentication
 
-In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsRenderingClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsTimezoneClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
-To use AAD authentication, the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsRenderingClient`.
+To use MicrosoftEntra authentication, the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsTimezoneClient`.
 
 We also need an **Azure Maps Client ID** which can be found on the Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
-![AzureMapsPortal](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/images/azure-maps-portal.png?raw=true "Azure Maps portal website")
-
-```C# Snippet:InstantiateRenderClientViaAAD
-// Create a MapsRenderingClient that will authenticate through Active Directory
-TokenCredential credential = new DefaultAzureCredential();
-string clientId = "<Your Map ClientId>";
-MapsRenderingClient client = new MapsRenderingClient(credential, clientId);
+```C# Snippet:InstantiateTimezoneClientViaMicrosoftEntra
+// Create a MapsTimezoneClient that will authenticate through MicrosoftEntra
+DefaultAzureCredential credential = new DefaultAzureCredential();
+string clientId = "<My Map Account Client Id>";
+MapsTimezoneClient client = new MapsTimezoneClient(credential, clientId);
 ```
 
 #### Shared Access Signature (SAS) Authentication
@@ -67,22 +65,10 @@ dotnet add package Azure.ResourceManager
 dotnet add package Azure.ResourceManager.Maps --prerelease
 ```
 
-In the code, we need to import the following lines for both Azure Maps SDK and ResourceManager:
 
-```C# Snippet:RenderImportNamespaces
-using Azure.Maps.Rendering;
-```
+And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsTimezoneClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
 
-```C# Snippet:RenderSasAuthImportNamespaces
-using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Maps;
-using Azure.ResourceManager.Maps.Models;
-```
-
-And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsRenderingClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
-
-```C# Snippet:InstantiateRenderingClientViaSas
+```C# Snippet:InstantiateTimezoneClientViaSas
 // Get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
 TokenCredential cred = new DefaultAzureCredential();
 // Authenticate your client
@@ -109,19 +95,12 @@ string expiry = now.AddDays(1).ToString("O");
 MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
 Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
 
-// Create a SearchClient that will authenticate via SAS token
+// Create a TimezoneClient that will authenticate via SAS token
 AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
-MapsRenderingClient client = new MapsRenderingClient(sasCredential);
+MapsTimezoneClient client = new MapsTimezoneClient(sasCredential);
 ```
 
 ## Key concepts
-
-MapsRenderingClient is designed for:
-
-* Communicate with Azure Maps endpoint to get images and tiles
-* Communicate with Azure Maps endpoint to get copyrights for images and tiles
-
-Learn more about examples in [samples](https://github.com/dubiety/azure-sdk-for-net/tree/feature/maps-render/sdk/maps/Azure.Maps.Rendering/samples)
 
 ### Thread safety
 
@@ -140,61 +119,68 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples). Rendering map tiles requires knowledge about zoom levels and tile grid system. Please refer to the [documentation](https://docs.microsoft.com/azure/azure-maps/zoom-levels-and-tile-grid) for more information.
+You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Timezone/samples). 
 
-### Get Imagery Tiles
+### Get Timezone By ID
 
-Here is a simple example of rendering imagery tiles:
-
-```C# Snippet:GetImageryMapTiles
-int zoom = 10, tileSize = 256;
-
-// Get tile X, Y index by coordinate, zoom and tile size information
-MapTileIndex tileIndex = MapsRenderingClient.PositionToTileXY(new GeoPosition(13.3854, 52.517), zoom, tileSize);
-
-// Fetch imagery map tiles
-GetMapTileOptions GetMapTileOptions = new GetMapTileOptions(
-    MapTileSetId.MicrosoftImagery,
-    new MapTileIndex(tileIndex.X, tileIndex.Y, zoom)
-);
-Response<Stream> mapTile = client.GetMapTile(GetMapTileOptions);
-
-// Prepare a file stream to save the imagery
-using (FileStream fileStream = File.Create(".\\BerlinImagery.png"))
-{
-    mapTile.Value.CopyTo(fileStream);
-}
+```C# Snippet:GetTimezoneById
+TimezoneBaseOptions options = new TimezoneBaseOptions();
+options.Options = TimezoneOptions.All;
+var response = client.GetTimezoneByID("Asia/Bahrain", options);
+Console.WriteLine(response);
 ```
+
+### Get Timezone By Coordinates
+
+```C# Snippet:GetTimezoneByCoordinates
+TimezoneBaseOptions options = new TimezoneBaseOptions();
+options.Options = TimezoneOptions.All;
+IList<double> coordinates = new[] { 25.0338053, 121.5640089 };
+var response =  client.GetTimezoneByCoordinates(coordinates, options);
+Console.WriteLine(response);
+```
+
+### Get Windows Timezone Ids
+
+```C# Snippet:GetWindowsTimezoneIds
+var response = client.GetWindowsTimezoneIds();
+Console.WriteLine(response);
+```
+
+### Get Iana Timezone Ids
+
+```C# Snippet:GetIanaTimezoneIds
+var response = client.GetIanaTimezoneIds();
+Console.WriteLine(response);
+```
+
+### Get Iana Version
+
+```C# Snippet:GetIanaVersion
+var response = client.GetIanaVersion();
+Console.WriteLine(response);
+```
+
+### Convert Windows Timezone To Iana
+
+```C# Snippet:ConvertWindowsTimezoneToIana
+var response = client.ConvertWindowsTimezoneToIana("Dateline Standard Time");
+Console.WriteLine(response);
+```
+
 
 ## Troubleshooting
 
 ### General
 
-When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/render).
+When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/timezone).
 
-For example, if you try to get an imagery tile with wrong tile index, an error is returned, indicating "Bad Request" (HTTP 400).
+For example, if you search with an invalid coordinate, a error is returned, indicating "Bad Request".400
 
-```C# Snippet:CatchRenderException
-try
-{
-    var options = new GetMapTileOptions(
-        MapTileSetId.MicrosoftBaseHybrid,
-        new MapTileIndex(12, 12, 2)
-    );
-
-    Response<Stream> imageryTile = client.GetMapTile(options);
-    using var imageryStream = new MemoryStream();
-    imageryTile.Value.CopyTo(imageryStream);
-}
-catch (RequestFailedException e)
-{
-    Console.WriteLine(e.ToString());
-}
-```
 
 ## Next steps
 
-* For more context and additional scenarios, please see: [detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Rendering/samples)
+* For more context and additional scenarios, please see: [detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Timezone/samples)
 
 ## Contributing
 
@@ -206,4 +192,4 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact <opencode@microsoft.com> with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.Rendering/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.Timezone/README.png)

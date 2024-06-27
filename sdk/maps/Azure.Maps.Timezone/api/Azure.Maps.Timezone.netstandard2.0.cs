@@ -1,311 +1,175 @@
-namespace Azure.Maps.Rendering
+namespace Azure.Maps.Timezone
 {
-    public partial class CopyrightCaption
+    public partial class CountryRecord
     {
-        internal CopyrightCaption() { }
-        public string Copyright { get { throw null; } }
-        public string FormatVersion { get { throw null; } }
+        internal CountryRecord() { }
+        public string Code { get { throw null; } }
+        public string Name { get { throw null; } }
     }
-    public partial class GetMapStaticImageOptions
+    public partial class IanaId
     {
-        public GetMapStaticImageOptions(Azure.Core.GeoJson.GeoBoundingBox boundingBox, System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePushpinStyle> imagePushpinStyles = null, System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePathStyle> imagePathStyles = null) { }
-        public GetMapStaticImageOptions(Azure.Core.GeoJson.GeoPosition centerCoordinate, int widthInPixels, int heightInPixels, System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePushpinStyle> imagePushpinStyles = null, System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePathStyle> imagePathStyles = null) { }
-        public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } }
-        public Azure.Core.GeoJson.GeoPosition? CenterCoordinate { get { throw null; } }
-        public int? HeightInPixels { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePathStyle> ImagePathStyles { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Maps.Rendering.ImagePushpinStyle> ImagePushpinStyles { get { throw null; } }
-        public Azure.Maps.Rendering.RenderingLanguage? Language { get { throw null; } set { } }
-        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
-        public Azure.Maps.Rendering.MapImageLayer? MapImageLayer { get { throw null; } set { } }
-        public Azure.Maps.Rendering.MapImageStyle? MapImageStyle { get { throw null; } set { } }
-        public int? WidthInPixels { get { throw null; } }
-        public int? ZoomLevel { get { throw null; } set { } }
-    }
-    public partial class GetMapTileOptions
-    {
-        public GetMapTileOptions(Azure.Maps.Rendering.MapTileSetId mapTileSetId, Azure.Maps.Rendering.MapTileIndex mapTileIndex) { }
-        public Azure.Maps.Rendering.RenderingLanguage? Language { get { throw null; } set { } }
-        public Azure.Maps.LocalizedMapView? LocalizedMapView { get { throw null; } set { } }
-        public Azure.Maps.Rendering.MapTileIndex MapTileIndex { get { throw null; } }
-        public Azure.Maps.Rendering.MapTileSetId MapTileSetId { get { throw null; } }
-        public Azure.Maps.Rendering.MapTileSize? MapTileSize { get { throw null; } set { } }
-        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
-    }
-    public partial class ImagePathStyle
-    {
-        public ImagePathStyle(System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> pathPositions) { }
-        public int? CircleRadiusInMeters { get { throw null; } set { } }
-        public System.Drawing.Color? FillColor { get { throw null; } set { } }
-        public System.Drawing.Color? LineColor { get { throw null; } set { } }
-        public int? LineWidthInPixels { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Core.GeoJson.GeoPosition> PathPositions { get { throw null; } }
-    }
-    public partial class ImagePushpinStyle
-    {
-        public ImagePushpinStyle(System.Collections.Generic.IList<Azure.Maps.Rendering.PushpinPosition> pushpinPositions) { }
-        public System.Uri? CustomPushpinImageUri { get { throw null; } set { } }
-        public System.Drawing.Point? LabelAnchorShiftInPixels { get { throw null; } set { } }
-        public System.Drawing.Color? LabelColor { get { throw null; } set { } }
-        public double? LabelScaleRatio { get { throw null; } set { } }
-        public System.Drawing.Point? PushpinAnchorShiftInPixels { get { throw null; } set { } }
-        public System.Drawing.Color? PushpinColor { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Maps.Rendering.PushpinPosition> PushpinPositions { get { throw null; } }
-        public double? PushpinScaleRatio { get { throw null; } set { } }
-        public int? RotationInDegrees { get { throw null; } set { } }
+        internal IanaId() { }
+        public string AliasOf { get { throw null; } }
+        public bool? HasZone1970Location { get { throw null; } }
+        public string Id { get { throw null; } }
+        public bool? IsAlias { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MapImageLayer : System.IEquatable<Azure.Maps.Rendering.MapImageLayer>
+    public readonly partial struct JsonFormat : System.IEquatable<Azure.Maps.Timezone.JsonFormat>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MapImageLayer(string value) { throw null; }
-        public static Azure.Maps.Rendering.MapImageLayer Basic { get { throw null; } }
-        public static Azure.Maps.Rendering.MapImageLayer Hybrid { get { throw null; } }
-        public static Azure.Maps.Rendering.MapImageLayer Labels { get { throw null; } }
-        public bool Equals(Azure.Maps.Rendering.MapImageLayer other) { throw null; }
+        public JsonFormat(string value) { throw null; }
+        public static Azure.Maps.Timezone.JsonFormat Json { get { throw null; } }
+        public bool Equals(Azure.Maps.Timezone.JsonFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Rendering.MapImageLayer left, Azure.Maps.Rendering.MapImageLayer right) { throw null; }
-        public static implicit operator Azure.Maps.Rendering.MapImageLayer (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Rendering.MapImageLayer left, Azure.Maps.Rendering.MapImageLayer right) { throw null; }
+        public static bool operator ==(Azure.Maps.Timezone.JsonFormat left, Azure.Maps.Timezone.JsonFormat right) { throw null; }
+        public static implicit operator Azure.Maps.Timezone.JsonFormat (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Timezone.JsonFormat left, Azure.Maps.Timezone.JsonFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MapImageStyle : System.IEquatable<Azure.Maps.Rendering.MapImageStyle>
+    public partial class MapsTimezoneClient
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MapImageStyle(string value) { throw null; }
-        public static Azure.Maps.Rendering.MapImageStyle Dark { get { throw null; } }
-        public static Azure.Maps.Rendering.MapImageStyle Main { get { throw null; } }
-        public bool Equals(Azure.Maps.Rendering.MapImageStyle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Rendering.MapImageStyle left, Azure.Maps.Rendering.MapImageStyle right) { throw null; }
-        public static implicit operator Azure.Maps.Rendering.MapImageStyle (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Rendering.MapImageStyle left, Azure.Maps.Rendering.MapImageStyle right) { throw null; }
-        public override string ToString() { throw null; }
+        protected MapsTimezoneClient() { }
+        public MapsTimezoneClient(Azure.AzureKeyCredential credential) { }
+        public MapsTimezoneClient(Azure.AzureKeyCredential credential, Azure.Maps.Timezone.MapsTimezoneClientOptions options) { }
+        public MapsTimezoneClient(Azure.AzureSasCredential credential) { }
+        public MapsTimezoneClient(Azure.AzureSasCredential credential, Azure.Maps.Timezone.MapsTimezoneClientOptions options) { }
+        public MapsTimezoneClient(Azure.Core.TokenCredential credential, string clientId) { }
+        public MapsTimezoneClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Timezone.MapsTimezoneClientOptions options) { }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.IanaId>> ConvertWindowsTimezoneToIana(string windowsTimezoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.IanaId>>> ConvertWindowsTimezoneToIanaAsync(string windowsTimezoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.IanaId>> GetIanaTimezoneIds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.IanaId>>> GetIanaTimezoneIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Timezone.TimezoneIanaVersionResult> GetIanaVersion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Timezone.TimezoneIanaVersionResult>> GetIanaVersionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Timezone.TimezoneResult> GetTimezoneByCoordinates(System.Collections.Generic.IEnumerable<double> coordinates, Azure.Maps.Timezone.Models.Options.TimezoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Timezone.TimezoneResult>> GetTimezoneByCoordinatesAsync(System.Collections.Generic.IEnumerable<double> coordinates, Azure.Maps.Timezone.Models.Options.TimezoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Timezone.TimezoneResult> GetTimezoneByID(string timezoneId, Azure.Maps.Timezone.Models.Options.TimezoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Timezone.TimezoneResult>> GetTimezoneByIDAsync(string timezoneId, Azure.Maps.Timezone.Models.Options.TimezoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.TimezoneWindows>> GetWindowsTimezoneIds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.TimezoneWindows>>> GetWindowsTimezoneIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MapsRenderingClient
+    public partial class MapsTimezoneClientOptions : Azure.Core.ClientOptions
     {
-        protected MapsRenderingClient() { }
-        public MapsRenderingClient(Azure.AzureKeyCredential credential) { }
-        public MapsRenderingClient(Azure.AzureKeyCredential credential, Azure.Maps.Rendering.MapsRenderingClientOptions options) { }
-        public MapsRenderingClient(Azure.AzureSasCredential credential) { }
-        public MapsRenderingClient(Azure.AzureSasCredential credential, Azure.Maps.Rendering.MapsRenderingClientOptions options) { }
-        public MapsRenderingClient(Azure.Core.TokenCredential credential, string clientId) { }
-        public MapsRenderingClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Rendering.MapsRenderingClientOptions options) { }
-        public virtual Azure.Response<Azure.Maps.Rendering.CopyrightCaption> GetCopyrightCaption(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Rendering.CopyrightCaption>> GetCopyrightCaptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Rendering.RenderCopyright> GetCopyrightForTile(Azure.Maps.Rendering.MapTileIndex mapTileIndex, bool includeText = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Rendering.RenderCopyright>> GetCopyrightForTileAsync(Azure.Maps.Rendering.MapTileIndex mapTileIndex, bool includeText = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Rendering.RenderCopyright> GetCopyrightForWorld(bool includeText = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Rendering.RenderCopyright>> GetCopyrightForWorldAsync(bool includeText = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Rendering.RenderCopyright> GetCopyrightFromBoundingBox(Azure.Core.GeoJson.GeoBoundingBox geoBoundingBox, bool includeText = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Rendering.RenderCopyright>> GetCopyrightFromBoundingBoxAsync(Azure.Core.GeoJson.GeoBoundingBox geoBoundingBox, bool includeText = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<string>> GetMapCopyrightAttribution(Azure.Maps.Rendering.MapTileSetId tileSetId, Azure.Core.GeoJson.GeoBoundingBox boundingBox, int? zoom = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<string>>> GetMapCopyrightAttributionAsync(Azure.Maps.Rendering.MapTileSetId tileSetId, Azure.Core.GeoJson.GeoBoundingBox boundingBox, int? zoom = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.IO.Stream> GetMapStateTile(string stateSetId, Azure.Maps.Rendering.MapTileIndex mapTileIndex, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.IO.Stream>> GetMapStateTileAsync(string stateSetId, Azure.Maps.Rendering.MapTileIndex mapTileIndex, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.IO.Stream> GetMapStaticImage(Azure.Maps.Rendering.GetMapStaticImageOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.IO.Stream>> GetMapStaticImageAsync(Azure.Maps.Rendering.GetMapStaticImageOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.IO.Stream> GetMapTile(Azure.Maps.Rendering.GetMapTileOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.IO.Stream>> GetMapTileAsync(Azure.Maps.Rendering.GetMapTileOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Rendering.MapTileSet> GetMapTileSet(Azure.Maps.Rendering.MapTileSetId tileSetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Rendering.MapTileSet>> GetMapTileSetAsync(Azure.Maps.Rendering.MapTileSetId tileSetId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Maps.Rendering.MapTileIndex PositionToTileXY(Azure.Core.GeoJson.GeoPosition position, int zoom, int tileSize) { throw null; }
-        public static Azure.Core.GeoJson.GeoBoundingBox TileXYToBoundingBox(Azure.Maps.Rendering.MapTileIndex mapTileIndex, int tileSize) { throw null; }
-    }
-    public partial class MapsRenderingClientOptions : Azure.Core.ClientOptions
-    {
-        public MapsRenderingClientOptions(Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion version = Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion.V2022_08_01, System.Uri endpoint = null) { }
+        public MapsTimezoneClientOptions(Azure.Maps.Timezone.MapsTimezoneClientOptions.ServiceVersion version = Azure.Maps.Timezone.MapsTimezoneClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V2022_08_01 = 1,
+            V1_0 = 1,
         }
     }
-    public static partial class MapsRenderingModelFactory
+    public static partial class MapsTimezoneModelFactory
     {
-        public static Azure.Maps.Rendering.CopyrightCaption CopyrightCaption(string formatVersion = null, string copyright = null) { throw null; }
-        public static Azure.Maps.Rendering.RegionalCopyright RegionalCopyright(System.Collections.Generic.IEnumerable<string> copyrights = null, Azure.Maps.Rendering.RegionalCopyrightCountry country = null) { throw null; }
-        public static Azure.Maps.Rendering.RegionalCopyrightCountry RegionalCopyrightCountry(string iso3 = null, string label = null) { throw null; }
-        public static Azure.Maps.Rendering.RenderCopyright RenderCopyright(string formatVersion = null, System.Collections.Generic.IEnumerable<string> generalCopyrights = null, System.Collections.Generic.IEnumerable<Azure.Maps.Rendering.RegionalCopyright> regionalCopyrights = null) { throw null; }
+        public static Azure.Maps.Timezone.CountryRecord CountryRecord(string name = null, string code = null) { throw null; }
+        public static Azure.Maps.Timezone.IanaId IanaId(string id = null, bool? isAlias = default(bool?), string aliasOf = null, bool? hasZone1970Location = default(bool?)) { throw null; }
+        public static Azure.Maps.Timezone.ReferenceTime ReferenceTime(string tag = null, string standardOffset = null, string daylightSavings = null, string wallTime = null, int? posixTzValidYear = default(int?), string posixTz = null, System.DateTimeOffset? sunrise = default(System.DateTimeOffset?), System.DateTimeOffset? sunset = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Maps.Timezone.RepresentativePoint RepresentativePoint(float? latitude = default(float?), float? longitude = default(float?)) { throw null; }
+        public static Azure.Maps.Timezone.TimeTransition TimeTransition(string tag = null, string standardOffset = null, string daylightSavings = null, System.DateTimeOffset? utcStart = default(System.DateTimeOffset?), System.DateTimeOffset? utcEnd = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Maps.Timezone.TimezoneIanaVersionResult TimezoneIanaVersionResult(string version = null) { throw null; }
+        public static Azure.Maps.Timezone.TimezoneId TimezoneId(string id = null, System.Collections.Generic.IEnumerable<string> aliases = null, System.Collections.Generic.IEnumerable<Azure.Maps.Timezone.CountryRecord> countries = null, Azure.Maps.Timezone.TimezoneNames names = null, Azure.Maps.Timezone.ReferenceTime referenceTime = null, Azure.Maps.Timezone.RepresentativePoint representativePoint = null, System.Collections.Generic.IEnumerable<Azure.Maps.Timezone.TimeTransition> timeTransitions = null) { throw null; }
+        public static Azure.Maps.Timezone.TimezoneNames TimezoneNames(string isO6391LanguageCode = null, string generic = null, string standard = null, string daylight = null) { throw null; }
+        public static Azure.Maps.Timezone.TimezoneResult TimezoneResult(string version = null, System.DateTimeOffset? referenceUtcTimestamp = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Maps.Timezone.TimezoneId> timeZones = null) { throw null; }
+        public static Azure.Maps.Timezone.TimezoneWindows TimezoneWindows(string windowsId = null, string territory = null, System.Collections.Generic.IEnumerable<string> ianaIds = null) { throw null; }
     }
-    public partial class MapTileIndex
+    public partial class ReferenceTime
     {
-        public MapTileIndex(int x, int y, int z) { }
-        public int X { get { throw null; } }
-        public int Y { get { throw null; } }
-        public int Z { get { throw null; } }
+        internal ReferenceTime() { }
+        public string DaylightSavings { get { throw null; } }
+        public string PosixTz { get { throw null; } }
+        public int? PosixTzValidYear { get { throw null; } }
+        public string StandardOffset { get { throw null; } }
+        public System.DateTimeOffset? Sunrise { get { throw null; } }
+        public System.DateTimeOffset? Sunset { get { throw null; } }
+        public string Tag { get { throw null; } }
+        public string WallTime { get { throw null; } }
+    }
+    public partial class RepresentativePoint
+    {
+        internal RepresentativePoint() { }
+        public float? Latitude { get { throw null; } }
+        public float? Longitude { get { throw null; } }
+    }
+    public partial class TimeTransition
+    {
+        internal TimeTransition() { }
+        public string DaylightSavings { get { throw null; } }
+        public string StandardOffset { get { throw null; } }
+        public string Tag { get { throw null; } }
+        public System.DateTimeOffset? UtcEnd { get { throw null; } }
+        public System.DateTimeOffset? UtcStart { get { throw null; } }
+    }
+    public partial class TimezoneIanaVersionResult
+    {
+        internal TimezoneIanaVersionResult() { }
+        public string Version { get { throw null; } }
+    }
+    public partial class TimezoneId
+    {
+        internal TimezoneId() { }
+        public System.Collections.Generic.IReadOnlyList<string> Aliases { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.CountryRecord> Countries { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.Maps.Timezone.TimezoneNames Names { get { throw null; } }
+        public Azure.Maps.Timezone.ReferenceTime ReferenceTime { get { throw null; } }
+        public Azure.Maps.Timezone.RepresentativePoint RepresentativePoint { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.TimeTransition> TimeTransitions { get { throw null; } }
+    }
+    public partial class TimezoneNames
+    {
+        internal TimezoneNames() { }
+        public string Daylight { get { throw null; } }
+        public string Generic { get { throw null; } }
+        public string ISO6391LanguageCode { get { throw null; } }
+        public string Standard { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MapTileScheme : System.IEquatable<Azure.Maps.Rendering.MapTileScheme>
+    public readonly partial struct TimezoneOptions : System.IEquatable<Azure.Maps.Timezone.TimezoneOptions>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MapTileScheme(string value) { throw null; }
-        public static Azure.Maps.Rendering.MapTileScheme Tms { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileScheme Xyz { get { throw null; } }
-        public bool Equals(Azure.Maps.Rendering.MapTileScheme other) { throw null; }
+        public TimezoneOptions(string value) { throw null; }
+        public static Azure.Maps.Timezone.TimezoneOptions All { get { throw null; } }
+        public static Azure.Maps.Timezone.TimezoneOptions None { get { throw null; } }
+        public static Azure.Maps.Timezone.TimezoneOptions Transitions { get { throw null; } }
+        public static Azure.Maps.Timezone.TimezoneOptions ZoneInfo { get { throw null; } }
+        public bool Equals(Azure.Maps.Timezone.TimezoneOptions other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Rendering.MapTileScheme left, Azure.Maps.Rendering.MapTileScheme right) { throw null; }
-        public static implicit operator Azure.Maps.Rendering.MapTileScheme (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Rendering.MapTileScheme left, Azure.Maps.Rendering.MapTileScheme right) { throw null; }
+        public static bool operator ==(Azure.Maps.Timezone.TimezoneOptions left, Azure.Maps.Timezone.TimezoneOptions right) { throw null; }
+        public static implicit operator Azure.Maps.Timezone.TimezoneOptions (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Timezone.TimezoneOptions left, Azure.Maps.Timezone.TimezoneOptions right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MapTileSet
+    public partial class TimezoneResult
     {
-        internal MapTileSet() { }
-        public Azure.Core.GeoJson.GeoBoundingBox? BoundingBox { get { throw null; } }
-        public Azure.Maps.Rendering.MapTileIndex? CenterTileIndex { get { throw null; } }
-        public string CopyrightAttribution { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> GeoJsonDataFiles { get { throw null; } }
-        public string MapTileLegend { get { throw null; } }
-        public int? MaxZoomLevel { get { throw null; } }
-        public int? MinZoomLevel { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> TileEndpoints { get { throw null; } }
-        public string TileJsonVersion { get { throw null; } }
-        public Azure.Maps.Rendering.MapTileScheme TileScheme { get { throw null; } }
-        public string TileSetDescription { get { throw null; } }
-        public string TileSetName { get { throw null; } }
-        public string TileSetVersion { get { throw null; } }
+        internal TimezoneResult() { }
+        public System.DateTimeOffset? ReferenceUtcTimestamp { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.TimezoneId> TimeZones { get { throw null; } }
+        public string Version { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MapTileSetId : System.IEquatable<Azure.Maps.Rendering.MapTileSetId>
+    public partial class TimezoneWindows
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MapTileSetId(string value) { throw null; }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftBase { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseDarkgrey { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseHybrid { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseHybridDarkgrey { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseHybridRoad { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseLabels { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseLabelsDarkgrey { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseLabelsRoad { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftBaseRoad { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftImagery { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTerraMain { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficAbsolute { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficAbsoluteMain { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficDelay { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficDelayMain { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficIncident { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficReducedMain { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficRelative { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficRelativeDark { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftTrafficRelativeMain { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftWeatherInfraredMain { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSetId MicrosoftWeatherRadarMain { get { throw null; } }
-        public bool Equals(Azure.Maps.Rendering.MapTileSetId other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Rendering.MapTileSetId left, Azure.Maps.Rendering.MapTileSetId right) { throw null; }
-        public static implicit operator Azure.Maps.Rendering.MapTileSetId (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Rendering.MapTileSetId left, Azure.Maps.Rendering.MapTileSetId right) { throw null; }
-        public override string ToString() { throw null; }
+        internal TimezoneWindows() { }
+        public System.Collections.Generic.IReadOnlyList<string> IanaIds { get { throw null; } }
+        public string Territory { get { throw null; } }
+        public string WindowsId { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MapTileSize : System.IEquatable<Azure.Maps.Rendering.MapTileSize>
+}
+namespace Azure.Maps.Timezone.Models.Options
+{
+    public partial class TimezoneBaseOptions
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MapTileSize(string value) { throw null; }
-        public static Azure.Maps.Rendering.MapTileSize Size256 { get { throw null; } }
-        public static Azure.Maps.Rendering.MapTileSize Size512 { get { throw null; } }
-        public bool Equals(Azure.Maps.Rendering.MapTileSize other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Rendering.MapTileSize left, Azure.Maps.Rendering.MapTileSize right) { throw null; }
-        public static implicit operator Azure.Maps.Rendering.MapTileSize (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Rendering.MapTileSize left, Azure.Maps.Rendering.MapTileSize right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PushpinPosition
-    {
-        public PushpinPosition(double longitude, double latitude, string? label = null) { }
-    }
-    public partial class RegionalCopyright
-    {
-        internal RegionalCopyright() { }
-        public System.Collections.Generic.IReadOnlyList<string> Copyrights { get { throw null; } }
-        public Azure.Maps.Rendering.RegionalCopyrightCountry Country { get { throw null; } }
-    }
-    public partial class RegionalCopyrightCountry
-    {
-        internal RegionalCopyrightCountry() { }
-        public string Iso3 { get { throw null; } }
-        public string Label { get { throw null; } }
-    }
-    public partial class RenderCopyright
-    {
-        internal RenderCopyright() { }
-        public string FormatVersion { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> GeneralCopyrights { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Rendering.RegionalCopyright> RegionalCopyrights { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RenderingLanguage : System.IEquatable<Azure.Maps.Rendering.RenderingLanguage>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RenderingLanguage(string value) { throw null; }
-        public static Azure.Maps.Rendering.RenderingLanguage Arabic { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Bulgarian { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Czech { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Danish { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage DutchNetherlands { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage EnglishAustralia { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage EnglishGreatBritain { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage EnglishNewZealand { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage EnglishUsa { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Finnish { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage FrenchFrance { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage German { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Greek { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Hungarian { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Indonesian { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Italian { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Korean { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Lithuanian { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Malay { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage NeutralGroundTruthLatin { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage NeutralGroundTruthLocal { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Norwegian { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Polish { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage PortugueseBrazil { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage PortuguesePortugal { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Russian { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage SimplifiedChinese { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Slovak { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Slovenian { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage SpanishMexico { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage SpanishSpain { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Swedish { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Thai { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage TraditionalChinese { get { throw null; } }
-        public static Azure.Maps.Rendering.RenderingLanguage Turkish { get { throw null; } }
-        public bool Equals(Azure.Maps.Rendering.RenderingLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Rendering.RenderingLanguage left, Azure.Maps.Rendering.RenderingLanguage right) { throw null; }
-        public static implicit operator Azure.Maps.Rendering.RenderingLanguage (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Rendering.RenderingLanguage left, Azure.Maps.Rendering.RenderingLanguage right) { throw null; }
-        public override string ToString() { throw null; }
+        public TimezoneBaseOptions() { }
+        public string AcceptLanguage { get { throw null; } set { } }
+        public System.DateTimeOffset? DaylightSavingsTimeFrom { get { throw null; } set { } }
+        public int? DaylightSavingsTimeLastingYears { get { throw null; } set { } }
+        public Azure.Maps.Timezone.TimezoneOptions? Options { get { throw null; } set { } }
+        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
     }
 }

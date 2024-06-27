@@ -23,10 +23,11 @@ namespace Azure.Maps.Timezone
 
         internal string Version { get; }
 
-        internal Uri Endpoint { get; }
+        /// <summary> The Azure Maps endpoint for requests. </summary>
+        public Uri Endpoint { get; set; }
 
-        /// <summary> Initializes new instance of MapsRenderClientOptions. </summary>
-        /// <param name="version"> Azure Maps Render API version. </param>
+        /// <summary> Initializes new instance of MapsTimezoneClientOptions. </summary>
+        /// <param name="version"> Azure Maps Timezone API version. </param>
         /// <param name="endpoint"> The endpoint for Azure Maps. </param>
         public MapsTimezoneClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
         {
