@@ -79,4 +79,8 @@
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.ClientModel\src\System.ClientModel.csproj" />
+  </ItemGroup>
+
 </Project>

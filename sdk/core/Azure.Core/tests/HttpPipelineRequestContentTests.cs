@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -164,6 +166,47 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ModelContent()
+        {
+            MockPersistableModel model = new(404, "abcde");
+            using RequestContent content = RequestContent.Create(model);
+
+            Assert.IsTrue(content.TryComputeLength(out long length));
+            Assert.AreEqual(model.SerializedValue.Length, length);
+
+            MemoryStream stream = new MemoryStream();
+            content.WriteTo(stream, CancellationToken.None);
+
+            Assert.AreEqual(model.SerializedValue.Length, stream.Position);
+
+            BinaryData serializedContent = ((IPersistableModel<object>)model).Write(ModelReaderWriterOptions.Json);
+            Assert.AreEqual(serializedContent.ToArray(), stream.ToArray());
+        }
+
+        [Test]
+        public void JsonModelContent()
+        {
+            MockJsonModel model = new MockJsonModel(404, "abcde");
+            using RequestContent content = RequestContent.Create(model, ModelReaderWriterOptions.Json);
+
+            Assert.IsTrue(content.TryComputeLength(out long length));
+            Assert.AreEqual(model.Utf8BytesValue.Length, length);
+
+            MemoryStream contentStream = new MemoryStream();
+            content.WriteTo(contentStream, CancellationToken.None);
+
+            Assert.AreEqual(model.Utf8BytesValue.Length, contentStream.Position);
+
+            MemoryStream modelStream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(modelStream);
+
+            ((IJsonModel<object>)model).Write(writer, ModelReaderWriterOptions.Json);
+            writer.Flush();
+
+            Assert.AreEqual(model.Utf8BytesValue, contentStream.ToArray());
+        }
+
+        [Test]
         public void CamelCaseContent()
         {
             ReadOnlySpan<byte> utf8Json = """
@@ -195,6 +238,40 @@ namespace Azure.Core.Tests
             content.WriteTo(destination, default);
 
             CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
+        }
+
+        public class MockPersistableModel : IPersistableModel<MockPersistableModel>
+        {
+            public int IntValue { get; set; }
+
+            public string StringValue { get; set; }
+
+            public string SerializedValue { get; }
+
+            public MockPersistableModel(int intValue, string stringValue)
+            {
+                IntValue = intValue;
+                StringValue = stringValue;
+
+                dynamic json = BinaryData.FromString("{}").ToDynamicFromJson(JsonPropertyNames.CamelCase);
+                json.IntValue = IntValue;
+                json.StringValue = StringValue;
+                SerializedValue = json.ToString();
+            }
+
+            MockPersistableModel IPersistableModel<MockPersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                dynamic json = data.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+                return new MockPersistableModel(json.IntValue, json.StringValue);
+            }
+
+            string IPersistableModel<MockPersistableModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+                => "J";
+
+            BinaryData IPersistableModel<MockPersistableModel>.Write(ModelReaderWriterOptions options)
+            {
+                return BinaryData.FromString(SerializedValue);
+            }
         }
     }
 }

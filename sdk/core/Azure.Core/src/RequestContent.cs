@@ -3,6 +3,8 @@
 
 using System;
 using System.Buffers;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -119,6 +121,20 @@ namespace Azure.Core
             JsonSerializerOptions serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
             ObjectSerializer serializer = new JsonObjectSerializer(serializerOptions);
             return Create(serializer.Serialize(serializable));
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public static RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+        {
+            Argument.AssertNotNull(model, nameof(model));
+
+            return new ModelContent<T>(model, options ?? new ModelReaderWriterOptions("W"));
         }
 
         /// <summary>
@@ -344,6 +360,35 @@ namespace Azure.Core
             {
                 _data.WriteTo(stream);
                 return Task.CompletedTask;
+            }
+        }
+
+        private sealed class ModelContent<T> : RequestContent where T : IPersistableModel<T>
+        {
+            private readonly BinaryContent _binaryContent;
+
+            public ModelContent(T model, ModelReaderWriterOptions options)
+            {
+                _binaryContent = BinaryContent.Create(model, options);
+            }
+            public override void Dispose()
+            {
+                _binaryContent.Dispose();
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                return _binaryContent.TryComputeLength(out length);
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                _binaryContent.WriteTo(stream, cancellation);
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                await _binaryContent.WriteToAsync(stream, cancellation).ConfigureAwait(false);
             }
         }
     }
