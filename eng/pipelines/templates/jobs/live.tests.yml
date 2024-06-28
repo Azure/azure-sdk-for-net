@@ -114,8 +114,11 @@ jobs:
         parameters:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
-          EnvVars: ${{ parameters.EnvVars }}
-          SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+          ${{ if parameters.UseFederatedAuth }}:
+            SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+          EnvVars:
+            Pool: $(Pool)
+            ${{ insert }}: ${{ parameters.EnvVars }}
 
       - pwsh: |
           $project = "${{ parameters.Project }}"
@@ -179,9 +182,13 @@ jobs:
             pwsh: true
             ScriptType: InlineScript
             Inline: >-
+              . ./eng/common/TestResources/SubConfig-Helpers.ps1
+              $serviceDirectoryPrefix = BuildServiceDirectoryPrefix ${{ parameters.ServiceDirectory }};
               $account = (Get-AzContext).Account;
               $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id;
               $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants;
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}CLIENT_ID", $account.Id);
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}TENANT_ID", $account.Tenants);
 
               dotnet test eng/service.proj
               --framework $(TestTargetFramework)
