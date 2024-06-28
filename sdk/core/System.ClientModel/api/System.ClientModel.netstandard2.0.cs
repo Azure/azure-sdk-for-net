@@ -7,16 +7,11 @@ namespace System.ClientModel
         public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
-    public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncResultCollection<T>
+    public abstract partial class AsyncCollectionResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
-        protected AsyncPageableCollection() { }
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
-        public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public abstract partial class AsyncResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
-    {
-        protected internal AsyncResultCollection() { }
-        protected internal AsyncResultCollection(System.ClientModel.Primitives.PipelineResponse response) { }
+        protected internal AsyncCollectionResult() { }
+        protected internal AsyncCollectionResult(System.ClientModel.Primitives.PipelineResponse response) { }
+        public static System.ClientModel.AsyncCollectionResult<T> FromPageAsync(System.ClientModel.PageResult<T> firstPage) { throw null; }
         public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public abstract partial class BinaryContent : System.IDisposable
@@ -54,31 +49,42 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
-    public abstract partial class PageableCollection<T> : System.ClientModel.ResultCollection<T>
+    public abstract partial class CollectionResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
-        protected PageableCollection() { }
-        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
-        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
-    }
-    public abstract partial class ResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
-    {
-        protected internal ResultCollection() { }
-        protected internal ResultCollection(System.ClientModel.Primitives.PipelineResponse response) { }
+        protected internal CollectionResult() { }
+        protected internal CollectionResult(System.ClientModel.Primitives.PipelineResponse response) { }
+        public static System.ClientModel.CollectionResult<T> FromPage(System.ClientModel.PageResult<T> firstPage) { throw null; }
         public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ResultPage<T> : System.ClientModel.ResultCollection<T>
+    public partial class ContinuationToken
     {
-        internal ResultPage() { }
-        public string? ContinuationToken { get { throw null; } }
-        public static System.ClientModel.ResultPage<T> Create(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+        protected ContinuationToken() { }
+        protected ContinuationToken(System.BinaryData bytes) { }
+        public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
+        public virtual System.BinaryData ToBytes() { throw null; }
     }
-    public abstract partial class ResultValueOperation : System.ClientModel.ClientResult
+    public abstract partial class OperationResult : System.ClientModel.ClientResult
     {
-        protected ResultValueOperation(System.BinaryData rehydrationToken, System.ClientModel.Primitives.PipelineResponse response) { }
+        protected OperationResult(System.ClientModel.ContinuationToken rehydrationToken, System.ClientModel.Primitives.PipelineResponse response) { }
         public bool HasCompleted { get { throw null; } protected set { } }
-        public System.BinaryData RehydrationToken { get { throw null; } protected set { } }
+        public System.ClientModel.ContinuationToken RehydrationToken { get { throw null; } protected set { } }
+    }
+    public abstract partial class PageResult : System.ClientModel.ClientResult
+    {
+        protected PageResult(bool hasNext, System.ClientModel.Primitives.PipelineResponse response) { }
+        public bool HasNext { get { throw null; } }
+        public System.ClientModel.PageResult GetNextResult() { throw null; }
+        public System.Threading.Tasks.Task<System.ClientModel.PageResult> GetNextResultAsync() { throw null; }
+        protected abstract System.Threading.Tasks.Task<System.ClientModel.PageResult> GetNextResultAsyncCore();
+        protected abstract System.ClientModel.PageResult GetNextResultCore();
+    }
+    public abstract partial class PageResult<T> : System.ClientModel.PageResult
+    {
+        protected PageResult(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) : base (default(bool), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public System.ClientModel.ContinuationToken? NextPageToken { get { throw null; } }
+        public System.ClientModel.ContinuationToken PageToken { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
     }
     public enum ReturnWhen
     {

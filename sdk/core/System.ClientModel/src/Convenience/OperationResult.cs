@@ -6,15 +6,15 @@ using System.ClientModel.Primitives;
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class ResultValueOperation : ClientResult
+public abstract class OperationResult : ClientResult
 {
-    protected ResultValueOperation(BinaryData rehydrationToken, PipelineResponse response)
+    protected OperationResult(ContinuationToken rehydrationToken, PipelineResponse response)
         : base(response)
     {
         RehydrationToken = rehydrationToken;
     }
 
-    public BinaryData RehydrationToken { get; protected set; }
+    public ContinuationToken RehydrationToken { get; protected set; }
     public bool HasCompleted {  get; protected set; }
 }
 #pragma warning restore CS1591 // public XML comments
