@@ -947,6 +947,12 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
+# PRLabel: %Informatica Data Management
+/sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak
+
+# ServiceLabel: %Informatica Data Management %Mgmt
+# ServiceOwners:                                                   @almasak
+
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978
 
