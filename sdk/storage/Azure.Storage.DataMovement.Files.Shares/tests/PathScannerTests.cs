@@ -154,9 +154,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             }
 
             Assert.That(files.Select(f => f.Uri.PathAndQuery.Substring(shareName.Length + 2)), Is.EquivalentTo(expectedFilePaths));
-            Assert.That(files.Any(f => f._options._destinationPermissionKey == destinationPermissionKey));
+            foreach (ShareFileStorageResource file in files)
+            {
+                StorageResourceItemProperties properties = file.GetResourceProperties();
+                Assert.That(properties.RawProperties.GetDestinationPermissionKey(), Is.EqualTo(destinationPermissionKey));
+            }
             Assert.That(directories.Select(f => f.Uri.PathAndQuery.Substring(shareName.Length + 2)), Is.EquivalentTo(expectedDirectoryPaths));
-            Assert.That(directories.Any(d => d.ResourceOptions._destinationPermissionKey == destinationPermissionKey));
+            foreach (ShareDirectoryStorageResourceContainer directory in directories)
+            {
+                Assert.That(directory.ResourceProperties.RawProperties.GetDestinationPermissionKey(), Is.EqualTo(destinationPermissionKey));
+            }
             mockDirectory.Verify(d => d.GetFilesAndDirectoriesAsync(
                 It.Is<ShareDirectoryGetFilesAndDirectoriesOptions>(
                     options => options.Traits == traits),

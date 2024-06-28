@@ -32,6 +32,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override long? Length => ResourceProperties?.ResourceLength;
 
+        internal string _destinationPermissionKey;
+
         public ShareFileStorageResource(
             ShareFileClient fileClient,
             ShareFileStorageResourceOptions options = default)
@@ -74,12 +76,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(properties?.RawProperties);
             IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
-            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties);
+            string filePermission = _options?.GetFilePermission(properties?.RawProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
             await ShareFileClient.CreateAsync(
                     maxSize: maxSize,
                     httpHeaders: httpHeaders,
                     metadata: metadata,
                     smbProperties: smbProperties,
+                    filePermission: filePermission,
                     conditions: _options?.DestinationConditions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -199,7 +203,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             Response<ShareFileProperties> response = await ShareFileClient.GetPropertiesAsync(
                 conditions: _options?.SourceConditions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+            if (ResourceProperties != default)
+            {
+                ResourceProperties.AddToStorageResourceItemProperties(response.Value);
+            }
+            else
+            {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
+            }
             return ResourceProperties;
         }
 
@@ -226,7 +237,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 if (_options?.FilePermissions?.Preserve ?? false)
                 {
                     ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
-                    if (string.IsNullOrEmpty(sourceShareFile._options._destinationPermissionKey))
+                    string destinationPermissionKey = sourceProperties?.RawProperties?.GetDestinationPermissionKey();
+                    if (destinationPermissionKey == default)
                     {
                         string sourcePermissions = await sourceShareFile.GetPermissionsAsync(sourceProperties, cancellationToken).ConfigureAwait(false);
 
@@ -234,12 +246,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         {
                             ShareClient parentShare = ShareFileClient.GetParentShareClient();
                             PermissionInfo permissionsInfo = await parentShare.CreatePermissionAsync(sourcePermissions, cancellationToken).ConfigureAwait(false);
-                            _options._destinationPermissionKey = permissionsInfo.FilePermissionKey;
+                            _destinationPermissionKey = permissionsInfo.FilePermissionKey;
                         }
                     }
                     else
                     {
-                        _options._destinationPermissionKey = sourceShareFile._options._destinationPermissionKey;
+                        _destinationPermissionKey = destinationPermissionKey;
                     }
                 }
             }
@@ -271,7 +283,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 contentDisposition: _options?.ContentDisposition,
                 cacheControl: _options?.CacheControl,
                 fileAttributes: _options?.FileAttributes,
-                filePermissionKey: _options?._destinationPermissionKey,
+                preserveFilePermission: _options?.FilePermissions?.Preserve,
                 fileCreatedOn: _options?.FileCreatedOn,
                 fileLastWrittenOn: _options?.FileLastWrittenOn,
                 fileChangedOn: _options?.FileChangedOn,

@@ -98,7 +98,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// By default the permission key will not be preserved from the source Share to the destination Share.
         /// </summary>
         public DataTransferProperty FilePermissions { get; set; }
-        internal string _destinationPermissionKey;
 
         /// <summary>
         /// The creation time of the file.
@@ -149,12 +148,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
         }
 
-        internal ShareFileStorageResourceOptions(string destinationPermissionKey)
-        {
-            _destinationPermissionKey = destinationPermissionKey;
-        }
-
-        internal ShareFileStorageResourceOptions(ShareFileStorageResourceOptions options, string destinationPermissionKey)
+        internal ShareFileStorageResourceOptions(ShareFileStorageResourceOptions options)
         {
             SourceConditions = options?.SourceConditions;
             DestinationConditions = options?.DestinationConditions;
@@ -165,13 +159,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ContentType = options?.ContentType;
             FileAttributes = options?.FileAttributes;
             FilePermissions = options?.FilePermissions;
-            _destinationPermissionKey = options?._destinationPermissionKey;
             FileCreatedOn = options?.FileCreatedOn;
             FileLastWrittenOn = options?.FileLastWrittenOn;
             FileChangedOn = options?.FileChangedOn;
             DirectoryMetadata = options?.DirectoryMetadata;
             FileMetadata = options?.FileMetadata;
-            _destinationPermissionKey = destinationPermissionKey;
         }
     }
 }

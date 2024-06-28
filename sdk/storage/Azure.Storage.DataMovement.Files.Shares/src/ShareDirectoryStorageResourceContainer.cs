@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 contentDisposition: ResourceOptions?.ContentDisposition,
                 cacheControl: ResourceOptions?.CacheControl,
                 fileAttributes: ResourceOptions?.FileAttributes,
-                filePermissionKey: ResourceOptions?._destinationPermissionKey,
+                preserveFilePermission: ResourceOptions?.FilePermissions?.Preserve,
                 fileCreatedOn: ResourceOptions?.FileCreatedOn,
                 fileLastWrittenOn: ResourceOptions?.FileLastWrittenOn,
                 fileChangedOn: ResourceOptions?.FileChangedOn,

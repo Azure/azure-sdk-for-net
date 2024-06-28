@@ -52,15 +52,31 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         : default
                     : options?.FileMetadata?.Value;
 
+        public static string GetFilePermission(
+            this ShareFileStorageResourceOptions options,
+            Dictionary<string, object> properties)
+            => (options?.FilePermissions?.Preserve ?? false)
+                ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
+                        ? (string) permission
+                        : default
+                    : default;
+
         public static string GetSourcePermissionKey(
             this Dictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, out object permissionKey) == true
                 ? (string)permissionKey
                 : default;
 
+        public static string GetDestinationPermissionKey(
+            this Dictionary<string, object> properties)
+            => properties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKey) == true
+                ? (string)permissionKey
+                : default;
+
         public static FileSmbProperties GetFileSmbProperties(
             this ShareFileStorageResourceOptions options,
-            StorageResourceItemProperties properties)
+            StorageResourceItemProperties properties,
+            string destinationPermissionKey)
             => new()
             {
                 FileAttributes = (options?.FileAttributes?.Preserve ?? true)
@@ -68,7 +84,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         ? (NtfsFileAttributes?) fileAttributes
                         : default
                     : options?.FileAttributes?.Value,
-                FilePermissionKey = options?._destinationPermissionKey,
+                FilePermissionKey = destinationPermissionKey,
                 FileCreatedOn = (options?.FileCreatedOn?.Preserve ?? true)
                     ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
                         ? (DateTimeOffset?) fileCreatedOn
@@ -106,60 +122,125 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 SourceAuthentication = sourceAuthorization
             };
 
+        private static void WriteKeyValue(
+            this Dictionary<string, object> properties,
+            string key,
+            object value)
+        {
+            if (value != default &&
+                properties.ContainsKey(key))
+            {
+                properties[key] = value;
+            }
+            else
+            {
+                properties.Add(key, value);
+            }
+        }
+
         internal static StorageResourceItemProperties ToStorageResourceItemProperties(
             this ShareFileProperties fileProperties)
         {
-            Dictionary<string, object> properties = new();
+            Dictionary<string, object> rawProperties = new();
             if (fileProperties.Metadata != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.Metadata, fileProperties.Metadata);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.Metadata, fileProperties.Metadata);
             }
             if (fileProperties.SmbProperties.FileCreatedOn != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.CreationTime, fileProperties.SmbProperties.FileCreatedOn);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.CreationTime, fileProperties.SmbProperties.FileCreatedOn);
             }
             if (fileProperties.SmbProperties.FileChangedOn != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.ChangedOnTime, fileProperties.SmbProperties.FileChangedOn);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ChangedOnTime, fileProperties.SmbProperties.FileChangedOn);
             }
             if (fileProperties.SmbProperties.FileAttributes != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.FileAttributes, fileProperties.SmbProperties.FileAttributes);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileAttributes, fileProperties.SmbProperties.FileAttributes);
             }
             if (fileProperties.SmbProperties.FilePermissionKey != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, fileProperties.SmbProperties.FilePermissionKey);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, fileProperties.SmbProperties.FilePermissionKey);
             }
             if (fileProperties.ContentType != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentType, fileProperties.ContentType);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentType, fileProperties.ContentType);
             }
             if (fileProperties.ContentHash != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentHash, fileProperties.ContentHash);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentHash, fileProperties.ContentHash);
             }
             if (fileProperties.ContentEncoding != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentEncoding, fileProperties.ContentEncoding);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentEncoding, fileProperties.ContentEncoding);
             }
             if (fileProperties.ContentLanguage != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentLanguage, fileProperties.ContentLanguage);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentLanguage, fileProperties.ContentLanguage);
             }
             if (fileProperties.ContentDisposition != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentDisposition, fileProperties.ContentDisposition);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentDisposition, fileProperties.ContentDisposition);
             }
             if (fileProperties.CacheControl != default)
             {
-                properties.Add(DataMovementConstants.ResourceProperties.CacheControl, fileProperties.CacheControl);
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.CacheControl, fileProperties.CacheControl);
             }
-
             return new StorageResourceItemProperties(
                 resourceLength: fileProperties.ContentLength,
                 eTag: fileProperties.ETag,
                 lastModifiedTime: fileProperties.SmbProperties.FileLastWrittenOn,
-                properties: properties);
+                properties: rawProperties);
+        }
+
+        internal static void AddToStorageResourceItemProperties(
+            this StorageResourceItemProperties existingProperties,
+            ShareFileProperties fileProperties)
+        {
+            if (fileProperties.Metadata != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.Metadata, fileProperties.Metadata);
+            }
+            if (fileProperties.SmbProperties.FileCreatedOn != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.CreationTime, fileProperties.SmbProperties.FileCreatedOn);
+            }
+            if (fileProperties.SmbProperties.FileChangedOn != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ChangedOnTime, fileProperties.SmbProperties.FileChangedOn);
+            }
+            if (fileProperties.SmbProperties.FileAttributes != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileAttributes, fileProperties.SmbProperties.FileAttributes);
+            }
+            if (fileProperties.SmbProperties.FilePermissionKey != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, fileProperties.SmbProperties.FilePermissionKey);
+            }
+            if (fileProperties.ContentType != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentType, fileProperties.ContentType);
+            }
+            if (fileProperties.ContentHash != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentHash, fileProperties.ContentHash);
+            }
+            if (fileProperties.ContentEncoding != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentEncoding, fileProperties.ContentEncoding);
+            }
+            if (fileProperties.ContentLanguage != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentLanguage, fileProperties.ContentLanguage);
+            }
+            if (fileProperties.ContentDisposition != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ContentDisposition, fileProperties.ContentDisposition);
+            }
+            if (fileProperties.CacheControl != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.CacheControl, fileProperties.CacheControl);
+            }
         }
 
         internal static ShareFileDownloadOptions ToShareFileDownloadOptions(
@@ -229,28 +310,18 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     properties: properties));
         }
 
-        internal static StorageResourceItemProperties ToResourceProperties(this ShareFileItem shareItem)
+        internal static StorageResourceItemProperties ToResourceProperties(
+            this ShareFileItem shareItem,
+            string destinationPermissionKey)
         {
             Dictionary<string, object> properties = new();
-            if (shareItem?.Properties?.CreatedOn != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.CreationTime, shareItem.Properties.CreatedOn);
-            }
-            if (shareItem?.Properties?.LastWrittenOn != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.LastWrittenOn, shareItem.Properties.LastWrittenOn);
-            }
-            if (shareItem?.Properties?.ChangedOn != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ChangedOnTime, shareItem.Properties.ChangedOn);
-            }
-            if (shareItem?.FileAttributes != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.FileAttributes, shareItem.FileAttributes);
-            }
             if (shareItem?.PermissionKey != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, shareItem.PermissionKey);
+            }
+            if (destinationPermissionKey != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, destinationPermissionKey);
             }
             return new StorageResourceItemProperties(
                 resourceLength: shareItem?.FileSize,

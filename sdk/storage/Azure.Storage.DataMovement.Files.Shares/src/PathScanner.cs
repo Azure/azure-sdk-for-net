@@ -59,27 +59,22 @@ namespace Azure.Storage.DataMovement.Files.Shares
                             destinationPermissionKey = existingDestinationKey;
                         }
                     }
-                    ShareFileStorageResourceOptions fileOptions = sourceOptions;
-                    if (!string.IsNullOrEmpty(destinationPermissionKey))
-                    {
-                        fileOptions = new(sourceOptions, destinationPermissionKey);
-                    }
                     if (item.IsDirectory)
                     {
                         ShareDirectoryClient subdir = current.GetSubdirectoryClient(item.Name);
                         toScan.Enqueue(subdir);
                         yield return new ShareDirectoryStorageResourceContainer(
                             subdir,
-                            item.ToResourceProperties(),
-                            fileOptions);
+                            item.ToResourceProperties(destinationPermissionKey),
+                            sourceOptions);
                     }
                     else
                     {
                         ShareFileClient fileClient = current.GetFileClient(item.Name);
                         yield return new ShareFileStorageResource(
                             fileClient,
-                            item.ToResourceProperties(),
-                            fileOptions);
+                            item.ToResourceProperties(destinationPermissionKey),
+                            sourceOptions);
                     }
                 }
             }

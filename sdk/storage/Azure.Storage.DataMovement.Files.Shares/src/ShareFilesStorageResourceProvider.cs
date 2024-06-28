@@ -242,10 +242,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 checkpointData = ShareFileDestinationCheckpointData.Deserialize(stream);
             }
 
-            ShareFileStorageResourceOptions options = new(checkpointData.FilePermissionKey)
+            ShareFileStorageResourceOptions options = new()
             {
                 FileAttributes = checkpointData.FileAttributes,
-                FilePermissions = new(!string.IsNullOrEmpty(checkpointData.FilePermissionKey)),
+                FilePermissions = new(checkpointData.PreserveFilePermission),
                 CacheControl = checkpointData.CacheControl,
                 ContentDisposition = checkpointData.ContentDisposition,
                 ContentEncoding = checkpointData.ContentEncoding,
