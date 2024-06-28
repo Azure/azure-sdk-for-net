@@ -134,7 +134,7 @@ namespace Azure.Core
         {
             Argument.AssertNotNull(model, nameof(model));
 
-            return new ModelContent<T>(model, options ?? new ModelReaderWriterOptions("W"));
+            return Create(ModelReaderWriter.Write(model, options));
         }
 
         /// <summary>
@@ -360,35 +360,6 @@ namespace Azure.Core
             {
                 _data.WriteTo(stream);
                 return Task.CompletedTask;
-            }
-        }
-
-        private sealed class ModelContent<T> : RequestContent where T : IPersistableModel<T>
-        {
-            private readonly BinaryContent _binaryContent;
-
-            public ModelContent(T model, ModelReaderWriterOptions options)
-            {
-                _binaryContent = BinaryContent.Create(model, options);
-            }
-            public override void Dispose()
-            {
-                _binaryContent.Dispose();
-            }
-
-            public override bool TryComputeLength(out long length)
-            {
-                return _binaryContent.TryComputeLength(out length);
-            }
-
-            public override void WriteTo(Stream stream, CancellationToken cancellation)
-            {
-                _binaryContent.WriteTo(stream, cancellation);
-            }
-
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
-            {
-                await _binaryContent.WriteToAsync(stream, cancellation).ConfigureAwait(false);
             }
         }
     }
