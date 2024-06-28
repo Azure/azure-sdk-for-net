@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="subnetId"> Virtual network subnet resource id. </param>
         /// <param name="vnetResourceGuid"> Virtual network resource guid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaNetworkInterfaceConfigurationUpdate(string vnetId, string subnetId, string vnetResourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InformaticaNetworkInterfaceConfigurationUpdate(ResourceIdentifier vnetId, ResourceIdentifier subnetId, string vnetResourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VnetId = vnetId;
             SubnetId = subnetId;
@@ -64,9 +65,9 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <summary> Virtual network resource id. </summary>
-        public string VnetId { get; set; }
+        public ResourceIdentifier VnetId { get; set; }
         /// <summary> Virtual network subnet resource id. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Virtual network resource guid. </summary>
         public string VnetResourceGuid { get; set; }
     }

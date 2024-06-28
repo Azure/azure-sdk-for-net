@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_get</description>
+        /// <description>ServerlessRuntimes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_get</description>
+        /// <description>ServerlessRuntimes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_delete</description>
+        /// <description>ServerlessRuntimes_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_delete</description>
+        /// <description>ServerlessRuntimes_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_update</description>
+        /// <description>ServerlessRuntimes_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_update</description>
+        /// <description>ServerlessRuntimes_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_checkDependencies</description>
+        /// <description>ServerlessRuntimes_CheckDependencies</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_checkDependencies</description>
+        /// <description>ServerlessRuntimes_CheckDependencies</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_startFailedServerlessRuntime</description>
+        /// <description>ServerlessRuntimes_StartFailedServerlessRuntime</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_startFailedServerlessRuntime</description>
+        /// <description>ServerlessRuntimes_StartFailedServerlessRuntime</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

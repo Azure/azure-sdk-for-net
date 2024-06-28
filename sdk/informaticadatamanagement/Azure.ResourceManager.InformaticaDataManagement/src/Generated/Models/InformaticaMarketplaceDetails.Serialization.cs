@@ -26,8 +26,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("marketplaceSubscriptionId"u8);
-            writer.WriteStringValue(MarketplaceSubscriptionId);
+            if (Optional.IsDefined(MarketplaceSubscriptionId))
+            {
+                writer.WritePropertyName("marketplaceSubscriptionId"u8);
+                writer.WriteStringValue(MarketplaceSubscriptionId);
+            }
             writer.WritePropertyName("offerDetails"u8);
             writer.WriteObjectValue(OfferDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

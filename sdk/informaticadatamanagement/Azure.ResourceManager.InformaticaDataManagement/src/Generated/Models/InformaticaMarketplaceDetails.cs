@@ -46,15 +46,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="InformaticaMarketplaceDetails"/>. </summary>
-        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="offerDetails"> Marketplace offer details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceSubscriptionId"/> or <paramref name="offerDetails"/> is null. </exception>
-        public InformaticaMarketplaceDetails(string marketplaceSubscriptionId, InformaticaOfferDetails offerDetails)
+        /// <exception cref="ArgumentNullException"> <paramref name="offerDetails"/> is null. </exception>
+        public InformaticaMarketplaceDetails(InformaticaOfferDetails offerDetails)
         {
-            Argument.AssertNotNull(marketplaceSubscriptionId, nameof(marketplaceSubscriptionId));
             Argument.AssertNotNull(offerDetails, nameof(offerDetails));
 
-            MarketplaceSubscriptionId = marketplaceSubscriptionId;
             OfferDetails = offerDetails;
         }
 

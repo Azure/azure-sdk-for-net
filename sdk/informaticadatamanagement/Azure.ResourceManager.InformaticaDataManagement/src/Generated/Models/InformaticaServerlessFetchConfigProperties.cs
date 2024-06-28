@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="region"> region name for the runtime environment. </param>
         /// <param name="serverlessArmResourceId"> Serverless Arm Resource ID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaServerlessFetchConfigProperties(string subnet, string applicationType, string resourceGroupName, string advancedCustomProperties, string supplementaryFileLocation, string platform, string tags, string vnet, string executionTimeout, string computeUnits, Guid? tenantId, string subscriptionId, string region, string serverlessArmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InformaticaServerlessFetchConfigProperties(string subnet, string applicationType, string resourceGroupName, string advancedCustomProperties, string supplementaryFileLocation, string platform, string tags, string vnet, string executionTimeout, string computeUnits, Guid? tenantId, string subscriptionId, string region, ResourceIdentifier serverlessArmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subnet = subnet;
             ApplicationType = applicationType;
@@ -112,6 +113,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> region name for the runtime environment. </summary>
         public string Region { get; }
         /// <summary> Serverless Arm Resource ID. </summary>
-        public string ServerlessArmResourceId { get; }
+        public ResourceIdentifier ServerlessArmResourceId { get; }
     }
 }
