@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("memoryGiB"u8);
                 writer.WriteNumberValue(MemoryInGiB.Value);
             }
+            if (Optional.IsDefined(Gpus))
+            {
+                writer.WritePropertyName("gpus"u8);
+                writer.WriteNumberValue(Gpus.Value);
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppAvailableWorkloadProfileApplicability? applicability = default;
             int? cores = default;
             int? memoryGiB = default;
+            int? gpus = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -130,6 +136,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                     memoryGiB = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("gpus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gpus = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
@@ -146,6 +161,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 applicability,
                 cores,
                 memoryGiB,
+                gpus,
                 displayName,
                 serializedAdditionalRawData);
         }
