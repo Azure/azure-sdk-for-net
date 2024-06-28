@@ -124,18 +124,15 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// TODO.
+        /// Creates an instance of <see cref="RequestContent"/> that contains the bytes resulting from writing the value of the
+        /// provided <see cref="IPersistableModel{T}"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
+        /// <param name="options">The <see cref="ModelReaderWriterOptions"/>, if any, that indicates what format
+        /// the <paramref name="model"/> will be written in.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps an <see cref="IPersistableModel{T}"/>.</returns>
         public static RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
-        {
-            Argument.AssertNotNull(model, nameof(model));
-
-            return Create(ModelReaderWriter.Write(model, options));
-        }
+            => Create(ModelReaderWriter.Write(model, options));
 
         /// <summary>
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
