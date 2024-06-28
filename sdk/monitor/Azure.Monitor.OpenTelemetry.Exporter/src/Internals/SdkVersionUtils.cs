@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal static class SdkVersionUtils
     {
         private static string? s_prefix;
-        internal static string? s_sdkVersion = GetSdkVersion();
+        internal static string s_sdkVersion = GetSdkVersion();
         internal static bool s_isDistro = false;
 
         internal static string? SdkVersionPrefix
@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static string? GetSdkVersion()
+        private static string GetSdkVersion()
         {
             try
             {
@@ -115,7 +115,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 #elif ASP_NET_CORE_DISTRO
                 AzureMonitorAspNetCoreEventSource.Log.SdkVersionCreateFailed(ex);
 #endif
-                return null;
+
+                // Return a default value in case of failure.
+                // We don't think this will ever happen.
+                // We will monitor internal telemetry and if we detect this we may explore an alternative approach to collecting version numbers.
+                return "dotnetu:otelu:extu"; // 'u' for Unknown
             }
         }
     }
