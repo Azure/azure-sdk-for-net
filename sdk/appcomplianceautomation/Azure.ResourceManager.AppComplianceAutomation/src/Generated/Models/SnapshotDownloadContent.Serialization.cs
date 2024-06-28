@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 return null;
             }
             string reportCreatorTenantId = default;
-            DownloadType downloadType = default;
+            AppComplianceDownloadType downloadType = default;
             string offerGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (property.NameEquals("downloadType"u8))
                 {
-                    downloadType = new DownloadType(property.Value.GetString());
+                    downloadType = new AppComplianceDownloadType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("offerGuid"u8))
