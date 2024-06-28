@@ -65,7 +65,7 @@ public abstract class CollectionResult<T> : ClientResult, IEnumerable<T>
         public override IEnumerator<T> GetEnumerator()
         {
             PageResult<T> page = _firstPage;
-            while (page.HasNext)
+            while (page.NextPageToken is not null)
             {
                 foreach (T value in page.Values)
                 {

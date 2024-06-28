@@ -63,7 +63,7 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
         public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             PageResult<T> page = _firstPage;
-            while (page.HasNext)
+            while (page.NextPageToken is not null)
             {
                 foreach (T value in page.Values)
                 {

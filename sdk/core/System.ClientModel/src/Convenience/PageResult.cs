@@ -9,18 +9,31 @@ namespace System.ClientModel;
 #pragma warning disable CS1591
 public abstract class PageResult : ClientResult
 {
-    protected PageResult(bool hasNext, PipelineResponse response) : base(response)
+    protected PageResult(
+        ContinuationToken pageToken,
+        ContinuationToken? nextPageToken, PipelineResponse response) : base(response)
     {
-        HasNext = hasNext;
+        PageToken = pageToken;
+        NextPageToken = nextPageToken;
     }
 
-    public bool HasNext { get; }
+    // The token used to retrieve this page -- can uniquely request
+    // the page AND uniquely rehydrate a page collection that this is
+    // a page in (first, page 5, whatever).
+    // i.e. it completely describes a collection where this is a page
+    // in it.
+    // This is useful because I can cache this and retrive both the
+    // full collection this page is in and/or the current page.
+    public ContinuationToken PageToken { get; }
+
+    // If this is null, the current page is the last page in a collection.
+    public ContinuationToken? NextPageToken { get; }
 
     public PageResult GetNextResult()
     {
-        if (!HasNext)
+        if (NextPageToken is null)
         {
-            throw new InvalidOperationException("Cannot get next page result when 'HasNext' is false.");
+            throw new InvalidOperationException("Cannot get next page result when NextPageToken is null.");
         }
 
         return GetNextResultCore();
@@ -28,9 +41,9 @@ public abstract class PageResult : ClientResult
 
     public async Task<PageResult> GetNextResultAsync()
     {
-        if (!HasNext)
+        if (NextPageToken is null)
         {
-            throw new InvalidOperationException("Cannot get next page result when 'HasNext' is false.");
+            throw new InvalidOperationException("Cannot get next page result when NextPageToken is null.");
         }
 
         return await GetNextResultAsyncCore().ConfigureAwait(false);

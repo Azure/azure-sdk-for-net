@@ -66,8 +66,9 @@ namespace System.ClientModel
     }
     public abstract partial class PageResult : System.ClientModel.ClientResult
     {
-        protected PageResult(bool hasNext, System.ClientModel.Primitives.PipelineResponse response) { }
-        public bool HasNext { get { throw null; } }
+        protected PageResult(System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { }
+        public System.ClientModel.ContinuationToken? NextPageToken { get { throw null; } }
+        public System.ClientModel.ContinuationToken PageToken { get { throw null; } }
         public System.ClientModel.PageResult GetNextResult() { throw null; }
         public System.Threading.Tasks.Task<System.ClientModel.PageResult> GetNextResultAsync() { throw null; }
         protected abstract System.Threading.Tasks.Task<System.ClientModel.PageResult> GetNextResultAsyncCore();
@@ -75,9 +76,7 @@ namespace System.ClientModel
     }
     public abstract partial class PageResult<T> : System.ClientModel.PageResult
     {
-        protected PageResult(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) : base (default(bool), default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public System.ClientModel.ContinuationToken? NextPageToken { get { throw null; } }
-        public System.ClientModel.ContinuationToken PageToken { get { throw null; } }
+        protected PageResult(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.ContinuationToken), default(System.ClientModel.ContinuationToken), default(System.ClientModel.Primitives.PipelineResponse)) { }
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
     }
 }
