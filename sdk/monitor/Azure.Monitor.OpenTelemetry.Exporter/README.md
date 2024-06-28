@@ -167,7 +167,7 @@ using (logger.BeginScope(scope))
 ```
 
 In scenarios involving multiple scopes or a single scope with multiple key-value pairs, if duplicate keys are present, only the first occurrence of the key-value pair from the outermost scope will be recorded.
-However, when the same key is utilized both within a logging scope and directly in the log message template, the value specified in the log message template will take precedence.
+However, when the same key is utilized both within a logging scope and directly in the log statement, the value specified in the log message template will take precedence.
 
 ## Troubleshooting
 
