@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
-    public partial class Sample_JobDetectorResource
+    public partial class Sample_ContainerAppJobDetectorResource
     {
         // Get diagnostic data for a Container App Job
         [NUnit.Framework.Test]
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobDetectorResource created on azure
-            // for more information of creating JobDetectorResource, please refer to the document of JobDetectorResource
+            // this example assumes you already have this ContainerAppJobDetectorResource created on azure
+            // for more information of creating ContainerAppJobDetectorResource, please refer to the document of ContainerAppJobDetectorResource
             string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string jobName = "mikonojob1";
             string detectorName = "containerappjobnetworkIO";
-            ResourceIdentifier jobDetectorResourceId = JobDetectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName, detectorName);
-            JobDetectorResource jobDetector = client.GetJobDetectorResource(jobDetectorResourceId);
+            ResourceIdentifier containerAppJobDetectorResourceId = ContainerAppJobDetectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName, detectorName);
+            ContainerAppJobDetectorResource containerAppJobDetector = client.GetContainerAppJobDetectorResource(containerAppJobDetectorResourceId);
 
             // invoke the operation
-            JobDetectorResource result = await jobDetector.GetAsync();
+            ContainerAppJobDetectorResource result = await containerAppJobDetector.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

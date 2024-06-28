@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
-    public partial class Sample_JobDetectorPropertyCollection
+    public partial class Sample_ContainerAppJobDetectorPropertyCollection
     {
         // Get Container App Job by name
         [NUnit.Framework.Test]
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
-            // get the collection of this JobDetectorPropertyResource
-            JobDetectorPropertyCollection collection = containerAppJob.GetJobDetectorProperties();
+            // get the collection of this ContainerAppJobDetectorPropertyResource
+            ContainerAppJobDetectorPropertyCollection collection = containerAppJob.GetContainerAppJobDetectorProperties();
 
             // invoke the operation
             string apiName = "rootApi";
-            JobDetectorPropertyResource result = await collection.GetAsync(apiName);
+            ContainerAppJobDetectorPropertyResource result = await collection.GetAsync(apiName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
-            // get the collection of this JobDetectorPropertyResource
-            JobDetectorPropertyCollection collection = containerAppJob.GetJobDetectorProperties();
+            // get the collection of this ContainerAppJobDetectorPropertyResource
+            ContainerAppJobDetectorPropertyCollection collection = containerAppJob.GetContainerAppJobDetectorProperties();
 
             // invoke the operation
             string apiName = "rootApi";
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
-            // get the collection of this JobDetectorPropertyResource
-            JobDetectorPropertyCollection collection = containerAppJob.GetJobDetectorProperties();
+            // get the collection of this ContainerAppJobDetectorPropertyResource
+            ContainerAppJobDetectorPropertyCollection collection = containerAppJob.GetContainerAppJobDetectorProperties();
 
             // invoke the operation
             string apiName = "rootApi";
-            NullableResponse<JobDetectorPropertyResource> response = await collection.GetIfExistsAsync(apiName);
-            JobDetectorPropertyResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ContainerAppJobDetectorPropertyResource> response = await collection.GetIfExistsAsync(apiName);
+            ContainerAppJobDetectorPropertyResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

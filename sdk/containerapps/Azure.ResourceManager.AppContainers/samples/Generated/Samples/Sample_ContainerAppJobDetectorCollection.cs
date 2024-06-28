@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
-    public partial class Sample_JobDetectorCollection
+    public partial class Sample_ContainerAppJobDetectorCollection
     {
         // Get the list of available diagnostic data for a Container App Job
         [NUnit.Framework.Test]
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
-            // get the collection of this JobDetectorResource
-            JobDetectorCollection collection = containerAppJob.GetJobDetectors();
+            // get the collection of this ContainerAppJobDetectorResource
+            ContainerAppJobDetectorCollection collection = containerAppJob.GetContainerAppJobDetectors();
 
             // invoke the operation and iterate over the result
-            await foreach (JobDetectorResource item in collection.GetAllAsync())
+            await foreach (ContainerAppJobDetectorResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
-            // get the collection of this JobDetectorResource
-            JobDetectorCollection collection = containerAppJob.GetJobDetectors();
+            // get the collection of this ContainerAppJobDetectorResource
+            ContainerAppJobDetectorCollection collection = containerAppJob.GetContainerAppJobDetectors();
 
             // invoke the operation
             string detectorName = "containerappjobnetworkIO";
-            JobDetectorResource result = await collection.GetAsync(detectorName);
+            ContainerAppJobDetectorResource result = await collection.GetAsync(detectorName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
-            // get the collection of this JobDetectorResource
-            JobDetectorCollection collection = containerAppJob.GetJobDetectors();
+            // get the collection of this ContainerAppJobDetectorResource
+            ContainerAppJobDetectorCollection collection = containerAppJob.GetContainerAppJobDetectors();
 
             // invoke the operation
             string detectorName = "containerappjobnetworkIO";
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
             ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
 
-            // get the collection of this JobDetectorResource
-            JobDetectorCollection collection = containerAppJob.GetJobDetectors();
+            // get the collection of this ContainerAppJobDetectorResource
+            ContainerAppJobDetectorCollection collection = containerAppJob.GetContainerAppJobDetectors();
 
             // invoke the operation
             string detectorName = "containerappjobnetworkIO";
-            NullableResponse<JobDetectorResource> response = await collection.GetIfExistsAsync(detectorName);
-            JobDetectorResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ContainerAppJobDetectorResource> response = await collection.GetIfExistsAsync(detectorName);
+            ContainerAppJobDetectorResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

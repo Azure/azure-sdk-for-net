@@ -15,28 +15,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="JobDetectorPropertyResource"/> and their operations.
-    /// Each <see cref="JobDetectorPropertyResource"/> in the collection will belong to the same instance of <see cref="ContainerAppJobResource"/>.
-    /// To get a <see cref="JobDetectorPropertyCollection"/> instance call the GetJobDetectorProperties method from an instance of <see cref="ContainerAppJobResource"/>.
+    /// A class representing a collection of <see cref="ContainerAppJobDetectorPropertyResource"/> and their operations.
+    /// Each <see cref="ContainerAppJobDetectorPropertyResource"/> in the collection will belong to the same instance of <see cref="ContainerAppJobResource"/>.
+    /// To get a <see cref="ContainerAppJobDetectorPropertyCollection"/> instance call the GetContainerAppJobDetectorProperties method from an instance of <see cref="ContainerAppJobResource"/>.
     /// </summary>
-    public partial class JobDetectorPropertyCollection : ArmCollection
+    public partial class ContainerAppJobDetectorPropertyCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _jobDetectorPropertyJobsClientDiagnostics;
-        private readonly JobsRestOperations _jobDetectorPropertyJobsRestClient;
+        private readonly ClientDiagnostics _containerAppJobDetectorPropertyJobsClientDiagnostics;
+        private readonly JobsRestOperations _containerAppJobDetectorPropertyJobsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="JobDetectorPropertyCollection"/> class for mocking. </summary>
-        protected JobDetectorPropertyCollection()
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorPropertyCollection"/> class for mocking. </summary>
+        protected ContainerAppJobDetectorPropertyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobDetectorPropertyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorPropertyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal JobDetectorPropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppJobDetectorPropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobDetectorPropertyJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", JobDetectorPropertyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(JobDetectorPropertyResource.ResourceType, out string jobDetectorPropertyJobsApiVersion);
-            _jobDetectorPropertyJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobDetectorPropertyJobsApiVersion);
+            _containerAppJobDetectorPropertyJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobDetectorPropertyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ContainerAppJobDetectorPropertyResource.ResourceType, out string containerAppJobDetectorPropertyJobsApiVersion);
+            _containerAppJobDetectorPropertyJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobDetectorPropertyJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorPropertyResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,18 +73,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
-        public virtual async Task<Response<JobDetectorPropertyResource>> GetAsync(string apiName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppJobDetectorPropertyResource>> GetAsync(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _jobDetectorPropertyJobsClientDiagnostics.CreateScope("JobDetectorPropertyCollection.Get");
+            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _jobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppJobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorPropertyResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,18 +118,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
-        public virtual Response<JobDetectorPropertyResource> Get(string apiName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppJobDetectorPropertyResource> Get(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _jobDetectorPropertyJobsClientDiagnostics.CreateScope("JobDetectorPropertyCollection.Get");
+            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Get");
             scope.Start();
             try
             {
-                var response = _jobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken);
+                var response = _containerAppJobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorPropertyResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _jobDetectorPropertyJobsClientDiagnostics.CreateScope("JobDetectorPropertyCollection.Exists");
+            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _jobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppJobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorPropertyResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _jobDetectorPropertyJobsClientDiagnostics.CreateScope("JobDetectorPropertyCollection.Exists");
+            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _jobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken);
+                var response = _containerAppJobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorPropertyResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,18 +249,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
-        public virtual async Task<NullableResponse<JobDetectorPropertyResource>> GetIfExistsAsync(string apiName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ContainerAppJobDetectorPropertyResource>> GetIfExistsAsync(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _jobDetectorPropertyJobsClientDiagnostics.CreateScope("JobDetectorPropertyCollection.GetIfExists");
+            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _jobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppJobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<JobDetectorPropertyResource>(response.GetRawResponse());
-                return Response.FromValue(new JobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ContainerAppJobDetectorPropertyResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorPropertyResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,18 +294,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
-        public virtual NullableResponse<JobDetectorPropertyResource> GetIfExists(string apiName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ContainerAppJobDetectorPropertyResource> GetIfExists(string apiName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
-            using var scope = _jobDetectorPropertyJobsClientDiagnostics.CreateScope("JobDetectorPropertyCollection.GetIfExists");
+            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _jobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken);
+                var response = _containerAppJobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<JobDetectorPropertyResource>(response.GetRawResponse());
-                return Response.FromValue(new JobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ContainerAppJobDetectorPropertyResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A Class representing a JobDetectorProperty along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JobDetectorPropertyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetJobDetectorPropertyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppJobResource"/> using the GetJobDetectorProperty method.
+    /// A Class representing a ContainerAppJobDetectorProperty along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppJobDetectorPropertyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppJobDetectorPropertyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppJobResource"/> using the GetContainerAppJobDetectorProperty method.
     /// </summary>
-    public partial class JobDetectorPropertyResource : ArmResource
+    public partial class ContainerAppJobDetectorPropertyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="JobDetectorPropertyResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ContainerAppJobDetectorPropertyResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="jobName"> The jobName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.AppContainers
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _jobDetectorPropertyJobsClientDiagnostics;
-        private readonly JobsRestOperations _jobDetectorPropertyJobsRestClient;
+        private readonly ClientDiagnostics _containerAppJobDetectorPropertyJobsClientDiagnostics;
+        private readonly JobsRestOperations _containerAppJobDetectorPropertyJobsRestClient;
         private readonly ContainerAppJobData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/jobs/detectorProperties";
 
-        /// <summary> Initializes a new instance of the <see cref="JobDetectorPropertyResource"/> class for mocking. </summary>
-        protected JobDetectorPropertyResource()
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorPropertyResource"/> class for mocking. </summary>
+        protected ContainerAppJobDetectorPropertyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobDetectorPropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorPropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobDetectorPropertyResource(ArmClient client, ContainerAppJobData data) : this(client, data.Id)
+        internal ContainerAppJobDetectorPropertyResource(ArmClient client, ContainerAppJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobDetectorPropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorPropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobDetectorPropertyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppJobDetectorPropertyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobDetectorPropertyJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string jobDetectorPropertyJobsApiVersion);
-            _jobDetectorPropertyJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobDetectorPropertyJobsApiVersion);
+            _containerAppJobDetectorPropertyJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerAppJobDetectorPropertyJobsApiVersion);
+            _containerAppJobDetectorPropertyJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobDetectorPropertyJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorPropertyResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JobDetectorPropertyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppJobDetectorPropertyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobDetectorPropertyJobsClientDiagnostics.CreateScope("JobDetectorPropertyResource.Get");
+            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyResource.Get");
             scope.Start();
             try
             {
-                var response = await _jobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppJobDetectorPropertyJobsRestClient.ProxyGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorPropertyResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JobDetectorPropertyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppJobDetectorPropertyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobDetectorPropertyJobsClientDiagnostics.CreateScope("JobDetectorPropertyResource.Get");
+            using var scope = _containerAppJobDetectorPropertyJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorPropertyResource.Get");
             scope.Start();
             try
             {
-                var response = _jobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerAppJobDetectorPropertyJobsRestClient.ProxyGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobDetectorPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

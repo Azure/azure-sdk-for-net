@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
-    public partial class Sample_JobDetectorPropertyResource
+    public partial class Sample_ContainerAppJobDetectorPropertyResource
     {
         // Get Container App Job by name
         [NUnit.Framework.Test]
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this JobDetectorPropertyResource created on azure
-            // for more information of creating JobDetectorPropertyResource, please refer to the document of JobDetectorPropertyResource
+            // this example assumes you already have this ContainerAppJobDetectorPropertyResource created on azure
+            // for more information of creating ContainerAppJobDetectorPropertyResource, please refer to the document of ContainerAppJobDetectorPropertyResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerappsjob0";
             string apiName = "rootApi";
-            ResourceIdentifier jobDetectorPropertyResourceId = JobDetectorPropertyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName, apiName);
-            JobDetectorPropertyResource jobDetectorProperty = client.GetJobDetectorPropertyResource(jobDetectorPropertyResourceId);
+            ResourceIdentifier containerAppJobDetectorPropertyResourceId = ContainerAppJobDetectorPropertyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName, apiName);
+            ContainerAppJobDetectorPropertyResource containerAppJobDetectorProperty = client.GetContainerAppJobDetectorPropertyResource(containerAppJobDetectorPropertyResourceId);
 
             // invoke the operation
-            JobDetectorPropertyResource result = await jobDetectorProperty.GetAsync();
+            ContainerAppJobDetectorPropertyResource result = await containerAppJobDetectorProperty.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

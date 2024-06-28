@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A Class representing a JobDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JobDetectorResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetJobDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppJobResource"/> using the GetJobDetector method.
+    /// A Class representing a ContainerAppJobDetector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppJobDetectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppJobDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppJobResource"/> using the GetContainerAppJobDetector method.
     /// </summary>
-    public partial class JobDetectorResource : ArmResource
+    public partial class ContainerAppJobDetectorResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="JobDetectorResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ContainerAppJobDetectorResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="jobName"> The jobName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.AppContainers
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _jobDetectorJobsClientDiagnostics;
-        private readonly JobsRestOperations _jobDetectorJobsRestClient;
+        private readonly ClientDiagnostics _containerAppJobDetectorJobsClientDiagnostics;
+        private readonly JobsRestOperations _containerAppJobDetectorJobsRestClient;
         private readonly ContainerAppDiagnosticData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/jobs/detectors";
 
-        /// <summary> Initializes a new instance of the <see cref="JobDetectorResource"/> class for mocking. </summary>
-        protected JobDetectorResource()
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorResource"/> class for mocking. </summary>
+        protected ContainerAppJobDetectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobDetectorResource(ArmClient client, ContainerAppDiagnosticData data) : this(client, data.Id)
+        internal ContainerAppJobDetectorResource(ArmClient client, ContainerAppDiagnosticData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobDetectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerAppJobDetectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobDetectorJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string jobDetectorJobsApiVersion);
-            _jobDetectorJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobDetectorJobsApiVersion);
+            _containerAppJobDetectorJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerAppJobDetectorJobsApiVersion);
+            _containerAppJobDetectorJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobDetectorJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JobDetectorResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppJobDetectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobDetectorJobsClientDiagnostics.CreateScope("JobDetectorResource.Get");
+            using var scope = _containerAppJobDetectorJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorResource.Get");
             scope.Start();
             try
             {
-                var response = await _jobDetectorJobsRestClient.GetDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppJobDetectorJobsRestClient.GetDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobDetectorResource"/></description>
+        /// <description><see cref="ContainerAppJobDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JobDetectorResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppJobDetectorResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobDetectorJobsClientDiagnostics.CreateScope("JobDetectorResource.Get");
+            using var scope = _containerAppJobDetectorJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorResource.Get");
             scope.Start();
             try
             {
-                var response = _jobDetectorJobsRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerAppJobDetectorJobsRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerAppJobDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

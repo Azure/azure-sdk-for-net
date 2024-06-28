@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class JobDetectorResource : IJsonModel<ContainerAppDiagnosticData>
+    public partial class ContainerAppJobDetectorResource : IJsonModel<ContainerAppDiagnosticData>
     {
         void IJsonModel<ContainerAppDiagnosticData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDiagnosticData>)Data).Write(writer, options);
 

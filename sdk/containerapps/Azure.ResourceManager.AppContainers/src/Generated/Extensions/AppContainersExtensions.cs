@@ -300,22 +300,22 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobDetectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobDetectorResource.CreateResourceIdentifier" /> to create a <see cref="JobDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppJobDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppJobDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetJobDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppJobDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="JobDetectorResource"/> object. </returns>
-        public static JobDetectorResource GetJobDetectorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppJobDetectorResource"/> object. </returns>
+        public static ContainerAppJobDetectorResource GetContainerAppJobDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetJobDetectorResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppJobDetectorResource(id);
         }
 
         /// <summary>
@@ -357,22 +357,22 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobDetectorPropertyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobDetectorPropertyResource.CreateResourceIdentifier" /> to create a <see cref="JobDetectorPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppJobDetectorPropertyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppJobDetectorPropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobDetectorPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetJobDetectorPropertyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppJobDetectorPropertyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="JobDetectorPropertyResource"/> object. </returns>
-        public static JobDetectorPropertyResource GetJobDetectorPropertyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppJobDetectorPropertyResource"/> object. </returns>
+        public static ContainerAppJobDetectorPropertyResource GetContainerAppJobDetectorPropertyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetJobDetectorPropertyResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppJobDetectorPropertyResource(id);
         }
 
         /// <summary>

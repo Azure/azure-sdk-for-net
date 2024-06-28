@@ -1,18 +1,20 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2024-06-28)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
+- Upgraded api-version tag from 'package-2023-05' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/07f22664203dc215a564e00329b81a8a94cc11ee/specification/app/resource-manager/readme.md
 
 ### Bugs Fixed
 
 - Fix `ContainerAppJobExecutionData` deserialization issue
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
 
 ## 1.1.1 (2023-11-27)
 
