@@ -160,42 +160,11 @@ stages:
                             path: s  # Keep this in the same path it would be if it was only a single checkout
                           - checkout: azure-sdk-build-tools
                             path: azure-sdk-build-tools
-                          - task: PowerShell@2
-                            displayName: 'Convert symbols to Windows PDB format'
-                            inputs:
-                              filePath: eng/scripts/symbols/Convert-SymbolsToWindowsPdb.ps1
-                              arguments: |
-                                -SymbolsToolPath $(Pipeline.Workspace)/azure-sdk-build-tools/tools/symboltool/pdb2pdb.exe
-                                -PackagesPath $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-                                -OutputPath $(Build.ArtifactStagingDirectory)/symbols
-                          - task: AzurePowershell@5
-                            displayName: 'Reserve symbols api request name'
-                            inputs:
-                              azureSubscription: 'Azure SDK Symbols Publishing'
-                              ScriptType: 'FilePath'
-                              ScriptPath: eng/scripts/symbols/New-SymbolsApiRequestName.ps1
-                              ScriptArguments: >
-                                -ProjectName 'azure-sdk'
-                                -VariableName 'SymbolsRequestName'
-                              pwsh: true
-                          - task: PublishSymbols@2
-                            displayName: 'Request SymWeb and MSDL api publishing'
-                            inputs:
-                              SymbolsFolder: '$(Build.ArtifactStagingDirectory)/symbols'
-                              SearchPattern: '**/*.pdb'
-                              SymbolServerType: 'TeamServices'
-                              SymbolsArtifactName: '$(SymbolsRequestName)'
-                          - task: AzurePowershell@5
-                            displayName: 'Request SymWeb and MSDL api publishing'
-                            inputs:
-                              azureSubscription: 'Azure SDK Symbols Publishing'
-                              ScriptType: 'FilePath'
-                              ScriptPath: eng/scripts/symbols/Invoke-SymbolsApiRequest.ps1
-                              ScriptArguments: >
-                                -ProjectName 'azure-sdk'
-                                -RequestName '$(SymbolsRequestName)'
-                                -Wait
-                              pwsh: true
+                          - template: /pipelines/steps/publish-symbols.yml@azure-sdk-build-tools
+                            parameters:
+                              BuildToolsRepositoryPath: $(Pipeline.Workspace)/azure-sdk-build-tools
+                              PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
+                              StagingDirectory: $(Build.ArtifactStagingDirectory)/symbols    
                           - template: /eng/common/pipelines/templates/steps/create-apireview.yml
                             parameters:
                               ArtifactPath: $(Pipeline.Workspace)/packages
