@@ -16,30 +16,30 @@ public abstract class PageResult : ClientResult
 
     public bool HasNext { get; }
 
-    public PageResult GetNext()
+    public PageResult GetNextResult()
     {
         if (!HasNext)
         {
-            throw new InvalidOperationException("Cannot get next page when 'HasNext' is false.");
+            throw new InvalidOperationException("Cannot get next page result when 'HasNext' is false.");
         }
 
-        return GetNextCore();
+        return GetNextResultCore();
     }
 
-    public async Task<PageResult> GetNextAsync()
+    public async Task<PageResult> GetNextResultAsync()
     {
         if (!HasNext)
         {
-            throw new InvalidOperationException("Cannot get next page when 'HasNext' is false.");
+            throw new InvalidOperationException("Cannot get next page result when 'HasNext' is false.");
         }
 
-        return await GetNextAsyncCore().ConfigureAwait(false);
+        return await GetNextResultAsyncCore().ConfigureAwait(false);
     }
 
     // Needed in order to be able to retrieve next page via protocol method
     // return value.
-    protected abstract PageResult GetNextCore();
-    protected abstract Task<PageResult> GetNextAsyncCore();
+    protected abstract PageResult GetNextResultCore();
+    protected abstract Task<PageResult> GetNextResultAsyncCore();
 }
 
 #pragma warning restore CS1591

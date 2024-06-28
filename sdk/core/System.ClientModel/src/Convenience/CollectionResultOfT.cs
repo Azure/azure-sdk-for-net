@@ -72,7 +72,7 @@ public abstract class CollectionResult<T> : ClientResult, IEnumerable<T>
                     yield return value;
                 }
 
-                page = (PageResult<T>)page.GetNext();
+                page = (PageResult<T>)page.GetNextResult();
             }
         }
     }

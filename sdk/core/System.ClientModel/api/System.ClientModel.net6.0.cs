@@ -68,10 +68,10 @@ namespace System.ClientModel
     {
         protected PageResult(bool hasNext, System.ClientModel.Primitives.PipelineResponse response) { }
         public bool HasNext { get { throw null; } }
-        public System.ClientModel.PageResult GetNext() { throw null; }
-        public System.Threading.Tasks.Task<System.ClientModel.PageResult> GetNextAsync() { throw null; }
-        protected abstract System.Threading.Tasks.Task<System.ClientModel.PageResult> GetNextAsyncCore();
-        protected abstract System.ClientModel.PageResult GetNextCore();
+        public System.ClientModel.PageResult GetNextResult() { throw null; }
+        public System.Threading.Tasks.Task<System.ClientModel.PageResult> GetNextResultAsync() { throw null; }
+        protected abstract System.Threading.Tasks.Task<System.ClientModel.PageResult> GetNextResultAsyncCore();
+        protected abstract System.ClientModel.PageResult GetNextResultCore();
     }
     public abstract partial class PageResult<T> : System.ClientModel.PageResult
     {

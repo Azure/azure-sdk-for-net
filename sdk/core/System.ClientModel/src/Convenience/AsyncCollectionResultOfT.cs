@@ -70,7 +70,7 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
                     yield return value;
                 }
 
-                page = (PageResult<T>)await page.GetNextAsync().ConfigureAwait(false);
+                page = (PageResult<T>)await page.GetNextResultAsync().ConfigureAwait(false);
             }
         }
     }
