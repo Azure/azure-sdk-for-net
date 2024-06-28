@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes, options);
             }
+            if (Optional.IsDefined(TokenStore))
+            {
+                writer.WritePropertyName("tokenStore"u8);
+                writer.WriteObjectValue(TokenStore, options);
+            }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
                 writer.WritePropertyName("preserveUrlFragmentsForLogins"u8);
@@ -95,6 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             LoginRoutes routes = default;
+            ContainerAppTokenStore tokenStore = default;
             bool? preserveUrlFragmentsForLogins = default;
             IList<string> allowedExternalRedirectUrls = default;
             ContainerAppCookieExpiration cookieExpiration = default;
@@ -110,6 +116,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                         continue;
                     }
                     routes = LoginRoutes.DeserializeLoginRoutes(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("tokenStore"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tokenStore = ContainerAppTokenStore.DeserializeContainerAppTokenStore(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preserveUrlFragmentsForLogins"u8))
@@ -161,6 +176,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppLogin(
                 routes,
+                tokenStore,
                 preserveUrlFragmentsForLogins,
                 allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
                 cookieExpiration,

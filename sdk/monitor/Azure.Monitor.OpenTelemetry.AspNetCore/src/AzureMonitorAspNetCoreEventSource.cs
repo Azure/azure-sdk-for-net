@@ -72,23 +72,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         [Event(4, Message = "Vendor instrumentation added for: {0}.", Level = EventLevel.Verbose)]
         public void VendorInstrumentationAdded(string packageName) => WriteEvent(4, packageName);
 
-        [NonEvent]
-        public void GetEnvironmentVariableFailed(string envVarName, System.Exception ex)
-        {
-            if (IsEnabled(EventLevel.Error))
-            {
-                GetEnvironmentVariableFailed(envVarName, ex.FlattenException().ToInvariantString());
-            }
-        }
+        [Event(5, Message = "Failed to map unknown EventSource log level in AzureEventSourceLogForwarder {0}", Level = EventLevel.Warning)]
+        public void MapLogLevelFailed(string level) => WriteEvent(5, level);
 
-        [Event(5, Message = "Failed to Read environment variable {0}, exception: {1}", Level = EventLevel.Error)]
-        public void GetEnvironmentVariableFailed(string envVarName, string exceptionMessage) => WriteEvent(5, envVarName, exceptionMessage);
-
-        [Event(6, Message = "Failed to map unknown EventSource log level in AzureEventSourceLogForwarder {0}", Level = EventLevel.Warning)]
-        public void MapLogLevelFailed(string level) => WriteEvent(6, level);
-
-        [Event(7, Message = "Found existing Microsoft.Extensions.Azure.AzureEventSourceLogForwarder registration.", Level = EventLevel.Informational)]
-        public void LogForwarderIsAlreadyRegistered() => WriteEvent(7);
+        [Event(6, Message = "Found existing Microsoft.Extensions.Azure.AzureEventSourceLogForwarder registration.", Level = EventLevel.Informational)]
+        public void LogForwarderIsAlreadyRegistered() => WriteEvent(6);
 
         [NonEvent]
         public void FailedToParseConnectionString(System.Exception ex)
