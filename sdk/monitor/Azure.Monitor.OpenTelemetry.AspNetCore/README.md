@@ -308,7 +308,7 @@ builder.Services.Configure<OpenTelemetryLoggerOptions>(options =>
 });
 ```
 
-Once enabled, you can define a scope using a dictionary or any enumerable of KeyValuePair<string, object>.
+Once enabled, you can define a scope using a dictionary or any enumerable of `KeyValuePair<string, object>`.
 All logs written within the context of the scope will include the specified information.
 Azure Monitor will add these scope values to the Log's CustomProperties.
 ```csharp
@@ -324,7 +324,7 @@ using (logger.BeginScope(scope))
 ```
 
 In scenarios involving multiple scopes or a single scope with multiple key-value pairs, if duplicate keys are present, only the first occurrence of the key-value pair from the outermost scope will be recorded.
-However, when the same key is utilized both within a logging scope and directly in the log message template, the value specified in the log message template will take precedence.
+However, when the same key is utilized both within a logging scope and directly in the log statement, the value specified in the log message template will take precedence.
 
 ## Troubleshooting
 

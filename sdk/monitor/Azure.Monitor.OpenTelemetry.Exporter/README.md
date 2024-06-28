@@ -151,7 +151,7 @@ var loggerFactory = LoggerFactory.Create(builder =>
 });
 ```
 
-Once enabled, you can define a scope using a dictionary or any enumerable of KeyValuePair<string, object>.
+Once enabled, you can define a scope using a dictionary or any enumerable of `KeyValuePair<string, object>`.
 All logs written within the context of the scope will include the specified information.
 Azure Monitor will add these scope values to the Log's CustomProperties.
 ```csharp
