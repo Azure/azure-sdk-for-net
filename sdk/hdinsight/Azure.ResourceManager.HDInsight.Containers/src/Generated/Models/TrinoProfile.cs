@@ -110,6 +110,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Trino worker. </summary>
-        public TrinoWorker Worker { get; set; }
+        internal TrinoWorker Worker { get; set; }
+        /// <summary> Trino debug configuration. </summary>
+        public TrinoDebugConfig WorkerDebug
+        {
+            get => Worker is null ? default : Worker.Debug;
+            set
+            {
+                if (Worker is null)
+                    Worker = new TrinoWorker();
+                Worker.Debug = value;
+            }
+        }
     }
 }

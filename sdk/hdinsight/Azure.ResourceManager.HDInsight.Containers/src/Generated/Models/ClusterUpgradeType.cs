@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         private const string AKSPatchUpgradeValue = "AKSPatchUpgrade";
         private const string HotfixUpgradeValue = "HotfixUpgrade";
+        private const string PatchVersionUpgradeValue = "PatchVersionUpgrade";
 
         /// <summary> AKSPatchUpgrade. </summary>
         public static ClusterUpgradeType AKSPatchUpgrade { get; } = new ClusterUpgradeType(AKSPatchUpgradeValue);
         /// <summary> HotfixUpgrade. </summary>
         public static ClusterUpgradeType HotfixUpgrade { get; } = new ClusterUpgradeType(HotfixUpgradeValue);
+        /// <summary> PatchVersionUpgrade. </summary>
+        public static ClusterUpgradeType PatchVersionUpgrade { get; } = new ClusterUpgradeType(PatchVersionUpgradeValue);
         /// <summary> Determines if two <see cref="ClusterUpgradeType"/> values are the same. </summary>
         public static bool operator ==(ClusterUpgradeType left, ClusterUpgradeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterUpgradeType"/> values are not the same. </summary>

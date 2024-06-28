@@ -55,11 +55,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="ClusterSshProfile"/>. </summary>
         /// <param name="count"> Number of ssh pods per cluster. </param>
         /// <param name="podPrefix"> Prefix of the pod names. Pod number will be appended to the prefix. The ingress URLs for the pods will be available at &lt;clusterFqdn&gt;/&lt;sshBasePath&gt;/&lt;prefix&gt;-&lt;number&gt;. </param>
+        /// <param name="vmSize"> The virtual machine SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterSshProfile(int count, string podPrefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterSshProfile(int count, string podPrefix, string vmSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             PodPrefix = podPrefix;
+            VmSize = vmSize;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,5 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public int Count { get; set; }
         /// <summary> Prefix of the pod names. Pod number will be appended to the prefix. The ingress URLs for the pods will be available at &lt;clusterFqdn&gt;/&lt;sshBasePath&gt;/&lt;prefix&gt;-&lt;number&gt;. </summary>
         public string PodPrefix { get; }
+        /// <summary> The virtual machine SKU. </summary>
+        public string VmSize { get; set; }
     }
 }

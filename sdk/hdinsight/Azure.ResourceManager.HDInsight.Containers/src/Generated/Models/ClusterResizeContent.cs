@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="targetWorkerNodeCount"> Target node count of worker node. </param>
+        /// <param name="properties"> Sets the properties. Define cluster resize specific properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterResizeContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? targetWorkerNodeCount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ClusterResizeContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterResizeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            TargetWorkerNodeCount = targetWorkerNodeCount;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,7 +73,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
         }
 
+        /// <summary> Sets the properties. Define cluster resize specific properties. </summary>
+        internal ClusterResizeProperties Properties { get; set; }
         /// <summary> Target node count of worker node. </summary>
-        public int? TargetWorkerNodeCount { get; set; }
+        public int? ClusterResizeTargetWorkerNodeCount
+        {
+            get => Properties is null ? default(int?) : Properties.TargetWorkerNodeCount;
+            set
+            {
+                Properties = value.HasValue ? new ClusterResizeProperties(value.Value) : null;
+            }
+        }
     }
 }

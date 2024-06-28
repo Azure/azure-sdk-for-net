@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    internal partial class ComputeProfile : IUtf8JsonSerializable, IJsonModel<ComputeProfile>
+    public partial class ComputeProfile : IUtf8JsonSerializable, IJsonModel<ComputeProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -33,6 +33,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(AvailabilityZones))
+            {
+                writer.WritePropertyName("availabilityZones"u8);
+                writer.WriteStartArray();
+                foreach (var item in AvailabilityZones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -72,6 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             IList<ClusterComputeNodeProfile> nodes = default;
+            IList<string> availabilityZones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,13 +97,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     nodes = array;
                     continue;
                 }
+                if (property.NameEquals("availabilityZones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    availabilityZones = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeProfile(nodes, serializedAdditionalRawData);
+            return new ComputeProfile(nodes, availabilityZones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeProfile>.Write(ModelReaderWriterOptions options)

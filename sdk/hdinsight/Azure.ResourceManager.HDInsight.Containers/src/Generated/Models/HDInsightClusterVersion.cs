@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterVersion"/>. </summary>
         public HDInsightClusterVersion()
         {
-            Components = new ChangeTrackingList<ClusterComponentItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterVersion"/>. </summary>
@@ -58,35 +57,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="clusterType"> The type of cluster. </param>
-        /// <param name="clusterVersion"> Version with three part. </param>
-        /// <param name="ossVersion"> Version with three part. </param>
-        /// <param name="clusterPoolVersion"> The two part cluster pool version. If the cluster version is before cluster pool version on-board, the return value will be empty string. </param>
-        /// <param name="isPreview"> Indicate if this version is in preview or not. </param>
-        /// <param name="components"> Component list of this cluster type and version. </param>
+        /// <param name="properties"> Cluster version properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string clusterType, string clusterVersion, string ossVersion, string clusterPoolVersion, bool? isPreview, IReadOnlyList<ClusterComponentItem> components, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HDInsightClusterVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ClusterType = clusterType;
-            ClusterVersion = clusterVersion;
-            OssVersion = ossVersion;
-            ClusterPoolVersion = clusterPoolVersion;
-            IsPreview = isPreview;
-            Components = components;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of cluster. </summary>
-        public string ClusterType { get; set; }
-        /// <summary> Version with three part. </summary>
-        public string ClusterVersion { get; set; }
-        /// <summary> Version with three part. </summary>
-        public string OssVersion { get; set; }
-        /// <summary> The two part cluster pool version. If the cluster version is before cluster pool version on-board, the return value will be empty string. </summary>
-        public string ClusterPoolVersion { get; set; }
-        /// <summary> Indicate if this version is in preview or not. </summary>
-        public bool? IsPreview { get; set; }
-        /// <summary> Component list of this cluster type and version. </summary>
-        public IReadOnlyList<ClusterComponentItem> Components { get; }
+        /// <summary> Cluster version properties. </summary>
+        public ClusterVersionProperties Properties { get; set; }
     }
 }

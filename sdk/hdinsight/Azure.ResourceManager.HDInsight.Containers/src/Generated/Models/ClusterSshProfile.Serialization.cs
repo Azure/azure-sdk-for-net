@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("podPrefix"u8);
                 writer.WriteStringValue(PodPrefix);
             }
+            if (Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             int count = default;
             string podPrefix = default;
+            string vmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,13 +93,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     podPrefix = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vmSize"u8))
+                {
+                    vmSize = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterSshProfile(count, podPrefix, serializedAdditionalRawData);
+            return new ClusterSshProfile(count, podPrefix, vmSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterSshProfile>.Write(ModelReaderWriterOptions options)

@@ -57,15 +57,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="upgradeType"> Type of upgrade. </param>
+        /// <param name="properties">
+        /// Gets or sets the properties. Define cluster upgrade specific properties.
+        /// Please note <see cref="ClusterAvailableUpgradeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ClusterAvailableUpgradeAksPatchUpgradeProperties"/>, <see cref="ClusterAvailableInPlaceUpgradeProperties"/>, <see cref="ClusterAvailableUpgradeHotfixUpgradeProperties"/> and <see cref="ClusterAvailableUpgradePatchVersionUpgradeProperties"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterAvailableUpgrade(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterAvailableUpgradeType? upgradeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ClusterAvailableUpgrade(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterAvailableUpgradeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            UpgradeType = upgradeType;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of upgrade. </summary>
-        internal ClusterAvailableUpgradeType? UpgradeType { get; set; }
+        /// <summary>
+        /// Gets or sets the properties. Define cluster upgrade specific properties.
+        /// Please note <see cref="ClusterAvailableUpgradeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ClusterAvailableUpgradeAksPatchUpgradeProperties"/>, <see cref="ClusterAvailableInPlaceUpgradeProperties"/>, <see cref="ClusterAvailableUpgradeHotfixUpgradeProperties"/> and <see cref="ClusterAvailableUpgradePatchVersionUpgradeProperties"/>.
+        /// </summary>
+        public ClusterAvailableUpgradeProperties Properties { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> The compute profile. </summary>
-    internal partial class ComputeProfile
+    public partial class ComputeProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -54,14 +54,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Argument.AssertNotNull(nodes, nameof(nodes));
 
             Nodes = nodes.ToList();
+            AvailabilityZones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
         /// <param name="nodes"> The nodes definitions. </param>
+        /// <param name="availabilityZones"> The list of Availability zones to use for AKS VMSS nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeProfile(IList<ClusterComputeNodeProfile> nodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeProfile(IList<ClusterComputeNodeProfile> nodes, IList<string> availabilityZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Nodes = nodes;
+            AvailabilityZones = availabilityZones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,5 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> The nodes definitions. </summary>
         public IList<ClusterComputeNodeProfile> Nodes { get; }
+        /// <summary> The list of Availability zones to use for AKS VMSS nodes. </summary>
+        public IList<string> AvailabilityZones { get; }
     }
 }

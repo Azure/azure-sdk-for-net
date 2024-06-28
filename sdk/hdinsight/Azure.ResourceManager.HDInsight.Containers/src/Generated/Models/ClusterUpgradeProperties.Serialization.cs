@@ -71,7 +71,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 switch (discriminator.GetString())
                 {
                     case "AKSPatchUpgrade": return ClusterAKSPatchVersionUpgradeProperties.DeserializeClusterAKSPatchVersionUpgradeProperties(element, options);
+                    case "ClusterInPlaceUpgradeProperties": return ClusterInPlaceUpgradeProperties.DeserializeClusterInPlaceUpgradeProperties(element, options);
                     case "HotfixUpgrade": return ClusterHotfixUpgradeProperties.DeserializeClusterHotfixUpgradeProperties(element, options);
+                    case "PatchVersionUpgrade": return ClusterPatchVersionUpgradeProperties.DeserializeClusterPatchVersionUpgradeProperties(element, options);
                 }
             }
             return UnknownClusterUpgradeProperties.DeserializeUnknownClusterUpgradeProperties(element, options);

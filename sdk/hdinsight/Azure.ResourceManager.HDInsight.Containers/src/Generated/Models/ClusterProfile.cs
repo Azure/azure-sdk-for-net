@@ -70,7 +70,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
         /// <param name="components"> Component list of this cluster type and version. </param>
-        /// <param name="identityProfile"> This property is required by Trino, Spark and Flink cluster but is optional for Kafka cluster. </param>
+        /// <param name="identityProfile"> This is deprecated. Please use managed identity profile instead. </param>
+        /// <param name="managedIdentityProfile"> This property is required by Trino, Spark and Flink cluster but is optional for Kafka cluster. </param>
         /// <param name="authorizationProfile"> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </param>
         /// <param name="secretsProfile"> The cluster secret profile. </param>
         /// <param name="serviceConfigsProfiles"> The service configs profiles. </param>
@@ -90,12 +91,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="stubProfile"> Stub cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentItem> components, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile, ClusterSecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterConnectivityProfile connectivityProfile, ClusterAccessProfile clusterAccessProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, ClusterRangerPluginProfile rangerPluginProfile, KafkaProfile kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, RangerProfile rangerProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentItem> components, HDInsightIdentityProfile identityProfile, ManagedIdentityProfile managedIdentityProfile, AuthorizationProfile authorizationProfile, ClusterSecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterConnectivityProfile connectivityProfile, ClusterAccessProfile clusterAccessProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, ClusterRangerPluginProfile rangerPluginProfile, KafkaProfile kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, RangerProfile rangerProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterVersion = clusterVersion;
             OssVersion = ossVersion;
             Components = components;
             IdentityProfile = identityProfile;
+            ManagedIdentityProfile = managedIdentityProfile;
             AuthorizationProfile = authorizationProfile;
             SecretsProfile = secretsProfile;
             ServiceConfigsProfiles = serviceConfigsProfiles;
@@ -128,8 +130,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public string OssVersion { get; set; }
         /// <summary> Component list of this cluster type and version. </summary>
         public IReadOnlyList<ClusterComponentItem> Components { get; }
-        /// <summary> This property is required by Trino, Spark and Flink cluster but is optional for Kafka cluster. </summary>
+        /// <summary> This is deprecated. Please use managed identity profile instead. </summary>
         public HDInsightIdentityProfile IdentityProfile { get; set; }
+        /// <summary> This property is required by Trino, Spark and Flink cluster but is optional for Kafka cluster. </summary>
+        internal ManagedIdentityProfile ManagedIdentityProfile { get; set; }
+        /// <summary> The list of managed identity. </summary>
+        public IList<ManagedIdentitySpec> IdentityList
+        {
+            get => ManagedIdentityProfile is null ? default : ManagedIdentityProfile.IdentityList;
+            set => ManagedIdentityProfile = new ManagedIdentityProfile(value);
+        }
+
         /// <summary> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </summary>
         public AuthorizationProfile AuthorizationProfile { get; set; }
         /// <summary> The cluster secret profile. </summary>

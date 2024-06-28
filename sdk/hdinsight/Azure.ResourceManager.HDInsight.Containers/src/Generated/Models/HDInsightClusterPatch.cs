@@ -52,19 +52,31 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
+        /// <param name="properties"> Define cluster patch specific properties. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="clusterProfile"> Cluster resource patch properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterPatch(IDictionary<string, string> tags, UpdatableClusterProfile clusterProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HDInsightClusterPatch(ClusterPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Properties = properties;
             Tags = tags;
-            ClusterProfile = clusterProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Define cluster patch specific properties. </summary>
+        internal ClusterPatchProperties Properties { get; set; }
+        /// <summary> Cluster resource patch properties. </summary>
+        public UpdatableClusterProfile ClusterProfile
+        {
+            get => Properties is null ? default : Properties.ClusterProfile;
+            set
+            {
+                if (Properties is null)
+                    Properties = new ClusterPatchProperties();
+                Properties.ClusterProfile = value;
+            }
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Cluster resource patch properties. </summary>
-        public UpdatableClusterProfile ClusterProfile { get; set; }
     }
 }

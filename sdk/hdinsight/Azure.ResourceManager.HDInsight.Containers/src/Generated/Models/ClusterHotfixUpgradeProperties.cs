@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Properties of upgrading cluster's hotfix. </summary>
-    public partial class ClusterHotfixUpgradeProperties : ClusterUpgradeProperties
+    public partial class ClusterHotfixUpgradeProperties : ClusterInPlaceUpgradeProperties
     {
         /// <summary> Initializes a new instance of <see cref="ClusterHotfixUpgradeProperties"/>. </summary>
         public ClusterHotfixUpgradeProperties()
@@ -26,22 +26,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="targetClusterVersion"> Target cluster version of component to be upgraded. </param>
         /// <param name="targetBuildNumber"> Target build number of component to be upgraded. </param>
         /// <param name="componentName"> Name of component to be upgraded. </param>
-        internal ClusterHotfixUpgradeProperties(ClusterUpgradeType upgradeType, IDictionary<string, BinaryData> serializedAdditionalRawData, string targetOssVersion, string targetClusterVersion, string targetBuildNumber, string componentName) : base(upgradeType, serializedAdditionalRawData)
+        internal ClusterHotfixUpgradeProperties(ClusterUpgradeType upgradeType, IDictionary<string, BinaryData> serializedAdditionalRawData, string targetOssVersion, string targetClusterVersion, string targetBuildNumber, string componentName) : base(upgradeType, serializedAdditionalRawData, targetOssVersion, targetClusterVersion, targetBuildNumber, componentName)
         {
-            TargetOssVersion = targetOssVersion;
-            TargetClusterVersion = targetClusterVersion;
-            TargetBuildNumber = targetBuildNumber;
-            ComponentName = componentName;
             UpgradeType = upgradeType;
         }
-
-        /// <summary> Target OSS version of component to be upgraded. </summary>
-        public string TargetOssVersion { get; set; }
-        /// <summary> Target cluster version of component to be upgraded. </summary>
-        public string TargetClusterVersion { get; set; }
-        /// <summary> Target build number of component to be upgraded. </summary>
-        public string TargetBuildNumber { get; set; }
-        /// <summary> Name of component to be upgraded. </summary>
-        public string ComponentName { get; set; }
     }
 }

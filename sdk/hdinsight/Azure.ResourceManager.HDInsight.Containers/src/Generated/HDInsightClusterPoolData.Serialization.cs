@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -61,59 +66,6 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentId))
-            {
-                writer.WritePropertyName("deploymentId"u8);
-                writer.WriteStringValue(DeploymentId);
-            }
-            if (Optional.IsDefined(ManagedResourceGroupName))
-            {
-                writer.WritePropertyName("managedResourceGroupName"u8);
-                writer.WriteStringValue(ManagedResourceGroupName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AksManagedResourceGroupName))
-            {
-                writer.WritePropertyName("aksManagedResourceGroupName"u8);
-                writer.WriteStringValue(AksManagedResourceGroupName);
-            }
-            if (Optional.IsDefined(ClusterPoolProfile))
-            {
-                writer.WritePropertyName("clusterPoolProfile"u8);
-                writer.WriteObjectValue(ClusterPoolProfile, options);
-            }
-            if (Optional.IsDefined(ComputeProfile))
-            {
-                writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AksClusterProfile))
-            {
-                writer.WritePropertyName("aksClusterProfile"u8);
-                writer.WriteObjectValue(AksClusterProfile, options);
-            }
-            if (Optional.IsDefined(NetworkProfile))
-            {
-                writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
-            }
-            if (Optional.IsDefined(LogAnalyticsProfile))
-            {
-                writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -152,26 +104,26 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 return null;
             }
+            ClusterPoolResourceProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            HDInsightProvisioningStatus? provisioningState = default;
-            string deploymentId = default;
-            string managedResourceGroupName = default;
-            string aksManagedResourceGroupName = default;
-            ClusterPoolProfile clusterPoolProfile = default;
-            ClusterPoolComputeProfile computeProfile = default;
-            AksClusterProfile aksClusterProfile = default;
-            ClusterPoolNetworkProfile networkProfile = default;
-            ClusterPoolLogAnalyticsProfile logAnalyticsProfile = default;
-            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ClusterPoolResourceProperties.DeserializeClusterPoolResourceProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -215,92 +167,6 @@ namespace Azure.ResourceManager.HDInsight.Containers
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new HDInsightProvisioningStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("deploymentId"u8))
-                        {
-                            deploymentId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("managedResourceGroupName"u8))
-                        {
-                            managedResourceGroupName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("aksManagedResourceGroupName"u8))
-                        {
-                            aksManagedResourceGroupName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterPoolProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterPoolProfile = ClusterPoolProfile.DeserializeClusterPoolProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("computeProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            computeProfile = ClusterPoolComputeProfile.DeserializeClusterPoolComputeProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("aksClusterProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            aksClusterProfile = AksClusterProfile.DeserializeAksClusterProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("networkProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkProfile = ClusterPoolNetworkProfile.DeserializeClusterPoolNetworkProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("logAnalyticsProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            logAnalyticsProfile = ClusterPoolLogAnalyticsProfile.DeserializeClusterPoolLogAnalyticsProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            status = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -314,16 +180,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState,
-                deploymentId,
-                managedResourceGroupName,
-                aksManagedResourceGroupName,
-                clusterPoolProfile,
-                computeProfile,
-                aksClusterProfile,
-                networkProfile,
-                logAnalyticsProfile,
-                status,
+                properties,
                 serializedAdditionalRawData);
         }
 

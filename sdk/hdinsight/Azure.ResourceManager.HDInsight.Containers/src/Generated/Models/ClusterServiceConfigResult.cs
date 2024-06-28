@@ -48,48 +48,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigResult"/>. </summary>
         internal ClusterServiceConfigResult()
         {
-            CustomKeys = new ChangeTrackingDictionary<string, string>();
-            DefaultKeys = new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigResult"/>. </summary>
-        /// <param name="serviceName"> Service Config Name. </param>
-        /// <param name="fileName"> File Name. </param>
-        /// <param name="content"> Content in the service config file. </param>
-        /// <param name="componentName"> Component Name. </param>
-        /// <param name="serviceConfigListResultPropertiesType"> Config type. </param>
-        /// <param name="path"> Config file path. </param>
-        /// <param name="customKeys"> The custom keys. </param>
-        /// <param name="defaultKeys"> The default keys. </param>
+        /// <param name="properties"> Cluster instance service config properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterServiceConfigResult(string serviceName, string fileName, string content, string componentName, string serviceConfigListResultPropertiesType, string path, IReadOnlyDictionary<string, string> customKeys, IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterServiceConfigResult(ServiceConfigResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ServiceName = serviceName;
-            FileName = fileName;
-            Content = content;
-            ComponentName = componentName;
-            ServiceConfigListResultPropertiesType = serviceConfigListResultPropertiesType;
-            Path = path;
-            CustomKeys = customKeys;
-            DefaultKeys = defaultKeys;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Service Config Name. </summary>
-        public string ServiceName { get; }
-        /// <summary> File Name. </summary>
-        public string FileName { get; }
-        /// <summary> Content in the service config file. </summary>
-        public string Content { get; }
-        /// <summary> Component Name. </summary>
-        public string ComponentName { get; }
-        /// <summary> Config type. </summary>
-        public string ServiceConfigListResultPropertiesType { get; }
-        /// <summary> Config file path. </summary>
-        public string Path { get; }
-        /// <summary> The custom keys. </summary>
-        public IReadOnlyDictionary<string, string> CustomKeys { get; }
-        /// <summary> The default keys. </summary>
-        public IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> DefaultKeys { get; }
+        /// <summary> Cluster instance service config properties. </summary>
+        public ServiceConfigResultProperties Properties { get; }
     }
 }

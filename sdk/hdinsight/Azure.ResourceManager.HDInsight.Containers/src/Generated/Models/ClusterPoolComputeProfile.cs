@@ -53,16 +53,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Argument.AssertNotNull(vmSize, nameof(vmSize));
 
             VmSize = vmSize;
+            AvailabilityZones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterPoolComputeProfile"/>. </summary>
         /// <param name="vmSize"> The virtual machine SKU. </param>
         /// <param name="count"> The number of virtual machines. </param>
+        /// <param name="availabilityZones"> The list of Availability zones to use for AKS VMSS nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterPoolComputeProfile(string vmSize, int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterPoolComputeProfile(string vmSize, int? count, IList<string> availabilityZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmSize = vmSize;
             Count = count;
+            AvailabilityZones = availabilityZones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,5 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public string VmSize { get; set; }
         /// <summary> The number of virtual machines. </summary>
         public int? Count { get; }
+        /// <summary> The list of Availability zones to use for AKS VMSS nodes. </summary>
+        public IList<string> AvailabilityZones { get; }
     }
 }
