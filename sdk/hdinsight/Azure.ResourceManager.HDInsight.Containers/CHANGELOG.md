@@ -1,10 +1,10 @@
 # Release History
 
-## 1.0.0 (2024-07-02)
+## 1.0.0-beta.4 (2024-07-30)
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-preview-2023-11' to 'package-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f517936b7f0d1a3049c2afba9392fbbebb8ff3a9/specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/readme.md.
+- Upgraded api-version tag from 'package-preview-2023-11' to 'packagee-preview-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f517936b7f0d1a3049c2afba9392fbbebb8ff3a9/specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/readme.md.
     - Cluster Pool
         - Enabled get cluster pool upgrade history.
     - Cluster

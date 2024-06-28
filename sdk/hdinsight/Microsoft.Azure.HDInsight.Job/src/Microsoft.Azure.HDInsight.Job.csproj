@@ -15,6 +15,5 @@ Support using Apache Spark REST API to submit remote jobs to an HDInsight Spark 
 
   <ItemGroup>
     <PackageReference Include="WindowsAzure.Storage" />
-    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.1"/>
   </ItemGroup>
 </Project>
