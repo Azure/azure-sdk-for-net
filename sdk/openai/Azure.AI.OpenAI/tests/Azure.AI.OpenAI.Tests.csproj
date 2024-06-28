@@ -40,6 +40,14 @@
     <Compile Include="..\src\Utility\Polyfill\**\*.cs">
       <Link>Utils\Polyfill\%(RecursiveDir)\%(Filename).cs</Link>
     </Compile>
-</ItemGroup>
-  
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- This is used to automatically update the playback configuration file when recording -->
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>TestProjectSourceBasePath</_Parameter1>
+      <_Parameter2>$(MSBuildThisFileDirectory)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
 </Project>

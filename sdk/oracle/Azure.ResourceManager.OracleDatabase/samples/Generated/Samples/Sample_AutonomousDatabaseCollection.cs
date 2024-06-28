@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAutonomousDatabaseByResourceGroup()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_listByResourceGroup.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_listByResourceGroup.json
             // this example is just showing the usage of "AutonomousDatabases_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AutonomousDatabasesGet()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_get.json
             // this example is just showing the usage of "AutonomousDatabases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_AutonomousDatabasesGet()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_get.json
             // this example is just showing the usage of "AutonomousDatabases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_AutonomousDatabasesGet()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_get.json
             // this example is just showing the usage of "AutonomousDatabases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAutonomousDatabase()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_get.json
             // this example is just showing the usage of "AutonomousDatabases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAutonomousDatabase()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_get.json
             // this example is just showing the usage of "AutonomousDatabases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetAutonomousDatabase()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_get.json
             // this example is just showing the usage of "AutonomousDatabases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_AutonomousDatabasesCreateOrUpdate()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_create.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_create.json
             // this example is just showing the usage of "AutonomousDatabases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                     AdminPassword = "********",
                     CharacterSet = "AL32UTF8",
                     ComputeCount = 2,
-                    ComputeModel = ComputeModel.Ecpu,
+                    ComputeModel = AutonomousDatabaseComputeModel.Ecpu,
                     DataStorageSizeInTbs = 1,
-                    DbVersion = "18.4.0.0",
+                    DBVersion = "18.4.0.0",
                     DisplayName = "example_autonomous_databasedb1",
                     NcharacterSet = "AL16UTF16",
                     SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_AutonomousDatabasesCreateOrUpdateClone()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabaseClone_create.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseClone_create.json
             // this example is just showing the usage of "AutonomousDatabases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -346,12 +346,12 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             string autonomousdatabasename = "databasedb1";
             AutonomousDatabaseData data = new AutonomousDatabaseData(new AzureLocation("eastus"))
             {
-                Properties = new AutonomousDatabaseCloneProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/autonomousDatabases/databasedb1"), CloneType.Full)
+                Properties = new AutonomousDatabaseCloneProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/autonomousDatabases/databasedb1"), AutonomousDatabaseCloneType.Full)
                 {
                     AdminPassword = "********",
                     CharacterSet = "AL32UTF8",
                     ComputeCount = 2,
-                    ComputeModel = ComputeModel.Ecpu,
+                    ComputeModel = AutonomousDatabaseComputeModel.Ecpu,
                     DataStorageSizeInTbs = 1,
                     DisplayName = "example_autonomous_databasedb1_clone",
                     NcharacterSet = "AL16UTF16",
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAutonomousDatabase()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabase_create.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabase_create.json
             // this example is just showing the usage of "AutonomousDatabases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -405,9 +405,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
                     AdminPassword = "********",
                     CharacterSet = "AL32UTF8",
                     ComputeCount = 2,
-                    ComputeModel = ComputeModel.Ecpu,
+                    ComputeModel = AutonomousDatabaseComputeModel.Ecpu,
                     DataStorageSizeInTbs = 1,
-                    DbVersion = "18.4.0.0",
+                    DBVersion = "18.4.0.0",
                     DisplayName = "example_autonomous_databasedb1",
                     NcharacterSet = "AL16UTF16",
                     SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateCloneAutonomousDatabase()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/preview/2023-09-01-preview/examples/autonomousDatabaseClone_create.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseClone_create.json
             // this example is just showing the usage of "AutonomousDatabases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -455,12 +455,12 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             string autonomousdatabasename = "databasedb1";
             AutonomousDatabaseData data = new AutonomousDatabaseData(new AzureLocation("eastus"))
             {
-                Properties = new AutonomousDatabaseCloneProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/autonomousDatabases/databasedb1"), CloneType.Full)
+                Properties = new AutonomousDatabaseCloneProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg000/providers/Oracle.Database/autonomousDatabases/databasedb1"), AutonomousDatabaseCloneType.Full)
                 {
                     AdminPassword = "********",
                     CharacterSet = "AL32UTF8",
                     ComputeCount = 2,
-                    ComputeModel = ComputeModel.Ecpu,
+                    ComputeModel = AutonomousDatabaseComputeModel.Ecpu,
                     DataStorageSizeInTbs = 1,
                     DisplayName = "example_autonomous_databasedb1_clone",
                     NcharacterSet = "AL16UTF16",
