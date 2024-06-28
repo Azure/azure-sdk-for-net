@@ -45,18 +45,18 @@ public abstract class CollectionResult<T> : ClientResult, IEnumerable<T>
     /// <param name="firstPage"></param>
     /// <returns></returns>
     public static CollectionResult<T> FromPage(PageResult<T> firstPage)
-        => new PageableCollectionResult(firstPage);
+        => new PagedCollectionResult(firstPage);
 
     /// <inheritdoc/>
     public abstract IEnumerator<T> GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    private class PageableCollectionResult : CollectionResult<T>
+    private class PagedCollectionResult : CollectionResult<T>
     {
         private readonly PageResult<T> _firstPage;
 
-        public PageableCollectionResult(PageResult<T> firstPage)
+        public PagedCollectionResult(PageResult<T> firstPage)
         {
             _firstPage = firstPage;
             SetRawResponse(firstPage.GetRawResponse());

@@ -45,16 +45,16 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
     /// <param name="firstPage"></param>
     /// <returns></returns>
     public static AsyncCollectionResult<T> FromPageAsync(PageResult<T> firstPage)
-        => new AsyncPageableCollectionResult(firstPage);
+        => new AsyncPagedCollectionResult(firstPage);
 
     /// <inheritdoc/>
     public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
 
-    private class AsyncPageableCollectionResult : AsyncCollectionResult<T>
+    private class AsyncPagedCollectionResult : AsyncCollectionResult<T>
     {
         private readonly PageResult<T> _firstPage;
 
-        public AsyncPageableCollectionResult(PageResult<T> firstPage)
+        public AsyncPagedCollectionResult(PageResult<T> firstPage)
         {
             _firstPage = firstPage;
             SetRawResponse(firstPage.GetRawResponse());
@@ -63,10 +63,13 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
         public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             PageResult<T> page = _firstPage;
+
             while (page.NextPageToken is not null)
             {
                 foreach (T value in page.Values)
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     yield return value;
                 }
 
