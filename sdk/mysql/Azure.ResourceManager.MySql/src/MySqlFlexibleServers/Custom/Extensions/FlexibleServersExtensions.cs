@@ -34,16 +34,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary>
         /// Get the operation detailed status for a long running operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/operationProgress/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationProgress_Get</description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="operation"> The long-running operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -53,6 +43,34 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Argument.AssertNotNull(operation, nameof(operation));
             Response response = operation.UpdateStatus(cancellationToken);
             OperationProgressResult result = OperationProgressResult.ToBackupAndExportResponse(ModelReaderWriter.Read<OperationProgressResult>(response.Content));
+            return Response.FromValue(result, response);
+        }
+
+        /// <summary>
+        /// Get the operation detailed status for a long running operation.
+        /// </summary>
+        /// <param name="operation"> The long-running operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operation"/> is null or the long-running operation doesn't support get detailed status. </exception>
+        public static async Task<Response<OperationProgressResult>> GetDetailedStatusAsync(this ArmOperation<MySqlFlexibleServerResource> operation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(operation, nameof(operation));
+            Response response = await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+            OperationProgressResult result = OperationProgressResult.ToImportFromStorageResponse(ModelReaderWriter.Read<OperationProgressResult>(response.Content));
+            return Response.FromValue(result, response);
+        }
+
+        /// <summary>
+        /// Get the operation detailed status for a long running operation.
+        /// </summary>
+        /// <param name="operation"> The long-running operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operation"/> is null or the long-running operation doesn't support get detailed status. </exception>
+        public static Response<OperationProgressResult> GetDetailedStatus(this ArmOperation<MySqlFlexibleServerResource> operation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(operation, nameof(operation));
+            Response response = operation.UpdateStatus(cancellationToken);
+            OperationProgressResult result = OperationProgressResult.ToImportFromStorageResponse(ModelReaderWriter.Read<OperationProgressResult>(response.Content));
             return Response.FromValue(result, response);
         }
     }

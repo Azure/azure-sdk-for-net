@@ -19,35 +19,38 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// Converts the OperationProgressResponseType to BackupAndExportResponseType.
         /// <returns> An instance of BackupAndExportResponseType. </returns>
         /// </summary>
-        internal static BackupAndExportResponseType ToBackupAndExportResponseType(OperationProgressResponseType operationProgressResponseType)
+        internal static OperationProgressResponseType ToBackupAndExportResponseType(OperationProgressResponseType operationProgressResponseType)
         {
             if (operationProgressResponseType == null)
+                return null;
+            if (operationProgressResponseType is UnknownOperationProgressResponseType)
             {
-                throw new ArgumentNullException(nameof(operationProgressResponseType));
-            }
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
-            long? DatasourceSizeInBytes = null;
-            long? DataTransferredInBytes = null;
-            string BackupMetadata = null;
-            foreach (var item in operationProgressResponseType._serializedAdditionalRawData)
-            {
-                switch (item.Key)
+                // LRO polling doesnt return the ObjectType, so we need to check the serializedAdditionalRawData to determine the type
+                Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+                long? DatasourceSizeInBytes = null;
+                long? DataTransferredInBytes = null;
+                string BackupMetadata = null;
+                foreach (var item in operationProgressResponseType._serializedAdditionalRawData)
                 {
-                    case "datasourceSizeInBytes":
-                        DatasourceSizeInBytes = item.Value.ToObjectFromJson<long>();
-                        break;
-                    case "dataTransferredInBytes":
-                        DataTransferredInBytes = item.Value.ToObjectFromJson<long>();
-                        break;
-                    case "backupMetadata":
-                        BackupMetadata = item.Value.ToObjectFromJson<string>();
-                        break;
-                    default:
-                        serializedAdditionalRawData.Add(item.Key, item.Value);
-                        break;
+                    switch (item.Key)
+                    {
+                        case "datasourceSizeInBytes":
+                            DatasourceSizeInBytes = item.Value.ToObjectFromJson<long>();
+                            break;
+                        case "dataTransferredInBytes":
+                            DataTransferredInBytes = item.Value.ToObjectFromJson<long>();
+                            break;
+                        case "backupMetadata":
+                            BackupMetadata = item.Value.ToObjectFromJson<string>();
+                            break;
+                        default:
+                            serializedAdditionalRawData.Add(item.Key, item.Value);
+                            break;
+                    }
                 }
+                return new BackupAndExportResponseType(MySqlFlexibleServerOperationType.BackupAndExportResponse, serializedAdditionalRawData, DatasourceSizeInBytes, DataTransferredInBytes, BackupMetadata);
             }
-            return new BackupAndExportResponseType(MySqlFlexibleServerOperationType.BackupAndExportResponse, serializedAdditionalRawData, DatasourceSizeInBytes, DataTransferredInBytes, BackupMetadata);
+            return operationProgressResponseType;
         }
 
         /// <summary>
@@ -55,27 +58,31 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="operationProgressResponseType"> Instance of OperationProgressResponseType. </param>
         /// <returns> An instance of ImportFromStorageResponseType. </returns>
         /// </summary>
-        internal static ImportFromStorageResponseType ToImportFromStorageResponseType(OperationProgressResponseType operationProgressResponseType)
+        internal static OperationProgressResponseType ToImportFromStorageResponseType(OperationProgressResponseType operationProgressResponseType)
         {
             if (operationProgressResponseType == null)
+                return null;
+
+            if (operationProgressResponseType is UnknownOperationProgressResponseType)
             {
-                throw new ArgumentNullException(nameof(operationProgressResponseType));
-            }
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
-            DateTimeOffset? estimatedCompletionOn = null;
-            foreach (var item in operationProgressResponseType._serializedAdditionalRawData)
-            {
-                switch (item.Key)
+                // LRO polling doesnt return the ObjectType, so we need to check the serializedAdditionalRawData to determine the type
+                Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+                DateTimeOffset? estimatedCompletionOn = null;
+                foreach (var item in operationProgressResponseType._serializedAdditionalRawData)
                 {
-                    case "estimatedCompletionTime":
-                        estimatedCompletionOn = item.Value.ToObjectFromJson<DateTimeOffset>();
-                        break;
-                    default:
-                        serializedAdditionalRawData.Add(item.Key, item.Value);
-                        break;
+                    switch (item.Key)
+                    {
+                        case "estimatedCompletionTime":
+                            estimatedCompletionOn = item.Value.ToObjectFromJson<DateTimeOffset>();
+                            break;
+                        default:
+                            serializedAdditionalRawData.Add(item.Key, item.Value);
+                            break;
+                    }
                 }
+                return new ImportFromStorageResponseType(MySqlFlexibleServerOperationType.BackupAndExportResponse, serializedAdditionalRawData, estimatedCompletionOn);
             }
-            return new ImportFromStorageResponseType(MySqlFlexibleServerOperationType.BackupAndExportResponse, serializedAdditionalRawData, estimatedCompletionOn);
+            return operationProgressResponseType;
         }
     }
 }

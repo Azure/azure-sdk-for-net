@@ -30,5 +30,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                                 operationProgressResult._serializedAdditionalRawData,
                                 OperationProgressResponseType.ToBackupAndExportResponseType(operationProgressResult.Properties));
         }
+
+        /// <summary>
+        /// Converts the OperationProgressResponseType properties to ImportFromStorageResponseType properties.
+        /// <returns> An instance of OperationProgressResult. </returns>
+        /// </summary>
+        internal static OperationProgressResult ToImportFromStorageResponse(OperationProgressResult operationProgressResult)
+        {
+            return new OperationProgressResult(operationProgressResult.Id,
+                                operationProgressResult.ResourceId,
+                                operationProgressResult.Name,
+                                operationProgressResult.Status,
+                                operationProgressResult.PercentComplete,
+                                operationProgressResult.StartOn,
+                                operationProgressResult.EndOn,
+                                operationProgressResult.Operations,
+                                operationProgressResult.Error,
+                                operationProgressResult._serializedAdditionalRawData,
+                                OperationProgressResponseType.ToImportFromStorageResponseType(operationProgressResult.Properties));
+        }
     }
 }
