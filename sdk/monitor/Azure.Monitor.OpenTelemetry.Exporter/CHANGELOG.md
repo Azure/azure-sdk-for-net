@@ -8,7 +8,21 @@
 
 ### Bugs Fixed
 
+### Features Added
+
+* Added `LoggerProviderBuilder.AddAzureMonitorLogExporter` registration extension.
+  ([#44617](https://github.com/Azure/azure-sdk-for-net/pull/44617))
+
 ### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be public.
+  This will allow users to write custom processors for filtering logs.
+  (This feature was originally introduced in 1.3.0-beta.1)
+  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
+
+* Update OpenTelemetry dependencies
+  ([#44650](https://github.com/Azure/azure-sdk-for-net/pull/44650))
+  - OpenTelemetry 1.9.0
 
 ## 1.3.0 (2024-06-07)
 

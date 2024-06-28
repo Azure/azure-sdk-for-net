@@ -28,7 +28,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, null)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(
+                CosmosDBTestUtilities.GenerateDatabaseAccountName(SessionRecording),
+                CosmosDBAccountKind.GlobalDocumentDB,
+                null)).Id;
+
             await StopSessionRecordingAsync();
         }
 
@@ -91,12 +95,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         internal async Task<CosmosDBServiceResource> CreateCosmosDBService()
         {
             _serviceName = CosmosDBServiceType.SqlDedicatedGateway.ToString();
-            var content = new CosmosDBServiceCreateOrUpdateContent()
+            var properties = new SqlDedicatedGatewayServiceResourceCreateUpdateProperties()
             {
                 InstanceSize = CosmosDBServiceSize.CosmosD4S,
                 InstanceCount = 1,
-                ServiceType = CosmosDBServiceType.SqlDedicatedGateway
+                DedicatedGatewayType = DedicatedGatewayType.IntegratedCache
             };
+
+            var content = new CosmosDBServiceCreateOrUpdateContent()
+            {
+                Properties = properties
+            };
+
             return (await CosmosDBServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, _serviceName, content)).Value;
         }
 

@@ -484,7 +484,7 @@
 # ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Event Grid
-/sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft
+/sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft @jsquire @m-redding
 
 # PRLabel: %Event Grid %Functions
 /sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/       @jsquire @JoshLove-msft
@@ -724,10 +724,10 @@
 # ServiceOwners:                                                   @tjsomasundaram
 
 # PRLabel: %OpenAI
-/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
+/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
 
 # ServiceLabel: %OpenAI
-# ServiceOwners:                                                   @jpalvarezl @trrwilson
+# ServiceOwners:                                                   @jpalvarezl @trrwilson @ralph-msft
 
 # PRLabel: %Image Analysis
 /sdk/vision/Azure.AI.Vision.ImageAnalysis/                         @rhurey @dargilco
@@ -926,6 +926,12 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
+# PRLabel: %ARM
+/sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
+
+# ServiceLabel: %ARM %Mgmt
+# ServiceOwners:                                                   @Azure/arm-sdk-owners
+
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
 
@@ -965,6 +971,14 @@
 # ServiceLabel: %Nginx %Mgmt
 # ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs @v-eelhomsi
+
+# ServiceLabel: %Oracle %Mgmt
+# ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @v-eelhomsi
+
+# PRLabel: %Recovery Services Backup
+/sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
@@ -980,9 +994,6 @@
 
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
-
-# Reviewers to double check any API changes
-/sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
