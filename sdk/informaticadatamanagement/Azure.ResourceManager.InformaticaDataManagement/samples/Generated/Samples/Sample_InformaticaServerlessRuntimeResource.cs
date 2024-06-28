@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string organizationName = "e3Y";
             string serverlessRuntimeName = "48-";
             ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource informaticaServerlessRuntimeResource = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntimeResource.GetAsync();
+            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntime.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+            InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string organizationName = "YC";
             string serverlessRuntimeName = "___";
             ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource informaticaServerlessRuntimeResource = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntimeResource.GetAsync();
+            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntime.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+            InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -99,23 +99,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string organizationName = "W5";
             string serverlessRuntimeName = "t_";
             ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource informaticaServerlessRuntimeResource = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            InformaticaServerlessRuntimeResourcePatch patch = new InformaticaServerlessRuntimeResourcePatch()
+            InformaticaServerlessRuntimePatch patch = new InformaticaServerlessRuntimePatch()
             {
-                Properties = new ServerlessRuntimePropertiesCustomUpdate()
+                Properties = new ServerlessRuntimePropertiesUpdate()
                 {
                     Description = "ocprslpljoikxyduackzqnkuhyzrh",
-                    Platform = PlatformType.Azure,
-                    ApplicationType = ApplicationType.CDI,
+                    Platform = InformaticaPlatformType.Azure,
+                    ApplicationType = InformaticaApplicationType.Cdi,
                     ComputeUnits = "uncwbpu",
                     ExecutionTimeout = "tjyfytuywriabt",
                     ServerlessAccountLocation = "goaugkyfanqfnvcmntreibqrswfpis",
-                    NetworkInterfaceConfiguration = new NetworkInterfaceConfigurationUpdate()
+                    NetworkInterfaceConfiguration = new InformaticaNetworkInterfaceConfigurationUpdate()
                     {
-                        VnetId = "tnsqwwoxydeqqffumdnxlkkb",
-                        SubnetId = "dctcuhgttxhcarwcrgdmsfwksyrzj",
+                        VnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/HypernetVnet1"),
+                        SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/subnet1"),
                         VnetResourceGuid = "5328d299-1462-4be0-bef1-303a28e556a0",
                     },
                     AdvancedCustomProperties =
@@ -131,16 +131,16 @@ Value = "unraxmnohdmvutt",
                     {
                         CdiConfigProps =
 {
-new CdiConfigProps("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new ApplicationConfigs[]
+new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
 {
-new ApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
+new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
 })
 },
                         CdieConfigProps =
 {
-new CdiConfigProps("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new ApplicationConfigs[]
+new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
 {
-new ApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
+new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
 })
 },
                     },
@@ -155,11 +155,11 @@ Value = "uyiuegxnkgp",
                     UserContextToken = "ctgebtvjhwh",
                 },
             };
-            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntimeResource.UpdateAsync(patch);
+            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntime.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+            InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -184,15 +184,15 @@ Value = "uyiuegxnkgp",
             string organizationName = "_f--";
             string serverlessRuntimeName = "8Zr__";
             ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource informaticaServerlessRuntimeResource = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            InformaticaServerlessRuntimeResourcePatch patch = new InformaticaServerlessRuntimeResourcePatch();
-            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntimeResource.UpdateAsync(patch);
+            InformaticaServerlessRuntimePatch patch = new InformaticaServerlessRuntimePatch();
+            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntime.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+            InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -217,10 +217,10 @@ Value = "uyiuegxnkgp",
             string organizationName = "orgName";
             string serverlessRuntimeName = "serverlessRuntimeName";
             ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource informaticaServerlessRuntimeResource = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            await informaticaServerlessRuntimeResource.DeleteAsync(WaitUntil.Completed);
+            await informaticaServerlessRuntime.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -245,10 +245,10 @@ Value = "uyiuegxnkgp",
             string organizationName = "3P";
             string serverlessRuntimeName = "M";
             ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource informaticaServerlessRuntimeResource = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            CheckDependenciesResponse result = await informaticaServerlessRuntimeResource.CheckDependenciesAsync();
+            CheckDependenciesResult result = await informaticaServerlessRuntime.CheckDependenciesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -273,10 +273,10 @@ Value = "uyiuegxnkgp",
             string organizationName = "_-";
             string serverlessRuntimeName = "_2_";
             ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource informaticaServerlessRuntimeResource = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            CheckDependenciesResponse result = await informaticaServerlessRuntimeResource.CheckDependenciesAsync();
+            CheckDependenciesResult result = await informaticaServerlessRuntime.CheckDependenciesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -284,7 +284,7 @@ Value = "uyiuegxnkgp",
         // ServerlessRuntimes_ServerlessResourceById
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ServerlessResourceById_ServerlessRuntimesServerlessResourceById()
+        public async Task GetServerlessResourceById_ServerlessRuntimesServerlessResourceById()
         {
             // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/ServerlessRuntimes_ServerlessResourceById_MaximumSet_Gen.json
             // this example is just showing the usage of "ServerlessRuntimes_ServerlessResourceById" operation, for the dependent resources, they will have to be created separately.
@@ -301,14 +301,14 @@ Value = "uyiuegxnkgp",
             string organizationName = "_RD_R";
             string serverlessRuntimeName = "serverlessRuntimeName159";
             ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource informaticaServerlessRuntimeResource = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntimeResource.ServerlessResourceByIdAsync();
+            InformaticaServerlessRuntimeResource result = await informaticaServerlessRuntime.GetServerlessResourceByIdAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+            InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -333,10 +333,10 @@ Value = "uyiuegxnkgp",
             string organizationName = "9M4";
             string serverlessRuntimeName = "-25-G_";
             ResourceIdentifier informaticaServerlessRuntimeResourceId = InformaticaServerlessRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource informaticaServerlessRuntimeResource = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
+            InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            await informaticaServerlessRuntimeResource.StartFailedServerlessRuntimeAsync();
+            await informaticaServerlessRuntime.StartFailedServerlessRuntimeAsync();
 
             Console.WriteLine($"Succeeded");
         }

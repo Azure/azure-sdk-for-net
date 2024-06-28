@@ -13,7 +13,7 @@ using Azure.ResourceManager.InformaticaDataManagement.Models;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 {
-    public partial class Sample_InformaticaServerlessRuntimeResourceCollection
+    public partial class Sample_InformaticaServerlessRuntimeCollection
     {
         // ServerlessRuntimes_ListByInformaticaOrganizationResource
         [NUnit.Framework.Test]
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "orgName";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeResourceCollection collection = informaticaOrganizationResource.GetInformaticaServerlessRuntimeResources();
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
 
             // invoke the operation and iterate over the result
             await foreach (InformaticaServerlessRuntimeResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InformaticaServerlessRuntimeResourceData resourceData = item.Data;
+                InformaticaServerlessRuntimeData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "e3Y";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeResourceCollection collection = informaticaOrganizationResource.GetInformaticaServerlessRuntimeResources();
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
 
             // invoke the operation
             string serverlessRuntimeName = "48-";
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+            InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "e3Y";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeResourceCollection collection = informaticaOrganizationResource.GetInformaticaServerlessRuntimeResources();
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
 
             // invoke the operation
             string serverlessRuntimeName = "48-";
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "e3Y";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeResourceCollection collection = informaticaOrganizationResource.GetInformaticaServerlessRuntimeResources();
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
 
             // invoke the operation
             string serverlessRuntimeName = "48-";
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+                InformaticaServerlessRuntimeData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "YC";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeResourceCollection collection = informaticaOrganizationResource.GetInformaticaServerlessRuntimeResources();
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
 
             // invoke the operation
             string serverlessRuntimeName = "___";
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+            InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "YC";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeResourceCollection collection = informaticaOrganizationResource.GetInformaticaServerlessRuntimeResources();
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
 
             // invoke the operation
             string serverlessRuntimeName = "___";
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "YC";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeResourceCollection collection = informaticaOrganizationResource.GetInformaticaServerlessRuntimeResources();
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
 
             // invoke the operation
             string serverlessRuntimeName = "___";
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+                InformaticaServerlessRuntimeData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -289,26 +289,27 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "__C";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeResourceCollection collection = informaticaOrganizationResource.GetInformaticaServerlessRuntimeResources();
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
 
             // invoke the operation
             string serverlessRuntimeName = "0j-__";
-            InformaticaServerlessRuntimeResourceData data = new InformaticaServerlessRuntimeResourceData()
+            InformaticaServerlessRuntimeData data = new InformaticaServerlessRuntimeData()
             {
-                Description = "mqkaenjmxakvzrwmirelmhgiedto",
-                Platform = PlatformType.Azure,
-                ApplicationType = ApplicationType.CDI,
-                ComputeUnits = "bsctukmndvowse",
-                ExecutionTimeout = "ruiougpypny",
-                ServerlessAccountLocation = "bkxdfopapbqucyhduewrubjpaei",
-                NetworkInterfaceConfiguration = new NetworkInterfaceConfiguration("uaqjvtubxccjs", "s")
+                Properties = new InformaticaServerlessRuntimeProperties("bkxdfopapbqucyhduewrubjpaei")
                 {
-                    VnetResourceGuid = "5328d299-1462-4be0-bef1-303a28e556a0",
-                },
-                AdvancedCustomProperties =
+                    Description = "mqkaenjmxakvzrwmirelmhgiedto",
+                    Platform = InformaticaPlatformType.Azure,
+                    ApplicationType = InformaticaApplicationType.Cdi,
+                    ComputeUnits = "bsctukmndvowse",
+                    ExecutionTimeout = "ruiougpypny",
+                    NetworkInterfaceConfiguration = new InformaticaNetworkInterfaceConfiguration(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/HypernetVnet1"), new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/subnet1"))
+                    {
+                        VnetResourceGuid = "5328d299-1462-4be0-bef1-303a28e556a0",
+                    },
+                    AdvancedCustomProperties =
 {
 new AdvancedCustomProperties()
 {
@@ -316,25 +317,25 @@ Key = "qcmc",
 Value = "unraxmnohdmvutt",
 }
 },
-                SupplementaryFileLocation = "zmlqtkncwgqhhupsnqluumz",
-                ServerlessRuntimeConfig = new ServerlessRuntimeConfigProperties()
-                {
-                    CdiConfigProps =
+                    SupplementaryFileLocation = "zmlqtkncwgqhhupsnqluumz",
+                    ServerlessRuntimeConfig = new ServerlessRuntimeConfigProperties()
+                    {
+                        CdiConfigProps =
 {
-new CdiConfigProps("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new ApplicationConfigs[]
+new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
 {
-new ApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
+new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
 })
 },
-                    CdieConfigProps =
+                        CdieConfigProps =
 {
-new CdiConfigProps("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new ApplicationConfigs[]
+new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
 {
-new ApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
+new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
 })
 },
-                },
-                ServerlessRuntimeTags =
+                    },
+                    ServerlessRuntimeTags =
 {
 new ServerlessRuntimeTag()
 {
@@ -342,14 +343,15 @@ Name = "korveuycuwhs",
 Value = "uyiuegxnkgp",
 }
 },
-                UserContextToken = "oludf",
+                    UserContextToken = "oludf",
+                },
             };
             ArmOperation<InformaticaServerlessRuntimeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serverlessRuntimeName, data);
             InformaticaServerlessRuntimeResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+            InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -373,20 +375,20 @@ Value = "uyiuegxnkgp",
             string resourceGroupName = "rgopenapi";
             string organizationName = "-4Z__7";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeResourceCollection collection = informaticaOrganizationResource.GetInformaticaServerlessRuntimeResources();
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
 
             // invoke the operation
             string serverlessRuntimeName = "J";
-            InformaticaServerlessRuntimeResourceData data = new InformaticaServerlessRuntimeResourceData();
+            InformaticaServerlessRuntimeData data = new InformaticaServerlessRuntimeData();
             ArmOperation<InformaticaServerlessRuntimeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serverlessRuntimeName, data);
             InformaticaServerlessRuntimeResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeResourceData resourceData = result.Data;
+            InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

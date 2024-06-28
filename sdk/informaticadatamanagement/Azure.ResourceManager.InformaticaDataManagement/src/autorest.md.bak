@@ -49,6 +49,10 @@ rename-mapping:
   ServerlessRuntimePropertiesCustomUpdate: ServerlessRuntimePropertiesUpdate
   UserDetails: InformaticaUserDetails
   UserDetailsUpdate: InformaticaUserDetailsUpdate
+  ServerlessMetadataResponse.type: RuntimeType
+
+override-operation-name:
+  ServerlessRuntimes_ServerlessResourceById: GetServerlessResourceById
 
 format-by-name-rules:
   'tenantId': 'uuid'

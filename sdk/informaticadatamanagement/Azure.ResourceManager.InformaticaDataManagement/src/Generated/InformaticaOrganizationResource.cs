@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_get</description>
+        /// <description>ServerlessRuntimes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerlessRuntimes_get</description>
+        /// <description>ServerlessRuntimes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_get</description>
+        /// <description>Organizations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_get</description>
+        /// <description>Organizations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_delete</description>
+        /// <description>Organizations_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_delete</description>
+        /// <description>Organizations_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_update</description>
+        /// <description>Organizations_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_update</description>
+        /// <description>Organizations_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_getServerlessMetadata</description>
+        /// <description>Organizations_GetServerlessMetadata</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_getServerlessMetadata</description>
+        /// <description>Organizations_GetServerlessMetadata</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_getAllServerlessRuntimes</description>
+        /// <description>Organizations_GetAllServerlessRuntimes</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_getAllServerlessRuntimes</description>
+        /// <description>Organizations_GetAllServerlessRuntimes</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_get</description>
+        /// <description>Organizations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_get</description>
+        /// <description>Organizations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_get</description>
+        /// <description>Organizations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_get</description>
+        /// <description>Organizations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_get</description>
+        /// <description>Organizations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_get</description>
+        /// <description>Organizations_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         // Organizations_ListBySubscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetInformaticaOrganizationResources_OrganizationsListBySubscription()
+        public async Task GetInformaticaOrganizations_OrganizationsListBySubscription()
         {
             // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Organizations_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (InformaticaOrganizationResource item in subscriptionResource.GetInformaticaOrganizationResourcesAsync())
+            await foreach (InformaticaOrganizationResource item in subscriptionResource.GetInformaticaOrganizationsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InformaticaOrganizationResourceData resourceData = item.Data;
+                InformaticaOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         // Organizations_ListBySubscription_Min
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetInformaticaOrganizationResources_OrganizationsListBySubscriptionMin()
+        public async Task GetInformaticaOrganizations_OrganizationsListBySubscriptionMin()
         {
             // Generated from example definition: specification/informatica/resource-manager/Informatica.DataManagement/stable/2024-05-08/examples/Organizations_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "Organizations_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (InformaticaOrganizationResource item in subscriptionResource.GetInformaticaOrganizationResourcesAsync())
+            await foreach (InformaticaOrganizationResource item in subscriptionResource.GetInformaticaOrganizationsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InformaticaOrganizationResourceData resourceData = item.Data;
+                InformaticaOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "Sg";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            InformaticaOrganizationResource result = await informaticaOrganizationResource.GetAsync();
+            InformaticaOrganizationResource result = await informaticaOrganization.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaOrganizationResourceData resourceData = result.Data;
+            InformaticaOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "q";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            InformaticaOrganizationResource result = await informaticaOrganizationResource.GetAsync();
+            InformaticaOrganizationResource result = await informaticaOrganization.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaOrganizationResourceData resourceData = result.Data;
+            InformaticaOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -161,21 +161,21 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "_-";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            InformaticaOrganizationResourcePatch patch = new InformaticaOrganizationResourcePatch()
+            InformaticaOrganizationPatch patch = new InformaticaOrganizationPatch()
             {
                 Tags =
 {
 ["key1918"] = "fbjvtuvzsghpl",
 },
-                Properties = new OrganizationPropertiesCustomUpdate()
+                Properties = new InformaticaOrganizationPropertiesUpdate()
                 {
-                    MarketplaceDetails = new MarketplaceDetailsUpdate()
+                    MarketplaceDetails = new InformaticaMarketplaceDetailsUpdate()
                     {
                         MarketplaceSubscriptionId = "szhyxzgjtssjmlguivepc",
-                        OfferDetails = new OfferDetailsUpdate()
+                        OfferDetails = new InformaticaOfferDetailsUpdate()
                         {
                             PublisherId = "ktzfghsyjqbsswhltoaemgotmnorhdogvkaxplutbjjqzuepxizliynyakersobagvpwvpzwjtjjxigsqgcyqaahaxdijghnexliofhfjlqzjmmbvrhcvjxdodnexxizbgfhjopbwzjojxsluasnwwsgcajefglbcvzpaeblanhmurcculndtfwnfjyxol",
                             OfferId = "idaxbflabvjsippplyenvrpgeydsjxcmyubgukffkcdvlvrtwpdhnvdblxjsldiuswrchsibk",
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
                             TermId = "eolmwogtgpdncqoigqcdomupwummaicwvdxgbskpdsmjizdfbdgbxbuekcpwmenqzbhqxpdnjtup",
                         },
                     },
-                    UserDetails = new UserDetailsUpdate()
+                    UserDetails = new InformaticaUserDetailsUpdate()
                     {
                         FirstName = "qguqrmanyupoi",
                         LastName = "ugzg",
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
                         Upn = "viwjrkn",
                         PhoneNumber = "uxa",
                     },
-                    CompanyDetails = new CompanyDetailsUpdate()
+                    CompanyDetails = new InformaticaCompanyDetailsUpdate()
                     {
                         CompanyName = "xkrvbozrjcvappqeeyt",
                         OfficeAddress = "sfcx",
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
                         Business = "mwqblnruflwpolgbxpqbqneve",
                         NumberOfEmployees = 22,
                     },
-                    ExistingResourceId = "uvwlcphdfkqnhrtddpsiacbowcxxo",
+                    ExistingResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Informatica.DataManagement/organizations/org1/serverlessRuntimes/serverlessRuntimeName"),
                 },
             };
-            InformaticaOrganizationResource result = await informaticaOrganizationResource.UpdateAsync(patch);
+            InformaticaOrganizationResource result = await informaticaOrganization.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaOrganizationResourceData resourceData = result.Data;
+            InformaticaOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -233,15 +233,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "-";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            InformaticaOrganizationResourcePatch patch = new InformaticaOrganizationResourcePatch();
-            InformaticaOrganizationResource result = await informaticaOrganizationResource.UpdateAsync(patch);
+            InformaticaOrganizationPatch patch = new InformaticaOrganizationPatch();
+            InformaticaOrganizationResource result = await informaticaOrganization.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaOrganizationResourceData resourceData = result.Data;
+            InformaticaOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -265,10 +265,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "_";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            await informaticaOrganizationResource.DeleteAsync(WaitUntil.Completed);
+            await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "_-";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            await informaticaOrganizationResource.DeleteAsync(WaitUntil.Completed);
+            await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -319,10 +319,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "t";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            InformaticaServerlessRuntimeResourceList result = await informaticaOrganizationResource.GetAllServerlessRuntimesAsync();
+            InformaticaServerlessRuntimeResourceList result = await informaticaOrganization.GetAllServerlessRuntimesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -346,10 +346,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "0";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            InformaticaServerlessRuntimeResourceList result = await informaticaOrganizationResource.GetAllServerlessRuntimesAsync();
+            InformaticaServerlessRuntimeResourceList result = await informaticaOrganization.GetAllServerlessRuntimesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -373,10 +373,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "3_UC";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            ServerlessMetadataResponse result = await informaticaOrganizationResource.GetServerlessMetadataAsync();
+            ServerlessMetadataResponse result = await informaticaOrganization.GetServerlessMetadataAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -400,10 +400,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             string resourceGroupName = "rgopenapi";
             string organizationName = "A";
             ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganizationResource = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            ServerlessMetadataResponse result = await informaticaOrganizationResource.GetServerlessMetadataAsync();
+            ServerlessMetadataResponse result = await informaticaOrganization.GetServerlessMetadataAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

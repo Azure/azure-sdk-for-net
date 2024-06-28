@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            string vnetId = default;
-            string subnetId = default;
+            ResourceIdentifier vnetId = default;
+            ResourceIdentifier subnetId = default;
             string vnetResourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 if (property.NameEquals("vnetId"u8))
                 {
-                    vnetId = property.Value.GetString();
+                    vnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = property.Value.GetString();
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vnetResourceGuid"u8))

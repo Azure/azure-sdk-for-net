@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="region"> region name for the runtime environment. </param>
         /// <param name="serverlessArmResourceId"> Serverless Arm Resource ID. </param>
         /// <returns> A new <see cref="Models.InformaticaServerlessFetchConfigProperties"/> instance for mocking. </returns>
-        public static InformaticaServerlessFetchConfigProperties InformaticaServerlessFetchConfigProperties(string subnet = null, string applicationType = null, string resourceGroupName = null, string advancedCustomProperties = null, string supplementaryFileLocation = null, string platform = null, string tags = null, string vnet = null, string executionTimeout = null, string computeUnits = null, Guid? tenantId = null, string subscriptionId = null, string region = null, string serverlessArmResourceId = null)
+        public static InformaticaServerlessFetchConfigProperties InformaticaServerlessFetchConfigProperties(string subnet = null, string applicationType = null, string resourceGroupName = null, string advancedCustomProperties = null, string supplementaryFileLocation = null, string platform = null, string tags = null, string vnet = null, string executionTimeout = null, string computeUnits = null, Guid? tenantId = null, string subscriptionId = null, string region = null, ResourceIdentifier serverlessArmResourceId = null)
         {
             return new InformaticaServerlessFetchConfigProperties(
                 subnet,

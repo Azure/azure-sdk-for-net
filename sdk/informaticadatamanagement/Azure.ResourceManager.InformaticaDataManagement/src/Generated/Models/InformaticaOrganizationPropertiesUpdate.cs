@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="companyDetails"> Company Details. </param>
         /// <param name="existingResourceId"> Existing Resource Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaOrganizationPropertiesUpdate(InformaticaOrganizationPatch informaticaOrganizationProperties, InformaticaMarketplaceDetailsUpdate marketplaceDetails, InformaticaUserDetailsUpdate userDetails, InformaticaCompanyDetailsUpdate companyDetails, string existingResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InformaticaOrganizationPropertiesUpdate(InformaticaOrganizationPatch informaticaOrganizationProperties, InformaticaMarketplaceDetailsUpdate marketplaceDetails, InformaticaUserDetailsUpdate userDetails, InformaticaCompanyDetailsUpdate companyDetails, ResourceIdentifier existingResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InformaticaOrganizationProperties = informaticaOrganizationProperties;
             MarketplaceDetails = marketplaceDetails;
@@ -76,6 +77,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> Company Details. </summary>
         public InformaticaCompanyDetailsUpdate CompanyDetails { get; set; }
         /// <summary> Existing Resource Id. </summary>
-        public string ExistingResourceId { get; set; }
+        public ResourceIdentifier ExistingResourceId { get; set; }
     }
 }

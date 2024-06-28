@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 {
-    public partial class Sample_InformaticaOrganizationResourceCollection
+    public partial class Sample_InformaticaOrganizationCollection
     {
         // Organizations_ListByResourceGroup
         [NUnit.Framework.Test]
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation and iterate over the result
             await foreach (InformaticaOrganizationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InformaticaOrganizationResourceData resourceData = item.Data;
+                InformaticaOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation and iterate over the result
             await foreach (InformaticaOrganizationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InformaticaOrganizationResourceData resourceData = item.Data;
+                InformaticaOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation
             string organizationName = "Sg";
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaOrganizationResourceData resourceData = result.Data;
+            InformaticaOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation
             string organizationName = "Sg";
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation
             string organizationName = "Sg";
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InformaticaOrganizationResourceData resourceData = result.Data;
+                InformaticaOrganizationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation
             string organizationName = "q";
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaOrganizationResourceData resourceData = result.Data;
+            InformaticaOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation
             string organizationName = "q";
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation
             string organizationName = "q";
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InformaticaOrganizationResourceData resourceData = result.Data;
+                InformaticaOrganizationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -321,41 +321,47 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation
             string organizationName = "C";
-            InformaticaOrganizationResourceData data = new InformaticaOrganizationResourceData(new AzureLocation("pamjoudtssthlbhrnfjidr"))
+            InformaticaOrganizationData data = new InformaticaOrganizationData(new AzureLocation("pamjoudtssthlbhrnfjidr"))
             {
-                InformaticaProperties = new InformaticaProperties()
+                Properties = new InformaticaOrganizationProperties()
                 {
-                    OrganizationId = "wtdmhlwhkvgqdumaehgfgiqcxgnqpx",
-                    OrganizationName = "nomzbvwe",
-                    InformaticaRegion = "zfqodqpbeflhedypiijdkc",
-                    SingleSignOnUri = new Uri("espcbzjhtmgwfdkckhqk"),
+                    InformaticaProperties = new InformaticaProperties()
+                    {
+                        OrganizationId = "wtdmhlwhkvgqdumaehgfgiqcxgnqpx",
+                        OrganizationName = "nomzbvwe",
+                        InformaticaRegion = "zfqodqpbeflhedypiijdkc",
+                        SingleSignOnUri = new Uri("https://contoso.com/singlesignon"),
+                    },
+                    MarketplaceDetails = new InformaticaMarketplaceDetails(new InformaticaOfferDetails("zajxpfacudwongxjvnnuhhpygmnydchgowjccyuzsjonegmqxcqqpnzafanggowfqdixnnutyfvmvwrkx", "cwswcfwmzhjcoksmueukegwaptvpcmbfyvixfhvgwnjyblqivqdkkwkunkgimiopwwkvgnwclmajhuty", "jfnemevyivtlxhectiutdavdgfyidolivuojumdzckp", "iaoxgaitteuoqgujkgxbdgryaobtkjjecuvchwutntrvmuorikrbqqegmelenbewhakiysprrnovjixyxrikscaptrbapbdspu", "tcvvsxdjnjlfmjhmvwklptdmxetnzydxyuhfqchoubmtoeqbchnfxoxqzezlgpxdnzyvzgkynjxzzgetkqccxvpzahxattluqdipvbdktqmndfefitzuifqjpschzlbvixnvznkmmgjwvkplfhemnapsewgqxggdzdokryhv")
+                    {
+                        TermUnit = "gjwmgevrblbosuogsvfspsgspetbnxaygkbelvadpgwiywl",
+                    })
+                    {
+                        MarketplaceSubscriptionId = "ovenlecocg",
+                    },
+                    UserDetails = new InformaticaUserDetails()
+                    {
+                        FirstName = "appvdclawzfjntdfdftjevlhvzropnxqtnypid",
+                        LastName = "nzirbvzmkxtbrlamyatlcszebxgcyncxoascojsmacwvjsjvn",
+                        EmailAddress = "7_-46@13D--3.m-4x-.11.c-9-.DHLYFc",
+                        Upn = "undljch",
+                        PhoneNumber = "fvcjylxlmhdnshsgywnzlyvshu",
+                    },
+                    CompanyDetails = new InformaticaCompanyDetails()
+                    {
+                        CompanyName = "xszcggknokhw",
+                        OfficeAddress = "sbttzwyajgdbsvipuiclbzvkcvwyil",
+                        Country = "gwkcpnwyaqc",
+                        Domain = "utcxetzzpmbvwmjrvphqngvp",
+                        Business = "pucosrtjv",
+                        NumberOfEmployees = 25,
+                    },
+                    LinkOrganizationToken = "jjfouhoqpumjvrdsfbimgcy",
                 },
-                MarketplaceDetails = new MarketplaceDetails("ovenlecocg", new OfferDetails("zajxpfacudwongxjvnnuhhpygmnydchgowjccyuzsjonegmqxcqqpnzafanggowfqdixnnutyfvmvwrkx", "cwswcfwmzhjcoksmueukegwaptvpcmbfyvixfhvgwnjyblqivqdkkwkunkgimiopwwkvgnwclmajhuty", "jfnemevyivtlxhectiutdavdgfyidolivuojumdzckp", "iaoxgaitteuoqgujkgxbdgryaobtkjjecuvchwutntrvmuorikrbqqegmelenbewhakiysprrnovjixyxrikscaptrbapbdspu", "tcvvsxdjnjlfmjhmvwklptdmxetnzydxyuhfqchoubmtoeqbchnfxoxqzezlgpxdnzyvzgkynjxzzgetkqccxvpzahxattluqdipvbdktqmndfefitzuifqjpschzlbvixnvznkmmgjwvkplfhemnapsewgqxggdzdokryhv")
-                {
-                    TermUnit = "gjwmgevrblbosuogsvfspsgspetbnxaygkbelvadpgwiywl",
-                }),
-                UserDetails = new UserDetails()
-                {
-                    FirstName = "appvdclawzfjntdfdftjevlhvzropnxqtnypid",
-                    LastName = "nzirbvzmkxtbrlamyatlcszebxgcyncxoascojsmacwvjsjvn",
-                    EmailAddress = "7_-46@13D--3.m-4x-.11.c-9-.DHLYFc",
-                    Upn = "undljch",
-                    PhoneNumber = "fvcjylxlmhdnshsgywnzlyvshu",
-                },
-                CompanyDetails = new CompanyDetails()
-                {
-                    CompanyName = "xszcggknokhw",
-                    OfficeAddress = "sbttzwyajgdbsvipuiclbzvkcvwyil",
-                    Country = "gwkcpnwyaqc",
-                    Domain = "utcxetzzpmbvwmjrvphqngvp",
-                    Business = "pucosrtjv",
-                    NumberOfEmployees = 25,
-                },
-                LinkOrganizationToken = "jjfouhoqpumjvrdsfbimgcy",
                 Tags =
 {
 ["key8430"] = "cagshqtjlxtqqhdwtchokvxszybp",
@@ -366,7 +372,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaOrganizationResourceData resourceData = result.Data;
+            InformaticaOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -392,17 +398,17 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InformaticaOrganizationResource
-            InformaticaOrganizationResourceCollection collection = resourceGroupResource.GetInformaticaOrganizationResources();
+            InformaticaOrganizationCollection collection = resourceGroupResource.GetInformaticaOrganizations();
 
             // invoke the operation
             string organizationName = "n6v";
-            InformaticaOrganizationResourceData data = new InformaticaOrganizationResourceData(new AzureLocation("pamjoudtssthlbhrnfjidr"));
+            InformaticaOrganizationData data = new InformaticaOrganizationData(new AzureLocation("pamjoudtssthlbhrnfjidr"));
             ArmOperation<InformaticaOrganizationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, organizationName, data);
             InformaticaOrganizationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InformaticaOrganizationResourceData resourceData = result.Data;
+            InformaticaOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
