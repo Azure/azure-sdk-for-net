@@ -3,6 +3,8 @@
 
 using System;
 using System.Buffers;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -120,6 +122,17 @@ namespace Azure.Core
             ObjectSerializer serializer = new JsonObjectSerializer(serializerOptions);
             return Create(serializer.Serialize(serializable));
         }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that contains the bytes resulting from writing the value of the
+        /// provided <see cref="IPersistableModel{T}"/>.
+        /// </summary>
+        /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
+        /// <param name="options">The <see cref="ModelReaderWriterOptions"/>, if any, that indicates what format
+        /// the <paramref name="model"/> will be written in.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps an <see cref="IPersistableModel{T}"/>.</returns>
+        public static RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+            => Create(ModelReaderWriter.Write(model, options));
 
         /// <summary>
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
