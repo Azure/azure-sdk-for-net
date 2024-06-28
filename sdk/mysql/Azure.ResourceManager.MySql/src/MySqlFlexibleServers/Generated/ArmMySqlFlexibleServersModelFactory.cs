@@ -667,6 +667,40 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.OperationProgressResult"/>. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="properties">
+        /// The response properties specific to the operation
+        /// Please note <see cref="OperationProgressResponseType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.BackupAndExportResponseType"/> and <see cref="Models.ImportFromStorageResponseType"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.OperationProgressResult"/> instance for mocking. </returns>
+        public static OperationProgressResult OperationProgressResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, OperationProgressResponseType properties = null)
+        {
+            operations ??= new List<OperationStatusResult>();
+
+            return new OperationProgressResult(
+                id,
+                resourceId,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations?.ToList(),
+                error,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/>. </summary>
         /// <param name="privateDnsZoneSuffix"> Represents the private DNS zone suffix. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/> instance for mocking. </returns>
@@ -711,6 +745,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 maintenanceDescription,
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BackupAndExportResponseType"/>. </summary>
+        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
+        /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
+        /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
+        /// <returns> A new <see cref="Models.BackupAndExportResponseType"/> instance for mocking. </returns>
+        public static BackupAndExportResponseType BackupAndExportResponseType(long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupMetadata = null)
+        {
+            return new BackupAndExportResponseType(MySqlFlexibleServerOperationType.BackupAndExportResponse, serializedAdditionalRawData: null, datasourceSizeInBytes, dataTransferredInBytes, backupMetadata);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ImportFromStorageResponseType"/>. </summary>
+        /// <param name="estimatedCompletionOn"> The estimated time of operation completion. </param>
+        /// <returns> A new <see cref="Models.ImportFromStorageResponseType"/> instance for mocking. </returns>
+        public static ImportFromStorageResponseType ImportFromStorageResponseType(DateTimeOffset? estimatedCompletionOn = null)
+        {
+            return new ImportFromStorageResponseType(MySqlFlexibleServerOperationType.ImportFromStorageResponse, serializedAdditionalRawData: null, estimatedCompletionOn);
         }
     }
 }

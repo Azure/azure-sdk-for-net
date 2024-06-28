@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         private CheckNameAvailabilityWithoutLocationRestOperations _checkNameAvailabilityWithoutLocationRestClient;
         private ClientDiagnostics _operationResultsClientDiagnostics;
         private OperationResultsRestOperations _operationResultsRestClient;
+        private ClientDiagnostics _operationProgressClientDiagnostics;
+        private OperationProgressRestOperations _operationProgressRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableMySqlFlexibleServersSubscriptionResource"/> class for mocking. </summary>
         protected MockableMySqlFlexibleServersSubscriptionResource()
@@ -55,6 +57,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         private CheckNameAvailabilityWithoutLocationRestOperations CheckNameAvailabilityWithoutLocationRestClient => _checkNameAvailabilityWithoutLocationRestClient ??= new CheckNameAvailabilityWithoutLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics OperationProgressClientDiagnostics => _operationProgressClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private OperationProgressRestOperations OperationProgressRestClient => _operationProgressRestClient ??= new OperationProgressRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
