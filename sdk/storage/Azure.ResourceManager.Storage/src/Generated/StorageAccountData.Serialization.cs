@@ -187,6 +187,11 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
+            if (Optional.IsDefined(IsExtendedGroupEnabled))
+            {
+                writer.WritePropertyName("enableExtendedGroups"u8);
+                writer.WriteBooleanValue(IsExtendedGroupEnabled.Value);
+            }
             if (Optional.IsDefined(IsHnsEnabled))
             {
                 writer.WritePropertyName("isHnsEnabled"u8);
@@ -282,6 +287,16 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("dnsEndpointType"u8);
                 writer.WriteStringValue(DnsEndpointType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(IsSkuConversionBlocked))
+            {
+                writer.WritePropertyName("isSkuConversionBlocked"u8);
+                writer.WriteBooleanValue(IsSkuConversionBlocked.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAccountMigrationInProgress))
+            {
+                writer.WritePropertyName("accountMigrationInProgress"u8);
+                writer.WriteBooleanValue(IsAccountMigrationInProgress.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -351,6 +366,7 @@ namespace Azure.ResourceManager.Storage
             StorageAccountNetworkRuleSet networkAcls = default;
             bool? isSftpEnabled = default;
             bool? isLocalUserEnabled = default;
+            bool? enableExtendedGroups = default;
             bool? isHnsEnabled = default;
             GeoReplicationStatistics geoReplicationStats = default;
             bool? failoverInProgress = default;
@@ -369,6 +385,8 @@ namespace Azure.ResourceManager.Storage
             AllowedCopyScope? allowedCopyScope = default;
             StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = default;
             StorageDnsEndpointType? dnsEndpointType = default;
+            bool? isSkuConversionBlocked = default;
+            bool? accountMigrationInProgress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -642,6 +660,15 @@ namespace Azure.ResourceManager.Storage
                             isLocalUserEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableExtendedGroups"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableExtendedGroups = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("isHnsEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -809,6 +836,24 @@ namespace Azure.ResourceManager.Storage
                             dnsEndpointType = new StorageDnsEndpointType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("isSkuConversionBlocked"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isSkuConversionBlocked = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("accountMigrationInProgress"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            accountMigrationInProgress = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -849,6 +894,7 @@ namespace Azure.ResourceManager.Storage
                 networkAcls,
                 isSftpEnabled,
                 isLocalUserEnabled,
+                enableExtendedGroups,
                 isHnsEnabled,
                 geoReplicationStats,
                 failoverInProgress,
@@ -867,6 +913,8 @@ namespace Azure.ResourceManager.Storage
                 allowedCopyScope,
                 storageAccountSkuConversionStatus,
                 dnsEndpointType,
+                isSkuConversionBlocked,
+                accountMigrationInProgress,
                 serializedAdditionalRawData);
         }
 
@@ -1355,6 +1403,22 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsExtendedGroupEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableExtendedGroups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsExtendedGroupEnabled))
+                {
+                    builder.Append("    enableExtendedGroups: ");
+                    var boolValue = IsExtendedGroupEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHnsEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -1637,6 +1701,38 @@ namespace Azure.ResourceManager.Storage
                 {
                     builder.Append("    dnsEndpointType: ");
                     builder.AppendLine($"'{DnsEndpointType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSkuConversionBlocked), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isSkuConversionBlocked: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSkuConversionBlocked))
+                {
+                    builder.Append("    isSkuConversionBlocked: ");
+                    var boolValue = IsSkuConversionBlocked.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAccountMigrationInProgress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    accountMigrationInProgress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAccountMigrationInProgress))
+                {
+                    builder.Append("    accountMigrationInProgress: ");
+                    var boolValue = IsAccountMigrationInProgress.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
