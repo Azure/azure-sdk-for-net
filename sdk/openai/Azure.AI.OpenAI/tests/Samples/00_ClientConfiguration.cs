@@ -17,8 +17,6 @@ namespace Azure.AI.OpenAI.Samples;
 
 public partial class AzureOpenAISamples
 {
-    [Test]
-    [Ignore("Only for sample compilation validation")]
     public void CreateAnAzureOpenAIClient()
     {
         #region Snippet:ConfigureClient:WithAOAITopLevelClient
@@ -31,8 +29,6 @@ public partial class AzureOpenAISamples
         #endregion
     }
 
-    [Test]
-    [Ignore("Only for sample compilation validation")]
     public void CreateAnAzureOpenAIClientWithEntra()
     {
         #region Snippet:ConfigureClient:WithEntra
