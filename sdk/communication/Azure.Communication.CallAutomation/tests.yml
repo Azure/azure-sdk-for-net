@@ -10,7 +10,10 @@ extends:
       Public:
         ServiceConnection: azure-sdk-tests
         SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzurePublicMsft.json
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json    
+        SubscriptionConfigurations:
+          - $(sub-config-communication-services-cloud-test-resources-common)
+          - $(sub-config-communication-services-cloud-test-resources-net)
       Int:
         SubscriptionConfigurations:
           - $(sub-config-communication-int-test-resources-common)
