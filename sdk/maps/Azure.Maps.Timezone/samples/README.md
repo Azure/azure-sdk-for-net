@@ -5,12 +5,12 @@ languages:
 products:
 - azure
 - azure-maps
-name: Azure.Maps.Rendering samples for .NET
-description: Samples for the Azure.Maps.Rendering client library.
+name: Azure.Maps.Timezone samples for .NET
+description: Samples for the Azure.Maps.Timezone client library.
 ---
 
-# Azure.Maps.Rendering Samples
+# Azure.Maps.Timezone Samples
 
 For different APIs, please refer the following samples:
 
-[Rendering tiles, imageries and images](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Rendering/samples/MapsRenderingTilesImageriesImagesSamples.md)
+[Timezone](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Timezone/samples/MapsTimezoneSamples.md)
