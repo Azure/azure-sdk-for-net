@@ -301,6 +301,7 @@ To leverage log scopes, you must explicitly enable them.
 
 To include the scope with your logs, set `OpenTelemetryLoggerOptions.IncludeScopes` to `true` in your application's configuration:
 ```csharp
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
 builder.Services.Configure<OpenTelemetryLoggerOptions>(options =>
 {
     options.IncludeScopes = true;
