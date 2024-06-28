@@ -8,6 +8,7 @@ csharp: true
 library-name: InformaticaDataManagement
 namespace: Azure.ResourceManager.InformaticaDataManagement
 require: https://github.com/Azure/azure-rest-api-specs/blob/00a6d4f6cdfe2e3ffd069d0771ee0a52143a13c0/specification/informatica/resource-manager/readme.md
+#tag: package-2024-05-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
