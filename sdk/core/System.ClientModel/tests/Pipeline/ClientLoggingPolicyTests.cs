@@ -2,15 +2,9 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using Microsoft.Extensions.Logging;
