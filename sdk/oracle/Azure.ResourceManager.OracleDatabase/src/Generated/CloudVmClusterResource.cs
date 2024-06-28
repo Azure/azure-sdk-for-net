@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.OracleDatabase
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DbNodeResources in the CloudVmCluster. </summary>
-        /// <returns> An object representing collection of DbNodeResources and their operations over a DbNodeResource. </returns>
-        public virtual DbNodeCollection GetDbNodes()
+        /// <summary> Gets a collection of CloudVmClusterDBNodeResources in the CloudVmCluster. </summary>
+        /// <returns> An object representing collection of CloudVmClusterDBNodeResources and their operations over a CloudVmClusterDBNodeResource. </returns>
+        public virtual CloudVmClusterDBNodeCollection GetCloudVmClusterDBNodes()
         {
-            return GetCachedClient(client => new DbNodeCollection(client, Id));
+            return GetCachedClient(client => new CloudVmClusterDBNodeCollection(client, Id));
         }
 
         /// <summary>
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DbNodeResource"/></description>
+        /// <description><see cref="CloudVmClusterDBNodeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="dbnodeocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DbNodeResource>> GetDbNodeAsync(string dbnodeocid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudVmClusterDBNodeResource>> GetCloudVmClusterDBNodeAsync(string dbnodeocid, CancellationToken cancellationToken = default)
         {
-            return await GetDbNodes().GetAsync(dbnodeocid, cancellationToken).ConfigureAwait(false);
+            return await GetCloudVmClusterDBNodes().GetAsync(dbnodeocid, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DbNodeResource"/></description>
+        /// <description><see cref="CloudVmClusterDBNodeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,47 +155,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="dbnodeocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DbNodeResource> GetDbNode(string dbnodeocid, CancellationToken cancellationToken = default)
+        public virtual Response<CloudVmClusterDBNodeResource> GetCloudVmClusterDBNode(string dbnodeocid, CancellationToken cancellationToken = default)
         {
-            return GetDbNodes().Get(dbnodeocid, cancellationToken);
+            return GetCloudVmClusterDBNodes().Get(dbnodeocid, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkAddressResources in the CloudVmCluster. </summary>
-        /// <returns> An object representing collection of VirtualNetworkAddressResources and their operations over a VirtualNetworkAddressResource. </returns>
-        public virtual VirtualNetworkAddressCollection GetVirtualNetworkAddresses()
+        /// <summary> Gets a collection of CloudVmClusterVirtualNetworkAddressResources in the CloudVmCluster. </summary>
+        /// <returns> An object representing collection of CloudVmClusterVirtualNetworkAddressResources and their operations over a CloudVmClusterVirtualNetworkAddressResource. </returns>
+        public virtual CloudVmClusterVirtualNetworkAddressCollection GetCloudVmClusterVirtualNetworkAddresses()
         {
-            return GetCachedClient(client => new VirtualNetworkAddressCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a VirtualNetworkAddress
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkAddresses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualnetworkaddressname"> Virtual IP address hostname. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualnetworkaddressname"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualnetworkaddressname"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualNetworkAddressResource>> GetVirtualNetworkAddressAsync(string virtualnetworkaddressname, CancellationToken cancellationToken = default)
-        {
-            return await GetVirtualNetworkAddresses().GetAsync(virtualnetworkaddressname, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new CloudVmClusterVirtualNetworkAddressCollection(client, Id));
         }
 
         /// <summary>
@@ -211,11 +180,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkAddressResource"/></description>
+        /// <description><see cref="CloudVmClusterVirtualNetworkAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,9 +193,40 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <exception cref="ArgumentNullException"> <paramref name="virtualnetworkaddressname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualnetworkaddressname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualNetworkAddressResource> GetVirtualNetworkAddress(string virtualnetworkaddressname, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudVmClusterVirtualNetworkAddressResource>> GetCloudVmClusterVirtualNetworkAddressAsync(string virtualnetworkaddressname, CancellationToken cancellationToken = default)
         {
-            return GetVirtualNetworkAddresses().Get(virtualnetworkaddressname, cancellationToken);
+            return await GetCloudVmClusterVirtualNetworkAddresses().GetAsync(virtualnetworkaddressname, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a VirtualNetworkAddress
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkAddresses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterVirtualNetworkAddressResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualnetworkaddressname"> Virtual IP address hostname. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualnetworkaddressname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualnetworkaddressname"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CloudVmClusterVirtualNetworkAddressResource> GetCloudVmClusterVirtualNetworkAddress(string virtualnetworkaddressname, CancellationToken cancellationToken = default)
+        {
+            return GetCloudVmClusterVirtualNetworkAddresses().Get(virtualnetworkaddressname, cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -507,19 +507,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudVmClusterResource>> AddVmsAsync(WaitUntil waitUntil, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<CloudVmClusterResource>> AddVmsAsync(WaitUntil waitUntil, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterResource.AddVms");
             scope.Start();
             try
             {
-                var response = await _cloudVmClusterRestClient.AddVmsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateAddVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudVmClusterRestClient.AddVmsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateAddVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -553,19 +553,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CloudVmClusterResource> AddVms(WaitUntil waitUntil, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<CloudVmClusterResource> AddVms(WaitUntil waitUntil, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterResource.AddVms");
             scope.Start();
             try
             {
-                var response = _cloudVmClusterRestClient.AddVms(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateAddVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudVmClusterRestClient.AddVms(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateAddVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -598,16 +598,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PrivateIPAddressProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateIPAddressProperties> GetPrivateIPAddressesAsync(PrivateIPAddressesFilter body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateIPAddressResult> GetPrivateIPAddressesAsync(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PrivateIPAddressProperties.DeserializePrivateIPAddressProperties(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PrivateIPAddressResult.DeserializePrivateIPAddressResult(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -631,16 +631,16 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <returns> A collection of <see cref="PrivateIPAddressProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateIPAddressProperties> GetPrivateIPAddresses(PrivateIPAddressesFilter body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateIPAddressResult> GetPrivateIPAddresses(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PrivateIPAddressProperties.DeserializePrivateIPAddressProperties(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PrivateIPAddressResult.DeserializePrivateIPAddressResult(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -665,19 +665,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudVmClusterResource>> RemoveVmsAsync(WaitUntil waitUntil, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<CloudVmClusterResource>> RemoveVmsAsync(WaitUntil waitUntil, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterResource.RemoveVms");
             scope.Start();
             try
             {
-                var response = await _cloudVmClusterRestClient.RemoveVmsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateRemoveVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudVmClusterRestClient.RemoveVmsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateRemoveVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -711,19 +711,19 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<CloudVmClusterResource> RemoveVms(WaitUntil waitUntil, AddRemoveDbNode body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<CloudVmClusterResource> RemoveVms(WaitUntil waitUntil, CloudVmClusterDBNodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterResource.RemoveVms");
             scope.Start();
             try
             {
-                var response = _cloudVmClusterRestClient.RemoveVms(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateRemoveVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudVmClusterRestClient.RemoveVms(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateRemoveVmsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
