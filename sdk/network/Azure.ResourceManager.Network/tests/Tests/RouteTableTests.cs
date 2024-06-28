@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task EmptyRouteTableTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
@@ -74,7 +73,6 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task RouteTableApiTest()
         {
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
