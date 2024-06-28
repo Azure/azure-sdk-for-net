@@ -15,7 +15,7 @@ API reference documentation |
 Install the client library from [NuGet]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.Functions.Worker.Extensions.WebPubSub --prerelease
+dotnet add package Microsoft.Azure.Functions.Worker.Extensions.WebPubSub
 ```
 
 ### Prerequisites

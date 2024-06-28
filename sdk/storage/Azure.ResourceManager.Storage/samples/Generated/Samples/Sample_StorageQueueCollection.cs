@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_QueueOperationPut()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/QueueOperationPut.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationPut.json
             // this example is just showing the usage of "Queue_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_QueueOperationPutWithMetadata()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/QueueOperationPutWithMetadata.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationPutWithMetadata.json
             // this example is just showing the usage of "Queue_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_QueueOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/QueueOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationGet.json
             // this example is just showing the usage of "Queue_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_QueueOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/QueueOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationGet.json
             // this example is just showing the usage of "Queue_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_QueueOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/QueueOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationGet.json
             // this example is just showing the usage of "Queue_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_QueueOperationList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/QueueOperationList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationList.json
             // this example is just showing the usage of "Queue_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

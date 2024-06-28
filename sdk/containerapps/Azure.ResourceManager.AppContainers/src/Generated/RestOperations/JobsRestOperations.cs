@@ -32,8 +32,310 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListDetectorsRequestUri(string subscriptionId, string resourceGroupName, string jobName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/detectors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListDetectorsRequest(string subscriptionId, string resourceGroupName, string jobName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/detectors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the list of diagnostics for a Container App Job. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DiagnosticsCollection>> ListDetectorsAsync(string subscriptionId, string resourceGroupName, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateListDetectorsRequest(subscriptionId, resourceGroupName, jobName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DiagnosticsCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DiagnosticsCollection.DeserializeDiagnosticsCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the list of diagnostics for a Container App Job. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DiagnosticsCollection> ListDetectors(string subscriptionId, string resourceGroupName, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateListDetectorsRequest(subscriptionId, resourceGroupName, jobName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DiagnosticsCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DiagnosticsCollection.DeserializeDiagnosticsCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetDetectorRequestUri(string subscriptionId, string resourceGroupName, string jobName, string detectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/detectors/", false);
+            uri.AppendPath(detectorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetDetectorRequest(string subscriptionId, string resourceGroupName, string jobName, string detectorName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/detectors/", false);
+            uri.AppendPath(detectorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the diagnostics data for a Container App Job. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="detectorName"> Name of the Container App Job detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ContainerAppDiagnosticData>> GetDetectorAsync(string subscriptionId, string resourceGroupName, string jobName, string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var message = CreateGetDetectorRequest(subscriptionId, resourceGroupName, jobName, detectorName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppDiagnosticData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ContainerAppDiagnosticData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the diagnostics data for a Container App Job. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="detectorName"> Name of the Container App Job detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ContainerAppDiagnosticData> GetDetector(string subscriptionId, string resourceGroupName, string jobName, string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var message = CreateGetDetectorRequest(subscriptionId, resourceGroupName, jobName, detectorName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppDiagnosticData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ContainerAppDiagnosticData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateProxyGetRequestUri(string subscriptionId, string resourceGroupName, string jobName, string apiName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/detectorProperties/", false);
+            uri.AppendPath(apiName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateProxyGetRequest(string subscriptionId, string resourceGroupName, string jobName, string apiName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/detectorProperties/", false);
+            uri.AppendPath(apiName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the properties of a Container App Job. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="apiName"> Proxy API Name for Container App Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ContainerAppJobData>> ProxyGetAsync(string subscriptionId, string resourceGroupName, string jobName, string apiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            using var message = CreateProxyGetRequest(subscriptionId, resourceGroupName, jobName, apiName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppJobData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ContainerAppJobData.DeserializeContainerAppJobData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ContainerAppJobData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the properties of a Container App Job. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="apiName"> Proxy API Name for Container App Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ContainerAppJobData> ProxyGet(string subscriptionId, string resourceGroupName, string jobName, string apiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            using var message = CreateProxyGetRequest(subscriptionId, resourceGroupName, jobName, apiName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppJobData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ContainerAppJobData.DeserializeContainerAppJobData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ContainerAppJobData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
@@ -928,6 +1230,90 @@ namespace Azure.ResourceManager.AppContainers
                         JobSecretsCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = JobSecretsCollection.DeserializeJobSecretsCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListDetectorsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string jobName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListDetectorsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string jobName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the list of diagnostics for a Container App Job. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DiagnosticsCollection>> ListDetectorsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateListDetectorsNextPageRequest(nextLink, subscriptionId, resourceGroupName, jobName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DiagnosticsCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DiagnosticsCollection.DeserializeDiagnosticsCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the list of diagnostics for a Container App Job. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DiagnosticsCollection> ListDetectorsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateListDetectorsNextPageRequest(nextLink, subscriptionId, resourceGroupName, jobName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DiagnosticsCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DiagnosticsCollection.DeserializeDiagnosticsCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

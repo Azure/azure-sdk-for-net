@@ -601,16 +601,24 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "filename": "**/sdk/informaticadatamanagement/**/*.cs",
       "words": [
-        "kustomization",
-        "kustomizations"
+        "cdie",
+        "infa",
+        "informatica"
       ]
     },
     {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization",
+        "kustomizations"
       ]
     },
     {
@@ -1205,7 +1213,8 @@
         "Ragzrs",
         "Rehydrated",
         "Undelete",
-        "Aadkerb"
+        "Aadkerb",
+        "Nfsv"
       ]
     },
     {
