@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of Deployment stacks. </summary>
-    internal partial class ArmDeploymentStackListResult
+    internal partial class DeploymentStackListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackListResult"/>. </summary>
-        internal ArmDeploymentStackListResult()
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackListResult"/>. </summary>
+        internal DeploymentStackListResult()
         {
-            Value = new ChangeTrackingList<ArmDeploymentStackData>();
+            Value = new ChangeTrackingList<DeploymentStackData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackListResult"/>. </summary>
         /// <param name="value"> An array of Deployment stacks. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentStackListResult(IReadOnlyList<ArmDeploymentStackData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentStackListResult(IReadOnlyList<DeploymentStackData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> An array of Deployment stacks. </summary>
-        public IReadOnlyList<ArmDeploymentStackData> Value { get; }
+        public IReadOnlyList<DeploymentStackData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

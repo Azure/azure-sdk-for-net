@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Resources.Mocking
             return GetArmDeployments().Get(deploymentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ArmDeploymentStackResources in the ManagementGroupResource. </summary>
-        /// <returns> An object representing collection of ArmDeploymentStackResources and their operations over a ArmDeploymentStackResource. </returns>
-        public virtual ArmDeploymentStackCollection GetArmDeploymentStacks()
+        /// <summary> Gets a collection of DeploymentStackResources in the ManagementGroupResource. </summary>
+        /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
+        public virtual DeploymentStackCollection GetDeploymentStacks()
         {
-            return GetCachedClient(client => new ArmDeploymentStackCollection(client, Id));
+            return GetCachedClient(client => new DeploymentStackCollection(client, Id));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentStackResource"/></description>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ArmDeploymentStackResource>> GetArmDeploymentStackAsync(string deploymentStackName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentStackResource>> GetDeploymentStackAsync(string deploymentStackName, CancellationToken cancellationToken = default)
         {
-            return await GetArmDeploymentStacks().GetAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
+            return await GetDeploymentStacks().GetAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentStackResource"/></description>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ArmDeploymentStackResource> GetArmDeploymentStack(string deploymentStackName, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentStackResource> GetDeploymentStack(string deploymentStackName, CancellationToken cancellationToken = default)
         {
-            return GetArmDeploymentStacks().Get(deploymentStackName, cancellationToken);
+            return GetDeploymentStacks().Get(deploymentStackName, cancellationToken);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The Deployment stack validation result details. </summary>
-    public partial class ArmDeploymentStackValidateProperties
+    public partial class DeploymentStackValidateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackValidateProperties"/>. </summary>
-        public ArmDeploymentStackValidateProperties()
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackValidateProperties"/>. </summary>
+        public DeploymentStackValidateProperties()
         {
             Parameters = new ChangeTrackingDictionary<string, DeploymentParameter>();
             ValidatedResources = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackValidateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackValidateProperties"/>. </summary>
         /// <param name="actionOnUnmanage"> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </param>
         /// <param name="correlationId"> The correlation id of the Deployment stack validate operation. It is in GUID format and is used for tracing. </param>
         /// <param name="denySettings"> The Deployment stack deny settings. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="templateLink"> The URI of the template. </param>
         /// <param name="validatedResources"> The array of resources that were validated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentStackValidateProperties(ActionOnUnmanage actionOnUnmanage, string correlationId, DenySettings denySettings, string deploymentScope, string description, IDictionary<string, DeploymentParameter> parameters, ArmDeploymentStackTemplateLink templateLink, IList<SubResource> validatedResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentStackValidateProperties(ActionOnUnmanage actionOnUnmanage, string correlationId, DenySettings denySettings, string deploymentScope, string description, IDictionary<string, DeploymentParameter> parameters, DeploymentStacksTemplateLink templateLink, IList<SubResource> validatedResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionOnUnmanage = actionOnUnmanage;
             CorrelationId = correlationId;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
         public IDictionary<string, DeploymentParameter> Parameters { get; }
         /// <summary> The URI of the template. </summary>
         [WirePath("templateLink")]
-        public ArmDeploymentStackTemplateLink TemplateLink { get; set; }
+        public DeploymentStacksTemplateLink TemplateLink { get; set; }
         /// <summary> The array of resources that were validated. </summary>
         [WirePath("validatedResources")]
         public IList<SubResource> ValidatedResources { get; }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Entity representing the reference to the template. </summary>
-    public partial class ArmDeploymentStackTemplateLink
+    public partial class DeploymentStacksTemplateLink
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackTemplateLink"/>. </summary>
-        public ArmDeploymentStackTemplateLink()
+        /// <summary> Initializes a new instance of <see cref="DeploymentStacksTemplateLink"/>. </summary>
+        public DeploymentStacksTemplateLink()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackTemplateLink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStacksTemplateLink"/>. </summary>
         /// <param name="uri"> The URI of the template to deploy. Use either the uri or id property, but not both. </param>
         /// <param name="id"> The resourceId of a Template Spec. Use either the id or uri property, but not both. </param>
         /// <param name="relativePath"> The relativePath property can be used to deploy a linked template at a location relative to the parent. If the parent template was linked with a TemplateSpec, this will reference an artifact in the TemplateSpec.  If the parent was linked with a URI, the child deployment will be a combination of the parent and relativePath URIs. </param>
         /// <param name="queryString"> The query string (for example, a SAS token) to be used with the templateLink URI. </param>
         /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentStackTemplateLink(Uri uri, string id, string relativePath, string queryString, string contentVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentStacksTemplateLink(Uri uri, string id, string relativePath, string queryString, string contentVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             Id = id;

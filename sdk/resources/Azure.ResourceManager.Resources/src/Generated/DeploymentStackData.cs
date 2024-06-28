@@ -14,10 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing the ArmDeploymentStack data model.
+    /// A class representing the DeploymentStack data model.
     /// Deployment stack object.
     /// </summary>
-    public partial class ArmDeploymentStackData : ResourceData
+    public partial class DeploymentStackData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackData"/>. </summary>
-        public ArmDeploymentStackData()
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackData"/>. </summary>
+        public DeploymentStackData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Parameters = new ChangeTrackingDictionary<string, DeploymentParameter>();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources
             Resources = new ChangeTrackingList<ManagedResourceReference>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="outputs"> The outputs of the deployment resource created by the deployment stack. </param>
         /// <param name="duration"> The duration of the last successful Deployment stack update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ResponseError error, BinaryData template, ArmDeploymentStackTemplateLink templateLink, IDictionary<string, DeploymentParameter> parameters, ArmDeploymentStackParametersLink parametersLink, ActionOnUnmanage actionOnUnmanage, ArmDeploymentStackDebugSetting debugSetting, bool? bypassStackOutOfSyncError, string deploymentScope, string description, DenySettings denySettings, DeploymentStackProvisioningState? provisioningState, string correlationId, IReadOnlyList<SubResource> detachedResources, IReadOnlyList<SubResource> deletedResources, IReadOnlyList<ResourceReferenceExtended> failedResources, IReadOnlyList<ManagedResourceReference> resources, string deploymentId, BinaryData outputs, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DeploymentStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ResponseError error, BinaryData template, DeploymentStacksTemplateLink templateLink, IDictionary<string, DeploymentParameter> parameters, DeploymentStacksParametersLink parametersLink, ActionOnUnmanage actionOnUnmanage, DeploymentStacksDebugSetting debugSetting, bool? bypassStackOutOfSyncError, string deploymentScope, string description, DenySettings denySettings, DeploymentStackProvisioningState? provisioningState, string correlationId, IReadOnlyList<SubResource> detachedResources, IReadOnlyList<SubResource> deletedResources, IReadOnlyList<ResourceReferenceExtended> failedResources, IReadOnlyList<ManagedResourceReference> resources, string deploymentId, BinaryData outputs, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -160,18 +160,18 @@ namespace Azure.ResourceManager.Resources
         public BinaryData Template { get; set; }
         /// <summary> The URI of the template. Use either the templateLink property or the template property, but not both. </summary>
         [WirePath("properties.templateLink")]
-        public ArmDeploymentStackTemplateLink TemplateLink { get; set; }
+        public DeploymentStacksTemplateLink TemplateLink { get; set; }
         /// <summary> Name and value pairs that define the deployment parameters for the template. Use this element when providing the parameter values directly in the request, rather than linking to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. </summary>
         [WirePath("properties.parameters")]
         public IDictionary<string, DeploymentParameter> Parameters { get; }
         /// <summary> The URI of parameters file. Use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </summary>
         [WirePath("properties.parametersLink")]
-        public ArmDeploymentStackParametersLink ParametersLink { get; set; }
+        public DeploymentStacksParametersLink ParametersLink { get; set; }
         /// <summary> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </summary>
         [WirePath("properties.actionOnUnmanage")]
         public ActionOnUnmanage ActionOnUnmanage { get; set; }
         /// <summary> The debug setting of the deployment. </summary>
-        internal ArmDeploymentStackDebugSetting DebugSetting { get; set; }
+        internal DeploymentStacksDebugSetting DebugSetting { get; set; }
         /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </summary>
         [WirePath("properties.debugSetting.detailLevel")]
         public string DebugSettingDetailLevel
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Resources
             set
             {
                 if (DebugSetting is null)
-                    DebugSetting = new ArmDeploymentStackDebugSetting();
+                    DebugSetting = new DeploymentStacksDebugSetting();
                 DebugSetting.DetailLevel = value;
             }
         }

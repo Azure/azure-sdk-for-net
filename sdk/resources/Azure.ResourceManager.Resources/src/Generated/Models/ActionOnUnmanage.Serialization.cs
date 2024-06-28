@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            ArmDeploymentStackDeleteDetachEnum resources = default;
-            ArmDeploymentStackDeleteDetachEnum? resourceGroups = default;
-            ArmDeploymentStackDeleteDetachEnum? managementGroups = default;
+            DeploymentStacksDeleteDetachEnum resources = default;
+            DeploymentStacksDeleteDetachEnum? resourceGroups = default;
+            DeploymentStacksDeleteDetachEnum? managementGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resources"u8))
                 {
-                    resources = new ArmDeploymentStackDeleteDetachEnum(property.Value.GetString());
+                    resources = new DeploymentStacksDeleteDetachEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceGroups"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    resourceGroups = new ArmDeploymentStackDeleteDetachEnum(property.Value.GetString());
+                    resourceGroups = new DeploymentStacksDeleteDetachEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("managementGroups"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    managementGroups = new ArmDeploymentStackDeleteDetachEnum(property.Value.GetString());
+                    managementGroups = new DeploymentStacksDeleteDetachEnum(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

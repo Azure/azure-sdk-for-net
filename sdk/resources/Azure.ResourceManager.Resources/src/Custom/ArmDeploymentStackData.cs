@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Resources
     /// A class representing the ArmDeploymentStack data model.
     /// Deployment stack object.
     /// </summary>
-    public partial class ArmDeploymentStackData : ResourceData
+    public partial class DeploymentStackData : ResourceData
     {
     }
 }

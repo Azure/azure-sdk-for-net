@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The Deployment stack validation result. </summary>
-    public partial class ArmDeploymentStackValidateResult : ResourceData
+    /// <summary> The debug setting. </summary>
+    internal partial class DeploymentStacksDebugSetting
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +45,22 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackValidateResult"/>. </summary>
-        public ArmDeploymentStackValidateResult()
+        /// <summary> Initializes a new instance of <see cref="DeploymentStacksDebugSetting"/>. </summary>
+        public DeploymentStacksDebugSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackValidateResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The validation result details. </param>
-        /// <param name="error"> The error detail. </param>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStacksDebugSetting"/>. </summary>
+        /// <param name="detailLevel"> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentStackValidateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentStackValidateProperties properties, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DeploymentStacksDebugSetting(string detailLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
-            Error = error;
+            DetailLevel = detailLevel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The validation result details. </summary>
-        [WirePath("properties")]
-        public ArmDeploymentStackValidateProperties Properties { get; set; }
-        /// <summary> The error detail. </summary>
-        [WirePath("error")]
-        public ResponseError Error { get; set; }
+        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </summary>
+        [WirePath("detailLevel")]
+        public string DetailLevel { get; set; }
     }
 }

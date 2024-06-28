@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentStackValidateProperties : IUtf8JsonSerializable, IJsonModel<ArmDeploymentStackValidateProperties>
+    public partial class DeploymentStackValidateProperties : IUtf8JsonSerializable, IJsonModel<DeploymentStackValidateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentStackValidateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentStackValidateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ArmDeploymentStackValidateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeploymentStackValidateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentStackValidateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentStackValidateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,19 +97,19 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        ArmDeploymentStackValidateProperties IJsonModel<ArmDeploymentStackValidateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeploymentStackValidateProperties IJsonModel<DeploymentStackValidateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentStackValidateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentStackValidateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeArmDeploymentStackValidateProperties(document.RootElement, options);
+            return DeserializeDeploymentStackValidateProperties(document.RootElement, options);
         }
 
-        internal static ArmDeploymentStackValidateProperties DeserializeArmDeploymentStackValidateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeploymentStackValidateProperties DeserializeDeploymentStackValidateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Models
             string deploymentScope = default;
             string description = default;
             IDictionary<string, DeploymentParameter> parameters = default;
-            ArmDeploymentStackTemplateLink templateLink = default;
+            DeploymentStacksTemplateLink templateLink = default;
             IList<SubResource> validatedResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentStackTemplateLink.DeserializeArmDeploymentStackTemplateLink(property.Value, options);
+                    templateLink = DeploymentStacksTemplateLink.DeserializeDeploymentStacksTemplateLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validatedResources"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ArmDeploymentStackValidateProperties(
+            return new DeploymentStackValidateProperties(
                 actionOnUnmanage,
                 correlationId,
                 denySettings,
@@ -393,9 +393,9 @@ namespace Azure.ResourceManager.Resources.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ArmDeploymentStackValidateProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeploymentStackValidateProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -404,26 +404,26 @@ namespace Azure.ResourceManager.Resources.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentStackValidateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentStackValidateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ArmDeploymentStackValidateProperties IPersistableModel<ArmDeploymentStackValidateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeploymentStackValidateProperties IPersistableModel<DeploymentStackValidateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentStackValidateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeArmDeploymentStackValidateProperties(document.RootElement, options);
+                        return DeserializeDeploymentStackValidateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentStackValidateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentStackValidateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ArmDeploymentStackValidateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeploymentStackValidateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

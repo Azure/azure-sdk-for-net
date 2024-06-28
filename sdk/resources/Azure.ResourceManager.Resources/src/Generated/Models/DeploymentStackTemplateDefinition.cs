@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Export Template specific properties of the Deployment stack. </summary>
-    public partial class ArmDeploymentStackTemplateDefinition
+    public partial class DeploymentStackTemplateDefinition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackTemplateDefinition"/>. </summary>
-        internal ArmDeploymentStackTemplateDefinition()
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackTemplateDefinition"/>. </summary>
+        internal DeploymentStackTemplateDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackTemplateDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStackTemplateDefinition"/>. </summary>
         /// <param name="template"> The template content. Use this element to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentStackTemplateDefinition(BinaryData template, ArmDeploymentStackTemplateLink templateLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentStackTemplateDefinition(BinaryData template, DeploymentStacksTemplateLink templateLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Template = template;
             TemplateLink = templateLink;
@@ -95,6 +95,6 @@ namespace Azure.ResourceManager.Resources.Models
         public BinaryData Template { get; }
         /// <summary> The URI of the template. Use either the templateLink property or the template property, but not both. </summary>
         [WirePath("templateLink")]
-        public ArmDeploymentStackTemplateLink TemplateLink { get; }
+        public DeploymentStacksTemplateLink TemplateLink { get; }
     }
 }

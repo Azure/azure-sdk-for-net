@@ -196,22 +196,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArmDeploymentStackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArmDeploymentStackResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentStackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeploymentStackResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeploymentStackResource.CreateResourceIdentifier" /> to create a <see cref="DeploymentStackResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeploymentStackResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetDeploymentStackResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ArmDeploymentStackResource"/> object. </returns>
-        public static ArmDeploymentStackResource GetArmDeploymentStackResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeploymentStackResource"/> object. </returns>
+        public static DeploymentStackResource GetDeploymentStackResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableResourcesArmClient(client).GetArmDeploymentStackResource(id);
+            return GetMockableResourcesArmClient(client).GetDeploymentStackResource(id);
         }
 
         /// <summary>
@@ -308,20 +308,20 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets a collection of ArmDeploymentStackResources in the ManagementGroupResource.
+        /// Gets a collection of DeploymentStackResources in the ManagementGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetArmDeploymentStacks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetDeploymentStacks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ArmDeploymentStackResources and their operations over a ArmDeploymentStackResource. </returns>
-        public static ArmDeploymentStackCollection GetArmDeploymentStacks(this ManagementGroupResource managementGroupResource)
+        /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
+        public static DeploymentStackCollection GetDeploymentStacks(this ManagementGroupResource managementGroupResource)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableResourcesManagementGroupResource(managementGroupResource).GetArmDeploymentStacks();
+            return GetMockableResourcesManagementGroupResource(managementGroupResource).GetDeploymentStacks();
         }
 
         /// <summary>
@@ -341,12 +341,12 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentStackResource"/></description>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetArmDeploymentStackAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetDeploymentStackAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ArmDeploymentStackResource>> GetArmDeploymentStackAsync(this ManagementGroupResource managementGroupResource, string deploymentStackName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeploymentStackResource>> GetDeploymentStackAsync(this ManagementGroupResource managementGroupResource, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return await GetMockableResourcesManagementGroupResource(managementGroupResource).GetArmDeploymentStackAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesManagementGroupResource(managementGroupResource).GetDeploymentStackAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -379,12 +379,12 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentStackResource"/></description>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetArmDeploymentStack(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetDeploymentStack(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ArmDeploymentStackResource> GetArmDeploymentStack(this ManagementGroupResource managementGroupResource, string deploymentStackName, CancellationToken cancellationToken = default)
+        public static Response<DeploymentStackResource> GetDeploymentStack(this ManagementGroupResource managementGroupResource, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableResourcesManagementGroupResource(managementGroupResource).GetArmDeploymentStack(deploymentStackName, cancellationToken);
+            return GetMockableResourcesManagementGroupResource(managementGroupResource).GetDeploymentStack(deploymentStackName, cancellationToken);
         }
 
         /// <summary>
@@ -961,20 +961,20 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets a collection of ArmDeploymentStackResources in the ResourceGroupResource.
+        /// Gets a collection of DeploymentStackResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeploymentStacks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetDeploymentStacks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ArmDeploymentStackResources and their operations over a ArmDeploymentStackResource. </returns>
-        public static ArmDeploymentStackCollection GetArmDeploymentStacks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
+        public static DeploymentStackCollection GetDeploymentStacks(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeploymentStacks();
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetDeploymentStacks();
         }
 
         /// <summary>
@@ -994,12 +994,12 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentStackResource"/></description>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeploymentStackAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetDeploymentStackAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1008,11 +1008,11 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ArmDeploymentStackResource>> GetArmDeploymentStackAsync(this ResourceGroupResource resourceGroupResource, string deploymentStackName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeploymentStackResource>> GetDeploymentStackAsync(this ResourceGroupResource resourceGroupResource, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeploymentStackAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesResourceGroupResource(resourceGroupResource).GetDeploymentStackAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1032,12 +1032,12 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentStackResource"/></description>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeploymentStack(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetDeploymentStack(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1046,11 +1046,11 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ArmDeploymentStackResource> GetArmDeploymentStack(this ResourceGroupResource resourceGroupResource, string deploymentStackName, CancellationToken cancellationToken = default)
+        public static Response<DeploymentStackResource> GetDeploymentStack(this ResourceGroupResource resourceGroupResource, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeploymentStack(deploymentStackName, cancellationToken);
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetDeploymentStack(deploymentStackName, cancellationToken);
         }
 
         /// <summary>
@@ -1147,20 +1147,20 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// Gets a collection of ArmDeploymentStackResources in the SubscriptionResource.
+        /// Gets a collection of DeploymentStackResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeploymentStacks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetDeploymentStacks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of ArmDeploymentStackResources and their operations over a ArmDeploymentStackResource. </returns>
-        public static ArmDeploymentStackCollection GetArmDeploymentStacks(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
+        public static DeploymentStackCollection GetDeploymentStacks(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeploymentStacks();
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetDeploymentStacks();
         }
 
         /// <summary>
@@ -1180,12 +1180,12 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentStackResource"/></description>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeploymentStackAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetDeploymentStackAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1194,11 +1194,11 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ArmDeploymentStackResource>> GetArmDeploymentStackAsync(this SubscriptionResource subscriptionResource, string deploymentStackName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeploymentStackResource>> GetDeploymentStackAsync(this SubscriptionResource subscriptionResource, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeploymentStackAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesSubscriptionResource(subscriptionResource).GetDeploymentStackAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1218,12 +1218,12 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentStackResource"/></description>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeploymentStack(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetDeploymentStack(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1232,11 +1232,11 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="deploymentStackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ArmDeploymentStackResource> GetArmDeploymentStack(this SubscriptionResource subscriptionResource, string deploymentStackName, CancellationToken cancellationToken = default)
+        public static Response<DeploymentStackResource> GetDeploymentStack(this SubscriptionResource subscriptionResource, string deploymentStackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeploymentStack(deploymentStackName, cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetDeploymentStack(deploymentStackName, cancellationToken);
         }
 
         /// <summary>

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The debug setting. </summary>
-    internal partial class ArmDeploymentStackDebugSetting
+    /// <summary> Entity representing the reference to the deployment parameters. </summary>
+    public partial class DeploymentStacksParametersLink
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,37 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackDebugSetting"/>. </summary>
-        public ArmDeploymentStackDebugSetting()
+        /// <summary> Initializes a new instance of <see cref="DeploymentStacksParametersLink"/>. </summary>
+        /// <param name="uri"> The URI of the parameters file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        public DeploymentStacksParametersLink(Uri uri)
         {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+            Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentStackDebugSetting"/>. </summary>
-        /// <param name="detailLevel"> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </param>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStacksParametersLink"/>. </summary>
+        /// <param name="uri"> The URI of the parameters file. </param>
+        /// <param name="contentVersion"> If included, must match the ContentVersion in the template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentStackDebugSetting(string detailLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentStacksParametersLink(Uri uri, string contentVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DetailLevel = detailLevel;
+            Uri = uri;
+            ContentVersion = contentVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </summary>
-        [WirePath("detailLevel")]
-        public string DetailLevel { get; set; }
+        /// <summary> Initializes a new instance of <see cref="DeploymentStacksParametersLink"/> for deserialization. </summary>
+        internal DeploymentStacksParametersLink()
+        {
+        }
+
+        /// <summary> The URI of the parameters file. </summary>
+        [WirePath("uri")]
+        public Uri Uri { get; set; }
+        /// <summary> If included, must match the ContentVersion in the template. </summary>
+        [WirePath("contentVersion")]
+        public string ContentVersion { get; set; }
     }
 }
