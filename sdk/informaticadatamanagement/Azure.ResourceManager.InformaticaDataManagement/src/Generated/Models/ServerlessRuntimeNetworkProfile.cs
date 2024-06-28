@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> Initializes a new instance of <see cref="ServerlessRuntimeNetworkProfile"/>. </summary>
         /// <param name="networkInterfaceConfiguration"> Network Interface Configuration Profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceConfiguration"/> is null. </exception>
-        public ServerlessRuntimeNetworkProfile(NetworkInterfaceConfiguration networkInterfaceConfiguration)
+        public ServerlessRuntimeNetworkProfile(InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration)
         {
             Argument.AssertNotNull(networkInterfaceConfiguration, nameof(networkInterfaceConfiguration));
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> Initializes a new instance of <see cref="ServerlessRuntimeNetworkProfile"/>. </summary>
         /// <param name="networkInterfaceConfiguration"> Network Interface Configuration Profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessRuntimeNetworkProfile(NetworkInterfaceConfiguration networkInterfaceConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerlessRuntimeNetworkProfile(InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkInterfaceConfiguration = networkInterfaceConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <summary> Network Interface Configuration Profile. </summary>
-        public NetworkInterfaceConfiguration NetworkInterfaceConfiguration { get; set; }
+        public InformaticaNetworkInterfaceConfiguration NetworkInterfaceConfiguration { get; set; }
     }
 }

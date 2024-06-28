@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> Initializes a new instance of <see cref="InformaticaServerlessRuntimeResourceList"/>. </summary>
         /// <param name="informaticaRuntimeResources"> List of runtime resources for the fetch all API. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="informaticaRuntimeResources"/> is null. </exception>
-        internal InformaticaServerlessRuntimeResourceList(IEnumerable<InfaRuntimeResourceFetchMetaData> informaticaRuntimeResources)
+        internal InformaticaServerlessRuntimeResourceList(IEnumerable<InformaticaRuntimeResourceFetchMetadata> informaticaRuntimeResources)
         {
             Argument.AssertNotNull(informaticaRuntimeResources, nameof(informaticaRuntimeResources));
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> Initializes a new instance of <see cref="InformaticaServerlessRuntimeResourceList"/>. </summary>
         /// <param name="informaticaRuntimeResources"> List of runtime resources for the fetch all API. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InformaticaServerlessRuntimeResourceList(IReadOnlyList<InfaRuntimeResourceFetchMetaData> informaticaRuntimeResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InformaticaServerlessRuntimeResourceList(IReadOnlyList<InformaticaRuntimeResourceFetchMetadata> informaticaRuntimeResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InformaticaRuntimeResources = informaticaRuntimeResources;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <summary> List of runtime resources for the fetch all API. </summary>
-        public IReadOnlyList<InfaRuntimeResourceFetchMetaData> InformaticaRuntimeResources { get; }
+        public IReadOnlyList<InformaticaRuntimeResourceFetchMetadata> InformaticaRuntimeResources { get; }
     }
 }

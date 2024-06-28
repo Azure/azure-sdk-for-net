@@ -1,6 +1,6 @@
 # Microsoft Azure Informatica data management client library for .NET
 
-**[Describe the service briefly first.]**
+The service provides seamless experience for discovering, subscribing, provisioning, and managing Informatica’s Intelligent Data Management Cloud Services from Azure.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

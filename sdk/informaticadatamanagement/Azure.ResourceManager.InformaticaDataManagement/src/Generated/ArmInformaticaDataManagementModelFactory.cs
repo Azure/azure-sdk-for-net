@@ -16,31 +16,41 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmInformaticaDataManagementModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="InformaticaDataManagement.InformaticaOrganizationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformaticaDataManagement.InformaticaOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="informaticaProperties"> Informatica Organization properties. </param>
-        /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <param name="userDetails"> User details. </param>
-        /// <param name="companyDetails"> Company details. </param>
-        /// <param name="linkOrganizationToken"> Link Organization. </param>
-        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaOrganizationResourceData"/> instance for mocking. </returns>
-        public static InformaticaOrganizationResourceData InformaticaOrganizationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, InformaticaProperties informaticaProperties = null, MarketplaceDetails marketplaceDetails = null, UserDetails userDetails = null, CompanyDetails companyDetails = null, string linkOrganizationToken = null)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaOrganizationData"/> instance for mocking. </returns>
+        public static InformaticaOrganizationData InformaticaOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, InformaticaOrganizationProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new InformaticaOrganizationResourceData(
+            return new InformaticaOrganizationData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags,
                 location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InformaticaOrganizationProperties"/>. </summary>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <param name="informaticaProperties"> Informatica Organization properties. </param>
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <param name="userDetails"> User details. </param>
+        /// <param name="companyDetails"> Company details. </param>
+        /// <param name="linkOrganizationToken"> Link Organization. </param>
+        /// <returns> A new <see cref="Models.InformaticaOrganizationProperties"/> instance for mocking. </returns>
+        public static InformaticaOrganizationProperties InformaticaOrganizationProperties(InformaticaProvisioningState? provisioningState = null, InformaticaProperties informaticaProperties = null, InformaticaMarketplaceDetails marketplaceDetails = null, InformaticaUserDetails userDetails = null, InformaticaCompanyDetails companyDetails = null, string linkOrganizationToken = null)
+        {
+            return new InformaticaOrganizationProperties(
                 provisioningState,
                 informaticaProperties,
                 marketplaceDetails,
@@ -50,17 +60,78 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ServerlessMetadataResponse"/>. </summary>
+        /// <param name="runtimeType"> type of the runtime environment. </param>
+        /// <param name="serverlessConfigProperties"> serverless config properties. </param>
+        /// <param name="serverlessRuntimeConfigProperties"> serverless runtime config properties. </param>
+        /// <returns> A new <see cref="Models.ServerlessMetadataResponse"/> instance for mocking. </returns>
+        public static ServerlessMetadataResponse ServerlessMetadataResponse(InformaticaRuntimeType? runtimeType = null, ServerlessConfigProperties serverlessConfigProperties = null, ServerlessRuntimeConfigProperties serverlessRuntimeConfigProperties = null)
+        {
+            return new ServerlessMetadataResponse(runtimeType, serverlessConfigProperties, serverlessRuntimeConfigProperties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServerlessConfigProperties"/>. </summary>
+        /// <param name="platform"> Platform types. </param>
+        /// <param name="applicationTypes"> List of application types supported by informatica. </param>
+        /// <param name="computeUnits"> The list of compute units with possible array of values. </param>
+        /// <param name="executionTimeout"> Serverless Runtime execution timeout. </param>
+        /// <param name="regions"> List of supported serverless informatica regions. </param>
+        /// <returns> A new <see cref="Models.ServerlessConfigProperties"/> instance for mocking. </returns>
+        public static ServerlessConfigProperties ServerlessConfigProperties(InformaticaPlatformType? platform = null, IEnumerable<InformaticaApplicationTypeMetadata> applicationTypes = null, IEnumerable<ComputeUnitsMetadata> computeUnits = null, string executionTimeout = null, IEnumerable<InformaticaRegionsMetadata> regions = null)
+        {
+            applicationTypes ??= new List<InformaticaApplicationTypeMetadata>();
+            computeUnits ??= new List<ComputeUnitsMetadata>();
+            regions ??= new List<InformaticaRegionsMetadata>();
+
+            return new ServerlessConfigProperties(
+                platform,
+                applicationTypes?.ToList(),
+                computeUnits?.ToList(),
+                executionTimeout,
+                regions?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InformaticaApplicationTypeMetadata"/>. </summary>
+        /// <param name="name"> Application type name. </param>
+        /// <param name="value"> Application type value. </param>
+        /// <returns> A new <see cref="Models.InformaticaApplicationTypeMetadata"/> instance for mocking. </returns>
+        public static InformaticaApplicationTypeMetadata InformaticaApplicationTypeMetadata(string name = null, string value = null)
+        {
+            return new InformaticaApplicationTypeMetadata(name, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeUnitsMetadata"/>. </summary>
+        /// <param name="name"> ComputeUnit name. </param>
+        /// <param name="value"> ComputeUnit value. </param>
+        /// <returns> A new <see cref="Models.ComputeUnitsMetadata"/> instance for mocking. </returns>
+        public static ComputeUnitsMetadata ComputeUnitsMetadata(string name = null, IEnumerable<string> value = null)
+        {
+            value ??= new List<string>();
+
+            return new ComputeUnitsMetadata(name, value?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InformaticaRegionsMetadata"/>. </summary>
+        /// <param name="id"> Region Id. </param>
+        /// <param name="name"> Region name. </param>
+        /// <returns> A new <see cref="Models.InformaticaRegionsMetadata"/> instance for mocking. </returns>
+        public static InformaticaRegionsMetadata InformaticaRegionsMetadata(string id = null, string name = null)
+        {
+            return new InformaticaRegionsMetadata(id, name, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.InformaticaServerlessRuntimeResourceList"/>. </summary>
         /// <param name="informaticaRuntimeResources"> List of runtime resources for the fetch all API. </param>
         /// <returns> A new <see cref="Models.InformaticaServerlessRuntimeResourceList"/> instance for mocking. </returns>
-        public static InformaticaServerlessRuntimeResourceList InformaticaServerlessRuntimeResourceList(IEnumerable<InfaRuntimeResourceFetchMetaData> informaticaRuntimeResources = null)
+        public static InformaticaServerlessRuntimeResourceList InformaticaServerlessRuntimeResourceList(IEnumerable<InformaticaRuntimeResourceFetchMetadata> informaticaRuntimeResources = null)
         {
-            informaticaRuntimeResources ??= new List<InfaRuntimeResourceFetchMetaData>();
+            informaticaRuntimeResources ??= new List<InformaticaRuntimeResourceFetchMetadata>();
 
             return new InformaticaServerlessRuntimeResourceList(informaticaRuntimeResources?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InfaRuntimeResourceFetchMetaData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InformaticaRuntimeResourceFetchMetadata"/>. </summary>
         /// <param name="name"> Environment name. </param>
         /// <param name="createdTime"> Created time. </param>
         /// <param name="updatedTime"> Updated Time. </param>
@@ -73,10 +144,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="statusMessage"> status message. </param>
         /// <param name="serverlessConfigProperties"> Serverless Config Properties. </param>
         /// <param name="description"> Description of the runtime resource. </param>
-        /// <returns> A new <see cref="Models.InfaRuntimeResourceFetchMetaData"/> instance for mocking. </returns>
-        public static InfaRuntimeResourceFetchMetaData InfaRuntimeResourceFetchMetaData(string name = null, string createdTime = null, string updatedTime = null, string createdBy = null, string updatedBy = null, string id = null, RuntimeType runtimeType = default, string status = null, string statusLocalized = null, string statusMessage = null, InfaServerlessFetchConfigProperties serverlessConfigProperties = null, string description = null)
+        /// <returns> A new <see cref="Models.InformaticaRuntimeResourceFetchMetadata"/> instance for mocking. </returns>
+        public static InformaticaRuntimeResourceFetchMetadata InformaticaRuntimeResourceFetchMetadata(string name = null, string createdTime = null, string updatedTime = null, string createdBy = null, string updatedBy = null, string id = null, InformaticaRuntimeType runtimeType = default, string status = null, string statusLocalized = null, string statusMessage = null, InformaticaServerlessFetchConfigProperties serverlessConfigProperties = null, string description = null)
         {
-            return new InfaRuntimeResourceFetchMetaData(
+            return new InformaticaRuntimeResourceFetchMetadata(
                 name,
                 createdTime,
                 updatedTime,
@@ -92,7 +163,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InfaServerlessFetchConfigProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InformaticaServerlessFetchConfigProperties"/>. </summary>
         /// <param name="subnet"> subnet name. </param>
         /// <param name="applicationType"> applicationType name. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
@@ -107,10 +178,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="subscriptionId"> subscription ID. </param>
         /// <param name="region"> region name for the runtime environment. </param>
         /// <param name="serverlessArmResourceId"> Serverless Arm Resource ID. </param>
-        /// <returns> A new <see cref="Models.InfaServerlessFetchConfigProperties"/> instance for mocking. </returns>
-        public static InfaServerlessFetchConfigProperties InfaServerlessFetchConfigProperties(string subnet = null, string applicationType = null, string resourceGroupName = null, string advancedCustomProperties = null, string supplementaryFileLocation = null, string platform = null, string tags = null, string vnet = null, string executionTimeout = null, string computeUnits = null, Guid? tenantId = null, string subscriptionId = null, string region = null, string serverlessArmResourceId = null)
+        /// <returns> A new <see cref="Models.InformaticaServerlessFetchConfigProperties"/> instance for mocking. </returns>
+        public static InformaticaServerlessFetchConfigProperties InformaticaServerlessFetchConfigProperties(string subnet = null, string applicationType = null, string resourceGroupName = null, string advancedCustomProperties = null, string supplementaryFileLocation = null, string platform = null, string tags = null, string vnet = null, string executionTimeout = null, string computeUnits = null, Guid? tenantId = null, string subscriptionId = null, string region = null, string serverlessArmResourceId = null)
         {
-            return new InfaServerlessFetchConfigProperties(
+            return new InformaticaServerlessFetchConfigProperties(
                 subnet,
                 applicationType,
                 resourceGroupName,
@@ -128,72 +199,25 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServerlessMetadataResponse"/>. </summary>
-        /// <param name="runtimeType"> type of the runtime environment. </param>
-        /// <param name="serverlessConfigProperties"> serverless config properties. </param>
-        /// <param name="serverlessRuntimeConfigProperties"> serverless runtime config properties. </param>
-        /// <returns> A new <see cref="Models.ServerlessMetadataResponse"/> instance for mocking. </returns>
-        public static ServerlessMetadataResponse ServerlessMetadataResponse(RuntimeType? runtimeType = null, ServerlessConfigProperties serverlessConfigProperties = null, ServerlessRuntimeConfigProperties serverlessRuntimeConfigProperties = null)
-        {
-            return new ServerlessMetadataResponse(runtimeType, serverlessConfigProperties, serverlessRuntimeConfigProperties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServerlessConfigProperties"/>. </summary>
-        /// <param name="platform"> Platform types. </param>
-        /// <param name="applicationTypes"> List of application types supported by informatica. </param>
-        /// <param name="computeUnits"> The list of compute units with possible array of values. </param>
-        /// <param name="executionTimeout"> Serverless Runtime execution timeout. </param>
-        /// <param name="regions"> List of supported serverless informatica regions. </param>
-        /// <returns> A new <see cref="Models.ServerlessConfigProperties"/> instance for mocking. </returns>
-        public static ServerlessConfigProperties ServerlessConfigProperties(PlatformType? platform = null, IEnumerable<ApplicationTypeMetadata> applicationTypes = null, IEnumerable<ComputeUnitsMetadata> computeUnits = null, string executionTimeout = null, IEnumerable<RegionsMetadata> regions = null)
-        {
-            applicationTypes ??= new List<ApplicationTypeMetadata>();
-            computeUnits ??= new List<ComputeUnitsMetadata>();
-            regions ??= new List<RegionsMetadata>();
-
-            return new ServerlessConfigProperties(
-                platform,
-                applicationTypes?.ToList(),
-                computeUnits?.ToList(),
-                executionTimeout,
-                regions?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationTypeMetadata"/>. </summary>
-        /// <param name="name"> Application type name. </param>
-        /// <param name="value"> Application type value. </param>
-        /// <returns> A new <see cref="Models.ApplicationTypeMetadata"/> instance for mocking. </returns>
-        public static ApplicationTypeMetadata ApplicationTypeMetadata(string name = null, string value = null)
-        {
-            return new ApplicationTypeMetadata(name, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeUnitsMetadata"/>. </summary>
-        /// <param name="name"> ComputeUnit name. </param>
-        /// <param name="value"> ComputeUnit value. </param>
-        /// <returns> A new <see cref="Models.ComputeUnitsMetadata"/> instance for mocking. </returns>
-        public static ComputeUnitsMetadata ComputeUnitsMetadata(string name = null, IEnumerable<string> value = null)
-        {
-            value ??= new List<string>();
-
-            return new ComputeUnitsMetadata(name, value?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RegionsMetadata"/>. </summary>
-        /// <param name="id"> Region Id. </param>
-        /// <param name="name"> Region name. </param>
-        /// <returns> A new <see cref="Models.RegionsMetadata"/> instance for mocking. </returns>
-        public static RegionsMetadata RegionsMetadata(string id = null, string name = null)
-        {
-            return new RegionsMetadata(id, name, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/> instance for mocking. </returns>
+        public static InformaticaServerlessRuntimeData InformaticaServerlessRuntimeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InformaticaServerlessRuntimeProperties properties = null)
+        {
+            return new InformaticaServerlessRuntimeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InformaticaServerlessRuntimeProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="description"> description of the serverless runtime. </param>
         /// <param name="platform"> Platform type of the Serverless Runtime. </param>
@@ -207,17 +231,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
         /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
         /// <param name="userContextToken"> Serverless runtime user context properties. </param>
-        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeResourceData"/> instance for mocking. </returns>
-        public static InformaticaServerlessRuntimeResourceData InformaticaServerlessRuntimeResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, string description = null, PlatformType? platform = null, ApplicationType? applicationType = null, string computeUnits = null, string executionTimeout = null, string serverlessAccountLocation = null, NetworkInterfaceConfiguration networkInterfaceConfiguration = null, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = null, string supplementaryFileLocation = null, ServerlessRuntimeConfigProperties serverlessRuntimeConfig = null, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = null, string userContextToken = null)
+        /// <returns> A new <see cref="Models.InformaticaServerlessRuntimeProperties"/> instance for mocking. </returns>
+        public static InformaticaServerlessRuntimeProperties InformaticaServerlessRuntimeProperties(InformaticaProvisioningState? provisioningState = null, string description = null, InformaticaPlatformType? platform = null, InformaticaApplicationType? applicationType = null, string computeUnits = null, string executionTimeout = null, string serverlessAccountLocation = null, InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration = null, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = null, string supplementaryFileLocation = null, ServerlessRuntimeConfigProperties serverlessRuntimeConfig = null, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = null, string userContextToken = null)
         {
             advancedCustomProperties ??= new List<AdvancedCustomProperties>();
             serverlessRuntimeTags ??= new List<ServerlessRuntimeTag>();
 
-            return new InformaticaServerlessRuntimeResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
+            return new InformaticaServerlessRuntimeProperties(
                 provisioningState,
                 description,
                 platform,
@@ -234,16 +254,16 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckDependenciesResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CheckDependenciesResult"/>. </summary>
         /// <param name="count"> Count of dependencies. </param>
         /// <param name="id"> id of resource. </param>
         /// <param name="references"> List of dependencies. </param>
-        /// <returns> A new <see cref="Models.CheckDependenciesResponse"/> instance for mocking. </returns>
-        public static CheckDependenciesResponse CheckDependenciesResponse(int count = default, string id = null, IEnumerable<ServerlessRuntimeDependency> references = null)
+        /// <returns> A new <see cref="Models.CheckDependenciesResult"/> instance for mocking. </returns>
+        public static CheckDependenciesResult CheckDependenciesResult(int count = default, string id = null, IEnumerable<ServerlessRuntimeDependency> references = null)
         {
             references ??= new List<ServerlessRuntimeDependency>();
 
-            return new CheckDependenciesResponse(count, id, references?.ToList(), serializedAdditionalRawData: null);
+            return new CheckDependenciesResult(count, id, references?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServerlessRuntimeDependency"/>. </summary>

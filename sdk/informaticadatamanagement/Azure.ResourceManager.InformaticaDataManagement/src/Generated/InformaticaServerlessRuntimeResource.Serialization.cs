@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
-    public partial class InformaticaServerlessRuntimeResource : IJsonModel<InformaticaServerlessRuntimeResourceData>
+    public partial class InformaticaServerlessRuntimeResource : IJsonModel<InformaticaServerlessRuntimeData>
     {
-        void IJsonModel<InformaticaServerlessRuntimeResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeResourceData>)Data).Write(writer, options);
+        void IJsonModel<InformaticaServerlessRuntimeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeData>)Data).Write(writer, options);
 
-        InformaticaServerlessRuntimeResourceData IJsonModel<InformaticaServerlessRuntimeResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeResourceData>)Data).Create(ref reader, options);
+        InformaticaServerlessRuntimeData IJsonModel<InformaticaServerlessRuntimeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InformaticaServerlessRuntimeResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<InformaticaServerlessRuntimeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        InformaticaServerlessRuntimeResourceData IPersistableModel<InformaticaServerlessRuntimeResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaServerlessRuntimeResourceData>(data, options);
+        InformaticaServerlessRuntimeData IPersistableModel<InformaticaServerlessRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaServerlessRuntimeData>(data, options);
 
-        string IPersistableModel<InformaticaServerlessRuntimeResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaServerlessRuntimeResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<InformaticaServerlessRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaServerlessRuntimeData>)Data).GetFormatFromOptions(options);
     }
 }

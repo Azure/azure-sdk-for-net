@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> Initializes a new instance of <see cref="ServerlessRuntimeConfigProperties"/>. </summary>
         public ServerlessRuntimeConfigProperties()
         {
-            CdiConfigProps = new ChangeTrackingList<CdiConfigProps>();
-            CdieConfigProps = new ChangeTrackingList<CdiConfigProps>();
+            CdiConfigProps = new ChangeTrackingList<CdiConfigProperties>();
+            CdieConfigProps = new ChangeTrackingList<CdiConfigProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerlessRuntimeConfigProperties"/>. </summary>
         /// <param name="cdiConfigProps"> The List of Informatica Serverless Runtime CDI Config Properties. </param>
         /// <param name="cdieConfigProps"> The List of Informatica Serverless Runtime CDIE Config Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessRuntimeConfigProperties(IList<CdiConfigProps> cdiConfigProps, IList<CdiConfigProps> cdieConfigProps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerlessRuntimeConfigProperties(IList<CdiConfigProperties> cdiConfigProps, IList<CdiConfigProperties> cdieConfigProps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CdiConfigProps = cdiConfigProps;
             CdieConfigProps = cdieConfigProps;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <summary> The List of Informatica Serverless Runtime CDI Config Properties. </summary>
-        public IList<CdiConfigProps> CdiConfigProps { get; }
+        public IList<CdiConfigProperties> CdiConfigProps { get; }
         /// <summary> The List of Informatica Serverless Runtime CDIE Config Properties. </summary>
-        public IList<CdiConfigProps> CdieConfigProps { get; }
+        public IList<CdiConfigProperties> CdieConfigProps { get; }
     }
 }

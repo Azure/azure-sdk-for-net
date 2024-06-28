@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            PlatformType? platform = default;
-            IReadOnlyList<ApplicationTypeMetadata> applicationTypes = default;
+            InformaticaPlatformType? platform = default;
+            IReadOnlyList<InformaticaApplicationTypeMetadata> applicationTypes = default;
             IReadOnlyList<ComputeUnitsMetadata> computeUnits = default;
             string executionTimeout = default;
-            IReadOnlyList<RegionsMetadata> regions = default;
+            IReadOnlyList<InformaticaRegionsMetadata> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    platform = new PlatformType(property.Value.GetString());
+                    platform = new InformaticaPlatformType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("applicationTypes"u8))
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    List<ApplicationTypeMetadata> array = new List<ApplicationTypeMetadata>();
+                    List<InformaticaApplicationTypeMetadata> array = new List<InformaticaApplicationTypeMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationTypeMetadata.DeserializeApplicationTypeMetadata(item, options));
+                        array.Add(InformaticaApplicationTypeMetadata.DeserializeInformaticaApplicationTypeMetadata(item, options));
                     }
                     applicationTypes = array;
                     continue;
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    List<RegionsMetadata> array = new List<RegionsMetadata>();
+                    List<InformaticaRegionsMetadata> array = new List<InformaticaRegionsMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionsMetadata.DeserializeRegionsMetadata(item, options));
+                        array.Add(InformaticaRegionsMetadata.DeserializeInformaticaRegionsMetadata(item, options));
                     }
                     regions = array;
                     continue;
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ServerlessConfigProperties(
                 platform,
-                applicationTypes ?? new ChangeTrackingList<ApplicationTypeMetadata>(),
+                applicationTypes ?? new ChangeTrackingList<InformaticaApplicationTypeMetadata>(),
                 computeUnits ?? new ChangeTrackingList<ComputeUnitsMetadata>(),
                 executionTimeout,
-                regions ?? new ChangeTrackingList<RegionsMetadata>(),
+                regions ?? new ChangeTrackingList<InformaticaRegionsMetadata>(),
                 serializedAdditionalRawData);
         }
 

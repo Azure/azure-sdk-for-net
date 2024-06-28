@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableInformaticaDataManagementSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _informaticaOrganizationResourceOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _informaticaOrganizationResourceOrganizationsRestClient;
+        private ClientDiagnostics _informaticaOrganizationOrganizationsClientDiagnostics;
+        private OrganizationsRestOperations _informaticaOrganizationOrganizationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableInformaticaDataManagementSubscriptionResource"/> class for mocking. </summary>
         protected MockableInformaticaDataManagementSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         {
         }
 
-        private ClientDiagnostics InformaticaOrganizationResourceOrganizationsClientDiagnostics => _informaticaOrganizationResourceOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", InformaticaOrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations InformaticaOrganizationResourceOrganizationsRestClient => _informaticaOrganizationResourceOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(InformaticaOrganizationResource.ResourceType));
+        private ClientDiagnostics InformaticaOrganizationOrganizationsClientDiagnostics => _informaticaOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.InformaticaDataManagement", InformaticaOrganizationResource.ResourceType.Namespace, Diagnostics);
+        private OrganizationsRestOperations InformaticaOrganizationOrganizationsRestClient => _informaticaOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(InformaticaOrganizationResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_ListBySubscription</description>
+        /// <description>InformaticaOrganizationResource_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InformaticaOrganizationResource> GetInformaticaOrganizationResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<InformaticaOrganizationResource> GetInformaticaOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InformaticaOrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformaticaOrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InformaticaOrganizationResource(Client, InformaticaOrganizationResourceData.DeserializeInformaticaOrganizationResourceData(e)), InformaticaOrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => InformaticaOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformaticaOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InformaticaOrganizationResource(Client, InformaticaOrganizationData.DeserializeInformaticaOrganizationData(e)), InformaticaOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_ListBySubscription</description>
+        /// <description>InformaticaOrganizationResource_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InformaticaOrganizationResource> GetInformaticaOrganizationResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<InformaticaOrganizationResource> GetInformaticaOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InformaticaOrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformaticaOrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InformaticaOrganizationResource(Client, InformaticaOrganizationResourceData.DeserializeInformaticaOrganizationResourceData(e)), InformaticaOrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => InformaticaOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InformaticaOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InformaticaOrganizationResource(Client, InformaticaOrganizationData.DeserializeInformaticaOrganizationData(e)), InformaticaOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations", "value", "nextLink", cancellationToken);
         }
     }
 }

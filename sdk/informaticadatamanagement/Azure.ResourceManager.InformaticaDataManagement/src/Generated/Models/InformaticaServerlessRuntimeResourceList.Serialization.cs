@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<InfaRuntimeResourceFetchMetaData> informaticaRuntimeResources = default;
+            IReadOnlyList<InformaticaRuntimeResourceFetchMetadata> informaticaRuntimeResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("informaticaRuntimeResources"u8))
                 {
-                    List<InfaRuntimeResourceFetchMetaData> array = new List<InfaRuntimeResourceFetchMetaData>();
+                    List<InformaticaRuntimeResourceFetchMetadata> array = new List<InformaticaRuntimeResourceFetchMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InfaRuntimeResourceFetchMetaData.DeserializeInfaRuntimeResourceFetchMetaData(item, options));
+                        array.Add(InformaticaRuntimeResourceFetchMetadata.DeserializeInformaticaRuntimeResourceFetchMetadata(item, options));
                     }
                     informaticaRuntimeResources = array;
                     continue;

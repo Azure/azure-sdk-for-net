@@ -26,11 +26,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkInterfaceConfiguration))
-            {
-                writer.WritePropertyName("networkInterfaceConfiguration"u8);
-                writer.WriteObjectValue(NetworkInterfaceConfiguration, options);
-            }
+            writer.WritePropertyName("networkInterfaceConfiguration"u8);
+            writer.WriteObjectValue(NetworkInterfaceConfiguration, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -69,18 +66,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            NetworkInterfaceConfigurationUpdate networkInterfaceConfiguration = default;
+            InformaticaNetworkInterfaceConfigurationUpdate networkInterfaceConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaceConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    networkInterfaceConfiguration = NetworkInterfaceConfigurationUpdate.DeserializeNetworkInterfaceConfigurationUpdate(property.Value, options);
+                    networkInterfaceConfiguration = InformaticaNetworkInterfaceConfigurationUpdate.DeserializeInformaticaNetworkInterfaceConfigurationUpdate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

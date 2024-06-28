@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            NetworkInterfaceConfiguration networkInterfaceConfiguration = default;
+            InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaceConfiguration"u8))
                 {
-                    networkInterfaceConfiguration = NetworkInterfaceConfiguration.DeserializeNetworkInterfaceConfiguration(property.Value, options);
+                    networkInterfaceConfiguration = InformaticaNetworkInterfaceConfiguration.DeserializeInformaticaNetworkInterfaceConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

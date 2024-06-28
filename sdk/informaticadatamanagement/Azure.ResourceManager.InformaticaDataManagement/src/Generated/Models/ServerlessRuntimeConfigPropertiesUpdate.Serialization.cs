@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            IList<CdiConfigProps> cdiConfigProps = default;
-            IList<CdiConfigProps> cdieConfigProps = default;
+            IList<CdiConfigProperties> cdiConfigProps = default;
+            IList<CdiConfigProperties> cdieConfigProps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    List<CdiConfigProps> array = new List<CdiConfigProps>();
+                    List<CdiConfigProperties> array = new List<CdiConfigProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CdiConfigProps.DeserializeCdiConfigProps(item, options));
+                        array.Add(CdiConfigProperties.DeserializeCdiConfigProperties(item, options));
                     }
                     cdiConfigProps = array;
                     continue;
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    List<CdiConfigProps> array = new List<CdiConfigProps>();
+                    List<CdiConfigProperties> array = new List<CdiConfigProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CdiConfigProps.DeserializeCdiConfigProps(item, options));
+                        array.Add(CdiConfigProperties.DeserializeCdiConfigProperties(item, options));
                     }
                     cdieConfigProps = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServerlessRuntimeConfigPropertiesUpdate(cdiConfigProps ?? new ChangeTrackingList<CdiConfigProps>(), cdieConfigProps ?? new ChangeTrackingList<CdiConfigProps>(), serializedAdditionalRawData);
+            return new ServerlessRuntimeConfigPropertiesUpdate(cdiConfigProps ?? new ChangeTrackingList<CdiConfigProperties>(), cdieConfigProps ?? new ChangeTrackingList<CdiConfigProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerlessRuntimeConfigPropertiesUpdate>.Write(ModelReaderWriterOptions options)

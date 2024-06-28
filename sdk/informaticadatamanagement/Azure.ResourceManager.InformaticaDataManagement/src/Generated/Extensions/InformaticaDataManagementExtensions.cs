@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// Gets a collection of InformaticaOrganizationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetInformaticaOrganizationResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetInformaticaOrganizations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of InformaticaOrganizationResources and their operations over a InformaticaOrganizationResource. </returns>
-        public static InformaticaOrganizationResourceCollection GetInformaticaOrganizationResources(this ResourceGroupResource resourceGroupResource)
+        public static InformaticaOrganizationCollection GetInformaticaOrganizations(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganizationResources();
+            return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganizations();
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetInformaticaOrganizationResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetInformaticaOrganizationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<InformaticaOrganizationResource>> GetInformaticaOrganizationResourceAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<InformaticaOrganizationResource>> GetInformaticaOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganizationResourceAsync(organizationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetInformaticaOrganizationResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementResourceGroupResource.GetInformaticaOrganization(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<InformaticaOrganizationResource> GetInformaticaOrganizationResource(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        public static Response<InformaticaOrganizationResource> GetInformaticaOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganizationResource(organizationName, cancellationToken);
+            return GetMockableInformaticaDataManagementResourceGroupResource(resourceGroupResource).GetInformaticaOrganization(organizationName, cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_ListBySubscription</description>
+        /// <description>InformaticaOrganizationResource_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -185,18 +185,18 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<InformaticaOrganizationResource> GetInformaticaOrganizationResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<InformaticaOrganizationResource> GetInformaticaOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableInformaticaDataManagementSubscriptionResource(subscriptionResource).GetInformaticaOrganizationResourcesAsync(cancellationToken);
+            return GetMockableInformaticaDataManagementSubscriptionResource(subscriptionResource).GetInformaticaOrganizationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organizations_ListBySubscription</description>
+        /// <description>InformaticaOrganizationResource_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -221,18 +221,18 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<InformaticaOrganizationResource> GetInformaticaOrganizationResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<InformaticaOrganizationResource> GetInformaticaOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableInformaticaDataManagementSubscriptionResource(subscriptionResource).GetInformaticaOrganizationResources(cancellationToken);
+            return GetMockableInformaticaDataManagementSubscriptionResource(subscriptionResource).GetInformaticaOrganizations(cancellationToken);
         }
     }
 }

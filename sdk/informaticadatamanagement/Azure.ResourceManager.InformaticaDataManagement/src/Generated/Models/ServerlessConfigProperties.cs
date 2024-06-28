@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <summary> Initializes a new instance of <see cref="ServerlessConfigProperties"/>. </summary>
         internal ServerlessConfigProperties()
         {
-            ApplicationTypes = new ChangeTrackingList<ApplicationTypeMetadata>();
+            ApplicationTypes = new ChangeTrackingList<InformaticaApplicationTypeMetadata>();
             ComputeUnits = new ChangeTrackingList<ComputeUnitsMetadata>();
-            Regions = new ChangeTrackingList<RegionsMetadata>();
+            Regions = new ChangeTrackingList<InformaticaRegionsMetadata>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerlessConfigProperties"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="executionTimeout"> Serverless Runtime execution timeout. </param>
         /// <param name="regions"> List of supported serverless informatica regions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessConfigProperties(PlatformType? platform, IReadOnlyList<ApplicationTypeMetadata> applicationTypes, IReadOnlyList<ComputeUnitsMetadata> computeUnits, string executionTimeout, IReadOnlyList<RegionsMetadata> regions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerlessConfigProperties(InformaticaPlatformType? platform, IReadOnlyList<InformaticaApplicationTypeMetadata> applicationTypes, IReadOnlyList<ComputeUnitsMetadata> computeUnits, string executionTimeout, IReadOnlyList<InformaticaRegionsMetadata> regions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Platform = platform;
             ApplicationTypes = applicationTypes;
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <summary> Platform types. </summary>
-        public PlatformType? Platform { get; }
+        public InformaticaPlatformType? Platform { get; }
         /// <summary> List of application types supported by informatica. </summary>
-        public IReadOnlyList<ApplicationTypeMetadata> ApplicationTypes { get; }
+        public IReadOnlyList<InformaticaApplicationTypeMetadata> ApplicationTypes { get; }
         /// <summary> The list of compute units with possible array of values. </summary>
         public IReadOnlyList<ComputeUnitsMetadata> ComputeUnits { get; }
         /// <summary> Serverless Runtime execution timeout. </summary>
         public string ExecutionTimeout { get; }
         /// <summary> List of supported serverless informatica regions. </summary>
-        public IReadOnlyList<RegionsMetadata> Regions { get; }
+        public IReadOnlyList<InformaticaRegionsMetadata> Regions { get; }
     }
 }

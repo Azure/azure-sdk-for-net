@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="serverlessConfigProperties"> serverless config properties. </param>
         /// <param name="serverlessRuntimeConfigProperties"> serverless runtime config properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessMetadataResponse(RuntimeType? runtimeType, ServerlessConfigProperties serverlessConfigProperties, ServerlessRuntimeConfigProperties serverlessRuntimeConfigProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerlessMetadataResponse(InformaticaRuntimeType? runtimeType, ServerlessConfigProperties serverlessConfigProperties, ServerlessRuntimeConfigProperties serverlessRuntimeConfigProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuntimeType = runtimeType;
             ServerlessConfigProperties = serverlessConfigProperties;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <summary> type of the runtime environment. </summary>
-        public RuntimeType? RuntimeType { get; }
+        public InformaticaRuntimeType? RuntimeType { get; }
         /// <summary> serverless config properties. </summary>
         public ServerlessConfigProperties ServerlessConfigProperties { get; }
         /// <summary> serverless runtime config properties. </summary>

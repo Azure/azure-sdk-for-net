@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<InformaticaOrganizationResourceData> value = default;
+            IReadOnlyList<InformaticaOrganizationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<InformaticaOrganizationResourceData> array = new List<InformaticaOrganizationResourceData>();
+                    List<InformaticaOrganizationData> array = new List<InformaticaOrganizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InformaticaOrganizationResourceData.DeserializeInformaticaOrganizationResourceData(item, options));
+                        array.Add(InformaticaOrganizationData.DeserializeInformaticaOrganizationData(item, options));
                     }
                     value = array;
                     continue;

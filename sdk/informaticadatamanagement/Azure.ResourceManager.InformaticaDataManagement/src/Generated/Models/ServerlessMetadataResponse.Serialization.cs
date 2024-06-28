@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            RuntimeType? type = default;
+            InformaticaRuntimeType? type = default;
             ServerlessConfigProperties serverlessConfigProperties = default;
             ServerlessRuntimeConfigProperties serverlessRuntimeConfigProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                     {
                         continue;
                     }
-                    type = new RuntimeType(property.Value.GetString());
+                    type = new InformaticaRuntimeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serverlessConfigProperties"u8))

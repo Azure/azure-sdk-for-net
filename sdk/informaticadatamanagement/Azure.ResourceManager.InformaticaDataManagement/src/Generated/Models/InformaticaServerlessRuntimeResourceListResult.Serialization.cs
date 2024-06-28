@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<InformaticaServerlessRuntimeResourceData> value = default;
+            IReadOnlyList<InformaticaServerlessRuntimeData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<InformaticaServerlessRuntimeResourceData> array = new List<InformaticaServerlessRuntimeResourceData>();
+                    List<InformaticaServerlessRuntimeData> array = new List<InformaticaServerlessRuntimeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InformaticaServerlessRuntimeResourceData.DeserializeInformaticaServerlessRuntimeResourceData(item, options));
+                        array.Add(InformaticaServerlessRuntimeData.DeserializeInformaticaServerlessRuntimeData(item, options));
                     }
                     value = array;
                     continue;

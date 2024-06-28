@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
-    public partial class InformaticaOrganizationResource : IJsonModel<InformaticaOrganizationResourceData>
+    public partial class InformaticaOrganizationResource : IJsonModel<InformaticaOrganizationData>
     {
-        void IJsonModel<InformaticaOrganizationResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationResourceData>)Data).Write(writer, options);
+        void IJsonModel<InformaticaOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationData>)Data).Write(writer, options);
 
-        InformaticaOrganizationResourceData IJsonModel<InformaticaOrganizationResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationResourceData>)Data).Create(ref reader, options);
+        InformaticaOrganizationData IJsonModel<InformaticaOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InformaticaOrganizationResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<InformaticaOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        InformaticaOrganizationResourceData IPersistableModel<InformaticaOrganizationResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaOrganizationResourceData>(data, options);
+        InformaticaOrganizationData IPersistableModel<InformaticaOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaOrganizationData>(data, options);
 
-        string IPersistableModel<InformaticaOrganizationResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaOrganizationResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<InformaticaOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaOrganizationData>)Data).GetFormatFromOptions(options);
     }
 }
