@@ -12,14 +12,14 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package (Since now we are in private preview status, the bellow method doesn't work please send email to Askhilo@microsoft.com to install the nuget from our private nuget feed)
 
 Install the Azure HDInsight On AKS management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.HDInsight.Containers
+dotnet add package Azure.ResourceManager.HDInsight.Containers --prerelease
 ```
 
 ### Prerequisites
