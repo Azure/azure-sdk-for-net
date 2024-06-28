@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -389,24 +390,117 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     private static void DumpRequest(PipelineRequest request)
     {
         Console.WriteLine($"--- New request ---");
-        string headers = request.Headers
-            .Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}")
-            .Aggregate(string.Empty, (current, next) => string.Format("{0},{1}", current, next));
-        Console.WriteLine($"Headers: {headers}");
-        Console.WriteLine($"{request.Method} URI: {request?.Uri}");
-        if (request!.Content is not null)
+        Console.WriteLine($"{request.Method} {request?.Uri}");
+        string headers = string.Join("\n  ",
+            request!.Headers
+                .Select(kvp => $"{kvp.Key}: {(kvp.Key.ToLowerInvariant().Contains("auth") ? "***" : kvp.Value)}"));
+        Console.Write("  ");
+        Console.WriteLine(headers);
+
+        if (request?.Content is not null)
         {
             using MemoryStream stream = new();
             request.Content.WriteTo(stream, default);
             stream.Position = 0;
-            using StreamReader reader = new(stream);
-            Console.WriteLine(reader.ReadToEnd());
+
+            string? contentType = request.Headers.GetFirstValueOrDefault("Content-Type");
+            if (IsProbableTextContent(contentType))
+            {
+                DumpText(contentType, stream);
+            }
+            else
+            {
+                DumpHex(stream);
+            }
         }
     }
 
     private static void DumpResponse(PipelineResponse response)
     {
-        Console.WriteLine($"--- Response --- <dump not yet implemented>");
+        Console.WriteLine($"--- Response ---");
+        Console.WriteLine($"{response.Status} - {response.ReasonPhrase}");
+        string headers = string.Join(
+            "\n  ",
+            response.Headers
+                .Where(kvp => !kvp.Key.ToLowerInvariant().Contains("client-"))
+                .Select(kvp => $"{kvp.Key}: {kvp.Value}"));
+        Console.Write("  ");
+        Console.WriteLine(headers);
+
+        response.BufferContent();
+
+        if (response!.Content is not null)
+        {
+            using Stream stream = response.Content.ToStream();
+            string? contentType = response.Headers.GetFirstValueOrDefault("Content-Type");
+            if (IsProbableTextContent(contentType))
+            {
+                DumpText(contentType, stream);
+            }
+            else
+            {
+                DumpHex(stream);
+            }
+        }
+
+        Console.WriteLine();
+    }
+
+    private static bool IsProbableTextContent(string? contentType)
+    {
+        contentType = contentType?.ToLowerInvariant() ?? string.Empty;
+        return contentType.StartsWith("application/json")
+            || contentType.StartsWith("text/");
+    }
+
+    private static void DumpText(string? contentType, Stream stream)
+    {
+        if (contentType?.ToLowerInvariant().StartsWith("application/json") == true)
+        {
+            var json = JsonDocument.Parse(stream);
+
+            stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new(stream, new() { Indented = true }))
+            {
+                json.WriteTo(writer);
+            }
+
+            stream.Seek(0, SeekOrigin.Begin);
+        }
+
+        using StreamReader reader = new(stream);
+        Console.WriteLine(reader.ReadToEnd());
+    }
+
+    private static void DumpHex(Stream stream, int maxLines = 256)
+    {
+        byte[] buffer = new byte[32];
+        StringBuilder hex = new(3 * buffer.Length);
+        StringBuilder chars = new(buffer.Length);
+
+        int read = 0;
+        for (int lines = 0;  (read = stream.FillBuffer(buffer)) > 0 && lines < maxLines; lines++)
+        {
+            for (int i = 0; i < read; i++)
+            {
+                hex.AppendFormat("{0:X2} ", buffer[i]);
+
+                char c = Convert.ToChar(buffer[i]);
+                chars.Append(char.IsControl(c) ? ' ' : c);
+            }
+
+            Console.Write(hex.PadRight(buffer.Length * 3));
+            Console.Write("| ");
+            Console.WriteLine(chars);
+
+            hex.Clear();
+            chars.Clear();
+        }
+
+        if (read != 0)
+        {
+            Console.WriteLine(" ... truncated");
+        }
     }
 
     protected void ValidateById<T>(string id)
