@@ -1428,6 +1428,14 @@
       ]
     },
     {
+      "filename": "**/sdk/healthdataaiservices/**/*",
+      "words": [
+        "Deidentification",
+        "Deidentify",
+        "Deid"
+      ]
+    },
+    {
       "filename": "**/sdk/confluent/**/*.cs",
       "words": [
         "Byok"

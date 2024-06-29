@@ -1,0 +1,35 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/healthdataaiservices
+    - sdk/healthdataaiservices/ci.yml
+    - sdk/healthdataaiservices/Azure.Health.AI.Deidentification
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/healthdataaiservices
+    - sdk/healthdataaiservices/ci.yml
+    - sdk/healthdataaiservices/Azure.Health.AI.Deidentification
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: healthdataaiservices
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Health.AI.Deidentification
+      safeName: AzureHealthAIDeidentification
