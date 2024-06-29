@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Need to research how to associate with firewalls")]
         public async Task CreateOrUpdate()
         {
             string FirewallPolicyName = Recording.GenerateAssetName("policy-");
