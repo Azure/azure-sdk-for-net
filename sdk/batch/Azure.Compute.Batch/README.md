@@ -41,7 +41,7 @@ Azure Batch provides integration with Microsoft Entra ID for identity-based auth
 ```C# Snippet:Batch_Readme_EntraIDCredential
 var credential = new DefaultAzureCredential();
 BatchClient _batchClient = new BatchClient(
-new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
+new Uri("https://<your account>.eastus.batch.azure.com"), credential);
 ```
 
 #### Authenticate using Shared Key
