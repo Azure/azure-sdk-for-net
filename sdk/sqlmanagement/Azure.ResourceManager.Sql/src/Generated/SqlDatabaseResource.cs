@@ -48,8 +48,6 @@ namespace Azure.ResourceManager.Sql
         private readonly RestorePointsRestOperations _sqlServerDatabaseRestorePointRestorePointsRestClient;
         private readonly ClientDiagnostics _databaseExtensionsClientDiagnostics;
         private readonly DatabaseExtensionsRestOperations _databaseExtensionsRestClient;
-        private readonly ClientDiagnostics _databaseOperationsClientDiagnostics;
-        private readonly DatabaseRestOperations _databaseOperationsRestClient;
         private readonly ClientDiagnostics _databaseUsagesClientDiagnostics;
         private readonly DatabaseUsagesRestOperations _databaseUsagesRestClient;
         private readonly ClientDiagnostics _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics;
@@ -58,6 +56,8 @@ namespace Azure.ResourceManager.Sql
         private readonly SynapseLinkWorkspacesRestOperations _synapseLinkWorkspacesRestClient;
         private readonly ClientDiagnostics _databaseEncryptionProtectorsClientDiagnostics;
         private readonly DatabaseEncryptionProtectorsRestOperations _databaseEncryptionProtectorsRestClient;
+        private readonly ClientDiagnostics _databaseOperationsClientDiagnostics;
+        private readonly DatabaseRestOperations _databaseOperationsRestClient;
         private readonly SqlDatabaseData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -97,8 +97,6 @@ namespace Azure.ResourceManager.Sql
             _sqlServerDatabaseRestorePointRestorePointsRestClient = new RestorePointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseRestorePointRestorePointsApiVersion);
             _databaseExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _databaseExtensionsRestClient = new DatabaseExtensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _databaseOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _databaseOperationsRestClient = new DatabaseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _databaseUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _databaseUsagesRestClient = new DatabaseUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
@@ -108,6 +106,8 @@ namespace Azure.ResourceManager.Sql
             _synapseLinkWorkspacesRestClient = new SynapseLinkWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _databaseEncryptionProtectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _databaseEncryptionProtectorsRestClient = new DatabaseEncryptionProtectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _databaseOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _databaseOperationsRestClient = new DatabaseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -1092,75 +1092,6 @@ namespace Azure.ResourceManager.Sql
             return GetDatabaseAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlServerDatabaseReplicationLinkResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of SqlServerDatabaseReplicationLinkResources and their operations over a SqlServerDatabaseReplicationLinkResource. </returns>
-        public virtual SqlServerDatabaseReplicationLinkCollection GetSqlServerDatabaseReplicationLinks()
-        {
-            return GetCachedClient(client => new SqlServerDatabaseReplicationLinkCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a replication link.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkId"> The name of the replication link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerDatabaseReplicationLinkResource>> GetSqlServerDatabaseReplicationLinkAsync(string linkId, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlServerDatabaseReplicationLinks().GetAsync(linkId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a replication link.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkId"> The name of the replication link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SqlServerDatabaseReplicationLinkResource> GetSqlServerDatabaseReplicationLink(string linkId, CancellationToken cancellationToken = default)
-        {
-            return GetSqlServerDatabaseReplicationLinks().Get(linkId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of LogicalDatabaseTransparentDataEncryptionResources in the SqlDatabase. </summary>
         /// <returns> An object representing collection of LogicalDatabaseTransparentDataEncryptionResources and their operations over a LogicalDatabaseTransparentDataEncryptionResource. </returns>
         public virtual LogicalDatabaseTransparentDataEncryptionCollection GetLogicalDatabaseTransparentDataEncryptions()
@@ -1354,6 +1285,75 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<LongTermRetentionPolicyResource> GetLongTermRetentionPolicy(LongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             return GetLongTermRetentionPolicies().Get(policyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlServerDatabaseReplicationLinkResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlServerDatabaseReplicationLinkResources and their operations over a SqlServerDatabaseReplicationLinkResource. </returns>
+        public virtual SqlServerDatabaseReplicationLinkCollection GetSqlServerDatabaseReplicationLinks()
+        {
+            return GetCachedClient(client => new SqlServerDatabaseReplicationLinkCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a replication link.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkId"> The name of the replication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlServerDatabaseReplicationLinkResource>> GetSqlServerDatabaseReplicationLinkAsync(string linkId, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlServerDatabaseReplicationLinks().GetAsync(linkId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a replication link.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkId"> The name of the replication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerDatabaseReplicationLinkResource> GetSqlServerDatabaseReplicationLink(string linkId, CancellationToken cancellationToken = default)
+        {
+            return GetSqlServerDatabaseReplicationLinks().Get(linkId, cancellationToken);
         }
 
         /// <summary>
@@ -2026,128 +2026,6 @@ namespace Azure.ResourceManager.Sql
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseExtensionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseExtensionsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ImportExportExtensionsOperationResult.DeserializeImportExportExtensionsOperationResult(e), _databaseExtensionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseExtensions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Cancels the asynchronous operation on the database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations/{operationId}/cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseOperations_Cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelDatabaseOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.CancelDatabaseOperation");
-            scope.Start();
-            try
-            {
-                var response = await _databaseOperationsRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancels the asynchronous operation on the database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations/{operationId}/cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseOperations_Cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> The operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CancelDatabaseOperation(Guid operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.CancelDatabaseOperation");
-            scope.Start();
-            try
-            {
-                var response = _databaseOperationsRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of operations performed on the database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseOperations_ListByDatabase</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseOperationData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseOperationData> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseOperationsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatabaseOperationData.DeserializeDatabaseOperationData(e), _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of operations performed on the database.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseOperations_ListByDatabase</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-02-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseOperationData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseOperationData> GetDatabaseOperations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseOperationsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatabaseOperationData.DeserializeDatabaseOperationData(e), _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3308,6 +3186,128 @@ namespace Azure.ResourceManager.Sql
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of operations performed on the database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseOperations_ListByDatabase</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DatabaseOperationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseOperationData> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseOperationsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatabaseOperationData.DeserializeDatabaseOperationData(e), _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of operations performed on the database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseOperations_ListByDatabase</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DatabaseOperationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseOperationData> GetDatabaseOperations(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseOperationsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatabaseOperationData.DeserializeDatabaseOperationData(e), _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Cancels the asynchronous operation on the database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations/{operationId}/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseOperations_Cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The operation identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CancelDatabaseOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.CancelDatabaseOperation");
+            scope.Start();
+            try
+            {
+                var response = await _databaseOperationsRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels the asynchronous operation on the database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations/{operationId}/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseOperations_Cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The operation identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response CancelDatabaseOperation(Guid operationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.CancelDatabaseOperation");
+            scope.Start();
+            try
+            {
+                var response = _databaseOperationsRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

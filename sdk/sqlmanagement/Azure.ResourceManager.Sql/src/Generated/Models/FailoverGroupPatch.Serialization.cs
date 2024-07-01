@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SecondaryType))
+            {
+                writer.WritePropertyName("secondaryType"u8);
+                writer.WriteStringValue(SecondaryType.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,6 +123,7 @@ namespace Azure.ResourceManager.Sql.Models
             FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
             IList<ResourceIdentifier> databases = default;
             IList<PartnerServerInfo> partnerServers = default;
+            FailoverGroupDatabasesSecondaryType? secondaryType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,6 +204,15 @@ namespace Azure.ResourceManager.Sql.Models
                             partnerServers = array;
                             continue;
                         }
+                        if (property0.NameEquals("secondaryType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            secondaryType = new FailoverGroupDatabasesSecondaryType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -213,6 +228,7 @@ namespace Azure.ResourceManager.Sql.Models
                 readOnlyEndpoint,
                 databases ?? new ChangeTrackingList<ResourceIdentifier>(),
                 partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
+                secondaryType,
                 serializedAdditionalRawData);
         }
 
