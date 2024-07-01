@@ -63,7 +63,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Update labels on assets matching the provided filter. </summary>
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
-        /// <param name="assetUpdatePayload"> A request body used to update an asset. </param>
+        /// <param name="assetUpdatePayload"> The <see cref="AssetUpdatePayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="assetUpdatePayload"/> is null. </exception>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssetsAsync(string,AssetUpdatePayload,CancellationToken)']/*" />
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Update labels on assets matching the provided filter. </summary>
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
-        /// <param name="assetUpdatePayload"> A request body used to update an asset. </param>
+        /// <param name="assetUpdatePayload"> The <see cref="AssetUpdatePayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="assetUpdatePayload"/> is null. </exception>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssets(string,AssetUpdatePayload,CancellationToken)']/*" />
@@ -698,7 +698,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Validate a discovery group with a given groupName. </summary>
-        /// <param name="discoveryGroupPayload"> A request body used to create a discovery group. </param>
+        /// <param name="discoveryGroupPayload"> The <see cref="DiscoveryGroupPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="discoveryGroupPayload"/> is null. </exception>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroupAsync(DiscoveryGroupPayload,CancellationToken)']/*" />
@@ -713,7 +713,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Validate a discovery group with a given groupName. </summary>
-        /// <param name="discoveryGroupPayload"> A request body used to create a discovery group. </param>
+        /// <param name="discoveryGroupPayload"> The <see cref="DiscoveryGroupPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="discoveryGroupPayload"/> is null. </exception>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroup(DiscoveryGroupPayload,CancellationToken)']/*" />
@@ -917,7 +917,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Create a discovery group with a given groupName. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
-        /// <param name="discoveryGroupPayload"> A request body used to create a discovery group. </param>
+        /// <param name="discoveryGroupPayload"> The <see cref="DiscoveryGroupPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="discoveryGroupPayload"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -935,7 +935,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Create a discovery group with a given groupName. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
-        /// <param name="discoveryGroupPayload"> A request body used to create a discovery group. </param>
+        /// <param name="discoveryGroupPayload"> The <see cref="DiscoveryGroupPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="discoveryGroupPayload"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1308,7 +1308,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Get the most recent snapshot of asset summary values for the snapshot request. </summary>
-        /// <param name="reportAssetSnapshotPayload"> A request body used to retrieve an asset report snapshot. </param>
+        /// <param name="reportAssetSnapshotPayload"> The <see cref="ReportAssetSnapshotPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportAssetSnapshotPayload"/> is null. </exception>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshotAsync(ReportAssetSnapshotPayload,CancellationToken)']/*" />
@@ -1323,7 +1323,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Get the most recent snapshot of asset summary values for the snapshot request. </summary>
-        /// <param name="reportAssetSnapshotPayload"> A request body used to retrieve an asset report snapshot. </param>
+        /// <param name="reportAssetSnapshotPayload"> The <see cref="ReportAssetSnapshotPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportAssetSnapshotPayload"/> is null. </exception>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshot(ReportAssetSnapshotPayload,CancellationToken)']/*" />
@@ -1416,7 +1416,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Get asset summary details for the summary request. </summary>
-        /// <param name="reportAssetSummaryPayload"> A request body used to retrieve summary asset information. One and only one collection of summary identifiers must be provided: filters, metrics, or metricCategories. </param>
+        /// <param name="reportAssetSummaryPayload"> The <see cref="ReportAssetSummaryPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportAssetSummaryPayload"/> is null. </exception>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummaryAsync(ReportAssetSummaryPayload,CancellationToken)']/*" />
@@ -1431,7 +1431,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Get asset summary details for the summary request. </summary>
-        /// <param name="reportAssetSummaryPayload"> A request body used to retrieve summary asset information. One and only one collection of summary identifiers must be provided: filters, metrics, or metricCategories. </param>
+        /// <param name="reportAssetSummaryPayload"> The <see cref="ReportAssetSummaryPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportAssetSummaryPayload"/> is null. </exception>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummary(ReportAssetSummaryPayload,CancellationToken)']/*" />
@@ -1635,7 +1635,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Create or replace a saved filter with a given filterName. </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
-        /// <param name="savedFilterPayload"> A request body used to create a saved filter. </param>
+        /// <param name="savedFilterPayload"> The <see cref="SavedFilterPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="savedFilterPayload"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1653,7 +1653,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Create or replace a saved filter with a given filterName. </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
-        /// <param name="savedFilterPayload"> A request body used to create a saved filter. </param>
+        /// <param name="savedFilterPayload"> The <see cref="SavedFilterPayload"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="savedFilterPayload"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
