@@ -8,5 +8,9 @@ namespace Azure.Data.SchemaRegistry.Models
     [CodeGenModel("SchemaId")]
     internal readonly partial struct SchemaId
     {
+        /// <summary> Initializes a new instance of SchemaId. </summary>
+        public SchemaId()
+        {
+        }
     }
 }
