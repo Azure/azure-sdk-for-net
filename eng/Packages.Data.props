@@ -177,6 +177,10 @@
     <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
+    <PackageReference Update="OpenAI" Version="2.0.0-beta.7" />
+  </ItemGroup>
+
   <!--
     Dependency versions for Track 2, Microsoft.* libraries.
     These are dependencies for Track 2 integration packages
