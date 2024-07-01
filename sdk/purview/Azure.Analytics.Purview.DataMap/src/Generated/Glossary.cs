@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Purview Data Map Service is a fully managed cloud service whose users can discover the data sources they need and understand the data sources they find. At the same time, Data Map helps organizations get more value from their existing investments. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         internal Glossary(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
@@ -206,7 +206,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary. </summary>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="atlasGlossary"> The <see cref="AtlasGlossary"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossary"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateAsync(AtlasGlossary,CancellationToken)']/*" />
@@ -221,7 +221,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary. </summary>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="atlasGlossary"> The <see cref="AtlasGlossary"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossary"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Create(AtlasGlossary,CancellationToken)']/*" />
@@ -438,7 +438,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary category. </summary>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="atlasGlossaryCategory"> The <see cref="AtlasGlossaryCategory"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryCategory"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoryAsync(AtlasGlossaryCategory,CancellationToken)']/*" />
@@ -453,7 +453,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary category. </summary>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="atlasGlossaryCategory"> The <see cref="AtlasGlossaryCategory"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryCategory"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategory(AtlasGlossaryCategory,CancellationToken)']/*" />
@@ -657,7 +657,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="atlasGlossaryCategory"> The <see cref="AtlasGlossaryCategory"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="atlasGlossaryCategory"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -675,7 +675,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="atlasGlossaryCategory"> The <see cref="AtlasGlossaryCategory"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="atlasGlossaryCategory"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1290,7 +1290,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary term. </summary>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="atlasGlossaryTerm"> The <see cref="AtlasGlossaryTerm"/> to use. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryTerm"/> is null. </exception>
@@ -1306,7 +1306,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary term. </summary>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="atlasGlossaryTerm"> The <see cref="AtlasGlossaryTerm"/> to use. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryTerm"/> is null. </exception>
@@ -1513,7 +1513,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="atlasGlossaryTerm"> The <see cref="AtlasGlossaryTerm"/> to use. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="atlasGlossaryTerm"/> is null. </exception>
@@ -1532,7 +1532,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="atlasGlossaryTerm"> The <see cref="AtlasGlossaryTerm"/> to use. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="atlasGlossaryTerm"/> is null. </exception>
@@ -2665,7 +2665,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="atlasGlossary"> The <see cref="AtlasGlossary"/> to use. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="atlasGlossary"/> is null. </exception>
@@ -2684,7 +2684,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="atlasGlossary"> The <see cref="AtlasGlossary"/> to use. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="atlasGlossary"/> is null. </exception>

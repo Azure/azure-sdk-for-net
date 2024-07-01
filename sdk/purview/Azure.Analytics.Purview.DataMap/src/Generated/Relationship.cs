@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Purview Data Map Service is a fully managed cloud service whose users can discover the data sources they need and understand the data sources they find. At the same time, Data Map helps organizations get more value from their existing investments. </param>
         internal Relationship(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint)
         {
             ClientDiagnostics = clientDiagnostics;
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="atlasRelationship"> The <see cref="AtlasRelationship"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(AtlasRelationship,CancellationToken)']/*" />
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="atlasRelationship"> The <see cref="AtlasRelationship"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(AtlasRelationship,CancellationToken)']/*" />
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="atlasRelationship"> The <see cref="AtlasRelationship"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(AtlasRelationship,CancellationToken)']/*" />
@@ -170,7 +170,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="atlasRelationship"> The <see cref="AtlasRelationship"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(AtlasRelationship,CancellationToken)']/*" />

@@ -6042,7 +6042,7 @@ Status = EntityStatus.Active,
             {
                 file = File.OpenRead("<filePath>"),
             });
-            Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
+            Response response = client.ImportBusinessMetadata(content, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6060,7 +6060,7 @@ Status = EntityStatus.Active,
             {
                 file = File.OpenRead("<filePath>"),
             });
-            Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
+            Response response = await client.ImportBusinessMetadataAsync(content, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6102,7 +6102,7 @@ Status = EntityStatus.Active,
             {
                 file = File.OpenRead("<filePath>"),
             });
-            Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
+            Response response = client.ImportBusinessMetadata(content, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -6127,7 +6127,7 @@ Status = EntityStatus.Active,
             {
                 file = File.OpenRead("<filePath>"),
             });
-            Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
+            Response response = await client.ImportBusinessMetadataAsync(content, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());

@@ -38,7 +38,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Purview Data Map Service is a fully managed cloud service whose users can discover the data sources they need and understand the data sources they find. At the same time, Data Map helps organizations get more value from their existing investments. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         internal Discovery(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get data using search. </summary>
-        /// <param name="queryConfig"> The search query of advanced search request. </param>
+        /// <param name="queryConfig"> The <see cref="QueryConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queryConfig"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='QueryAsync(QueryConfig,CancellationToken)']/*" />
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get data using search. </summary>
-        /// <param name="queryConfig"> The search query of advanced search request. </param>
+        /// <param name="queryConfig"> The <see cref="QueryConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queryConfig"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Query(QueryConfig,CancellationToken)']/*" />
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="suggestConfig"> The payload of suggest request. </param>
+        /// <param name="suggestConfig"> The <see cref="SuggestConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="suggestConfig"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='SuggestAsync(SuggestConfig,CancellationToken)']/*" />
@@ -173,7 +173,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="suggestConfig"> The payload of suggest request. </param>
+        /// <param name="suggestConfig"> The <see cref="SuggestConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="suggestConfig"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Suggest(SuggestConfig,CancellationToken)']/*" />
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="autoCompleteConfig"> The payload of autocomplete request. </param>
+        /// <param name="autoCompleteConfig"> The <see cref="AutoCompleteConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autoCompleteConfig"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoCompleteAsync(AutoCompleteConfig,CancellationToken)']/*" />
@@ -281,7 +281,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="autoCompleteConfig"> The payload of autocomplete request. </param>
+        /// <param name="autoCompleteConfig"> The <see cref="AutoCompleteConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="autoCompleteConfig"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoComplete(AutoCompleteConfig,CancellationToken)']/*" />
