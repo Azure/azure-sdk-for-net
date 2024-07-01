@@ -32,6 +32,7 @@ namespace Azure.AI.Inference
             Messages = new ChangeTrackingList<ChatRequestMessage>();
             StopSequences = new ChangeTrackingList<string>();
             Tools = new ChangeTrackingList<ChatCompletionsToolDefinition>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
     }
 }

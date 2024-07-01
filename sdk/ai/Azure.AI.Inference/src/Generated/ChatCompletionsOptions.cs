@@ -18,38 +18,6 @@ namespace Azure.AI.Inference
     /// </summary>
     public partial class ChatCompletionsOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
         /// <param name="messages">
         /// The collection of context messages associated with this chat completions request.
@@ -67,6 +35,7 @@ namespace Azure.AI.Inference
             Messages = messages.ToList();
             StopSequences = new ChangeTrackingList<string>();
             Tools = new ChangeTrackingList<ChatCompletionsToolDefinition>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
@@ -124,8 +93,8 @@ namespace Azure.AI.Inference
         /// same seed and parameters should return the same result. Determinism is not guaranteed.
         /// </param>
         /// <param name="model"> ID of the specific AI model to use, if more than one model is available on the endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? internalShouldStreamResponse, float? presencePenalty, float? temperature, float? nucleusSamplingFactor, int? maxTokens, ChatCompletionsResponseFormat? responseFormat, IList<string> stopSequences, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice, long? seed, string model, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? internalShouldStreamResponse, float? presencePenalty, float? temperature, float? nucleusSamplingFactor, int? maxTokens, ChatCompletionsResponseFormat? responseFormat, IList<string> stopSequences, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice, long? seed, string model, IDictionary<string, BinaryData> additionalProperties)
         {
             Messages = messages;
             FrequencyPenalty = frequencyPenalty;
@@ -140,7 +109,7 @@ namespace Azure.AI.Inference
             InternalSuppressedToolChoice = internalSuppressedToolChoice;
             Seed = seed;
             Model = model;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary>
@@ -208,5 +177,36 @@ namespace Azure.AI.Inference
         public long? Seed { get; set; }
         /// <summary> ID of the specific AI model to use, if more than one model is available on the endpoint. </summary>
         public string Model { get; set; }
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

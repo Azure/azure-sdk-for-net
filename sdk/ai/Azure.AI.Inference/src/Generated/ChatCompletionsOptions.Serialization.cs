@@ -50,8 +50,8 @@ namespace Azure.AI.Inference
             BinaryData toolChoice = default;
             long? seed = default;
             string model = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messages"u8))
@@ -178,12 +178,9 @@ namespace Azure.AI.Inference
                     model = property.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            additionalProperties = additionalPropertiesDictionary;
             return new ChatCompletionsOptions(
                 messages,
                 frequencyPenalty,
@@ -198,7 +195,7 @@ namespace Azure.AI.Inference
                 toolChoice,
                 seed,
                 model,
-                serializedAdditionalRawData);
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ChatCompletionsOptions>.Write(ModelReaderWriterOptions options)
