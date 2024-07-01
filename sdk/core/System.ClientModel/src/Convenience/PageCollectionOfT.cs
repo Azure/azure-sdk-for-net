@@ -24,6 +24,7 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
         IEnumerator<PageResult<T>> enumerator = GetEnumerator();
         PageResult<T> current = enumerator.Current;
 
+        // Relies on generated enumerator contract
         if (current == null)
         {
             enumerator.MoveNext();
