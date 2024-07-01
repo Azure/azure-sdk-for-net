@@ -89,7 +89,7 @@ namespace Azure.Compute.Batch
             ErrorCategory category = default;
             string code = default;
             string message = default;
-            IList<NameValuePair> details = default;
+            IReadOnlyList<NameValuePair> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

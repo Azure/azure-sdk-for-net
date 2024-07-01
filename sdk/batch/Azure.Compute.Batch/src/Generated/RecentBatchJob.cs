@@ -46,7 +46,7 @@ namespace Azure.Compute.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RecentBatchJob"/>. </summary>
-        public RecentBatchJob()
+        internal RecentBatchJob()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The ID of the Job. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
         /// <summary> The URL of the Job. </summary>
-        public string Url { get; set; }
+        public string Url { get; }
     }
 }

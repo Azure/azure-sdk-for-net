@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BatchJobScheduleExecutionInfo"/>. </summary>
-        public BatchJobScheduleExecutionInfo()
+        internal BatchJobScheduleExecutionInfo()
         {
         }
 
@@ -67,10 +67,10 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The next time at which a Job will be created under this schedule. This property is meaningful only if the schedule is in the active state when the time comes around. For example, if the schedule is disabled, no Job will be created at nextRunTime unless the Job is enabled before then. </summary>
-        public DateTimeOffset? NextRunTime { get; set; }
+        public DateTimeOffset? NextRunTime { get; }
         /// <summary> Information about the most recent Job under the Job Schedule. This property is present only if the at least one Job has run under the schedule. </summary>
-        public RecentBatchJob RecentJob { get; set; }
+        public RecentBatchJob RecentJob { get; }
         /// <summary> The time at which the schedule ended. This property is set only if the Job Schedule is in the completed state. </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndTime { get; }
     }
 }

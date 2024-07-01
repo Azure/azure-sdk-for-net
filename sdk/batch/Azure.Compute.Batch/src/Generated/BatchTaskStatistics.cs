@@ -58,7 +58,7 @@ namespace Azure.Compute.Batch
         /// <param name="writeIOGiB"> The total gibibytes written to disk by the Task. </param>
         /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public BatchTaskStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, TimeSpan waitTime)
+        internal BatchTaskStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, TimeSpan waitTime)
         {
             Argument.AssertNotNull(url, nameof(url));
 
@@ -110,26 +110,26 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The URL of the statistics. </summary>
-        public string Url { get; set; }
+        public string Url { get; }
         /// <summary> The start time of the time range covered by the statistics. </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartTime { get; }
         /// <summary> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </summary>
-        public DateTimeOffset LastUpdateTime { get; set; }
+        public DateTimeOffset LastUpdateTime { get; }
         /// <summary> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </summary>
-        public TimeSpan UserCpuTime { get; set; }
+        public TimeSpan UserCpuTime { get; }
         /// <summary> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </summary>
-        public TimeSpan KernelCpuTime { get; set; }
+        public TimeSpan KernelCpuTime { get; }
         /// <summary> The total wall clock time of the Task. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If the Task was retried, this includes the wall clock time of all the Task retries. </summary>
-        public TimeSpan WallClockTime { get; set; }
+        public TimeSpan WallClockTime { get; }
         /// <summary> The total number of disk read operations made by the Task. </summary>
-        public long ReadIOps { get; set; }
+        public long ReadIOps { get; }
         /// <summary> The total number of disk write operations made by the Task. </summary>
-        public long WriteIOps { get; set; }
+        public long WriteIOps { get; }
         /// <summary> The total gibibytes read from disk by the Task. </summary>
-        public float ReadIOGiB { get; set; }
+        public float ReadIOGiB { get; }
         /// <summary> The total gibibytes written to disk by the Task. </summary>
-        public float WriteIOGiB { get; set; }
+        public float WriteIOGiB { get; }
         /// <summary> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </summary>
-        public TimeSpan WaitTime { get; set; }
+        public TimeSpan WaitTime { get; }
     }
 }

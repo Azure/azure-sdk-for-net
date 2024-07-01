@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch
         /// <param name="numTaskRetries"> The total number of retries on all the Tasks in the Job during the given time range. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public BatchJobStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, TimeSpan waitTime)
+        internal BatchJobStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, TimeSpan waitTime)
         {
             Argument.AssertNotNull(url, nameof(url));
 
@@ -122,32 +122,32 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The URL of the statistics. </summary>
-        public string Url { get; set; }
+        public string Url { get; }
         /// <summary> The start time of the time range covered by the statistics. </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartTime { get; }
         /// <summary> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </summary>
-        public DateTimeOffset LastUpdateTime { get; set; }
+        public DateTimeOffset LastUpdateTime { get; }
         /// <summary> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </summary>
-        public TimeSpan UserCpuTime { get; set; }
+        public TimeSpan UserCpuTime { get; }
         /// <summary> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </summary>
-        public TimeSpan KernelCpuTime { get; set; }
+        public TimeSpan KernelCpuTime { get; }
         /// <summary> The total wall clock time of all Tasks in the Job.  The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </summary>
-        public TimeSpan WallClockTime { get; set; }
+        public TimeSpan WallClockTime { get; }
         /// <summary> The total number of disk read operations made by all Tasks in the Job. </summary>
-        public long ReadIOps { get; set; }
+        public long ReadIOps { get; }
         /// <summary> The total number of disk write operations made by all Tasks in the Job. </summary>
-        public long WriteIOps { get; set; }
+        public long WriteIOps { get; }
         /// <summary> The total amount of data in GiB read from disk by all Tasks in the Job. </summary>
-        public float ReadIOGiB { get; set; }
+        public float ReadIOGiB { get; }
         /// <summary> The total amount of data in GiB written to disk by all Tasks in the Job. </summary>
-        public float WriteIOGiB { get; set; }
+        public float WriteIOGiB { get; }
         /// <summary> The total number of Tasks successfully completed in the Job during the given time range. A Task completes successfully if it returns exit code 0. </summary>
-        public long NumSucceededTasks { get; set; }
+        public long NumSucceededTasks { get; }
         /// <summary> The total number of Tasks in the Job that failed during the given time range. A Task fails if it exhausts its maximum retry count without returning exit code 0. </summary>
-        public long NumFailedTasks { get; set; }
+        public long NumFailedTasks { get; }
         /// <summary> The total number of retries on all the Tasks in the Job during the given time range. </summary>
-        public long NumTaskRetries { get; set; }
+        public long NumTaskRetries { get; }
         /// <summary> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </summary>
-        public TimeSpan WaitTime { get; set; }
+        public TimeSpan WaitTime { get; }
     }
 }

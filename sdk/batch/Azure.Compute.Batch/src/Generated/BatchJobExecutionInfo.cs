@@ -47,7 +47,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of <see cref="BatchJobExecutionInfo"/>. </summary>
         /// <param name="startTime"> The start time of the Job. This is the time at which the Job was created. </param>
-        public BatchJobExecutionInfo(DateTimeOffset startTime)
+        internal BatchJobExecutionInfo(DateTimeOffset startTime)
         {
             StartTime = startTime;
         }
@@ -75,14 +75,14 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The start time of the Job. This is the time at which the Job was created. </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartTime { get; }
         /// <summary> The completion time of the Job. This property is set only if the Job is in the completed state. </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndTime { get; }
         /// <summary> The ID of the Pool to which this Job is assigned. This element contains the actual Pool where the Job is assigned. When you get Job details from the service, they also contain a poolInfo element, which contains the Pool configuration data from when the Job was added or updated. That poolInfo element may also contain a poolId element. If it does, the two IDs are the same. If it does not, it means the Job ran on an auto Pool, and this property contains the ID of that auto Pool. </summary>
-        public string PoolId { get; set; }
+        public string PoolId { get; }
         /// <summary> Details of any error encountered by the service in starting the Job. This property is not set if there was no error starting the Job. </summary>
-        public BatchJobSchedulingError SchedulingError { get; set; }
+        public BatchJobSchedulingError SchedulingError { get; }
         /// <summary> A string describing the reason the Job ended. This property is set only if the Job is in the completed state. If the Batch service terminates the Job, it sets the reason as follows: JMComplete - the Job Manager Task completed, and killJobOnCompletion was set to true. MaxWallClockTimeExpiry - the Job reached its maxWallClockTime constraint. TerminateJobSchedule - the Job ran as part of a schedule, and the schedule terminated. AllTasksComplete - the Job's onAllTasksComplete attribute is set to terminatejob, and all Tasks in the Job are complete. TaskFailed - the Job's onTaskFailure attribute is set to performExitOptionsJobAction, and a Task in the Job failed with an exit condition that specified a jobAction of terminatejob. Any other string is a user-defined reason specified in a call to the 'Terminate a Job' operation. </summary>
-        public string TerminationReason { get; set; }
+        public string TerminationReason { get; }
     }
 }

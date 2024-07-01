@@ -46,7 +46,7 @@ namespace Azure.Compute.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskContainerExecutionInfo"/>. </summary>
-        public BatchTaskContainerExecutionInfo()
+        internal BatchTaskContainerExecutionInfo()
         {
         }
 
@@ -64,10 +64,10 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The ID of the container. </summary>
-        public string ContainerId { get; set; }
+        public string ContainerId { get; }
         /// <summary> The state of the container. This is the state of the container according to the Docker service. It is equivalent to the status field returned by "docker inspect". </summary>
-        public string State { get; set; }
+        public string State { get; }
         /// <summary> Detailed error information about the container. This is the detailed error string from the Docker service, if available. It is equivalent to the error field returned by "docker inspect". </summary>
-        public string Error { get; set; }
+        public string Error { get; }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.Compute.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeInfo"/>. </summary>
-        public BatchNodeInfo()
+        internal BatchNodeInfo()
         {
         }
 
@@ -70,16 +70,16 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> An identifier for the Node on which the Task ran, which can be passed when adding a Task to request that the Task be scheduled on this Compute Node. </summary>
-        public string AffinityId { get; set; }
+        public string AffinityId { get; }
         /// <summary> The URL of the Compute Node on which the Task ran. </summary>
-        public string NodeUrl { get; set; }
+        public string NodeUrl { get; }
         /// <summary> The ID of the Pool on which the Task ran. </summary>
-        public string PoolId { get; set; }
+        public string PoolId { get; }
         /// <summary> The ID of the Compute Node on which the Task ran. </summary>
-        public string NodeId { get; set; }
+        public string NodeId { get; }
         /// <summary> The root directory of the Task on the Compute Node. </summary>
-        public string TaskRootDirectory { get; set; }
+        public string TaskRootDirectory { get; }
         /// <summary> The URL to the root directory of the Task on the Compute Node. </summary>
-        public string TaskRootDirectoryUrl { get; set; }
+        public string TaskRootDirectoryUrl { get; }
     }
 }

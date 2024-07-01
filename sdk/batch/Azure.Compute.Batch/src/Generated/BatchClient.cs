@@ -9284,7 +9284,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9450,7 +9450,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9508,7 +9508,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9536,7 +9536,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9568,7 +9568,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9626,7 +9626,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9658,7 +9658,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9819,7 +9819,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9850,7 +9850,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9882,7 +9882,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9944,7 +9944,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -9970,7 +9970,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -10242,7 +10242,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -10273,7 +10273,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -10389,7 +10389,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -10457,7 +10457,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -10527,7 +10527,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -10630,7 +10630,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add(requestConditions, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -10899,7 +10899,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -10959,7 +10959,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -11020,7 +11020,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -11050,7 +11050,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }
@@ -11136,7 +11136,7 @@ namespace Azure.Compute.Batch
             {
                 request.Headers.Add("ocp-date", ocpdate.Value, "R");
             }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
+            request.Headers.Add("Content-Type", "application/json; odata=minimalmetadata");
             request.Content = content;
             return message;
         }

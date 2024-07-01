@@ -223,6 +223,15 @@ namespace Azure.Compute.Batch
             return new ResizeError(code, message, values?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Batch.NameValuePair"/>. </summary>
+        /// <param name="name"> The name in the name-value pair. </param>
+        /// <param name="value"> The value in the name-value pair. </param>
+        /// <returns> A new <see cref="Batch.NameValuePair"/> instance for mocking. </returns>
+        public static NameValuePair NameValuePair(string name = null, string value = null)
+        {
+            return new NameValuePair(name, value, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Batch.AutoScaleRun"/>. </summary>
         /// <param name="timestamp"> The time at which the autoscale formula was last evaluated. </param>
         /// <param name="results"> The final values of all variables used in the evaluation of the autoscale formula. Each variable value is returned in the form $variable=value, and variables are separated by semicolons. </param>
@@ -461,6 +470,73 @@ namespace Azure.Compute.Batch
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchJobExecutionInfo"/>. </summary>
+        /// <param name="startTime"> The start time of the Job. This is the time at which the Job was created. </param>
+        /// <param name="endTime"> The completion time of the Job. This property is set only if the Job is in the completed state. </param>
+        /// <param name="poolId"> The ID of the Pool to which this Job is assigned. This element contains the actual Pool where the Job is assigned. When you get Job details from the service, they also contain a poolInfo element, which contains the Pool configuration data from when the Job was added or updated. That poolInfo element may also contain a poolId element. If it does, the two IDs are the same. If it does not, it means the Job ran on an auto Pool, and this property contains the ID of that auto Pool. </param>
+        /// <param name="schedulingError"> Details of any error encountered by the service in starting the Job. This property is not set if there was no error starting the Job. </param>
+        /// <param name="terminationReason"> A string describing the reason the Job ended. This property is set only if the Job is in the completed state. If the Batch service terminates the Job, it sets the reason as follows: JMComplete - the Job Manager Task completed, and killJobOnCompletion was set to true. MaxWallClockTimeExpiry - the Job reached its maxWallClockTime constraint. TerminateJobSchedule - the Job ran as part of a schedule, and the schedule terminated. AllTasksComplete - the Job's onAllTasksComplete attribute is set to terminatejob, and all Tasks in the Job are complete. TaskFailed - the Job's onTaskFailure attribute is set to performExitOptionsJobAction, and a Task in the Job failed with an exit condition that specified a jobAction of terminatejob. Any other string is a user-defined reason specified in a call to the 'Terminate a Job' operation. </param>
+        /// <returns> A new <see cref="Batch.BatchJobExecutionInfo"/> instance for mocking. </returns>
+        public static BatchJobExecutionInfo BatchJobExecutionInfo(DateTimeOffset startTime = default, DateTimeOffset? endTime = null, string poolId = null, BatchJobSchedulingError schedulingError = null, string terminationReason = null)
+        {
+            return new BatchJobExecutionInfo(
+                startTime,
+                endTime,
+                poolId,
+                schedulingError,
+                terminationReason,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchJobSchedulingError"/>. </summary>
+        /// <param name="category"> The category of the Job scheduling error. </param>
+        /// <param name="code"> An identifier for the Job scheduling error. Codes are invariant and are intended to be consumed programmatically. </param>
+        /// <param name="message"> A message describing the Job scheduling error, intended to be suitable for display in a user interface. </param>
+        /// <param name="details"> A list of additional error details related to the scheduling error. </param>
+        /// <returns> A new <see cref="Batch.BatchJobSchedulingError"/> instance for mocking. </returns>
+        public static BatchJobSchedulingError BatchJobSchedulingError(ErrorCategory category = default, string code = null, string message = null, IEnumerable<NameValuePair> details = null)
+        {
+            details ??= new List<NameValuePair>();
+
+            return new BatchJobSchedulingError(category, code, message, details?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchJobStatistics"/>. </summary>
+        /// <param name="url"> The URL of the statistics. </param>
+        /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
+        /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
+        /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
+        /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
+        /// <param name="wallClockTime"> The total wall clock time of all Tasks in the Job.  The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
+        /// <param name="readIOps"> The total number of disk read operations made by all Tasks in the Job. </param>
+        /// <param name="writeIOps"> The total number of disk write operations made by all Tasks in the Job. </param>
+        /// <param name="readIOGiB"> The total amount of data in GiB read from disk by all Tasks in the Job. </param>
+        /// <param name="writeIOGiB"> The total amount of data in GiB written to disk by all Tasks in the Job. </param>
+        /// <param name="numSucceededTasks"> The total number of Tasks successfully completed in the Job during the given time range. A Task completes successfully if it returns exit code 0. </param>
+        /// <param name="numFailedTasks"> The total number of Tasks in the Job that failed during the given time range. A Task fails if it exhausts its maximum retry count without returning exit code 0. </param>
+        /// <param name="numTaskRetries"> The total number of retries on all the Tasks in the Job during the given time range. </param>
+        /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
+        /// <returns> A new <see cref="Batch.BatchJobStatistics"/> instance for mocking. </returns>
+        public static BatchJobStatistics BatchJobStatistics(string url = null, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIOps = default, long writeIOps = default, float readIOGiB = default, float writeIOGiB = default, long numSucceededTasks = default, long numFailedTasks = default, long numTaskRetries = default, TimeSpan waitTime = default)
+        {
+            return new BatchJobStatistics(
+                url,
+                startTime,
+                lastUpdateTime,
+                userCpuTime,
+                kernelCpuTime,
+                wallClockTime,
+                readIOps,
+                writeIOps,
+                readIOGiB,
+                writeIOGiB,
+                numSucceededTasks,
+                numFailedTasks,
+                numTaskRetries,
+                waitTime,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Batch.BatchJobCreateContent"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Job. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
@@ -550,6 +626,29 @@ namespace Azure.Compute.Batch
                 lastRetryTime,
                 result,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskContainerExecutionInfo"/>. </summary>
+        /// <param name="containerId"> The ID of the container. </param>
+        /// <param name="state"> The state of the container. This is the state of the container according to the Docker service. It is equivalent to the status field returned by "docker inspect". </param>
+        /// <param name="error"> Detailed error information about the container. This is the detailed error string from the Docker service, if available. It is equivalent to the error field returned by "docker inspect". </param>
+        /// <returns> A new <see cref="Batch.BatchTaskContainerExecutionInfo"/> instance for mocking. </returns>
+        public static BatchTaskContainerExecutionInfo BatchTaskContainerExecutionInfo(string containerId = null, string state = null, string error = null)
+        {
+            return new BatchTaskContainerExecutionInfo(containerId, state, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskFailureInfo"/>. </summary>
+        /// <param name="category"> The category of the Task error. </param>
+        /// <param name="code"> An identifier for the Task error. Codes are invariant and are intended to be consumed programmatically. </param>
+        /// <param name="message"> A message describing the Task error, intended to be suitable for display in a user interface. </param>
+        /// <param name="details"> A list of additional details related to the error. </param>
+        /// <returns> A new <see cref="Batch.BatchTaskFailureInfo"/> instance for mocking. </returns>
+        public static BatchTaskFailureInfo BatchTaskFailureInfo(ErrorCategory category = default, string code = null, string message = null, IEnumerable<NameValuePair> details = null)
+        {
+            details ??= new List<NameValuePair>();
+
+            return new BatchTaskFailureInfo(category, code, message, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchJobReleaseTaskExecutionInfo"/>. </summary>
@@ -660,6 +759,61 @@ namespace Azure.Compute.Batch
                 executionInfo,
                 metadata?.ToList(),
                 stats,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchJobScheduleExecutionInfo"/>. </summary>
+        /// <param name="nextRunTime"> The next time at which a Job will be created under this schedule. This property is meaningful only if the schedule is in the active state when the time comes around. For example, if the schedule is disabled, no Job will be created at nextRunTime unless the Job is enabled before then. </param>
+        /// <param name="recentJob"> Information about the most recent Job under the Job Schedule. This property is present only if the at least one Job has run under the schedule. </param>
+        /// <param name="endTime"> The time at which the schedule ended. This property is set only if the Job Schedule is in the completed state. </param>
+        /// <returns> A new <see cref="Batch.BatchJobScheduleExecutionInfo"/> instance for mocking. </returns>
+        public static BatchJobScheduleExecutionInfo BatchJobScheduleExecutionInfo(DateTimeOffset? nextRunTime = null, RecentBatchJob recentJob = null, DateTimeOffset? endTime = null)
+        {
+            return new BatchJobScheduleExecutionInfo(nextRunTime, recentJob, endTime, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.RecentBatchJob"/>. </summary>
+        /// <param name="id"> The ID of the Job. </param>
+        /// <param name="url"> The URL of the Job. </param>
+        /// <returns> A new <see cref="Batch.RecentBatchJob"/> instance for mocking. </returns>
+        public static RecentBatchJob RecentBatchJob(string id = null, string url = null)
+        {
+            return new RecentBatchJob(id, url, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchJobScheduleStatistics"/>. </summary>
+        /// <param name="url"> The URL of the statistics. </param>
+        /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
+        /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
+        /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. </param>
+        /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in all Jobs created under the schedule. </param>
+        /// <param name="wallClockTime"> The total wall clock time of all the Tasks in all the Jobs created under the schedule. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
+        /// <param name="readIOps"> The total number of disk read operations made by all Tasks in all Jobs created under the schedule. </param>
+        /// <param name="writeIOps"> The total number of disk write operations made by all Tasks in all Jobs created under the schedule. </param>
+        /// <param name="readIOGiB"> The total gibibytes read from disk by all Tasks in all Jobs created under the schedule. </param>
+        /// <param name="writeIOGiB"> The total gibibytes written to disk by all Tasks in all Jobs created under the schedule. </param>
+        /// <param name="numSucceededTasks"> The total number of Tasks successfully completed during the given time range in Jobs created under the schedule. A Task completes successfully if it returns exit code 0. </param>
+        /// <param name="numFailedTasks"> The total number of Tasks that failed during the given time range in Jobs created under the schedule. A Task fails if it exhausts its maximum retry count without returning exit code 0. </param>
+        /// <param name="numTaskRetries"> The total number of retries during the given time range on all Tasks in all Jobs created under the schedule. </param>
+        /// <param name="waitTime"> The total wait time of all Tasks in all Jobs created under the schedule. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
+        /// <returns> A new <see cref="Batch.BatchJobScheduleStatistics"/> instance for mocking. </returns>
+        public static BatchJobScheduleStatistics BatchJobScheduleStatistics(string url = null, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIOps = default, long writeIOps = default, float readIOGiB = default, float writeIOGiB = default, long numSucceededTasks = default, long numFailedTasks = default, long numTaskRetries = default, TimeSpan waitTime = default)
+        {
+            return new BatchJobScheduleStatistics(
+                url,
+                startTime,
+                lastUpdateTime,
+                userCpuTime,
+                kernelCpuTime,
+                wallClockTime,
+                readIOps,
+                writeIOps,
+                readIOGiB,
+                writeIOGiB,
+                numSucceededTasks,
+                numFailedTasks,
+                numTaskRetries,
+                waitTime,
                 serializedAdditionalRawData: null);
         }
 
@@ -792,6 +946,84 @@ namespace Azure.Compute.Batch
                 dependsOn,
                 applicationPackageReferences?.ToList(),
                 authenticationTokenSettings,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskExecutionInfo"/>. </summary>
+        /// <param name="startTime"> The time at which the Task started running. 'Running' corresponds to the running state, so if the Task specifies resource files or Packages, then the start time reflects the time at which the Task started downloading or deploying these. If the Task has been restarted or retried, this is the most recent time at which the Task started running. This property is present only for Tasks that are in the running or completed state. </param>
+        /// <param name="endTime"> The time at which the Task completed. This property is set only if the Task is in the Completed state. </param>
+        /// <param name="exitCode"> The exit code of the program specified on the Task command line. This property is set only if the Task is in the completed state. In general, the exit code for a process reflects the specific convention implemented by the application developer for that process. If you use the exit code value to make decisions in your code, be sure that you know the exit code convention used by the application process. However, if the Batch service terminates the Task (due to timeout, or user termination via the API) you may see an operating system-defined exit code. </param>
+        /// <param name="containerInfo"> Information about the container under which the Task is executing. This property is set only if the Task runs in a container context. </param>
+        /// <param name="failureInfo"> Information describing the Task failure, if any. This property is set only if the Task is in the completed state and encountered a failure. </param>
+        /// <param name="retryCount"> The number of times the Task has been retried by the Batch service. Task application failures (non-zero exit code) are retried, pre-processing errors (the Task could not be run) and file upload errors are not retried. The Batch service will retry the Task up to the limit specified by the constraints. </param>
+        /// <param name="lastRetryTime"> The most recent time at which a retry of the Task started running. This element is present only if the Task was retried (i.e. retryCount is nonzero). If present, this is typically the same as startTime, but may be different if the Task has been restarted for reasons other than retry; for example, if the Compute Node was rebooted during a retry, then the startTime is updated but the lastRetryTime is not. </param>
+        /// <param name="requeueCount"> The number of times the Task has been requeued by the Batch service as the result of a user request. When the user removes Compute Nodes from a Pool (by resizing/shrinking the pool) or when the Job is being disabled, the user can specify that running Tasks on the Compute Nodes be requeued for execution. This count tracks how many times the Task has been requeued for these reasons. </param>
+        /// <param name="lastRequeueTime"> The most recent time at which the Task has been requeued by the Batch service as the result of a user request. This property is set only if the requeueCount is nonzero. </param>
+        /// <param name="result"> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </param>
+        /// <returns> A new <see cref="Batch.BatchTaskExecutionInfo"/> instance for mocking. </returns>
+        public static BatchTaskExecutionInfo BatchTaskExecutionInfo(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, int? exitCode = null, BatchTaskContainerExecutionInfo containerInfo = null, BatchTaskFailureInfo failureInfo = null, int retryCount = default, DateTimeOffset? lastRetryTime = null, int requeueCount = default, DateTimeOffset? lastRequeueTime = null, BatchTaskExecutionResult? result = null)
+        {
+            return new BatchTaskExecutionInfo(
+                startTime,
+                endTime,
+                exitCode,
+                containerInfo,
+                failureInfo,
+                retryCount,
+                lastRetryTime,
+                requeueCount,
+                lastRequeueTime,
+                result,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchNodeInfo"/>. </summary>
+        /// <param name="affinityId"> An identifier for the Node on which the Task ran, which can be passed when adding a Task to request that the Task be scheduled on this Compute Node. </param>
+        /// <param name="nodeUrl"> The URL of the Compute Node on which the Task ran. </param>
+        /// <param name="poolId"> The ID of the Pool on which the Task ran. </param>
+        /// <param name="nodeId"> The ID of the Compute Node on which the Task ran. </param>
+        /// <param name="taskRootDirectory"> The root directory of the Task on the Compute Node. </param>
+        /// <param name="taskRootDirectoryUrl"> The URL to the root directory of the Task on the Compute Node. </param>
+        /// <returns> A new <see cref="Batch.BatchNodeInfo"/> instance for mocking. </returns>
+        public static BatchNodeInfo BatchNodeInfo(string affinityId = null, string nodeUrl = null, string poolId = null, string nodeId = null, string taskRootDirectory = null, string taskRootDirectoryUrl = null)
+        {
+            return new BatchNodeInfo(
+                affinityId,
+                nodeUrl,
+                poolId,
+                nodeId,
+                taskRootDirectory,
+                taskRootDirectoryUrl,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchTaskStatistics"/>. </summary>
+        /// <param name="url"> The URL of the statistics. </param>
+        /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
+        /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
+        /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
+        /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
+        /// <param name="wallClockTime"> The total wall clock time of the Task. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If the Task was retried, this includes the wall clock time of all the Task retries. </param>
+        /// <param name="readIOps"> The total number of disk read operations made by the Task. </param>
+        /// <param name="writeIOps"> The total number of disk write operations made by the Task. </param>
+        /// <param name="readIOGiB"> The total gibibytes read from disk by the Task. </param>
+        /// <param name="writeIOGiB"> The total gibibytes written to disk by the Task. </param>
+        /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </param>
+        /// <returns> A new <see cref="Batch.BatchTaskStatistics"/> instance for mocking. </returns>
+        public static BatchTaskStatistics BatchTaskStatistics(string url = null, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIOps = default, long writeIOps = default, float readIOGiB = default, float writeIOGiB = default, TimeSpan waitTime = default)
+        {
+            return new BatchTaskStatistics(
+                url,
+                startTime,
+                lastUpdateTime,
+                userCpuTime,
+                kernelCpuTime,
+                wallClockTime,
+                readIOps,
+                writeIOps,
+                readIOGiB,
+                writeIOGiB,
+                waitTime,
                 serializedAdditionalRawData: null);
         }
 

@@ -48,7 +48,7 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchTaskExecutionInfo"/>. </summary>
         /// <param name="retryCount"> The number of times the Task has been retried by the Batch service. Task application failures (non-zero exit code) are retried, pre-processing errors (the Task could not be run) and file upload errors are not retried. The Batch service will retry the Task up to the limit specified by the constraints. </param>
         /// <param name="requeueCount"> The number of times the Task has been requeued by the Batch service as the result of a user request. When the user removes Compute Nodes from a Pool (by resizing/shrinking the pool) or when the Job is being disabled, the user can specify that running Tasks on the Compute Nodes be requeued for execution. This count tracks how many times the Task has been requeued for these reasons. </param>
-        public BatchTaskExecutionInfo(int retryCount, int requeueCount)
+        internal BatchTaskExecutionInfo(int retryCount, int requeueCount)
         {
             RetryCount = retryCount;
             RequeueCount = requeueCount;
@@ -87,24 +87,24 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The time at which the Task started running. 'Running' corresponds to the running state, so if the Task specifies resource files or Packages, then the start time reflects the time at which the Task started downloading or deploying these. If the Task has been restarted or retried, this is the most recent time at which the Task started running. This property is present only for Tasks that are in the running or completed state. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartTime { get; }
         /// <summary> The time at which the Task completed. This property is set only if the Task is in the Completed state. </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndTime { get; }
         /// <summary> The exit code of the program specified on the Task command line. This property is set only if the Task is in the completed state. In general, the exit code for a process reflects the specific convention implemented by the application developer for that process. If you use the exit code value to make decisions in your code, be sure that you know the exit code convention used by the application process. However, if the Batch service terminates the Task (due to timeout, or user termination via the API) you may see an operating system-defined exit code. </summary>
-        public int? ExitCode { get; set; }
+        public int? ExitCode { get; }
         /// <summary> Information about the container under which the Task is executing. This property is set only if the Task runs in a container context. </summary>
-        public BatchTaskContainerExecutionInfo ContainerInfo { get; set; }
+        public BatchTaskContainerExecutionInfo ContainerInfo { get; }
         /// <summary> Information describing the Task failure, if any. This property is set only if the Task is in the completed state and encountered a failure. </summary>
-        public BatchTaskFailureInfo FailureInfo { get; set; }
+        public BatchTaskFailureInfo FailureInfo { get; }
         /// <summary> The number of times the Task has been retried by the Batch service. Task application failures (non-zero exit code) are retried, pre-processing errors (the Task could not be run) and file upload errors are not retried. The Batch service will retry the Task up to the limit specified by the constraints. </summary>
-        public int RetryCount { get; set; }
+        public int RetryCount { get; }
         /// <summary> The most recent time at which a retry of the Task started running. This element is present only if the Task was retried (i.e. retryCount is nonzero). If present, this is typically the same as startTime, but may be different if the Task has been restarted for reasons other than retry; for example, if the Compute Node was rebooted during a retry, then the startTime is updated but the lastRetryTime is not. </summary>
-        public DateTimeOffset? LastRetryTime { get; set; }
+        public DateTimeOffset? LastRetryTime { get; }
         /// <summary> The number of times the Task has been requeued by the Batch service as the result of a user request. When the user removes Compute Nodes from a Pool (by resizing/shrinking the pool) or when the Job is being disabled, the user can specify that running Tasks on the Compute Nodes be requeued for execution. This count tracks how many times the Task has been requeued for these reasons. </summary>
-        public int RequeueCount { get; set; }
+        public int RequeueCount { get; }
         /// <summary> The most recent time at which the Task has been requeued by the Batch service as the result of a user request. This property is set only if the requeueCount is nonzero. </summary>
-        public DateTimeOffset? LastRequeueTime { get; set; }
+        public DateTimeOffset? LastRequeueTime { get; }
         /// <summary> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </summary>
-        public BatchTaskExecutionResult? Result { get; set; }
+        public BatchTaskExecutionResult? Result { get; }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.Compute.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NameValuePair"/>. </summary>
-        public NameValuePair()
+        internal NameValuePair()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The name in the name-value pair. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The value in the name-value pair. </summary>
-        public string Value { get; set; }
+        public string Value { get; }
     }
 }
