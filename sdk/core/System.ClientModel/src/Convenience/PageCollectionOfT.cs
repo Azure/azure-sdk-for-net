@@ -21,7 +21,7 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
 
     public PageResult<T> GetCurrentPage()
     {
-        IEnumerator<PageResult<T>> enumerator = GetEnumerator();
+        IEnumerator<PageResult<T>> enumerator = GetEnumeratorCore();
         PageResult<T> current = enumerator.Current;
 
         // Relies on generated enumerator contract
@@ -45,7 +45,10 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
         }
     }
 
-    public abstract IEnumerator<PageResult<T>> GetEnumerator();
+    protected abstract IEnumerator<PageResult<T>> GetEnumeratorCore();
+
+    IEnumerator<PageResult<T>> IEnumerable<PageResult<T>>.GetEnumerator()
+        => GetEnumeratorCore();
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PageResult<T>>)this).GetEnumerator();
 }

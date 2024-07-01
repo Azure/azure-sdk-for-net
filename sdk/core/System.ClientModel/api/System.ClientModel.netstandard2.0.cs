@@ -17,8 +17,9 @@ namespace System.ClientModel
     {
         protected AsyncPageCollection() { }
         public System.Collections.Generic.IAsyncEnumerable<T> GetAllValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public abstract System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>> GetAsyncEnumeratorCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetCurrentPageAsync() { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.PageResult<T>>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class BinaryContent : System.IDisposable
     {
@@ -74,7 +75,8 @@ namespace System.ClientModel
         protected PageCollection() { }
         public System.Collections.Generic.IEnumerable<T> GetAllValues() { throw null; }
         public System.ClientModel.PageResult<T> GetCurrentPage() { throw null; }
-        public abstract System.Collections.Generic.IEnumerator<System.ClientModel.PageResult<T>> GetEnumerator();
+        protected abstract System.Collections.Generic.IEnumerator<System.ClientModel.PageResult<T>> GetEnumeratorCore();
+        System.Collections.Generic.IEnumerator<System.ClientModel.PageResult<T>> System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class PageResult<T> : System.ClientModel.ClientResult

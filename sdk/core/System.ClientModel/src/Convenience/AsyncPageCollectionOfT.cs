@@ -22,7 +22,7 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
 
     public async Task<PageResult<T>> GetCurrentPageAsync()
     {
-        IAsyncEnumerator<PageResult<T>> enumerator = GetAsyncEnumerator();
+        IAsyncEnumerator<PageResult<T>> enumerator = GetAsyncEnumeratorCore();
         PageResult<T> current = enumerator.Current;
 
         // Relies on generated enumerator contract
@@ -48,7 +48,10 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
         }
     }
 
-    public abstract IAsyncEnumerator<PageResult<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default);
+    protected abstract IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken = default);
+
+    IAsyncEnumerator<PageResult<T>> IAsyncEnumerable<PageResult<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        => GetAsyncEnumeratorCore(cancellationToken);
 }
 
 #pragma warning restore CS1591
