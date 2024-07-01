@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Azure SDK for .NET | Azure SDK for .NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Azure SDK for .NET | Azure SDK for .NET ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="navtoc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    <meta property="docfx:newtab" content="true">
+  
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-62780441-41"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', 'UA-62780441-41');
+    </script>
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="azure-sdk-for-net">Azure SDK for .NET</h1>
+
+<p><a href="https://azure.github.io/azure-sdk/releases/latest/dotnet.html"><img src="https://img.shields.io/badge/packages-latest-blue.svg" alt="Packages"></a> <a href="https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/dependencies/dependencies.html"><img src="https://img.shields.io/badge/dependency-report-blue.svg" alt="Dependencies"></a> <a href="https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/dependencies/dependencyGraph/dagre.html"><img src="https://img.shields.io/badge/dependency-graph-blue.svg" alt="Dependencies Graph"></a></p>
+<p>This repository is for active development of the Azure SDK for .NET. For consumers of the SDK we recommend visiting our <a href="https://docs.microsoft.com/dotnet/azure/">public developer docs</a> or our versioned <a href="https://azure.github.io/azure-sdk-for-net">developer docs</a>.</p>
+<h2 id="getting-started">Getting started</h2>
+<p>To get started with a library, see the README.md file located in the library's project folder. You can find these library folders grouped by service in the /sdk directory.</p>
+<p>For tutorials, samples, quick starts, and other documentation, go to <a href="https://docs.microsoft.com/dotnet/azure/">Azure for .NET Developers</a>.</p>
+<h2 id="packages-available">Packages available</h2>
+<p>Each service might have a number of libraries available from each of the following categories:</p>
+<ul>
+<li><a href="#client-new-releases">Client - New Releases</a></li>
+<li><a href="#client-previous-versions">Client - Previous Versions</a></li>
+<li><a href="#management-new-releases">Management - New Releases</a></li>
+<li><a href="#management-previous-versions">Management - Previous Versions</a></li>
+</ul>
+<h3 id="client-new-releases">Client: New Releases</h3>
+<p>New wave of packages that we are announcing as <strong>GA</strong> and several that are currently releasing in <strong>preview</strong>. These libraries follow the <a href="https://azure.github.io/azure-sdk/dotnet/guidelines/">Azure SDK Design Guidelines for .NET</a> and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features at <a href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md">Azure.Core</a>.</p>
+<p>These new client libraries can be identified by the naming used for their folder, package, and namespace. Each will start with <code>Azure</code>, followed by the service category, and then the name of the service. For example <code>Azure.Storage.Blobs</code>.</p>
+<p>For a complete list of available packages, please see the <a href="https://azure.github.io/azure-sdk/releases/latest/dotnet.html">latest available packages</a> page.</p>
+<blockquote>
+<p>NOTE: If you need to ensure your code is ready for production we strongly recommend using one of the stable, non-preview libraries.</p>
+</blockquote>
+<h3 id="client-previous-versions">Client: Previous Versions</h3>
+<p>Last stable versions of packages that are production-ready. These libraries provide similar functionalities to the preview packages, as they allow you to use and consume existing resources and interact with them, for example: upload a storage blob. Stable library directories typically contain 'Microsoft.Azure' in their names, e.g. 'Microsoft.Azure.KeyVault'. They might not implement the <a href="https://azure.github.io/azure-sdk/dotnet_introduction.html">guidelines</a> or have the same feature set as the November releases. They do however offer wider coverage of services.</p>
+<h3 id="management-new-releases">Management: New Releases</h3>
+<p>A new set of management libraries that follow the <a href="https://azure.github.io/azure-sdk/dotnet_introduction.html">Azure SDK Design Guidelines for .NET</a> and based on <a href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core">Azure.Core libraries</a> are now in Public Preview. These new libraries provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more. You can find the list of new packages <a href="https://azure.github.io/azure-sdk/releases/latest/dotnet.html">on this page</a>.</p>
+<p>To get started with these new libraries, please see the <a href="https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md">quickstart guide here</a>. These new libraries can be identified by namespaces that start with <code>Azure.ResourceManager</code>, e.g. <code>Azure.ResourceManager.Network</code></p>
+<blockquote>
+<p>NOTE: If you need to ensure your code is ready for production use one of the stable, non-preview libraries.</p>
+</blockquote>
+<h3 id="management-previous-versions">Management: Previous Versions</h3>
+<p>For a complete list of management libraries which enable you to provision and manage Azure resources, please check <a href="https://azure.github.io/azure-sdk/releases/latest/all/dotnet.html">here</a>. They might not have the same feature set as the new releases but they do offer wider coverage of services. Previous versions of management libraries can be identified by namespaces that start with <code>Microsoft.Azure.Management</code>, e.g. <code>Microsoft.Azure.Management.Network</code></p>
+<p>Documentation and code samples for these libraries can be found <a href="https://azure.github.io/azure-sdk-for-net">here</a>.</p>
+<h2 id="need-help">Need help?</h2>
+<ul>
+<li>For reference documentation visit the <a href="https://aka.ms/net-docs">Azure SDK for .NET API Reference</a>.</li>
+<li>For tutorials, samples, quick starts, and other documentation, go to <a href="https://docs.microsoft.com/dotnet/azure/">Azure for .NET Developers</a>.</li>
+<li>File an issue via <a href="https://github.com/Azure/azure-sdk-for-net/issues/new/choose">Github Issues</a>.</li>
+<li>Check <a href="https://stackoverflow.com/questions/tagged/azure+.net">previous questions</a> or ask new ones on StackOverflow using <code>azure</code> and <code>.net</code> tags.</li>
+</ul>
+<h3 id="community">Community</h3>
+<ul>
+<li>Chat with other community members <a href="https://gitter.im/azure/azure-sdk-for-net?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/azure/azure-sdk-for-net"></a></li>
+</ul>
+<h3 id="reporting-security-issues-and-security-bugs">Reporting security issues and security bugs</h3>
+<p>Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) <a href="mailto:secure@microsoft.com">secure@microsoft.com</a>. You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the MSRC PGP key, can be found in the <a href="https://www.microsoft.com/msrc/faqs-report-an-issue">Security TechCenter</a>.</p>
+<h2 id="we-want-your-thoughts">We want your thoughts!</h2>
+<h3 id="feature-requests">Feature Requests</h3>
+<p>What features are important to you?  You can let us know by looking at our open <a href="https://github.com/Azure/azure-sdk-for-net/issues?q=is%3Aopen+label%3Afeature-request+sort%3Areactions-%2B1-desc">feature requests</a> and sharing your thoughts by giving the issue a thumbs up or thumbs down.  (Note the list is sorted by number of thumbs up in descending order.)</p>
+<h3 id="design-discussions">Design Discussions</h3>
+<p>We would love to incorporate the community's input into our library design process. Here's a list of <a href="https://github.com/Azure/azure-sdk-for-net/labels/design-discussion">design discussions</a> that we're currently having. Participate in the discussions by leaving your comments in the issue!</p>
+<h2 id="contributing">Contributing</h2>
+<p>For details on contributing to this repository, see the <a href="https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md">contributing guide</a>.</p>
+<p>This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit
+<a href="https://cla.microsoft.com">https://cla.microsoft.com</a>.</p>
+<p>When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repositories using our CLA.</p>
+<p>This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open Source Code of Conduct</a>. For more information see the <a href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct FAQ</a> or contact <a href="mailto:opencode@microsoft.com">opencode@microsoft.com</a> with any additional questions or comments.</p>
+<p><img src="https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2FREADME.png" alt="Impressions"></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Azure SDK for .NET
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>
