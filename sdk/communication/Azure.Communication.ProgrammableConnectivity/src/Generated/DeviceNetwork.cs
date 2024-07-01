@@ -51,7 +51,7 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Retrieves the network a given device is on. Returns network in a networkCode format that can be used for other APIs. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Identifier for the network to be queried. </param>
+        /// <param name="networkIdentifier"> The <see cref="NetworkIdentifier"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="networkIdentifier"/> is null. </exception>
         /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='RetrieveAsync(string,NetworkIdentifier,CancellationToken)']/*" />
@@ -68,7 +68,7 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Retrieves the network a given device is on. Returns network in a networkCode format that can be used for other APIs. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Identifier for the network to be queried. </param>
+        /// <param name="networkIdentifier"> The <see cref="NetworkIdentifier"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="networkIdentifier"/> is null. </exception>
         /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='Retrieve(string,NetworkIdentifier,CancellationToken)']/*" />

@@ -62,7 +62,7 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies the phone number (MSISDN) associated with a device. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="numberVerificationWithCodeContent"> Request to verify number of device - second call. </param>
+        /// <param name="numberVerificationWithCodeContent"> The <see cref="NumberVerificationWithCodeContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="numberVerificationWithCodeContent"/> is null. </exception>
         /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCodeAsync(string,NumberVerificationWithCodeContent,CancellationToken)']/*" />
@@ -79,7 +79,7 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies the phone number (MSISDN) associated with a device. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="numberVerificationWithCodeContent"> Request to verify number of device - second call. </param>
+        /// <param name="numberVerificationWithCodeContent"> The <see cref="NumberVerificationWithCodeContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="numberVerificationWithCodeContent"/> is null. </exception>
         /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCode(string,NumberVerificationWithCodeContent,CancellationToken)']/*" />

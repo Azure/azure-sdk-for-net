@@ -66,7 +66,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Sends a notification message from Business to User. </summary>
-        /// <param name="notificationContent"> Details of the message to send. </param>
+        /// <param name="notificationContent"> The <see cref="NotificationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(NotificationContent,CancellationToken)']/*" />
@@ -81,7 +81,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Sends a notification message from Business to User. </summary>
-        /// <param name="notificationContent"> Details of the message to send. </param>
+        /// <param name="notificationContent"> The <see cref="NotificationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(NotificationContent,CancellationToken)']/*" />
