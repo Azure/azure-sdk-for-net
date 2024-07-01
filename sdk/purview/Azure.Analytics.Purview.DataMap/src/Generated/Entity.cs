@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Purview Data Map Service is a fully managed cloud service whose users can discover the data sources they need and understand the data sources they find. At the same time, Data Map helps organizations get more value from their existing investments. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         internal Entity(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
@@ -60,10 +60,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// int&gt;&gt;.
         /// For each contact type, the maximum number of contacts is 20.
         /// </summary>
-        /// <param name="atlasEntityWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="atlasEntityWithExtInfo"> The <see cref="AtlasEntityWithExtInfo"/> to use. </param>
         /// <param name="businessAttributeUpdateBehavior">
         /// Used to define the update behavior for business attributes when updating
         /// entities.
@@ -94,10 +91,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// int&gt;&gt;.
         /// For each contact type, the maximum number of contacts is 20.
         /// </summary>
-        /// <param name="atlasEntityWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="atlasEntityWithExtInfo"> The <see cref="AtlasEntityWithExtInfo"/> to use. </param>
         /// <param name="businessAttributeUpdateBehavior">
         /// Used to define the update behavior for business attributes when updating
         /// entities.
@@ -349,10 +343,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// For each contact type, the maximum number of contacts
         /// is 20.
         /// </summary>
-        /// <param name="atlasEntitiesWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="atlasEntitiesWithExtInfo"> The <see cref="AtlasEntitiesWithExtInfo"/> to use. </param>
         /// <param name="collectionId">
         /// The collection where entities will be moved to. Only specify a value if you
         /// need to move an entity to another collection.
@@ -384,10 +375,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// For each contact type, the maximum number of contacts
         /// is 20.
         /// </summary>
-        /// <param name="atlasEntitiesWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="atlasEntitiesWithExtInfo"> The <see cref="AtlasEntitiesWithExtInfo"/> to use. </param>
         /// <param name="collectionId">
         /// The collection where entities will be moved to. Only specify a value if you
         /// need to move an entity to another collection.
@@ -632,7 +620,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
-        /// <param name="classificationAssociateConfig"> The request payload for classification association. </param>
+        /// <param name="classificationAssociateConfig"> The <see cref="ClassificationAssociateConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateConfig"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)']/*" />
@@ -647,7 +635,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
-        /// <param name="classificationAssociateConfig"> The request payload for classification association. </param>
+        /// <param name="classificationAssociateConfig"> The <see cref="ClassificationAssociateConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateConfig"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(ClassificationAssociateConfig,CancellationToken)']/*" />
@@ -1868,10 +1856,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="atlasEntityWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="atlasEntityWithExtInfo"> The <see cref="AtlasEntityWithExtInfo"/> to use. </param>
         /// <param name="attribute">
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
@@ -1910,10 +1895,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="atlasEntityWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="atlasEntityWithExtInfo"> The <see cref="AtlasEntityWithExtInfo"/> to use. </param>
         /// <param name="attribute">
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
@@ -2588,7 +2570,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Set classifications on entities in bulk. </summary>
-        /// <param name="atlasEntityHeaders"> An instance of an entity header map. </param>
+        /// <param name="atlasEntityHeaders"> The <see cref="AtlasEntityHeaders"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityHeaders"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassificationsAsync(AtlasEntityHeaders,CancellationToken)']/*" />
@@ -2611,7 +2593,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Set classifications on entities in bulk. </summary>
-        /// <param name="atlasEntityHeaders"> An instance of an entity header map. </param>
+        /// <param name="atlasEntityHeaders"> The <see cref="AtlasEntityHeaders"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityHeaders"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassifications(AtlasEntityHeaders,CancellationToken)']/*" />
@@ -3634,7 +3616,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
-        /// <param name="businessMetadataOptions"> Business metadata to send to the service. </param>
+        /// <param name="businessMetadataOptions"> The <see cref="BusinessMetadataOptions"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataOptions"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)']/*" />
@@ -3649,7 +3631,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
-        /// <param name="businessMetadataOptions"> Business metadata to send to the service. </param>
+        /// <param name="businessMetadataOptions"> The <see cref="BusinessMetadataOptions"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataOptions"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)']/*" />
@@ -4661,7 +4643,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
-        /// <param name="moveEntitiesConfig"> MoveEntitiesOptions. </param>
+        /// <param name="moveEntitiesConfig"> The <see cref="MoveEntitiesConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesConfig"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)']/*" />
@@ -4678,7 +4660,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
-        /// <param name="moveEntitiesConfig"> MoveEntitiesOptions. </param>
+        /// <param name="moveEntitiesConfig"> The <see cref="MoveEntitiesConfig"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesConfig"/> is null. </exception>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)']/*" />
@@ -5328,7 +5310,7 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("content-type", contentType);
             request.Content = content;
             return message;
         }

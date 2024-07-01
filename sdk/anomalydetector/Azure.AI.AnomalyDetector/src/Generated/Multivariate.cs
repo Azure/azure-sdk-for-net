@@ -56,10 +56,6 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
         /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// For asynchronous inference, get a multivariate anomaly detection result based on the
-        /// resultId value that the BatchDetectAnomaly API returns.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='GetMultivariateBatchDetectionResultAsync(Guid,CancellationToken)']/*" />
         public virtual async Task<Response<MultivariateDetectionResult>> GetMultivariateBatchDetectionResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
@@ -71,10 +67,6 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Get Multivariate Anomaly Detection Result. </summary>
         /// <param name="resultId"> ID of a batch detection result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// For asynchronous inference, get a multivariate anomaly detection result based on the
-        /// resultId value that the BatchDetectAnomaly API returns.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='GetMultivariateBatchDetectionResult(Guid,CancellationToken)']/*" />
         public virtual Response<MultivariateDetectionResult> GetMultivariateBatchDetectionResult(Guid resultId, CancellationToken cancellationToken = default)
         {
@@ -159,18 +151,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelInfo"> Model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
-        /// <remarks>
-        /// Create and train a multivariate anomaly detection model. The request must
-        /// include a source parameter to indicate an Azure Blob
-        /// Storage URI that's accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
-        /// Storage folder that contains multiple CSV files, where each CSV file has
-        /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
-        /// time stamp column.
-        /// The model object will be created and returned in the response, but the
-        /// training process happens asynchronously. To check the training status, call
-        /// GetMultivariateModel with the modelId value and check the status field in the
-        /// modelInfo object.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='TrainMultivariateModelAsync(ModelInfo,CancellationToken)']/*" />
         public virtual async Task<Response<AnomalyDetectionModel>> TrainMultivariateModelAsync(ModelInfo modelInfo, CancellationToken cancellationToken = default)
         {
@@ -186,18 +166,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="modelInfo"> Model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
-        /// <remarks>
-        /// Create and train a multivariate anomaly detection model. The request must
-        /// include a source parameter to indicate an Azure Blob
-        /// Storage URI that's accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
-        /// Storage folder that contains multiple CSV files, where each CSV file has
-        /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
-        /// time stamp column.
-        /// The model object will be created and returned in the response, but the
-        /// training process happens asynchronously. To check the training status, call
-        /// GetMultivariateModel with the modelId value and check the status field in the
-        /// modelInfo object.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='TrainMultivariateModel(ModelInfo,CancellationToken)']/*" />
         public virtual Response<AnomalyDetectionModel> TrainMultivariateModel(ModelInfo modelInfo, CancellationToken cancellationToken = default)
         {
@@ -364,10 +332,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Get detailed information about the multivariate model, including the training status
-        /// and variables used in the model.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='GetMultivariateModelAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AnomalyDetectionModel>> GetMultivariateModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
@@ -383,10 +347,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Get detailed information about the multivariate model, including the training status
-        /// and variables used in the model.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='GetMultivariateModel(string,CancellationToken)']/*" />
         public virtual Response<AnomalyDetectionModel> GetMultivariateModel(string modelId, CancellationToken cancellationToken = default)
         {
@@ -483,14 +443,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
-        /// and inference data. The input schema should be the same with the training
-        /// request. The request will finish asynchronously and return a resultId value to
-        /// query the detection result. The request should be a source link to indicate an
-        /// externally accessible Azure Storage URI that either points to an Azure Blob
-        /// Storage folder or points to a CSV file in Azure Blob Storage.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='DetectMultivariateBatchAnomalyAsync(string,MultivariateBatchDetectionOptions,CancellationToken)']/*" />
         public virtual async Task<Response<MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
@@ -509,14 +461,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
-        /// and inference data. The input schema should be the same with the training
-        /// request. The request will finish asynchronously and return a resultId value to
-        /// query the detection result. The request should be a source link to indicate an
-        /// externally accessible Azure Storage URI that either points to an Azure Blob
-        /// Storage folder or points to a CSV file in Azure Blob Storage.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='DetectMultivariateBatchAnomaly(string,MultivariateBatchDetectionOptions,CancellationToken)']/*" />
         public virtual Response<MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, MultivariateBatchDetectionOptions options, CancellationToken cancellationToken = default)
         {
@@ -619,12 +563,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
-        /// and inference data. The inference data should be put into the request body in
-        /// JSON format. The request will finish synchronously and return the detection
-        /// immediately in the response body.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='DetectMultivariateLastAnomalyAsync(string,MultivariateLastDetectionOptions,CancellationToken)']/*" />
         public virtual async Task<Response<MultivariateLastDetectionResult>> DetectMultivariateLastAnomalyAsync(string modelId, MultivariateLastDetectionOptions options, CancellationToken cancellationToken = default)
         {
@@ -643,12 +581,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Submit a multivariate anomaly detection task with the modelId value of a trained model
-        /// and inference data. The inference data should be put into the request body in
-        /// JSON format. The request will finish synchronously and return the detection
-        /// immediately in the response body.
-        /// </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='DetectMultivariateLastAnomaly(string,MultivariateLastDetectionOptions,CancellationToken)']/*" />
         public virtual Response<MultivariateLastDetectionResult> DetectMultivariateLastAnomaly(string modelId, MultivariateLastDetectionOptions options, CancellationToken cancellationToken = default)
         {
@@ -749,7 +681,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='GetMultivariateModelsAsync(int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<AnomalyDetectionModel> GetMultivariateModelsAsync(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
         {
@@ -763,7 +694,6 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> List models of a resource. </remarks>
         /// <include file="Docs/Multivariate.xml" path="doc/members/member[@name='GetMultivariateModels(int?,int?,CancellationToken)']/*" />
         public virtual Pageable<AnomalyDetectionModel> GetMultivariateModels(int? skip = null, int? maxCount = null, CancellationToken cancellationToken = default)
         {

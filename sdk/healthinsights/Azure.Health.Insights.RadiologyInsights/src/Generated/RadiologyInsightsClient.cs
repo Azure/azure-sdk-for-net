@@ -63,10 +63,9 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Create Radiology Insights job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="radiologyInsightsData"> Contains the list of patients, and configuration data. </param>
+        /// <param name="radiologyInsightsData"> The <see cref="RadiologyInsightsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="radiologyInsightsData"/> is null. </exception>
-        /// <remarks> Creates a Radiology Insights job with the given request body. </remarks>
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,RadiologyInsightsData,CancellationToken)']/*" />
         public virtual async Task<Operation<RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(WaitUntil waitUntil, RadiologyInsightsData radiologyInsightsData, CancellationToken cancellationToken = default)
         {
@@ -80,10 +79,9 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Create Radiology Insights job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="radiologyInsightsData"> Contains the list of patients, and configuration data. </param>
+        /// <param name="radiologyInsightsData"> The <see cref="RadiologyInsightsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="radiologyInsightsData"/> is null. </exception>
-        /// <remarks> Creates a Radiology Insights job with the given request body. </remarks>
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,RadiologyInsightsData,CancellationToken)']/*" />
         public virtual Operation<RadiologyInsightsInferenceResult> InferRadiologyInsights(WaitUntil waitUntil, RadiologyInsightsData radiologyInsightsData, CancellationToken cancellationToken = default)
         {

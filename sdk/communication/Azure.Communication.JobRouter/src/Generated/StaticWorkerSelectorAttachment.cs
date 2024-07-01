@@ -28,6 +28,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> The worker selector to attach. </summary>
-        public RouterWorkerSelector WorkerSelector { get; }
+        public RouterWorkerSelector WorkerSelector { get; set; }
     }
 }

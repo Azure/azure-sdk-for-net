@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// <summary> Initializes a new instance of OrganizationsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> Azure Resource Manager url. </param>
+        /// <param name="endpoint"> Service host. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public OrganizationsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(organizationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", accept);
             _userAgent.Apply(message);
             return message;
         }
@@ -161,8 +161,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(organizationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", accept);
+            request.Headers.Add("Content-Type", contentType);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
@@ -253,8 +253,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(organizationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", accept);
+            request.Headers.Add("Content-Type", contentType);
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(organizationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", accept);
             _userAgent.Apply(message);
             return message;
         }
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/providers/Informatica.DataManagement/organizations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", accept);
             _userAgent.Apply(message);
             return message;
         }
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/providers/Informatica.DataManagement/organizations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", accept);
             _userAgent.Apply(message);
             return message;
         }
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/getServerlessMetadata", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", accept);
             _userAgent.Apply(message);
             return message;
         }
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/getAllServerlessRuntimes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", accept);
             _userAgent.Apply(message);
             return message;
         }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", accept);
             _userAgent.Apply(message);
             return message;
         }
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", accept);
             _userAgent.Apply(message);
             return message;
         }

@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FhirR4ContactPoint"/>. </summary>
-        public FhirR4ContactPoint()
+        internal FhirR4ContactPoint()
         {
         }
 
@@ -71,14 +71,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> phone | fax | email | pager | url | sms | other. </summary>
-        public ContactPointSystem? System { get; set; }
+        public ContactPointSystem? System { get; }
         /// <summary> The actual contact point details. </summary>
-        public string Value { get; set; }
+        public string Value { get; }
         /// <summary> home | work | temp | old | mobile - purpose of this contact point. </summary>
-        public ContactPointUse? Use { get; set; }
+        public ContactPointUse? Use { get; }
         /// <summary> Specify preferred order of use (1 = highest). </summary>
-        public int? Rank { get; set; }
+        public int? Rank { get; }
         /// <summary> Time period when the contact point was/is in use. </summary>
-        public FhirR4Period Period { get; set; }
+        public FhirR4Period Period { get; }
     }
 }

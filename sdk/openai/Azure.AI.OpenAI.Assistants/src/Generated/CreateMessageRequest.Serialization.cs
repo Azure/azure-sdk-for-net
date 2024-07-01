@@ -98,8 +98,8 @@ namespace Azure.AI.OpenAI.Assistants
             }
             MessageRole role = default;
             string content = default;
-            IList<string> fileIds = default;
-            IDictionary<string, string> metadata = default;
+            IReadOnlyList<string> fileIds = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

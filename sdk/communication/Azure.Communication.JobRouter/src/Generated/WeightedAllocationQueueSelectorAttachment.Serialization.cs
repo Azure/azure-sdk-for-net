@@ -73,7 +73,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            IReadOnlyList<QueueWeightedAllocation> allocations = default;
+            IList<QueueWeightedAllocation> allocations = default;
             QueueSelectorAttachmentKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

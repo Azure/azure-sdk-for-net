@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="CodeTransparencyClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="endpoint"> Code Transparency Service. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         public static IAzureClientBuilder<CodeTransparencyClient, CodeTransparencyClientOptions> AddCodeTransparencyClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder

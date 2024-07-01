@@ -51,7 +51,7 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies whether a device is within a specified location area, defined as an accuracy (radius) around a point, specified by longitude and latitude. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="deviceLocationVerificationContent"> Request to verify Location. </param>
+        /// <param name="deviceLocationVerificationContent"> The <see cref="DeviceLocationVerificationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="deviceLocationVerificationContent"/> is null. </exception>
         /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='VerifyAsync(string,DeviceLocationVerificationContent,CancellationToken)']/*" />
@@ -68,7 +68,7 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies whether a device is within a specified location area, defined as an accuracy (radius) around a point, specified by longitude and latitude. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="deviceLocationVerificationContent"> Request to verify Location. </param>
+        /// <param name="deviceLocationVerificationContent"> The <see cref="DeviceLocationVerificationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="deviceLocationVerificationContent"/> is null. </exception>
         /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='Verify(string,DeviceLocationVerificationContent,CancellationToken)']/*" />

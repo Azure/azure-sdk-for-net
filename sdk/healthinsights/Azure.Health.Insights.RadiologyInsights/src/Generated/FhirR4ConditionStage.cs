@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FhirR4ConditionStage"/>. </summary>
-        public FhirR4ConditionStage()
+        internal FhirR4ConditionStage()
         {
         }
 
@@ -65,8 +65,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Simple summary (disease specific). </summary>
-        public FhirR4CodeableConcept Summary { get; set; }
+        public FhirR4CodeableConcept Summary { get; }
         /// <summary> Kind of staging. </summary>
-        public FhirR4CodeableConcept Type { get; set; }
+        public FhirR4CodeableConcept Type { get; }
     }
 }

@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
-        public RejectRequest(IEnumerable<string> lockTokens)
+        internal RejectRequest(IEnumerable<string> lockTokens)
         {
             Argument.AssertNotNull(lockTokens, nameof(lockTokens));
 
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RejectRequest(IList<string> lockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RejectRequest(IReadOnlyList<string> lockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LockTokens = lockTokens;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary> Array of lock tokens. </summary>
-        public IList<string> LockTokens { get; }
+        public IReadOnlyList<string> LockTokens { get; }
     }
 }
