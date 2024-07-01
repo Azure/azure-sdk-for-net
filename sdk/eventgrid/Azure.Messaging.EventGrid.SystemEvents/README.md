@@ -22,6 +22,7 @@ dotnet add package Azure.Messaging.EventGrid.SystemEvents --prerelease
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://docs.microsoft.com/cli/azure).
 
 ### Receiving and Deserializing Events
+
 There are several different Azure services that act as [event handlers](https://docs.microsoft.com/azure/event-grid/event-handlers).
 
 Note: if using Webhooks for event delivery of the *Event Grid schema*, Event Grid requires you to prove ownership of your Webhook endpoint before it starts delivering events to that endpoint. At the time of event subscription creation, Event Grid sends a subscription validation event to your endpoint, as seen below. Learn more about completing the handshake here: [Webhook event delivery](https://docs.microsoft.com/azure/event-grid/webhook-event-delivery). For the *CloudEvents schema*, the service validates the connection using the HTTP options method. Learn more here: [CloudEvents validation](https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection).
@@ -34,7 +35,10 @@ var bytes = await httpContent.ReadAsByteArrayAsync();
 CloudEvent[] cloudEvents = CloudEvent.ParseMany(new BinaryData(bytes));
 ```
 #### Deserializing event data
-From here, one can access the event data by deserializing to a specific type by calling `ToObjectFromJson<T>()` on the `Data` property. In order to deserialize to the correct type, the `EventType` property (`Type` for CloudEvents) helps distinguish between different events. Custom event data should be deserialized using the generic method `ToObjectFromJson<T>()`. There is also an extension method `ToObject<T>()` that accepts a custom `ObjectSerializer` to deserialize the event data.
+
+##### Deserializing using `ToObjectFromJson<T>()`:
+
+From here, one can access the event data by deserializing to a specific type by calling `ToObjectFromJson<T>()` on the `Data` property. In order to deserialize to the correct type, the `Type` property helps distinguish between different events. Custom event data should be deserialized using the generic method `ToObjectFromJson<T>()`. There is also an extension method `ToObject<T>()` that accepts a custom `ObjectSerializer` to deserialize the event data.
 
 ```C# Snippet:SystemEventsDeserializePayloadUsingGenericGetData
 foreach (CloudEvent cloudEvent in cloudEvents)
@@ -60,7 +64,7 @@ foreach (CloudEvent cloudEvent in cloudEvents)
 }
 ```
 
-Using `TryGetSystemEventData()`:
+##### Deserializing using `TryGetSystemEventData()`:
 
 If expecting mostly system events, it may be cleaner to switch on `TryGetSystemEventData()` and use pattern matching to act on the individual events. If an event is not a system event, the method will return false and the out parameter will be null.
 
