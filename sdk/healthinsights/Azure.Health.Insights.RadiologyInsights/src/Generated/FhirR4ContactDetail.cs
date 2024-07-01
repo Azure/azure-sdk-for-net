@@ -14,7 +14,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     public partial class FhirR4ContactDetail : FhirR4Element
     {
         /// <summary> Initializes a new instance of <see cref="FhirR4ContactDetail"/>. </summary>
-        public FhirR4ContactDetail()
+        internal FhirR4ContactDetail()
         {
             Telecom = new ChangeTrackingList<FhirR4ContactPoint>();
         }
@@ -25,15 +25,15 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of an individual to contact. </param>
         /// <param name="telecom"> Contact details for individual or organization. </param>
-        internal FhirR4ContactDetail(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IList<FhirR4ContactPoint> telecom) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4ContactDetail(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IReadOnlyList<FhirR4ContactPoint> telecom) : base(id, extension, serializedAdditionalRawData)
         {
             Name = name;
             Telecom = telecom;
         }
 
         /// <summary> Name of an individual to contact. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Contact details for individual or organization. </summary>
-        public IList<FhirR4ContactPoint> Telecom { get; }
+        public IReadOnlyList<FhirR4ContactPoint> Telecom { get; }
     }
 }

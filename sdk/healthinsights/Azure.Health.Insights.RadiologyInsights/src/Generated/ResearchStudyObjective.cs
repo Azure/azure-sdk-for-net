@@ -48,7 +48,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="ResearchStudyObjective"/>. </summary>
         /// <param name="name"> Label for the objective. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResearchStudyObjective(string name)
+        internal ResearchStudyObjective(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -72,8 +72,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Label for the objective. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> primary | secondary | exploratory. </summary>
-        public FhirR4CodeableConcept Type { get; set; }
+        public FhirR4CodeableConcept Type { get; }
     }
 }

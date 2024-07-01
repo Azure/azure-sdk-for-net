@@ -103,21 +103,9 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Create a new detect liveness session. </summary>
-        /// <param name="createLivenessSessionContent"> Request for creating liveness session. </param>
+        /// <param name="createLivenessSessionContent"> The <see cref="CreateLivenessSessionContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createLivenessSessionContent"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLiveness/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt; Client access can be revoked by deleting the session using the Delete Liveness Session operation. To retrieve a result, use the Get Liveness Session. To audit the individual requests that a client has made to your resource, use the List Liveness Session Audit Entries.
-        /// </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSessionAsync(CreateLivenessSessionContent,CancellationToken)']/*" />
         public virtual async Task<Response<CreateLivenessSessionResult>> CreateLivenessSessionAsync(CreateLivenessSessionContent createLivenessSessionContent, CancellationToken cancellationToken = default)
         {
@@ -130,21 +118,9 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Create a new detect liveness session. </summary>
-        /// <param name="createLivenessSessionContent"> Request for creating liveness session. </param>
+        /// <param name="createLivenessSessionContent"> The <see cref="CreateLivenessSessionContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createLivenessSessionContent"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLiveness/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt; Client access can be revoked by deleting the session using the Delete Liveness Session operation. To retrieve a result, use the Get Liveness Session. To audit the individual requests that a client has made to your resource, use the List Liveness Session Audit Entries.
-        /// </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSession(CreateLivenessSessionContent,CancellationToken)']/*" />
         public virtual Response<CreateLivenessSessionResult> CreateLivenessSession(CreateLivenessSessionContent createLivenessSessionContent, CancellationToken cancellationToken = default)
         {
@@ -420,11 +396,6 @@ namespace Azure.AI.Vision.Face
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// List sessions from the last sessionId greater than the 'start'.
-        ///
-        /// The result should be ordered by sessionId in ascending order.
-        /// </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionsAsync(string,int?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<LivenessSessionItem>>> GetLivenessSessionsAsync(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -445,11 +416,6 @@ namespace Azure.AI.Vision.Face
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// List sessions from the last sessionId greater than the 'start'.
-        ///
-        /// The result should be ordered by sessionId in ascending order.
-        /// </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessions(string,int?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<LivenessSessionItem>> GetLivenessSessions(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -675,29 +641,9 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Create a new liveness session with verify. Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call. </summary>
-        /// <param name="createLivenessSessionContent"> Request for creating liveness session. </param>
+        /// <param name="createLivenessSessionContent"> The <see cref="CreateLivenessSessionContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createLivenessSessionContent"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLivenessWithVerify/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Client access can be revoked by deleting the session using the Delete Liveness With Verify Session operation.
-        /// &gt;   * To retrieve a result, use the Get Liveness With Verify Session.
-        /// &gt;   * To audit the individual requests that a client has made to your resource, use the List Liveness With Verify Session Audit Entries.
-        ///
-        /// Alternative Option: Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call.
-        /// &gt; [!NOTE]
-        /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
-        /// </remarks>
         internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(CreateLivenessSessionContent createLivenessSessionContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(createLivenessSessionContent, nameof(createLivenessSessionContent));
@@ -709,29 +655,9 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Create a new liveness session with verify. Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call. </summary>
-        /// <param name="createLivenessSessionContent"> Request for creating liveness session. </param>
+        /// <param name="createLivenessSessionContent"> The <see cref="CreateLivenessSessionContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createLivenessSessionContent"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLivenessWithVerify/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Client access can be revoked by deleting the session using the Delete Liveness With Verify Session operation.
-        /// &gt;   * To retrieve a result, use the Get Liveness With Verify Session.
-        /// &gt;   * To audit the individual requests that a client has made to your resource, use the List Liveness With Verify Session Audit Entries.
-        ///
-        /// Alternative Option: Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call.
-        /// &gt; [!NOTE]
-        /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
-        /// </remarks>
         internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(CreateLivenessSessionContent createLivenessSessionContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(createLivenessSessionContent, nameof(createLivenessSessionContent));
@@ -819,27 +745,9 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Create a new liveness session with verify. Provide the verify image during session creation. </summary>
-        /// <param name="createLivenessWithVerifySessionContent"> Request of liveness with verify session creation. </param>
+        /// <param name="createLivenessWithVerifySessionContent"> The <see cref="CreateLivenessWithVerifySessionContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createLivenessWithVerifySessionContent"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLivenessWithVerify/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Client access can be revoked by deleting the session using the Delete Liveness With Verify Session operation.
-        /// &gt;   * To retrieve a result, use the Get Liveness With Verify Session.
-        /// &gt;   * To audit the individual requests that a client has made to your resource, use the List Liveness With Verify Session Audit Entries.
-        ///
-        /// Recommended Option: VerifyImage is provided during session creation.
-        /// </remarks>
         internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionWithVerifyImageAsync(CreateLivenessWithVerifySessionContent createLivenessWithVerifySessionContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(createLivenessWithVerifySessionContent, nameof(createLivenessWithVerifySessionContent));
@@ -851,27 +759,9 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Create a new liveness session with verify. Provide the verify image during session creation. </summary>
-        /// <param name="createLivenessWithVerifySessionContent"> Request of liveness with verify session creation. </param>
+        /// <param name="createLivenessWithVerifySessionContent"> The <see cref="CreateLivenessWithVerifySessionContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createLivenessWithVerifySessionContent"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLivenessWithVerify/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Client access can be revoked by deleting the session using the Delete Liveness With Verify Session operation.
-        /// &gt;   * To retrieve a result, use the Get Liveness With Verify Session.
-        /// &gt;   * To audit the individual requests that a client has made to your resource, use the List Liveness With Verify Session Audit Entries.
-        ///
-        /// Recommended Option: VerifyImage is provided during session creation.
-        /// </remarks>
         internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySessionWithVerifyImage(CreateLivenessWithVerifySessionContent createLivenessWithVerifySessionContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(createLivenessWithVerifySessionContent, nameof(createLivenessWithVerifySessionContent));
@@ -1146,11 +1036,6 @@ namespace Azure.AI.Vision.Face
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// List sessions from the last sessionId greater than the "start".
-        ///
-        /// The result should be ordered by sessionId in ascending order.
-        /// </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionsAsync(string,int?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<LivenessSessionItem>>> GetLivenessWithVerifySessionsAsync(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -1171,11 +1056,6 @@ namespace Azure.AI.Vision.Face
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// List sessions from the last sessionId greater than the "start".
-        ///
-        /// The result should be ordered by sessionId in ascending order.
-        /// </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessions(string,int?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<LivenessSessionItem>> GetLivenessWithVerifySessions(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -1526,7 +1406,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/detectLivenessWithVerify/singleModal/sessions", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("content-type", contentType);
             request.Content = content;
             return message;
         }

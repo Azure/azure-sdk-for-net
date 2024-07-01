@@ -63,10 +63,9 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         /// <summary> Create Trial Matcher job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="trialMatcherData"> The body of the Trial Matcher request. </param>
+        /// <param name="trialMatcherData"> The <see cref="TrialMatcherData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
-        /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
         public virtual async Task<Operation<TrialMatcherResults>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {
@@ -80,10 +79,9 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         /// <summary> Create Trial Matcher job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="trialMatcherData"> The body of the Trial Matcher request. </param>
+        /// <param name="trialMatcherData"> The <see cref="TrialMatcherData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
-        /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
         public virtual Operation<TrialMatcherResults> MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {

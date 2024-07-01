@@ -48,7 +48,7 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="DetectFromUrlRequest"/>. </summary>
         /// <param name="uri"> URL of input image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public DetectFromUrlRequest(Uri uri)
+        internal DetectFromUrlRequest(Uri uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
