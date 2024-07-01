@@ -29,7 +29,7 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
     // TODO: do we need this to be public?
     protected abstract ContinuationToken FirstPageToken { get; /*protected set;*/ }
 
-    public async Task<PageResult<T>> GetCurrentPage()
+    public async Task<PageResult<T>> GetCurrentPageAsync()
         => await GetPageAsync(_currentPageToken ?? FirstPageToken).ConfigureAwait(false);
 
     public async IAsyncEnumerable<T> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)

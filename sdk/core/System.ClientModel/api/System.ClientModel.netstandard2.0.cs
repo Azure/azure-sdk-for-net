@@ -18,7 +18,7 @@ namespace System.ClientModel
         protected AsyncPageCollection() { }
         protected abstract System.ClientModel.ContinuationToken FirstPageToken { get; }
         public System.Collections.Generic.IAsyncEnumerable<T> GetAllValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetCurrentPage() { throw null; }
+        public System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetCurrentPageAsync() { throw null; }
         protected System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetPageAsync(System.ClientModel.ContinuationToken pageToken) { throw null; }
         public abstract System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetPageAsyncCore(System.ClientModel.ContinuationToken pageToken);
         System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.PageResult<T>>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
