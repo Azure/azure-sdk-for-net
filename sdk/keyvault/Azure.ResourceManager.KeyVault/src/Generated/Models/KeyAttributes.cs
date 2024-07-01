@@ -51,29 +51,29 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyAttributes"/>. </summary>
-        /// <param name="enabled"> Determines whether or not the object is enabled. </param>
+        /// <param name="isEnabled"> Determines whether or not the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="recoveryLevel"> The deletion recovery level currently in effect for the object. If it contains 'Purgeable', then the object can be permanently deleted by a privileged user; otherwise, only the system can purge the object at the end of the retention interval. </param>
-        /// <param name="exportable"> Indicates if the private key can be exported. </param>
+        /// <param name="canExported"> Indicates if the private key can be exported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyAttributes(bool? enabled, long? notBefore, long? expires, long? created, long? updated, DeletionRecoveryLevel? recoveryLevel, bool? exportable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyAttributes(bool? isEnabled, long? notBefore, long? expires, long? created, long? updated, DeletionRecoveryLevel? recoveryLevel, bool? canExported, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             NotBefore = notBefore;
             Expires = expires;
             Created = created;
             Updated = updated;
             RecoveryLevel = recoveryLevel;
-            Exportable = exportable;
+            CanExported = canExported;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Determines whether or not the object is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Not before date in seconds since 1970-01-01T00:00:00Z. </summary>
         [WirePath("nbf")]
         public long? NotBefore { get; set; }
@@ -91,6 +91,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public DeletionRecoveryLevel? RecoveryLevel { get; }
         /// <summary> Indicates if the private key can be exported. </summary>
         [WirePath("exportable")]
-        public bool? Exportable { get; set; }
+        public bool? CanExported { get; set; }
     }
 }

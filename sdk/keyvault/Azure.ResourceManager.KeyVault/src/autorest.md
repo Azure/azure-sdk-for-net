@@ -124,6 +124,13 @@ rename-mapping:
   Trigger: KeyRotationTrigger
   Action: KeyRotationAction
   Key: KeyVaultKey
+  Key.properties.kty: keyType
+  KeyAttributes.enabled: isEnabled
+  KeyAttributes.exportable: canExported
+  KeyProperties.kty: keyType
+  ManagedHsmKeyAttributes.enabled: isEnabled
+  ManagedHsmKeyAttributes.exportable: canExported
+  ManagedHsmKeyProperties.kty: keyType
 
 prompted-enum-values: Default
 

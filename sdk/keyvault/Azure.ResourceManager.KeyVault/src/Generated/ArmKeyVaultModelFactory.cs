@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyProperties"/>. </summary>
         /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
+        /// <param name="keyType"> The type of the key. For valid values, see JsonWebKeyType. </param>
         /// <param name="keyOps"></param>
         /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
         /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
         /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
         /// <returns> A new <see cref="Models.KeyProperties"/> instance for mocking. </returns>
-        public static KeyProperties KeyProperties(KeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null)
+        public static KeyProperties KeyProperties(KeyAttributes attributes = null, JsonWebKeyType? keyType = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null)
         {
             keyOps ??= new List<JsonWebKeyOperation>();
 
             return new KeyProperties(
                 attributes,
-                kty,
+                keyType,
                 keyOps?.ToList(),
                 keySize,
                 curveName,
@@ -57,24 +57,24 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KeyAttributes"/>. </summary>
-        /// <param name="enabled"> Determines whether or not the object is enabled. </param>
+        /// <param name="isEnabled"> Determines whether or not the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="recoveryLevel"> The deletion recovery level currently in effect for the object. If it contains 'Purgeable', then the object can be permanently deleted by a privileged user; otherwise, only the system can purge the object at the end of the retention interval. </param>
-        /// <param name="exportable"> Indicates if the private key can be exported. </param>
+        /// <param name="canExported"> Indicates if the private key can be exported. </param>
         /// <returns> A new <see cref="Models.KeyAttributes"/> instance for mocking. </returns>
-        public static KeyAttributes KeyAttributes(bool? enabled = null, long? notBefore = null, long? expires = null, long? created = null, long? updated = null, DeletionRecoveryLevel? recoveryLevel = null, bool? exportable = null)
+        public static KeyAttributes KeyAttributes(bool? isEnabled = null, long? notBefore = null, long? expires = null, long? created = null, long? updated = null, DeletionRecoveryLevel? recoveryLevel = null, bool? canExported = null)
         {
             return new KeyAttributes(
-                enabled,
+                isEnabled,
                 notBefore,
                 expires,
                 created,
                 updated,
                 recoveryLevel,
-                exportable,
+                canExported,
                 serializedAdditionalRawData: null);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
+        /// <param name="keyType"> The type of the key. For valid values, see JsonWebKeyType. </param>
         /// <param name="keyOps"></param>
         /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
         /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultKeyData"/> instance for mocking. </returns>
-        public static KeyVaultKeyData KeyVaultKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        public static KeyVaultKeyData KeyVaultKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KeyAttributes attributes = null, JsonWebKeyType? keyType = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, RotationPolicy rotationPolicy = null, KeyReleasePolicy releasePolicy = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
         {
             keyOps ??= new List<JsonWebKeyOperation>();
             tags ??= new Dictionary<string, string>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 resourceType,
                 systemData,
                 attributes,
-                kty,
+                keyType,
                 keyOps?.ToList(),
                 keySize,
                 curveName,
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmKeyProperties"/>. </summary>
         /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
+        /// <param name="keyType"> The type of the key. For valid values, see JsonWebKeyType. </param>
         /// <param name="keyOps"></param>
         /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
         /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
@@ -151,13 +151,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
         /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
         /// <returns> A new <see cref="Models.ManagedHsmKeyProperties"/> instance for mocking. </returns>
-        public static ManagedHsmKeyProperties ManagedHsmKeyProperties(ManagedHsmKeyAttributes attributes = null, JsonWebKeyType? kty = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, ManagedHsmRotationPolicy rotationPolicy = null, ManagedHsmKeyReleasePolicy releasePolicy = null)
+        public static ManagedHsmKeyProperties ManagedHsmKeyProperties(ManagedHsmKeyAttributes attributes = null, JsonWebKeyType? keyType = null, IEnumerable<JsonWebKeyOperation> keyOps = null, int? keySize = null, JsonWebKeyCurveName? curveName = null, Uri keyUri = null, string keyUriWithVersion = null, ManagedHsmRotationPolicy rotationPolicy = null, ManagedHsmKeyReleasePolicy releasePolicy = null)
         {
             keyOps ??= new List<JsonWebKeyOperation>();
 
             return new ManagedHsmKeyProperties(
                 attributes,
-                kty,
+                keyType,
                 keyOps?.ToList(),
                 keySize,
                 curveName,
@@ -169,24 +169,24 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedHsmKeyAttributes"/>. </summary>
-        /// <param name="enabled"> Determines whether or not the object is enabled. </param>
+        /// <param name="isEnabled"> Determines whether or not the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="recoveryLevel"> The deletion recovery level currently in effect for the object. If it contains 'Purgeable', then the object can be permanently deleted by a privileged user; otherwise, only the system can purge the object at the end of the retention interval. </param>
-        /// <param name="exportable"> Indicates if the private key can be exported. </param>
+        /// <param name="canExported"> Indicates if the private key can be exported. </param>
         /// <returns> A new <see cref="Models.ManagedHsmKeyAttributes"/> instance for mocking. </returns>
-        public static ManagedHsmKeyAttributes ManagedHsmKeyAttributes(bool? enabled = null, long? notBefore = null, long? expires = null, long? created = null, long? updated = null, DeletionRecoveryLevel? recoveryLevel = null, bool? exportable = null)
+        public static ManagedHsmKeyAttributes ManagedHsmKeyAttributes(bool? isEnabled = null, long? notBefore = null, long? expires = null, long? created = null, long? updated = null, DeletionRecoveryLevel? recoveryLevel = null, bool? canExported = null)
         {
             return new ManagedHsmKeyAttributes(
-                enabled,
+                isEnabled,
                 notBefore,
                 expires,
                 created,
                 updated,
                 recoveryLevel,
-                exportable,
+                canExported,
                 serializedAdditionalRawData: null);
         }
 

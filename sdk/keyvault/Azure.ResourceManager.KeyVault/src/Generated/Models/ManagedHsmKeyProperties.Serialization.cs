@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes, options);
             }
-            if (Optional.IsDefined(Kty))
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("kty"u8);
-                writer.WriteStringValue(Kty.Value.ToString());
+                writer.WriteStringValue(KeyType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(KeyOps))
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kty), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  kty: ");
@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             else
             {
-                if (Optional.IsDefined(Kty))
+                if (Optional.IsDefined(KeyType))
                 {
                     builder.Append("  kty: ");
-                    builder.AppendLine($"'{Kty.Value.ToString()}'");
+                    builder.AppendLine($"'{KeyType.Value.ToString()}'");
                 }
             }
 

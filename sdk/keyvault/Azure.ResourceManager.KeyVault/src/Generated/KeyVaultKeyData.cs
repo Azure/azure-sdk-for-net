@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
+        /// <param name="keyType"> The type of the key. For valid values, see JsonWebKeyType. </param>
         /// <param name="keyOps"></param>
         /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
         /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KeyAttributes attributes, JsonWebKeyType? kty, IList<JsonWebKeyOperation> keyOps, int? keySize, JsonWebKeyCurveName? curveName, Uri keyUri, string keyUriWithVersion, RotationPolicy rotationPolicy, KeyReleasePolicy releasePolicy, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal KeyVaultKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KeyAttributes attributes, JsonWebKeyType? keyType, IList<JsonWebKeyOperation> keyOps, int? keySize, JsonWebKeyCurveName? curveName, Uri keyUri, string keyUriWithVersion, RotationPolicy rotationPolicy, KeyReleasePolicy releasePolicy, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Attributes = attributes;
-            Kty = kty;
+            KeyType = keyType;
             KeyOps = keyOps;
             KeySize = keySize;
             CurveName = curveName;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
         public KeyAttributes Attributes { get; set; }
         /// <summary> The type of the key. For valid values, see JsonWebKeyType. </summary>
         [WirePath("properties.kty")]
-        public JsonWebKeyType? Kty { get; set; }
+        public JsonWebKeyType? KeyType { get; set; }
         /// <summary> Gets the key ops. </summary>
         [WirePath("properties.keyOps")]
         public IList<JsonWebKeyOperation> KeyOps { get; }

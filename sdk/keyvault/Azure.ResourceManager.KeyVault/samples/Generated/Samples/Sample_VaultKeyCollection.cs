@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
             string keyName = "sample-key-name";
             VaultKeyCreateOrUpdateContent content = new VaultKeyCreateOrUpdateContent(new KeyProperties()
             {
-                Kty = JsonWebKeyType.RSA,
+                KeyType = JsonWebKeyType.RSA,
             });
             ArmOperation<VaultKeyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, keyName, content);
             VaultKeyResource result = lro.Value;

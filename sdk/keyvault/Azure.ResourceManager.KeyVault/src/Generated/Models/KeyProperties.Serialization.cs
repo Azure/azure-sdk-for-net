@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes, options);
             }
-            if (Optional.IsDefined(Kty))
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("kty"u8);
-                writer.WriteStringValue(Kty.Value.ToString());
+                writer.WriteStringValue(KeyType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(KeyOps))
             {

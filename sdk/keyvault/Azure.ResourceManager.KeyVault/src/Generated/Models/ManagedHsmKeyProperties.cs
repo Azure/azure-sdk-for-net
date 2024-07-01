@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmKeyProperties"/>. </summary>
         /// <param name="attributes"> The attributes of the key. </param>
-        /// <param name="kty"> The type of the key. For valid values, see JsonWebKeyType. </param>
+        /// <param name="keyType"> The type of the key. For valid values, see JsonWebKeyType. </param>
         /// <param name="keyOps"></param>
         /// <param name="keySize"> The key size in bits. For example: 2048, 3072, or 4096 for RSA. </param>
         /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="rotationPolicy"> Key rotation policy in response. It will be used for both output and input. Omitted if empty. </param>
         /// <param name="releasePolicy"> Key release policy in response. It will be used for both output and input. Omitted if empty. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmKeyProperties(ManagedHsmKeyAttributes attributes, JsonWebKeyType? kty, IList<JsonWebKeyOperation> keyOps, int? keySize, JsonWebKeyCurveName? curveName, Uri keyUri, string keyUriWithVersion, ManagedHsmRotationPolicy rotationPolicy, ManagedHsmKeyReleasePolicy releasePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedHsmKeyProperties(ManagedHsmKeyAttributes attributes, JsonWebKeyType? keyType, IList<JsonWebKeyOperation> keyOps, int? keySize, JsonWebKeyCurveName? curveName, Uri keyUri, string keyUriWithVersion, ManagedHsmRotationPolicy rotationPolicy, ManagedHsmKeyReleasePolicy releasePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Attributes = attributes;
-            Kty = kty;
+            KeyType = keyType;
             KeyOps = keyOps;
             KeySize = keySize;
             CurveName = curveName;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public ManagedHsmKeyAttributes Attributes { get; set; }
         /// <summary> The type of the key. For valid values, see JsonWebKeyType. </summary>
         [WirePath("kty")]
-        public JsonWebKeyType? Kty { get; set; }
+        public JsonWebKeyType? KeyType { get; set; }
         /// <summary> Gets the key ops. </summary>
         [WirePath("keyOps")]
         public IList<JsonWebKeyOperation> KeyOps { get; }

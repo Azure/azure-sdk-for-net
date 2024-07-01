@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(NotBefore))
             {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("recoveryLevel"u8);
                 writer.WriteStringValue(RecoveryLevel.Value.ToString());
             }
-            if (Optional.IsDefined(Exportable))
+            if (Optional.IsDefined(CanExported))
             {
                 writer.WritePropertyName("exportable"u8);
-                writer.WriteBooleanValue(Exportable.Value);
+                writer.WriteBooleanValue(CanExported.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             else
             {
-                if (Optional.IsDefined(Enabled))
+                if (Optional.IsDefined(IsEnabled))
                 {
                     builder.Append("  enabled: ");
-                    var boolValue = Enabled.Value == true ? "true" : "false";
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exportable), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanExported), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  exportable: ");
@@ -301,10 +301,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             else
             {
-                if (Optional.IsDefined(Exportable))
+                if (Optional.IsDefined(CanExported))
                 {
                     builder.Append("  exportable: ");
-                    var boolValue = Exportable.Value == true ? "true" : "false";
+                    var boolValue = CanExported.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

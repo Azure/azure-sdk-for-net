@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
             string keyName = "sample-key-name";
             ManagedHSMKeyCreateOrUpdateContent content = new ManagedHSMKeyCreateOrUpdateContent(new ManagedHsmKeyProperties()
             {
-                Kty = JsonWebKeyType.RSA,
+                KeyType = JsonWebKeyType.RSA,
             });
             ArmOperation<ManagedHSMKeyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, keyName, content);
             ManagedHSMKeyResource result = lro.Value;
