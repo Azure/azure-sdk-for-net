@@ -212,6 +212,7 @@ Console.WriteLine(batchJob.State);
 ```
 
 ### List jobs
+
 `GetJobs` can be used to list all `BatchJob` allocated under a Batch Account
 
 ```C# Snippet:Batch_Readme_ListJobs
