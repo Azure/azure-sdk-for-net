@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkConfigurationGroup"/>. </summary>
         /// <param name="id"> Network group ID. </param>
         /// <param name="description"> A description of the network group. </param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="memberType"> Group member type. </param>
+        /// <param name="provisioningState"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkConfigurationGroup(string id, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkConfigurationGroup(string id, string description, string memberType, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Description = description;
+            MemberType = memberType;
             ProvisioningState = provisioningState;
-            ResourceGuid = resourceGuid;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Network.Models
         public string Id { get; }
         /// <summary> A description of the network group. </summary>
         public string Description { get; }
-        /// <summary> The provisioning state of the scope assignment resource. </summary>
+        /// <summary> Group member type. </summary>
+        public string MemberType { get; }
+        /// <summary> Resource type. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> Unique identifier for this resource. </summary>
-        public Guid? ResourceGuid { get; }
     }
 }

@@ -482,6 +482,7 @@ namespace Azure.ResourceManager.Network
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -507,6 +508,7 @@ namespace Azure.ResourceManager.Network
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

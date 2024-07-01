@@ -606,6 +606,7 @@ TargetFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
 Name = "apprulecoll",
 }
 },
@@ -663,6 +664,7 @@ TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
 Name = "natrulecoll",
 }
 },
@@ -716,6 +718,7 @@ DestinationFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
 Name = "netrulecoll",
 }
 },
@@ -810,6 +813,7 @@ TargetFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
 Name = "apprulecoll",
 }
 },
@@ -867,6 +871,7 @@ TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
 Name = "natrulecoll",
 }
 },
@@ -920,6 +925,7 @@ DestinationFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
 Name = "netrulecoll",
 }
 },
@@ -1019,6 +1025,7 @@ TargetFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
 Name = "apprulecoll",
 }
 },
@@ -1076,6 +1083,7 @@ TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
 Name = "natrulecoll",
 }
 },
@@ -1129,6 +1137,7 @@ DestinationFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
 Name = "netrulecoll",
 }
 },
@@ -1224,6 +1233,7 @@ TargetFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
 Name = "apprulecoll",
 }
 },
@@ -1281,6 +1291,7 @@ TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
 Name = "natrulecoll",
 }
 },
@@ -1334,6 +1345,7 @@ DestinationFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
 Name = "netrulecoll",
 }
 },
@@ -1428,6 +1440,7 @@ TargetFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/applicationRuleCollections/apprulecoll"),
 Name = "apprulecoll",
 }
 },
@@ -1485,6 +1498,7 @@ TranslatedPort = "880",
 TranslatedFqdn = "internalhttpserver",
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/natRuleCollections/natrulecoll"),
 Name = "natrulecoll",
 }
 },
@@ -1538,6 +1552,7 @@ DestinationFqdns =
 },
 }
 },
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azurefirewall/networkRuleCollections/netrulecoll"),
 Name = "netrulecoll",
 }
 },
