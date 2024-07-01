@@ -223,6 +223,7 @@ foreach (BatchJob item in _batchClient.GetJobs())
 ```
 
 ### Create a task
+
 A task is a unit of computation that is associated with a job. It runs on a node. Tasks are assigned to a node for execution, or are queued until a node becomes free. Put simply, a task runs one or more programs or scripts on a compute node to perform the work you need done. For more information see [Jobs and tasks in Azure Batch](https://learn.microsoft.com/azure/batch/jobs-and-tasks).
 
 Use the `CreateTask` method with a `BatchTaskCreateContent` instance to create a `BatchTask`. 
