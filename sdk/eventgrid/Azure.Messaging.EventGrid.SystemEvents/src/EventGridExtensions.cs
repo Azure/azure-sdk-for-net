@@ -4,12 +4,13 @@
 using System;
 using System.Text.Json;
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+// This is intentionally in the Azure.Messaging.EventGrid namespace to support type forwarding
+namespace Azure.Messaging.EventGrid
 {
     /// <summary>
     /// Extension methods for BinaryData to use for parsing JSON-encoded events.
     /// </summary>
-    public static class CloudEventExtensions
+    public static class EventGridExtensions
     {
         /// <summary>
         /// Gets whether or not the event is a System defined event and returns the deserialized

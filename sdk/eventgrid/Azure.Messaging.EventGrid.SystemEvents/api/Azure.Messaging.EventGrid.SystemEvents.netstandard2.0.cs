@@ -1,3 +1,10 @@
+namespace Azure.Messaging.EventGrid
+{
+    public static partial class EventGridExtensions
+    {
+        public static bool TryGetSystemEventData(this Azure.Messaging.CloudEvent cloudEvent, out object eventData) { throw null; }
+    }
+}
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     public partial class AcsChatEventBaseProperties : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatEventBaseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AcsChatEventBaseProperties>
@@ -1691,10 +1698,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public static partial class CloudEventExtensions
-    {
-        public static bool TryGetSystemEventData(this Azure.Messaging.CloudEvent cloudEvent, out object eventData) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommunicationCloudEnvironmentModel : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel>
