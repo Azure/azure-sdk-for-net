@@ -14,6 +14,25 @@ parameters:
     default: null
 
 steps:
+  - task: AzurePowerShell@5
+    displayName: Set Pipeline Subnet Info
+    env: ${{ parameters.EnvVars }}
+    inputs:
+      azureSubscription: azure-sdk-tests
+      azurePowerShellVersion: LatestVersion
+      pwsh: true
+      ScriptType: InlineScript
+      Inline: |
+        Set-AzContext 'Azure SDK Engineering System'
+        if ($env:Pool -eq 'Azure Pipelines') {
+          Write-Host "Skipping pool subnet lookup when running on an Azure Pipelines hosted pool"
+          Write-Host "##vso[task.setvariable variable=PoolSubnet;]"
+          exit 0
+        }
+        $poolSubnet = (Get-AzResource -ResourceGroupName azsdk-pools -Name $env:Pool -ExpandProperties).Properties.networkProfile.subnetId
+        Write-Host "Setting pipeline subnet env variable PoolSubnet to '$poolSubnet'"
+        Write-Host "##vso[task.setvariable variable=PoolSubnet;]$poolSubnet"
+
   - pwsh: |
       . ./eng/common/TestResources/SubConfig-Helpers.ps1
 
