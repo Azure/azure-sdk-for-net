@@ -94,7 +94,7 @@ namespace Azure.AI.Translation.Document
         /// The target language must be one of the supported languages included in the translation scope.
         /// For example if you want to translate the document in German language, then use targetLanguage=de
         /// </param>
-        /// <param name="documentTranslateContent"> Document Translate Request Content. </param>
+        /// <param name="documentTranslateContent"> The <see cref="DocumentTranslateContent"/> to use. </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
@@ -111,7 +111,6 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
-        /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
         public virtual async Task<Response<BinaryData>> DocumentTranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
@@ -129,7 +128,7 @@ namespace Azure.AI.Translation.Document
         /// The target language must be one of the supported languages included in the translation scope.
         /// For example if you want to translate the document in German language, then use targetLanguage=de
         /// </param>
-        /// <param name="documentTranslateContent"> Document Translate Request Content. </param>
+        /// <param name="documentTranslateContent"> The <see cref="DocumentTranslateContent"/> to use. </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
@@ -146,7 +145,6 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
-        /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
         public virtual Response<BinaryData> DocumentTranslate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
@@ -301,7 +299,7 @@ namespace Azure.AI.Translation.Document
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("content-type", contentType);
             request.Content = content;
             return message;
         }
