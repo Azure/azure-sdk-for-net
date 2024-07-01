@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added `ArmDeploymentStack` support.
+- Added `DeploymentStack` support.
 
 ## 1.7.3 (2024-05-07)
 
