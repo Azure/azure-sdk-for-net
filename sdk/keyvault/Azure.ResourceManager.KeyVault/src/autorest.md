@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
-tag: package-2023-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/d1296700aa6cd650970e9891dd58eef5698327fd/specification/keyvault/resource-manager/readme.md
+#tag: package-2023-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -120,6 +121,16 @@ rename-mapping:
   CertificatePermissions: IdentityAccessCertificatePermission
   IPRule.value: AddressRange
   CheckNameAvailabilityResult: KeyVaultNameAvailabilityResult
+  Trigger: KeyRotationTrigger
+  Action: KeyRotationAction
+  Key: KeyVaultKey
+  Key.properties.kty: keyType
+  KeyAttributes.enabled: isEnabled
+  KeyAttributes.exportable: canExported
+  KeyProperties.kty: keyType
+  ManagedHsmKeyAttributes.enabled: isEnabled
+  ManagedHsmKeyAttributes.exportable: canExported
+  ManagedHsmKeyProperties.kty: keyType
 
 prompted-enum-values: Default
 
@@ -151,6 +162,11 @@ directive:
       $.VaultProperties.properties.provisioningState['x-ms-enum']['name'] = 'KeyVaultProvisioningState';
       $.Vault['x-csharp-usage'] = 'model,input,output';
       $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
+# Remove the flatten since it will cause Tag operation error
+  - from: keysManagedHsm.json
+    where: $.definitions
+    transform: >    
+      delete $.ManagedHsmKey.properties.properties['x-ms-client-flatten']
 ```
 
 ### Tag: package-2023-02
