@@ -19,8 +19,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
 
         private readonly ConcurrentDictionary<string, ILogger> _loggers = new ConcurrentDictionary<string, ILogger>();
 
-        private readonly Func<EventSourceEvent, Exception, string> _formatMessage = FormatMessage;
-
         private AzureEventSourceListener _listener;
 
         public AzureEventSourceLogForwarder(ILoggerFactory loggerFactory)
@@ -28,10 +26,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
             _loggerFactory = loggerFactory;
         }
 
-        private void LogEvent(EventWrittenEventArgs eventData)
+        private void LogEvent(EventWrittenEventArgs eventData, string formattedMessage)
         {
             var logger = _loggers.GetOrAdd(eventData.EventSource.Name, name => _loggerFactory!.CreateLogger(ToLoggerName(name)));
-            logger.Log(MapLevel(eventData.Level), new EventId(eventData.EventId, eventData.EventName), new EventSourceEvent(eventData), null, _formatMessage);
+            logger.Log(MapLevel(eventData.Level), new EventId(eventData.EventId, eventData.EventName), new EventSourceEvent(eventData), null, (_, _) => formattedMessage);
         }
 
         private static string ToLoggerName(string name)
@@ -61,13 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
             }
         }
 
-        private static string FormatMessage(EventSourceEvent eventSourceEvent, Exception _) => eventSourceEvent.Format();
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             if (_loggerFactory != null)
             {
-                _listener ??= new AzureEventSourceListener((e, s) => LogEvent(e), EventLevel.Verbose);
+                _listener ??= new AzureEventSourceListener(LogEvent, EventLevel.Verbose);
             }
 
             return Task.CompletedTask;
