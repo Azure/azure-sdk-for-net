@@ -16,9 +16,10 @@ namespace System.ClientModel
     public abstract partial class AsyncPageCollection<T> : System.Collections.Generic.IAsyncEnumerable<System.ClientModel.PageResult<T>>
     {
         protected AsyncPageCollection() { }
-        public abstract System.ClientModel.ContinuationToken FirstPageToken { get; }
+        protected abstract System.ClientModel.ContinuationToken FirstPageToken { get; }
         public System.Collections.Generic.IAsyncEnumerable<T> GetAllValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetPageAsync(System.ClientModel.ContinuationToken pageToken) { throw null; }
+        public System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetCurrentPage() { throw null; }
+        protected System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetPageAsync(System.ClientModel.ContinuationToken pageToken) { throw null; }
         public abstract System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetPageAsyncCore(System.ClientModel.ContinuationToken pageToken);
         System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.PageResult<T>>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -74,10 +75,11 @@ namespace System.ClientModel
     public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>, System.Collections.IEnumerable
     {
         protected PageCollection() { }
-        public abstract System.ClientModel.ContinuationToken FirstPageToken { get; }
+        protected abstract System.ClientModel.ContinuationToken FirstPageToken { get; }
         public System.Collections.Generic.IEnumerable<T> GetAllValues() { throw null; }
-        public System.ClientModel.PageResult<T> GetPage(System.ClientModel.ContinuationToken pageToken) { throw null; }
-        public abstract System.ClientModel.PageResult<T> GetPageCore(System.ClientModel.ContinuationToken pageToken);
+        public System.ClientModel.PageResult<T> GetCurrentPage() { throw null; }
+        protected System.ClientModel.PageResult<T> GetPage(System.ClientModel.ContinuationToken pageToken) { throw null; }
+        protected abstract System.ClientModel.PageResult<T> GetPageCore(System.ClientModel.ContinuationToken pageToken);
         System.Collections.Generic.IEnumerator<System.ClientModel.PageResult<T>> System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }

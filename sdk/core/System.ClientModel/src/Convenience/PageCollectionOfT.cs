@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace System.ClientModel;
 
@@ -13,6 +14,8 @@ namespace System.ClientModel;
 // make service requests to retrieve specific pages
 public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
 {
+    private ContinuationToken? _currentPageToken;
+
     // Note page collections delay making a first request until either
     // GetPage is called or the collection is enumerated, so the constructor
     // calls the base class constructor that does not take a response.
@@ -23,16 +26,12 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     // Note that this is abstract rather than providing the field in the base
     // type because it means the implementation can hold the field as a subtype
     // instance in the implementation and not have to cast it.
-    public abstract ContinuationToken FirstPageToken { get; }
 
-    public PageResult<T> GetPage(ContinuationToken pageToken)
-    {
-        Argument.AssertNotNull(pageToken, nameof(pageToken));
-        return GetPageCore(pageToken);
-    }
+    // TODO: do we need this to be public?
+    protected abstract ContinuationToken FirstPageToken { get; /*protected set;*/ }
 
-    // Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
-    public abstract PageResult<T> GetPageCore(ContinuationToken pageToken);
+    public PageResult<T> GetCurrentPage() =>
+        GetPage(_currentPageToken ?? FirstPageToken);
 
     public IEnumerable<T> GetAllValues()
     {
@@ -45,6 +44,17 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
         }
     }
 
+    // TODO: do we need this, and do we need it to be called Core?
+    protected PageResult<T> GetPage(ContinuationToken pageToken)
+    {
+        Argument.AssertNotNull(pageToken, nameof(pageToken));
+
+        return GetPageCore(pageToken);
+    }
+
+    // Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
+    protected abstract PageResult<T> GetPageCore(ContinuationToken pageToken);
+
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PageResult<T>>)this).GetEnumerator();
 
     IEnumerator<PageResult<T>> IEnumerable<PageResult<T>>.GetEnumerator()
@@ -55,6 +65,8 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
         while (page.NextPageToken != null)
         {
             page = GetPage(page.NextPageToken);
+            _currentPageToken = page.PageToken;
+
             yield return page;
         }
     }
