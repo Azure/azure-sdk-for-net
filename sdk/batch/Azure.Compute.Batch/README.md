@@ -243,6 +243,7 @@ Console.WriteLine(batchTask.State);
 ```
 
 ### Retrieve an output file from a task
+
 In Azure Batch, each task has a working directory under which it can create files and directories. This working directory can be used for storing the program that is run by the task, the data that it processes, and the output of the processing it performs. All files and directories of a task are owned by the task user.
 
 The Batch service exposes a portion of the file system on a node as the root directory. This root directory is located on the temporary storage drive of the VM, not directly on the OS drive.
