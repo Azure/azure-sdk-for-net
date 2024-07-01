@@ -20,14 +20,26 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     {
     }
 
-    // Note that this is abstract rather than providing the field in the base
-    // type because it means the implementation can hold the field as a subtype
-    // instance in the implementation and not have to cast it.
+    //// Note that this is abstract rather than providing the field in the base
+    //// type because it means the implementation can hold the field as a subtype
+    //// instance in the implementation and not have to cast it.
 
-    // If we ever make this property public, we should keep the setter protected.
-    protected abstract ContinuationToken CurrentPageToken { get; set; }
+    //// If we ever make this property public, we should keep the setter protected.
+    //protected abstract ContinuationToken CurrentPageToken { get; set; }
 
-    public PageResult<T> GetCurrentPage() => GetPage(CurrentPageToken);
+    public PageResult<T> GetCurrentPage()
+    {
+        IEnumerator<PageResult<T>> enumerator = GetEnumerator();
+        PageResult<T> current = enumerator.Current;
+
+        if (current == null)
+        {
+            enumerator.MoveNext();
+            current = enumerator.Current;
+        }
+
+        return current;
+    }
 
     public IEnumerable<T> GetAllValues()
     {
@@ -40,32 +52,33 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
         }
     }
 
-    // TODO: do we need this, and do we need it to be called Core?
-    protected PageResult<T> GetPage(ContinuationToken pageToken)
-    {
-        Argument.AssertNotNull(pageToken, nameof(pageToken));
+    //// TODO: do we need this, and do we need it to be called Core?
+    //protected PageResult<T> GetPage(ContinuationToken pageToken)
+    //{
+    //    Argument.AssertNotNull(pageToken, nameof(pageToken));
 
-        return GetPageCore(pageToken);
-    }
+    //    return GetPageCore(pageToken);
+    //}
 
-    // Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
-    protected abstract PageResult<T> GetPageCore(ContinuationToken pageToken);
+    //// Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
+    //protected abstract PageResult<T> GetPageCore(ContinuationToken pageToken);
+    public abstract IEnumerator<PageResult<T>> GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PageResult<T>>)this).GetEnumerator();
 
-    IEnumerator<PageResult<T>> IEnumerable<PageResult<T>>.GetEnumerator()
-    {
-        PageResult<T> page = GetPage(CurrentPageToken);
-        yield return page;
+    //IEnumerator<PageResult<T>> IEnumerable<PageResult<T>>.GetEnumerator()
+    //{
+    //    PageResult<T> page = GetCurrentPage();
+    //    yield return page;
 
-        while (page.NextPageToken != null)
-        {
-            page = GetPage(page.NextPageToken);
-            CurrentPageToken = page.PageToken;
+    //    while (page.NextPageToken != null)
+    //    {
+    //        page = GetPage(page.NextPageToken);
+    //        CurrentPageToken = page.PageToken;
 
-            yield return page;
-        }
-    }
+    //        yield return page;
+    //    }
+    //}
 }
 
 #pragma warning restore CS1591

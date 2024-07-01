@@ -20,15 +20,26 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
     {
     }
 
-    // Note that this is abstract rather than providing the field in the base
-    // type because it means the implementation can hold the field as a subtype
-    // instance in the implementation and not have to cast it.
+    //// Note that this is abstract rather than providing the field in the base
+    //// type because it means the implementation can hold the field as a subtype
+    //// instance in the implementation and not have to cast it.
 
-    // If we ever make this property public, we should keep the setter protected.
-    protected abstract ContinuationToken CurrentPageToken { get; set; }
+    //// If we ever make this property public, we should keep the setter protected.
+    //protected abstract ContinuationToken CurrentPageToken { get; set; }
 
     public async Task<PageResult<T>> GetCurrentPageAsync()
-        => await GetPageAsync(CurrentPageToken).ConfigureAwait(false);
+    {
+        IAsyncEnumerator<PageResult<T>> enumerator = GetAsyncEnumerator();
+        PageResult<T> current = enumerator.Current;
+
+        if (current == null)
+        {
+            await enumerator.MoveNextAsync().ConfigureAwait(false);
+            current = enumerator.Current;
+        }
+
+        return current;
+    }
 
     public async IAsyncEnumerable<T> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
@@ -43,31 +54,34 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
         }
     }
 
-    protected async Task<PageResult<T>> GetPageAsync(ContinuationToken pageToken)
-    {
-        Argument.AssertNotNull(pageToken, nameof(pageToken));
+    public abstract IAsyncEnumerator<PageResult<T>> GetAsyncEnumerator(CancellationToken cancellationToken = default);
 
-        return await GetPageAsyncCore(pageToken).ConfigureAwait(false);
-    }
+    //protected async Task<PageResult<T>> GetPageAsync(ContinuationToken pageToken)
+    //{
+    //    // This is important to validate against passing a null NextPageToken.
+    //    Argument.AssertNotNull(pageToken, nameof(pageToken));
 
-    // Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
-    public abstract Task<PageResult<T>> GetPageAsyncCore(ContinuationToken pageToken);
+    //    return await GetPageAsyncCore(pageToken).ConfigureAwait(false);
+    //}
 
-    async IAsyncEnumerator<PageResult<T>> IAsyncEnumerable<PageResult<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
-    {
-        PageResult<T> page = await GetPageAsync(CurrentPageToken).ConfigureAwait(false);
-        yield return page;
+    //// Doesn't take RequestOptions because RequestOptions cannot be rehydrated.
+    //public abstract Task<PageResult<T>> GetPageAsyncCore(ContinuationToken pageToken);
 
-        while (page.NextPageToken != null)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
+    //async IAsyncEnumerator<PageResult<T>> IAsyncEnumerable<PageResult<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
+    //{
+    //    PageResult<T> page = await GetPageAsync(CurrentPageToken).ConfigureAwait(false);
+    //    yield return page;
 
-            page = await GetPageAsync(page.NextPageToken).ConfigureAwait(false);
-            CurrentPageToken = page.PageToken;
+    //    while (page.NextPageToken != null)
+    //    {
+    //        cancellationToken.ThrowIfCancellationRequested();
 
-            yield return page;
-        }
-    }
+    //        page = await GetPageAsync(page.NextPageToken).ConfigureAwait(false);
+    //        CurrentPageToken = page.PageToken;
+
+    //        yield return page;
+    //    }
+    //}
 }
 
 #pragma warning restore CS1591
