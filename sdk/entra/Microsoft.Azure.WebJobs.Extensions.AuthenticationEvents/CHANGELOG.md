@@ -1,5 +1,10 @@
 # Release History
 
+## 1.0.1 (2024-06-25)
+
+### Other Changes
+- Updated README.md to reflect the latest changes
+
 ## 1.0.0 (2024-05-15)
 
 ### Other Changes
