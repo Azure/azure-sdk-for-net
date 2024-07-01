@@ -585,12 +585,12 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobExecutionInfo : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobExecutionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobExecutionInfo>
     {
-        public BatchJobExecutionInfo(System.DateTimeOffset startTime) { }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
-        public string PoolId { get { throw null; } set { } }
-        public Azure.Compute.Batch.BatchJobSchedulingError SchedulingError { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
-        public string TerminationReason { get { throw null; } set { } }
+        internal BatchJobExecutionInfo() { }
+        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public string PoolId { get { throw null; } }
+        public Azure.Compute.Batch.BatchJobSchedulingError SchedulingError { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public string TerminationReason { get { throw null; } }
         Azure.Compute.Batch.BatchJobExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -807,10 +807,10 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobScheduleExecutionInfo : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleExecutionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobScheduleExecutionInfo>
     {
-        public BatchJobScheduleExecutionInfo() { }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
-        public System.DateTimeOffset? NextRunTime { get { throw null; } set { } }
-        public Azure.Compute.Batch.RecentBatchJob RecentJob { get { throw null; } set { } }
+        internal BatchJobScheduleExecutionInfo() { }
+        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public System.DateTimeOffset? NextRunTime { get { throw null; } }
+        public Azure.Compute.Batch.RecentBatchJob RecentJob { get { throw null; } }
         Azure.Compute.Batch.BatchJobScheduleExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobScheduleExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -840,21 +840,21 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobScheduleStatistics : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobScheduleStatistics>
     {
-        public BatchJobScheduleStatistics(string url, System.DateTimeOffset startTime, System.DateTimeOffset lastUpdateTime, System.TimeSpan userCpuTime, System.TimeSpan kernelCpuTime, System.TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, System.TimeSpan waitTime) { }
-        public System.TimeSpan KernelCpuTime { get { throw null; } set { } }
-        public System.DateTimeOffset LastUpdateTime { get { throw null; } set { } }
-        public long NumFailedTasks { get { throw null; } set { } }
-        public long NumSucceededTasks { get { throw null; } set { } }
-        public long NumTaskRetries { get { throw null; } set { } }
-        public float ReadIOGiB { get { throw null; } set { } }
-        public long ReadIOps { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
-        public System.TimeSpan UserCpuTime { get { throw null; } set { } }
-        public System.TimeSpan WaitTime { get { throw null; } set { } }
-        public System.TimeSpan WallClockTime { get { throw null; } set { } }
-        public float WriteIOGiB { get { throw null; } set { } }
-        public long WriteIOps { get { throw null; } set { } }
+        internal BatchJobScheduleStatistics() { }
+        public System.TimeSpan KernelCpuTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdateTime { get { throw null; } }
+        public long NumFailedTasks { get { throw null; } }
+        public long NumSucceededTasks { get { throw null; } }
+        public long NumTaskRetries { get { throw null; } }
+        public float ReadIOGiB { get { throw null; } }
+        public long ReadIOps { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public string Url { get { throw null; } }
+        public System.TimeSpan UserCpuTime { get { throw null; } }
+        public System.TimeSpan WaitTime { get { throw null; } }
+        public System.TimeSpan WallClockTime { get { throw null; } }
+        public float WriteIOGiB { get { throw null; } }
+        public long WriteIOps { get { throw null; } }
         Azure.Compute.Batch.BatchJobScheduleStatistics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobScheduleStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobScheduleStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobScheduleStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -875,11 +875,11 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobSchedulingError : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSchedulingError>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobSchedulingError>
     {
-        public BatchJobSchedulingError(Azure.Compute.Batch.ErrorCategory category) { }
-        public Azure.Compute.Batch.ErrorCategory Category { get { throw null; } set { } }
-        public string Code { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Compute.Batch.NameValuePair> Details { get { throw null; } }
-        public string Message { get { throw null; } set { } }
+        internal BatchJobSchedulingError() { }
+        public Azure.Compute.Batch.ErrorCategory Category { get { throw null; } }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.NameValuePair> Details { get { throw null; } }
+        public string Message { get { throw null; } }
         Azure.Compute.Batch.BatchJobSchedulingError System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSchedulingError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSchedulingError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobSchedulingError System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobSchedulingError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -935,21 +935,21 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobStatistics : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobStatistics>
     {
-        public BatchJobStatistics(string url, System.DateTimeOffset startTime, System.DateTimeOffset lastUpdateTime, System.TimeSpan userCpuTime, System.TimeSpan kernelCpuTime, System.TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, System.TimeSpan waitTime) { }
-        public System.TimeSpan KernelCpuTime { get { throw null; } set { } }
-        public System.DateTimeOffset LastUpdateTime { get { throw null; } set { } }
-        public long NumFailedTasks { get { throw null; } set { } }
-        public long NumSucceededTasks { get { throw null; } set { } }
-        public long NumTaskRetries { get { throw null; } set { } }
-        public float ReadIOGiB { get { throw null; } set { } }
-        public long ReadIOps { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
-        public System.TimeSpan UserCpuTime { get { throw null; } set { } }
-        public System.TimeSpan WaitTime { get { throw null; } set { } }
-        public System.TimeSpan WallClockTime { get { throw null; } set { } }
-        public float WriteIOGiB { get { throw null; } set { } }
-        public long WriteIOps { get { throw null; } set { } }
+        internal BatchJobStatistics() { }
+        public System.TimeSpan KernelCpuTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdateTime { get { throw null; } }
+        public long NumFailedTasks { get { throw null; } }
+        public long NumSucceededTasks { get { throw null; } }
+        public long NumTaskRetries { get { throw null; } }
+        public float ReadIOGiB { get { throw null; } }
+        public long ReadIOps { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public string Url { get { throw null; } }
+        public System.TimeSpan UserCpuTime { get { throw null; } }
+        public System.TimeSpan WaitTime { get { throw null; } }
+        public System.TimeSpan WallClockTime { get { throw null; } }
+        public float WriteIOGiB { get { throw null; } }
+        public long WriteIOps { get { throw null; } }
         Azure.Compute.Batch.BatchJobStatistics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1181,13 +1181,13 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchNodeInfo : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeInfo>
     {
-        public BatchNodeInfo() { }
-        public string AffinityId { get { throw null; } set { } }
-        public string NodeId { get { throw null; } set { } }
-        public string NodeUrl { get { throw null; } set { } }
-        public string PoolId { get { throw null; } set { } }
-        public string TaskRootDirectory { get { throw null; } set { } }
-        public string TaskRootDirectoryUrl { get { throw null; } set { } }
+        internal BatchNodeInfo() { }
+        public string AffinityId { get { throw null; } }
+        public string NodeId { get { throw null; } }
+        public string NodeUrl { get { throw null; } }
+        public string PoolId { get { throw null; } }
+        public string TaskRootDirectory { get { throw null; } }
+        public string TaskRootDirectoryUrl { get { throw null; } }
         Azure.Compute.Batch.BatchNodeInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchNodeInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1871,10 +1871,10 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchTaskContainerExecutionInfo : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerExecutionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskContainerExecutionInfo>
     {
-        public BatchTaskContainerExecutionInfo() { }
-        public string ContainerId { get { throw null; } set { } }
-        public string Error { get { throw null; } set { } }
-        public string State { get { throw null; } set { } }
+        internal BatchTaskContainerExecutionInfo() { }
+        public string ContainerId { get { throw null; } }
+        public string Error { get { throw null; } }
+        public string State { get { throw null; } }
         Azure.Compute.Batch.BatchTaskContainerExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskContainerExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskContainerExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1957,17 +1957,17 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchTaskExecutionInfo : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskExecutionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskExecutionInfo>
     {
-        public BatchTaskExecutionInfo(int retryCount, int requeueCount) { }
-        public Azure.Compute.Batch.BatchTaskContainerExecutionInfo ContainerInfo { get { throw null; } set { } }
-        public System.DateTimeOffset? EndTime { get { throw null; } set { } }
-        public int? ExitCode { get { throw null; } set { } }
-        public Azure.Compute.Batch.BatchTaskFailureInfo FailureInfo { get { throw null; } set { } }
-        public System.DateTimeOffset? LastRequeueTime { get { throw null; } set { } }
-        public System.DateTimeOffset? LastRetryTime { get { throw null; } set { } }
-        public int RequeueCount { get { throw null; } set { } }
-        public Azure.Compute.Batch.BatchTaskExecutionResult? Result { get { throw null; } set { } }
-        public int RetryCount { get { throw null; } set { } }
-        public System.DateTimeOffset? StartTime { get { throw null; } set { } }
+        internal BatchTaskExecutionInfo() { }
+        public Azure.Compute.Batch.BatchTaskContainerExecutionInfo ContainerInfo { get { throw null; } }
+        public System.DateTimeOffset? EndTime { get { throw null; } }
+        public int? ExitCode { get { throw null; } }
+        public Azure.Compute.Batch.BatchTaskFailureInfo FailureInfo { get { throw null; } }
+        public System.DateTimeOffset? LastRequeueTime { get { throw null; } }
+        public System.DateTimeOffset? LastRetryTime { get { throw null; } }
+        public int RequeueCount { get { throw null; } }
+        public Azure.Compute.Batch.BatchTaskExecutionResult? Result { get { throw null; } }
+        public int RetryCount { get { throw null; } }
+        public System.DateTimeOffset? StartTime { get { throw null; } }
         Azure.Compute.Batch.BatchTaskExecutionInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskExecutionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskExecutionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskExecutionInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskExecutionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1994,11 +1994,11 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchTaskFailureInfo : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskFailureInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskFailureInfo>
     {
-        public BatchTaskFailureInfo(Azure.Compute.Batch.ErrorCategory category) { }
-        public Azure.Compute.Batch.ErrorCategory Category { get { throw null; } set { } }
-        public string Code { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Compute.Batch.NameValuePair> Details { get { throw null; } }
-        public string Message { get { throw null; } set { } }
+        internal BatchTaskFailureInfo() { }
+        public Azure.Compute.Batch.ErrorCategory Category { get { throw null; } }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Compute.Batch.NameValuePair> Details { get { throw null; } }
+        public string Message { get { throw null; } }
         Azure.Compute.Batch.BatchTaskFailureInfo System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskFailureInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskFailureInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskFailureInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskFailureInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2087,18 +2087,18 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchTaskStatistics : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskStatistics>
     {
-        public BatchTaskStatistics(string url, System.DateTimeOffset startTime, System.DateTimeOffset lastUpdateTime, System.TimeSpan userCpuTime, System.TimeSpan kernelCpuTime, System.TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, System.TimeSpan waitTime) { }
-        public System.TimeSpan KernelCpuTime { get { throw null; } set { } }
-        public System.DateTimeOffset LastUpdateTime { get { throw null; } set { } }
-        public float ReadIOGiB { get { throw null; } set { } }
-        public long ReadIOps { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
-        public System.TimeSpan UserCpuTime { get { throw null; } set { } }
-        public System.TimeSpan WaitTime { get { throw null; } set { } }
-        public System.TimeSpan WallClockTime { get { throw null; } set { } }
-        public float WriteIOGiB { get { throw null; } set { } }
-        public long WriteIOps { get { throw null; } set { } }
+        internal BatchTaskStatistics() { }
+        public System.TimeSpan KernelCpuTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdateTime { get { throw null; } }
+        public float ReadIOGiB { get { throw null; } }
+        public long ReadIOps { get { throw null; } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
+        public string Url { get { throw null; } }
+        public System.TimeSpan UserCpuTime { get { throw null; } }
+        public System.TimeSpan WaitTime { get { throw null; } }
+        public System.TimeSpan WallClockTime { get { throw null; } }
+        public float WriteIOGiB { get { throw null; } }
+        public long WriteIOps { get { throw null; } }
         Azure.Compute.Batch.BatchTaskStatistics System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchTaskStatistics System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2148,17 +2148,23 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchErrorMessage BatchErrorMessage(string lang = null, string value = null) { throw null; }
         public static Azure.Compute.Batch.BatchJob BatchJob(string id = null, string displayName = null, bool? usesTaskDependencies = default(bool?), string url = null, string eTag = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchJobState? state = default(Azure.Compute.Batch.BatchJobState?), System.DateTimeOffset? stateTransitionTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchJobState? previousState = default(Azure.Compute.Batch.BatchJobState?), System.DateTimeOffset? previousStateTransitionTime = default(System.DateTimeOffset?), int? priority = default(int?), bool? allowTaskPreemption = default(bool?), int? maxParallelTasks = default(int?), Azure.Compute.Batch.BatchJobConstraints constraints = null, Azure.Compute.Batch.BatchJobManagerTask jobManagerTask = null, Azure.Compute.Batch.BatchJobPreparationTask jobPreparationTask = null, Azure.Compute.Batch.BatchJobReleaseTask jobReleaseTask = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.EnvironmentSetting> commonEnvironmentSettings = null, Azure.Compute.Batch.BatchPoolInfo poolInfo = null, Azure.Compute.Batch.OnAllBatchTasksComplete? onAllTasksComplete = default(Azure.Compute.Batch.OnAllBatchTasksComplete?), Azure.Compute.Batch.OnBatchTaskFailure? onTaskFailure = default(Azure.Compute.Batch.OnBatchTaskFailure?), Azure.Compute.Batch.BatchJobNetworkConfiguration networkConfiguration = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.MetadataItem> metadata = null, Azure.Compute.Batch.BatchJobExecutionInfo executionInfo = null, Azure.Compute.Batch.BatchJobStatistics stats = null) { throw null; }
         public static Azure.Compute.Batch.BatchJobCreateContent BatchJobCreateContent(string id = null, string displayName = null, bool? usesTaskDependencies = default(bool?), int? priority = default(int?), bool? allowTaskPreemption = default(bool?), int? maxParallelTasks = default(int?), Azure.Compute.Batch.BatchJobConstraints constraints = null, Azure.Compute.Batch.BatchJobManagerTask jobManagerTask = null, Azure.Compute.Batch.BatchJobPreparationTask jobPreparationTask = null, Azure.Compute.Batch.BatchJobReleaseTask jobReleaseTask = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.EnvironmentSetting> commonEnvironmentSettings = null, Azure.Compute.Batch.BatchPoolInfo poolInfo = null, Azure.Compute.Batch.OnAllBatchTasksComplete? onAllTasksComplete = default(Azure.Compute.Batch.OnAllBatchTasksComplete?), Azure.Compute.Batch.OnBatchTaskFailure? onTaskFailure = default(Azure.Compute.Batch.OnBatchTaskFailure?), Azure.Compute.Batch.BatchJobNetworkConfiguration networkConfiguration = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.MetadataItem> metadata = null) { throw null; }
+        public static Azure.Compute.Batch.BatchJobExecutionInfo BatchJobExecutionInfo(System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string poolId = null, Azure.Compute.Batch.BatchJobSchedulingError schedulingError = null, string terminationReason = null) { throw null; }
         public static Azure.Compute.Batch.BatchJobPreparationAndReleaseTaskStatus BatchJobPreparationAndReleaseTaskStatus(string poolId = null, string nodeId = null, string nodeUrl = null, Azure.Compute.Batch.BatchJobPreparationTaskExecutionInfo jobPreparationTaskExecutionInfo = null, Azure.Compute.Batch.BatchJobReleaseTaskExecutionInfo jobReleaseTaskExecutionInfo = null) { throw null; }
         public static Azure.Compute.Batch.BatchJobPreparationTaskExecutionInfo BatchJobPreparationTaskExecutionInfo(System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchJobPreparationTaskState state = default(Azure.Compute.Batch.BatchJobPreparationTaskState), string taskRootDirectory = null, string taskRootDirectoryUrl = null, int? exitCode = default(int?), Azure.Compute.Batch.BatchTaskContainerExecutionInfo containerInfo = null, Azure.Compute.Batch.BatchTaskFailureInfo failureInfo = null, int retryCount = 0, System.DateTimeOffset? lastRetryTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchTaskExecutionResult? result = default(Azure.Compute.Batch.BatchTaskExecutionResult?)) { throw null; }
         public static Azure.Compute.Batch.BatchJobReleaseTaskExecutionInfo BatchJobReleaseTaskExecutionInfo(System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchJobReleaseTaskState state = default(Azure.Compute.Batch.BatchJobReleaseTaskState), string taskRootDirectory = null, string taskRootDirectoryUrl = null, int? exitCode = default(int?), Azure.Compute.Batch.BatchTaskContainerExecutionInfo containerInfo = null, Azure.Compute.Batch.BatchTaskFailureInfo failureInfo = null, Azure.Compute.Batch.BatchTaskExecutionResult? result = default(Azure.Compute.Batch.BatchTaskExecutionResult?)) { throw null; }
         public static Azure.Compute.Batch.BatchJobSchedule BatchJobSchedule(string id = null, string displayName = null, string url = null, string eTag = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchJobScheduleState? state = default(Azure.Compute.Batch.BatchJobScheduleState?), System.DateTimeOffset? stateTransitionTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchJobScheduleState? previousState = default(Azure.Compute.Batch.BatchJobScheduleState?), System.DateTimeOffset? previousStateTransitionTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchJobScheduleConfiguration schedule = null, Azure.Compute.Batch.BatchJobSpecification jobSpecification = null, Azure.Compute.Batch.BatchJobScheduleExecutionInfo executionInfo = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.MetadataItem> metadata = null, Azure.Compute.Batch.BatchJobScheduleStatistics stats = null) { throw null; }
         public static Azure.Compute.Batch.BatchJobScheduleCreateContent BatchJobScheduleCreateContent(string id = null, string displayName = null, Azure.Compute.Batch.BatchJobScheduleConfiguration schedule = null, Azure.Compute.Batch.BatchJobSpecification jobSpecification = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.MetadataItem> metadata = null) { throw null; }
+        public static Azure.Compute.Batch.BatchJobScheduleExecutionInfo BatchJobScheduleExecutionInfo(System.DateTimeOffset? nextRunTime = default(System.DateTimeOffset?), Azure.Compute.Batch.RecentBatchJob recentJob = null, System.DateTimeOffset? endTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Compute.Batch.BatchJobScheduleStatistics BatchJobScheduleStatistics(string url = null, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset), System.TimeSpan userCpuTime = default(System.TimeSpan), System.TimeSpan kernelCpuTime = default(System.TimeSpan), System.TimeSpan wallClockTime = default(System.TimeSpan), long readIOps = (long)0, long writeIOps = (long)0, float readIOGiB = 0f, float writeIOGiB = 0f, long numSucceededTasks = (long)0, long numFailedTasks = (long)0, long numTaskRetries = (long)0, System.TimeSpan waitTime = default(System.TimeSpan)) { throw null; }
+        public static Azure.Compute.Batch.BatchJobSchedulingError BatchJobSchedulingError(Azure.Compute.Batch.ErrorCategory category = default(Azure.Compute.Batch.ErrorCategory), string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.NameValuePair> details = null) { throw null; }
+        public static Azure.Compute.Batch.BatchJobStatistics BatchJobStatistics(string url = null, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset), System.TimeSpan userCpuTime = default(System.TimeSpan), System.TimeSpan kernelCpuTime = default(System.TimeSpan), System.TimeSpan wallClockTime = default(System.TimeSpan), long readIOps = (long)0, long writeIOps = (long)0, float readIOGiB = 0f, float writeIOGiB = 0f, long numSucceededTasks = (long)0, long numFailedTasks = (long)0, long numTaskRetries = (long)0, System.TimeSpan waitTime = default(System.TimeSpan)) { throw null; }
         public static Azure.Compute.Batch.BatchNode BatchNode(string id = null, string url = null, Azure.Compute.Batch.BatchNodeState? state = default(Azure.Compute.Batch.BatchNodeState?), Azure.Compute.Batch.SchedulingState? schedulingState = default(Azure.Compute.Batch.SchedulingState?), System.DateTimeOffset? stateTransitionTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastBootTime = default(System.DateTimeOffset?), System.DateTimeOffset? allocationTime = default(System.DateTimeOffset?), string ipAddress = null, string affinityId = null, string vmSize = null, int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? runningTaskSlotsCount = default(int?), int? totalTasksSucceeded = default(int?), System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskInfo> recentTasks = null, Azure.Compute.Batch.BatchStartTask startTask = null, Azure.Compute.Batch.BatchStartTaskInfo startTaskInfo = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchNodeError> errors = null, bool? isDedicated = default(bool?), Azure.Compute.Batch.BatchNodeEndpointConfiguration endpointConfiguration = null, Azure.Compute.Batch.BatchNodeAgentInfo nodeAgentInfo = null, Azure.Compute.Batch.VirtualMachineInfo virtualMachineInfo = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeAgentInfo BatchNodeAgentInfo(string version = null, System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Compute.Batch.BatchNodeCounts BatchNodeCounts(int creating = 0, int idle = 0, int offline = 0, int preempted = 0, int rebooting = 0, int reimaging = 0, int running = 0, int starting = 0, int startTaskFailed = 0, int leavingPool = 0, int unknown = 0, int unusable = 0, int waitingForStartTask = 0, int total = 0, int upgradingOs = 0) { throw null; }
         public static Azure.Compute.Batch.BatchNodeEndpointConfiguration BatchNodeEndpointConfiguration(System.Collections.Generic.IEnumerable<Azure.Compute.Batch.InboundEndpoint> inboundEndpoints = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeError BatchNodeError(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.NameValuePair> errorDetails = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeFile BatchNodeFile(string name = null, string url = null, bool? isDirectory = default(bool?), Azure.Compute.Batch.FileProperties properties = null) { throw null; }
+        public static Azure.Compute.Batch.BatchNodeInfo BatchNodeInfo(string affinityId = null, string nodeUrl = null, string poolId = null, string nodeId = null, string taskRootDirectory = null, string taskRootDirectoryUrl = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeRemoteLoginSettings BatchNodeRemoteLoginSettings(string remoteLoginIpAddress = null, int remoteLoginPort = 0) { throw null; }
         public static Azure.Compute.Batch.BatchNodeUserCreateContent BatchNodeUserCreateContent(string name = null, bool? isAdmin = default(bool?), System.DateTimeOffset? expiryTime = default(System.DateTimeOffset?), string password = null, string sshPublicKey = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeVMExtension BatchNodeVMExtension(string provisioningState = null, Azure.Compute.Batch.VMExtension vmExtension = null, Azure.Compute.Batch.VMExtensionInstanceView instanceView = null) { throw null; }
@@ -2176,15 +2182,21 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchTask BatchTask(string id = null, string displayName = null, string url = null, string eTag = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), Azure.Compute.Batch.ExitConditions exitConditions = null, Azure.Compute.Batch.BatchTaskState? state = default(Azure.Compute.Batch.BatchTaskState?), System.DateTimeOffset? stateTransitionTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchTaskState? previousState = default(Azure.Compute.Batch.BatchTaskState?), System.DateTimeOffset? previousStateTransitionTime = default(System.DateTimeOffset?), string commandLine = null, Azure.Compute.Batch.BatchTaskContainerSettings containerSettings = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.ResourceFile> resourceFiles = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.OutputFile> outputFiles = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.EnvironmentSetting> environmentSettings = null, Azure.Compute.Batch.AffinityInfo affinityInfo = null, Azure.Compute.Batch.BatchTaskConstraints constraints = null, int? requiredSlots = default(int?), Azure.Compute.Batch.UserIdentity userIdentity = null, Azure.Compute.Batch.BatchTaskExecutionInfo executionInfo = null, Azure.Compute.Batch.BatchNodeInfo nodeInfo = null, Azure.Compute.Batch.MultiInstanceSettings multiInstanceSettings = null, Azure.Compute.Batch.BatchTaskStatistics stats = null, Azure.Compute.Batch.BatchTaskDependencies dependsOn = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences = null, Azure.Compute.Batch.AuthenticationTokenSettings authenticationTokenSettings = null) { throw null; }
         public static Azure.Compute.Batch.BatchTaskAddCollectionResult BatchTaskAddCollectionResult(System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskAddResult> value = null) { throw null; }
         public static Azure.Compute.Batch.BatchTaskAddResult BatchTaskAddResult(Azure.Compute.Batch.BatchTaskAddStatus status = default(Azure.Compute.Batch.BatchTaskAddStatus), string taskId = null, string eTag = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), string location = null, Azure.Compute.Batch.BatchError error = null) { throw null; }
+        public static Azure.Compute.Batch.BatchTaskContainerExecutionInfo BatchTaskContainerExecutionInfo(string containerId = null, string state = null, string error = null) { throw null; }
         public static Azure.Compute.Batch.BatchTaskCounts BatchTaskCounts(int active = 0, int running = 0, int completed = 0, int succeeded = 0, int failed = 0) { throw null; }
         public static Azure.Compute.Batch.BatchTaskCountsResult BatchTaskCountsResult(Azure.Compute.Batch.BatchTaskCounts taskCounts = null, Azure.Compute.Batch.BatchTaskSlotCounts taskSlotCounts = null) { throw null; }
         public static Azure.Compute.Batch.BatchTaskCreateContent BatchTaskCreateContent(string id = null, string displayName = null, Azure.Compute.Batch.ExitConditions exitConditions = null, string commandLine = null, Azure.Compute.Batch.BatchTaskContainerSettings containerSettings = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.ResourceFile> resourceFiles = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.OutputFile> outputFiles = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.EnvironmentSetting> environmentSettings = null, Azure.Compute.Batch.AffinityInfo affinityInfo = null, Azure.Compute.Batch.BatchTaskConstraints constraints = null, int? requiredSlots = default(int?), Azure.Compute.Batch.UserIdentity userIdentity = null, Azure.Compute.Batch.MultiInstanceSettings multiInstanceSettings = null, Azure.Compute.Batch.BatchTaskDependencies dependsOn = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences = null, Azure.Compute.Batch.AuthenticationTokenSettings authenticationTokenSettings = null) { throw null; }
+        public static Azure.Compute.Batch.BatchTaskExecutionInfo BatchTaskExecutionInfo(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), int? exitCode = default(int?), Azure.Compute.Batch.BatchTaskContainerExecutionInfo containerInfo = null, Azure.Compute.Batch.BatchTaskFailureInfo failureInfo = null, int retryCount = 0, System.DateTimeOffset? lastRetryTime = default(System.DateTimeOffset?), int requeueCount = 0, System.DateTimeOffset? lastRequeueTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchTaskExecutionResult? result = default(Azure.Compute.Batch.BatchTaskExecutionResult?)) { throw null; }
+        public static Azure.Compute.Batch.BatchTaskFailureInfo BatchTaskFailureInfo(Azure.Compute.Batch.ErrorCategory category = default(Azure.Compute.Batch.ErrorCategory), string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.NameValuePair> details = null) { throw null; }
         public static Azure.Compute.Batch.BatchTaskInfo BatchTaskInfo(string taskUrl = null, string jobId = null, string taskId = null, int? subtaskId = default(int?), Azure.Compute.Batch.BatchTaskState taskState = default(Azure.Compute.Batch.BatchTaskState), Azure.Compute.Batch.BatchTaskExecutionInfo executionInfo = null) { throw null; }
         public static Azure.Compute.Batch.BatchTaskSlotCounts BatchTaskSlotCounts(int active = 0, int running = 0, int completed = 0, int succeeded = 0, int failed = 0) { throw null; }
+        public static Azure.Compute.Batch.BatchTaskStatistics BatchTaskStatistics(string url = null, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset), System.TimeSpan userCpuTime = default(System.TimeSpan), System.TimeSpan kernelCpuTime = default(System.TimeSpan), System.TimeSpan wallClockTime = default(System.TimeSpan), long readIOps = (long)0, long writeIOps = (long)0, float readIOGiB = 0f, float writeIOGiB = 0f, System.TimeSpan waitTime = default(System.TimeSpan)) { throw null; }
         public static Azure.Compute.Batch.FileProperties FileProperties(System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset lastModified = default(System.DateTimeOffset), long contentLength = (long)0, string contentType = null, string fileMode = null) { throw null; }
         public static Azure.Compute.Batch.ImageReference ImageReference(string publisher = null, string offer = null, string sku = null, string version = null, string virtualMachineImageId = null, string exactVersion = null) { throw null; }
         public static Azure.Compute.Batch.InboundEndpoint InboundEndpoint(string name = null, Azure.Compute.Batch.InboundEndpointProtocol protocol = default(Azure.Compute.Batch.InboundEndpointProtocol), string publicIpAddress = null, string publicFQDN = null, int frontendPort = 0, int backendPort = 0) { throw null; }
         public static Azure.Compute.Batch.InstanceViewStatus InstanceViewStatus(string code = null, string displayStatus = null, Azure.Compute.Batch.StatusLevelTypes? level = default(Azure.Compute.Batch.StatusLevelTypes?), string message = null, System.DateTimeOffset? time = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Compute.Batch.NameValuePair NameValuePair(string name = null, string value = null) { throw null; }
+        public static Azure.Compute.Batch.RecentBatchJob RecentBatchJob(string id = null, string url = null) { throw null; }
         public static Azure.Compute.Batch.ResizeError ResizeError(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.NameValuePair> values = null) { throw null; }
         public static Azure.Compute.Batch.UploadBatchServiceLogsContent UploadBatchServiceLogsContent(string containerUrl = null, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.Compute.Batch.BatchNodeIdentityReference identityReference = null) { throw null; }
         public static Azure.Compute.Batch.UploadBatchServiceLogsResult UploadBatchServiceLogsResult(string virtualDirectoryName = null, int numberOfFilesUploaded = 0) { throw null; }
@@ -2688,9 +2700,9 @@ namespace Azure.Compute.Batch
     }
     public partial class NameValuePair : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NameValuePair>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.NameValuePair>
     {
-        public NameValuePair() { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
+        internal NameValuePair() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
         Azure.Compute.Batch.NameValuePair System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NameValuePair>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.NameValuePair>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.NameValuePair System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.NameValuePair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2899,9 +2911,9 @@ namespace Azure.Compute.Batch
     }
     public partial class RecentBatchJob : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.RecentBatchJob>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.RecentBatchJob>
     {
-        public RecentBatchJob() { }
-        public string Id { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
+        internal RecentBatchJob() { }
+        public string Id { get { throw null; } }
+        public string Url { get { throw null; } }
         Azure.Compute.Batch.RecentBatchJob System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.RecentBatchJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.RecentBatchJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.RecentBatchJob System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.RecentBatchJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
