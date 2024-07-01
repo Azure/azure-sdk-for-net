@@ -6,14 +6,14 @@ using System.Collections.Generic;
 
 #nullable enable
 
-namespace Azure.Core
+namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
     /// <summary>
     /// A simple LRU cache implementation using a doubly linked list and dictionary.
     /// </summary>
     /// <typeparam name="TKey">The type of key.</typeparam>
     /// <typeparam name="TValue">The type of value.</typeparam>
-    public class LruCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
+    internal class LruCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
         where TKey : notnull
     {
         private readonly int _capacity;

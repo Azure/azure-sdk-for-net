@@ -37,8 +37,8 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> Custom Serialization schema type. </summary>
         public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue);
 
-        /// <summary> Protobuf Serialization schema type. </summary>
-        public static SchemaFormat Protobuf { get; } = new SchemaFormat(ProtobufValue);
+        ///// <summary> Protobuf Serialization schema type. </summary>
+        //public static SchemaFormat Protobuf { get; } = new SchemaFormat(ProtobufValue);
 
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>
         public static bool operator ==(SchemaFormat left, SchemaFormat right) => left.Equals(right);
@@ -67,8 +67,8 @@ namespace Azure.Data.SchemaRegistry
                     return ContentType.Avro;
                 case JsonValue:
                     return ContentType.Json;
-                case ProtobufValue:
-                    return ContentType.Protobuf;
+                //case ProtobufValue:
+                //    return ContentType.Protobuf;
                 default:
                     return ContentType.Custom;
             }
@@ -92,7 +92,7 @@ namespace Azure.Data.SchemaRegistry
             }
             return contentSubType[1] switch
             {
-                ProtobufContentType => SchemaFormat.Protobuf,
+                //ProtobufContentType => SchemaFormat.Protobuf,
                 _ => SchemaFormat.Custom,
             };
         }
