@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Functions.Worker
         /// The connection states.
         /// </summary>
         [JsonPropertyName("states")]
-        public IReadOnlyDictionary<string, BinaryData> ConnectionStates { get; set; }
+        [JsonConverter(typeof(ConnectionStatesConverter))]
+        public IReadOnlyDictionary<string, BinaryData> ConnectionStates => _states;
 
         /// <summary>
         /// Message.

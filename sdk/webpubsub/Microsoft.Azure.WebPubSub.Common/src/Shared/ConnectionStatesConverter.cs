@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 // This is shared between WPS.Common and WPS.AspNetCore
 
-namespace Microsoft.Azure.WebPubSub.Common
+namespace Microsoft.Azure.Functions.Worker
 {
     /// <summary>
     /// Converter to turn the ConnectionStates dictionary into a regular JSON
