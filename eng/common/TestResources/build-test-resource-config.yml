@@ -8,7 +8,7 @@ parameters:
   # EnvVars is used to help diagnose variable conflict issues early
   - name: EnvVars
     type: object
-    default: null
+    default: {}
   - name: SubscriptionConfigurationFilePaths
     type: object
     default: null
