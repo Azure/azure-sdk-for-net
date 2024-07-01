@@ -82,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             {
                 logger.Log(
                     logLevel: logLevel,
-                    eventId: 0,
+                    eventId: 1,
                     exception: null,
                     message: "Hello {name}.",
                     args: new object[] { "World" });
@@ -100,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }, { "scopeKey1", "scopeValue1" } },
+                expectedMessageProperties: new Dictionary<string, string> { { "EventId", "1" }, { "name", "World" }, { "scopeKey1", "scopeValue1" } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
@@ -143,7 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             {
                 logger.Log(
                     logLevel: logLevel,
-                    eventId: 0,
+                    eventId: 1,
                     exception: ex,
                     message: "Hello {name}.",
                     args: new object[] { "World" });
@@ -161,7 +161,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Test Exception",
-                expectedTypeName: "System.Exception");
+                expectedTypeName: "System.Exception",
+                expectedProperties: new Dictionary<string, string> { { "EventId", "1" } });
         }
     }
 }

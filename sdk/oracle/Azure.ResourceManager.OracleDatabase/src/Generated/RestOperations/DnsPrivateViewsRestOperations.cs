@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01-preview";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="dnsprivateviewocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="dnsprivateviewocid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DnsPrivateViewData>> GetAsync(string subscriptionId, AzureLocation location, string dnsprivateviewocid, CancellationToken cancellationToken = default)
+        public async Task<Response<OracleDnsPrivateViewData>> GetAsync(string subscriptionId, AzureLocation location, string dnsprivateviewocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(dnsprivateviewocid, nameof(dnsprivateviewocid));
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DnsPrivateViewData value = default;
+                        OracleDnsPrivateViewData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DnsPrivateViewData.DeserializeDnsPrivateViewData(document.RootElement);
+                        value = OracleDnsPrivateViewData.DeserializeOracleDnsPrivateViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DnsPrivateViewData)null, message.Response);
+                    return Response.FromValue((OracleDnsPrivateViewData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="dnsprivateviewocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="dnsprivateviewocid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DnsPrivateViewData> Get(string subscriptionId, AzureLocation location, string dnsprivateviewocid, CancellationToken cancellationToken = default)
+        public Response<OracleDnsPrivateViewData> Get(string subscriptionId, AzureLocation location, string dnsprivateviewocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(dnsprivateviewocid, nameof(dnsprivateviewocid));
@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DnsPrivateViewData value = default;
+                        OracleDnsPrivateViewData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DnsPrivateViewData.DeserializeDnsPrivateViewData(document.RootElement);
+                        value = OracleDnsPrivateViewData.DeserializeOracleDnsPrivateViewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DnsPrivateViewData)null, message.Response);
+                    return Response.FromValue((OracleDnsPrivateViewData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
