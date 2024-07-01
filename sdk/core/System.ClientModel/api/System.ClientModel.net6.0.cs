@@ -16,7 +16,7 @@ namespace System.ClientModel
     public abstract partial class AsyncPageCollection<T> : System.Collections.Generic.IAsyncEnumerable<System.ClientModel.PageResult<T>>
     {
         protected AsyncPageCollection() { }
-        protected abstract System.ClientModel.ContinuationToken FirstPageToken { get; }
+        protected abstract System.ClientModel.ContinuationToken CurrentPageToken { get; set; }
         public System.Collections.Generic.IAsyncEnumerable<T> GetAllValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetCurrentPageAsync() { throw null; }
         protected System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetPageAsync(System.ClientModel.ContinuationToken pageToken) { throw null; }
@@ -75,7 +75,7 @@ namespace System.ClientModel
     public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>, System.Collections.IEnumerable
     {
         protected PageCollection() { }
-        protected abstract System.ClientModel.ContinuationToken FirstPageToken { get; }
+        protected abstract System.ClientModel.ContinuationToken CurrentPageToken { get; set; }
         public System.Collections.Generic.IEnumerable<T> GetAllValues() { throw null; }
         public System.ClientModel.PageResult<T> GetCurrentPage() { throw null; }
         protected System.ClientModel.PageResult<T> GetPage(System.ClientModel.ContinuationToken pageToken) { throw null; }

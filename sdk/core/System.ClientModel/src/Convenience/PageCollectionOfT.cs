@@ -4,7 +4,6 @@
 using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace System.ClientModel;
 
@@ -14,8 +13,6 @@ namespace System.ClientModel;
 // make service requests to retrieve specific pages
 public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
 {
-    private ContinuationToken? _currentPageToken;
-
     // Note page collections delay making a first request until either
     // GetPage is called or the collection is enumerated, so the constructor
     // calls the base class constructor that does not take a response.
@@ -27,11 +24,10 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     // type because it means the implementation can hold the field as a subtype
     // instance in the implementation and not have to cast it.
 
-    // TODO: do we need this to be public?
-    protected abstract ContinuationToken FirstPageToken { get; /*protected set;*/ }
+    // If we ever make this property public, we should keep the setter protected.
+    protected abstract ContinuationToken CurrentPageToken { get; set; }
 
-    public PageResult<T> GetCurrentPage() =>
-        GetPage(_currentPageToken ?? FirstPageToken);
+    public PageResult<T> GetCurrentPage() => GetPage(CurrentPageToken);
 
     public IEnumerable<T> GetAllValues()
     {
@@ -59,13 +55,13 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
 
     IEnumerator<PageResult<T>> IEnumerable<PageResult<T>>.GetEnumerator()
     {
-        PageResult<T> page = GetPage(FirstPageToken);
+        PageResult<T> page = GetPage(CurrentPageToken);
         yield return page;
 
         while (page.NextPageToken != null)
         {
             page = GetPage(page.NextPageToken);
-            _currentPageToken = page.PageToken;
+            CurrentPageToken = page.PageToken;
 
             yield return page;
         }
