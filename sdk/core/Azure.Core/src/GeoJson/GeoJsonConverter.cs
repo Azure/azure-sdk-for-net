@@ -133,6 +133,7 @@ namespace Azure.Core.GeoJson
                 }
 
                 var arrayLength = bboxElement.GetArrayLength();
+
                 switch (arrayLength)
                 {
                     case 4:
