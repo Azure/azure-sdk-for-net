@@ -1,8 +1,8 @@
 {
-    "SubscriptionId": "d206c0a8-dfad-4165-a870-a21054b5660c",
-    "TenantId": "cdc5aeea-15c5-4db6-b079-fcadd2505dc2",
-    "TestApplicationId": "b1bbc383-b460-4385-99c3-04873028401f",
-    "TestApplicationOid": "6170a7f1-9d4e-4bec-8a8d-17b315af9f45",
-    "ProvisionerApplicationId": "b1bbc383-b460-4385-99c3-04873028401f",
-    "ProvisionerApplicationOid": "6170a7f1-9d4e-4bec-8a8d-17b315af9f45"
+  "SubscriptionId": "d206c0a8-dfad-4165-a870-a21054b5660c",
+  "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+  "TestApplicationId": "f850650c-1fcf-4489-b46f-71af2e30d360",
+  "TestApplicationOid": "30511c9d-ba1a-4c7b-b422-5b543da11b3f",
+  "ProvisionerApplicationId": "f850650c-1fcf-4489-b46f-71af2e30d360",
+  "ProvisionerApplicationOid": "30511c9d-ba1a-4c7b-b422-5b543da11b3f"
 }
