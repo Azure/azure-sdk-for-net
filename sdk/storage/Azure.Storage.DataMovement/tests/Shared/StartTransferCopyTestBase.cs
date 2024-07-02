@@ -99,7 +99,8 @@ namespace Azure.Storage.DataMovement.Tests
             bool createResource = false,
             string objectName = default,
             TSourceClientOptions options = default,
-            Stream contents = default);
+            Stream contents = default,
+            TransferPropertiesTestType propertiesTestType = default);
 
         /// <summary>
         /// Gets the specific storage resource from the given TSourceObjectClient
