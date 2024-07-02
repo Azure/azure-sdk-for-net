@@ -65,7 +65,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         toScan.Enqueue(subdir);
                         yield return new ShareDirectoryStorageResourceContainer(
                             subdir,
-                            item.ToResourceProperties(destinationPermissionKey),
                             sourceOptions);
                     }
                     else

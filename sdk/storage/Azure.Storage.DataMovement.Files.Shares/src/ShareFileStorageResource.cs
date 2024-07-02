@@ -237,8 +237,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 if (_options?.FilePermissions?.Preserve ?? false)
                 {
                     ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
+                    string permissionsValue = sourceProperties?.RawProperties?.GetPermission();
                     string destinationPermissionKey = sourceProperties?.RawProperties?.GetDestinationPermissionKey();
-                    if (destinationPermissionKey == default)
+                    // Get / Set the permission key if preserve is set to true,
+                    // there are no short form file permissions (x-ms-file-permission) in the source properties
+                    // and already set destination permission key (x-ms-file-permission-key).
+                    if (destinationPermissionKey == default && permissionsValue == default)
                     {
                         string sourcePermissions = await sourceShareFile.GetPermissionsAsync(sourceProperties, cancellationToken).ConfigureAwait(false);
 

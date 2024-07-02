@@ -16,16 +16,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
     internal class PathScannerTests
     {
-        private string GetDestinationPermissionKey(StorageResourceItemInternal storageResourceItemInternal)
-            => storageResourceItemInternal.GetResourceProperties().RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObj) == true
-                ? permissionKeyObj as string
-                : default;
-
-        private string GetDestinationPermissionKey(ShareDirectoryStorageResourceContainer storageResource)
-            => storageResource.ResourceProperties.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObj) == true
-                ? permissionKeyObj as string
-                : default;
-
         [TestCase("")]
         [TestCase("somedir")]
         public async Task PathScannerFindsAllRecursive(string baseDirName)
@@ -160,10 +150,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.That(properties.RawProperties.GetDestinationPermissionKey(), Is.EqualTo(destinationPermissionKey));
             }
             Assert.That(directories.Select(f => f.Uri.PathAndQuery.Substring(shareName.Length + 2)), Is.EquivalentTo(expectedDirectoryPaths));
-            foreach (ShareDirectoryStorageResourceContainer directory in directories)
-            {
-                Assert.That(directory.ResourceProperties.RawProperties.GetDestinationPermissionKey(), Is.EqualTo(destinationPermissionKey));
-            }
             mockDirectory.Verify(d => d.GetFilesAndDirectoriesAsync(
                 It.Is<ShareDirectoryGetFilesAndDirectoriesOptions>(
                     options => options.Traits == traits),

@@ -24,21 +24,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override string ProviderId => "share";
 
-        internal StorageResourceItemProperties ResourceProperties;
-
         internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
             ShareDirectoryClient = shareDirectoryClient;
             ResourceOptions = options;
-        }
-
-        internal ShareDirectoryStorageResourceContainer(
-            ShareDirectoryClient shareDirectoryClient,
-            StorageResourceItemProperties properties,
-            ShareFileStorageResourceOptions options = default)
-            : this (shareDirectoryClient, options)
-        {
-            ResourceProperties = properties;
         }
 
         protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
