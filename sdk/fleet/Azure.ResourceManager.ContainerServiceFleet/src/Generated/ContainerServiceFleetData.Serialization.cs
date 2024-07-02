@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 return null;
             }
-            ETag? eTag = default;
+            ETag? etag = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                eTag,
+                etag,
                 identity,
                 provisioningState,
                 serializedAdditionalRawData);
