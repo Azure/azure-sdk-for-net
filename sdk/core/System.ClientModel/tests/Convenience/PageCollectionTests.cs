@@ -23,7 +23,7 @@ public class PageCollectionTests
         };
         ClientPipeline mockPipeline = ClientPipeline.Create(options);
 
-        PagingClient client = new PagingClient(mockPipeline);
+        PagingProtocolClient client = new PagingProtocolClient(mockPipeline);
     }
 
     //[Test]

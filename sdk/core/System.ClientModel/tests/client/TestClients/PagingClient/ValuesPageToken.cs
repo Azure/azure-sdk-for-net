@@ -10,6 +10,25 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.PagingClient;
 
-public class ValuesPageToken : ContinuationToken
+internal class ValuesPageToken : ContinuationToken
 {
+    public override BinaryData ToBytes()
+    {
+        throw new NotImplementedException();
+    }
+
+    public ValuesPageToken? GetNextPageToken()
+    {
+        throw new NotImplementedException();
+    }
+
+    public static ValuesPageToken FromToken(ContinuationToken pageToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static ValuesPageToken FromOptions()
+    {
+        throw new NotImplementedException();
+    }
 }

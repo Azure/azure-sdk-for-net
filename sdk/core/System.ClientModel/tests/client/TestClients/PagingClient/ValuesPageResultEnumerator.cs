@@ -15,9 +15,7 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
     private readonly ClientPipeline _pipeline;
     private readonly RequestOptions _options;
 
-    public ValuesPageResultEnumerator(
-        ClientPipeline pipeline,
-        RequestOptions options)
+    public ValuesPageResultEnumerator(ClientPipeline pipeline, RequestOptions options)
     {
         _pipeline = pipeline;
         _options = options;

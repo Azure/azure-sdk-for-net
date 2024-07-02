@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.PagingClient;
 
-internal class ValuesPageEnumerator<T> : PageEnumerator<T>
+internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
 {
     private readonly ClientPipeline _pipeline;
     private readonly RequestOptions _options;
 
-    public ValuesPageEnumerator(
-        ClientPipeline pipeline,
-        RequestOptions options)
+    public ValuesPageEnumerator(ClientPipeline pipeline, RequestOptions options)
     {
         _pipeline = pipeline;
         _options = options;
     }
 
-    public override PageResult<T> GetPageFromResult(ClientResult result)
+    public override PageResult<ValueItem> GetPageFromResult(ClientResult result)
     {
         throw new NotImplementedException();
     }

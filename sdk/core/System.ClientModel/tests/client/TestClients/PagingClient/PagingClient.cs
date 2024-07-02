@@ -4,10 +4,12 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace ClientModel.Tests.PagingClient;
 
-// A mock client implementation that illustrates paging patterns
+// A mock client implementation that illustrates paging patterns for client
+// endpoints that have both convenience and protocol methods.
 public class PagingClient
 {
     private readonly ClientPipeline _pipeline;
@@ -17,15 +19,51 @@ public class PagingClient
         _pipeline = pipeline;
     }
 
-    public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(RequestOptions options)
+    public virtual AsyncPageCollection<ValueItem> GetValuesAsync(CancellationToken cancellationToken = default)
     {
-        PageResultEnumerator enumerator = new ValuesPageEnumerator(_pipeline);
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, cancellationToken.ToRequestOptions());
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
-    public virtual IEnumerable<ClientResult> GetAssistants(RequestOptions options)
+    public virtual AsyncPageCollection<ValueItem> GetValuesAsync(
+        ContinuationToken firstPageToken,
+        CancellationToken cancellationToken = default)
     {
-        PageResultEnumerator enumerator = new GetValues(_pipeline);
+        Argument.AssertNotNull(firstPageToken, nameof(firstPageToken));
+
+        ValuesPageToken pageToken = ValuesPageToken.FromToken(firstPageToken);
+
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, cancellationToken.ToRequestOptions());
+        return PageCollectionHelpers.CreateAsync(enumerator);
+    }
+
+    public virtual IEnumerable<ClientResult> GetValues(CancellationToken cancellationToken = default)
+    {
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, cancellationToken.ToRequestOptions());
+        return PageCollectionHelpers.Create(enumerator);
+    }
+
+    public virtual PageCollection<ValueItem> GetValues(
+        ContinuationToken firstPageToken,
+        CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(firstPageToken, nameof(firstPageToken));
+
+        ValuesPageToken pageToken = ValuesPageToken.FromToken(firstPageToken);
+
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, cancellationToken.ToRequestOptions());
+        return PageCollectionHelpers.Create(enumerator);
+    }
+
+    public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(RequestOptions options)
+    {
+        PageResultEnumerator enumerator = new ValuesPageEnumerator(_pipeline, options);
+        return PageCollectionHelpers.CreateAsync(enumerator);
+    }
+
+    public virtual IEnumerable<ClientResult> GetValues(RequestOptions options)
+    {
+        PageResultEnumerator enumerator = new ValuesPageEnumerator(_pipeline, options);
         return PageCollectionHelpers.Create(enumerator);
     }
 }
