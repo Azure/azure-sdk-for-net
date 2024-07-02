@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Details of the elasticity profile. </summary>
-    internal partial class StandbyVirtualMachinePoolElasticityProfile
+    /// <summary> Details of the StandbyVirtualMachine. </summary>
+    public partial class StandbyVirtualMachineResourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,35 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
-        public StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity)
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/>. </summary>
+        /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineResourceId"/> is null. </exception>
+        public StandbyVirtualMachineResourceProperties(string virtualMachineResourceId)
         {
-            MaxReadyCapacity = maxReadyCapacity;
+            Argument.AssertNotNull(virtualMachineResourceId, nameof(virtualMachineResourceId));
+
+            VirtualMachineResourceId = virtualMachineResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/>. </summary>
+        /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachineResourceProperties(string virtualMachineResourceId, StandbyPoolProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxReadyCapacity = maxReadyCapacity;
+            VirtualMachineResourceId = virtualMachineResourceId;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/> for deserialization. </summary>
-        internal StandbyVirtualMachinePoolElasticityProfile()
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/> for deserialization. </summary>
+        internal StandbyVirtualMachineResourceProperties()
         {
         }
 
-        /// <summary> Specifies the maximum number of virtual machines in the standby virtual machine pool. </summary>
-        public long MaxReadyCapacity { get; set; }
+        /// <summary> Resource id of the virtual machine. </summary>
+        public string VirtualMachineResourceId { get; set; }
+        /// <summary> The status of the last operation. </summary>
+        public StandbyPoolProvisioningState? ProvisioningState { get; }
     }
 }

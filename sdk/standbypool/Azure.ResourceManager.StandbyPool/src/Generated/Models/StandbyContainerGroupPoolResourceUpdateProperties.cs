@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Details of the elasticity profile. </summary>
-    internal partial class StandbyVirtualMachinePoolElasticityProfile
+    /// <summary> The updatable properties of the StandbyContainerGroupPoolResource. </summary>
+    public partial class StandbyContainerGroupPoolResourceUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,25 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
-        public StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity)
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceUpdateProperties"/>. </summary>
+        public StandbyContainerGroupPoolResourceUpdateProperties()
         {
-            MaxReadyCapacity = maxReadyCapacity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceUpdateProperties"/>. </summary>
+        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
+        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolResourceUpdateProperties(StandbyContainerGroupPoolElasticityPatchProfile elasticityProfile, StandbyContainerGroupPatchProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxReadyCapacity = maxReadyCapacity;
+            ElasticityProfile = elasticityProfile;
+            ContainerGroupProperties = containerGroupProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/> for deserialization. </summary>
-        internal StandbyVirtualMachinePoolElasticityProfile()
-        {
-        }
-
-        /// <summary> Specifies the maximum number of virtual machines in the standby virtual machine pool. </summary>
-        public long MaxReadyCapacity { get; set; }
+        /// <summary> Specifies elasticity profile of standby container group pools. </summary>
+        public StandbyContainerGroupPoolElasticityPatchProfile ElasticityProfile { get; set; }
+        /// <summary> Specifies container group properties of standby container group pools. </summary>
+        public StandbyContainerGroupPatchProperties ContainerGroupProperties { get; set; }
     }
 }
