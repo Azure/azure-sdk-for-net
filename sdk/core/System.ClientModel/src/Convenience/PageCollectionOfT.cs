@@ -22,27 +22,30 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     public PageResult<T> GetCurrentPage()
     {
         IEnumerator<PageResult<T>> enumerator = GetEnumeratorCore();
-        PageResult<T> current = enumerator.Current;
 
-        // Relies on generated enumerator contract
-        if (current == null)
+        if (enumerator.Current == null)
         {
             enumerator.MoveNext();
-            current = enumerator.Current;
         }
 
-        return current;
+        return enumerator.Current!;
     }
 
     public IEnumerable<T> GetAllValues()
     {
-        foreach (PageResult<T> page in this)
+        IEnumerator<PageResult<T>> enumerator = GetEnumeratorCore();
+
+        do
         {
-            foreach (T value in page.Values)
+            if (enumerator.Current is not null)
             {
-                yield return value;
+                foreach (T value in enumerator.Current.Values)
+                {
+                    yield return value;
+                }
             }
         }
+        while (enumerator.MoveNext());
     }
 
     protected abstract IEnumerator<PageResult<T>> GetEnumeratorCore();

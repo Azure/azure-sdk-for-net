@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -23,29 +22,32 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
     public async Task<PageResult<T>> GetCurrentPageAsync()
     {
         IAsyncEnumerator<PageResult<T>> enumerator = GetAsyncEnumeratorCore();
-        PageResult<T> current = enumerator.Current;
 
-        // Relies on generated enumerator contract
-        if (current == null)
+        if (enumerator.Current == null)
         {
             await enumerator.MoveNextAsync().ConfigureAwait(false);
-            current = enumerator.Current;
         }
 
-        return current;
+        return enumerator.Current!;
     }
 
     public async IAsyncEnumerable<T> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await foreach (PageResult<T> page in this.ConfigureAwait(false).WithCancellation(cancellationToken))
-        {
-            foreach (T value in page.Values)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
+        IAsyncEnumerator<PageResult<T>> enumerator = GetAsyncEnumeratorCore(cancellationToken);
 
-                yield return value;
+        do
+        {
+            if (enumerator.Current is not null)
+            {
+                foreach (T value in enumerator.Current.Values)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    yield return value;
+                }
             }
         }
+        while (await enumerator.MoveNextAsync().ConfigureAwait(false));
     }
 
     protected abstract IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken = default);
