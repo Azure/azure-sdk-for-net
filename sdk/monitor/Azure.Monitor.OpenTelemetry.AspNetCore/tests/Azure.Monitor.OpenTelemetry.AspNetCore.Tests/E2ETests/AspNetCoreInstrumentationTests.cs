@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
     [CollectionDefinition("Instrumentation.AspNetCore", DisableParallelization = true)]
     [Collection("Instrumentation.AspNetCore")]
-    public class AspNetCoreInstrumentationTests
+    public partial class AspNetCoreInstrumentationTests
         : IClassFixture<WebApplicationFactory<AspNetCoreTestApp.Program>>, IDisposable
     {
         private readonly WebApplicationFactory<AspNetCoreTestApp.Program> _factory;

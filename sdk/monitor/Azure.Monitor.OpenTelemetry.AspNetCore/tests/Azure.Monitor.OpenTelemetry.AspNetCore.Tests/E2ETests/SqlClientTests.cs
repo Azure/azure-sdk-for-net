@@ -21,9 +21,9 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
-    [CollectionDefinition("SqlClient", DisableParallelization = true)]
-    [Collection("SqlClient")]
-    public class SqlClientTests
+    //[CollectionDefinition("SqlClient", DisableParallelization = true)]
+    //[Collection("SqlClient")]
+    public partial class AspNetCoreInstrumentationTests
     {
         private const string SqlClientDiagnosticListenerName = "SqlClientDiagnosticListener";
         private const string SqlDataBeforeExecuteCommand = "System.Data.SqlClient.WriteCommandBefore";
@@ -210,6 +210,20 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+
+            // TODO: PRINT ACTIVITY NAME
+            if (activities.Count > 1)
+            {
+                var str = "";
+
+                foreach (var a in activities)
+                {
+                    str += a.DisplayName.ToString();
+                }
+
+                throw new Exception(str);
+            }
+
             var telemetryItem = telemetryItems.Where(x => x.Name == "RemoteDependency").Single();
             var activity = activities.Single();
 
