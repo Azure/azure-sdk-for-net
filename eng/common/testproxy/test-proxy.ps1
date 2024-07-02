@@ -81,7 +81,6 @@ function Get-Proxy-Url (
     return $url
 }
 
-
 function Cleanup-Directory ($path) {
     if (Test-Path -Path $path) {
         Remove-Item -Path $path -Recurse -Force
@@ -109,57 +108,6 @@ function Is-Work-Necessary (
 
 <#
 .SYNOPSIS
-Installs the test-proxy as a dotnet tool installation.
-.PARAMETER Version
-The version of the proxy to install. Defaults to latest release.
-.PARAMETER Feed
-The feed from which to install the test-proxy. Defaults to public azure sdk for net official feed.
-.PARAMETER TargetDirectory
-If provided, the tool will be installed to this directory, rather than globally.
-#>
-function Install-Tool-TestProxy (
-    $Version = "1.0.0-dev*",
-    $Feed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
-    $TargetDirectory = $null
-) {
-
-    $adjustableArgs = "--global"
-
-    if ($TargetDirectory -ne $null) {
-        $adjustableArgs = "--tool-path `"$TargetDirectory`""
-    }
-
-    Write-Host "dotnet tool update azure.sdk.tools.testproxy $adjustableArgs --add-source $Feed --version $Version --ignore-failed-sources"
-    dotnet tool update azure.sdk.tools.testproxy $adjustableArgs --add-source $Feed --version $Version --ignore-failed-sources
-}
-
-<#
-.SYNOPSIS
-Installs a local copy of the test-proxy.
-.PARAMETER ProjectDirectory
-Where does the solution or project directory exist? Defaults to ".".
-.PARAMETER TargetDirectory
-If provided, the tool will be installed to this directory, rather than globally.
-#>
-function Install-Local-TestProxy (
-    $ProjectDirectory = ".",
-    $TargetDirectory = $null
-) {
-    $tmpDir = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath ([System.Guid]::NewGuid().ToString())
-    New-Item -ItemType Directory -Path $tmpDir
-
-    $adjustableArgs = "--global"
-    if ($TargetDirectory -ne $null) {
-        $adjustableArgs = "--tool-path `"$TargetDirectory`""
-    }
-
-    dotnet pack /p:ArtifactsPackagesDir=$tmpDir -c Release $ProjectDirectory
-    Write-Host "Built Test-Proxy located in $tmpDir"
-    dotnet tool update azure.sdk.tools.testproxy $adjustableArgs --prerelease --add-source $tmpDir
-}
-
-<#
-.SYNOPSIS
 Installs a standalone version of the test-proxy.
 .PARAMETER Version
 The version of the proxy to install. Requires a full version to be provided. EG "1.0.0-dev.20240617.1"
@@ -173,6 +121,11 @@ function Install-Standalone-TestProxy (
 ) {
     $ErrorActionPreference = "Stop"
     $systemDetails = Get-Proxy-Meta
+
+    if (!(Test-Path $Directory) -and $Directory -ne ".") {
+        New-Item -ItemType Directory -Path $Directory -Force
+    }
+
     $downloadFolder = Resolve-Path $Directory
     $downloadUrl = Get-Proxy-Url $Version
     $downloadFile = $downloadUrl.Split('/')[-1]

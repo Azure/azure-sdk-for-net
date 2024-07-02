@@ -32,7 +32,7 @@ steps:
       }
 
       Write-Host "Installing test-proxy version $version"
-      ${{ parameters.templateRoot }}/eng/common/testproxy/scripts/install-test-proxy.ps1 -Version $version -InstallDirectory $(Build.BinariesDirectory)/test-proxy
+      ${{ parameters.templateRoot }}/eng/common/testproxy/install-test-proxy.ps1 -Version $version -InstallDirectory $(Build.BinariesDirectory)/test-proxy
     displayName: "Install test-proxy"
     condition: and(succeeded(), ${{ parameters.condition }})
 

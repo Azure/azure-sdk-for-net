@@ -1,4 +1,3 @@
-Set-StrictMode -Version 4
 <#
 .SYNOPSIS
 Installs a standalone version of the test-proxy for use in tests. This function is intended to be used in CI/CD pipelines, and leaves behind
@@ -14,14 +13,18 @@ param(
     [Parameter(Mandatory = $true)]
     $Version,
     [Parameter(Mandatory = $true)]
-    $InstallDirectory,
+    $InstallDirectory
 )
 
 . (Join-Path $PSScriptRoot test-proxy.ps1)
 
-Install-Standalone-TestProxy -Version $Version -InstallDirectory $InstallDirectory
+Write-Host "Attempting to download and install version `"$Version`" into `"$InstallDirectory`""
 
-if $(IsWindows) {
+Install-Standalone-TestProxy -Version $Version -Directory $InstallDirectory
+
+$PROXY_EXE = ""
+
+if ($IsWindows) {
     $PROXY_EXE = Join-Path $InstallDirectory "Azure.Sdk.Tools.TestProxy.exe"
 } else {
     $PROXY_EXE = Join-Path $InstallDirectory "Azure.Sdk.Tools.TestProxy"
