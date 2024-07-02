@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection proxy resource. </param>
-        /// <param name="eTag"> ETag from NRP. </param>
+        /// <param name="etag"> ETag from NRP. </param>
         /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
         /// <param name="status"> Operation status. </param>
         /// <returns> A new <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData"/> instance for mocking. </returns>
-        public static DeviceUpdatePrivateEndpointConnectionProxyData DeviceUpdatePrivateEndpointConnectionProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState = null, string eTag = null, DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint = null, string status = null)
+        public static DeviceUpdatePrivateEndpointConnectionProxyData DeviceUpdatePrivateEndpointConnectionProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState = null, string etag = null, DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint = null, string status = null)
         {
             return new DeviceUpdatePrivateEndpointConnectionProxyData(
                 id,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 resourceType,
                 systemData,
                 provisioningState,
-                eTag,
+                etag,
                 remotePrivateEndpoint,
                 status,
                 serializedAdditionalRawData: null);
