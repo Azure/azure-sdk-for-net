@@ -306,3 +306,4 @@ namespace Azure.Core.Tests
         }
     }
 }
+
