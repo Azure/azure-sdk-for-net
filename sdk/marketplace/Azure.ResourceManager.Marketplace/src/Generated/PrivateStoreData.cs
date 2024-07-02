@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="systemData"> The systemData. </param>
         /// <param name="availability"> Indicates private store availability. </param>
         /// <param name="privateStoreId"> Private Store id. </param>
-        /// <param name="eTag"> Identifier for purposes of race condition. </param>
+        /// <param name="etag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreName"> Private Store Name. </param>
         /// <param name="tenantId"> Tenant id. </param>
         /// <param name="isGov"> Is government. </param>
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="recipients"> Gets or sets list of notified recipients for new requests. </param>
         /// <param name="sendToAllMarketplaceAdmins"> Gets or sets whether to send email to all marketplace admins for new requests. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<Guid> collectionIds, IDictionary<string, string> branding, IList<NotificationRecipient> recipients, bool? sendToAllMarketplaceAdmins, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? etag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<Guid> collectionIds, IDictionary<string, string> branding, IList<NotificationRecipient> recipients, bool? sendToAllMarketplaceAdmins, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Availability = availability;
             PrivateStoreId = privateStoreId;
-            ETag = eTag;
+            ETag = etag;
             PrivateStoreName = privateStoreName;
             TenantId = tenantId;
             IsGov = isGov;
