@@ -22,29 +22,33 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 {
     public static partial class NetworkManagerHelperExtensions
     {
-        public static async Task<NetworkManagerCommit> PostNetworkManagerCommitAsync(
-            NetworkManagerResource networkManager,
+        private const int DelayMilliseconds = 10000;
+
+        public static async Task PostNetworkManagerCommitAsync(
+            this NetworkManagerResource networkManager,
             AzureLocation location,
             List<string> configurationIds,
             NetworkConfigurationDeploymentType configType)
         {
-            NetworkManagerCommit networkManagerCommit = new(new string[] { location }, configType);
+            var locations = new[] { location.ToString() };
+            var networkManagerCommit = new NetworkManagerCommit(locations, configType);
 
-            foreach (var id in configurationIds)
+            foreach (var configId in configurationIds)
             {
-                networkManagerCommit.ConfigurationIds.Add(id);
+                networkManagerCommit.ConfigurationIds.Add(configId);
             }
 
-            ArmOperation<NetworkManagerCommit> networkManagerCommitLro = await networkManager.PostNetworkManagerCommitAsync(WaitUntil.Completed, networkManagerCommit);
-            return networkManagerCommitLro.Value;
+            await networkManager.PostNetworkManagerCommitAsync(WaitUntil.Started, networkManagerCommit).ConfigureAwait(false);
+
+            await Task.Delay(DelayMilliseconds).ConfigureAwait(false);
         }
 
         public static async Task DeleteNetworkGroupAsync(
             this NetworkManagerResource networkManager,
             NetworkGroupResource networkGroup)
         {
-            await networkGroup.DeleteAsync(WaitUntil.Completed);
-            NullableResponse<NetworkGroupResource> networkGroupResponse = await networkManager.GetNetworkGroups().GetIfExistsAsync(networkGroup.Id);
+            await networkGroup.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+            NullableResponse<NetworkGroupResource> networkGroupResponse = await networkManager.GetNetworkGroups().GetIfExistsAsync(networkGroup.Id).ConfigureAwait(false);
             Assert.AreEqual(false, networkGroupResponse.HasValue);
         }
 
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             try
             {
-                var method = typeof(TCollection).GetMethod("GetIfExistsAsync", new Type[] { typeof(string), typeof(CancellationToken) });
+                MethodInfo method = typeof(TCollection).GetMethod("GetIfExistsAsync", new Type[] { typeof(string), typeof(CancellationToken) });
                 if (method == null)
                 {
                     throw new InvalidOperationException($"The method 'GetIfExistsAsync' was not found on type '{typeof(TCollection).Name}'.");
@@ -62,22 +66,22 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 var task = (Task)method.Invoke(collection, new object[] { resourceName, CancellationToken.None });
                 await task.ConfigureAwait(false);
 
-                var resultProperty = task.GetType().GetProperty("Result");
+                PropertyInfo resultProperty = task.GetType().GetProperty("Result");
                 var response = resultProperty.GetValue(task);
 
                 if (response != null)
                 {
-                    var hasValueProperty = response.GetType().GetProperty("HasValue");
+                    PropertyInfo hasValueProperty = response.GetType().GetProperty("HasValue");
                     bool hasValue = (bool)hasValueProperty.GetValue(response);
 
                     if (hasValue)
                     {
-                        var resourceProperty = response.GetType().GetProperty("Value");
+                        PropertyInfo resourceProperty = response.GetType().GetProperty("Value");
                         var resource = resourceProperty.GetValue(response);
 
                         await resource.DeleteResourceAsync().ConfigureAwait(false);
 
-                        var verifyMethod = typeof(TCollection).GetMethod("GetIfExistsAsync", new Type[] { typeof(string), typeof(CancellationToken) });
+                        MethodInfo verifyMethod = typeof(TCollection).GetMethod("GetIfExistsAsync", new Type[] { typeof(string), typeof(CancellationToken) });
                         if (verifyMethod == null)
                         {
                             throw new InvalidOperationException($"The method 'GetIfExistsAsync' was not found on type '{typeof(TCollection).Name}' for verification.");
@@ -86,12 +90,12 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                         var verifyTask = (Task)verifyMethod.Invoke(collection, new object[] { resourceName, CancellationToken.None });
                         await verifyTask.ConfigureAwait(false);
 
-                        var verifyResultProperty = verifyTask.GetType().GetProperty("Result");
+                        PropertyInfo verifyResultProperty = verifyTask.GetType().GetProperty("Result");
                         var verifyResponse = verifyResultProperty.GetValue(verifyTask);
 
                         if (verifyResponse != null)
                         {
-                            var verifyHasValueProperty = verifyResponse.GetType().GetProperty("HasValue");
+                            PropertyInfo verifyHasValueProperty = verifyResponse.GetType().GetProperty("HasValue");
                             bool verifyHasValue = (bool)verifyHasValueProperty.GetValue(verifyResponse);
 
                             if (verifyHasValue)
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         public static async Task DeleteResourceAsync<TResource>(this TResource resource)
         {
-            var deleteMethod = resource.GetType().GetMethod("DeleteAsync", new Type[] { typeof(WaitUntil), typeof(bool?), typeof(CancellationToken) });
+            MethodInfo deleteMethod = resource.GetType().GetMethod("DeleteAsync", new Type[] { typeof(WaitUntil), typeof(bool?), typeof(CancellationToken) });
             if (deleteMethod == null)
             {
                 deleteMethod = resource.GetType().GetMethod("DeleteAsync", new Type[] { typeof(WaitUntil), typeof(CancellationToken) });
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             string resourceGroupName,
             AzureLocation location)
         {
-            ArmOperation<ResourceGroupResource> resourceGroupLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroupResource> resourceGroupLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, new ResourceGroupData(location)).ConfigureAwait(false);
             return resourceGroupLro.Value;
         }
 
@@ -184,53 +188,51 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             NetworkGroupCollection networkGroupResources = networkManager.GetNetworkGroups();
             string networkGroupName = $"ng-{networkGroupType}";
 
-            NetworkGroupData networkGroupData = new()
+            var networkGroupData = new NetworkGroupData
             {
                 Description = "My Test Network Group",
                 MemberType = networkGroupType,
             };
 
-            ArmOperation<NetworkGroupResource> networkGroupResource = await networkGroupResources.CreateOrUpdateAsync(WaitUntil.Completed, networkGroupName, networkGroupData);
-
-            // await AddStaticMemberToNetworkGroup(networkGroupType);
+            ArmOperation<NetworkGroupResource> networkGroupResource = await networkGroupResources.CreateOrUpdateAsync(WaitUntil.Completed, networkGroupName, networkGroupData).ConfigureAwait(false);
             return networkGroupResource.Value;
         }
 
-        private static async Task AddSubnetStaticMemberToNetworkGroup(
-            NetworkGroupResource networkGroup,
+        public static async Task AddSubnetStaticMemberToNetworkGroup(
+            this NetworkGroupResource networkGroup,
             List<SubnetResource> subnets)
         {
             NetworkGroupStaticMemberCollection collection = networkGroup.GetNetworkGroupStaticMembers();
 
-            foreach (var subnet in subnets)
+            foreach (SubnetResource subnet in subnets)
             {
-                string staticMemberName = $"testStaticMember-{subnet.Data.Name}";
+                var staticMemberName = $"testStaticMember-{subnet.Data.Name}";
 
-                NetworkGroupStaticMemberData data = new()
+                var data = new NetworkGroupStaticMemberData
                 {
                     ResourceId = subnet.Id,
                 };
 
-                await collection.CreateOrUpdateAsync(WaitUntil.Completed, staticMemberName, data);
+                await collection.CreateOrUpdateAsync(WaitUntil.Completed, staticMemberName, data).ConfigureAwait(false);
             }
         }
 
-        private static async Task AddVnetStaticMemberToNetworkGroup(
-            NetworkGroupResource networkGroup,
+        public static async Task AddVnetStaticMemberToNetworkGroup(
+            this NetworkGroupResource networkGroup,
             List<VirtualNetworkResource> vnets)
         {
             NetworkGroupStaticMemberCollection collection = networkGroup.GetNetworkGroupStaticMembers();
 
-            foreach (var vnet in vnets)
+            foreach (VirtualNetworkResource vnet in vnets)
             {
-                string staticMemberName = $"testStaticMember-{vnet.Data.Name}";
+                var staticMemberName = $"testStaticMember-{vnet.Data.Name}";
 
-                NetworkGroupStaticMemberData data = new()
+                var data = new NetworkGroupStaticMemberData
                 {
                     ResourceId = vnet.Id,
                 };
 
-                await collection.CreateOrUpdateAsync(WaitUntil.Completed, staticMemberName, data);
+                await collection.CreateOrUpdateAsync(WaitUntil.Completed, staticMemberName, data).ConfigureAwait(false);
             }
         }
 
@@ -239,28 +241,30 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             AzureLocation location,
             int numResources = 1)
         {
-            VirtualNetworkData vnetData = new()
+            var vnetData = new VirtualNetworkData
             {
                 Location = location,
-                AddressSpace = new AddressSpace(),
+                AddressSpace = new AddressSpace
+                {
+                    AddressPrefixes = { "10.0.0.0/16" }
+                }
             };
 
-            SubnetData subnetData = new()
+            var subnetData = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/24"
             };
 
-            List<VirtualNetworkResource> vnets = new();
-            List<SubnetResource> subnets = new();
+            var vnets = new List<VirtualNetworkResource>();
+            var subnets = new List<SubnetResource>();
 
             for (int i = 0; i < numResources; i++)
             {
-                string vnetName = $"vnet-{i}";
-                vnetData.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
-                ArmOperation<VirtualNetworkResource> vnetLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
+                var vnetName = $"vnet-{i}";
+                ArmOperation<VirtualNetworkResource> vnetLro = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData).ConfigureAwait(false);
 
-                string subnetName = $"subnet-{i}";
-                ArmOperation<SubnetResource> subnetLro = await vnetLro.Value.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, subnetName, subnetData);
+                var subnetName = $"subnet-{i}";
+                ArmOperation<SubnetResource> subnetLro = await vnetLro.Value.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, subnetName, subnetData).ConfigureAwait(false);
 
                 vnets.Add(vnetLro.Value);
                 subnets.Add(subnetLro.Value);

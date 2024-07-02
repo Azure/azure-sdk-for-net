@@ -11,6 +11,7 @@ using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 using Azure.Core;
 using System.Runtime.CompilerServices;
+using System;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -22,8 +23,11 @@ namespace Azure.ResourceManager.Network.Tests
         private NetworkGroupResource _networkGroupSubnet;
         private readonly AzureLocation _location = AzureLocation.EastUS2;
         private RoutingConfigurationResource _routingConfiguration;
+        private List<RoutingRuleCollectionResource> _routingCollections;
+        private List<RoutingRuleResource> _routingRules;
         private List<VirtualNetworkResource> _vnets = new();
         private List<SubnetResource> _subnets = new();
+        private SubscriptionResource _subscription;
         private const string VirtualNetworkGroupType = "VirtualNetwork";
         private const string SubnetNetworkGroupType = "Subnet";
 
@@ -34,15 +38,20 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            // Get the default subscription
+            _subscription = await GlobalClient.GetDefaultSubscriptionAsync();
 
-            // Create resource group
+            // Create a resource group
             string resourceGroupName = SessionRecording.GenerateAssetName("rg-");
-            _resourceGroup = await subscription.CreateResourceGroupAsync(resourceGroupName, _location);
+            _resourceGroup = await _subscription.CreateResourceGroupAsync(resourceGroupName, _location);
 
-            // Create network manager
+            // Create a network manager
             string networkManagerName = SessionRecording.GenerateAssetName("nm-");
-            _networkManager = await _resourceGroup.CreateNetworkManagerAsync(networkManagerName, _location, new List<string> { subscription.Data.Id }, new List<NetworkConfigurationDeploymentType> { NetworkConfigurationDeploymentType.Routing });
+            _networkManager = await _resourceGroup.CreateNetworkManagerAsync(
+                networkManagerName,
+                _location,
+                new List<string> { _subscription.Data.Id },
+                new List<NetworkConfigurationDeploymentType> { NetworkConfigurationDeploymentType.Routing });
 
             // Create test virtual networks and subnets
             (_vnets, _subnets) = await _resourceGroup.CreateTestVirtualNetworksAsync(_location);
@@ -67,61 +76,86 @@ namespace Azure.ResourceManager.Network.Tests
         [SetUp]
         public async Task TestSetUp()
         {
+            // Create network groups for virtual networks and subnets
             _networkGroupVnet = await _networkManager.CreateNetworkGroupAsync(VirtualNetworkGroupType);
             _networkGroupSubnet = await _networkManager.CreateNetworkGroupAsync(SubnetNetworkGroupType);
+
+            // Create a routing configuration
+            (_routingConfiguration, _routingCollections, _routingRules) = await _networkManager.CreateRoutingConfigurationAsync
+                (new List<ResourceIdentifier>() { _networkGroupSubnet.Id, _networkGroupVnet.Id });
         }
 
         [TearDown]
         public async Task TestTearDown()
         {
+            // Delete the routing configuration
             await _networkManager.DeleteRoutingConfigurationAsync(_routingConfiguration);
+
+            // Delete the network groups
             await _networkManager.DeleteNetworkGroupAsync(_networkGroupSubnet);
             await _networkManager.DeleteNetworkGroupAsync(_networkGroupVnet);
         }
 
         [Test]
         [RecordedTest]
-        public async Task RoutingConfigurationCrudWithVnetMemberType()
+        public async Task TestRoutingConfigurationCrud()
         {
-            // Arrange
-            // Create routing configuration
-            _routingConfiguration = await _networkManager.CreateRoutingConfigurationAsync();
+            // Prepare expected values for validation
+            var expectedValues = _routingRules.ToDictionary(
+                rule => rule.Data.Destination.DestinationAddress,
+                rule => (rule.Data.NextHop.NextHopAddress, rule.Data.NextHop.NextHopType));
 
-            // Create routing rule collection
-            RoutingRuleCollectionResource routingCollection = await _routingConfiguration.CreateRoutingRuleCollectionAsync(new List<ResourceIdentifier>() { _networkGroupVnet.Id });
-
-            // Create multiple routing rules
-            List<RoutingRuleResource> routingRules = new()
-            {
-                await routingCollection.CreateRoutingRuleAsync("rule1", "10.1.1.0/24", RoutingRuleDestinationType.AddressPrefix, "20.1.1.1", RoutingRuleNextHopType.VirtualAppliance),
-                await routingCollection.CreateRoutingRuleAsync("rule2", "10.2.2.0/24", RoutingRuleDestinationType.AddressPrefix, "20.2.2.2", RoutingRuleNextHopType.VirtualAppliance)
-            };
-
-            // Expected values for validation
-            var expectedValues = new Dictionary<string, (string NextHopAddress, RoutingRuleNextHopType NextHopType)>();
-            foreach (RoutingRuleResource rule in routingRules)
-            {
-                expectedValues.Add(rule.Data.Destination.DestinationAddress, (rule.Data.NextHop.NextHopAddress, rule.Data.NextHop.NextHopType));
-            }
-
-            // Act
+            // Assert
             // Fetch the routing configuration
             Response<RoutingConfigurationResource> fetchedRoutingConfiguration = await _networkManager.GetRoutingConfigurations().GetAsync(_routingConfiguration.Data.Name);
             Assert.AreEqual(NetworkProvisioningState.Succeeded, fetchedRoutingConfiguration.Value.Data.ProvisioningState);
 
             // Fetch the routing rule collection
-            Response<RoutingRuleCollectionResource> fetchedRoutingRuleCollection = await fetchedRoutingConfiguration.Value.GetRoutingRuleCollections().GetAsync(routingCollection.Data.Name);
+            Response<RoutingRuleCollectionResource> fetchedRoutingRuleCollection = await fetchedRoutingConfiguration.Value.GetRoutingRuleCollections().GetAsync(_routingCollections.First().Data.Name);
             Assert.AreEqual(NetworkProvisioningState.Succeeded, fetchedRoutingRuleCollection.Value.Data.ProvisioningState);
-            Assert.AreEqual(_networkGroupVnet.Id, fetchedRoutingRuleCollection.Value.Data.AppliesTo.First().NetworkGroupId);
+
+            Assert.AreEqual(2, fetchedRoutingRuleCollection.Value.Data.AppliesTo.Count);
             Assert.AreEqual("True", fetchedRoutingRuleCollection.Value.Data.DisableBgpRoutePropagation);
 
-            // Assert
             // Validate each routing rule
-            var fetchedRoutingRules = fetchedRoutingRuleCollection.Value.GetRoutingRules();
+            RoutingRuleCollection fetchedRoutingRules = fetchedRoutingRuleCollection.Value.GetRoutingRules();
             await foreach (RoutingRuleResource rule in fetchedRoutingRules)
             {
                 NetworkManagerHelperExtensions.ValidateRoutingRule(rule, expectedValues);
             }
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task TestRoutingConfigurationCommit()
+        {
+            // Prepare expected values for validation
+            var expectedValues = _routingRules.ToDictionary(
+                rule => rule.Data.Destination.DestinationAddress,
+                rule => (rule.Data.NextHop.NextHopAddress, rule.Data.NextHop.NextHopType));
+
+            // Add static members to the network groups
+            await _networkGroupVnet.AddVnetStaticMemberToNetworkGroup(_vnets);
+
+            // Act
+            // Commit the routing configuration
+            await _networkManager.PostNetworkManagerCommitAsync(
+                _location,
+                new List<string> { _routingConfiguration.Id },
+                NetworkConfigurationDeploymentType.Routing);
+
+            // Assert
+            // Validate all the routes within the route tables associated with the subnets
+            await _resourceGroup.ValidateRouteTablesAsync(_subscription, _vnets, expectedValues);
+
+            // Act
+            // Commit an empty routing configuration
+            expectedValues = new Dictionary<string, (string NextHopAddress, RoutingRuleNextHopType NextHopType)>();
+            await _networkManager.PostNetworkManagerCommitAsync(_location, new List<string> { }, NetworkConfigurationDeploymentType.Routing);
+
+            // Assert
+            // Validate that the route tables are empty
+            await _resourceGroup.ValidateRouteTablesAsync(_subscription, _vnets, expectedValues, isEmpty: true);
         }
     }
 }
