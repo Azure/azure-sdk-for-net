@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Azure.ResourceManager.TestFramework
 {
