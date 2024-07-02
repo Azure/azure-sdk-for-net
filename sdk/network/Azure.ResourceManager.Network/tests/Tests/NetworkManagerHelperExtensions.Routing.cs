@@ -44,7 +44,9 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             List<Task<RoutingRuleResource>> routingRuleTasks = new()
             {
                 routingCollection.CreateRoutingRuleAsync("rule1", "10.1.1.0/24", RoutingRuleDestinationType.AddressPrefix, "20.1.1.1", RoutingRuleNextHopType.VirtualAppliance),
-                routingCollection.CreateRoutingRuleAsync("rule2", "10.2.2.0/24", RoutingRuleDestinationType.AddressPrefix, "20.2.2.2", RoutingRuleNextHopType.VirtualAppliance)
+                routingCollection.CreateRoutingRuleAsync("rule2", "10.2.2.0/24", RoutingRuleDestinationType.AddressPrefix, string.Empty, RoutingRuleNextHopType.VirtualNetworkGateway),
+                routingCollection.CreateRoutingRuleAsync("rule3", "ApiManagement", RoutingRuleDestinationType.ServiceTag, string.Empty, RoutingRuleNextHopType.Internet),
+                routingCollection.CreateRoutingRuleAsync("rule5", "2001::1/128", RoutingRuleDestinationType.AddressPrefix, "2001::2", RoutingRuleNextHopType.VirtualAppliance),
             };
             List<RoutingRuleResource> routingRules = (await Task.WhenAll(routingRuleTasks)).ToList();
 
