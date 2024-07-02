@@ -33,11 +33,6 @@ namespace Azure.AI.Inference
             Function = function;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolDefinition"/> for deserialization. </summary>
-        internal ChatCompletionsFunctionToolDefinition()
-        {
-        }
-
         /// <summary> The function definition details for the function tool. </summary>
         public FunctionDefinition Function { get; }
     }

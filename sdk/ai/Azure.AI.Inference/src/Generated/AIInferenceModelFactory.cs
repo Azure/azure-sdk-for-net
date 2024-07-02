@@ -141,19 +141,6 @@ namespace Azure.AI.Inference
             return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.FunctionDefinition"/>. </summary>
-        /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="description">
-        /// A description of what the function does. The model will use this description when selecting the function and
-        /// interpreting its parameters.
-        /// </param>
-        /// <param name="parameters"> The parameters the function accepts, described as a JSON Schema object. </param>
-        /// <returns> A new <see cref="Inference.FunctionDefinition"/> instance for mocking. </returns>
-        public static FunctionDefinition FunctionDefinition(string name = null, string description = null, BinaryData parameters = null)
-        {
-            return new FunctionDefinition(name, description, parameters, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/>. </summary>
         /// <param name="function"> The function that should be called. </param>
         /// <returns> A new <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/> instance for mocking. </returns>

@@ -43,8 +43,5 @@ namespace Azure.AI.Inference
         internal ChatCompletionsFunctionToolCall()
         {
         }
-
-        /// <summary> The details of the function invocation requested by the tool call. </summary>
-        public FunctionCall Function { get; set; }
     }
 }

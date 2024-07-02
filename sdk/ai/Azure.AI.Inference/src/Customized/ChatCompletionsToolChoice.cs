@@ -36,6 +36,9 @@ namespace Azure.AI.Inference
         /// <inheritdoc cref="ChatCompletionsToolSelectionPreset.None"/>
         public static readonly ChatCompletionsToolChoice None = new(ChatCompletionsToolSelectionPreset.None);
 
+        /// <inheritdoc cref="ChatCompletionsToolSelectionPreset.Required"/>
+        public static readonly ChatCompletionsToolChoice Required = new(ChatCompletionsToolSelectionPreset.Required);
+
         public static implicit operator ChatCompletionsToolChoice(FunctionDefinition functionDefinition)
         {
             return new(functionDefinition);

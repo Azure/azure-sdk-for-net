@@ -90,60 +90,6 @@ namespace Azure.AI.Inference
         }
 
         /// <summary>
-        /// Gets chat completions for the provided chat messages.
-        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
-        /// provided prompt data. The method makes a REST API call to the `/chat/completions` route
-        /// on the given endpoint.
-        /// </summary>
-        /// <param name="chatCompletionsOptions">
-        /// The configuration information for a chat completions request.
-        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
-        /// provided prompt data.
-        /// </param>
-        /// <param name="unknownParams">
-        /// Controls what happens if unknown parameters are passed in the JSON request payload.
-        /// This sets the HTTP request header `unknown-parameters`.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
-        public virtual async Task<Response<ChatCompletions>> CompleteAsync(ChatCompletionsOptions chatCompletionsOptions, UnknownParams? unknownParams = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
-
-            using RequestContent content = chatCompletionsOptions.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CompleteAsync(content, unknownParams?.ToString(), context).ConfigureAwait(false);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// Gets chat completions for the provided chat messages.
-        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
-        /// provided prompt data. The method makes a REST API call to the `/chat/completions` route
-        /// on the given endpoint.
-        /// </summary>
-        /// <param name="chatCompletionsOptions">
-        /// The configuration information for a chat completions request.
-        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
-        /// provided prompt data.
-        /// </param>
-        /// <param name="unknownParams">
-        /// Controls what happens if unknown parameters are passed in the JSON request payload.
-        /// This sets the HTTP request header `unknown-parameters`.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
-        public virtual Response<ChatCompletions> Complete(ChatCompletionsOptions chatCompletionsOptions, UnknownParams? unknownParams = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
-
-            using RequestContent content = chatCompletionsOptions.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Complete(content, unknownParams?.ToString(), context);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
-        }
-
-        /// <summary>
         /// [Protocol Method] Gets chat completions for the provided chat messages.
         /// Completions support a wide variety of tasks and generate text that continues from or "completes"
         /// provided prompt data. The method makes a REST API call to the `/chat/completions` route
@@ -157,15 +103,15 @@ namespace Azure.AI.Inference
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="unknownParams">
-        /// Controls what happens if unknown parameters are passed in the JSON request payload.
-        /// This sets the HTTP request header `unknown-parameters`. Allowed values: "error" | "drop" | "pass_through"
+        /// <param name="extraParams">
+        /// Controls what happens if extra parameters are passed in the JSON request payload.
+        /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass_through"
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CompleteAsync(RequestContent content, string unknownParams = null, RequestContext context = null)
+        internal virtual async Task<Response> CompleteAsync(RequestContent content, string extraParams = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -173,7 +119,7 @@ namespace Azure.AI.Inference
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCompleteRequest(content, unknownParams, context);
+                using HttpMessage message = CreateCompleteRequest(content, extraParams, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -197,15 +143,15 @@ namespace Azure.AI.Inference
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="unknownParams">
-        /// Controls what happens if unknown parameters are passed in the JSON request payload.
-        /// This sets the HTTP request header `unknown-parameters`. Allowed values: "error" | "drop" | "pass_through"
+        /// <param name="extraParams">
+        /// Controls what happens if extra parameters are passed in the JSON request payload.
+        /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass_through"
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response Complete(RequestContent content, string unknownParams = null, RequestContext context = null)
+        internal virtual Response Complete(RequestContent content, string extraParams = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -213,7 +159,7 @@ namespace Azure.AI.Inference
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCompleteRequest(content, unknownParams, context);
+                using HttpMessage message = CreateCompleteRequest(content, extraParams, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -307,7 +253,7 @@ namespace Azure.AI.Inference
             }
         }
 
-        internal HttpMessage CreateCompleteRequest(RequestContent content, string unknownParams, RequestContext context)
+        internal HttpMessage CreateCompleteRequest(RequestContent content, string extraParams, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -318,9 +264,9 @@ namespace Azure.AI.Inference
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (unknownParams != null)
+            if (extraParams != null)
             {
-                request.Headers.Add("unknown-parameters", unknownParams);
+                request.Headers.Add("extra-parameters", extraParams);
             }
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;

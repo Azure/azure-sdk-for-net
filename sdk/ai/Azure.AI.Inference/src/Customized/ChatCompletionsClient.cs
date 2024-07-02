@@ -21,6 +21,74 @@ namespace Azure.AI.Inference
     public partial class ChatCompletionsClient
     {
         /// <summary>
+        /// Gets chat completions for the provided chat messages.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data. The method makes a REST API call to the `/chat/completions` route
+        /// on the given endpoint.
+        /// </summary>
+        /// <param name="chatCompletionsOptions">
+        /// The configuration information for a chat completions request.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data.
+        /// </param>
+        /// <param name="extraParams">
+        /// Controls what happens if extra parameters are passed in the JSON request payload.
+        /// This sets the HTTP request header `extra-parameters`.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
+        public virtual async Task<Response<ChatCompletions>> CompleteAsync(ChatCompletionsOptions chatCompletionsOptions, ExtraParams? extraParams = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+
+            // CUSTOM CODE NOTE:
+            //   If AdditionalProperties are provided, the decision has been made to default extraParams to "PassThrough"
+            if (chatCompletionsOptions.AdditionalProperties != null && chatCompletionsOptions.AdditionalProperties.Count > 0)
+            {
+                extraParams ??= ExtraParams.PassThrough;
+            }
+
+            using RequestContent content = chatCompletionsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CompleteAsync(content, extraParams?.ToString(), context).ConfigureAwait(false);
+            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Gets chat completions for the provided chat messages.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data. The method makes a REST API call to the `/chat/completions` route
+        /// on the given endpoint.
+        /// </summary>
+        /// <param name="chatCompletionsOptions">
+        /// The configuration information for a chat completions request.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data.
+        /// </param>
+        /// <param name="extraParams">
+        /// Controls what happens if extra parameters are passed in the JSON request payload.
+        /// This sets the HTTP request header `extra-parameters`.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
+        public virtual Response<ChatCompletions> Complete(ChatCompletionsOptions chatCompletionsOptions, ExtraParams? extraParams = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
+
+            // CUSTOM CODE NOTE:
+            //   If AdditionalProperties are provided, the decision has been made to default extraParams to "PassThrough"
+            if (chatCompletionsOptions.AdditionalProperties != null && chatCompletionsOptions.AdditionalProperties.Count > 0)
+            {
+                extraParams ??= ExtraParams.PassThrough;
+            }
+
+            using RequestContent content = chatCompletionsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Complete(content, extraParams?.ToString(), context);
+            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+        }
+
+        /// <summary>
         ///     Begin a chat completions request and get an object that can stream response data as it becomes
         ///     available.
         /// </summary>
@@ -36,9 +104,12 @@ namespace Azure.AI.Inference
         /// <exception cref="ArgumentException">
         ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns>
+        /// A response that, if the request was successful, may be asynchronously enumerated for
+        /// <see cref="StreamingChatCompletionsUpdate"/> instances.
+        /// </returns>
         [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
-        public virtual StreamingResponse<StreamingChatCompletionsUpdate> GetChatCompletionsStreaming(
+        public virtual async Task<StreamingResponse<StreamingChatCompletionsUpdate>> CompleteStreamingAsync(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
@@ -57,7 +128,10 @@ namespace Azure.AI.Inference
                 // Response value object takes IDisposable ownership of message
                 HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 message.BufferResponse = false;
-                Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+                Response baseResponse = await _pipeline.ProcessMessageAsync(
+                    message,
+                    context,
+                    cancellationToken).ConfigureAwait(false);
                 return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
                     baseResponse,
                     (responseForEnumeration)
@@ -89,12 +163,9 @@ namespace Azure.AI.Inference
         /// <exception cref="ArgumentException">
         ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
-        /// <returns>
-        /// A response that, if the request was successful, may be asynchronously enumerated for
-        /// <see cref="StreamingChatCompletionsUpdate"/> instances.
-        /// </returns>
+        /// <returns> The response returned from the service. </returns>
         [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
-        public virtual async Task<StreamingResponse<StreamingChatCompletionsUpdate>> GetChatCompletionsStreamingAsync(
+        public virtual StreamingResponse<StreamingChatCompletionsUpdate> CompleteStreaming(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
@@ -113,10 +184,7 @@ namespace Azure.AI.Inference
                 // Response value object takes IDisposable ownership of message
                 HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 message.BufferResponse = false;
-                Response baseResponse = await _pipeline.ProcessMessageAsync(
-                    message,
-                    context,
-                    cancellationToken).ConfigureAwait(false);
+                Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
                 return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
                     baseResponse,
                     (responseForEnumeration)

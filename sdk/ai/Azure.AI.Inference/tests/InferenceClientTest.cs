@@ -8,17 +8,29 @@ using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Azure.AI.Inference.Tests
 {
     public class InferenceClientTest: RecordedTestBase<InferenceClientTestEnvironment>
     {
+        public enum ToolChoiceTestType
+        {
+            DoNotSpecifyToolChoice,
+            UseAutoPresetToolChoice,
+            UseNonePresetToolChoice,
+            UseRequiredPresetToolChoice,
+            UseFunctionByExplicitToolDefinitionForToolChoice,
+            UseFunctionByImplicitToolDefinitionForToolChoice,
+        }
+
         public InferenceClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
@@ -79,7 +91,7 @@ namespace Azure.AI.Inference.Tests
             };
 
             StreamingResponse<StreamingChatCompletionsUpdate> response
-                = await client.GetChatCompletionsStreamingAsync(requestOptions);
+                = await client.CompleteStreamingAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
 
             StringBuilder contentBuilder = new();
@@ -154,9 +166,25 @@ namespace Azure.AI.Inference.Tests
             };
 
             var exceptionThrown = false;
+
             try
             {
-                 await client.CompleteAsync(requestOptions, UnknownParams.PassThrough);
+                await client.CompleteAsync(requestOptions);
+            }
+            catch (Exception e)
+            {
+                exceptionThrown = true;
+                Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
+                Assert.IsTrue(captureRequestPayloadPolicy._requestContent.Contains("foo"));
+                Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders.ContainsKey("extra-parameters"));
+                Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders["extra-parameters"] == ExtraParams.PassThrough);
+            }
+            Assert.IsTrue(exceptionThrown);
+
+            exceptionThrown = false;
+            try
+            {
+                 await client.CompleteAsync(requestOptions, ExtraParams.PassThrough);
             }
             catch (Exception e)
             {
@@ -167,8 +195,8 @@ namespace Azure.AI.Inference.Tests
             Assert.IsTrue(exceptionThrown);
 
             /*
-            // To be enabled once UnknownParams is implemented in the service
-            var response = await client.CompleteAsync(requestOptions, UnknownParams.Drop);
+            // To be enabled once ExtraParams is implemented in the service
+            var response = await client.CompleteAsync(requestOptions, ExtraParams.Drop);
 
             Assert.IsTrue(captureRequestPayloadPolicy._requestContent.Contains("foo"));
 
@@ -184,6 +212,151 @@ namespace Azure.AI.Inference.Tests
             Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
             Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
             */
+        }
+
+        [RecordedTest]
+        [TestCase(ToolChoiceTestType.UseAutoPresetToolChoice)]
+        [TestCase(ToolChoiceTestType.UseNonePresetToolChoice)]
+        [TestCase(ToolChoiceTestType.UseRequiredPresetToolChoice)]
+        [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice)]
+        [TestCase(ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice)]
+        public async Task TestChatCompletionsFunctionToolHandling(ToolChoiceTestType toolChoiceType = ToolChoiceTestType.DoNotSpecifyToolChoice)
+        {
+            FunctionDefinition futureTemperatureFunction = new FunctionDefinition("get_future_temperature")
+            {
+                Description = "requests the anticipated future temperature at a provided location to help inform "
+                + "advice about topics like choice of attire",
+                Parameters = BinaryData.FromObjectAsJson(new
+                {
+                    Type = "object",
+                    Properties = new
+                    {
+                        LocationName = new
+                        {
+                            Type = "string",
+                            Description = "the name or brief description of a location for weather information"
+                        },
+                        DaysInAdvance = new
+                        {
+                            Type = "integer",
+                            Description = "the number of days in the future for which to retrieve weather information"
+                        }
+                    }
+                },
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
+            };
+
+            ChatCompletionsFunctionToolDefinition functionToolDef = new ChatCompletionsFunctionToolDefinition(futureTemperatureFunction);
+
+            var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
+            var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+
+            // var client = CreateClient(endpoint, credential);
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+            var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("What should I wear in Honolulu in 3 days?"),
+                },
+                MaxTokens = 512,
+                Tools = { functionToolDef }
+            };
+
+            requestOptions.ToolChoice = toolChoiceType switch
+            {
+                ToolChoiceTestType.UseAutoPresetToolChoice => ChatCompletionsToolChoice.Auto,
+                ToolChoiceTestType.UseNonePresetToolChoice => ChatCompletionsToolChoice.None,
+                ToolChoiceTestType.UseRequiredPresetToolChoice => ChatCompletionsToolChoice.Required,
+                ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice => new ChatCompletionsToolChoice(functionToolDef),
+                ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice => functionToolDef,
+                _ => null,
+            };
+
+            Response<ChatCompletions> response = null;
+            try
+            {
+                response = await client.CompleteAsync(requestOptions);
+            }
+            catch (Exception ex)
+            {
+                var requestPayload = captureRequestPayloadPolicy._requestContent;
+                Assert.True(false, $"Request failed with the following exception: {ex}\n Request payload: {requestPayload}");
+            }
+
+            Assert.That(response, Is.Not.Null);
+
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+
+            ChatChoice choice = response.Value.Choices[0];
+
+            if (toolChoiceType == ToolChoiceTestType.UseNonePresetToolChoice)
+            {
+                Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(choice.Message.ToolCalls, Is.Null.Or.Empty);
+                // We finish the test here as there's no further exercise for 'none' beyond ensuring we didn't do what we
+                // weren't meant to
+                return;
+            }
+            else if (toolChoiceType == ToolChoiceTestType.UseAutoPresetToolChoice || toolChoiceType == ToolChoiceTestType.DoNotSpecifyToolChoice)
+            {
+                // Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+                // and continue the test
+            }
+            else
+            {
+                Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                // and continue the test, as we will have tool_calls
+            }
+
+            ChatResponseMessage message = choice.Message;
+            Assert.That(message.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(message.Content, Is.Null.Or.Empty);
+            Assert.That(message.ToolCalls, Is.Not.Null.Or.Empty);
+            Assert.That(message.ToolCalls.Count, Is.EqualTo(1));
+            ChatCompletionsFunctionToolCall functionToolCall = message.ToolCalls[0] as ChatCompletionsFunctionToolCall;
+            Assert.That(functionToolCall, Is.Not.Null);
+            Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
+            Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
+
+            Dictionary<string, string> arguments
+                = JsonConvert.DeserializeObject<Dictionary<string, string>>(functionToolCall.Arguments);
+            Assert.That(arguments.ContainsKey("locationName"));
+            Assert.That(arguments.ContainsKey("date"));
+
+            ChatCompletionsOptions followupOptions = new()
+            {
+                Tools = { functionToolDef },
+                MaxTokens = 512,
+            };
+
+            // Include all original messages
+            foreach (ChatRequestMessage originalMessage in requestOptions.Messages)
+            {
+                followupOptions.Messages.Add(originalMessage);
+            }
+            // And the tool call message just received back from the assistant
+            followupOptions.Messages.Add(new ChatRequestAssistantMessage(choice.Message));
+
+            // And also the tool message that resolves the tool call
+            followupOptions.Messages.Add(new ChatRequestToolMessage(
+                toolCallId: functionToolCall.Id,
+                content: "31 celsius"));
+
+            Response<ChatCompletions> followupResponse = await client.CompleteAsync(followupOptions);
+            Assert.That(followupResponse, Is.Not.Null);
+            Assert.That(followupResponse.Value, Is.Not.Null);
+            Assert.That(followupResponse.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(followupResponse.Value.Choices[0], Is.Not.Null);
+            Assert.That(followupResponse.Value.Choices[0].Message, Is.Not.Null);
+            Assert.That(followupResponse.Value.Choices[0].Message.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(followupResponse.Value.Choices[0].Message.Content, Is.Not.Null.Or.Empty);
         }
 
         #region Helpers
