@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares
             _fileRequestIntent = fileRequestIntent;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMips, long? paidBurstingMaxIops)
+        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMibps, long? paidBurstingMaxIops)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -86,9 +86,9 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-share-paid-bursting-enabled", paidBurstingEnabled.Value);
             }
-            if (paidBurstingMaxBandwidthMips != null)
+            if (paidBurstingMaxBandwidthMibps != null)
             {
-                request.Headers.Add("x-ms-share-paid-bursting-max-bandwidth-mibps", paidBurstingMaxBandwidthMips.Value);
+                request.Headers.Add("x-ms-share-paid-bursting-max-bandwidth-mibps", paidBurstingMaxBandwidthMibps.Value);
             }
             if (paidBurstingMaxIops != null)
             {
@@ -107,12 +107,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
         /// <param name="enableSnapshotVirtualDirectoryAccess"> The <see cref="bool"/>? to use. </param>
         /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
-        /// <param name="paidBurstingMaxBandwidthMips"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMips = null, long? paidBurstingMaxIops = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMips, paidBurstingMaxIops);
+            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ShareCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -133,12 +133,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
         /// <param name="enableSnapshotVirtualDirectoryAccess"> The <see cref="bool"/>? to use. </param>
         /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
-        /// <param name="paidBurstingMaxBandwidthMips"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMips = null, long? paidBurstingMaxIops = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, int? quota = null, ShareAccessTier? accessTier = null, string enabledProtocols = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMips, paidBurstingMaxIops);
+            using var message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops);
             _pipeline.Send(message, cancellationToken);
             var headers = new ShareCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -875,7 +875,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(int? timeout, int? quota, ShareAccessTier? accessTier, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMips, long? paidBurstingMaxIops, ShareFileRequestConditions leaseAccessConditions)
+        internal HttpMessage CreateSetPropertiesRequest(int? timeout, int? quota, ShareAccessTier? accessTier, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxBandwidthMibps, long? paidBurstingMaxIops, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -914,9 +914,9 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-share-paid-bursting-enabled", paidBurstingEnabled.Value);
             }
-            if (paidBurstingMaxBandwidthMips != null)
+            if (paidBurstingMaxBandwidthMibps != null)
             {
-                request.Headers.Add("x-ms-share-paid-bursting-max-bandwidth-mibps", paidBurstingMaxBandwidthMips.Value);
+                request.Headers.Add("x-ms-share-paid-bursting-max-bandwidth-mibps", paidBurstingMaxBandwidthMibps.Value);
             }
             if (paidBurstingMaxIops != null)
             {
@@ -933,13 +933,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
         /// <param name="enableSnapshotVirtualDirectoryAccess"> The <see cref="bool"/>? to use. </param>
         /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
-        /// <param name="paidBurstingMaxBandwidthMips"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareSetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMips = null, long? paidBurstingMaxIops = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareSetPropertiesHeaders>> SetPropertiesAsync(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMips, paidBurstingMaxIops, leaseAccessConditions);
+            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ShareSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -958,13 +958,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="rootSquash"> Root squash to set on the share.  Only valid for NFS shares. </param>
         /// <param name="enableSnapshotVirtualDirectoryAccess"> The <see cref="bool"/>? to use. </param>
         /// <param name="paidBurstingEnabled"> Optional. Boolean. Default if not specified is false. This property enables paid bursting. </param>
-        /// <param name="paidBurstingMaxBandwidthMips"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
+        /// <param name="paidBurstingMaxBandwidthMibps"> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340  MiB/sec. </param>
         /// <param name="paidBurstingMaxIops"> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareSetPropertiesHeaders> SetProperties(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMips = null, long? paidBurstingMaxIops = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareSetPropertiesHeaders> SetProperties(int? timeout = null, int? quota = null, ShareAccessTier? accessTier = null, ShareRootSquash? rootSquash = null, bool? enableSnapshotVirtualDirectoryAccess = null, bool? paidBurstingEnabled = null, long? paidBurstingMaxBandwidthMibps = null, long? paidBurstingMaxIops = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMips, paidBurstingMaxIops, leaseAccessConditions);
+            using var message = CreateSetPropertiesRequest(timeout, quota, accessTier, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxBandwidthMibps, paidBurstingMaxIops, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new ShareSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)

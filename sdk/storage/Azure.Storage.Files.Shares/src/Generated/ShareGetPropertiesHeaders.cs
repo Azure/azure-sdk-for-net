@@ -60,6 +60,6 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Optional. Integer. Default if not specified is the maximum IOPS the file share can support. Current maximum for a file share is 102,400 IOPS. </summary>
         public long? PaidBurstingMaxIops => _response.Headers.TryGetValue("x-ms-share-paid-bursting-max-iops", out long? value) ? value : null;
         /// <summary> Optional. Integer. Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec. </summary>
-        public long? PaidBurstingMaxBandwidthMips => _response.Headers.TryGetValue("x-ms-share-paid-bursting-max-bandwidth-mibps", out long? value) ? value : null;
+        public long? PaidBurstingMaxBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-paid-bursting-max-bandwidth-mibps", out long? value) ? value : null;
     }
 }

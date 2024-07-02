@@ -713,7 +713,7 @@ namespace Azure.Storage.Files.Shares
                 QuotaInGB = response.Headers.Quota,
                 EnablePaidBursting = response.Headers.PaidBurstingEnabled,
                 PaidBurstingMaxIops = response.Headers.PaidBurstingMaxIops,
-                PaidBurstingMaxBandwidthMibps = response.Headers.PaidBurstingMaxBandwidthMips
+                PaidBurstingMaxBandwidthMibps = response.Headers.PaidBurstingMaxBandwidthMibps
             };
         }
 

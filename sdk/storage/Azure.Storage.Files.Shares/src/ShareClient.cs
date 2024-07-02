@@ -727,7 +727,7 @@ namespace Azure.Storage.Files.Shares
                             enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
-                            paidBurstingMaxBandwidthMips: paidBurstingMaxBandwidthMibps,
+                            paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -742,7 +742,7 @@ namespace Azure.Storage.Files.Shares
                             enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
-                            paidBurstingMaxBandwidthMips: paidBurstingMaxBandwidthMibps,
+                            paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2133,7 +2133,7 @@ namespace Azure.Storage.Files.Shares
                             enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
-                            paidBurstingMaxBandwidthMips: paidBurstingMaxBandwidthMibps,
+                            paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2147,7 +2147,7 @@ namespace Azure.Storage.Files.Shares
                             enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
-                            paidBurstingMaxBandwidthMips: paidBurstingMaxBandwidthMibps,
+                            paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
