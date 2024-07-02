@@ -231,6 +231,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("DefaultAzureCredential does not play nicely with this test.")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
