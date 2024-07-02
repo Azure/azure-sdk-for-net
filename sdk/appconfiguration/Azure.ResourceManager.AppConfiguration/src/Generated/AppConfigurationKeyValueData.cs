@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// The content type of the key-value's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </param>
-        /// <param name="eTag"> An ETag indicating the state of a key-value within a configuration store. </param>
+        /// <param name="etag"> An ETag indicating the state of a key-value within a configuration store. </param>
         /// <param name="lastModifiedOn"> The last time a modifying operation was performed on the given key-value. </param>
         /// <param name="isLocked">
         /// A value indicating whether the key-value is locked.
@@ -82,13 +82,13 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </param>
         /// <param name="tags"> A dictionary of tags that can help identify what a key-value may be applicable for. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationKeyValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string key, string label, string value, string contentType, ETag? eTag, DateTimeOffset? lastModifiedOn, bool? isLocked, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppConfigurationKeyValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string key, string label, string value, string contentType, ETag? etag, DateTimeOffset? lastModifiedOn, bool? isLocked, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Key = key;
             Label = label;
             Value = value;
             ContentType = contentType;
-            ETag = eTag;
+            ETag = etag;
             LastModifiedOn = lastModifiedOn;
             IsLocked = isLocked;
             Tags = tags;

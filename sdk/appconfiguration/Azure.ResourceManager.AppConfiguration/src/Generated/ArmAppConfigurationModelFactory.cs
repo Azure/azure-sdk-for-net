@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// The content type of the key-value's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </param>
-        /// <param name="eTag"> An ETag indicating the state of a key-value within a configuration store. </param>
+        /// <param name="etag"> An ETag indicating the state of a key-value within a configuration store. </param>
         /// <param name="lastModifiedOn"> The last time a modifying operation was performed on the given key-value. </param>
         /// <param name="isLocked">
         /// A value indicating whether the key-value is locked.
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </param>
         /// <param name="tags"> A dictionary of tags that can help identify what a key-value may be applicable for. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationKeyValueData"/> instance for mocking. </returns>
-        public static AppConfigurationKeyValueData AppConfigurationKeyValueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string key = null, string label = null, string value = null, string contentType = null, ETag? eTag = null, DateTimeOffset? lastModifiedOn = null, bool? isLocked = null, IDictionary<string, string> tags = null)
+        public static AppConfigurationKeyValueData AppConfigurationKeyValueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string key = null, string label = null, string value = null, string contentType = null, ETag? etag = null, DateTimeOffset? lastModifiedOn = null, bool? isLocked = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 label,
                 value,
                 contentType,
-                eTag,
+                etag,
                 lastModifiedOn,
                 isLocked,
                 tags,
