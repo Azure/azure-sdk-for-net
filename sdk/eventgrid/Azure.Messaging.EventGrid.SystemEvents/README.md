@@ -21,38 +21,93 @@ dotnet add package Azure.Messaging.EventGrid.SystemEvents --prerelease
 
 You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://docs.microsoft.com/cli/azure).
 
-### Authenticate the client
+### Receiving and Deserializing Events
 
-In order for the client library to interact with a topic or domain, you will need the `endpoint` of the Event Grid topic and a `credential`, which can be created using the topic's access key.
+There are several different Azure services that act as [event handlers](https://docs.microsoft.com/azure/event-grid/event-handlers).
 
-You can find the endpoint for your Event Grid topic either in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) snippet below.
+Note: if using Webhooks for event delivery of the *Event Grid schema*, Event Grid requires you to prove ownership of your Webhook endpoint before it starts delivering events to that endpoint. At the time of event subscription creation, Event Grid sends a subscription validation event to your endpoint, as seen below. Learn more about completing the handshake here: [Webhook event delivery](https://docs.microsoft.com/azure/event-grid/webhook-event-delivery). For the *CloudEvents schema*, the service validates the connection using the HTTP options method. Learn more here: [CloudEvents validation](https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection).
 
-```bash
-az eventgrid topic show --name <your-resource-name> --resource-group <your-resource-group-name> --query "endpoint"
+Once events are delivered to the event handler, we can deserialize the JSON payload into a list of events.
+
+```C# Snippet:SystemEventsCloudEventParseJson
+var bytes = await httpContent.ReadAsByteArrayAsync();
+// Parse the JSON payload into a list of events
+CloudEvent[] cloudEvents = CloudEvent.ParseMany(new BinaryData(bytes));
+```
+#### Deserializing event data
+
+##### Deserializing using `ToObjectFromJson<T>()`:
+
+From here, one can access the event data by deserializing to a specific type by calling `ToObjectFromJson<T>()` on the `Data` property. In order to deserialize to the correct type, the `Type` property helps distinguish between different events. Custom event data should be deserialized using the generic method `ToObjectFromJson<T>()`. There is also an extension method `ToObject<T>()` that accepts a custom `ObjectSerializer` to deserialize the event data.
+
+```C# Snippet:SystemEventsDeserializePayloadUsingGenericGetData
+foreach (CloudEvent cloudEvent in cloudEvents)
+{
+    switch (cloudEvent.Type)
+    {
+        case "Contoso.Items.ItemReceived":
+            // By default, ToObjectFromJson<T> uses System.Text.Json to deserialize the payload
+            ContosoItemReceivedEventData itemReceived = cloudEvent.Data.ToObjectFromJson<ContosoItemReceivedEventData>();
+            Console.WriteLine(itemReceived.ItemSku);
+            break;
+        case "MyApp.Models.CustomEventType":
+            // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
+            TestPayload testPayload = cloudEvent.Data.ToObject<TestPayload>(myCustomSerializer);
+            Console.WriteLine(testPayload.Name);
+            break;
+        case SystemEventNames.StorageBlobDeleted:
+            // Example for deserializing system events using ToObjectFromJson<T>
+            StorageBlobDeletedEventData blobDeleted = cloudEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
+            Console.WriteLine(blobDeleted.BlobType);
+            break;
+    }
+}
 ```
 
-The access key can also be found through the [portal](https://docs.microsoft.com/azure/event-grid/get-access-keys), or by using the Azure CLI snippet below:
-```bash
-az eventgrid topic key list --name <your-resource-name> --resource-group <your-resource-group-name> --query "key1"
-```
+##### Deserializing using `TryGetSystemEventData()`:
 
-#### Authenticate using Topic Access Key
+If expecting mostly system events, it may be cleaner to switch on `TryGetSystemEventData()` and use pattern matching to act on the individual events. If an event is not a system event, the method will return false and the out parameter will be null.
 
-Once you have your access key and topic endpoint, you can create the publisher client as follows:
-```C# Snippet:CreateNamespaceClient
-// Construct the client using an Endpoint for a namespace as well as the shared access key
-var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey));
-```
+*As a caveat, if you are using a custom event type with an EventType value that later gets added as a system event by the service and SDK, the return value of `TryGetSystemEventData` would change from `false` to `true`. This could come up if you are pre-emptively creating your own custom events for events that are already being sent by the service, but have not yet been added to the SDK. In this case, it is better to use the generic `ToObjectFromJson<T>` method on the `Data` property so that your code flow doesn't change automatically after upgrading (of course, you may still want to modify your code to consume the newly released system event model as opposed to your custom model).*
 
-#### Authenticate using an Entra ID
-
-Azure Event Grid provides integration with Entra ID for identity-based authentication of requests. With Entra ID, you can use role-based access control (RBAC) to grant access to your Azure Event Grid resources to users, groups, or applications. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) provides easy Azure Active Directory support for authentication.
-
-To send events to a topic or domain using Azure Active Directory, the authenticated identity should have the "EventGrid Data Sender" role assigned.
-
-```C# Snippet:CreateNamespaceClientAAD
-// Construct the sender client using an Endpoint for a namespace as well as the DefaultAzureCredential
-var senderClient = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new DefaultAzureCredential());
+```C# Snippet:SystemEventsDeserializePayloadUsingTryGetSystemEventData
+foreach (CloudEvent cloudEvent in cloudEvents)
+{
+    // If the event is a system event, TryGetSystemEventData will return the deserialized system event
+    if (cloudEvent.TryGetSystemEventData(out object systemEvent))
+    {
+        switch (systemEvent)
+        {
+            case SubscriptionValidationEventData subscriptionValidated:
+                Console.WriteLine(subscriptionValidated.ValidationCode);
+                break;
+            case StorageBlobCreatedEventData blobCreated:
+                Console.WriteLine(blobCreated.BlobType);
+                break;
+            // Handle any other system event type
+            default:
+                Console.WriteLine(cloudEvent.Type);
+                // we can get the raw Json for the event using Data
+                Console.WriteLine(cloudEvent.Data.ToString());
+                break;
+        }
+    }
+    else
+    {
+        switch (cloudEvent.Type)
+        {
+            case "MyApp.Models.CustomEventType":
+                TestPayload deserializedEventData = cloudEvent.Data.ToObjectFromJson<TestPayload>();
+                Console.WriteLine(deserializedEventData.Name);
+                break;
+            // Handle any other custom event type
+            default:
+                Console.Write(cloudEvent.Type);
+                Console.WriteLine(cloudEvent.Data.ToString());
+                break;
+        }
+    }
+}
 ```
 
 ## Key concepts
