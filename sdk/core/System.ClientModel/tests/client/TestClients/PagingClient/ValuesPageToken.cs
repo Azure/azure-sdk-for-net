@@ -8,9 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClientModel.Tests.Mocks;
+namespace ClientModel.Tests.PagingClient;
 
-public class MockPageToken : ContinuationToken
+public class ValuesPageToken : ContinuationToken
 {
-    // TODO
 }

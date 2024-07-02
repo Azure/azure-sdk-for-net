@@ -3,13 +3,29 @@
 
 using System.Collections;
 using System.Collections.Generic;
+
+using ClientModel.Tests.PagingClient;
+
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
+using System.ClientModel.Primitives;
 
 namespace System.ClientModel.Tests.Results;
 
 public class PageCollectionTests
 {
+    [Test]
+    public void CanGetValues()
+    {
+        ClientPipelineOptions options = new ClientPipelineOptions()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+        ClientPipeline mockPipeline = ClientPipeline.Create(options);
+
+        PagingClient client = new PagingClient(mockPipeline);
+    }
+
     //[Test]
     //public void CanEnumeratePages()
     //{

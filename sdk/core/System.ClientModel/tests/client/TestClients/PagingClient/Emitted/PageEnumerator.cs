@@ -4,7 +4,7 @@
 using System.ClientModel;
 using System.Collections.Generic;
 
-namespace ClientModel.Tests.Emitted;
+namespace ClientModel.Tests.PagingClient;
 
 internal abstract class PageEnumerator<T> : PageResultEnumerator,
     IAsyncEnumerator<PageResult<T>>,

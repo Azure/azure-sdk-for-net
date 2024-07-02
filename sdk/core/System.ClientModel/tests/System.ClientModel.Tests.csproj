@@ -31,4 +31,8 @@
     <None Remove="internal.perf/**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestFramework\Emitted\" />
+  </ItemGroup>
+
 </Project>
