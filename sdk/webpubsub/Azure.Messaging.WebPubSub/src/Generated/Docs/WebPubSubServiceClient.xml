@@ -39,7 +39,7 @@ Response response = client.CloseAllConnections(excluded: new string[] { "<exclud
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="SendToAllAsync(RequestContent,ContentType,IEnumerable{string},string,RequestContext)">
+    <member name="SendToAllAsync(RequestContent,ContentType,IEnumerable{string},string,int?,RequestContext)">
       <example>
 This sample shows how to call SendToAllAsync.
 <code><![CDATA[
@@ -55,12 +55,12 @@ This sample shows how to call SendToAllAsync with all parameters and request con
 WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = await client.SendToAllAsync(content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>");
+Response response = await client.SendToAllAsync(content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>", messageTtlSeconds: 300);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="SendToAll(RequestContent,ContentType,IEnumerable{string},string,RequestContext)">
+    <member name="SendToAll(RequestContent,ContentType,IEnumerable{string},string,int?,RequestContext)">
       <example>
 This sample shows how to call SendToAll.
 <code><![CDATA[
@@ -76,7 +76,7 @@ This sample shows how to call SendToAll with all parameters and request content.
 WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = client.SendToAll(content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>");
+Response response = client.SendToAll(content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>", messageTtlSeconds: 300);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -119,7 +119,7 @@ Response response = client.CloseConnection("<connectionId>", reason: "<reason>")
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="SendToConnectionAsync(string,RequestContent,ContentType,RequestContext)">
+    <member name="SendToConnectionAsync(string,RequestContent,ContentType,int?,RequestContext)">
       <example>
 This sample shows how to call SendToConnectionAsync.
 <code><![CDATA[
@@ -135,12 +135,12 @@ This sample shows how to call SendToConnectionAsync with all parameters and requ
 WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = await client.SendToConnectionAsync("<connectionId>", content, new ContentType("application/json"));
+Response response = await client.SendToConnectionAsync("<connectionId>", content, new ContentType("application/json"), messageTtlSeconds: 300);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="SendToConnection(string,RequestContent,ContentType,RequestContext)">
+    <member name="SendToConnection(string,RequestContent,ContentType,int?,RequestContext)">
       <example>
 This sample shows how to call SendToConnection.
 <code><![CDATA[
@@ -156,7 +156,7 @@ This sample shows how to call SendToConnection with all parameters and request c
 WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = client.SendToConnection("<connectionId>", content, new ContentType("application/json"));
+Response response = client.SendToConnection("<connectionId>", content, new ContentType("application/json"), messageTtlSeconds: 300);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -237,7 +237,7 @@ Response response = client.CloseGroupConnections("<group>", excluded: new string
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="SendToGroupAsync(string,RequestContent,ContentType,IEnumerable{string},string,RequestContext)">
+    <member name="SendToGroupAsync(string,RequestContent,ContentType,IEnumerable{string},string,int?,RequestContext)">
       <example>
 This sample shows how to call SendToGroupAsync.
 <code><![CDATA[
@@ -253,12 +253,12 @@ This sample shows how to call SendToGroupAsync with all parameters and request c
 WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = await client.SendToGroupAsync("<group>", content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>");
+Response response = await client.SendToGroupAsync("<group>", content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>", messageTtlSeconds: 300);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="SendToGroup(string,RequestContent,ContentType,IEnumerable{string},string,RequestContext)">
+    <member name="SendToGroup(string,RequestContent,ContentType,IEnumerable{string},string,int?,RequestContext)">
       <example>
 This sample shows how to call SendToGroup.
 <code><![CDATA[
@@ -274,7 +274,7 @@ This sample shows how to call SendToGroup with all parameters and request conten
 WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = client.SendToGroup("<group>", content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>");
+Response response = client.SendToGroup("<group>", content, new ContentType("application/json"), excluded: new string[] { "<excluded>" }, filter: "<filter>", messageTtlSeconds: 300);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -393,7 +393,7 @@ Response response = client.CloseUserConnections("<userId>", excluded: new string
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="SendToUserAsync(string,RequestContent,ContentType,string,RequestContext)">
+    <member name="SendToUserAsync(string,RequestContent,ContentType,string,int?,RequestContext)">
       <example>
 This sample shows how to call SendToUserAsync.
 <code><![CDATA[
@@ -409,12 +409,12 @@ This sample shows how to call SendToUserAsync with all parameters and request co
 WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = await client.SendToUserAsync("<userId>", content, new ContentType("application/json"), filter: "<filter>");
+Response response = await client.SendToUserAsync("<userId>", content, new ContentType("application/json"), filter: "<filter>", messageTtlSeconds: 300);
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="SendToUser(string,RequestContent,ContentType,string,RequestContext)">
+    <member name="SendToUser(string,RequestContent,ContentType,string,int?,RequestContext)">
       <example>
 This sample shows how to call SendToUser.
 <code><![CDATA[
@@ -430,7 +430,7 @@ This sample shows how to call SendToUser with all parameters and request content
 WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = client.SendToUser("<userId>", content, new ContentType("application/json"), filter: "<filter>");
+Response response = client.SendToUser("<userId>", content, new ContentType("application/json"), filter: "<filter>", messageTtlSeconds: 300);
 
 Console.WriteLine(response.Status);
 ]]></code></example>

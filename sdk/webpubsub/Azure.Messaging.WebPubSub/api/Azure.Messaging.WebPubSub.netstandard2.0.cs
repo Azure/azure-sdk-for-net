@@ -5,6 +5,11 @@ namespace Azure.Messaging.WebPubSub
         public static string Create(System.FormattableString filter) { throw null; }
         public static string Create(System.FormattableString filter, System.IFormatProvider formatProvider) { throw null; }
     }
+    public enum ClientEndpointType
+    {
+        Default = 0,
+        MQTT = 1,
+    }
     public enum WebPubSubPermission
     {
         SendToGroup = 1,
@@ -24,6 +29,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AddConnectionToGroup(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddConnectionToGroupAsync(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AddConnectionsToGroups(string filter, IEnumerable<string> groups, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddConnectionsToGroupsAsync(string filter, IEnumerable<string> groups, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AddUserToGroup(string group, string userId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddUserToGroupAsync(string group, string userId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<bool> CheckPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
@@ -38,13 +45,17 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> CloseUserConnectionsAsync(string userId, System.Collections.Generic.IEnumerable<string> excluded = null, string reason = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<bool> ConnectionExists(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ConnectionExistsAsync(string connectionId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.ClientEndpointType clientEndpointType = Azure.Messaging.WebPubSub.ClientEndpointType.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Uri GetClientAccessUri(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.ClientEndpointType clientEndpointType = Azure.Messaging.WebPubSub.ClientEndpointType.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Uri GetClientAccessUri(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.ClientEndpointType clientEndpointType = Azure.Messaging.WebPubSub.ClientEndpointType.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.DateTimeOffset expiresAt, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter = default(System.TimeSpan), string userId = null, System.Collections.Generic.IEnumerable<string> roles = null, System.Collections.Generic.IEnumerable<string> groups = null, Azure.Messaging.WebPubSub.ClientEndpointType clientEndpointType = Azure.Messaging.WebPubSub.ClientEndpointType.Default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Collections.Generic.IEnumerable<string> groups, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(System.TimeSpan expiresAfter, string userId, System.Collections.Generic.IEnumerable<string> roles, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response GrantPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GrantPermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
@@ -54,6 +65,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromAllGroupsAsync(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveConnectionFromGroup(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromGroupAsync(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response RemoveConnectionsFromGroups(string filter, IEnumerable<string> groups, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionsFromGroupsAsync(string filter, IEnumerable<string> groups, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveUserFromAllGroups(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveUserFromAllGroupsAsync(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveUserFromGroup(string group, string userId, Azure.RequestContext context = null) { throw null; }
@@ -61,37 +74,46 @@ namespace Azure.Messaging.WebPubSub
         public virtual Azure.Response RevokePermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RevokePermissionAsync(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response SendToAll(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response SendToAll(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SendToAll(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response SendToAll(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, string filter = null, int? messageTtlSeconds = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response SendToAll(string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded, string filter, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, string filter = null, int? messageTtlSeconds = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToAllAsync(string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual Azure.Response SendToConnection(string connectionId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SendToConnection(string connectionId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response SendToConnection(string connectionId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, int? messageTtlSeconds = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response SendToConnection(string connectionId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, int? messageTtlSeconds = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToConnectionAsync(string connectionId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual Azure.Response SendToGroup(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response SendToGroup(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SendToGroup(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded, string filter, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SendToGroup(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, string filter = null, int? messageTtlSeconds = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response SendToGroup(string group, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded, string filter, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, System.Collections.Generic.IEnumerable<string> excluded = null, string filter = null, int? messageTtlSeconds = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToGroupAsync(string group, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual Azure.Response SendToUser(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response SendToUser(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SendToUser(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response SendToUser(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, string filter = null, int? messageTtlSeconds = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response SendToUser(string userId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, string filter, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, Azure.Core.RequestContent content, Azure.Core.ContentType contentType, string filter = null, int? messageTtlSeconds = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendToUserAsync(string userId, string content, Azure.Core.ContentType contentType = default(Azure.Core.ContentType)) { throw null; }
         public virtual Azure.Response<bool> UserExists(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> UserExistsAsync(string userId, Azure.RequestContext context = null) { throw null; }
     }
     public partial class WebPubSubServiceClientOptions : Azure.Core.ClientOptions
     {
-        public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2021_10_01) { }
+        public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2024_01_01) { }
         public System.Uri ReverseProxyEndpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2021_10_01 = 1,
+            V2024_01_01 = 2,
         }
     }
 }

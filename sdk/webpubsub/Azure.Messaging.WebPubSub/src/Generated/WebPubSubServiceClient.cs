@@ -34,6 +34,72 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
+        /// [Protocol Method] Add filtered connections to multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AddConnectionsToGroupsAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionsToGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddConnectionsToGroupsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Add filtered connections to multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response AddConnectionsToGroups(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionsToGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddConnectionsToGroupsRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// [Protocol Method] Close the connections in the hub.
         /// <list type="bullet">
         /// <item>
@@ -111,16 +177,17 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="group"> Groups that the connection will join when it connects. </param>
+        /// <param name="clientType"> The type of client. Case-insensitive. If not set, it's "Default". For Web PubSub for Socket.IO, only the default value is supported. For Web PubSub, the valid values are 'Default' and 'MQTT'. Allowed values: "Default" | "MQTT". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
+        internal virtual async Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, string clientType = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, context);
+                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, clientType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -144,16 +211,83 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="role"> Roles that the connection with the generated token will have. </param>
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="group"> Groups that the connection will join when it connects. </param>
+        /// <param name="clientType"> The type of client. Case-insensitive. If not set, it's "Default". For Web PubSub for Socket.IO, only the default value is supported. For Web PubSub, the valid values are 'Default' and 'MQTT'. Allowed values: "Default" | "MQTT". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, RequestContext context = null)
+        internal virtual Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, string clientType = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GenerateClientTokenImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, context);
+                using HttpMessage message = CreateGenerateClientTokenImplRequest(userId, role, minutesToExpire, group, clientType, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Remove filtered connections from multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> RemoveConnectionsFromGroupsAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionsFromGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionsFromGroupsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Remove filtered connections from multiple groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response RemoveConnectionsFromGroups(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionsFromGroups");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveConnectionsFromGroupsRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -177,12 +311,13 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
+        /// <param name="messageTtlSeconds"> The time-to-live (TTL) value in seconds for messages sent to the service. 0 is the default value, which means the message never expires. 300 is the maximum value. If this parameter is non-zero, messages that are not consumed by the client within the specified TTL will be dropped by the service. This parameter can help when the client's bandwidth is limited. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAllAsync(RequestContent,ContentType,IEnumerable{string},string,RequestContext)']/*" />
-        public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAllAsync(RequestContent,ContentType,IEnumerable{string},string,int?,RequestContext)']/*" />
+        public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, int? messageTtlSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -190,7 +325,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, filter, context);
+                using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, filter, messageTtlSeconds, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -214,12 +349,13 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
+        /// <param name="messageTtlSeconds"> The time-to-live (TTL) value in seconds for messages sent to the service. 0 is the default value, which means the message never expires. 300 is the maximum value. If this parameter is non-zero, messages that are not consumed by the client within the specified TTL will be dropped by the service. This parameter can help when the client's bandwidth is limited. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAll(RequestContent,ContentType,IEnumerable{string},string,RequestContext)']/*" />
-        public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAll(RequestContent,ContentType,IEnumerable{string},string,int?,RequestContext)']/*" />
+        public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, int? messageTtlSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -227,7 +363,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, filter, context);
+                using HttpMessage message = CreateSendToAllRequest(content, contentType, excluded, filter, messageTtlSeconds, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -390,13 +526,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
+        /// <param name="messageTtlSeconds"> The time-to-live (TTL) value in seconds for messages sent to the service. 0 is the default value, which means the message never expires. 300 is the maximum value. If this parameter is non-zero, messages that are not consumed by the client within the specified TTL will be dropped by the service. This parameter can help when the client's bandwidth is limited. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnectionAsync(string,RequestContent,ContentType,RequestContext)']/*" />
-        public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnectionAsync(string,RequestContent,ContentType,int?,RequestContext)']/*" />
+        public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, int? messageTtlSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -405,7 +542,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, context);
+                using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, messageTtlSeconds, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -428,13 +565,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
+        /// <param name="messageTtlSeconds"> The time-to-live (TTL) value in seconds for messages sent to the service. 0 is the default value, which means the message never expires. 300 is the maximum value. If this parameter is non-zero, messages that are not consumed by the client within the specified TTL will be dropped by the service. This parameter can help when the client's bandwidth is limited. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnection(string,RequestContent,ContentType,RequestContext)']/*" />
-        public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnection(string,RequestContent,ContentType,int?,RequestContext)']/*" />
+        public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, int? messageTtlSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -443,7 +581,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, context);
+                using HttpMessage message = CreateSendToConnectionRequest(connectionId, content, contentType, messageTtlSeconds, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -680,13 +818,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
+        /// <param name="messageTtlSeconds"> The time-to-live (TTL) value in seconds for messages sent to the service. 0 is the default value, which means the message never expires. 300 is the maximum value. If this parameter is non-zero, messages that are not consumed by the client within the specified TTL will be dropped by the service. This parameter can help when the client's bandwidth is limited. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroupAsync(string,RequestContent,ContentType,IEnumerable{string},string,RequestContext)']/*" />
-        public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroupAsync(string,RequestContent,ContentType,IEnumerable{string},string,int?,RequestContext)']/*" />
+        public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, int? messageTtlSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
@@ -695,7 +834,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, filter, context);
+                using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, filter, messageTtlSeconds, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -720,13 +859,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
+        /// <param name="messageTtlSeconds"> The time-to-live (TTL) value in seconds for messages sent to the service. 0 is the default value, which means the message never expires. 300 is the maximum value. If this parameter is non-zero, messages that are not consumed by the client within the specified TTL will be dropped by the service. This parameter can help when the client's bandwidth is limited. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroup(string,RequestContent,ContentType,IEnumerable{string},string,RequestContext)']/*" />
-        public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroup(string,RequestContent,ContentType,IEnumerable{string},string,int?,RequestContext)']/*" />
+        public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, int? messageTtlSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
@@ -735,7 +875,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, filter, context);
+                using HttpMessage message = CreateSendToGroupRequest(group, content, contentType, excluded, filter, messageTtlSeconds, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1271,13 +1411,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
+        /// <param name="messageTtlSeconds"> The time-to-live (TTL) value in seconds for messages sent to the service. 0 is the default value, which means the message never expires. 300 is the maximum value. If this parameter is non-zero, messages that are not consumed by the client within the specified TTL will be dropped by the service. This parameter can help when the client's bandwidth is limited. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUserAsync(string,RequestContent,ContentType,string,RequestContext)']/*" />
-        public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, string filter = null, RequestContext context = null)
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUserAsync(string,RequestContent,ContentType,string,int?,RequestContext)']/*" />
+        public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, string filter = null, int? messageTtlSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1286,7 +1427,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, filter, context);
+                using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, filter, messageTtlSeconds, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1310,13 +1451,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
+        /// <param name="messageTtlSeconds"> The time-to-live (TTL) value in seconds for messages sent to the service. 0 is the default value, which means the message never expires. 300 is the maximum value. If this parameter is non-zero, messages that are not consumed by the client within the specified TTL will be dropped by the service. This parameter can help when the client's bandwidth is limited. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUser(string,RequestContent,ContentType,string,RequestContext)']/*" />
-        public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, string filter = null, RequestContext context = null)
+        /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUser(string,RequestContent,ContentType,string,int?,RequestContext)']/*" />
+        public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, string filter = null, int? messageTtlSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1325,7 +1467,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, filter, context);
+                using HttpMessage message = CreateSendToUserRequest(userId, content, contentType, filter, messageTtlSeconds, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1405,6 +1547,24 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        internal HttpMessage CreateAddConnectionsToGroupsRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:addToGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateCloseAllConnectionsRequest(IEnumerable<string> excluded, string reason, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1432,7 +1592,7 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, IEnumerable<string> group, RequestContext context)
+        internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, IEnumerable<string> group, string clientType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1465,12 +1625,34 @@ namespace Azure.Messaging.WebPubSub
                     uri.AppendQuery("group", param, true);
                 }
             }
+            if (clientType != null)
+            {
+                uri.AppendQuery("clientType", clientType, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
-        internal HttpMessage CreateSendToAllRequest(RequestContent content, ContentType contentType, IEnumerable<string> excluded, string filter, RequestContext context)
+        internal HttpMessage CreateRemoveConnectionsFromGroupsRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:removeFromGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSendToAllRequest(RequestContent content, ContentType contentType, IEnumerable<string> excluded, string filter, int? messageTtlSeconds, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -1491,6 +1673,10 @@ namespace Azure.Messaging.WebPubSub
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
+            }
+            if (messageTtlSeconds != null)
+            {
+                uri.AppendQuery("messageTtlSeconds", messageTtlSeconds.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1536,7 +1722,7 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content, ContentType contentType, RequestContext context)
+        internal HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content, ContentType contentType, int? messageTtlSeconds, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -1549,6 +1735,10 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath(connectionId, true);
             uri.AppendPath("/:send", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (messageTtlSeconds != null)
+            {
+                uri.AppendQuery("messageTtlSeconds", messageTtlSeconds.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", contentType.ToString());
@@ -1619,7 +1809,7 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateSendToGroupRequest(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded, string filter, RequestContext context)
+        internal HttpMessage CreateSendToGroupRequest(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded, string filter, int? messageTtlSeconds, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -1642,6 +1832,10 @@ namespace Azure.Messaging.WebPubSub
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
+            }
+            if (messageTtlSeconds != null)
+            {
+                uri.AppendQuery("messageTtlSeconds", messageTtlSeconds.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1801,7 +1995,7 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateSendToUserRequest(string userId, RequestContent content, ContentType contentType, string filter, RequestContext context)
+        internal HttpMessage CreateSendToUserRequest(string userId, RequestContent content, ContentType contentType, string filter, int? messageTtlSeconds, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -1817,6 +2011,10 @@ namespace Azure.Messaging.WebPubSub
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
+            }
+            if (messageTtlSeconds != null)
+            {
+                uri.AppendQuery("messageTtlSeconds", messageTtlSeconds.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1881,10 +2079,10 @@ namespace Azure.Messaging.WebPubSub
             return message;
         }
 
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
         private static ResponseClassifier _responseClassifier202;
         private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200404;
