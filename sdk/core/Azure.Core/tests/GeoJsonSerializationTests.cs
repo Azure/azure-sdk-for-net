@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundripPoint()
+        public void CanRoundTripPoint()
         {
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
 
@@ -30,7 +30,17 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundripBBox()
+        public void CanRoundTripNullBBox()
+        {
+            // cspell:ignore bbox
+            var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": null }}";
+
+            var point = AssertRoundtrip<GeoPoint>(input);
+            Assert.AreEqual(P(0), point.Coordinates);
+        }
+
+        [Test]
+        public void CanRoundTripBBox()
         {
             // cspell:ignore bbox
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": [ {PS(1)}, {PS(2)} ] }}";
@@ -67,7 +77,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundripAdditionalProperties()
+        public void CanRoundTripAdditionalProperties()
         {
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}]," +
                         $" \"additionalNumber\": 1," +
@@ -101,7 +111,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundripPolygon()
+        public void CanRoundTripPolygon()
         {
             var input = $" {{ \"type\": \"Polygon\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}], [{PS(0)}] ] ] }}";
 
@@ -120,7 +130,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundripPolygonHoles()
+        public void CanRoundTripPolygonHoles()
         {
             var input = $"{{ \"type\": \"Polygon\", \"coordinates\": [" +
                         $" [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}], [{PS(0)}] ]," +
@@ -152,7 +162,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundripMultiPoint()
+        public void CanRoundTripMultiPoint()
         {
             var input = $"{{ \"type\": \"MultiPoint\", \"coordinates\": [ [{PS(0)}], [{PS(1)}] ] }}";
 
@@ -164,7 +174,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundripMultiLineString()
+        public void CanRoundTripMultiLineString()
         {
             var input = $"{{ \"type\": \"MultiLineString\", \"coordinates\": [ [ [{PS(0)}], [{PS(1)}] ], [ [{PS(2)}], [{PS(3)}] ] ] }}";
 
@@ -185,7 +195,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundripMultiPolygon()
+        public void CanRoundTripMultiPolygon()
         {
             var input = $" {{ \"type\": \"MultiPolygon\", \"coordinates\": [" +
                         $" [ [ [{PS(0)}], [{PS(1)}], [{PS(2)}], [{PS(3)}], [{PS(4)}], [{PS(0)}] ] ]," +
@@ -235,7 +245,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundripGeometryCollection()
+        public void CanRoundTripGeometryCollection()
         {
             var input = $"{{ \"type\": \"GeometryCollection\", \"geometries\": [{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}, {{ \"type\": \"LineString\", \"coordinates\": [ [{PS(1)}], [{PS(2)}] ] }}] }}";
 
