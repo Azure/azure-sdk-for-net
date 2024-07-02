@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-10-preview</description>
+        /// <description>2024-06-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

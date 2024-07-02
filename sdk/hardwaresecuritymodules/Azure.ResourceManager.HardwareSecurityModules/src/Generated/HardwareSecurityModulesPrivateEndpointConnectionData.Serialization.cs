@@ -12,7 +12,6 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
@@ -29,6 +28,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -54,34 +58,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
-            {
-                writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
-            }
-            if (Optional.IsDefined(ConnectionState))
-            {
-                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
-            {
-                writer.WritePropertyName("groupIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in GroupIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -120,19 +96,25 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 return null;
             }
+            PrivateEndpointConnectionProperties properties = default;
             ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            SubResource privateEndpoint = default;
-            HardwareSecurityModulesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            HardwareSecurityModulesPrivateEndpointConnectionProvisioningState? provisioningState = default;
-            IReadOnlyList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -166,59 +148,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("privateEndpoint"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            privateLinkServiceConnectionState = HardwareSecurityModulesPrivateLinkServiceConnectionState.DeserializeHardwareSecurityModulesPrivateLinkServiceConnectionState(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new HardwareSecurityModulesPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("groupIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            groupIds = array;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -230,11 +159,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 name,
                 type,
                 systemData,
+                properties,
                 etag,
-                privateEndpoint,
-                privateLinkServiceConnectionState,
-                provisioningState,
-                groupIds ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
