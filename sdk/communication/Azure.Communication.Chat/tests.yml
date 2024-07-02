@@ -5,15 +5,18 @@ extends:
   parameters:
     ServiceDirectory: communication
     Project: Azure.Communication.Chat
+    UseFederatedAuth: true
     CloudConfig:
       Public:
+        ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json
         SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
       PPE:
         SubscriptionConfigurations:
-          - $(sub-config-communication-ppe-test-resources-common)
+          - $(sub-config-communication-ppe-test-resources-common-new)
           - $(sub-config-communication-ppe-test-resources-net)
       Int:
         SubscriptionConfigurations:
@@ -21,4 +24,4 @@ extends:
           - $(sub-config-communication-int-test-resources-net)
     Clouds: Public,PPE,Int
     TestResourceDirectories:
-      - communication/test-resources/
+      - communication/
