@@ -1,0 +1,8 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Health.Insights.CancerProfiling",
+  "library-name": "Azure.Health.Insights.CancerProfiling",
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}

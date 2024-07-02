@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            ETag? eTag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 name,
                 type,
                 systemData,
-                eTag,
+                etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 containers ?? new ChangeTrackingList<string>(),
                 tables ?? new ChangeTrackingList<string>(),

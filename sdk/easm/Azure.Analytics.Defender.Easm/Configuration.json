@@ -1,0 +1,8 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Analytics.Defender.Easm",
+  "library-name": "Azure.Analytics.Defender.Easm",
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 return null;
             }
-            ETag? eTag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 name,
                 type,
                 systemData,
-                eTag,
+                etag,
                 extensionId,
                 extensionCategory,
                 installedExtensionVersion,

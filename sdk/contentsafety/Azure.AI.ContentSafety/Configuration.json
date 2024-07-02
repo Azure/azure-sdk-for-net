@@ -1,0 +1,8 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.AI.ContentSafety",
+  "library-name": "Azure.AI.ContentSafety",
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}

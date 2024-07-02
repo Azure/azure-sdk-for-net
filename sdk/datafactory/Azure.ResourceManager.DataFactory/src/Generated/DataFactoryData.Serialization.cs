@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory
                 return null;
             }
             ManagedServiceIdentity identity = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DataFactory
                 globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
                 encryption,
                 publicNetworkAccess,
-                eTag,
+                etag,
                 additionalProperties);
         }
 

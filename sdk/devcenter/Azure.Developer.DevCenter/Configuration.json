@@ -1,0 +1,7 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Developer.DevCenter",
+  "library-name": "Azure.Developer.DevCenter",
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}

@@ -1,0 +1,1418 @@
+{
+ "$id": "1",
+ "Name": "AzureHealthInsights",
+ "ApiVersions": [
+  "2023-03-01-preview"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Kind": "enum",
+   "Name": "PatientInfoSex",
+   "CrossLanguageDefinitionId": "AzureHealthInsights.PatientInfoSex",
+   "ValueType": {
+    "$id": "3",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "4",
+     "Name": "Female",
+     "Value": "female"
+    },
+    {
+     "$id": "5",
+     "Name": "Male",
+     "Value": "male"
+    },
+    {
+     "$id": "6",
+     "Name": "Unspecified",
+     "Value": "unspecified"
+    }
+   ],
+   "Description": "The patient's sex.",
+   "IsExtensible": true,
+   "Usage": "Input"
+  },
+  {
+   "$id": "7",
+   "Kind": "enum",
+   "Name": "DocumentType",
+   "CrossLanguageDefinitionId": "AzureHealthInsights.DocumentType",
+   "ValueType": {
+    "$id": "8",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "9",
+     "Name": "Note",
+     "Value": "note"
+    },
+    {
+     "$id": "10",
+     "Name": "FhirBundle",
+     "Value": "fhirBundle"
+    },
+    {
+     "$id": "11",
+     "Name": "Dicom",
+     "Value": "dicom"
+    },
+    {
+     "$id": "12",
+     "Name": "GenomicSequencing",
+     "Value": "genomicSequencing"
+    }
+   ],
+   "Description": "The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document).",
+   "IsExtensible": true,
+   "Usage": "Input"
+  },
+  {
+   "$id": "13",
+   "Kind": "enum",
+   "Name": "ClinicalDocumentType",
+   "CrossLanguageDefinitionId": "AzureHealthInsights.ClinicalDocumentType",
+   "ValueType": {
+    "$id": "14",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "15",
+     "Name": "Consultation",
+     "Value": "consultation"
+    },
+    {
+     "$id": "16",
+     "Name": "DischargeSummary",
+     "Value": "dischargeSummary"
+    },
+    {
+     "$id": "17",
+     "Name": "HistoryAndPhysical",
+     "Value": "historyAndPhysical"
+    },
+    {
+     "$id": "18",
+     "Name": "Procedure",
+     "Value": "procedure"
+    },
+    {
+     "$id": "19",
+     "Name": "Progress",
+     "Value": "progress"
+    },
+    {
+     "$id": "20",
+     "Name": "Imaging",
+     "Value": "imaging"
+    },
+    {
+     "$id": "21",
+     "Name": "Laboratory",
+     "Value": "laboratory"
+    },
+    {
+     "$id": "22",
+     "Name": "Pathology",
+     "Value": "pathology"
+    }
+   ],
+   "Description": "The type of the clinical document.",
+   "IsExtensible": true,
+   "Usage": "Input"
+  },
+  {
+   "$id": "23",
+   "Kind": "enum",
+   "Name": "DocumentContentSourceType",
+   "CrossLanguageDefinitionId": "AzureHealthInsights.DocumentContentSourceType",
+   "ValueType": {
+    "$id": "24",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "25",
+     "Name": "Inline",
+     "Value": "inline"
+    },
+    {
+     "$id": "26",
+     "Name": "Reference",
+     "Value": "reference"
+    }
+   ],
+   "Description": "The type of the content's source. \nIn case the source type is 'inline', the content is given as a string (for instance, text). \nIn case the source type is 'reference', the content is given as a URI.",
+   "IsExtensible": true,
+   "Usage": "Input"
+  },
+  {
+   "$id": "27",
+   "Kind": "enum",
+   "Name": "OncoPhenotypeInferenceType",
+   "CrossLanguageDefinitionId": "AzureHealthInsights.OncoPhenotypeInferenceType",
+   "ValueType": {
+    "$id": "28",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "29",
+     "Name": "TumorSite",
+     "Value": "tumorSite"
+    },
+    {
+     "$id": "30",
+     "Name": "Histology",
+     "Value": "histology"
+    },
+    {
+     "$id": "31",
+     "Name": "ClinicalStageT",
+     "Value": "clinicalStageT"
+    },
+    {
+     "$id": "32",
+     "Name": "ClinicalStageN",
+     "Value": "clinicalStageN"
+    },
+    {
+     "$id": "33",
+     "Name": "ClinicalStageM",
+     "Value": "clinicalStageM"
+    },
+    {
+     "$id": "34",
+     "Name": "PathologicStageT",
+     "Value": "pathologicStageT"
+    },
+    {
+     "$id": "35",
+     "Name": "PathologicStageN",
+     "Value": "pathologicStageN"
+    },
+    {
+     "$id": "36",
+     "Name": "PathologicStageM",
+     "Value": "pathologicStageM"
+    }
+   ],
+   "Description": "The type of the Onco Phenotype inference.",
+   "IsExtensible": true,
+   "Usage": "RoundTrip"
+  },
+  {
+   "$id": "37",
+   "Kind": "enum",
+   "Name": "RepeatabilityResult",
+   "CrossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
+   "ValueType": {
+    "$id": "38",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "39",
+     "Name": "accepted",
+     "Value": "accepted",
+     "Description": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation."
+    },
+    {
+     "$id": "40",
+     "Name": "rejected",
+     "Value": "rejected",
+     "Description": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server."
+    }
+   ],
+   "Description": "Repeatability Result header options",
+   "IsExtensible": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "41",
+   "Kind": "enum",
+   "Name": "JobStatus",
+   "CrossLanguageDefinitionId": "AzureHealthInsights.JobStatus",
+   "ValueType": {
+    "$id": "42",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "43",
+     "Name": "NotStarted",
+     "Value": "notStarted"
+    },
+    {
+     "$id": "44",
+     "Name": "Running",
+     "Value": "running"
+    },
+    {
+     "$id": "45",
+     "Name": "Succeeded",
+     "Value": "succeeded"
+    },
+    {
+     "$id": "46",
+     "Name": "Failed",
+     "Value": "failed"
+    },
+    {
+     "$id": "47",
+     "Name": "PartiallyCompleted",
+     "Value": "partiallyCompleted"
+    }
+   ],
+   "Description": "The status of the processing job.",
+   "IsExtensible": true,
+   "Usage": "Output"
+  },
+  {
+   "$id": "48",
+   "Kind": "enum",
+   "Name": "ApiVersion",
+   "CrossLanguageDefinitionId": "AzureHealthInsights.ApiVersion",
+   "ValueType": {
+    "$id": "49",
+    "Kind": "string"
+   },
+   "Values": [
+    {
+     "$id": "50",
+     "Name": "v2023_03_01_preview",
+     "Value": "2023-03-01-preview"
+    }
+   ],
+   "IsExtensible": false,
+   "Usage": "None"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "51",
+   "Kind": "model",
+   "Name": "OncoPhenotypeData",
+   "CrossLanguageDefinitionId": "AzureHealthInsights.OncoPhenotypeData",
+   "Usage": "Input",
+   "Description": "The body of the Onco Phenotype request.",
+   "Properties": [
+    {
+     "$id": "52",
+     "Name": "patients",
+     "SerializedName": "patients",
+     "Description": "The list of patients, including their clinical information and data.",
+     "Type": {
+      "$id": "53",
+      "Kind": "array",
+      "ValueType": {
+       "$id": "54",
+       "Kind": "model",
+       "Name": "PatientRecord",
+       "CrossLanguageDefinitionId": "AzureHealthInsights.PatientRecord",
+       "Usage": "Input",
+       "Description": "A patient record, including their clinical information and data.",
+       "Properties": [
+        {
+         "$id": "55",
+         "Name": "id",
+         "SerializedName": "id",
+         "Description": "A given identifier for the patient. Has to be unique across all patients in a single request.",
+         "Type": {
+          "$id": "56",
+          "Kind": "string"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "57",
+         "Name": "info",
+         "SerializedName": "info",
+         "Description": "Patient structured information, including demographics and known structured clinical information.",
+         "Type": {
+          "$id": "58",
+          "Kind": "model",
+          "Name": "PatientInfo",
+          "CrossLanguageDefinitionId": "AzureHealthInsights.PatientInfo",
+          "Usage": "Input",
+          "Description": "Patient structured information, including demographics and known structured clinical information.",
+          "Properties": [
+           {
+            "$id": "59",
+            "Name": "sex",
+            "SerializedName": "sex",
+            "Description": "The patient's sex.",
+            "Type": {
+             "$ref": "2"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "60",
+            "Name": "birthDate",
+            "SerializedName": "birthDate",
+            "Description": "The patient's date of birth.",
+            "Type": {
+             "$id": "61",
+             "Kind": "plainDate"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "62",
+            "Name": "clinicalInfo",
+            "SerializedName": "clinicalInfo",
+            "Description": "Known clinical information for the patient, structured.",
+            "Type": {
+             "$id": "63",
+             "Kind": "array",
+             "ValueType": {
+              "$id": "64",
+              "Kind": "model",
+              "Name": "ClinicalCodedElement",
+              "CrossLanguageDefinitionId": "AzureHealthInsights.ClinicalCodedElement",
+              "Usage": "RoundTrip",
+              "Description": "A piece of clinical information, expressed as a code in a clinical coding system.",
+              "Properties": [
+               {
+                "$id": "65",
+                "Name": "system",
+                "SerializedName": "system",
+                "Description": "The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS.",
+                "Type": {
+                 "$id": "66",
+                 "Kind": "string"
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "67",
+                "Name": "code",
+                "SerializedName": "code",
+                "Description": "The code within the given clinical coding system.",
+                "Type": {
+                 "$id": "68",
+                 "Kind": "string"
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "69",
+                "Name": "name",
+                "SerializedName": "name",
+                "Description": "The name of this coded concept in the coding system.",
+                "Type": {
+                 "$id": "70",
+                 "Kind": "string"
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "71",
+                "Name": "value",
+                "SerializedName": "value",
+                "Description": "A value associated with the code within the given clinical coding system.",
+                "Type": {
+                 "$id": "72",
+                 "Kind": "string"
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               }
+              ]
+             }
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "73",
+         "Name": "data",
+         "SerializedName": "data",
+         "Description": "Patient unstructured clinical data, given as documents.",
+         "Type": {
+          "$id": "74",
+          "Kind": "array",
+          "ValueType": {
+           "$id": "75",
+           "Kind": "model",
+           "Name": "PatientDocument",
+           "CrossLanguageDefinitionId": "AzureHealthInsights.PatientDocument",
+           "Usage": "Input",
+           "Description": "A clinical document related to a patient. Document here is in the wide sense - not just a text document (note).",
+           "Properties": [
+            {
+             "$id": "76",
+             "Name": "type",
+             "SerializedName": "type",
+             "Description": "The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document).",
+             "Type": {
+              "$ref": "7"
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "77",
+             "Name": "clinicalType",
+             "SerializedName": "clinicalType",
+             "Description": "The type of the clinical document.",
+             "Type": {
+              "$ref": "13"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "78",
+             "Name": "id",
+             "SerializedName": "id",
+             "Description": "A given identifier for the document. Has to be unique across all documents for a single patient.",
+             "Type": {
+              "$id": "79",
+              "Kind": "string"
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "80",
+             "Name": "language",
+             "SerializedName": "language",
+             "Description": "A 2 letter ISO 639-1 representation of the language of the document.",
+             "Type": {
+              "$id": "81",
+              "Kind": "string"
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "82",
+             "Name": "createdDateTime",
+             "SerializedName": "createdDateTime",
+             "Description": "The date and time when the document was created.",
+             "Type": {
+              "$id": "83",
+              "Kind": "utcDateTime",
+              "Encode": "rfc3339",
+              "WireType": {
+               "$id": "84",
+               "Kind": "string"
+              }
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "85",
+             "Name": "content",
+             "SerializedName": "content",
+             "Description": "The content of the patient document.",
+             "Type": {
+              "$id": "86",
+              "Kind": "model",
+              "Name": "DocumentContent",
+              "CrossLanguageDefinitionId": "AzureHealthInsights.DocumentContent",
+              "Usage": "Input",
+              "Description": "The content of the patient document.",
+              "Properties": [
+               {
+                "$id": "87",
+                "Name": "sourceType",
+                "SerializedName": "sourceType",
+                "Description": "The type of the content's source.\nIn case the source type is 'inline', the content is given as a string (for instance, text).\nIn case the source type is 'reference', the content is given as a URI.",
+                "Type": {
+                 "$ref": "23"
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "88",
+                "Name": "value",
+                "SerializedName": "value",
+                "Description": "The content of the document, given either inline (as a string) or as a reference (URI).",
+                "Type": {
+                 "$id": "89",
+                 "Kind": "string"
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               }
+              ]
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            }
+           ]
+          }
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      }
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "90",
+     "Name": "configuration",
+     "SerializedName": "configuration",
+     "Description": "Configuration affecting the Onco Phenotype model's inference.",
+     "Type": {
+      "$id": "91",
+      "Kind": "model",
+      "Name": "OncoPhenotypeModelConfiguration",
+      "CrossLanguageDefinitionId": "AzureHealthInsights.OncoPhenotypeModelConfiguration",
+      "Usage": "Input",
+      "Description": "Configuration affecting the Onco Phenotype model's inference.",
+      "Properties": [
+       {
+        "$id": "92",
+        "Name": "verbose",
+        "SerializedName": "verbose",
+        "Description": "An indication whether the model should produce verbose output.",
+        "Type": {
+         "$id": "93",
+         "Kind": "boolean"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "94",
+        "Name": "includeEvidence",
+        "SerializedName": "includeEvidence",
+        "Description": "An indication whether the model's output should include evidence for the inferences.",
+        "Type": {
+         "$id": "95",
+         "Kind": "boolean"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "96",
+        "Name": "inferenceTypes",
+        "SerializedName": "inferenceTypes",
+        "Description": "A list of inference types to be inferred for the current request.\nThis could be used if only part of the Onco Phenotype inferences are required.\nIf this list is omitted or empty, the model will return all the inference types.",
+        "Type": {
+         "$id": "97",
+         "Kind": "array",
+         "ValueType": {
+          "$ref": "27"
+         }
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "98",
+        "Name": "checkForCancerCase",
+        "SerializedName": "checkForCancerCase",
+        "Description": "An indication whether to perform a preliminary step on the patient's documents to determine whether they relate to a Cancer case.",
+        "Type": {
+         "$id": "99",
+         "Kind": "boolean"
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "54"
+  },
+  {
+   "$ref": "58"
+  },
+  {
+   "$ref": "64"
+  },
+  {
+   "$ref": "75"
+  },
+  {
+   "$ref": "86"
+  },
+  {
+   "$ref": "91"
+  },
+  {
+   "$id": "100",
+   "Kind": "model",
+   "Name": "OncoPhenotypeResult",
+   "CrossLanguageDefinitionId": "AzureHealthInsights.OncoPhenotypeResult",
+   "Usage": "Output",
+   "Description": "The response for the Onco Phenotype request.",
+   "Properties": [
+    {
+     "$id": "101",
+     "Name": "jobId",
+     "SerializedName": "jobId",
+     "Description": "A processing job identifier.",
+     "Type": {
+      "$id": "102",
+      "Kind": "uuid",
+      "Encode": "string"
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "103",
+     "Name": "createdDateTime",
+     "SerializedName": "createdDateTime",
+     "Description": "The date and time when the processing job was created.",
+     "Type": {
+      "$id": "104",
+      "Kind": "utcDateTime",
+      "Encode": "rfc3339",
+      "WireType": {
+       "$id": "105",
+       "Kind": "string"
+      }
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "106",
+     "Name": "expirationDateTime",
+     "SerializedName": "expirationDateTime",
+     "Description": "The date and time when the processing job is set to expire.",
+     "Type": {
+      "$id": "107",
+      "Kind": "utcDateTime",
+      "Encode": "rfc3339",
+      "WireType": {
+       "$id": "108",
+       "Kind": "string"
+      }
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "109",
+     "Name": "lastUpdateDateTime",
+     "SerializedName": "lastUpdateDateTime",
+     "Description": "The date and time when the processing job was last updated.",
+     "Type": {
+      "$id": "110",
+      "Kind": "utcDateTime",
+      "Encode": "rfc3339",
+      "WireType": {
+       "$id": "111",
+       "Kind": "string"
+      }
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "112",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "The status of the processing job.",
+     "Type": {
+      "$ref": "41"
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "113",
+     "Name": "errors",
+     "SerializedName": "errors",
+     "Description": "An array of errors, if any errors occurred during the processing job.",
+     "Type": {
+      "$id": "114",
+      "Kind": "array",
+      "ValueType": {
+       "$id": "115",
+       "Kind": "model",
+       "Name": "Error",
+       "CrossLanguageDefinitionId": "Azure.Core.Foundations.Error",
+       "Usage": "Output",
+       "Description": "The error object.",
+       "Properties": [
+        {
+         "$id": "116",
+         "Name": "code",
+         "SerializedName": "code",
+         "Description": "One of a server-defined set of error codes.",
+         "Type": {
+          "$id": "117",
+          "Kind": "string"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "118",
+         "Name": "message",
+         "SerializedName": "message",
+         "Description": "A human-readable representation of the error.",
+         "Type": {
+          "$id": "119",
+          "Kind": "string"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "120",
+         "Name": "target",
+         "SerializedName": "target",
+         "Description": "The target of the error.",
+         "Type": {
+          "$id": "121",
+          "Kind": "string"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "122",
+         "Name": "details",
+         "SerializedName": "details",
+         "Description": "An array of details about specific errors that led to this reported error.",
+         "Type": {
+          "$id": "123",
+          "Kind": "array",
+          "ValueType": {
+           "$ref": "115"
+          }
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "124",
+         "Name": "innererror",
+         "SerializedName": "innererror",
+         "Description": "An object containing more specific information than the current object about the error.",
+         "Type": {
+          "$id": "125",
+          "Kind": "model",
+          "Name": "InnerError",
+          "CrossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
+          "Usage": "Output",
+          "Description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+          "Properties": [
+           {
+            "$id": "126",
+            "Name": "code",
+            "SerializedName": "code",
+            "Description": "One of a server-defined set of error codes.",
+            "Type": {
+             "$id": "127",
+             "Kind": "string"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "128",
+            "Name": "innererror",
+            "SerializedName": "innererror",
+            "Description": "Inner error.",
+            "Type": {
+             "$ref": "125"
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      }
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "129",
+     "Name": "results",
+     "SerializedName": "results",
+     "Description": "The inference results for the Onco Phenotype request.",
+     "Type": {
+      "$id": "130",
+      "Kind": "model",
+      "Name": "OncoPhenotypeResults",
+      "CrossLanguageDefinitionId": "AzureHealthInsights.OncoPhenotypeResults",
+      "Usage": "Output",
+      "Description": "The inference results for the Onco Phenotype request.",
+      "Properties": [
+       {
+        "$id": "131",
+        "Name": "patients",
+        "SerializedName": "patients",
+        "Description": "Results for the patients given in the request.",
+        "Type": {
+         "$id": "132",
+         "Kind": "array",
+         "ValueType": {
+          "$id": "133",
+          "Kind": "model",
+          "Name": "OncoPhenotypePatientResult",
+          "CrossLanguageDefinitionId": "AzureHealthInsights.OncoPhenotypePatientResult",
+          "Usage": "Output",
+          "Description": "The results of the model's work for a single patient.",
+          "Properties": [
+           {
+            "$id": "134",
+            "Name": "id",
+            "SerializedName": "id",
+            "Description": "The identifier given for the patient in the request.",
+            "Type": {
+             "$id": "135",
+             "Kind": "string"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "136",
+            "Name": "inferences",
+            "SerializedName": "inferences",
+            "Description": "The model's inferences for the given patient.",
+            "Type": {
+             "$id": "137",
+             "Kind": "array",
+             "ValueType": {
+              "$id": "138",
+              "Kind": "model",
+              "Name": "OncoPhenotypeInference",
+              "CrossLanguageDefinitionId": "AzureHealthInsights.OncoPhenotypeInference",
+              "Usage": "Output",
+              "Description": "An inference made by the Onco Phenotype model regarding a patient.",
+              "Properties": [
+               {
+                "$id": "139",
+                "Name": "type",
+                "SerializedName": "type",
+                "Description": "The type of the Onco Phenotype inference",
+                "Type": {
+                 "$ref": "27"
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "140",
+                "Name": "value",
+                "SerializedName": "value",
+                "Description": "The value of the inference, as relevant for the given inference type.",
+                "Type": {
+                 "$id": "141",
+                 "Kind": "string"
+                },
+                "IsRequired": true,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "142",
+                "Name": "description",
+                "SerializedName": "description",
+                "Description": "The description corresponding to the inference value.",
+                "Type": {
+                 "$id": "143",
+                 "Kind": "string"
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "144",
+                "Name": "confidenceScore",
+                "SerializedName": "confidenceScore",
+                "Description": "Confidence score for this inference.",
+                "Type": {
+                 "$id": "145",
+                 "Kind": "float32"
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "146",
+                "Name": "evidence",
+                "SerializedName": "evidence",
+                "Description": "The evidence corresponding to the inference value.",
+                "Type": {
+                 "$id": "147",
+                 "Kind": "array",
+                 "ValueType": {
+                  "$id": "148",
+                  "Kind": "model",
+                  "Name": "InferenceEvidence",
+                  "CrossLanguageDefinitionId": "AzureHealthInsights.InferenceEvidence",
+                  "Usage": "Output",
+                  "Description": "A piece of evidence corresponding to an inference.",
+                  "Properties": [
+                   {
+                    "$id": "149",
+                    "Name": "patientDataEvidence",
+                    "SerializedName": "patientDataEvidence",
+                    "Description": "A piece of evidence from a clinical note (text document).",
+                    "Type": {
+                     "$id": "150",
+                     "Kind": "model",
+                     "Name": "ClinicalNoteEvidence",
+                     "CrossLanguageDefinitionId": "AzureHealthInsights.ClinicalNoteEvidence",
+                     "Usage": "Output",
+                     "Description": "A piece of evidence from a clinical note (text document).",
+                     "Properties": [
+                      {
+                       "$id": "151",
+                       "Name": "id",
+                       "SerializedName": "id",
+                       "Description": "The identifier of the document containing the evidence.",
+                       "Type": {
+                        "$id": "152",
+                        "Kind": "string"
+                       },
+                       "IsRequired": true,
+                       "IsReadOnly": false
+                      },
+                      {
+                       "$id": "153",
+                       "Name": "text",
+                       "SerializedName": "text",
+                       "Description": "The actual text span which is evidence for the inference.",
+                       "Type": {
+                        "$id": "154",
+                        "Kind": "string"
+                       },
+                       "IsRequired": false,
+                       "IsReadOnly": false
+                      },
+                      {
+                       "$id": "155",
+                       "Name": "offset",
+                       "SerializedName": "offset",
+                       "Description": "The start index of the evidence text span in the document (0 based).",
+                       "Type": {
+                        "$id": "156",
+                        "Kind": "int32"
+                       },
+                       "IsRequired": true,
+                       "IsReadOnly": false
+                      },
+                      {
+                       "$id": "157",
+                       "Name": "length",
+                       "SerializedName": "length",
+                       "Description": "The length of the evidence text span.",
+                       "Type": {
+                        "$id": "158",
+                        "Kind": "int32"
+                       },
+                       "IsRequired": true,
+                       "IsReadOnly": false
+                      }
+                     ]
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "159",
+                    "Name": "patientInfoEvidence",
+                    "SerializedName": "patientInfoEvidence",
+                    "Description": "A piece of clinical information, expressed as a code in a clinical coding\nsystem.",
+                    "Type": {
+                     "$ref": "64"
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   },
+                   {
+                    "$id": "160",
+                    "Name": "importance",
+                    "SerializedName": "importance",
+                    "Description": "A value indicating how important this piece of evidence is for the inference.",
+                    "Type": {
+                     "$id": "161",
+                     "Kind": "float32"
+                    },
+                    "IsRequired": false,
+                    "IsReadOnly": false
+                   }
+                  ]
+                 }
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               },
+               {
+                "$id": "162",
+                "Name": "caseId",
+                "SerializedName": "caseId",
+                "Description": "An identifier for a clinical case, if there are multiple clinical cases regarding the same patient.",
+                "Type": {
+                 "$id": "163",
+                 "Kind": "string"
+                },
+                "IsRequired": false,
+                "IsReadOnly": false
+               }
+              ]
+             }
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         }
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "164",
+        "Name": "modelVersion",
+        "SerializedName": "modelVersion",
+        "Description": "The version of the model used for inference, expressed as the model date.",
+        "Type": {
+         "$id": "165",
+         "Kind": "string"
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$ref": "115"
+  },
+  {
+   "$ref": "125"
+  },
+  {
+   "$ref": "130"
+  },
+  {
+   "$ref": "133"
+  },
+  {
+   "$ref": "138"
+  },
+  {
+   "$ref": "148"
+  },
+  {
+   "$ref": "150"
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "166",
+   "Name": "CancerProfilingClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "167",
+     "Name": "inferCancerProfile",
+     "ResourceName": "CancerProfilingClient",
+     "Summary": "Create Onco Phenotype job",
+     "Description": "Creates an Onco Phenotype job with the given request body.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "168",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Description": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com).",
+       "Type": {
+        "$id": "169",
+        "Kind": "uri",
+        "IsNullable": false
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "170",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "171",
+        "Kind": "string"
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$id": "172",
+        "Type": {
+         "$id": "173",
+         "Kind": "string",
+         "IsNullable": false
+        },
+        "Value": "2023-03-01-preview"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "174",
+       "Name": "repeatabilityRequestId",
+       "NameInRequest": "Repeatability-Request-ID",
+       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "175",
+        "Kind": "string"
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "176",
+       "Name": "repeatabilityFirstSent",
+       "NameInRequest": "Repeatability-First-Sent",
+       "Description": "Specifies the date and time at which the request was first created.",
+       "Type": {
+        "$id": "177",
+        "Kind": "utcDateTime",
+        "Encode": "rfc7231",
+        "WireType": {
+         "$id": "178",
+         "Kind": "string"
+        }
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "179",
+       "Name": "OncoPhenotypeData",
+       "NameInRequest": "OncoPhenotypeData",
+       "Description": "The body of the Onco Phenotype request.",
+       "Type": {
+        "$ref": "51"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "180",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "181",
+        "Kind": "string",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "182",
+        "Type": {
+         "$ref": "181"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "183",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "184",
+        "Kind": "string",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "185",
+        "Type": {
+         "$ref": "184"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "186",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "187",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "188",
+          "Kind": "url"
+         }
+        },
+        {
+         "$id": "189",
+         "Name": "Retry-After",
+         "NameInResponse": "retryAfter",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "190",
+          "Kind": "int32"
+         }
+        },
+        {
+         "$id": "191",
+         "Name": "Repeatability-Result",
+         "NameInResponse": "repeatabilityResult",
+         "Description": "Indicates whether the repeatable request was accepted or rejected.",
+         "Type": {
+          "$ref": "37"
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "192",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "100"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}/healthinsights",
+     "Path": "/oncophenotype/jobs",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "193",
+      "FinalStateVia": 3,
+      "FinalResponse": {
+       "$id": "194",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "100"
+       },
+       "BodyMediaType": "Json"
+      },
+      "ResultPath": "results"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "195"
+   },
+   "Creatable": true,
+   "Parameters": [
+    {
+     "$ref": "168"
+    }
+   ]
+  }
+ ],
+ "Auth": {
+  "$id": "196",
+  "ApiKey": {
+   "$id": "197",
+   "Name": "Ocp-Apim-Subscription-Key"
+  }
+ }
+}

@@ -1,0 +1,8 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Analytics.Purview.DataMap",
+  "library-name": "Azure.Analytics.Purview.DataMap",
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}

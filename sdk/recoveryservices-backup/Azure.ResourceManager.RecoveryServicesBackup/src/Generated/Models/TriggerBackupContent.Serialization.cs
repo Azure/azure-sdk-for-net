@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             BackupContent properties = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                eTag,
+                etag,
                 serializedAdditionalRawData);
         }
 

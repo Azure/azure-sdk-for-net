@@ -1,0 +1,8 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.AI.DocumentIntelligence",
+  "library-name": "Azure.AI.DocumentIntelligence",
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}
