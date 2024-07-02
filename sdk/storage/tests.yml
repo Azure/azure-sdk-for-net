@@ -13,7 +13,7 @@ extends:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
         ServiceConnection: azure-sdk-tests
         SubscriptionConfigurationFiles:
-          - sdk/storage/sub-config-azure-preview.json
+          - sdk/storage/storage-preview-public-msft.json
       PrivatePreview:
         SubscriptionConfiguration: $(sub-config-storage-test-resources)
     Clouds: Preview
