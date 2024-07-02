@@ -6,10 +6,12 @@ namespace ClientModel.Tests.PagingClient;
 // A mock model that illustrate values that can be returned in a page collection
 public class ValueItem
 {
-    public ValueItem(string id)
+    public ValueItem(int id, string value)
     {
         Id = id;
+        Value = value;
     }
 
-    public string Id { get; }
+    public int Id { get; }
+    public string Value { get; }
 }

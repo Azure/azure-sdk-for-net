@@ -11,11 +11,17 @@ namespace ClientModel.Tests.PagingClient;
 internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
 {
     private readonly ClientPipeline _pipeline;
+    private readonly Uri _endpoint;
     private readonly RequestOptions _options;
 
-    public ValuesPageEnumerator(ClientPipeline pipeline, RequestOptions options)
+    public ValuesPageEnumerator(
+        ClientPipeline pipeline,
+        Uri endpoint,
+        RequestOptions options)
     {
         _pipeline = pipeline;
+        _endpoint = endpoint;
+
         _options = options;
     }
 

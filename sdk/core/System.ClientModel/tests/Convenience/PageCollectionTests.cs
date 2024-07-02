@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
-
-using ClientModel.Tests.PagingClient;
-
 using ClientModel.Tests.Mocks;
+using ClientModel.Tests.PagingClient;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
 
 namespace System.ClientModel.Tests.Results;
 
@@ -17,13 +15,12 @@ public class PageCollectionTests
     [Test]
     public void CanGetValues()
     {
-        ClientPipelineOptions options = new ClientPipelineOptions()
+        PagingClientOptions options = new()
         {
             Transport = new MockPipelineTransport("Mock", i => 200)
         };
-        ClientPipeline mockPipeline = ClientPipeline.Create(options);
 
-        PagingProtocolClient client = new PagingProtocolClient(mockPipeline);
+        PagingClient client = new PagingClient(options);
     }
 
     //[Test]
