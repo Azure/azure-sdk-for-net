@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanRoundTripPoint()
         {
-            var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
+            string input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
 
             var point = AssertRoundtrip<GeoPoint>(input);
             Assert.AreEqual(P(0), point.Coordinates);
