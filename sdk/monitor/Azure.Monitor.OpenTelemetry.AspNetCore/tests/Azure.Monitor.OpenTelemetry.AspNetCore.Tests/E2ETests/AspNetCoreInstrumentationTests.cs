@@ -32,16 +32,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
     {
         private readonly WebApplicationFactory<AspNetCoreTestApp.Program> _factory;
 
-        private const string TestServiceName = nameof(TestServiceName), TestServiceNamespace = nameof(TestServiceNamespace), TestServiceInstance = nameof(TestServiceInstance), TestServiceVersion = nameof(TestServiceVersion);
-        private const string TestRoleName = $"[{TestServiceNamespace}]/{TestServiceName}";
-        private readonly Dictionary<string, object> _testResourceAttributes = new()
-        {
-            { "service.name", TestServiceName },
-            { "service.namespace", TestServiceNamespace },
-            { "service.instance.id", TestServiceInstance },
-            { "service.version", TestServiceVersion }
-        };
-
         public AspNetCoreInstrumentationTests(WebApplicationFactory<AspNetCoreTestApp.Program> factory)
         {
             _factory = factory;
@@ -80,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                             })
                             .WithTracing(x => x.AddInMemoryExporter(activities))
                             // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
-                            .ConfigureResource(x => x.AddAttributes(_testResourceAttributes));
+                            .ConfigureResource(x => x.AddAttributes(SharedTestVars.TestResourceAttributes));
 
                         serviceCollection.Configure<AspNetCoreTraceInstrumentationOptions>(options =>
                         {
@@ -177,9 +167,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             Assert.Equal(6, telemetryItem.Tags.Count);
             Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.operation.id" && kvp.Value == activity.TraceId.ToHexString());
             Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.operation.name" && kvp.Value == operationName);
-            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.cloud.role" && kvp.Value == TestRoleName);
-            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.cloud.roleInstance" && kvp.Value == TestServiceInstance);
-            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.application.ver" && kvp.Value == TestServiceVersion);
+            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.cloud.role" && kvp.Value == SharedTestVars.TestRoleName);
+            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.cloud.roleInstance" && kvp.Value == SharedTestVars.TestServiceInstance);
+            Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.application.ver" && kvp.Value == SharedTestVars.TestServiceVersion);
             Assert.Contains(telemetryItem.Tags, kvp => kvp.Key == "ai.internal.sdkVersion");
 
             // TELEMETRY DATA
