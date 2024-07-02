@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventHubs
             SystemData systemData = default;
             DateTimeOffset? updatedAtUtc = default;
             DateTimeOffset? createdAtUtc = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             IDictionary<string, string> groupProperties = default;
             EventHubsSchemaCompatibility? schemaCompatibility = default;
             EventHubsSchemaType? schemaType = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            eTag = new ETag(property0.Value.GetString());
+                            etag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("groupProperties"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventHubs
                 systemData,
                 updatedAtUtc,
                 createdAtUtc,
-                eTag,
+                etag,
                 groupProperties ?? new ChangeTrackingDictionary<string, string>(),
                 schemaCompatibility,
                 schemaType,

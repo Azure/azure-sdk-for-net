@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties"> BackupVaultResource properties. </param>
         /// <param name="identity"> Input Managed Identity Details. </param>
-        /// <param name="eTag"> Optional ETag. </param>
+        /// <param name="etag"> Optional ETag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataProtectionBackupVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataProtectionBackupVaultProperties properties, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
-            ETag = eTag;
+            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
