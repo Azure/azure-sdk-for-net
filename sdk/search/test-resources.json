@@ -160,7 +160,7 @@
                         }
                     }
                 ],
-                "enablePurgeProtection": true,
+                "enablePurgeProtection": false,
                 "enableSoftDelete": true,
                 "softDeleteRetentionInDays": 7
             }
