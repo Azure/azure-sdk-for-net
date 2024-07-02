@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Azure Firewall Packet Capture Parameters resource. </summary>
-    public partial class FirewallPacketCaptureContent : NetworkSubResource
+    /// <summary> Azure Firewall Packet Capture Parameters. </summary>
+    public partial class FirewallPacketCaptureContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureContent"/>. </summary>
         public FirewallPacketCaptureContent()
         {
@@ -22,8 +53,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureContent"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="durationInSeconds"> Duration of packet capture in seconds. </param>
         /// <param name="numberOfPacketsToCapture"> Number of packets to be captured. </param>
         /// <param name="sasUri"> Upload capture location. </param>
@@ -31,7 +60,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocol"> The protocol of packets to capture. </param>
         /// <param name="flags"> The tcp-flag type to be captured. Used with protocol TCP. </param>
         /// <param name="filters"> Rules to filter packet captures. </param>
-        internal FirewallPacketCaptureContent(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters) : base(id, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPacketCaptureContent(int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DurationInSeconds = durationInSeconds;
             NumberOfPacketsToCapture = numberOfPacketsToCapture;
@@ -40,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             Protocol = protocol;
             Flags = flags;
             Filters = filters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Duration of packet capture in seconds. </summary>

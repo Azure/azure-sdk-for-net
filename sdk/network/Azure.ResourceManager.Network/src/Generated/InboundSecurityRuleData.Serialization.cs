@@ -10,19 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
-namespace Azure.ResourceManager.Network.Models
+namespace Azure.ResourceManager.Network
 {
-    public partial class InboundSecurityRule : IUtf8JsonSerializable, IJsonModel<InboundSecurityRule>
+    public partial class InboundSecurityRuleData : IUtf8JsonSerializable, IJsonModel<InboundSecurityRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundSecurityRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundSecurityRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InboundSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InboundSecurityRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundSecurityRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundSecurityRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,19 +88,19 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        InboundSecurityRule IJsonModel<InboundSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InboundSecurityRuleData IJsonModel<InboundSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundSecurityRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundSecurityRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInboundSecurityRule(document.RootElement, options);
+            return DeserializeInboundSecurityRuleData(document.RootElement, options);
         }
 
-        internal static InboundSecurityRule DeserializeInboundSecurityRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static InboundSecurityRuleData DeserializeInboundSecurityRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InboundSecurityRule(
+            return new InboundSecurityRuleData(
                 id,
                 name,
                 type,
@@ -211,35 +212,35 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState);
         }
 
-        BinaryData IPersistableModel<InboundSecurityRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InboundSecurityRuleData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRuleData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InboundSecurityRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundSecurityRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InboundSecurityRule IPersistableModel<InboundSecurityRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InboundSecurityRuleData IPersistableModel<InboundSecurityRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRuleData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeInboundSecurityRule(document.RootElement, options);
+                        return DeserializeInboundSecurityRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InboundSecurityRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundSecurityRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InboundSecurityRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InboundSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -48,7 +48,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
         /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="enableSessionRecording"> Enable/Disable Session Recording feature of the Bastion Host resource. </param>
+        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Zones = zones;
             ETag = etag;
@@ -65,6 +66,7 @@ namespace Azure.ResourceManager.Network
             EnableShareableLink = enableShareableLink;
             EnableTunneling = enableTunneling;
             EnableKerberos = enableKerberos;
+            EnableSessionRecording = enableSessionRecording;
         }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.Network
         public ETag? ETag { get; }
         /// <summary> The sku of this Bastion Host. </summary>
         internal NetworkSku Sku { get; set; }
-        /// <summary> The name of this Bastion Host. </summary>
+        /// <summary> The name of the sku of this Bastion Host. </summary>
         public BastionHostSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -132,5 +134,7 @@ namespace Azure.ResourceManager.Network
         public bool? EnableTunneling { get; set; }
         /// <summary> Enable/Disable Kerberos feature of the Bastion Host resource. </summary>
         public bool? EnableKerberos { get; set; }
+        /// <summary> Enable/Disable Session Recording feature of the Bastion Host resource. </summary>
+        public bool? EnableSessionRecording { get; set; }
     }
 }
