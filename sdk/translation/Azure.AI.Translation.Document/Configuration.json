@@ -1,0 +1,9 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.AI.Translation.Document",
+  "library-name": "Azure.AI.Translation.Document",
+  "model-namespace": false,
+  "flavor": "azure",
+  "generate-sample-project": false,
+  "use-model-reader-writer": true
+}
