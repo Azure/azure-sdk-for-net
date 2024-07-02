@@ -1,13 +1,15 @@
-parameters:
-- name: Location
-  displayName: Location
-  type: string
-  default: eastus
-
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
-  parameters:
-    ServiceDirectory: healthinsights
-    Location: '${{ parameters.Location }}'
+    template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+    parameters:
+      ServiceDirectory: healthinsights
+      Location: eastus
+      EnvVars:
+        AZURE_SUBSCRIPTION_ID: $(HEALTHINSIGHTS_SUBSCRIPTION_ID)
+        AZURE_CLIENT_ID: $(HEALTHINSIGHTS_CLIENT_ID)
+        AZURE_CLIENT_SECRET: $(HEALTHINSIGHTS_CLIENT_SECRET)
+        AZURE_TENANT_ID: $(HEALTHINSIGHTS_TENANT_ID)
+        TEST_MODE: 'RunLiveNoRecord'
+        AZURE_TEST_RUN_LIVE: 'true'
+        AZURE_SKIP_LIVE_RECORDING: 'True'
