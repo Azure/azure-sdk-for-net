@@ -127,6 +127,11 @@ namespace Azure.Core.GeoJson
 
             if (element.TryGetProperty(BBoxProperty, out JsonElement bboxElement))
             {
+                if (bboxElement.ValueKind == JsonValueKind.Null)
+                {
+                    return null;
+                }
+
                 var arrayLength = bboxElement.GetArrayLength();
 
                 switch (arrayLength)
