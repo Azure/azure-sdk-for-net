@@ -18,6 +18,7 @@ using NUnit.Framework;
 namespace Azure.Storage.Blobs.Tests.ManagedDisk
 {
     [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+    [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
     public class ManagedDiskTests : BlobTestBase
     {
         private Uri snapshot1SASUri;
