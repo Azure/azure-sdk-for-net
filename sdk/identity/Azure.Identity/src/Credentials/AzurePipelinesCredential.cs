@@ -67,11 +67,25 @@ namespace Azure.Identity
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Obtains an access token from within an Azure Pipelines environment.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
+        /// <exception cref="CredentialUnavailableException">Thrown when the credential is unavailable when used as part of a chained credential such as <see cref="DefaultAzureCredential"/> or <see cref="ChainedTokenCredential"/>.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
             => GetTokenCoreAsync(false, requestContext, cancellationToken).EnsureCompleted();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Obtains an access token from within an Azure Pipelines environment.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
+        /// <exception cref="CredentialUnavailableException">Thrown when the credential is unavailable when used as part of a chained credential such as <see cref="DefaultAzureCredential"/> or <see cref="ChainedTokenCredential"/>.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             => await GetTokenCoreAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
 
