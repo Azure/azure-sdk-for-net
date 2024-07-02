@@ -16,7 +16,7 @@ extends:
           - $(sub-config-communication-services-cloud-test-resources-net)
       PPE:
         SubscriptionConfigurations:
-          - $(sub-config-communication-ppe-test-resources-common)
+          - $(sub-config-communication-ppe-test-resources-common-new)
           - $(sub-config-communication-ppe-test-resources-net)
       Int:
         SubscriptionConfigurations:
