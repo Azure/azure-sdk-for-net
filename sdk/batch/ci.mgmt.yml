@@ -16,6 +16,7 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SdkType: mgmtclient
     ServiceDirectory: batch
     LimitForPullRequest: true
     Artifacts:
