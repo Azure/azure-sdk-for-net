@@ -12,10 +12,6 @@ namespace Azure.Storage.Test
     {
         public string VaultName { get; private set; }
         public string VaultEndpoint { get; private set; }
-        public string ActiveDirectoryApplicationId { get; private set; }
-        public string ActiveDirectoryTenantId { get; private set; }
-        public string ActiveDirectoryApplicationSecret { get; private set; }
-        public string ActiveDirectoryAuthEndpoint { get; private set; }
 
         /// <summary>
         /// Parse an XML representation into a TenantConfiguration value.
@@ -30,10 +26,6 @@ namespace Azure.Storage.Test
             {
                 VaultName = Get("VaultName"),
                 VaultEndpoint = Get("VaultEndpoint"),
-                ActiveDirectoryApplicationId = Get("ActiveDirectoryApplicationId"),
-                ActiveDirectoryApplicationSecret = Get("ActiveDirectoryApplicationSecret"),
-                ActiveDirectoryTenantId = Get("ActiveDirectoryTenantId"),
-                ActiveDirectoryAuthEndpoint = Get("ActiveDirectoryAuthEndpoint")
             };
         }
     }

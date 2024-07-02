@@ -478,7 +478,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSasBuilder_PreauthorizedAgentObjectId()
         {
             // Arrange
-            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
             string preauthorizedAgentGuid = Recording.Random.NewGuid().ToString();
 
@@ -516,7 +516,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task BlobSasBuilder_CorrelationId()
         {
             // Arrange
-            BlobServiceClient oauthService = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
             string containerName = GetNewContainerName();
 
             await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);

@@ -19,6 +19,7 @@ using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -68,11 +69,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigOAuth);
 
         public static ShareServiceClient GetServiceClient_OAuth(
-            this SharesClientBuilder clientBuilder, ShareClientOptions options = default)
+            this SharesClientBuilder clientBuilder, TokenCredential tokenCredential, ShareClientOptions options = default)
         {
             options ??= clientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
-            return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, options);
+            return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, tokenCredential, options);
         }
 
         public static async Task<DisposingShare> GetTestShareAsync(
@@ -102,7 +103,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
             if (publicAccessType == default)
             {
-                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+                publicAccessType = PublicAccessType.None;
             }
 
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));

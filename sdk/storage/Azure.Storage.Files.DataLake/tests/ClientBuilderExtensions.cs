@@ -67,7 +67,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             if (publicAccessType == default)
             {
-                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.FileSystem;
+                publicAccessType = PublicAccessType.None;
             }
 
             DataLakeFileSystemClient fileSystem = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetFileSystemClient(fileSystemName));

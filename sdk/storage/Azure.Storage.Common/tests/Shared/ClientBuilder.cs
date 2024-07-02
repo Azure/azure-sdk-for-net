@@ -137,11 +137,12 @@ namespace Azure.Storage.Test.Shared
 
         public TServiceClient GetServiceClientFromOauthConfig(
             TenantConfiguration config,
+            TokenCredential tokenCredential,
             TServiceClientOptions options = default)
             => AzureCoreRecordedTestBase.InstrumentClient(
                 _getServiceClientTokenCredential(
                     new Uri(GetEndpoint(config)),
-                    Tenants.GetOAuthCredential(config),
+                    tokenCredential,
                     options ?? GetOptions()));
 
         public TServiceClientOptions GetOptions(bool parallelRange = false)

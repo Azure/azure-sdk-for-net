@@ -6,16 +6,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
+using Azure.ResourceManager.Storage.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.Tests.Shared;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Rest;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -29,7 +31,8 @@ namespace Azure.Storage.Blobs.Test
 
         // The container is shared by all tests in this class
         private string _containerName;
-        private StorageManagementClient _storageManagementClient;
+        private BlobContainerResource _container;
+        //private StorageManagementClient _storageManagementClient;
 
         private BlobContainerClient _containerClient;
 
@@ -39,21 +42,28 @@ namespace Azure.Storage.Blobs.Test
             if (Mode != RecordedTestMode.Playback)
             {
                 _containerName = Guid.NewGuid().ToString();
-                var configuration = TestConfigurations.DefaultTargetOAuthTenant;
+                TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
 
-                string subscriptionId = configuration.SubscriptionId;
-                string[] scopes = new string[] { "https://management.azure.com/.default" };
-                string token = await GetAuthToken(scopes, configuration);
-                TokenCredentials tokenCredentials = new TokenCredentials(token);
-                _storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
-
-                await _storageManagementClient.BlobContainers.CreateAsync(
-                    resourceGroupName: configuration.ResourceGroupName,
-                    accountName: configuration.AccountName,
-                    containerName: _containerName,
-                    new Microsoft.Azure.Management.Storage.Models.BlobContainer(
-                        publicAccess: Microsoft.Azure.Management.Storage.Models.PublicAccess.Container,
-                        immutableStorageWithVersioning: new Microsoft.Azure.Management.Storage.Models.ImmutableStorageWithVersioning(true)));
+                try
+                {
+                    ArmClient armClient = new ArmClient(TestEnvironment.Credential);
+                    SubscriptionResource subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{configuration.SubscriptionId}"));
+                    ResourceGroupResource resourceGroup = await subscription.GetResourceGroupAsync(configuration.ResourceGroupName);
+                    StorageAccountResource storageAccount = await resourceGroup.GetStorageAccountAsync(configuration.AccountName);
+                    BlobServiceResource blobService = storageAccount.GetBlobService();
+                    BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
+                    BlobContainerData blobContainerData = new BlobContainerData();
+                    blobContainerData.ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning
+                    {
+                        IsEnabled = true
+                    };
+                    ArmOperation<BlobContainerResource> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, blobContainerData);
+                    _container = blobContainerCreateOperation.Value;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
                 return;
             }
         }
@@ -70,8 +80,8 @@ namespace Azure.Storage.Blobs.Test
         {
             if (Mode != RecordedTestMode.Playback)
             {
-                var configuration = TestConfigurations.DefaultTargetOAuthTenant;
-                var containerClient = new BlobServiceClient(
+                TenantConfiguration configuration = TestConfigurations.DefaultTargetOAuthTenant;
+                BlobContainerClient containerClient = new BlobServiceClient(
                     new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
                     new StorageSharedKeyCredential(Tenants.TestConfigOAuth.AccountName,
                     Tenants.TestConfigOAuth.AccountKey))
@@ -93,10 +103,7 @@ namespace Azure.Storage.Blobs.Test
                     await blobClient.DeleteIfExistsAsync();
                 }
 
-                await _storageManagementClient.BlobContainers.DeleteAsync(
-                     resourceGroupName: configuration.ResourceGroupName,
-                     accountName: configuration.AccountName,
-                     containerName: _containerName);
+                await _container.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -490,7 +497,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.SetImmutabilityPolicyAsync(
                     immutabilityPolicy: immutabilityPolicy,
                     conditions: conditions),
-                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
         [Test]
@@ -825,7 +832,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
+            await destBlob.SyncCopyFromUriAsync(
+                srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
+                options);
 
             // Assert
             Response<BlobProperties> propertiesResponse = await destBlob.GetPropertiesAsync();
