@@ -7,7 +7,9 @@
 - Upgraded latest REST API version to 2024-01-01.
 - Added method overloads `serviceClient.GetClientAccessUri`, `serviceClient.GetClientAccessUriasync` for MQTT clients.
 - Added method overloads to support specifying message time-to-live when sending messages.
-- 
+- Added method `serviceClient.AddConnectionsToGroups` to add filtered connections to specified multiple groups.
+- Added method `serviceClient.RemoveConnectionsFromGroups` to remove filtered connections from specified multiple groups.
+
 ### Breaking Changes
 
 ### Bugs Fixed
