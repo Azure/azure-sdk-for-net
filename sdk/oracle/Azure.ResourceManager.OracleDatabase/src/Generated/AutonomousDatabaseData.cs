@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the AutonomousDatabase data model.
     /// Autonomous Database  resource model.
-    /// Serialized Name: AutonomousDatabase
     /// </summary>
     public partial class AutonomousDatabaseData : TrackedResourceData
     {
@@ -67,7 +66,6 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// The resource-specific properties for this resource.
-        /// Serialized Name: AutonomousDatabase.properties
         /// Please note <see cref="AutonomousDatabaseBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutonomousDatabaseCloneProperties"/> and <see cref="AutonomousDatabaseProperties"/>.
         /// </param>
@@ -85,7 +83,6 @@ namespace Azure.ResourceManager.OracleDatabase
 
         /// <summary>
         /// The resource-specific properties for this resource.
-        /// Serialized Name: AutonomousDatabase.properties
         /// Please note <see cref="AutonomousDatabaseBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutonomousDatabaseCloneProperties"/> and <see cref="AutonomousDatabaseProperties"/>.
         /// </summary>

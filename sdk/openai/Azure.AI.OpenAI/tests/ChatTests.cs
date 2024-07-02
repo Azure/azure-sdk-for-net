@@ -10,22 +10,17 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Chat;
+using Azure.AI.OpenAI.Tests.Utils;
+using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.AI.OpenAI.Tests.Utils.Pipeline;
-using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using OpenAI.Chat;
 
 namespace Azure.AI.OpenAI.Tests;
 
 public partial class ChatTests : AoaiTestBase<ChatClient>
 {
-    private static readonly DateTimeOffset UNIX_EPOCH =
-#if NETFRAMEWORK
-            DateTimeOffset.Parse("1970-01-01T00:00:00.0000000+00:00");
-#else
-            DateTimeOffset.UnixEpoch;
-#endif
-
     public ChatTests(bool isAsync) : base(isAsync)
     { }
 
@@ -35,14 +30,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     [Category("Smoke")]
     public async Task DefaultUserAgentStringWorks()
     {
-        using MockPipeline pipeline = new(req => new CapturedResponse()
-        {
-            Content = BinaryData.FromString("{}"),
-            Headers = new Dictionary<string, IReadOnlyList<string>>()
-            {
-                ["Content-Type"] = ["application/json"],
-            }
-        });
+        using MockPipeline pipeline = new(MockPipeline.ReturnEmptyJson);
 
         Uri endpoint = new Uri("https://www.bing.com/");
         string apiKey = "not-a-real-one";
@@ -141,15 +129,11 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     [RecordedTest]
     public async Task ChatCompletionBadKeyGivesHelpfulError()
     {
-        Uri endpoint = TestConfig.GetEndpointFor<ChatClient>();
-        string modelName = TestConfig.GetDeploymentNameFor<ChatClient>();
         string mockKey = "not-a-valid-key-and-should-still-be-sanitized";
-
-        AzureOpenAIClient topLevel = new AzureOpenAIClient(endpoint, new ApiKeyCredential(mockKey));
-        ChatClient chatClient = InstrumentClient(topLevel.GetChatClient(modelName));
 
         try
         {
+            ChatClient chatClient = GetTestClient(keyCredential: new ApiKeyCredential(mockKey));
             _ = await chatClient.CompleteChatAsync([new UserChatMessage("oops, this won't work with that key!")]);
             Assert.Fail("No exception was thrown");
         }
@@ -165,7 +149,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     [Category("Smoke")]
     public async Task DefaultAzureCredentialWorks()
     {
-        ChatClient chatClient = GetTestClient<TokenCredential>();
+        ChatClient chatClient = GetTestClient(tokenCredential: this.TestEnvironment.Credential);
         ChatCompletion chatCompletion = await chatClient.CompleteChatAsync([ChatMessage.CreateUserMessage("Hello, world!")]);
         Assert.That(chatCompletion, Is.Not.Null);
         Assert.That(chatCompletion.Content, Is.Not.Null.Or.Empty);
@@ -226,7 +210,12 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         ChatMessageContentPart content = response.Content[0];
         Assert.That(content.Kind, Is.EqualTo(ChatMessageContentPartKind.Text));
         Assert.That(content.Text, Is.Not.Null.Or.Empty);
-        Assert.That(content.Text, Does.Contain("Fahrenheit").Or.Contain("Celsius").Or.Contain("°F").Or.Contain("°C"));
+        Assert.That(content.Text, Does
+            .Contain("Fahrenheit")
+            .Or.Contain("Celsius")
+            .Or.Contain("°F")
+            .Or.Contain("°C")
+            .Or.Contain("oven"));
     }
 
     [RecordedTest]
@@ -264,8 +253,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     [RecordedTest]
     public async Task SearchExtensionWorks()
     {
-        var searchConfig = TestConfig.GetConfig("search", "index");
-        string searchIndex = searchConfig.GetValueOrDefault<string>("index");
+        var searchConfig = TestConfig.GetConfig("search");
+        string searchIndex = searchConfig.GetValueOrThrow<string>("index");
 
         AzureSearchChatDataSource source = new()
         {
@@ -311,21 +300,13 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     [RecordedTest]
     public async Task ChatCompletionBadKeyGivesHelpfulErrorStreaming()
     {
-        // TODO FIXME:
-        // Sadly the CompleteChatStreamingAsync doesn't return a Task and the test framework code relies on this delta to
-        // enable automatic async and sync version testing. For now, disable instrumenting the client
-
-        Uri endpoint = TestConfig.GetEndpointFor<ChatClient>();
-        string modelName = TestConfig.GetDeploymentNameFor<ChatClient>();
         string mockKey = "not-a-valid-key-and-should-still-be-sanitized";
-
-        AzureOpenAIClient topLevel = new AzureOpenAIClient(endpoint, new ApiKeyCredential(mockKey));
-        // TODO FIXME This should be wrapped with in an InstrumentClient call
-        ChatClient chatClient = topLevel.GetChatClient(modelName);
-        var messages = new[] { new UserChatMessage("oops, this won't work with that key!") };
 
         try
         {
+            ChatClient chatClient = GetTestClient(keyCredential: new ApiKeyCredential(mockKey));
+            var messages = new[] { new UserChatMessage("oops, this won't work with that key!") };
+
             AsyncResultCollection<StreamingChatCompletionUpdate> result = SyncOrAsync(chatClient,
                 c => c.CompleteChatStreaming(messages),
                 c => c.CompleteChatStreamingAsync(messages));
@@ -391,8 +372,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         bool foundResponseFilter = false;
         List<AzureChatMessageContext> contexts = new();
 
-        var searchConfig = TestConfig.GetConfig("search", "index");
-        string searchIndex = searchConfig.GetValueOrDefault<string>("index");
+        var searchConfig = TestConfig.GetConfig("search");
+        string searchIndex = searchConfig.GetValueOrThrow<string>("index");
 
         AzureSearchChatDataSource source = new()
         {

@@ -73,7 +73,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = default,
+            TransferPropertiesTestType propertiesTestType = default)
         {
             objectName ??= GetNewObjectName();
             BlockBlobClient blobClient = container.GetBlockBlobClient(objectName);

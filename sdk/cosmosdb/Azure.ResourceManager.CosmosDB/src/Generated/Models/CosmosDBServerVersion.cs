@@ -26,6 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string V3_6Value = "3.6";
         private const string V4_0Value = "4.0";
         private const string V4_2Value = "4.2";
+        private const string Five0Value = "5.0";
+        private const string Six0Value = "6.0";
+        /// <summary> 5.0. </summary>
+        public static CosmosDBServerVersion Five0 { get; } = new CosmosDBServerVersion(Five0Value);
+        /// <summary> 6.0. </summary>
+        public static CosmosDBServerVersion Six0 { get; } = new CosmosDBServerVersion(Six0Value);
         /// <summary> Determines if two <see cref="CosmosDBServerVersion"/> values are the same. </summary>
         public static bool operator ==(CosmosDBServerVersion left, CosmosDBServerVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServerVersion"/> values are not the same. </summary>
@@ -41,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }
