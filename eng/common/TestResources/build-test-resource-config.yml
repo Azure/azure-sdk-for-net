@@ -16,6 +16,7 @@ parameters:
 steps:
   - task: AzurePowerShell@5
     displayName: Set Pipeline Subnet Info
+    condition: ne(variables['Pool'], '')
     env: ${{ parameters.EnvVars }}
     inputs:
       azureSubscription: azure-sdk-tests
