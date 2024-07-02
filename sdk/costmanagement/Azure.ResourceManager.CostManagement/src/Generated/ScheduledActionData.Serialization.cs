@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
-            ETag? eTag = default;
+            ETag? etag = default;
             ScheduledActionKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CostManagement
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CostManagement
                 scope,
                 status,
                 viewId,
-                eTag,
+                etag,
                 kind,
                 serializedAdditionalRawData);
         }
