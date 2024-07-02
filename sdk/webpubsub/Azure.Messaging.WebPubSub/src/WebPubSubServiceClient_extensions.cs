@@ -551,5 +551,73 @@ namespace Azure.Messaging.WebPubSub
                 throw;
             }
         }
+
+        /// <summary>
+        /// Add filtered connections to multiple groups.
+        /// </summary>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual Response AddConnectionsToGroups(string filter, IEnumerable<string> groups, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            string json = System.Text.Json.JsonSerializer.Serialize(new { filter = filter, groups = groups });
+
+            return AddConnectionsToGroups(RequestContent.Create(json), context);
+        }
+
+        /// <summary>
+        /// Add filtered connections to multiple groups.
+        /// </summary>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual async Task<Response> AddConnectionsToGroupsAsync(string filter, IEnumerable<string> groups, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            string json = System.Text.Json.JsonSerializer.Serialize(new { filter = filter, groups = groups });
+
+            return await AddConnectionsToGroupsAsync(RequestContent.Create(json), context).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Remove filtered connections from multiple groups.
+        /// </summary>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual Response RemoveConnectionsFromGroups(string filter, IEnumerable<string> groups, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            string json = System.Text.Json.JsonSerializer.Serialize(new { filter = filter, groups = groups });
+
+            return RemoveConnectionsFromGroups(RequestContent.Create(json), context);
+        }
+
+        /// <summary>
+        /// Remove filtered connections from multiple groups.
+        /// </summary>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual async Task<Response> RemoveConnectionsFromGroupsAsync(string filter, IEnumerable<string> groups, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            string json = System.Text.Json.JsonSerializer.Serialize(new { filter = filter, groups = groups });
+
+            return await RemoveConnectionsFromGroupsAsync(RequestContent.Create(json), context).ConfigureAwait(false);
+        }
     }
 }
