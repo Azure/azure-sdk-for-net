@@ -16,7 +16,10 @@ namespace Azure.AI.OpenAI.Tests;
 public class AudioTests : AoaiTestBase<AudioClient>
 {
     public AudioTests(bool isAsync) : base(isAsync)
-    { }
+    {
+        DisableRequestBodyRecording(nameof(AudioClient.TranscribeAudioAsync));
+        DisableRequestBodyRecording(nameof(AudioClient.TranslateAudioAsync));
+    }
 
     [Test]
     [Category("Smoke")]

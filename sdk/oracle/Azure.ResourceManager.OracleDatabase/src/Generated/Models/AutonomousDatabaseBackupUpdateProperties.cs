@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// The updatable properties of the AutonomousDatabaseBackup.
-    /// Serialized Name: AutonomousDatabaseBackupUpdateProperties
-    /// </summary>
+    /// <summary> The updatable properties of the AutonomousDatabaseBackup. </summary>
     internal partial class AutonomousDatabaseBackupUpdateProperties
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupUpdateProperties"/>. </summary>
-        /// <param name="retentionPeriodInDays">
-        /// Retention period, in days, for long-term backups.
-        /// Serialized Name: AutonomousDatabaseBackupUpdateProperties.retentionPeriodInDays
-        /// </param>
+        /// <param name="retentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseBackupUpdateProperties(int? retentionPeriodInDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Retention period, in days, for long-term backups.
-        /// Serialized Name: AutonomousDatabaseBackupUpdateProperties.retentionPeriodInDays
-        /// </summary>
+        /// <summary> Retention period, in days, for long-term backups. </summary>
         public int? RetentionPeriodInDays { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Operations Insights status type enum.
-    /// Serialized Name: OperationsInsightsStatusType
-    /// </summary>
+    /// <summary> Operations Insights status type enum. </summary>
     public readonly partial struct OperationsInsightsStatusType : IEquatable<OperationsInsightsStatusType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FailedEnablingValue = "FailedEnabling";
         private const string FailedDisablingValue = "FailedDisabling";
 
-        /// <summary>
-        /// Enabling status
-        /// Serialized Name: OperationsInsightsStatusType.Enabling
-        /// </summary>
+        /// <summary> Enabling status. </summary>
         public static OperationsInsightsStatusType Enabling { get; } = new OperationsInsightsStatusType(EnablingValue);
-        /// <summary>
-        /// Enabled status
-        /// Serialized Name: OperationsInsightsStatusType.Enabled
-        /// </summary>
+        /// <summary> Enabled status. </summary>
         public static OperationsInsightsStatusType Enabled { get; } = new OperationsInsightsStatusType(EnabledValue);
-        /// <summary>
-        /// Disabling status
-        /// Serialized Name: OperationsInsightsStatusType.Disabling
-        /// </summary>
+        /// <summary> Disabling status. </summary>
         public static OperationsInsightsStatusType Disabling { get; } = new OperationsInsightsStatusType(DisablingValue);
-        /// <summary>
-        /// NotEnabled status
-        /// Serialized Name: OperationsInsightsStatusType.NotEnabled
-        /// </summary>
+        /// <summary> NotEnabled status. </summary>
         public static OperationsInsightsStatusType NotEnabled { get; } = new OperationsInsightsStatusType(NotEnabledValue);
-        /// <summary>
-        /// FailedEnabling status
-        /// Serialized Name: OperationsInsightsStatusType.FailedEnabling
-        /// </summary>
+        /// <summary> FailedEnabling status. </summary>
         public static OperationsInsightsStatusType FailedEnabling { get; } = new OperationsInsightsStatusType(FailedEnablingValue);
-        /// <summary>
-        /// FailedDisabling status
-        /// Serialized Name: OperationsInsightsStatusType.FailedDisabling
-        /// </summary>
+        /// <summary> FailedDisabling status. </summary>
         public static OperationsInsightsStatusType FailedDisabling { get; } = new OperationsInsightsStatusType(FailedDisablingValue);
         /// <summary> Determines if two <see cref="OperationsInsightsStatusType"/> values are the same. </summary>
         public static bool operator ==(OperationsInsightsStatusType left, OperationsInsightsStatusType right) => left.Equals(right);
@@ -77,7 +56,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

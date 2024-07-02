@@ -927,10 +927,10 @@
 # AzureSdkOwners:                                                  @ArthurMa1978
 
 # PRLabel: %ARM
-/sdk/resources/Azure.ResourceManager.*/                            @anamikapan
+/sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
 
 # ServiceLabel: %ARM %Mgmt
-# ServiceOwners:                                                   @anamikapan
+# ServiceOwners:                                                   @Azure/arm-sdk-owners
 
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
@@ -946,6 +946,12 @@
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+
+# PRLabel: %Informatica Data Management
+/sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak
+
+# ServiceLabel: %Informatica Data Management %Mgmt
+# ServiceOwners:                                                   @almasak
 
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978

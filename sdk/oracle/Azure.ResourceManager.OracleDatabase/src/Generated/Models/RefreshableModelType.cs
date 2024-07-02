@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Refreshable model type enum
-    /// Serialized Name: RefreshableModelType
-    /// </summary>
+    /// <summary> Refreshable model type enum. </summary>
     public readonly partial struct RefreshableModelType : IEquatable<RefreshableModelType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string AutomaticValue = "Automatic";
         private const string ManualValue = "Manual";
 
-        /// <summary>
-        /// Automatic refreshable model type
-        /// Serialized Name: RefreshableModelType.Automatic
-        /// </summary>
+        /// <summary> Automatic refreshable model type. </summary>
         public static RefreshableModelType Automatic { get; } = new RefreshableModelType(AutomaticValue);
-        /// <summary>
-        /// Manual refreshable model type
-        /// Serialized Name: RefreshableModelType.Manual
-        /// </summary>
+        /// <summary> Manual refreshable model type. </summary>
         public static RefreshableModelType Manual { get; } = new RefreshableModelType(ManualValue);
         /// <summary> Determines if two <see cref="RefreshableModelType"/> values are the same. </summary>
         public static bool operator ==(RefreshableModelType left, RefreshableModelType right) => left.Equals(right);
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }
