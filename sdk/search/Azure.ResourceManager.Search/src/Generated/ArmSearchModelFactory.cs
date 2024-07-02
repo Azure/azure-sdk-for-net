@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
-        /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
+        /// <param name="etag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
         /// <returns> A new <see cref="Search.SearchServiceData"/> instance for mocking. </returns>
-        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null)
+        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             disabledDataExfiltrationOptions ??= new List<SearchDisabledDataExfiltrationOption>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Search.Models
                 semanticSearch,
                 privateEndpointConnections?.ToList(),
                 sharedPrivateLinkResources?.ToList(),
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
-        /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
+        /// <param name="etag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
-        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null)
+        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             disabledDataExfiltrationOptions ??= new List<SearchDisabledDataExfiltrationOption>();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Search.Models
                 semanticSearch,
                 privateEndpointConnections?.ToList(),
                 sharedPrivateLinkResources?.ToList(),
-                eTag,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
