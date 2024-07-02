@@ -204,6 +204,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("DefaultAzureCredential does not play nicely with this test.")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
