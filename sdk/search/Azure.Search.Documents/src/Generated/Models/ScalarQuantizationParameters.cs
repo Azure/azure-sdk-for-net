@@ -17,12 +17,12 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="ScalarQuantizationParameters"/>. </summary>
         /// <param name="quantizedDataType"> The quantized data type of compressed vector values. </param>
-        internal ScalarQuantizationParameters(VectorSearchCompressionTargetDataType? quantizedDataType)
+        internal ScalarQuantizationParameters(VectorSearchCompressionTarget? quantizedDataType)
         {
             QuantizedDataType = quantizedDataType;
         }
 
         /// <summary> The quantized data type of compressed vector values. </summary>
-        public VectorSearchCompressionTargetDataType? QuantizedDataType { get; set; }
+        public VectorSearchCompressionTarget? QuantizedDataType { get; set; }
     }
 }

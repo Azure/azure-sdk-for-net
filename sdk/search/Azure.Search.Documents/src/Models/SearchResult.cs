@@ -47,11 +47,6 @@ namespace Azure.Search.Documents.Models
         public SemanticSearchResult SemanticSearch { get; internal set; }
 
         /// <summary>
-        /// Contains debugging information that can be used to further explore your search results.
-        /// </summary>
-        public IList<DocumentDebugInfo> DocumentDebugInfo { get; internal set; }
-
-        /// <summary>
         /// The document found by the search query.
         /// </summary>
         public T Document { get; internal set; }
@@ -123,16 +118,6 @@ namespace Azure.Search.Documents.Models
                         captionResults.Add(QueryCaptionResult.DeserializeQueryCaptionResult(captionValue));
                     }
                     result.SemanticSearch.Captions = captionResults;
-                }
-                else if (prop.NameEquals(Constants.SearchDocumentDebugInfoKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    result.DocumentDebugInfo = new List<DocumentDebugInfo>();
-
-                    foreach (JsonElement documentDebugInfoValue in prop.Value.EnumerateArray())
-                    {
-                        result.DocumentDebugInfo.Add(Models.DocumentDebugInfo.DeserializeDocumentDebugInfo(documentDebugInfoValue));
-                    }
                 }
             }
 

@@ -29,27 +29,27 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (Optional.IsDefined(ResourceUri))
+            if (Optional.IsDefined(ResourceUrl))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUri.AbsoluteUri);
+                writer.WriteStringValue(ResourceUrl.AbsoluteUri);
             }
-            if (Optional.IsDefined(DeploymentId))
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deploymentId"u8);
-                writer.WriteStringValue(DeploymentId);
+                writer.WriteStringValue(DeploymentName);
             }
             if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(AuthIdentity))
+            if (Optional.IsDefined(AuthenticationIdentity))
             {
-                if (AuthIdentity != null)
+                if (AuthenticationIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthIdentity);
+                    writer.WriteObjectValue(AuthenticationIdentity);
                 }
                 else
                 {

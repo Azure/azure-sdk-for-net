@@ -99,9 +99,6 @@ namespace Azure.Search.Documents.Tests
         [SearchableField(IndexAnalyzerName = LexicalAnalyzerName.Values.Whitespace)]
         public string TextWithIndexAnalyzer { get; set; }
 
-        [SearchableField(IsFilterable = true, NormalizerName = LexicalNormalizerName.Values.Lowercase)]
-        public string TextWithNormalizer { get; set; }
-
         public string[] StringArray { get; set; }
 
         public IList<string> StringIList { get; set; }
