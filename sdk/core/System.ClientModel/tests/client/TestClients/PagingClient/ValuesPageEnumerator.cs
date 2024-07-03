@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Paging;
 
+// Mocks a page enumerator a client would evolve to for paged endpoints when
+// the client adds convenience methods.
 internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
 {
     private readonly ClientPipeline _pipeline;

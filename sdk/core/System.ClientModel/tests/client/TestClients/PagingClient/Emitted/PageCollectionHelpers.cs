@@ -18,26 +18,18 @@ internal class PageCollectionHelpers
 
     public static IEnumerable<ClientResult> Create(PageResultEnumerator enumerator)
     {
-        do
+        while (enumerator.MoveNext())
         {
-            if (enumerator.Current is not null)
-            {
-                yield return enumerator.Current;
-            }
+            yield return enumerator.Current;
         }
-        while (enumerator.MoveNext());
     }
 
     public static async IAsyncEnumerable<ClientResult> CreateAsync(PageResultEnumerator enumerator)
     {
-        do
+        while (await enumerator.MoveNextAsync().ConfigureAwait(false))
         {
-            if (enumerator.Current is not null)
-            {
-                yield return enumerator.Current;
-            }
+            yield return enumerator.Current;
         }
-        while (await enumerator.MoveNextAsync().ConfigureAwait(false));
     }
 
     private class EnumeratorPageCollection<T> : PageCollection<T>

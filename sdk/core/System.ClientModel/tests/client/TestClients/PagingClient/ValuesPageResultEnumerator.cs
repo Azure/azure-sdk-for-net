@@ -19,8 +19,11 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
     private readonly string? _order;
     private readonly int? _pageSize;
 
-    // This one is special - it keep track of which page we're on.
+    // This one is special - it keeps track of which page we're on.
     private int? _offset;
+
+    // We need two offsets to be able to create both page tokens.
+    private int _nextOffset;
 
     private readonly RequestOptions? _options;
 
@@ -45,7 +48,9 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
     public override ClientResult GetFirst()
     {
         ClientResult result = GetValuesPage(_order, _pageSize, _offset);
-        _offset += _pageSize;
+
+        _nextOffset = GetNextOffset(_offset, _pageSize);
+
         return result;
     }
 
@@ -56,8 +61,12 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
 
     public override ClientResult GetNext(ClientResult result)
     {
+        _offset = _nextOffset;
+
         ClientResult pageResult = GetValuesPage(_order, _pageSize, _offset);
-        _offset += _pageSize;
+
+        _nextOffset = GetNextOffset(_offset, _pageSize);
+
         return pageResult;
     }
 
@@ -68,7 +77,7 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
 
     public override bool HasNext(ClientResult result)
     {
-        return _offset < MockPagingData.Count;
+        return _nextOffset < MockPagingData.Count;
     }
 
     // In a real client implementation, thes would be the generated protocol
@@ -81,5 +90,13 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
     {
         IEnumerable<ValueItem> values = MockPagingData.GetValues(order, pageSize, offset);
         return MockPagingData.GetPageResult(values);
+    }
+
+    // This helper method is specific to this mock enumerator implementation
+    private static int GetNextOffset(int? offset, int? pageSize)
+    {
+        offset ??= MockPagingData.DefaultOffset;
+        pageSize ??= MockPagingData.DefaultPageSize;
+        return offset.Value + pageSize.Value;
     }
 }

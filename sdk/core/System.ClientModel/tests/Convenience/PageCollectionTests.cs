@@ -12,7 +12,9 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Paging;
 
-// Unit tests for sync and async page collections
+/// <summary>
+/// Unit tests for sync and async page collections.
+/// </summary>
 public class PageCollectionTests
 {
     private const int Count = 16;
