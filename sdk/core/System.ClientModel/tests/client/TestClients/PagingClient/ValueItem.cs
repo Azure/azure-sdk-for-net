@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 // A mock model that illustrate values that can be returned in a page collection
 public class ValueItem

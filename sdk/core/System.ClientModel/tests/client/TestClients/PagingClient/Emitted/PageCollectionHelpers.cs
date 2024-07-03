@@ -5,7 +5,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 internal class PageCollectionHelpers
 {

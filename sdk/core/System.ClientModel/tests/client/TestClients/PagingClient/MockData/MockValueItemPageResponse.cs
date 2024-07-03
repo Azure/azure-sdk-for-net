@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 internal class MockValueItemPageResponse : PipelineResponse
 {

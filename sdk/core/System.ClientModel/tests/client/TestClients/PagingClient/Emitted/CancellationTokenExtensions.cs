@@ -4,7 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Threading;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 internal static class CancellationTokenExtensions
 {

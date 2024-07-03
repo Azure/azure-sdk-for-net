@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 // Mocks a page result enumerator a client would have for paged endpoints when
 // those endpoints only have protocol methods on the client.

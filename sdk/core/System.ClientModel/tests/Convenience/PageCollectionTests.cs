@@ -6,41 +6,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
-using ClientModel.Tests.PagingClient;
+using ClientModel.Tests.Paging;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Paging;
 
-public class PageCollectionTests
+public class PageCollectionTests : SyncAsyncTestBase
 {
     // TODO: Async
     // TODO: A few more tests - from commented-out tests
 
-    [Test]
-    public void CanGetAllValues()
+    public PageCollectionTests(bool isAsync) : base(isAsync)
     {
-        PagingClientOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Mock", i => 200)
-        };
-
-        PagingClient client = new PagingClient(options);
-        PageCollection<ValueItem> pages = client.GetValues();
-        IEnumerable<ValueItem> values = pages.GetAllValues();
-
-        int count = 0;
-        foreach (ValueItem value in values)
-        {
-            Assert.AreEqual(count, value.Id);
-            count++;
-        }
-
-        Assert.AreEqual(MockPagingData.Count, count);
     }
 
     [Test]
-    public async Task CanGetAllValueAsync()
+    public async Task CanGetAllValues()
     {
         PagingClientOptions options = new()
         {
@@ -48,8 +31,7 @@ public class PageCollectionTests
         };
 
         PagingClient client = new PagingClient(options);
-        AsyncPageCollection<ValueItem> pages = client.GetValuesAsync();
-        IAsyncEnumerable<ValueItem> values = pages.GetAllValuesAsync();
+        IAsyncEnumerable<ValueItem> values = client.GetAllValuesSyncOrAsync(IsAsync);
 
         int count = 0;
         await foreach (ValueItem value in values)
@@ -62,7 +44,7 @@ public class PageCollectionTests
     }
 
     [Test]
-    public void CanGetCurrentPage()
+    public async Task CanGetCurrentPage()
     {
         PagingClientOptions options = new()
         {
@@ -70,8 +52,7 @@ public class PageCollectionTests
         };
 
         PagingClient client = new PagingClient(options);
-        PageCollection<ValueItem> pages = client.GetValues();
-        PageResult<ValueItem> page = pages.GetCurrentPage();
+        PageResult<ValueItem> page = await client.GetCurrentPageSyncOrAsync(IsAsync);
 
         Assert.AreEqual(MockPagingData.DefaultPageSize, page.Values.Count);
         Assert.AreEqual(0, page.Values[0].Id);
@@ -133,31 +114,6 @@ public class PageCollectionTests
 
         Assert.AreEqual(MockPagingData.Count, count);
     }
-
-    //[Test]
-    //public void CanGetCurrentPageWhileEnumeratingPages()
-    //{
-    //    PagingClientOptions options = new()
-    //    {
-    //        Transport = new MockPipelineTransport("Mock", i => 200)
-    //    };
-
-    //    PagingClient client = new PagingClient(options);
-    //    PageCollection<ValueItem> pages = client.GetValues();
-
-    //    int pageCount = 0;
-    //    foreach (PageResult<ValueItem> page in pages)
-    //    {
-    //        pageCount++;
-
-    //        PageResult<ValueItem> currentPage = pages.GetCurrentPage();
-
-    //        Assert.AreEqual(page.Values.Count, currentPage.Values.Count);
-    //        Assert.AreEqual(page.Values[0].Id, currentPage.Values[0].Id);
-    //    }
-
-    //    Assert.AreEqual(2, pageCount);
-    //}
 
     [Test]
     public void CanRehydratePageCollection()

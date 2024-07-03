@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 // In a real client, this type would be generated but would be made internal.
 // It corresponds to the REST API definition of the response that comes back

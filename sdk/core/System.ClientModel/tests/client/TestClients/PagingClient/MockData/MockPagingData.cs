@@ -5,7 +5,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 public class MockPagingData
 {

@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
 {

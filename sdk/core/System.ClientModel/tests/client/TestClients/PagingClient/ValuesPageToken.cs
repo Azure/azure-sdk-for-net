@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 internal class ValuesPageToken : ContinuationToken
 {

@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 // A mock client implementation that illustrates paging patterns for client
 // endpoints that have both convenience and protocol methods.

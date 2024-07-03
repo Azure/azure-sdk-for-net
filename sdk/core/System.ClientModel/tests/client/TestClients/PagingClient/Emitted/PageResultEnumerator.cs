@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ClientModel.Tests.PagingClient;
+namespace ClientModel.Tests.Paging;
 
 internal abstract class PageResultEnumerator : IAsyncEnumerator<ClientResult>, IEnumerator<ClientResult>
 {
