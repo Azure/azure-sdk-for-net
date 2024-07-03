@@ -5,7 +5,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.PagingClient;
@@ -19,7 +18,9 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
 
     private readonly string? _order;
     private readonly int? _pageSize;
-    private readonly int? _offset;
+
+    // This one is special - it keep track of which page we're on.
+    private int? _offset;
 
     private readonly RequestOptions? _options;
 
@@ -43,7 +44,9 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
 
     public override ClientResult GetFirst()
     {
-        throw new NotImplementedException();
+        ClientResult result = GetValuesPage(_order, _pageSize, _offset);
+        _offset += _pageSize;
+        return result;
     }
 
     public override Task<ClientResult> GetFirstAsync()
@@ -53,7 +56,9 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
 
     public override ClientResult GetNext(ClientResult result)
     {
-        throw new NotImplementedException();
+        ClientResult pageResult = GetValuesPage(_order, _pageSize, _offset);
+        _offset += _pageSize;
+        return pageResult;
     }
 
     public override Task<ClientResult> GetNextAsync(ClientResult result)
@@ -63,24 +68,18 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
 
     public override bool HasNext(ClientResult result)
     {
-        throw new NotImplementedException();
+        return _offset < MockPagingData.Count;
     }
 
+    // In a real client implementation, thes would be the generated protocol
+    // method used to obtain a page of items.
     internal virtual ClientResult GetValuesPage(
         string? order,
         int? pageSize,
         int? offset,
         RequestOptions? options = default)
     {
-        order ??= "asc";
-        pageSize ??= 8;
-        offset ??= 0;
-
-        IEnumerable<ValueItem> ordered = order == "asc" ?
-            MockPagingData.GetValues() :
-            MockPagingData.GetValues().Reverse();
-        IEnumerable<ValueItem> skipped = ordered.Skip(offset.Value);
-        IEnumerable<ValueItem> page = skipped.Take(pageSize.Value);
-        return MockPagingData.GetPageResult(page);
+        IEnumerable<ValueItem> values = MockPagingData.GetValues(order, pageSize, offset);
+        return MockPagingData.GetPageResult(values);
     }
 }

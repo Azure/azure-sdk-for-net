@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Text.Json;
 
 namespace ClientModel.Tests.PagingClient;
 
@@ -17,6 +17,12 @@ public class ValueItem
     public int Id { get; }
     public string Value { get; }
 
-    public string ToJson()
-        => $"{{ \"id\" = {Id}, \"value\"= {Value} }}";
+    public string ToJson() => $"{{ \"id\" : {Id}, \"value\" : \"{Value}\" }}";
+
+    public static ValueItem FromJson(JsonElement element)
+    {
+        int id = element.GetProperty("id").GetInt32();
+        string value = element.GetProperty("value").GetString()!;
+        return new ValueItem(id, value);
+    }
 }

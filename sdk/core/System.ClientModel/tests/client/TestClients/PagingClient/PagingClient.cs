@@ -28,7 +28,13 @@ public class PagingClient
         int? offset = default,
         CancellationToken cancellationToken = default)
     {
-        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, cancellationToken.ToRequestOptions());
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
+            _pipeline,
+            _endpoint,
+            order: order,
+            pageSize: pageSize,
+            offset: offset,
+            cancellationToken.ToRequestOptions());
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
@@ -38,8 +44,14 @@ public class PagingClient
     {
         Argument.AssertNotNull(firstPageToken, nameof(firstPageToken));
 
-        ValuesPageToken pageToken = ValuesPageToken.FromToken(firstPageToken);
-        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, cancellationToken.ToRequestOptions());
+        ValuesPageToken token = ValuesPageToken.FromToken(firstPageToken);
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
+            _pipeline,
+            _endpoint,
+            token.Order,
+            token.PageSize,
+            token.Offset,
+            cancellationToken.ToRequestOptions());
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
@@ -49,7 +61,13 @@ public class PagingClient
         int? offset = default,
         CancellationToken cancellationToken = default)
     {
-        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, cancellationToken.ToRequestOptions());
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
+            _pipeline,
+            _endpoint,
+            order: order,
+            pageSize: pageSize,
+            offset: offset,
+            cancellationToken.ToRequestOptions());
         return PageCollectionHelpers.Create(enumerator);
     }
 
@@ -59,8 +77,14 @@ public class PagingClient
     {
         Argument.AssertNotNull(firstPageToken, nameof(firstPageToken));
 
-        ValuesPageToken pageToken = ValuesPageToken.FromToken(firstPageToken);
-        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, cancellationToken.ToRequestOptions());
+        ValuesPageToken token = ValuesPageToken.FromToken(firstPageToken);
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
+            _pipeline,
+            _endpoint,
+            token.Order,
+            token.PageSize,
+            token.Offset,
+            cancellationToken.ToRequestOptions());
         return PageCollectionHelpers.Create(enumerator);
     }
 
@@ -70,7 +94,13 @@ public class PagingClient
         int? offset,
         RequestOptions options)
     {
-        PageResultEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, options);
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
+            _pipeline,
+            _endpoint,
+            order: order,
+            pageSize: pageSize,
+            offset: offset,
+            options);
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
@@ -80,7 +110,13 @@ public class PagingClient
         int? offset,
         RequestOptions options)
     {
-        PageResultEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, options);
+        ValuesPageEnumerator enumerator = new ValuesPageEnumerator(
+            _pipeline,
+            _endpoint,
+            order: order,
+            pageSize: pageSize,
+            offset: offset,
+            options);
         return PageCollectionHelpers.Create(enumerator);
     }
 }

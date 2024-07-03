@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.PagingClient;
@@ -12,27 +13,54 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
 {
     private readonly ClientPipeline _pipeline;
     private readonly Uri _endpoint;
-    private readonly RequestOptions _options;
+
+    private readonly string? _order;
+    private readonly int? _pageSize;
+
+    // This one is special - it keeps track of which page we're on.
+    private int? _offset;
+
+    // We need two offsets to be able to create both page tokens.
+    private int _nextOffset;
+
+    private readonly RequestOptions? _options;
 
     public ValuesPageEnumerator(
         ClientPipeline pipeline,
         Uri endpoint,
-        RequestOptions options)
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options)
     {
         _pipeline = pipeline;
         _endpoint = endpoint;
+
+        _order = order;
+        _pageSize = pageSize;
+        _offset = offset;
 
         _options = options;
     }
 
     public override PageResult<ValueItem> GetPageFromResult(ClientResult result)
     {
-        throw new NotImplementedException();
+        PipelineResponse response = result.GetRawResponse();
+        ValueItemPage pageModel = ValueItemPage.FromJson(response.Content);
+
+        ValuesPageToken pageToken = ValuesPageToken.FromOptions(_order, _pageSize, _offset);
+        ValuesPageToken? nextPageToken = pageToken.GetNextPageToken(_nextOffset, MockPagingData.Count);
+
+        return PageResult<ValueItem>.Create(pageModel.Values, pageToken, nextPageToken, response);
     }
 
     public override ClientResult GetFirst()
     {
-        throw new NotImplementedException();
+        ClientResult result = GetValuesPage(_order, _pageSize, _offset);
+
+        _nextOffset = GetNextOffset(_offset, _pageSize);
+
+        return result;
     }
 
     public override Task<ClientResult> GetFirstAsync()
@@ -42,7 +70,13 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
 
     public override ClientResult GetNext(ClientResult result)
     {
-        throw new NotImplementedException();
+        _offset = _nextOffset;
+
+        ClientResult pageResult = GetValuesPage(_order, _pageSize, _offset);
+
+        _nextOffset = GetNextOffset(_offset, _pageSize);
+
+        return pageResult;
     }
 
     public override Task<ClientResult> GetNextAsync(ClientResult result)
@@ -52,6 +86,26 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
 
     public override bool HasNext(ClientResult result)
     {
-        throw new NotImplementedException();
+        return _nextOffset < MockPagingData.Count;
+    }
+
+    // In a real client implementation, thes would be the generated protocol
+    // method used to obtain a page of items.
+    internal virtual ClientResult GetValuesPage(
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options = default)
+    {
+        IEnumerable<ValueItem> values = MockPagingData.GetValues(order, pageSize, offset);
+        return MockPagingData.GetPageResult(values);
+    }
+
+    // This helper method is specific to this mock enumerator implementation
+    private static int GetNextOffset(int? offset, int? pageSize)
+    {
+        offset ??= MockPagingData.DefaultOffset;
+        pageSize ??= MockPagingData.DefaultPageSize;
+        return offset.Value + pageSize.Value;
     }
 }

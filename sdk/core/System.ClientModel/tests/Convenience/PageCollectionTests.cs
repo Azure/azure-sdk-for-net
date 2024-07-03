@@ -4,22 +4,16 @@
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using ClientModel.Tests.PagingClient;
 using NUnit.Framework;
 
-namespace System.ClientModel.Tests.Results;
+namespace System.ClientModel.Tests.Paging;
 
-public class PageCollectionTests : SyncAsyncTestBase
+public class PageCollectionTests
 {
-    public PageCollectionTests(bool isAsync) : base(isAsync)
-    {
-    }
-
     [Test]
     public void CanGetAllValues()
     {
