@@ -213,7 +213,8 @@ function Wait-PurgeableResourceJob {
 function Remove-WormStorageAccounts() {
   [CmdletBinding(SupportsShouldProcess = $True)]
   param(
-    [string]$GroupPrefix
+    [string]$GroupPrefix,
+    [switch]$CI
   )
 
   $ErrorActionPreference = 'Stop'
@@ -222,8 +223,8 @@ function Remove-WormStorageAccounts() {
   # DO NOT REMOVE THIS
   # We call this script from live test pipelines as well, and a string mismatch/error could blow away
   # some static storage accounts we rely on
-  if (!$groupPrefix -or !$GroupPrefix.StartsWith('rg-')) {
-    throw "The -GroupPrefix parameter must start with 'rg-'"
+  if (!$groupPrefix -or ($CI -and !$GroupPrefix.StartsWith('rg-'))) {
+    throw "The -GroupPrefix parameter must not be empty, or must start with 'rg-' in CI contexts"
   }
 
   $groups = Get-AzResourceGroup | Where-Object { $_.ResourceGroupName.StartsWith($GroupPrefix) } | Where-Object { $_.ProvisioningState -ne 'Deleting' }
@@ -274,12 +275,14 @@ function Remove-WormStorageAccounts() {
           try {
             Write-Host "Removing immutability policies - account: $($ctx.StorageAccountName), group: $($group.ResourceGroupName)"
             $null = $ctx | Get-AzStorageContainer | Get-AzStorageBlob | Remove-AzStorageBlobImmutabilityPolicy
-          } catch {}
+          }
+          catch {}
 
           try {
             $ctx | Get-AzStorageContainer | Get-AzStorageBlob | Remove-AzStorageBlob -Force
             $succeeded = $true
-          } catch {
+          }
+          catch {
             Write-Warning "Failed to remove blobs - account: $($ctx.StorageAccountName), group: $($group.ResourceGroupName)"
             Write-Warning $_
           }
@@ -314,6 +317,7 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
   $storageAccounts = Retry { Get-AzResource -ResourceGroupName $ResourceGroupName -ResourceType "Microsoft.Storage/storageAccounts" }
   # Add client IP to storage account when running as local user. Pipeline's have their own vnet with access
   if ($storageAccounts) {
+    $appliedRule = $false
     foreach ($account in $storageAccounts) {
       $rules = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -AccountName $account.Name
       if ($rules -and ($Override -or $rules.DefaultAction -eq "Allow")) {
@@ -322,6 +326,7 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
         if ($CI -and $env:PoolSubnet) {
           Write-Host "Enabling access to '$($account.Name)' from pipeline subnet $($env:PoolSubnet)"
           Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -VirtualNetworkResourceId $env:PoolSubnet }
+          $appliedRule = $true
         }
         elseif ($AllowIpRanges) {
           Write-Host "Enabling access to '$($account.Name)' to $($AllowIpRanges.Length) IP ranges"
@@ -329,6 +334,7 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
             @{ Action = 'allow'; IPAddressOrRange = $_ }
           }
           Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -IPRule $ipRanges | Out-Null }
+          $appliedRule = $true
         }
         elseif (!$CI) {
           Write-Host "Enabling access to '$($account.Name)' from client IP"
@@ -343,8 +349,13 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
             }
           }
           Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
+          $appliedRule = $true
         }
       }
+    }
+    if ($appliedRule) {
+      Write-Host "Sleeping for 15 seconds to allow network rules to take effect"
+      Start-Sleep 15
     }
   }
 }

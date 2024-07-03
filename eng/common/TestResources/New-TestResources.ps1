@@ -117,6 +117,7 @@ param (
     $NewTestResourcesRemainingArguments
 )
 
+. (Join-Path $PSScriptRoot .. scripts Helpers Resource-Helpers.ps1)
 . $PSScriptRoot/TestResources-Helpers.ps1
 . $PSScriptRoot/SubConfig-Helpers.ps1
 

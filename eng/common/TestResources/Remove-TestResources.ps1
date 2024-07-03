@@ -257,8 +257,8 @@ $verifyDeleteScript = {
 # Get any resources that can be purged after the resource group is deleted coerced into a collection even if empty.
 $purgeableResources = Get-PurgeableGroupResources $ResourceGroupName
 
-SetStorageNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -Override -CI:$CI
-Remove-WormStorageAccounts -GroupPrefix $ResourceGroupName
+SetResourceNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -Override -CI:$CI
+Remove-WormStorageAccounts -GroupPrefix $ResourceGroupName -CI:$CI
 
 Log "Deleting resource group '$ResourceGroupName'"
 if ($Force -and !$purgeableResources) {
