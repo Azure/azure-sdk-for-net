@@ -65,9 +65,13 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         return result;
     }
 
-    public override Task<ClientResult> GetFirstAsync()
+    public override async Task<ClientResult> GetFirstAsync()
     {
-        throw new NotImplementedException();
+        ClientResult result = await GetValuesPageAsync(_order, _pageSize, _offset).ConfigureAwait(false);
+
+        _nextOffset = GetNextOffset(_offset, _pageSize);
+
+        return result;
     }
 
     public override ClientResult GetNext(ClientResult result)
@@ -81,9 +85,15 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         return pageResult;
     }
 
-    public override Task<ClientResult> GetNextAsync(ClientResult result)
+    public override async Task<ClientResult> GetNextAsync(ClientResult result)
     {
-        throw new NotImplementedException();
+        _offset = _nextOffset;
+
+        ClientResult pageResult = await GetValuesPageAsync(_order, _pageSize, _offset).ConfigureAwait(false);
+
+        _nextOffset = GetNextOffset(_offset, _pageSize);
+
+        return pageResult;
     }
 
     public override bool HasNext(ClientResult result)
@@ -91,8 +101,19 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         return _nextOffset < MockPagingData.Count;
     }
 
-    // In a real client implementation, thes would be the generated protocol
+    // In a real client implementation, these would be the generated protocol
     // method used to obtain a page of items.
+    internal virtual async Task<ClientResult> GetValuesPageAsync(
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options = default)
+    {
+        await Task.Delay(0);
+        IEnumerable<ValueItem> values = MockPagingData.GetValues(order, pageSize, offset);
+        return MockPagingData.GetPageResult(values);
+    }
+
     internal virtual ClientResult GetValuesPage(
         string? order,
         int? pageSize,
