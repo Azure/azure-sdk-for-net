@@ -559,49 +559,5 @@ namespace Azure.Messaging.WebPubSub.Samples
 
             Console.WriteLine(response.Status);
         }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AddConnectionsToGroups_AllParameters()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = client.AddConnectionsToGroups("<filter>", new string[] { "group1", "group2" });
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddConnectionsToGroups_AllParameters_Async()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = await client.AddConnectionsToGroupsAsync("<filter>", new string[] { "group1", "group2" });
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_RemoveConnectionsFromGroups_AllParameters()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = client.RemoveConnectionsFromGroups("<filter>", new string[] { "group1", "group2" });
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_RemoveConnectionsFromGroups_AllParameters_Async()
-        {
-            WebPubSubServiceClient client = new WebPubSubServiceClient("<Endpoint>", "<Hub>");
-
-            Response response = await client.RemoveConnectionsFromGroupsAsync("<filter>", new string[] { "group1", "group2" });
-
-            Console.WriteLine(response.Status);
-        }
     }
 }

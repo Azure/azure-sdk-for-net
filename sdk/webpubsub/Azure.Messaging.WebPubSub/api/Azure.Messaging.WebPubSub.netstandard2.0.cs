@@ -27,10 +27,10 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string Hub { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response AddConnectionsToGroups(System.Collections.Generic.IEnumerable<string> groups, string filter, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddConnectionsToGroupsAsync(System.Collections.Generic.IEnumerable<string> groups, string filter, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AddConnectionToGroup(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddConnectionToGroupAsync(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response AddConnectionsToGroups(string filter, IEnumerable<string> groups, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AddConnectionsToGroupsAsync(string filter, IEnumerable<string> groups, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AddUserToGroup(string group, string userId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddUserToGroupAsync(string group, string userId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<bool> CheckPermission(Azure.Messaging.WebPubSub.WebPubSubPermission permission, string connectionId, string targetName = null, Azure.RequestContext context = null) { throw null; }
@@ -65,8 +65,8 @@ namespace Azure.Messaging.WebPubSub
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromAllGroupsAsync(string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveConnectionFromGroup(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionFromGroupAsync(string group, string connectionId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response RemoveConnectionsFromGroups(string filter, IEnumerable<string> groups, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionsFromGroupsAsync(string filter, IEnumerable<string> groups, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response RemoveConnectionsFromGroups(System.Collections.Generic.IEnumerable<string> groups, string filter = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveConnectionsFromGroupsAsync(System.Collections.Generic.IEnumerable<string> groups, string filter = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveUserFromAllGroups(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveUserFromAllGroupsAsync(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveUserFromGroup(string group, string userId, Azure.RequestContext context = null) { throw null; }
