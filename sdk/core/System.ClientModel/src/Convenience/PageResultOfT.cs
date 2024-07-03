@@ -7,8 +7,14 @@ using System.Collections.Generic;
 
 namespace System.ClientModel;
 
-#pragma warning disable CS1591
-
+/// <summary>
+/// A page of values returned from a cloud service in response to a request for
+/// a collection from a paginated endpoint.  When used with
+/// <see cref="PageCollection{T}"/> or <see cref="AsyncPageCollection{T}"/>,
+/// returns a subset of a complete collection of values returned from a service.
+/// Each <see cref="PageResult{T}"/> represents the values in a single service
+/// response.
+/// </summary>
 public class PageResult<T> : ClientResult
 {
     private PageResult(IReadOnlyList<T> values,
@@ -24,23 +30,38 @@ public class PageResult<T> : ClientResult
         NextPageToken = nextPageToken;
     }
 
-    // The values in the page
+    /// <summary>
+    /// Gets the values in this <see cref="PageResult{T}"/>.
+    /// </summary>
     public IReadOnlyList<T> Values { get; }
 
-    // The token used to retrieve this page -- can uniquely request
-    // the page AND uniquely rehydrate a page collection that this is
-    // a page in (first, page 5, whatever).
-    // i.e. it completely describes a collection where this is a page
-    // in it.
-    // This is useful because I can cache this and retrive both the
-    // full collection this page is in and/or the current page.
+    /// <summary>
+    /// Gets a token that can be used to request or rehydrate a collection
+    /// beginning with this page of values.
+    /// </summary>
     public ContinuationToken PageToken { get; }
 
-    // If this is null, the current page is the last page in a collection.
+    /// <summary>
+    /// Gets a token that can be used to request or rehydrate a collection
+    /// beginning with the next page of values after this page. If
+    /// <see cref="NextPageToken"/> is null, the current page is the last page
+    /// of values in the collection.
+    /// </summary>
     public ContinuationToken? NextPageToken { get; }
 
+    /// <summary>
+    /// Create a <see cref="PageResult{T}"/> from the provided parameters.
+    /// </summary>
+    /// <param name="values">The values in the <see cref="PageResult{T}"/>.
+    /// </param>
+    /// <param name="pageToken">A token that can be used to request a collection
+    /// beginning with this page of values.</param>
+    /// <param name="nextPageToken">A token that can be used to request a
+    /// collection beginning with the next page of values.</param>
+    /// <param name="response">The response that returned the values in the
+    /// page.</param>
+    /// <returns>A <see cref="PageResult{T}"/> holding the provided values.
+    /// </returns>
     public static PageResult<T> Create(IReadOnlyList<T> values, ContinuationToken pageToken, ContinuationToken? nextPageToken, PipelineResponse response)
         => new(values, pageToken, nextPageToken, response);
 }
-
-#pragma warning restore CS1591
