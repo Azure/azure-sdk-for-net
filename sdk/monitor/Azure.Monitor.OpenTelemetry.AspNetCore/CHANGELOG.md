@@ -8,6 +8,15 @@
 
 ### Bugs Fixed
 
+* Fixed an issue where a `DuplicateKeyException` could be thrown if `EventId`
+  and `EventName` were present in both `LogRecord` (`LogRecord.EventId`,
+  `LogRecord.EventName`) and `LogRecord.Attributes`. The method now uses
+  `EventId` and `EventName` from `LogRecord.Attributes` when both are present.
+  If they are not in `LogRecord.Attributes`, it uses the values from
+  `LogRecord.EventId` or `LogRecord.EventName`, preventing the `LogRecord` from
+  being dropped.
+  ([#44748](https://github.com/Azure/azure-sdk-for-net/pull/44748))
+
 ### Other Changes
 
 * Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`.
@@ -15,15 +24,24 @@
   (This feature was originally introduced in 1.2.0-beta.2)
   ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
 
-* Added an experimental feature for logs emitted within an active tracing context to follow the Activity's sampling decision.
-  The feature can be enabled by setting `OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING` environment variable to `true`.
-  (This feature was originally introduced in 1.2.0-beta.1)
-  ([#44511](https://github.com/Azure/azure-sdk-for-net/pull/44511))
-
 * Update OpenTelemetry dependencies.
-  ([#44522](https://github.com/Azure/azure-sdk-for-net/pull/44522))
-  - OpenTelemetry 1.9.0-rc.1
-  - OpenTelemetry.Extensions.Hosting 1.9.0-rc.1
+  ([#44650](https://github.com/Azure/azure-sdk-for-net/pull/44650))
+  - OpenTelemetry 1.9.0
+  - OpenTelemetry.Extensions.Hosting 1.9.0
+  - OpenTelemetry.Instrumentation.AspNetCore 1.9.0
+  - OpenTelemetry.Instrumentation.Http 1.9.0
+
+* Updated the code of vendored instrumentation library `OpenTelemetry.Instrumentation.SqlClient` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.9.0-beta.1](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/Instrumentation.SqlClient-1.9.0-beta.1/src/OpenTelemetry.Instrumentation.SqlClient).
+  ([#44682](https://github.com/Azure/azure-sdk-for-net/pull/44682))
+
+* Updated the code of vendored resource detector library `OpenTelemetry.Resources.Azure` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.0.0-beta.8](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/Resources.Azure-1.0.0-beta.8/src/OpenTelemetry.Resources.Azure).
+  ([#44682](https://github.com/Azure/azure-sdk-for-net/pull/44682))
+
+* Removed an experimental feature for logs emitted within an active tracing context to follow the Activity's sampling decision.
+  (This feature was originally introduced in 1.2.0-beta.1)
+  ([#44745](https://github.com/Azure/azure-sdk-for-net/pull/44745))
 
 ## 1.2.0 (2024-06-11)
 

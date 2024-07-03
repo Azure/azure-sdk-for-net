@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Autonomous database lifecycle state enum
-    /// Serialized Name: AutonomousDatabaseLifecycleState
-    /// </summary>
+    /// <summary> Autonomous database lifecycle state enum. </summary>
     public readonly partial struct AutonomousDatabaseLifecycleState : IEquatable<AutonomousDatabaseLifecycleState>
     {
         private readonly string _value;
@@ -47,110 +44,47 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string InaccessibleValue = "Inaccessible";
         private const string StandbyValue = "Standby";
 
-        /// <summary>
-        /// Indicates that resource in Provisioning state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Provisioning
-        /// </summary>
+        /// <summary> Indicates that resource in Provisioning state. </summary>
         public static AutonomousDatabaseLifecycleState Provisioning { get; } = new AutonomousDatabaseLifecycleState(ProvisioningValue);
-        /// <summary>
-        /// Indicates that resource in Available state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Available
-        /// </summary>
+        /// <summary> Indicates that resource in Available state. </summary>
         public static AutonomousDatabaseLifecycleState Available { get; } = new AutonomousDatabaseLifecycleState(AvailableValue);
-        /// <summary>
-        /// Indicates that resource in Stopping state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Stopping
-        /// </summary>
+        /// <summary> Indicates that resource in Stopping state. </summary>
         public static AutonomousDatabaseLifecycleState Stopping { get; } = new AutonomousDatabaseLifecycleState(StoppingValue);
-        /// <summary>
-        /// Indicates that resource in Stopped state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Stopped
-        /// </summary>
+        /// <summary> Indicates that resource in Stopped state. </summary>
         public static AutonomousDatabaseLifecycleState Stopped { get; } = new AutonomousDatabaseLifecycleState(StoppedValue);
-        /// <summary>
-        /// Indicates that resource in Starting state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Starting
-        /// </summary>
+        /// <summary> Indicates that resource in Starting state. </summary>
         public static AutonomousDatabaseLifecycleState Starting { get; } = new AutonomousDatabaseLifecycleState(StartingValue);
-        /// <summary>
-        /// Indicates that resource in Terminating state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Terminating
-        /// </summary>
+        /// <summary> Indicates that resource in Terminating state. </summary>
         public static AutonomousDatabaseLifecycleState Terminating { get; } = new AutonomousDatabaseLifecycleState(TerminatingValue);
-        /// <summary>
-        /// Indicates that resource in Terminated state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Terminated
-        /// </summary>
+        /// <summary> Indicates that resource in Terminated state. </summary>
         public static AutonomousDatabaseLifecycleState Terminated { get; } = new AutonomousDatabaseLifecycleState(TerminatedValue);
-        /// <summary>
-        /// Indicates that resource in Unavailable state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Unavailable
-        /// </summary>
+        /// <summary> Indicates that resource in Unavailable state. </summary>
         public static AutonomousDatabaseLifecycleState Unavailable { get; } = new AutonomousDatabaseLifecycleState(UnavailableValue);
-        /// <summary>
-        /// Indicates that resource in RestoreInProgress state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.RestoreInProgress
-        /// </summary>
+        /// <summary> Indicates that resource in RestoreInProgress state. </summary>
         public static AutonomousDatabaseLifecycleState RestoreInProgress { get; } = new AutonomousDatabaseLifecycleState(RestoreInProgressValue);
-        /// <summary>
-        /// Indicates that resource in RestoreFailed state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.RestoreFailed
-        /// </summary>
+        /// <summary> Indicates that resource in RestoreFailed state. </summary>
         public static AutonomousDatabaseLifecycleState RestoreFailed { get; } = new AutonomousDatabaseLifecycleState(RestoreFailedValue);
-        /// <summary>
-        /// Indicates that resource in BackupInProgress state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.BackupInProgress
-        /// </summary>
+        /// <summary> Indicates that resource in BackupInProgress state. </summary>
         public static AutonomousDatabaseLifecycleState BackupInProgress { get; } = new AutonomousDatabaseLifecycleState(BackupInProgressValue);
-        /// <summary>
-        /// Indicates that resource in ScaleInProgress state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.ScaleInProgress
-        /// </summary>
+        /// <summary> Indicates that resource in ScaleInProgress state. </summary>
         public static AutonomousDatabaseLifecycleState ScaleInProgress { get; } = new AutonomousDatabaseLifecycleState(ScaleInProgressValue);
-        /// <summary>
-        /// Indicates that resource is available but needs attention
-        /// Serialized Name: AutonomousDatabaseLifecycleState.AvailableNeedsAttention
-        /// </summary>
+        /// <summary> Indicates that resource is available but needs attention. </summary>
         public static AutonomousDatabaseLifecycleState AvailableNeedsAttention { get; } = new AutonomousDatabaseLifecycleState(AvailableNeedsAttentionValue);
-        /// <summary>
-        /// Indicates that resource in Updating state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Updating
-        /// </summary>
+        /// <summary> Indicates that resource in Updating state. </summary>
         public static AutonomousDatabaseLifecycleState Updating { get; } = new AutonomousDatabaseLifecycleState(UpdatingValue);
-        /// <summary>
-        /// Indicates that resource maintenance in progress state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.MaintenanceInProgress
-        /// </summary>
+        /// <summary> Indicates that resource maintenance in progress state. </summary>
         public static AutonomousDatabaseLifecycleState MaintenanceInProgress { get; } = new AutonomousDatabaseLifecycleState(MaintenanceInProgressValue);
-        /// <summary>
-        /// Indicates that resource in Restarting state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Restarting
-        /// </summary>
+        /// <summary> Indicates that resource in Restarting state. </summary>
         public static AutonomousDatabaseLifecycleState Restarting { get; } = new AutonomousDatabaseLifecycleState(RestartingValue);
-        /// <summary>
-        /// Indicates that resource in Recreating state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Recreating
-        /// </summary>
+        /// <summary> Indicates that resource in Recreating state. </summary>
         public static AutonomousDatabaseLifecycleState Recreating { get; } = new AutonomousDatabaseLifecycleState(RecreatingValue);
-        /// <summary>
-        /// Indicates that resource role change in progress state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.RoleChangeInProgress
-        /// </summary>
+        /// <summary> Indicates that resource role change in progress state. </summary>
         public static AutonomousDatabaseLifecycleState RoleChangeInProgress { get; } = new AutonomousDatabaseLifecycleState(RoleChangeInProgressValue);
-        /// <summary>
-        /// Indicates that resource in Upgrading state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Upgrading
-        /// </summary>
+        /// <summary> Indicates that resource in Upgrading state. </summary>
         public static AutonomousDatabaseLifecycleState Upgrading { get; } = new AutonomousDatabaseLifecycleState(UpgradingValue);
-        /// <summary>
-        /// IIndicates that resource in Inaccessible state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Inaccessible
-        /// </summary>
+        /// <summary> IIndicates that resource in Inaccessible state. </summary>
         public static AutonomousDatabaseLifecycleState Inaccessible { get; } = new AutonomousDatabaseLifecycleState(InaccessibleValue);
-        /// <summary>
-        /// Indicates that resource in Standby state
-        /// Serialized Name: AutonomousDatabaseLifecycleState.Standby
-        /// </summary>
+        /// <summary> Indicates that resource in Standby state. </summary>
         public static AutonomousDatabaseLifecycleState Standby { get; } = new AutonomousDatabaseLifecycleState(StandbyValue);
         /// <summary> Determines if two <see cref="AutonomousDatabaseLifecycleState"/> values are the same. </summary>
         public static bool operator ==(AutonomousDatabaseLifecycleState left, AutonomousDatabaseLifecycleState right) => left.Equals(right);
@@ -167,7 +101,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }
