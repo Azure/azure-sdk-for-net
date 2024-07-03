@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> The details of a account resource. </summary>
-    public partial class NewRelicAccountResourceData : ResourceData
+    /// <summary> The list of subscriptions and it's monitoring status by current NewRelic monitor. </summary>
+    public partial class MonitoredSubscription
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,37 +45,33 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        public NewRelicAccountResourceData()
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscription"/>. </summary>
+        public MonitoredSubscription()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="organizationId"> organization id. </param>
-        /// <param name="accountId"> account id. </param>
-        /// <param name="accountName"> account name. </param>
-        /// <param name="region"> Region where New Relic account is present. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscription"/>. </summary>
+        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
+        /// <param name="status"> The state of monitoring. </param>
+        /// <param name="error"> The reason of not monitoring the subscription. </param>
+        /// <param name="tagRules"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MonitoredSubscription(string subscriptionId, Status? status, string error, MonitoringTagRulesProperties tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OrganizationId = organizationId;
-            AccountId = accountId;
-            AccountName = accountName;
-            Region = region;
+            SubscriptionId = subscriptionId;
+            Status = status;
+            Error = error;
+            TagRules = tagRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> organization id. </summary>
-        public string OrganizationId { get; set; }
-        /// <summary> account id. </summary>
-        public string AccountId { get; set; }
-        /// <summary> account name. </summary>
-        public string AccountName { get; set; }
-        /// <summary> Region where New Relic account is present. </summary>
-        public AzureLocation? Region { get; set; }
+        /// <summary> The subscriptionId to be monitored. </summary>
+        public string SubscriptionId { get; set; }
+        /// <summary> The state of monitoring. </summary>
+        public Status? Status { get; set; }
+        /// <summary> The reason of not monitoring the subscription. </summary>
+        public string Error { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public MonitoringTagRulesProperties TagRules { get; set; }
     }
 }

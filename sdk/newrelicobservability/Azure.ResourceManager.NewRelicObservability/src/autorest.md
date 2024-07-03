@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: Newrelic
 namespace: Azure.ResourceManager.NewRelicObservability
-require: https://github.com/Azure/azure-rest-api-specs/blob/fd0b301360d7f83dee9dec5afe3fff77b90b79f6/specification/newrelic/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/newrelic/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -100,6 +100,7 @@ rename-mapping:
   AppServicesGetRequest.azureResourceIds: -|arm-id
   AppServiceInfo.azureResourceId: -|arm-id
   AppServicesListResponse: NewRelicAppServicesListResult
+  BillingInfoResponse: BillingInfoResult
   AzureStorageBlobContainerEndpointProperties: StorageBlobContainerEndpointProperties
   AzureStorageBlobContainerNewrelicEndpointProperties.StorageAccountResourceId: -|arm-id
   HostsGetRequest: NewRelicHostsGetContent

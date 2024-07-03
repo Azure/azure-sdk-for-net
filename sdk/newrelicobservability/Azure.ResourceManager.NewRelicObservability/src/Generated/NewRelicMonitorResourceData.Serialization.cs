@@ -123,6 +123,16 @@ namespace Azure.ResourceManager.NewRelicObservability
                 writer.WritePropertyName("accountCreationSource"u8);
                 writer.WriteStringValue(AccountCreationSource.Value.ToString());
             }
+            if (Optional.IsDefined(SubscriptionState))
+            {
+                writer.WritePropertyName("subscriptionState"u8);
+                writer.WriteStringValue(SubscriptionState);
+            }
+            if (Optional.IsDefined(SaaSAzureSubscriptionStatus))
+            {
+                writer.WritePropertyName("saaSAzureSubscriptionStatus"u8);
+                writer.WriteStringValue(SaaSAzureSubscriptionStatus);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -180,6 +190,8 @@ namespace Azure.ResourceManager.NewRelicObservability
             int? liftrResourcePreference = default;
             NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
             NewRelicObservabilityAccountCreationSource? accountCreationSource = default;
+            string subscriptionState = default;
+            string saaSAzureSubscriptionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -340,6 +352,16 @@ namespace Azure.ResourceManager.NewRelicObservability
                             accountCreationSource = new NewRelicObservabilityAccountCreationSource(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("subscriptionState"u8))
+                        {
+                            subscriptionState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("saaSAzureSubscriptionStatus"u8))
+                        {
+                            saaSAzureSubscriptionStatus = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -368,6 +390,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                 liftrResourcePreference,
                 orgCreationSource,
                 accountCreationSource,
+                subscriptionState,
+                saaSAzureSubscriptionStatus,
                 serializedAdditionalRawData);
         }
 

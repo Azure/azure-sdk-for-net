@@ -9,11 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability.Models;
 
-namespace Azure.ResourceManager.NewRelicObservability.Models
+namespace Azure.ResourceManager.NewRelicObservability
 {
-    /// <summary> The details of a account resource. </summary>
-    public partial class NewRelicAccountResourceData : ResourceData
+    /// <summary>
+    /// A class representing the MonitoredSubscriptionProperty data model.
+    /// The request to update subscriptions needed to be monitored by the NewRelic monitor resource.
+    /// </summary>
+    public partial class MonitoredSubscriptionPropertyData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,37 +51,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        public NewRelicAccountResourceData()
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertyData"/>. </summary>
+        public MonitoredSubscriptionPropertyData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="organizationId"> organization id. </param>
-        /// <param name="accountId"> account id. </param>
-        /// <param name="accountName"> account name. </param>
-        /// <param name="region"> Region where New Relic account is present. </param>
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MonitoredSubscriptionPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubscriptionList properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            OrganizationId = organizationId;
-            AccountId = accountId;
-            AccountName = accountName;
-            Region = region;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> organization id. </summary>
-        public string OrganizationId { get; set; }
-        /// <summary> account id. </summary>
-        public string AccountId { get; set; }
-        /// <summary> account name. </summary>
-        public string AccountName { get; set; }
-        /// <summary> Region where New Relic account is present. </summary>
-        public AzureLocation? Region { get; set; }
+        /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
+        public SubscriptionList Properties { get; set; }
     }
 }

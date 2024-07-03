@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> The details of a account resource. </summary>
-    public partial class NewRelicAccountResourceData : ResourceData
+    /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
+    public partial class SubscriptionList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,37 +45,30 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        public NewRelicAccountResourceData()
+        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
+        public SubscriptionList()
         {
+            MonitoredSubscriptionList = new ChangeTrackingList<MonitoredSubscription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="organizationId"> organization id. </param>
-        /// <param name="accountId"> account id. </param>
-        /// <param name="accountName"> account name. </param>
-        /// <param name="region"> Region where New Relic account is present. </param>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
+        /// <param name="patchOperation"> The operation for the patch on the resource. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SubscriptionList(PatchOperation? patchOperation, IList<MonitoredSubscription> monitoredSubscriptionList, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OrganizationId = organizationId;
-            AccountId = accountId;
-            AccountName = accountName;
-            Region = region;
+            PatchOperation = patchOperation;
+            MonitoredSubscriptionList = monitoredSubscriptionList;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> organization id. </summary>
-        public string OrganizationId { get; set; }
-        /// <summary> account id. </summary>
-        public string AccountId { get; set; }
-        /// <summary> account name. </summary>
-        public string AccountName { get; set; }
-        /// <summary> Region where New Relic account is present. </summary>
-        public AzureLocation? Region { get; set; }
+        /// <summary> The operation for the patch on the resource. </summary>
+        public PatchOperation? PatchOperation { get; set; }
+        /// <summary> List of subscriptions and the state of the monitoring. </summary>
+        public IList<MonitoredSubscription> MonitoredSubscriptionList { get; }
+        /// <summary> Provisioning State of the resource. </summary>
+        public NewRelicProvisioningState? ProvisioningState { get; }
     }
 }

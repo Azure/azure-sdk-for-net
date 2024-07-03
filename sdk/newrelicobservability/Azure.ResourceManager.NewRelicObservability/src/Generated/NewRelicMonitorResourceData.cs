@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
         /// <param name="orgCreationSource"> Source of org creation. </param>
         /// <param name="accountCreationSource"> Source of account creation. </param>
+        /// <param name="subscriptionState"> State of the Azure Subscription containing the monitor resource. </param>
+        /// <param name="saaSAzureSubscriptionStatus"> Status of Azure Subscription where Marketplace SaaS is located. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewRelicProvisioningState? provisioningState, NewRelicObservabilityMonitoringStatus? monitoringStatus, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewRelicProvisioningState? provisioningState, NewRelicObservabilityMonitoringStatus? monitoringStatus, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, string subscriptionState, string saaSAzureSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -91,6 +93,8 @@ namespace Azure.ResourceManager.NewRelicObservability
             LiftrResourcePreference = liftrResourcePreference;
             OrgCreationSource = orgCreationSource;
             AccountCreationSource = accountCreationSource;
+            SubscriptionState = subscriptionState;
+            SaaSAzureSubscriptionStatus = saaSAzureSubscriptionStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -123,5 +127,9 @@ namespace Azure.ResourceManager.NewRelicObservability
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
         /// <summary> Source of account creation. </summary>
         public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
+        /// <summary> State of the Azure Subscription containing the monitor resource. </summary>
+        public string SubscriptionState { get; set; }
+        /// <summary> Status of Azure Subscription where Marketplace SaaS is located. </summary>
+        public string SaaSAzureSubscriptionStatus { get; set; }
     }
 }

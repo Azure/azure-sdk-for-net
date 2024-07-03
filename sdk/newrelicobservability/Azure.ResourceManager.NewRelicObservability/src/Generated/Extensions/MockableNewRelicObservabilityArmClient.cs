@@ -57,5 +57,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
             NewRelicObservabilityTagRuleResource.ValidateResourceId(id);
             return new NewRelicObservabilityTagRuleResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitoredSubscriptionPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitoredSubscriptionPropertyResource.CreateResourceIdentifier" /> to create a <see cref="MonitoredSubscriptionPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitoredSubscriptionPropertyResource"/> object. </returns>
+        public virtual MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionPropertyResource(ResourceIdentifier id)
+        {
+            MonitoredSubscriptionPropertyResource.ValidateResourceId(id);
+            return new MonitoredSubscriptionPropertyResource(Client, id);
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(BillingCycle))
             {
                 writer.WritePropertyName("billingCycle"u8);
-                writer.WriteStringValue(BillingCycle.Value.ToString());
+                writer.WriteStringValue(BillingCycle);
             }
             if (Optional.IsDefined(PlanDetails))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             NewRelicObservabilityUsageType? usageType = default;
-            NewRelicObservabilityBillingCycle? billingCycle = default;
+            string billingCycle = default;
             string planDetails = default;
             DateTimeOffset? effectiveDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -103,11 +103,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 if (property.NameEquals("billingCycle"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    billingCycle = new NewRelicObservabilityBillingCycle(property.Value.GetString());
+                    billingCycle = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("planDetails"u8))

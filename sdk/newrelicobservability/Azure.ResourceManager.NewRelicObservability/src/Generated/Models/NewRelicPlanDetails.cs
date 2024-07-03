@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Initializes a new instance of <see cref="NewRelicPlanDetails"/>. </summary>
         /// <param name="usageType"> Different usage type like PAYG/COMMITTED. this could be enum. </param>
-        /// <param name="billingCycle"> Different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
+        /// <param name="billingCycle"> Different billing cycles like Monthly/Weekly. </param>
         /// <param name="planDetails"> plan id as published by NewRelic. </param>
         /// <param name="effectiveOn"> date when plan was applied. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicPlanDetails(NewRelicObservabilityUsageType? usageType, NewRelicObservabilityBillingCycle? billingCycle, string planDetails, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NewRelicPlanDetails(NewRelicObservabilityUsageType? usageType, string billingCycle, string planDetails, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UsageType = usageType;
             BillingCycle = billingCycle;
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Different usage type like PAYG/COMMITTED. this could be enum. </summary>
         public NewRelicObservabilityUsageType? UsageType { get; set; }
-        /// <summary> Different billing cycles like MONTHLY/WEEKLY. this could be enum. </summary>
-        public NewRelicObservabilityBillingCycle? BillingCycle { get; set; }
+        /// <summary> Different billing cycles like Monthly/Weekly. </summary>
+        public string BillingCycle { get; set; }
         /// <summary> plan id as published by NewRelic. </summary>
         public string PlanDetails { get; set; }
         /// <summary> date when plan was applied. </summary>

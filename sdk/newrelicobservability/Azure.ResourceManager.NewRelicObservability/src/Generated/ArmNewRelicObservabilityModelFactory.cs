@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="organizationId"> organization id. </param>
         /// <param name="accountId"> account id. </param>
         /// <param name="accountName"> account name. </param>
-        /// <param name="region"> region. </param>
+        /// <param name="region"> Region where New Relic account is present. </param>
         /// <returns> A new <see cref="Models.NewRelicAccountResourceData"/> instance for mocking. </returns>
         public static NewRelicAccountResourceData NewRelicAccountResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, AzureLocation? region = null)
         {
@@ -59,8 +60,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
         /// <param name="orgCreationSource"> Source of org creation. </param>
         /// <param name="accountCreationSource"> Source of account creation. </param>
+        /// <param name="subscriptionState"> State of the Azure Subscription containing the monitor resource. </param>
+        /// <param name="saaSAzureSubscriptionStatus"> Status of Azure Subscription where Marketplace SaaS is located. </param>
         /// <returns> A new <see cref="NewRelicObservability.NewRelicMonitorResourceData"/> instance for mocking. </returns>
-        public static NewRelicMonitorResourceData NewRelicMonitorResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, NewRelicProvisioningState? provisioningState = null, NewRelicObservabilityMonitoringStatus? monitoringStatus = null, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string marketplaceSubscriptionId = null, NewRelicAccountProperties newRelicAccountProperties = null, NewRelicObservabilityUserInfo userInfo = null, NewRelicPlanDetails planData = null, NewRelicLiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, NewRelicObservabilityOrgCreationSource? orgCreationSource = null, NewRelicObservabilityAccountCreationSource? accountCreationSource = null)
+        public static NewRelicMonitorResourceData NewRelicMonitorResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, NewRelicProvisioningState? provisioningState = null, NewRelicObservabilityMonitoringStatus? monitoringStatus = null, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string marketplaceSubscriptionId = null, NewRelicAccountProperties newRelicAccountProperties = null, NewRelicObservabilityUserInfo userInfo = null, NewRelicPlanDetails planData = null, NewRelicLiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null, NewRelicObservabilityOrgCreationSource? orgCreationSource = null, NewRelicObservabilityAccountCreationSource? accountCreationSource = null, string subscriptionState = null, string saaSAzureSubscriptionStatus = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -83,6 +86,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 liftrResourcePreference,
                 orgCreationSource,
                 accountCreationSource,
+                subscriptionState,
+                saaSAzureSubscriptionStatus,
                 serializedAdditionalRawData: null);
         }
 
@@ -222,6 +227,61 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BillingInfoResult"/>. </summary>
+        /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
+        /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
+        /// <returns> A new <see cref="Models.BillingInfoResult"/> instance for mocking. </returns>
+        public static BillingInfoResult BillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo = null, PartnerBillingEntity partnerBillingEntity = null)
+        {
+            return new BillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
+        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
+        /// <param name="marketplaceSubscriptionName"> Marketplace Subscription Details: SAAS Name. </param>
+        /// <param name="marketplaceResourceId"> Marketplace Subscription Details: Resource URI. </param>
+        /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
+        /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
+        /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = null, string marketplaceSubscriptionName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null)
+        {
+            return new MarketplaceSaaSInfo(
+                marketplaceSubscriptionId,
+                marketplaceSubscriptionName,
+                marketplaceResourceId,
+                marketplaceStatus,
+                billedAzureSubscriptionId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PartnerBillingEntity"/>. </summary>
+        /// <param name="organizationId"> The New Relic Organization Id. </param>
+        /// <param name="organizationName"> The New Relic Organization Name. </param>
+        /// <returns> A new <see cref="Models.PartnerBillingEntity"/> instance for mocking. </returns>
+        public static PartnerBillingEntity PartnerBillingEntity(string organizationId = null, string organizationName = null)
+        {
+            return new PartnerBillingEntity(organizationId, organizationName, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedPartnerResourcesListFormat"/>. </summary>
+        /// <param name="properties"> Connected Partner Resource Properties. </param>
+        /// <returns> A new <see cref="Models.ConnectedPartnerResourcesListFormat"/> instance for mocking. </returns>
+        public static ConnectedPartnerResourcesListFormat ConnectedPartnerResourcesListFormat(ConnectedPartnerResourceProperties properties = null)
+        {
+            return new ConnectedPartnerResourcesListFormat(properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedPartnerResourceProperties"/>. </summary>
+        /// <param name="accountName"> NewRelic account name. </param>
+        /// <param name="accountId"> NewRelic Account Id. </param>
+        /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
+        /// <param name="location"> The location of the deployment. </param>
+        /// <returns> A new <see cref="Models.ConnectedPartnerResourceProperties"/> instance for mocking. </returns>
+        public static ConnectedPartnerResourceProperties ConnectedPartnerResourceProperties(string accountName = null, string accountId = null, string azureResourceId = null, AzureLocation? location = null)
+        {
+            return new ConnectedPartnerResourceProperties(accountName, accountId, azureResourceId, location, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="NewRelicObservability.NewRelicObservabilityTagRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -244,12 +304,78 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MonitoringTagRulesProperties"/>. </summary>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <returns> A new <see cref="Models.MonitoringTagRulesProperties"/> instance for mocking. </returns>
+        public static MonitoringTagRulesProperties MonitoringTagRulesProperties(NewRelicProvisioningState? provisioningState = null, NewRelicObservabilityLogRules logRules = null, NewRelicObservabilityMetricRules metricRules = null)
+        {
+            return new MonitoringTagRulesProperties(provisioningState, logRules, metricRules, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservability.MonitoredSubscriptionPropertyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </param>
+        /// <returns> A new <see cref="NewRelicObservability.MonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
+        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionList properties = null)
+        {
+            return new MonitoredSubscriptionPropertyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionList"/>. </summary>
+        /// <param name="patchOperation"> The operation for the patch on the resource. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <returns> A new <see cref="Models.SubscriptionList"/> instance for mocking. </returns>
+        public static SubscriptionList SubscriptionList(PatchOperation? patchOperation = null, IEnumerable<MonitoredSubscription> monitoredSubscriptionList = null, NewRelicProvisioningState? provisioningState = null)
+        {
+            monitoredSubscriptionList ??= new List<MonitoredSubscription>();
+
+            return new SubscriptionList(patchOperation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.NewRelicObservabilityVmExtensionPayload"/>. </summary>
         /// <param name="ingestionKey"> Ingestion key of the account. </param>
         /// <returns> A new <see cref="Models.NewRelicObservabilityVmExtensionPayload"/> instance for mocking. </returns>
         public static NewRelicObservabilityVmExtensionPayload NewRelicObservabilityVmExtensionPayload(string ingestionKey = null)
         {
             return new NewRelicObservabilityVmExtensionPayload(ingestionKey, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <param name="monitoringStatus"> MonitoringStatus of the resource. </param>
+        /// <param name="marketplaceSubscriptionStatus"> NewRelic Organization properties of the resource. </param>
+        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
+        /// <param name="newRelicAccountProperties"> MarketplaceSubscriptionStatus of the resource. </param>
+        /// <param name="userInfo"> User Info. </param>
+        /// <param name="planData"> Plan details. </param>
+        /// <param name="liftrResourceCategory"> Liftr resource category. </param>
+        /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
+        /// <param name="orgCreationSource"> Source of org creation. </param>
+        /// <param name="accountCreationSource"> Source of account creation. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NewRelicMonitorResourceData NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewRelicProvisioningState? provisioningState, NewRelicObservabilityMonitoringStatus? monitoringStatus, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource)
+        {
+            return NewRelicMonitorResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, provisioningState: provisioningState, monitoringStatus: monitoringStatus, marketplaceSubscriptionStatus: marketplaceSubscriptionStatus, marketplaceSubscriptionId: marketplaceSubscriptionId, newRelicAccountProperties: newRelicAccountProperties, userInfo: userInfo, planData: planData, liftrResourceCategory: liftrResourceCategory, liftrResourcePreference: liftrResourcePreference, orgCreationSource: orgCreationSource, accountCreationSource: accountCreationSource, subscriptionState: default, saaSAzureSubscriptionStatus: default);
         }
     }
 }

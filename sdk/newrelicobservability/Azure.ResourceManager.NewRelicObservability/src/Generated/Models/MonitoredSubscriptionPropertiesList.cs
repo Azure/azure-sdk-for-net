@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> The details of a account resource. </summary>
-    public partial class NewRelicAccountResourceData : ResourceData
+    /// <summary> The MonitoredSubscriptionPropertiesList. </summary>
+    internal partial class MonitoredSubscriptionPropertiesList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,37 +45,26 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        public NewRelicAccountResourceData()
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
+        internal MonitoredSubscriptionPropertiesList()
         {
+            Value = new ChangeTrackingList<MonitoredSubscriptionPropertyData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="organizationId"> organization id. </param>
-        /// <param name="accountId"> account id. </param>
-        /// <param name="accountName"> account name. </param>
-        /// <param name="region"> Region where New Relic account is present. </param>
+        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MonitoredSubscriptionPropertiesList(IReadOnlyList<MonitoredSubscriptionPropertyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OrganizationId = organizationId;
-            AccountId = accountId;
-            AccountName = accountName;
-            Region = region;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> organization id. </summary>
-        public string OrganizationId { get; set; }
-        /// <summary> account id. </summary>
-        public string AccountId { get; set; }
-        /// <summary> account name. </summary>
-        public string AccountName { get; set; }
-        /// <summary> Region where New Relic account is present. </summary>
-        public AzureLocation? Region { get; set; }
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<MonitoredSubscriptionPropertyData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public string NextLink { get; }
     }
 }
