@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
+
 namespace System.ClientModel;
 
 #pragma warning disable CS1591
@@ -13,6 +15,8 @@ public class ContinuationToken
 
     protected ContinuationToken(BinaryData bytes)
     {
+        Argument.AssertNotNull(bytes, nameof(bytes));
+
         _bytes = bytes;
     }
 

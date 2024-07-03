@@ -97,49 +97,4 @@ public static class MockSyncAsyncExtensions
             return response.BufferContent(cancellationToken);
         }
     }
-
-    public static IAsyncEnumerable<ValueItem> GetAllValuesSyncOrAsync(this PagingClient client,
-        bool isAsync,
-        string? order = default,
-        int? pageSize = default,
-        int? offset = default)
-    {
-        if (isAsync)
-        {
-            AsyncPageCollection<ValueItem> pages = client.GetValuesAsync(order, pageSize, offset);
-            return pages.GetAllValuesAsync();
-        }
-        else
-        {
-            PageCollection<ValueItem> pages = client.GetValues(order, pageSize, offset);
-            return pages.GetAllValues().ToAsyncEnumerable();
-        }
-    }
-
-    public static async Task<PageResult<ValueItem>> GetCurrentPageSyncOrAsync(this PagingClient client,
-        bool isAsync,
-        string? order = default,
-        int? pageSize = default,
-        int? offset = default)
-    {
-        if (isAsync)
-        {
-            AsyncPageCollection<ValueItem> pages = client.GetValuesAsync(order, pageSize, offset);
-            return await pages.GetCurrentPageAsync().ConfigureAwait(false);
-        }
-        else
-        {
-            PageCollection<ValueItem> pages = client.GetValues(order, pageSize, offset);
-            return pages.GetCurrentPage();
-        }
-    }
-
-    public static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(this IEnumerable<T> enumerable)
-    {
-        foreach (T item in enumerable)
-        {
-            await Task.Delay(0);
-            yield return item;
-        }
-    }
 }

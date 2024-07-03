@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
@@ -15,6 +16,9 @@ public class PageResult<T> : ClientResult
         ContinuationToken? nextPageToken,
         PipelineResponse response) : base(response)
     {
+        Argument.AssertNotNull(values, nameof(values));
+        Argument.AssertNotNull(pageToken, nameof(pageToken));
+
         Values = values;
         PageToken = pageToken;
         NextPageToken = nextPageToken;

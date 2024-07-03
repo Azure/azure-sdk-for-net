@@ -5,72 +5,84 @@ using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using ClientModel.Tests.Paging;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Paging;
 
-// Unit tests for sync and async page collections
-public class PageCollectionTests
+// Scenario tests for sync and async page collections
+public class PageScenarioCollectionTests
 {
-    private const int Count = 16;
-    private const int DefaultPageSize = 8;
-    private static readonly List<int> MockValues = GetMockValues(Count).ToList();
-
-    private static IEnumerable<int> GetMockValues(int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            yield return i;
-        }
-    }
+    // TODO: Async
+    // TODO: A few more tests - from commented-out tests
 
     [Test]
     public void CanGetAllValues()
     {
-        PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
-        IEnumerable<int> values = pages.GetAllValues();
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues();
+        IEnumerable<ValueItem> values = pages.GetAllValues();
 
         int count = 0;
-        foreach (int value in values)
+        foreach (ValueItem value in values)
         {
-            Assert.AreEqual(count, value);
+            Assert.AreEqual(count, value.Id);
             count++;
         }
 
-        Assert.AreEqual(Count, count);
+        Assert.AreEqual(MockPagingData.Count, count);
     }
 
     [Test]
     public void CanGetCurrentPage()
     {
-        PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
-        PageResult<int> page = pages.GetCurrentPage();
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues();
+        PageResult<ValueItem> page = pages.GetCurrentPage();
 
         Assert.AreEqual(MockPagingData.DefaultPageSize, page.Values.Count);
-        Assert.AreEqual(0, page.Values[0]);
+        Assert.AreEqual(0, page.Values[0].Id);
     }
 
     [Test]
     public void CanGetCurrentPageThenGetAllItems()
     {
-        PageCollection<int> pages = new MockPageCollection<int>(MockValues, DefaultPageSize);
-        PageResult<int> page = pages.GetCurrentPage();
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
 
-        Assert.AreEqual(DefaultPageSize, page.Values.Count);
-        Assert.AreEqual(0, page.Values[0]);
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues();
 
-        IEnumerable<int> values = pages.GetAllValues();
+        PageResult<ValueItem> page = pages.GetCurrentPage();
+
+        Assert.AreEqual(MockPagingData.DefaultPageSize, page.Values.Count);
+        Assert.AreEqual(0, page.Values[0].Id);
+
+        IEnumerable<ValueItem> values = pages.GetAllValues();
 
         int count = 0;
-        foreach (int value in values)
+        foreach (ValueItem value in values)
         {
-            Assert.AreEqual(count, value);
+            Assert.AreEqual(count, value.Id);
             count++;
         }
 
-        Assert.AreEqual(Count, count);
+        Assert.AreEqual(MockPagingData.Count, count);
     }
 
     [Test]
