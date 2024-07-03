@@ -91,16 +91,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="imageVersion"> The resource-specific properties for this resource. </param>
+        /// <param name="version"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ImageVersion"/> instance for mocking. </returns>
-        public static ImageVersion ImageVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string imageVersion = null)
+        public static ImageVersion ImageVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string version = null)
         {
             return new ImageVersion(
                 id,
                 name,
                 resourceType,
                 systemData,
-                imageVersion != null ? new ImageVersionProperties(imageVersion, serializedAdditionalRawData: null) : null,
+                version != null ? new VersionProperties(version, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 

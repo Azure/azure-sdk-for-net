@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    internal partial class ImageVersionProperties : IUtf8JsonSerializable, IJsonModel<ImageVersionProperties>
+    internal partial class VersionProperties : IUtf8JsonSerializable, IJsonModel<VersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageVersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ImageVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageVersionProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VersionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WriteEndObject();
         }
 
-        ImageVersionProperties IJsonModel<ImageVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VersionProperties IJsonModel<VersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageVersionProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VersionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageVersionProperties(document.RootElement, options);
+            return DeserializeVersionProperties(document.RootElement, options);
         }
 
-        internal static ImageVersionProperties DeserializeImageVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VersionProperties DeserializeVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,38 +82,38 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImageVersionProperties(version, serializedAdditionalRawData);
+            return new VersionProperties(version, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ImageVersionProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VersionProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VersionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageVersionProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VersionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImageVersionProperties IPersistableModel<ImageVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VersionProperties IPersistableModel<VersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VersionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeImageVersionProperties(document.RootElement, options);
+                        return DeserializeVersionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageVersionProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VersionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImageVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

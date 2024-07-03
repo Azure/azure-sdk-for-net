@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Models.ImageVersion)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Models.ImageVersion)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 return null;
             }
-            ImageVersionProperties properties = default;
+            VersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    properties = ImageVersionProperties.DeserializeImageVersionProperties(property.Value, options);
+                    properties = VersionProperties.DeserializeVersionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Models.ImageVersion)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                         return DeserializeImageVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Models.ImageVersion)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.DevOpsInfrastructure.Samples", "samples\Azure.ResourceManager.DevOpsInfrastructure.Samples.csproj", "{9080CD08-C3A7-48B0-92DF-72342167B292}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DevOpsInfrastructure.Samples", "samples\Azure.ResourceManager.DevOpsInfrastructure.Samples.csproj", "{9080CD08-C3A7-48B0-92DF-72342167B292}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.DevOpsInfrastructure", "src\Azure.ResourceManager.DevOpsInfrastructure.csproj", "{B5514D92-2277-45C1-AB80-7AD74587C114}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DevOpsInfrastructure", "src\Azure.ResourceManager.DevOpsInfrastructure.csproj", "{B5514D92-2277-45C1-AB80-7AD74587C114}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.DevOpsInfrastructure.Tests", "tests\Azure.ResourceManager.DevOpsInfrastructure.Tests.csproj", "{141578A5-E77D-408B-A1C6-A509F20865FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DevOpsInfrastructure.Tests", "tests\Azure.ResourceManager.DevOpsInfrastructure.Tests.csproj", "{141578A5-E77D-408B-A1C6-A509F20865FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

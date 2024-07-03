@@ -47,31 +47,31 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImageVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVersion"/>. </summary>
         public ImageVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImageVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVersion"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ImageVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ImageVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal ImageVersionProperties Properties { get; set; }
+        internal VersionProperties Properties { get; set; }
         /// <summary> Version of the image. </summary>
-        public string ImageVersion
+        public string Version
         {
             get => Properties is null ? default : Properties.Version;
-            set => Properties = new ImageVersionProperties(value);
+            set => Properties = new VersionProperties(value);
         }
     }
 }

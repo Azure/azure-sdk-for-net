@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> Details of the ImageVersionProperties. </summary>
-    internal partial class ImageVersionProperties
+    internal partial class VersionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ImageVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VersionProperties"/>. </summary>
         /// <param name="version"> Version of the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public ImageVersionProperties(string version)
+        public VersionProperties(string version)
         {
             Argument.AssertNotNull(version, nameof(version));
 
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageVersionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VersionProperties"/>. </summary>
         /// <param name="version"> Version of the image. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageVersionProperties(string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VersionProperties(string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageVersionProperties"/> for deserialization. </summary>
-        internal ImageVersionProperties()
+        /// <summary> Initializes a new instance of <see cref="VersionProperties"/> for deserialization. </summary>
+        internal VersionProperties()
         {
         }
 
