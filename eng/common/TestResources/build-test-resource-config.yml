@@ -8,7 +8,7 @@ parameters:
   # EnvVars is used to help diagnose variable conflict issues early
   - name: EnvVars
     type: object
-    default: null
+    default: {}
   - name: SubscriptionConfigurationFilePaths
     type: object
     default: null
@@ -16,6 +16,7 @@ parameters:
 steps:
   - task: AzurePowerShell@5
     displayName: Set Pipeline Subnet Info
+    condition: ne(variables['Pool'], '')
     env: ${{ parameters.EnvVars }}
     inputs:
       azureSubscription: azure-sdk-tests
