@@ -20,18 +20,26 @@ public class MockPageCollection<T> : PageCollection<T>
         _pageSize = pageSize;
     }
 
+    protected override PageResult<T> GetCurrentPageCore()
+        => GetPageFromCurrentState();
+
     protected override IEnumerator<PageResult<T>> GetEnumeratorCore()
     {
         while (_current < _values.Count)
         {
-            int pageSize = Math.Min(_pageSize, _values.Count - _current);
-            List<T> pageValues = _values.GetRange(_current, pageSize);
-
-            // Make page tokens not useful for mocks.
-            ContinuationToken mockPageToken = ContinuationToken.FromBytes(BinaryData.FromString("{}"));
-            yield return PageResult<T>.Create(pageValues, mockPageToken, null, new MockPipelineResponse(200));
+            yield return GetPageFromCurrentState();
 
             _current += _pageSize;
         }
+    }
+
+    private PageResult<T> GetPageFromCurrentState()
+    {
+        int pageSize = Math.Min(_pageSize, _values.Count - _current);
+        List<T> pageValues = _values.GetRange(_current, pageSize);
+
+        // Make page tokens not useful for mocks.
+        ContinuationToken mockPageToken = ContinuationToken.FromBytes(BinaryData.FromString("{}"));
+        return PageResult<T>.Create(pageValues, mockPageToken, null, new MockPipelineResponse(200));
     }
 }

@@ -19,6 +19,7 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerable<T> GetAllValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>> GetAsyncEnumeratorCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetCurrentPageAsync() { throw null; }
+        protected abstract System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetCurrentPageAsyncCore();
         System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>> System.Collections.Generic.IAsyncEnumerable<System.ClientModel.PageResult<T>>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class BinaryContent : System.IDisposable
@@ -75,6 +76,7 @@ namespace System.ClientModel
         protected PageCollection() { }
         public System.Collections.Generic.IEnumerable<T> GetAllValues() { throw null; }
         public System.ClientModel.PageResult<T> GetCurrentPage() { throw null; }
+        protected abstract System.ClientModel.PageResult<T> GetCurrentPageCore();
         protected abstract System.Collections.Generic.IEnumerator<System.ClientModel.PageResult<T>> GetEnumeratorCore();
         System.Collections.Generic.IEnumerator<System.ClientModel.PageResult<T>> System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }

@@ -20,33 +20,20 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
     }
 
     public PageResult<T> GetCurrentPage()
-    {
-        IEnumerator<PageResult<T>> enumerator = GetEnumeratorCore();
-
-        if (enumerator.Current == null)
-        {
-            enumerator.MoveNext();
-        }
-
-        return enumerator.Current!;
-    }
+        => GetCurrentPageCore();
 
     public IEnumerable<T> GetAllValues()
     {
-        IEnumerator<PageResult<T>> enumerator = GetEnumeratorCore();
-
-        do
+        foreach (PageResult<T> page in this)
         {
-            if (enumerator.Current is not null)
+            foreach (T value in page.Values)
             {
-                foreach (T value in enumerator.Current.Values)
-                {
-                    yield return value;
-                }
+                yield return value;
             }
         }
-        while (enumerator.MoveNext());
     }
+
+    protected abstract PageResult<T> GetCurrentPageCore();
 
     protected abstract IEnumerator<PageResult<T>> GetEnumeratorCore();
 

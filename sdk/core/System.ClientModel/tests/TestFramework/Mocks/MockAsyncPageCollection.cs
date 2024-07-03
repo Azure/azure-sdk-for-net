@@ -22,20 +22,28 @@ public class MockAsyncPageCollection<T> : AsyncPageCollection<T>
         _pageSize = pageSize;
     }
 
+    protected override async Task<PageResult<T>> GetCurrentPageAsyncCore()
+        => await GetPageFromCurrentStateAsync().ConfigureAwait(false);
+
     protected override async IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken)
     {
         while (_current < _values.Count)
         {
-            int pageSize = Math.Min(_pageSize, _values.Count - _current);
-            List<T> pageValues = _values.GetRange(_current, pageSize);
-
-            // Make page tokens not useful for mocks.
-            ContinuationToken mockPageToken = ContinuationToken.FromBytes(BinaryData.FromString("{}"));
-            yield return PageResult<T>.Create(pageValues, mockPageToken, null, new MockPipelineResponse(200));
+            yield return await GetPageFromCurrentStateAsync().ConfigureAwait(false);
 
             _current += _pageSize;
-
-            await Task.Delay(0);
         }
+    }
+
+    private async Task<PageResult<T>> GetPageFromCurrentStateAsync()
+    {
+        await Task.Delay(0);
+
+        int pageSize = Math.Min(_pageSize, _values.Count - _current);
+        List<T> pageValues = _values.GetRange(_current, pageSize);
+
+        // Make page tokens not useful for mocks.
+        ContinuationToken mockPageToken = ContinuationToken.FromBytes(BinaryData.FromString("{}"));
+        return PageResult<T>.Create(pageValues, mockPageToken, null, new MockPipelineResponse(200));
     }
 }

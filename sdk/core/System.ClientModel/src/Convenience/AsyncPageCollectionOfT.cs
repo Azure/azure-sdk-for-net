@@ -20,35 +20,22 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
     }
 
     public async Task<PageResult<T>> GetCurrentPageAsync()
-    {
-        IAsyncEnumerator<PageResult<T>> enumerator = GetAsyncEnumeratorCore();
-
-        if (enumerator.Current == null)
-        {
-            await enumerator.MoveNextAsync().ConfigureAwait(false);
-        }
-
-        return enumerator.Current!;
-    }
+        => await GetCurrentPageAsyncCore().ConfigureAwait(false);
 
     public async IAsyncEnumerable<T> GetAllValuesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        IAsyncEnumerator<PageResult<T>> enumerator = GetAsyncEnumeratorCore(cancellationToken);
-
-        do
+        await foreach (PageResult<T> page in this.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
-            if (enumerator.Current is not null)
+            foreach (T value in page.Values)
             {
-                foreach (T value in enumerator.Current.Values)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
+                cancellationToken.ThrowIfCancellationRequested();
 
-                    yield return value;
-                }
+                yield return value;
             }
         }
-        while (await enumerator.MoveNextAsync().ConfigureAwait(false));
     }
+
+    protected abstract Task<PageResult<T>> GetCurrentPageAsyncCore();
 
     protected abstract IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken = default);
 

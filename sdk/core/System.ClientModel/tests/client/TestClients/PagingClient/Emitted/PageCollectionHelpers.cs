@@ -4,6 +4,7 @@
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Paging;
 
@@ -48,6 +49,9 @@ internal class PageCollectionHelpers
             _enumerator = enumerator;
         }
 
+        protected override PageResult<T> GetCurrentPageCore()
+            => _enumerator.GetCurrentPage();
+
         protected override IEnumerator<PageResult<T>> GetEnumeratorCore()
             => _enumerator;
     }
@@ -60,6 +64,9 @@ internal class PageCollectionHelpers
         {
             _enumerator = enumerator;
         }
+
+        protected override async Task<PageResult<T>> GetCurrentPageAsyncCore()
+            => await _enumerator.GetCurrentPageAsync().ConfigureAwait(false);
 
         protected override IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken = default)
             => _enumerator;
