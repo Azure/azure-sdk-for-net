@@ -196,6 +196,8 @@ rename-mapping:
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   IPRule: BastionHostIPRule
   NetworkVirtualApplianceConnection.properties.routingConfiguration: ConnectionRoutingConfiguration
+  # to workaround breaking change in FirewallPacketCaptureParameters, we have to keep the old codes and rename it
+  FirewallPacketCaptureParameters: FirewallPacketCaptureRequestParameters
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps

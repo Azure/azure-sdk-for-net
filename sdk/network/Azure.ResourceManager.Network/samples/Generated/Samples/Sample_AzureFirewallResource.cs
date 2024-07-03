@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network.Samples
             AzureFirewallResource azureFirewall = client.GetAzureFirewallResource(azureFirewallResourceId);
 
             // invoke the operation
-            FirewallPacketCaptureContent content = new FirewallPacketCaptureContent()
+            FirewallPacketCaptureRequestContent content = new FirewallPacketCaptureRequestContent()
             {
                 DurationInSeconds = 300,
                 NumberOfPacketsToCapture = 5000,
