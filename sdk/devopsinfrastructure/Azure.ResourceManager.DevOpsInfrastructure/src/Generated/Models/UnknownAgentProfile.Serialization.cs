@@ -31,14 +31,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             if (Optional.IsDefined(ResourcePredictions))
             {
                 writer.WritePropertyName("resourcePredictions"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ResourcePredictions);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ResourcePredictions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(ResourcePredictions, options);
             }
             if (Optional.IsDefined(ResourcePredictionsProfile))
             {
@@ -84,7 +77,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 return null;
             }
             string kind = "Unknown";
-            BinaryData resourcePredictions = default;
+            ResourcePredictions resourcePredictions = default;
             ResourcePredictionsProfile resourcePredictionsProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +94,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    resourcePredictions = BinaryData.FromString(property.Value.GetRawText());
+                    resourcePredictions = ResourcePredictions.DeserializeResourcePredictions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourcePredictionsProfile"u8))

@@ -31,14 +31,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             if (Optional.IsDefined(ResourcePredictions))
             {
                 writer.WritePropertyName("resourcePredictions"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ResourcePredictions);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ResourcePredictions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(ResourcePredictions, options);
             }
             if (Optional.IsDefined(ResourcePredictionsProfile))
             {

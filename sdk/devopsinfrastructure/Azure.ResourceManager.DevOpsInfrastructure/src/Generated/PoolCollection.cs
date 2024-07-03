@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_ListByResourceGroup</description>
+        /// <description>Pool_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pools_ListByResourceGroup</description>
+        /// <description>Pool_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

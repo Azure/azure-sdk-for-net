@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ImageVersions_ListByImage</description>
+        /// <description>ImageVersion_ListByImage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ImageVersions_ListByImage</description>
+        /// <description>ImageVersion_ListByImage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

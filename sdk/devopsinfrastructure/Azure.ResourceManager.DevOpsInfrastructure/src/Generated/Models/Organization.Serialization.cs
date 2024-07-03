@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WriteStringValue(Organizatioi);
             if (Optional.IsCollectionDefined(Projects))
             {
                 writer.WritePropertyName("projects"u8);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 return null;
             }
-            Uri url = default;
+            string url = default;
             IList<string> projects = default;
             int? parallelism = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("projects"u8))

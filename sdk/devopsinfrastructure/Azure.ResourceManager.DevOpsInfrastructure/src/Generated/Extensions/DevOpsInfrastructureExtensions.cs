@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ImageVersions_ListByImage</description>
+        /// <description>ImageVersion_ListByImage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ImageVersions_ListByImage</description>
+        /// <description>ImageVersion_ListByImage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -214,6 +214,78 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         }
 
         /// <summary>
+        /// List Pool resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/pools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetPools(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PoolResource> GetPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetPoolsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List Pool resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/pools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pool_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetPools(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PoolResource> GetPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetPools(cancellationToken);
+        }
+
+        /// <summary>
         /// List ResourceSku resources by subscription ID
         /// <list type="bullet">
         /// <item>
@@ -222,7 +294,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Sku_ListByLocation</description>
+        /// <description>ResourceSku_ListByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -256,7 +328,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Sku_ListByLocation</description>
+        /// <description>ResourceSku_ListByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -299,15 +371,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.UsagesSubscriptionUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.UsagesSubscriptionUsages(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="Quota"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Quota> UsagesSubscriptionUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Quota> UsagesSubscriptionUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -332,91 +405,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.UsagesSubscriptionUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.UsagesSubscriptionUsages(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="Quota"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Quota> UsagesSubscriptionUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Pageable<Quota> UsagesSubscriptionUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).UsagesSubscriptionUsages(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// List Pool resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/pools</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pools_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetPools(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PoolResource> GetPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetPoolsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List Pool resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/pools</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pools_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-04-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDevOpsInfrastructureSubscriptionResource.GetPools(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PoolResource> GetPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableDevOpsInfrastructureSubscriptionResource(subscriptionResource).GetPools(cancellationToken);
         }
     }
 }

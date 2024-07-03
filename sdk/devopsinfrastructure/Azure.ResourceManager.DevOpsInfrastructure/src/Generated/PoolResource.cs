@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceDetails_ListByPool</description>
+        /// <description>ResourceDetailsObject_ListByPool</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceDetails_ListByPool</description>
+        /// <description>ResourceDetailsObject_ListByPool</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
