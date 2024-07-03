@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using ClientModel.Tests.Paging;
 using NUnit.Framework;
