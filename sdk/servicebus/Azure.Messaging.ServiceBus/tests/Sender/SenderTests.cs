@@ -172,7 +172,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
-            var sender = new ServiceBusSender("dummy", mockConnection.Object, new ServiceBusSenderOptions());
+            var sender = new ServiceBusSender("dummy", mockConnection.Object);
             var sendTask = sender.SendMessagesAsync(batch);
 
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
@@ -281,7 +281,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                         It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
 
-            var sender = new ServiceBusSender("fake", mockConnection.Object, new ServiceBusSenderOptions());
+            var sender = new ServiceBusSender("fake", mockConnection.Object);
             await sender.CloseAsync(cts.Token);
             mockTransportSender.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
