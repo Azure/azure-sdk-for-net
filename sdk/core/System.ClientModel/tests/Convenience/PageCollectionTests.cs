@@ -4,16 +4,24 @@
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using ClientModel.Tests.PagingClient;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Results;
 
-public class PageCollectionTests
+public class PageCollectionTests : SyncAsyncTestBase
 {
+    public PageCollectionTests(bool isAsync) : base(isAsync)
+    {
+    }
+
     [Test]
-    public void CanGetValues()
+    public void CanGetAllValues()
     {
         PagingClientOptions options = new()
         {
@@ -21,6 +29,294 @@ public class PageCollectionTests
         };
 
         PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues();
+        IEnumerable<ValueItem> values = pages.GetAllValues();
+
+        int count = 0;
+        foreach (ValueItem value in values)
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
+
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
+
+    [Test]
+    public async Task CanGetAllValueAsync()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        AsyncPageCollection<ValueItem> pages = client.GetValuesAsync();
+        IAsyncEnumerable<ValueItem> values = pages.GetAllValuesAsync();
+
+        int count = 0;
+        await foreach (ValueItem value in values)
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
+
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
+
+    [Test]
+    public void CanGetCurrentPage()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues();
+        PageResult<ValueItem> page = pages.GetCurrentPage();
+
+        Assert.AreEqual(MockPagingData.DefaultPageSize, page.Values.Count);
+        Assert.AreEqual(0, page.Values[0].Id);
+    }
+
+    // TODO: Async
+
+    [Test]
+    public void CanGetCurrentPageThenAllItems()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues();
+
+        PageResult<ValueItem> page = pages.GetCurrentPage();
+
+        Assert.AreEqual(MockPagingData.DefaultPageSize, page.Values.Count);
+        Assert.AreEqual(0, page.Values[0].Id);
+
+        IEnumerable<ValueItem> values = pages.GetAllValues();
+
+        int count = 0;
+        foreach (ValueItem value in values)
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
+
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
+
+    [Test]
+    public void CanGetCurrentPageWhileEnumeratingItems()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues();
+
+        IEnumerable<ValueItem> values = pages.GetAllValues();
+
+        int count = 0;
+        foreach (ValueItem value in values)
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+
+            PageResult<ValueItem> page = pages.GetCurrentPage();
+
+            // Validate that the current item is in range of the page values
+            Assert.GreaterOrEqual(value.Id, page.Values[0].Id);
+            Assert.LessOrEqual(value.Id, page.Values[page.Values.Count - 1].Id);
+        }
+
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
+
+    [Test]
+    public void CanRehydratePageCollection()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues();
+        PageResult<ValueItem> page = pages.GetCurrentPage();
+
+        ContinuationToken pageToken = page.PageToken;
+
+        PageCollection<ValueItem> rehydratedPages = client.GetValues(pageToken);
+        PageResult<ValueItem> rehydratedPage = rehydratedPages.GetCurrentPage();
+
+        Assert.AreEqual(page.Values.Count, rehydratedPage.Values.Count);
+
+        List<ValueItem> allValues = pages.GetAllValues().ToList();
+        List<ValueItem> allRehydratedValues = rehydratedPages.GetAllValues().ToList();
+
+        for (int i = 0; i < allValues.Count; i++)
+        {
+            Assert.AreEqual(allValues[i].Id, allRehydratedValues[i].Id);
+        }
+    }
+
+    [Test]
+    public void CanCastToConvenienceFromProtocol()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        PagingClient client = new PagingClient(options);
+
+        // Call the protocol method on the convenience client.
+        IEnumerable<ClientResult> pageResults = client.GetValues(
+            order: default,
+            pageSize: default,
+            offset: default,
+            new RequestOptions());
+
+        // Cast to convience type from protocol return value.
+        PageCollection<ValueItem> pages = (PageCollection<ValueItem>)pageResults;
+
+        IEnumerable<ValueItem> values = pages.GetAllValues();
+
+        int count = 0;
+        foreach (ValueItem value in values)
+        {
+            Assert.AreEqual(count, value.Id);
+            count++;
+        }
+
+        Assert.AreEqual(MockPagingData.Count, count);
+    }
+
+    [Test]
+    public void CanReorderItemsAndRehydrate()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        string order = "desc";
+        Assert.AreNotEqual(MockPagingData.DefaultOrder, order);
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues(order: order);
+        PageResult<ValueItem> page = pages.GetCurrentPage();
+
+        ContinuationToken pageToken = page.PageToken;
+
+        PageCollection<ValueItem> rehydratedPages = client.GetValues(pageToken);
+        PageResult<ValueItem> rehydratedPage = rehydratedPages.GetCurrentPage();
+
+        Assert.AreEqual(page.Values.Count, rehydratedPage.Values.Count);
+
+        // We got the last one first from both pages
+        Assert.AreEqual(MockPagingData.Count - 1, page.Values[0].Id);
+        Assert.AreEqual(MockPagingData.Count - 1, rehydratedPage.Values[0].Id);
+    }
+
+    [Test]
+    public void CanChangePageSizeAndRehydrate()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        int pageSize = 4;
+        Assert.AreNotEqual(MockPagingData.DefaultPageSize, pageSize);
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues(pageSize: pageSize);
+        PageResult<ValueItem> page = pages.GetCurrentPage();
+
+        ContinuationToken pageToken = page.PageToken;
+
+        PageCollection<ValueItem> rehydratedPages = client.GetValues(pageToken);
+        PageResult<ValueItem> rehydratedPage = rehydratedPages.GetCurrentPage();
+
+        // Both pages have same non-default page size
+        Assert.AreEqual(pageSize, page.Values.Count);
+        Assert.AreEqual(pageSize, rehydratedPage.Values.Count);
+    }
+
+    [Test]
+    public void CanSkipItemsAndRehydrate()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        int offset = 4;
+        Assert.AreNotEqual(MockPagingData.DefaultOffset, offset);
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues(offset: offset);
+        PageResult<ValueItem> page = pages.GetCurrentPage();
+
+        ContinuationToken pageToken = page.PageToken;
+
+        PageCollection<ValueItem> rehydratedPages = client.GetValues(pageToken);
+        PageResult<ValueItem> rehydratedPage = rehydratedPages.GetCurrentPage();
+
+        Assert.AreEqual(page.Values.Count, rehydratedPage.Values.Count);
+
+        // Both pages have the same non-default offset value
+        Assert.AreEqual(offset - 1, page.Values[0].Id);
+        Assert.AreEqual(offset - 1, rehydratedPage.Values[0].Id);
+    }
+
+    [Test]
+    public void CanChangeAllCollectionParametersAndRehydrate()
+    {
+        PagingClientOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Mock", i => 200)
+        };
+
+        string order = "desc";
+        Assert.AreNotEqual(MockPagingData.DefaultOrder, order);
+
+        int pageSize = 4;
+        Assert.AreNotEqual(MockPagingData.DefaultPageSize, pageSize);
+
+        int offset = 4;
+        Assert.AreNotEqual(MockPagingData.DefaultOffset, offset);
+
+        PagingClient client = new PagingClient(options);
+        PageCollection<ValueItem> pages = client.GetValues(pageSize: pageSize);
+        PageResult<ValueItem> page = pages.GetCurrentPage();
+
+        ContinuationToken pageToken = page.PageToken;
+
+        PageCollection<ValueItem> rehydratedPages = client.GetValues(pageToken);
+        PageResult<ValueItem> rehydratedPage = rehydratedPages.GetCurrentPage();
+
+        // Both page collections and first page are the same on each dimension
+
+        // Same number of pages in the two collections
+        Assert.AreEqual(3, pages.Count());
+        Assert.AreEqual(3, rehydratedPages.Count());
+
+        // Last one first and same items skipped
+        Assert.AreEqual(11, page.Values[0].Id);
+        Assert.AreEqual(11, rehydratedPage.Values[0].Id);
+
+        // Equal page size
+        Assert.AreEqual(pageSize, page.Values.Count);
+        Assert.AreEqual(pageSize, rehydratedPage.Values.Count);
     }
 
     //[Test]

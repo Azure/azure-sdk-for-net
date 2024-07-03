@@ -77,10 +77,10 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
         offset ??= 0;
 
         IEnumerable<ValueItem> ordered = order == "asc" ?
-            MockData.GetValues() :
-            MockData.GetValues().Reverse();
+            MockPagingData.GetValues() :
+            MockPagingData.GetValues().Reverse();
         IEnumerable<ValueItem> skipped = ordered.Skip(offset.Value);
         IEnumerable<ValueItem> page = skipped.Take(pageSize.Value);
-        return MockData.GetPageResult(page);
+        return MockPagingData.GetPageResult(page);
     }
 }

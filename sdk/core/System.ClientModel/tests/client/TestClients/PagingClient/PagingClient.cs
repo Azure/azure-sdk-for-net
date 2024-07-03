@@ -22,7 +22,11 @@ public class PagingClient
         _endpoint = new Uri("https://www.paging.com");
     }
 
-    public virtual AsyncPageCollection<ValueItem> GetValuesAsync(CancellationToken cancellationToken = default)
+    public virtual AsyncPageCollection<ValueItem> GetValuesAsync(
+        string? order = default,
+        int? pageSize = default,
+        int? offset = default,
+        CancellationToken cancellationToken = default)
     {
         ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, cancellationToken.ToRequestOptions());
         return PageCollectionHelpers.CreateAsync(enumerator);
@@ -39,7 +43,11 @@ public class PagingClient
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
-    public virtual IEnumerable<ClientResult> GetValues(CancellationToken cancellationToken = default)
+    public virtual PageCollection<ValueItem> GetValues(
+        string? order = default,
+        int? pageSize = default,
+        int? offset = default,
+        CancellationToken cancellationToken = default)
     {
         ValuesPageEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, cancellationToken.ToRequestOptions());
         return PageCollectionHelpers.Create(enumerator);
@@ -56,13 +64,21 @@ public class PagingClient
         return PageCollectionHelpers.Create(enumerator);
     }
 
-    public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(RequestOptions options)
+    public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions options)
     {
         PageResultEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, options);
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
-    public virtual IEnumerable<ClientResult> GetValues(RequestOptions options)
+    public virtual IEnumerable<ClientResult> GetValues(
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions options)
     {
         PageResultEnumerator enumerator = new ValuesPageEnumerator(_pipeline, _endpoint, options);
         return PageCollectionHelpers.Create(enumerator);

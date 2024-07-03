@@ -3,13 +3,15 @@
 
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ClientModel.Tests.PagingClient;
 
-internal class MockData
+public class MockPagingData
 {
-    private const int Count = 16;
+    public const int Count = 16;
+    public const int DefaultPageSize = 8;
+    public const int DefaultOffset = 0;
+    public const string DefaultOrder = "asc";
 
     public static IEnumerable<ValueItem> GetValues()
     {
