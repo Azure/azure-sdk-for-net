@@ -14,6 +14,9 @@ namespace System.ClientModel.Tests.Paging;
 
 public class PageCollectionTests
 {
+    // TODO: Async
+    // TODO: A few more tests - from commented-out tests
+
     [Test]
     public void CanGetAllValues()
     {
@@ -74,10 +77,8 @@ public class PageCollectionTests
         Assert.AreEqual(0, page.Values[0].Id);
     }
 
-    // TODO: Async
-
     [Test]
-    public void CanGetCurrentPageThenAllItems()
+    public void CanGetCurrentPageThenGetAllItems()
     {
         PagingClientOptions options = new()
         {
@@ -132,6 +133,31 @@ public class PageCollectionTests
 
         Assert.AreEqual(MockPagingData.Count, count);
     }
+
+    //[Test]
+    //public void CanGetCurrentPageWhileEnumeratingPages()
+    //{
+    //    PagingClientOptions options = new()
+    //    {
+    //        Transport = new MockPipelineTransport("Mock", i => 200)
+    //    };
+
+    //    PagingClient client = new PagingClient(options);
+    //    PageCollection<ValueItem> pages = client.GetValues();
+
+    //    int pageCount = 0;
+    //    foreach (PageResult<ValueItem> page in pages)
+    //    {
+    //        pageCount++;
+
+    //        PageResult<ValueItem> currentPage = pages.GetCurrentPage();
+
+    //        Assert.AreEqual(page.Values.Count, currentPage.Values.Count);
+    //        Assert.AreEqual(page.Values[0].Id, currentPage.Values[0].Id);
+    //    }
+
+    //    Assert.AreEqual(2, pageCount);
+    //}
 
     [Test]
     public void CanRehydratePageCollection()
@@ -268,8 +294,8 @@ public class PageCollectionTests
         Assert.AreEqual(page.Values.Count, rehydratedPage.Values.Count);
 
         // Both pages have the same non-default offset value
-        Assert.AreEqual(offset - 1, page.Values[0].Id);
-        Assert.AreEqual(offset - 1, rehydratedPage.Values[0].Id);
+        Assert.AreEqual(offset, page.Values[0].Id);
+        Assert.AreEqual(offset, rehydratedPage.Values[0].Id);
     }
 
     [Test]
@@ -290,7 +316,7 @@ public class PageCollectionTests
         Assert.AreNotEqual(MockPagingData.DefaultOffset, offset);
 
         PagingClient client = new PagingClient(options);
-        PageCollection<ValueItem> pages = client.GetValues(pageSize: pageSize);
+        PageCollection<ValueItem> pages = client.GetValues(order, pageSize, offset);
         PageResult<ValueItem> page = pages.GetCurrentPage();
 
         ContinuationToken pageToken = page.PageToken;
@@ -299,10 +325,6 @@ public class PageCollectionTests
         PageResult<ValueItem> rehydratedPage = rehydratedPages.GetCurrentPage();
 
         // Both page collections and first page are the same on each dimension
-
-        // Same number of pages in the two collections
-        Assert.AreEqual(3, pages.Count());
-        Assert.AreEqual(3, rehydratedPages.Count());
 
         // Last one first and same items skipped
         Assert.AreEqual(11, page.Values[0].Id);

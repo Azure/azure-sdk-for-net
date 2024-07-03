@@ -25,4 +25,6 @@ public class ValueItem
         string value = element.GetProperty("value").GetString()!;
         return new ValueItem(id, value);
     }
+
+    public override string ToString() => ToJson();
 }

@@ -15,6 +15,7 @@ public class MockPagingData
     public const int DefaultPageSize = 8;
     public const int DefaultOffset = 0;
 
+    // Source of all the data
     public static IEnumerable<ValueItem> GetValues()
     {
         for (int i = 0; i < Count; i++)
@@ -23,6 +24,7 @@ public class MockPagingData
         }
     }
 
+    // Filters on top of data source
     public static IEnumerable<ValueItem> GetValues(
         string? order,
         int? pageSize,
@@ -41,6 +43,7 @@ public class MockPagingData
         return page;
     }
 
+    // Turn data into a page result for protocol layer
     public static ClientResult GetPageResult(IEnumerable<ValueItem> values)
         => ClientResult.FromResponse(new MockValueItemPageResponse(values));
 }
