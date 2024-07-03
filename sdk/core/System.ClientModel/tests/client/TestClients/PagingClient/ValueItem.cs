@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace ClientModel.Tests.PagingClient;
 
 // A mock model that illustrate values that can be returned in a page collection
@@ -14,4 +16,7 @@ public class ValueItem
 
     public int Id { get; }
     public string Value { get; }
+
+    public string ToJson()
+        => $"{{ \"id\" = {Id}, \"value\"= {Value} }}";
 }

@@ -21,15 +21,35 @@ public class PagingProtocolClient
         _endpoint = new Uri("https://www.paging.com");
     }
 
-    public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(RequestOptions options)
+    public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options = default)
     {
-        PageResultEnumerator enumerator = new ValuesPageResultEnumerator(_pipeline, _endpoint, options);
+        PageResultEnumerator enumerator = new ValuesPageResultEnumerator(
+            _pipeline,
+            _endpoint,
+            order,
+            pageSize,
+            offset,
+            options);
         return PageCollectionHelpers.CreateAsync(enumerator);
     }
 
-    public virtual IEnumerable<ClientResult> GetValues(RequestOptions options)
+    public virtual IEnumerable<ClientResult> GetValues(
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options = default)
     {
-        PageResultEnumerator enumerator = new ValuesPageResultEnumerator(_pipeline, _endpoint, options);
+        PageResultEnumerator enumerator = new ValuesPageResultEnumerator(
+            _pipeline,
+            _endpoint,
+            order,
+            pageSize,
+            offset,
+            options);
         return PageCollectionHelpers.Create(enumerator);
     }
 }

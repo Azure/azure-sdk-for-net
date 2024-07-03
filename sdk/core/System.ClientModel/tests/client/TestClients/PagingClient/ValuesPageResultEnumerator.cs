@@ -4,6 +4,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.PagingClient;
@@ -14,15 +16,27 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
 {
     private readonly ClientPipeline _pipeline;
     private readonly Uri _endpoint;
-    private readonly RequestOptions _options;
+
+    private readonly string? _order;
+    private readonly int? _pageSize;
+    private readonly int? _offset;
+
+    private readonly RequestOptions? _options;
 
     public ValuesPageResultEnumerator(
         ClientPipeline pipeline,
         Uri endpoint,
-        RequestOptions options)
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options)
     {
         _pipeline = pipeline;
         _endpoint = endpoint;
+
+        _order = order;
+        _pageSize = pageSize;
+        _offset = offset;
 
         _options = options;
     }
@@ -50,5 +64,23 @@ internal class ValuesPageResultEnumerator : PageResultEnumerator
     public override bool HasNext(ClientResult result)
     {
         throw new NotImplementedException();
+    }
+
+    internal virtual ClientResult GetValuesPage(
+        string? order,
+        int? pageSize,
+        int? offset,
+        RequestOptions? options = default)
+    {
+        order ??= "asc";
+        pageSize ??= 8;
+        offset ??= 0;
+
+        IEnumerable<ValueItem> ordered = order == "asc" ?
+            MockData.GetValues() :
+            MockData.GetValues().Reverse();
+        IEnumerable<ValueItem> skipped = ordered.Skip(offset.Value);
+        IEnumerable<ValueItem> page = skipped.Take(pageSize.Value);
+        return MockData.GetPageResult(page);
     }
 }
