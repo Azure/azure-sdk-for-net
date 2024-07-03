@@ -26,11 +26,12 @@ public class MockPageCollection<T> : PageCollection<T>
         {
             int pageSize = Math.Min(_pageSize, _values.Count - _current);
             List<T> pageValues = _values.GetRange(_current, pageSize);
-            _current += _pageSize;
 
             // Make page tokens not useful for mocks.
             ContinuationToken mockPageToken = ContinuationToken.FromBytes(BinaryData.FromString("{}"));
             yield return PageResult<T>.Create(pageValues, mockPageToken, null, new MockPipelineResponse(200));
+
+            _current += _pageSize;
         }
     }
 }
