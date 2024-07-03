@@ -240,7 +240,7 @@ function Remove-WormStorageAccounts() {
 
                 # If it doesn't have containers then we can skip the explicit clean-up of this storage account
                 if (!$hasContainers) { continue }
-                
+
                 $ctx = New-AzStorageContext -StorageAccountName $account.StorageAccountName
 
                 $immutableBlobs = $ctx `
@@ -282,4 +282,69 @@ function Remove-WormStorageAccounts() {
             Remove-AzResourceGroup -ResourceGroupName $group.ResourceGroupName -Force -AsJob
         }
     }
+}
+
+function SetResourceNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI) {
+    SetStorageNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -CI:$CI
+}
+
+function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI, [switch]$Override) {
+    $clientIp = $null
+    $storageAccounts = Retry { Get-AzResource -ResourceGroupName $ResourceGroupName -ResourceType "Microsoft.Storage/storageAccounts" }
+    # Add client IP to storage account when running as local user. Pipeline's have their own vnet with access
+    if ($storageAccounts) {
+        foreach ($account in $storageAccounts) {
+            $rules = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -AccountName $account.Name
+            if ($rules -and ($Override -or $rules.DefaultAction -eq "Allow")) {
+                Write-Host "Restricting network rules in storage account '$($account.Name)' to deny access by default"
+                Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -DefaultAction Deny }
+                if ($CI -and $env:PoolSubnet) {
+                    Write-Host "Enabling access to '$($account.Name)' from pipeline subnet $($env:PoolSubnet)"
+                    Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -VirtualNetworkResourceId $env:PoolSubnet }
+                }
+                elseif ($AllowIpRanges) {
+                    Write-Host "Enabling access to '$($account.Name)' to $($AllowIpRanges.Length) IP ranges"
+                    $ipRanges = $AllowIpRanges | ForEach-Object {
+                        @{ Action = 'allow'; IPAddressOrRange = $_ }
+                    }
+                    Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -IPRule $ipRanges | Out-Null }
+                }
+                elseif (!$CI) {
+                    Write-Host "Enabling access to '$($account.Name)' from client IP"
+                    $clientIp ??= Retry { Invoke-RestMethod -Uri 'https://icanhazip.com/' }  # cloudflare owned ip site
+                    $clientIp = $clientIp.Trim()
+                    $ipRanges = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name
+                    if ($ipRanges) {
+                        foreach ($range in $ipRanges.IpRules) {
+                            if (DoesSubnetOverlap $range.IPAddressOrRange $clientIp) {
+                                return
+                            }
+                        }
+                    }
+                    Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
+                }
+            }
+        }
+    }
+}
+
+function DoesSubnetOverlap([string]$ipOrCidr, [string]$overlapIp) {
+    [System.Net.IPAddress]$overlapIpAddress = $overlapIp
+    $parsed = $ipOrCidr -split '/'
+    [System.Net.IPAddress]$baseIp = $parsed[0]
+    if ($parsed.Length -eq 1) {
+        return $baseIp -eq $overlapIpAddress
+    }
+
+    $subnet = $parsed[1]
+    $subnetNum = [int]$subnet
+
+    $baseMask = [math]::pow(2, 31)
+    $mask = 0
+    for ($i = 0; $i -lt $subnetNum; $i++) {
+        $mask = $mask + $baseMask;
+        $baseMask = $baseMask / 2
+    }
+
+    return $baseIp.Address -eq ($overlapIpAddress.Address -band ([System.Net.IPAddress]$mask).Address)
 }
