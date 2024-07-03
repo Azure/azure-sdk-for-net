@@ -8,7 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-tag: package-preview-2023-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/readme.md
+tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -114,28 +115,4 @@ directive:
     where: $.definitions.UpdateRunProperties.properties
     transform: >
       $.duration['x-ms-format'] = 'string';
-```
-### Tag: package-preview-2023-09
-
-These settings apply only when `--tag=package-preview-2023-09` is specified on the command line.
-
-```yaml $(tag) == 'package-preview-2023-09'
-input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/galleryImages.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/logicalNetworks.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/common.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/marketplaceGalleryImages.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/networkInterfaces.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/storageContainers.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualHardDisks.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualMachineInstances.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/arcSettings.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/clusters.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/extensions.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/offers.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/publishers.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/skus.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/updateRuns.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/updateSummaries.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/updates.json
 ```
