@@ -68,6 +68,12 @@ steps:
       if ($subConfigFilesRaw) {
         $subConfigFiles = $subConfigFilesRaw | ConvertFrom-Json -AsHashtable
         foreach ($file in $subConfigFiles) {
+          # In some cases, $file could be an empty string. Get-Content will fail
+          # if $file is an empty string, so skip those cases.
+          if (!$file) {
+            continue
+          }
+
           Write-Host "Merging sub config from file: $file"
           $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
           $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
