@@ -33,7 +33,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="authorString"> Individual responsible for the annotation. </param>
         /// <param name="time"> When the annotation was made. </param>
         /// <param name="text"> The annotation - text content (as markdown). </param>
-        internal FhirR4Annotation(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string authorString, string time, string text) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Annotation(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string authorString, string time, string text) : base(id, extension, serializedAdditionalRawData)
         {
             AuthorString = authorString;
             Time = time;

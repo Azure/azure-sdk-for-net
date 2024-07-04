@@ -35,7 +35,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> generated, extensions, additional, empty. </param>
         /// <param name="div"> xhtml. </param>
-        internal FhirR4Narrative(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string status, string div) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Narrative(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string status, string div) : base(id, extension, serializedAdditionalRawData)
         {
             Status = status;
             Div = div;
