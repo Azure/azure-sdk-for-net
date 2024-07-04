@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to retrieve an asset report snapshot. </summary>
-    public partial class ReportAssetSnapshotPayload
+    internal partial class ReportAssetSnapshotPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
