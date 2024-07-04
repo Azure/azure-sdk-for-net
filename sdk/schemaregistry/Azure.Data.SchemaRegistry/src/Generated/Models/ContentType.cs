@@ -23,7 +23,9 @@ namespace Azure.Data.SchemaRegistry
         private const string AvroValue = "application/json; serialization=Avro";
         private const string JsonValue = "application/json; serialization=json";
         private const string CustomValue = "text/plain; charset=utf-8";
-        private const string ProtobufValue = "text/vnd.ms.protobuf";
+        private const string TextVndMsProtobufValue = "text/vnd.ms.protobuf";
+        /// <summary> text/vnd.ms.protobuf. </summary>
+        public static ContentType TextVndMsProtobuf { get; } = new ContentType(TextVndMsProtobufValue);
         /// <summary> Determines if two <see cref="ContentType"/> values are the same. </summary>
         public static bool operator ==(ContentType left, ContentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentType"/> values are not the same. </summary>

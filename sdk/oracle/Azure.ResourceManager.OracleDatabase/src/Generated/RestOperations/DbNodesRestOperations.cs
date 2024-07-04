@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01-preview";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DbNodeListResult>> ListByCloudVmClusterAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, CancellationToken cancellationToken = default)
+        public async Task<Response<DBNodeListResult>> ListByCloudVmClusterAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DbNodeListResult value = default;
+                        DBNodeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DbNodeListResult.DeserializeDbNodeListResult(document.RootElement);
+                        value = DBNodeListResult.DeserializeDBNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DbNodeListResult> ListByCloudVmCluster(string subscriptionId, string resourceGroupName, string cloudvmclustername, CancellationToken cancellationToken = default)
+        public Response<DBNodeListResult> ListByCloudVmCluster(string subscriptionId, string resourceGroupName, string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DbNodeListResult value = default;
+                        DBNodeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DbNodeListResult.DeserializeDbNodeListResult(document.RootElement);
+                        value = DBNodeListResult.DeserializeDBNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="dbnodeocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DbNodeData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudVmClusterDBNodeData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DbNodeData value = default;
+                        CloudVmClusterDBNodeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DbNodeData.DeserializeDbNodeData(document.RootElement);
+                        value = CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DbNodeData)null, message.Response);
+                    return Response.FromValue((CloudVmClusterDBNodeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="dbnodeocid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DbNodeData> Get(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, CancellationToken cancellationToken = default)
+        public Response<CloudVmClusterDBNodeData> Get(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DbNodeData value = default;
+                        CloudVmClusterDBNodeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DbNodeData.DeserializeDbNodeData(document.RootElement);
+                        value = CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DbNodeData)null, message.Response);
+                    return Response.FromValue((CloudVmClusterDBNodeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateActionRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, DbNodeAction body)
+        internal RequestUriBuilder CreateActionRequestUri(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, DBNodeAction body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateActionRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, DbNodeAction body)
+        internal HttpMessage CreateActionRequest(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, DBNodeAction body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/>, <paramref name="dbnodeocid"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ActionAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, DbNodeAction body, CancellationToken cancellationToken = default)
+        public async Task<Response> ActionAsync(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, DBNodeAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/>, <paramref name="dbnodeocid"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudvmclustername"/> or <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Action(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, DbNodeAction body, CancellationToken cancellationToken = default)
+        public Response Action(string subscriptionId, string resourceGroupName, string cloudvmclustername, string dbnodeocid, DBNodeAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DbNodeListResult>> ListByCloudVmClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudvmclustername, CancellationToken cancellationToken = default)
+        public async Task<Response<DBNodeListResult>> ListByCloudVmClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -379,9 +379,9 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DbNodeListResult value = default;
+                        DBNodeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DbNodeListResult.DeserializeDbNodeListResult(document.RootElement);
+                        value = DBNodeListResult.DeserializeDBNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DbNodeListResult> ListByCloudVmClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudvmclustername, CancellationToken cancellationToken = default)
+        public Response<DBNodeListResult> ListByCloudVmClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -410,9 +410,9 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 case 200:
                     {
-                        DbNodeListResult value = default;
+                        DBNodeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DbNodeListResult.DeserializeDbNodeListResult(document.RootElement);
+                        value = DBNodeListResult.DeserializeDBNodeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
