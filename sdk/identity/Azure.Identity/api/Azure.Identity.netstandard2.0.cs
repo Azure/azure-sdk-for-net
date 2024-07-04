@@ -304,6 +304,7 @@ namespace Azure.Identity
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
         public Azure.Identity.BrowserCustomizationOptions BrowserCustomization { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
+        public System.Action<Microsoft.Identity.Client.PublicClientApplicationBuilder> CustomizeClientAppBuilder { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public string LoginHint { get { throw null; } set { } }
