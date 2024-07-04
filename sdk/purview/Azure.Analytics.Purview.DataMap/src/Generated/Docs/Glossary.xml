@@ -170,57 +170,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossary atlasGlossary = new AtlasGlossary
-{
-    Guid = "<guid>",
-    Classifications = {new AtlasClassification
-    {
-        Attributes =
-        {
-            ["key"] = BinaryData.FromObjectAsJson(new object())
-        },
-        TypeName = "<typeName>",
-        LastModifiedTS = "<lastModifiedTS>",
-        EntityGuid = "<entityGuid>",
-        EntityStatus = EntityStatus.Active,
-        RemovePropagationsOnEntityDelete = true,
-        ValidityPeriods = {new TimeBoundary
-        {
-            EndTime = "<endTime>",
-            StartTime = "<startTime>",
-            TimeZone = "<timeZone>",
-        }},
-    }},
-    LongDescription = "<longDescription>",
-    Name = "<name>",
-    QualifiedName = "<qualifiedName>",
-    ShortDescription = "<shortDescription>",
-    LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = 1234L,
-    CreatedBy = "<createdBy>",
-    UpdateTime = 1234L,
-    UpdatedBy = "<updatedBy>",
-    Categories = {new AtlasRelatedCategoryHeader
-    {
-        CategoryGuid = "<categoryGuid>",
-        Description = "<description>",
-        DisplayText = "<displayText>",
-        ParentCategoryGuid = "<parentCategoryGuid>",
-        RelationGuid = "<relationGuid>",
-    }},
-    Language = "<language>",
-    Terms = {new AtlasRelatedTermHeader
-    {
-        Description = "<description>",
-        DisplayText = "<displayText>",
-        Expression = "<expression>",
-        RelationGuid = "<relationGuid>",
-        Status = AtlasTermRelationshipStatus.Draft,
-        Steward = "<steward>",
-        TermGuid = "<termGuid>",
-    }},
-    Usage = "<usage>",
-};
+AtlasGlossary atlasGlossary = new AtlasGlossary();
 Response<AtlasGlossary> response = await client.CreateAsync(atlasGlossary);
 ]]></code></example>
     </member>
@@ -241,57 +191,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossary atlasGlossary = new AtlasGlossary
-{
-    Guid = "<guid>",
-    Classifications = {new AtlasClassification
-    {
-        Attributes =
-        {
-            ["key"] = BinaryData.FromObjectAsJson(new object())
-        },
-        TypeName = "<typeName>",
-        LastModifiedTS = "<lastModifiedTS>",
-        EntityGuid = "<entityGuid>",
-        EntityStatus = EntityStatus.Active,
-        RemovePropagationsOnEntityDelete = true,
-        ValidityPeriods = {new TimeBoundary
-        {
-            EndTime = "<endTime>",
-            StartTime = "<startTime>",
-            TimeZone = "<timeZone>",
-        }},
-    }},
-    LongDescription = "<longDescription>",
-    Name = "<name>",
-    QualifiedName = "<qualifiedName>",
-    ShortDescription = "<shortDescription>",
-    LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = 1234L,
-    CreatedBy = "<createdBy>",
-    UpdateTime = 1234L,
-    UpdatedBy = "<updatedBy>",
-    Categories = {new AtlasRelatedCategoryHeader
-    {
-        CategoryGuid = "<categoryGuid>",
-        Description = "<description>",
-        DisplayText = "<displayText>",
-        ParentCategoryGuid = "<parentCategoryGuid>",
-        RelationGuid = "<relationGuid>",
-    }},
-    Language = "<language>",
-    Terms = {new AtlasRelatedTermHeader
-    {
-        Description = "<description>",
-        DisplayText = "<displayText>",
-        Expression = "<expression>",
-        RelationGuid = "<relationGuid>",
-        Status = AtlasTermRelationshipStatus.Draft,
-        Steward = "<steward>",
-        TermGuid = "<termGuid>",
-    }},
-    Usage = "<usage>",
-};
+AtlasGlossary atlasGlossary = new AtlasGlossary();
 Response<AtlasGlossary> response = client.Create(atlasGlossary);
 ]]></code></example>
     </member>
@@ -7182,57 +7082,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-AtlasGlossary atlasGlossary = new AtlasGlossary
-{
-    Guid = "<guid>",
-    Classifications = {new AtlasClassification
-    {
-        Attributes =
-        {
-            ["key"] = BinaryData.FromObjectAsJson(new object())
-        },
-        TypeName = "<typeName>",
-        LastModifiedTS = "<lastModifiedTS>",
-        EntityGuid = "<entityGuid>",
-        EntityStatus = EntityStatus.Active,
-        RemovePropagationsOnEntityDelete = true,
-        ValidityPeriods = {new TimeBoundary
-        {
-            EndTime = "<endTime>",
-            StartTime = "<startTime>",
-            TimeZone = "<timeZone>",
-        }},
-    }},
-    LongDescription = "<longDescription>",
-    Name = "<name>",
-    QualifiedName = "<qualifiedName>",
-    ShortDescription = "<shortDescription>",
-    LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = 1234L,
-    CreatedBy = "<createdBy>",
-    UpdateTime = 1234L,
-    UpdatedBy = "<updatedBy>",
-    Categories = {new AtlasRelatedCategoryHeader
-    {
-        CategoryGuid = "<categoryGuid>",
-        Description = "<description>",
-        DisplayText = "<displayText>",
-        ParentCategoryGuid = "<parentCategoryGuid>",
-        RelationGuid = "<relationGuid>",
-    }},
-    Language = "<language>",
-    Terms = {new AtlasRelatedTermHeader
-    {
-        Description = "<description>",
-        DisplayText = "<displayText>",
-        Expression = "<expression>",
-        RelationGuid = "<relationGuid>",
-        Status = AtlasTermRelationshipStatus.Draft,
-        Steward = "<steward>",
-        TermGuid = "<termGuid>",
-    }},
-    Usage = "<usage>",
-};
+AtlasGlossary atlasGlossary = new AtlasGlossary();
 Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", atlasGlossary, ignoreTermsAndCategories: true);
 ]]></code></example>
     </member>
@@ -7253,57 +7103,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-AtlasGlossary atlasGlossary = new AtlasGlossary
-{
-    Guid = "<guid>",
-    Classifications = {new AtlasClassification
-    {
-        Attributes =
-        {
-            ["key"] = BinaryData.FromObjectAsJson(new object())
-        },
-        TypeName = "<typeName>",
-        LastModifiedTS = "<lastModifiedTS>",
-        EntityGuid = "<entityGuid>",
-        EntityStatus = EntityStatus.Active,
-        RemovePropagationsOnEntityDelete = true,
-        ValidityPeriods = {new TimeBoundary
-        {
-            EndTime = "<endTime>",
-            StartTime = "<startTime>",
-            TimeZone = "<timeZone>",
-        }},
-    }},
-    LongDescription = "<longDescription>",
-    Name = "<name>",
-    QualifiedName = "<qualifiedName>",
-    ShortDescription = "<shortDescription>",
-    LastModifiedTS = "<lastModifiedTS>",
-    CreateTime = 1234L,
-    CreatedBy = "<createdBy>",
-    UpdateTime = 1234L,
-    UpdatedBy = "<updatedBy>",
-    Categories = {new AtlasRelatedCategoryHeader
-    {
-        CategoryGuid = "<categoryGuid>",
-        Description = "<description>",
-        DisplayText = "<displayText>",
-        ParentCategoryGuid = "<parentCategoryGuid>",
-        RelationGuid = "<relationGuid>",
-    }},
-    Language = "<language>",
-    Terms = {new AtlasRelatedTermHeader
-    {
-        Description = "<description>",
-        DisplayText = "<displayText>",
-        Expression = "<expression>",
-        RelationGuid = "<relationGuid>",
-        Status = AtlasTermRelationshipStatus.Draft,
-        Steward = "<steward>",
-        TermGuid = "<termGuid>",
-    }},
-    Usage = "<usage>",
-};
+AtlasGlossary atlasGlossary = new AtlasGlossary();
 Response<AtlasGlossary> response = client.Update("<glossaryId>", atlasGlossary, ignoreTermsAndCategories: true);
 ]]></code></example>
     </member>

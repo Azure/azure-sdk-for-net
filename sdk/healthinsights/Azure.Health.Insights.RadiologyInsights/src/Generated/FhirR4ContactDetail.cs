@@ -25,7 +25,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of an individual to contact. </param>
         /// <param name="telecom"> Contact details for individual or organization. </param>
-        internal FhirR4ContactDetail(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IList<FhirR4ContactPoint> telecom) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4ContactDetail(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IList<FhirR4ContactPoint> telecom) : base(id, extension, serializedAdditionalRawData)
         {
             Name = name;
             Telecom = telecom;

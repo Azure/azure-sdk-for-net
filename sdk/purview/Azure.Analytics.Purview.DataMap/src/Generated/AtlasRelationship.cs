@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.DataMap
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AtlasRelationship"/>. </summary>
-        public AtlasRelationship()
+        internal AtlasRelationship()
         {
             Attributes = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="updatedBy"> The user who updated the record. </param>
         /// <param name="version"> The version of the relationship. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasRelationship(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, long? createTime, string createdBy, AtlasObjectId end1, AtlasObjectId end2, string guid, string homeId, string label, int? provenanceType, StatusAtlasRelationship? status, long? updateTime, string updatedBy, long? version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasRelationship(IReadOnlyDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, long? createTime, string createdBy, AtlasObjectId end1, AtlasObjectId end2, string guid, string homeId, string label, int? provenanceType, StatusAtlasRelationship? status, long? updateTime, string updatedBy, long? version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -118,34 +118,34 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Attributes { get; }
+        public IReadOnlyDictionary<string, BinaryData> Attributes { get; }
         /// <summary> The name of the type. </summary>
-        public string TypeName { get; set; }
+        public string TypeName { get; }
         /// <summary> ETag for concurrency control. </summary>
-        public string LastModifiedTS { get; set; }
+        public string LastModifiedTS { get; }
         /// <summary> The created time of the record. </summary>
-        public long? CreateTime { get; set; }
+        public long? CreateTime { get; }
         /// <summary> The user who created the record. </summary>
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; }
         /// <summary> Reference to an object-instance of a type - like entity. </summary>
-        public AtlasObjectId End1 { get; set; }
+        public AtlasObjectId End1 { get; }
         /// <summary> Reference to an object-instance of a type - like entity. </summary>
-        public AtlasObjectId End2 { get; set; }
+        public AtlasObjectId End2 { get; }
         /// <summary> The GUID of the relationship. </summary>
-        public string Guid { get; set; }
+        public string Guid { get; }
         /// <summary> The home ID of the relationship. </summary>
-        public string HomeId { get; set; }
+        public string HomeId { get; }
         /// <summary> The label of the relationship. </summary>
-        public string Label { get; set; }
+        public string Label { get; }
         /// <summary> Used to record the provenance of an instance of an entity or relationship. </summary>
-        public int? ProvenanceType { get; set; }
+        public int? ProvenanceType { get; }
         /// <summary> The enum of relationship status. </summary>
-        public StatusAtlasRelationship? Status { get; set; }
+        public StatusAtlasRelationship? Status { get; }
         /// <summary> The update time of the record. </summary>
-        public long? UpdateTime { get; set; }
+        public long? UpdateTime { get; }
         /// <summary> The user who updated the record. </summary>
-        public string UpdatedBy { get; set; }
+        public string UpdatedBy { get; }
         /// <summary> The version of the relationship. </summary>
-        public long? Version { get; set; }
+        public long? Version { get; }
     }
 }

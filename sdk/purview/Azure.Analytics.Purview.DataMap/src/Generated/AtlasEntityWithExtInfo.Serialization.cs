@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            IDictionary<string, AtlasEntity> referredEntities = default;
+            IReadOnlyDictionary<string, AtlasEntity> referredEntities = default;
             AtlasEntity entity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

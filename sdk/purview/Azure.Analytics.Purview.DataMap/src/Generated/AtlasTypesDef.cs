@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.DataMap
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AtlasTypesDef"/>. </summary>
-        public AtlasTypesDef()
+        internal AtlasTypesDef()
         {
             BusinessMetadataDefs = new ChangeTrackingList<AtlasBusinessMetadataDef>();
             ClassificationDefs = new ChangeTrackingList<AtlasClassificationDef>();
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="structDefs"> An array of struct definitions. </param>
         /// <param name="termTemplateDefs"> An array of term template definitions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasTypesDef(IList<AtlasBusinessMetadataDef> businessMetadataDefs, IList<AtlasClassificationDef> classificationDefs, IList<AtlasEntityDef> entityDefs, IList<AtlasEnumDef> enumDefs, IList<AtlasRelationshipDef> relationshipDefs, IList<AtlasStructDef> structDefs, IList<TermTemplateDef> termTemplateDefs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasTypesDef(IReadOnlyList<AtlasBusinessMetadataDef> businessMetadataDefs, IReadOnlyList<AtlasClassificationDef> classificationDefs, IReadOnlyList<AtlasEntityDef> entityDefs, IReadOnlyList<AtlasEnumDef> enumDefs, IReadOnlyList<AtlasRelationshipDef> relationshipDefs, IReadOnlyList<AtlasStructDef> structDefs, IReadOnlyList<TermTemplateDef> termTemplateDefs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BusinessMetadataDefs = businessMetadataDefs;
             ClassificationDefs = classificationDefs;
@@ -79,18 +79,18 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> businessMetadataDefs. </summary>
-        public IList<AtlasBusinessMetadataDef> BusinessMetadataDefs { get; }
+        public IReadOnlyList<AtlasBusinessMetadataDef> BusinessMetadataDefs { get; }
         /// <summary> An array of classification definitions. </summary>
-        public IList<AtlasClassificationDef> ClassificationDefs { get; }
+        public IReadOnlyList<AtlasClassificationDef> ClassificationDefs { get; }
         /// <summary> An array of entity definitions. </summary>
-        public IList<AtlasEntityDef> EntityDefs { get; }
+        public IReadOnlyList<AtlasEntityDef> EntityDefs { get; }
         /// <summary> An array of enum definitions. </summary>
-        public IList<AtlasEnumDef> EnumDefs { get; }
+        public IReadOnlyList<AtlasEnumDef> EnumDefs { get; }
         /// <summary> An array of relationship definitions. </summary>
-        public IList<AtlasRelationshipDef> RelationshipDefs { get; }
+        public IReadOnlyList<AtlasRelationshipDef> RelationshipDefs { get; }
         /// <summary> An array of struct definitions. </summary>
-        public IList<AtlasStructDef> StructDefs { get; }
+        public IReadOnlyList<AtlasStructDef> StructDefs { get; }
         /// <summary> An array of term template definitions. </summary>
-        public IList<TermTemplateDef> TermTemplateDefs { get; }
+        public IReadOnlyList<TermTemplateDef> TermTemplateDefs { get; }
     }
 }

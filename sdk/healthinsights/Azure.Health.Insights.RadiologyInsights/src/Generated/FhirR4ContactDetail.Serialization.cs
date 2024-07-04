@@ -97,7 +97,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             string name = default;
             IList<FhirR4ContactPoint> telecom = default;
             string id = default;
-            IList<FhirR4Extension> extension = default;
+            IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

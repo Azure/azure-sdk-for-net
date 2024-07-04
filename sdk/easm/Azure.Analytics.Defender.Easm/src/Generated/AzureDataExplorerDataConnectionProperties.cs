@@ -14,7 +14,7 @@ namespace Azure.Analytics.Defender.Easm
     public partial class AzureDataExplorerDataConnectionProperties : DataConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionProperties"/>. </summary>
-        public AzureDataExplorerDataConnectionProperties()
+        internal AzureDataExplorerDataConnectionProperties()
         {
         }
 
@@ -31,10 +31,10 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> The azure data explorer cluster name. </summary>
-        public string ClusterName { get; set; }
+        public string ClusterName { get; }
         /// <summary> The azure data explorer region. </summary>
-        public string Region { get; set; }
+        public string Region { get; }
         /// <summary> The azure data explorer database name. </summary>
-        public string DatabaseName { get; set; }
+        public string DatabaseName { get; }
     }
 }

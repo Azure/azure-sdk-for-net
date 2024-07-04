@@ -2044,6 +2044,15 @@ namespace Azure.Analytics.Defender.Easm
                 properties);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Easm.LogAnalyticsDataConnectionProperties"/>. </summary>
+        /// <param name="apiKey"> log analytics api key. </param>
+        /// <param name="workspaceId"> log analytics workspace id. </param>
+        /// <returns> A new <see cref="Easm.LogAnalyticsDataConnectionProperties"/> instance for mocking. </returns>
+        public static LogAnalyticsDataConnectionProperties LogAnalyticsDataConnectionProperties(string apiKey = null, string workspaceId = null)
+        {
+            return new LogAnalyticsDataConnectionProperties(serializedAdditionalRawData: null, apiKey, workspaceId);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Easm.AzureDataExplorerDataConnection"/>. </summary>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
@@ -2075,6 +2084,16 @@ namespace Azure.Analytics.Defender.Easm
                 inactiveMessage,
                 serializedAdditionalRawData: null,
                 properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.AzureDataExplorerDataConnectionProperties"/>. </summary>
+        /// <param name="clusterName"> The azure data explorer cluster name. </param>
+        /// <param name="region"> The azure data explorer region. </param>
+        /// <param name="databaseName"> The azure data explorer database name. </param>
+        /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnectionProperties"/> instance for mocking. </returns>
+        public static AzureDataExplorerDataConnectionProperties AzureDataExplorerDataConnectionProperties(string clusterName = null, string region = null, string databaseName = null)
+        {
+            return new AzureDataExplorerDataConnectionProperties(serializedAdditionalRawData: null, clusterName, region, databaseName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.LogAnalyticsDataConnectionPayload"/>. </summary>

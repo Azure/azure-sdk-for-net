@@ -442,11 +442,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-            {
-                ApiKey = "<apiKey>",
-                WorkspaceId = "<workspaceId>",
-            })
+            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties())
             {
                 Name = "<name>",
                 Content = DataConnectionContent.Assets,
@@ -464,11 +460,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-            {
-                ApiKey = "<apiKey>",
-                WorkspaceId = "<workspaceId>",
-            })
+            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties())
             {
                 Name = "<name>",
                 Content = DataConnectionContent.Assets,
@@ -750,11 +742,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-            {
-                ApiKey = "<apiKey>",
-                WorkspaceId = "<workspaceId>",
-            })
+            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties())
             {
                 Name = "<name>",
                 Content = DataConnectionContent.Assets,
@@ -772,11 +760,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-            {
-                ApiKey = "<apiKey>",
-                WorkspaceId = "<workspaceId>",
-            })
+            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties())
             {
                 Name = "<name>",
                 Content = DataConnectionContent.Assets,
