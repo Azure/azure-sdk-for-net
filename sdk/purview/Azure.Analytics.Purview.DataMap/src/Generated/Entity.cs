@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,10 +62,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// int&gt;&gt;.
         /// For each contact type, the maximum number of contacts is 20.
         /// </summary>
-        /// <param name="atlasEntityWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="referredEntities"> The referred entities. </param>
+        /// <param name="entity"> An instance of an entity - like hive_table, hive_database. </param>
         /// <param name="businessAttributeUpdateBehavior">
         /// Used to define the update behavior for business attributes when updating
         /// entities.
@@ -73,15 +73,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// need to move an entity to another collection.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityWithExtInfo"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdateAsync(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<EntityMutationResult>> CreateOrUpdateAsync(AtlasEntityWithExtInfo atlasEntityWithExtInfo, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdateAsync(IDictionary{string,AtlasEntity},AtlasEntity,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
+        public virtual async Task<Response<EntityMutationResult>> CreateOrUpdateAsync(IDictionary<string, AtlasEntity> referredEntities = null, AtlasEntity entity = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
-
-            using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntity>(), entity, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrUpdateAsync(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context).ConfigureAwait(false);
+            Response response = await CreateOrUpdateAsync(atlasEntityWithExtInfo.ToRequestContent(), businessAttributeUpdateBehavior?.ToString(), collectionId, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -94,10 +91,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// int&gt;&gt;.
         /// For each contact type, the maximum number of contacts is 20.
         /// </summary>
-        /// <param name="atlasEntityWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="referredEntities"> The referred entities. </param>
+        /// <param name="entity"> An instance of an entity - like hive_table, hive_database. </param>
         /// <param name="businessAttributeUpdateBehavior">
         /// Used to define the update behavior for business attributes when updating
         /// entities.
@@ -107,15 +102,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// need to move an entity to another collection.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityWithExtInfo"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdate(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
-        public virtual Response<EntityMutationResult> CreateOrUpdate(AtlasEntityWithExtInfo atlasEntityWithExtInfo, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdate(IDictionary{string,AtlasEntity},AtlasEntity,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> CreateOrUpdate(IDictionary<string, AtlasEntity> referredEntities = null, AtlasEntity entity = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
-
-            using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntity>(), entity, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrUpdate(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context);
+            Response response = CreateOrUpdate(atlasEntityWithExtInfo.ToRequestContent(), businessAttributeUpdateBehavior?.ToString(), collectionId, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -135,7 +127,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdateAsync(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrUpdateAsync(IDictionary{string,AtlasEntity},AtlasEntity,BusinessAttributeUpdateBehavior?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -188,7 +180,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdate(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrUpdate(IDictionary{string,AtlasEntity},AtlasEntity,BusinessAttributeUpdateBehavior?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -349,10 +341,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// For each contact type, the maximum number of contacts
         /// is 20.
         /// </summary>
-        /// <param name="atlasEntitiesWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="referredEntities"> The referred entities. </param>
+        /// <param name="entities"> An array of entities. </param>
         /// <param name="collectionId">
         /// The collection where entities will be moved to. Only specify a value if you
         /// need to move an entity to another collection.
@@ -362,15 +352,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// entities.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntitiesWithExtInfo"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
-        public virtual async Task<Response<EntityMutationResult>> BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdateAsync(IDictionary{string,AtlasEntity},IEnumerable{AtlasEntity},string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
+        public virtual async Task<Response<EntityMutationResult>> BatchCreateOrUpdateAsync(IDictionary<string, AtlasEntity> referredEntities = null, IEnumerable<AtlasEntity> entities = null, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntitiesWithExtInfo, nameof(atlasEntitiesWithExtInfo));
-
-            using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
+            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntity>(), entities?.ToList() as IList<AtlasEntity> ?? new ChangeTrackingList<AtlasEntity>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await BatchCreateOrUpdateAsync(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context).ConfigureAwait(false);
+            Response response = await BatchCreateOrUpdateAsync(atlasEntitiesWithExtInfo.ToRequestContent(), collectionId, businessAttributeUpdateBehavior?.ToString(), context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -384,10 +371,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// For each contact type, the maximum number of contacts
         /// is 20.
         /// </summary>
-        /// <param name="atlasEntitiesWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="referredEntities"> The referred entities. </param>
+        /// <param name="entities"> An array of entities. </param>
         /// <param name="collectionId">
         /// The collection where entities will be moved to. Only specify a value if you
         /// need to move an entity to another collection.
@@ -397,15 +382,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// entities.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntitiesWithExtInfo"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdate(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
-        public virtual Response<EntityMutationResult> BatchCreateOrUpdate(AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdate(IDictionary{string,AtlasEntity},IEnumerable{AtlasEntity},string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> BatchCreateOrUpdate(IDictionary<string, AtlasEntity> referredEntities = null, IEnumerable<AtlasEntity> entities = null, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntitiesWithExtInfo, nameof(atlasEntitiesWithExtInfo));
-
-            using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
+            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntity>(), entities?.ToList() as IList<AtlasEntity> ?? new ChangeTrackingList<AtlasEntity>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = BatchCreateOrUpdate(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context);
+            Response response = BatchCreateOrUpdate(atlasEntitiesWithExtInfo.ToRequestContent(), collectionId, businessAttributeUpdateBehavior?.ToString(), context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -426,7 +408,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchCreateOrUpdateAsync(IDictionary{string,AtlasEntity},IEnumerable{AtlasEntity},string,BusinessAttributeUpdateBehavior?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -480,7 +462,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchCreateOrUpdate(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchCreateOrUpdate(IDictionary{string,AtlasEntity},IEnumerable{AtlasEntity},string,BusinessAttributeUpdateBehavior?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -632,32 +614,34 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
-        /// <param name="classificationAssociateConfig"> The request payload for classification association. </param>
+        /// <param name="classification">
+        /// An instance of a classification; it doesn't have an identity, this object
+        /// exists only when associated with an entity.
+        /// </param>
+        /// <param name="entityGuids"> The GUID of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateConfig"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)']/*" />
-        public virtual async Task<Response> AddClassificationAsync(ClassificationAssociateConfig classificationAssociateConfig, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(AtlasClassification,IEnumerable{string},CancellationToken)']/*" />
+        public virtual async Task<Response> AddClassificationAsync(AtlasClassification classification = null, IEnumerable<string> entityGuids = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
-
-            using RequestContent content = classificationAssociateConfig.ToRequestContent();
+            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig(classification, entityGuids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddClassificationAsync(content, context).ConfigureAwait(false);
+            Response response = await AddClassificationAsync(classificationAssociateConfig.ToRequestContent(), context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
-        /// <param name="classificationAssociateConfig"> The request payload for classification association. </param>
+        /// <param name="classification">
+        /// An instance of a classification; it doesn't have an identity, this object
+        /// exists only when associated with an entity.
+        /// </param>
+        /// <param name="entityGuids"> The GUID of the entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateConfig"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(ClassificationAssociateConfig,CancellationToken)']/*" />
-        public virtual Response AddClassification(ClassificationAssociateConfig classificationAssociateConfig, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(AtlasClassification,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Response AddClassification(AtlasClassification classification = null, IEnumerable<string> entityGuids = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
-
-            using RequestContent content = classificationAssociateConfig.ToRequestContent();
+            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig(classification, entityGuids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddClassification(content, context);
+            Response response = AddClassification(classificationAssociateConfig.ToRequestContent(), context);
             return response;
         }
 
@@ -671,7 +655,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddClassificationAsync(AtlasClassification,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -710,7 +694,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddClassification(ClassificationAssociateConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddClassification(AtlasClassification,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1868,26 +1852,23 @@ namespace Azure.Analytics.Purview.DataMap
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="atlasEntityWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="referredEntities"> The referred entities. </param>
+        /// <param name="entity"> An instance of an entity - like hive_table, hive_database. </param>
         /// <param name="attribute">
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="atlasEntityWithExtInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttributeAsync(string,AtlasEntityWithExtInfo,string,CancellationToken)']/*" />
-        public virtual async Task<Response<EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, AtlasEntityWithExtInfo atlasEntityWithExtInfo, string attribute = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttributeAsync(string,IDictionary{string,AtlasEntity},AtlasEntity,string,CancellationToken)']/*" />
+        public virtual async Task<Response<EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, IDictionary<string, AtlasEntity> referredEntities = null, AtlasEntity entity = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
-            using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntity>(), entity, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
+            Response response = await UpdateByUniqueAttributeAsync(typeName, atlasEntityWithExtInfo.ToRequestContent(), attribute, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -1910,26 +1891,23 @@ namespace Azure.Analytics.Purview.DataMap
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="atlasEntityWithExtInfo">
-        /// An instance of an entity along with extended info - like hive_table,
-        /// hive_database.
-        /// </param>
+        /// <param name="referredEntities"> The referred entities. </param>
+        /// <param name="entity"> An instance of an entity - like hive_table, hive_database. </param>
         /// <param name="attribute">
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="atlasEntityWithExtInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttribute(string,AtlasEntityWithExtInfo,string,CancellationToken)']/*" />
-        public virtual Response<EntityMutationResult> UpdateByUniqueAttribute(string typeName, AtlasEntityWithExtInfo atlasEntityWithExtInfo, string attribute = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttribute(string,IDictionary{string,AtlasEntity},AtlasEntity,string,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> UpdateByUniqueAttribute(string typeName, IDictionary<string, AtlasEntity> referredEntities = null, AtlasEntity entity = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
-            using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
+            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntity>(), entity, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateByUniqueAttribute(typeName, content, attribute, context);
+            Response response = UpdateByUniqueAttribute(typeName, atlasEntityWithExtInfo.ToRequestContent(), attribute, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -1958,7 +1936,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateByUniqueAttributeAsync(string,AtlasEntityWithExtInfo,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateByUniqueAttributeAsync(string,IDictionary{string,AtlasEntity},AtlasEntity,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2019,7 +1997,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateByUniqueAttribute(string,AtlasEntityWithExtInfo,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateByUniqueAttribute(string,IDictionary{string,AtlasEntity},AtlasEntity,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2588,17 +2566,14 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Set classifications on entities in bulk. </summary>
-        /// <param name="atlasEntityHeaders"> An instance of an entity header map. </param>
+        /// <param name="guidHeaderMap"> The description of the guid header map,. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityHeaders"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassificationsAsync(AtlasEntityHeaders,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<string>>> BatchSetClassificationsAsync(AtlasEntityHeaders atlasEntityHeaders, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassificationsAsync(IDictionary{string,AtlasEntityHeader},CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<string>>> BatchSetClassificationsAsync(IDictionary<string, AtlasEntityHeader> guidHeaderMap = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntityHeaders, nameof(atlasEntityHeaders));
-
-            using RequestContent content = atlasEntityHeaders.ToRequestContent();
+            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders(guidHeaderMap ?? new ChangeTrackingDictionary<string, AtlasEntityHeader>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await BatchSetClassificationsAsync(content, context).ConfigureAwait(false);
+            Response response = await BatchSetClassificationsAsync(atlasEntityHeaders.ToRequestContent(), context).ConfigureAwait(false);
             IReadOnlyList<string> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             List<string> array = new List<string>();
@@ -2611,17 +2586,14 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Set classifications on entities in bulk. </summary>
-        /// <param name="atlasEntityHeaders"> An instance of an entity header map. </param>
+        /// <param name="guidHeaderMap"> The description of the guid header map,. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasEntityHeaders"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassifications(AtlasEntityHeaders,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<string>> BatchSetClassifications(AtlasEntityHeaders atlasEntityHeaders, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassifications(IDictionary{string,AtlasEntityHeader},CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<string>> BatchSetClassifications(IDictionary<string, AtlasEntityHeader> guidHeaderMap = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntityHeaders, nameof(atlasEntityHeaders));
-
-            using RequestContent content = atlasEntityHeaders.ToRequestContent();
+            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders(guidHeaderMap ?? new ChangeTrackingDictionary<string, AtlasEntityHeader>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = BatchSetClassifications(content, context);
+            Response response = BatchSetClassifications(atlasEntityHeaders.ToRequestContent(), context);
             IReadOnlyList<string> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
             List<string> array = new List<string>();
@@ -2643,7 +2615,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchSetClassificationsAsync(AtlasEntityHeaders,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchSetClassificationsAsync(IDictionary{string,AtlasEntityHeader},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2682,7 +2654,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchSetClassifications(AtlasEntityHeaders,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchSetClassifications(IDictionary{string,AtlasEntityHeader},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3634,14 +3606,15 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
-        /// <param name="businessMetadataOptions"> Business metadata to send to the service. </param>
+        /// <param name="file"> InputStream of file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataOptions"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<BulkImportResult>> ImportBusinessMetadataAsync(BusinessMetadataOptions businessMetadataOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(Stream,CancellationToken)']/*" />
+        public virtual async Task<Response<BulkImportResult>> ImportBusinessMetadataAsync(Stream file, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
+            Argument.AssertNotNull(file, nameof(file));
 
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(file, null);
             using MultipartFormDataRequestContent content = businessMetadataOptions.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ImportBusinessMetadataAsync(content, content.ContentType, context).ConfigureAwait(false);
@@ -3649,14 +3622,15 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
-        /// <param name="businessMetadataOptions"> Business metadata to send to the service. </param>
+        /// <param name="file"> InputStream of file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataOptions"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)']/*" />
-        public virtual Response<BulkImportResult> ImportBusinessMetadata(BusinessMetadataOptions businessMetadataOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(Stream,CancellationToken)']/*" />
+        public virtual Response<BulkImportResult> ImportBusinessMetadata(Stream file, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
+            Argument.AssertNotNull(file, nameof(file));
 
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(file, null);
             using MultipartFormDataRequestContent content = businessMetadataOptions.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ImportBusinessMetadata(content, content.ContentType, context);
@@ -3673,7 +3647,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportBusinessMetadataAsync(Stream,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3713,7 +3687,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportBusinessMetadata(Stream,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4661,35 +4635,33 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
-        /// <param name="moveEntitiesConfig"> MoveEntitiesOptions. </param>
+        /// <param name="entityGuids"> An array of entity guids to be moved to target collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesConfig"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)']/*" />
-        public virtual async Task<Response<EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, MoveEntitiesConfig moveEntitiesConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual async Task<Response<EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, IEnumerable<string> entityGuids = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
 
-            using RequestContent content = moveEntitiesConfig.ToRequestContent();
+            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig(entityGuids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await MoveEntitiesToCollectionAsync(collectionId, content, context).ConfigureAwait(false);
+            Response response = await MoveEntitiesToCollectionAsync(collectionId, moveEntitiesConfig.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
-        /// <param name="moveEntitiesConfig"> MoveEntitiesOptions. </param>
+        /// <param name="entityGuids"> An array of entity guids to be moved to target collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesConfig"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)']/*" />
-        public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesConfig moveEntitiesConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, IEnumerable<string> entityGuids = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
 
-            using RequestContent content = moveEntitiesConfig.ToRequestContent();
+            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig(entityGuids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = MoveEntitiesToCollection(collectionId, content, context);
+            Response response = MoveEntitiesToCollection(collectionId, moveEntitiesConfig.ToRequestContent(), context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
@@ -4703,7 +4675,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="MoveEntitiesToCollectionAsync(string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4744,7 +4716,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="MoveEntitiesToCollection(string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
