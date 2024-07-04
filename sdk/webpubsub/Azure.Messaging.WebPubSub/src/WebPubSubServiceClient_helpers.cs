@@ -30,7 +30,7 @@ namespace Azure.Messaging.WebPubSub
         internal static byte[] s_group = Encoding.UTF8.GetBytes("webpubsub.group");
 
         /// <summary>
-        /// Creates a URI with authentication token for clients who connect to "/clients/hubs/{hub}".
+        /// Creates a URI with authentication token for clients.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -43,7 +43,7 @@ namespace Azure.Messaging.WebPubSub
             => GetClientAccessUriInternal(expiresAt, userId, roles, null, ClientEndpointType.Default, async: false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Creates a URI with authentication token for clients who connect to "/clients/hubs/{hub}".
+        /// Creates a URI with authentication token for clients.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -72,7 +72,7 @@ namespace Azure.Messaging.WebPubSub
             => GetClientAccessUriInternal(expiresAt, userId, roles, groups, clientEndpointType, async: false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Creates a URI with authentication token for clients who connect to "/clients/hubs/{hub}".
+        /// Creates a URI with authentication token for clients.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -85,7 +85,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
-        /// Creates a URI with authentication token for clients who connect to "/clients/hubs/{hub}".
+        /// Creates a URI with authentication token for clients.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -99,7 +99,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
-        /// Creates a URI with authentication token for clients.
+        /// Creates a URI with authentication token for clients.Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -114,7 +114,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
-        /// Creates a URI with authentication token for clients who connect to "/clients/hubs/{hub}".
+        /// Creates a URI with authentication token for clients.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -133,7 +133,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for clients who connect to "/clients/hubs/{hub}".
+        /// Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -154,7 +154,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for clients.
+        /// Creates a URI with authentication token for clients.Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -177,7 +177,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for clients who connect to "/clients/hubs/{hub}".
+        /// Creates a URI with authentication token for clients.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -196,7 +196,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for clients who connect to "/clients/hubs/{hub}".
+        /// Creates a URI with authentication token for clients.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -217,7 +217,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for clients.
+        /// Creates a URI with authentication token for clients.Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
