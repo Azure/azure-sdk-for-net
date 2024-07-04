@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The LogAnalyticsDataConnectionPayload. </summary>
-    internal partial class LogAnalyticsDataConnectionPayload : DataConnectionPayload
+    public partial class LogAnalyticsDataConnectionPayload : DataConnectionPayload
     {
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnectionPayload"/>. </summary>
         /// <param name="properties"> properties. </param>
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnectionPayload"/>. </summary>
-        /// <param name="kind"> Discriminator property for DataConnectionPayload. </param>
+        /// <param name="kind"> Discriminator property for DataConnectionData. </param>
         /// <param name="name"> The name of data connection. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>

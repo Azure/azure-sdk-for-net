@@ -104,12 +104,9 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Create a new detect liveness session. </summary>
-        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
-        /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
-        /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
-        /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
-        /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks>
         /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
         ///
@@ -122,28 +119,21 @@ namespace Azure.AI.Vision.Face
         /// &gt; [!NOTE]
         /// &gt; Client access can be revoked by deleting the session using the Delete Liveness Session operation. To retrieve a result, use the Get Liveness Session. To audit the individual requests that a client has made to your resource, use the List Liveness Session Audit Entries.
         /// </remarks>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSessionAsync(LivenessOperationMode,bool?,bool?,string,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<CreateLivenessSessionResult>> CreateLivenessSessionAsync(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient = null, bool? deviceCorrelationIdSetInClient = null, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSessionAsync(CreateLivenessSessionContent,CancellationToken)']/*" />
+        public virtual async Task<Response<CreateLivenessSessionResult>> CreateLivenessSessionAsync(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
         {
-            CreateLivenessSessionContent createLivenessSessionContent = new CreateLivenessSessionContent(
-                livenessOperationMode,
-                sendResultsToClient,
-                deviceCorrelationIdSetInClient,
-                deviceCorrelationId,
-                authTokenTimeToLiveInSeconds,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateLivenessSessionAsync(createLivenessSessionContent.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateLivenessSessionAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(CreateLivenessSessionResult.FromResponse(response), response);
         }
 
         /// <summary> Create a new detect liveness session. </summary>
-        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
-        /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
-        /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
-        /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
-        /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks>
         /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
         ///
@@ -156,18 +146,14 @@ namespace Azure.AI.Vision.Face
         /// &gt; [!NOTE]
         /// &gt; Client access can be revoked by deleting the session using the Delete Liveness Session operation. To retrieve a result, use the Get Liveness Session. To audit the individual requests that a client has made to your resource, use the List Liveness Session Audit Entries.
         /// </remarks>
-        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSession(LivenessOperationMode,bool?,bool?,string,int?,CancellationToken)']/*" />
-        public virtual Response<CreateLivenessSessionResult> CreateLivenessSession(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient = null, bool? deviceCorrelationIdSetInClient = null, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSession(CreateLivenessSessionContent,CancellationToken)']/*" />
+        public virtual Response<CreateLivenessSessionResult> CreateLivenessSession(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
         {
-            CreateLivenessSessionContent createLivenessSessionContent = new CreateLivenessSessionContent(
-                livenessOperationMode,
-                sendResultsToClient,
-                deviceCorrelationIdSetInClient,
-                deviceCorrelationId,
-                authTokenTimeToLiveInSeconds,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateLivenessSession(createLivenessSessionContent.ToRequestContent(), context);
+            Response response = CreateLivenessSession(content, context);
             return Response.FromValue(CreateLivenessSessionResult.FromResponse(response), response);
         }
 
@@ -181,7 +167,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateLivenessSessionAsync(LivenessOperationMode,bool?,bool?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateLivenessSessionAsync(CreateLivenessSessionContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -220,7 +206,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateLivenessSession(LivenessOperationMode,bool?,bool?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateLivenessSession(CreateLivenessSessionContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -690,12 +676,9 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Create a new liveness session with verify. Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call. </summary>
-        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
-        /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
-        /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
-        /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
-        /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks>
         /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
         ///
@@ -716,27 +699,20 @@ namespace Azure.AI.Vision.Face
         /// &gt; [!NOTE]
         /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
         /// </remarks>
-        internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient = null, bool? deviceCorrelationIdSetInClient = null, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
         {
-            CreateLivenessSessionContent createLivenessSessionContent = new CreateLivenessSessionContent(
-                livenessOperationMode,
-                sendResultsToClient,
-                deviceCorrelationIdSetInClient,
-                deviceCorrelationId,
-                authTokenTimeToLiveInSeconds,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateLivenessWithVerifySessionAsync(createLivenessSessionContent.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateLivenessWithVerifySessionAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(CreateLivenessWithVerifySessionResult.FromResponse(response), response);
         }
 
         /// <summary> Create a new liveness session with verify. Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call. </summary>
-        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
-        /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
-        /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
-        /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
-        /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks>
         /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
         ///
@@ -757,17 +733,13 @@ namespace Azure.AI.Vision.Face
         /// &gt; [!NOTE]
         /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
         /// </remarks>
-        internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient = null, bool? deviceCorrelationIdSetInClient = null, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = null, CancellationToken cancellationToken = default)
+        internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
         {
-            CreateLivenessSessionContent createLivenessSessionContent = new CreateLivenessSessionContent(
-                livenessOperationMode,
-                sendResultsToClient,
-                deviceCorrelationIdSetInClient,
-                deviceCorrelationId,
-                authTokenTimeToLiveInSeconds,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateLivenessWithVerifySession(createLivenessSessionContent.ToRequestContent(), context);
+            Response response = CreateLivenessWithVerifySession(content, context);
             return Response.FromValue(CreateLivenessWithVerifySessionResult.FromResponse(response), response);
         }
 
@@ -781,7 +753,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionAsync(LivenessOperationMode,bool?,bool?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateLivenessWithVerifySessionAsync(CreateLivenessSessionContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -819,7 +791,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateLivenessWithVerifySession(LivenessOperationMode,bool?,bool?,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateLivenessWithVerifySession(CreateLivenessSessionContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

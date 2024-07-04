@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
     /// Please note <see cref="DataConnectionPayload"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureDataExplorerDataConnectionPayload"/> and <see cref="LogAnalyticsDataConnectionPayload"/>.
     /// </summary>
-    internal abstract partial class DataConnectionPayload
+    public abstract partial class DataConnectionPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnectionPayload"/>. </summary>
-        /// <param name="kind"> Discriminator property for DataConnectionPayload. </param>
+        /// <param name="kind"> Discriminator property for DataConnectionData. </param>
         /// <param name="name"> The name of data connection. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Defender.Easm
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Discriminator property for DataConnectionPayload. </summary>
+        /// <summary> Discriminator property for DataConnectionData. </summary>
         internal string Kind { get; set; }
         /// <summary> The name of data connection. </summary>
         public string Name { get; set; }

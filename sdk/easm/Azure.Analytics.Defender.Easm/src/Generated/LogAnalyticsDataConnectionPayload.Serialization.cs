@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class LogAnalyticsDataConnectionPayload : IUtf8JsonSerializable, IJsonModel<LogAnalyticsDataConnectionPayload>
+    public partial class LogAnalyticsDataConnectionPayload : IUtf8JsonSerializable, IJsonModel<LogAnalyticsDataConnectionPayload>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsDataConnectionPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

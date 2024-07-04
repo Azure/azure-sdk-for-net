@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -52,37 +51,35 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Provides timestamp of latest SIM swap. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Network to query for this device. </param>
-        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="networkIdentifier"/> is null. </exception>
-        /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='RetrieveAsync(string,NetworkIdentifier,string,CancellationToken)']/*" />
-        public virtual async Task<Response<SimSwapRetrievalResult>> RetrieveAsync(string apcGatewayId, NetworkIdentifier networkIdentifier, string phoneNumber = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='RetrieveAsync(string,SimSwapRetrievalContent,CancellationToken)']/*" />
+        public virtual async Task<Response<SimSwapRetrievalResult>> RetrieveAsync(string apcGatewayId, SimSwapRetrievalContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
+            Argument.AssertNotNull(body, nameof(body));
 
-            SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(phoneNumber, networkIdentifier, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RetrieveAsync(apcGatewayId, simSwapRetrievalContent.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await RetrieveAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(SimSwapRetrievalResult.FromResponse(response), response);
         }
 
         /// <summary> Provides timestamp of latest SIM swap. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Network to query for this device. </param>
-        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="networkIdentifier"/> is null. </exception>
-        /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='Retrieve(string,NetworkIdentifier,string,CancellationToken)']/*" />
-        public virtual Response<SimSwapRetrievalResult> Retrieve(string apcGatewayId, NetworkIdentifier networkIdentifier, string phoneNumber = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='Retrieve(string,SimSwapRetrievalContent,CancellationToken)']/*" />
+        public virtual Response<SimSwapRetrievalResult> Retrieve(string apcGatewayId, SimSwapRetrievalContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
+            Argument.AssertNotNull(body, nameof(body));
 
-            SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(phoneNumber, networkIdentifier, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Retrieve(apcGatewayId, simSwapRetrievalContent.ToRequestContent(), context);
+            Response response = Retrieve(apcGatewayId, content, context);
             return Response.FromValue(SimSwapRetrievalResult.FromResponse(response), response);
         }
 
@@ -96,7 +93,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RetrieveAsync(string,NetworkIdentifier,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RetrieveAsync(string,SimSwapRetrievalContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -137,7 +134,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Retrieve(string,NetworkIdentifier,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Retrieve(string,SimSwapRetrievalContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -170,39 +167,35 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies if a SIM swap has been performed during a past period (defined in the request with 'maxAgeHours' attribute). Returns 'True' if a SIM swap has occured. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Identifier for the network to query for this device. </param>
-        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
-        /// <param name="maxAgeHours"> Maximum lookback for SimSwap verification. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="networkIdentifier"/> is null. </exception>
-        /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='VerifyAsync(string,NetworkIdentifier,string,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<SimSwapVerificationResult>> VerifyAsync(string apcGatewayId, NetworkIdentifier networkIdentifier, string phoneNumber = null, int? maxAgeHours = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='VerifyAsync(string,SimSwapVerificationContent,CancellationToken)']/*" />
+        public virtual async Task<Response<SimSwapVerificationResult>> VerifyAsync(string apcGatewayId, SimSwapVerificationContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
+            Argument.AssertNotNull(body, nameof(body));
 
-            SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(phoneNumber, maxAgeHours, networkIdentifier, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await VerifyAsync(apcGatewayId, simSwapVerificationContent.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await VerifyAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(SimSwapVerificationResult.FromResponse(response), response);
         }
 
         /// <summary> Verifies if a SIM swap has been performed during a past period (defined in the request with 'maxAgeHours' attribute). Returns 'True' if a SIM swap has occured. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Identifier for the network to query for this device. </param>
-        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
-        /// <param name="maxAgeHours"> Maximum lookback for SimSwap verification. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="networkIdentifier"/> is null. </exception>
-        /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='Verify(string,NetworkIdentifier,string,int?,CancellationToken)']/*" />
-        public virtual Response<SimSwapVerificationResult> Verify(string apcGatewayId, NetworkIdentifier networkIdentifier, string phoneNumber = null, int? maxAgeHours = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='Verify(string,SimSwapVerificationContent,CancellationToken)']/*" />
+        public virtual Response<SimSwapVerificationResult> Verify(string apcGatewayId, SimSwapVerificationContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
+            Argument.AssertNotNull(body, nameof(body));
 
-            SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(phoneNumber, maxAgeHours, networkIdentifier, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Verify(apcGatewayId, simSwapVerificationContent.ToRequestContent(), context);
+            Response response = Verify(apcGatewayId, content, context);
             return Response.FromValue(SimSwapVerificationResult.FromResponse(response), response);
         }
 
@@ -216,7 +209,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="VerifyAsync(string,NetworkIdentifier,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="VerifyAsync(string,SimSwapVerificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -257,7 +250,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Verify(string,NetworkIdentifier,string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Verify(string,SimSwapVerificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

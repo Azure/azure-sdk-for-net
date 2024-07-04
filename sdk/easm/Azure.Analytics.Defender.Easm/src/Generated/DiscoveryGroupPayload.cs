@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to create a discovery group. </summary>
-    internal partial class DiscoveryGroupPayload
+    public partial class DiscoveryGroupPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

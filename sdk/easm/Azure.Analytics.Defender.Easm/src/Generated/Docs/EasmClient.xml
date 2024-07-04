@@ -255,7 +255,421 @@ Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToSt
 Console.WriteLine(result.GetProperty("reason").ToString());
 ]]></code></example>
     </member>
-    <member name="ValidateDataConnectionAsync(string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)">
+    <member name="GetAssetsExportAsync(AssetsExportRequest,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetsExportAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+AssetsExportRequest body = new AssetsExportRequest("<fileName>", new string[] { "<columns>" });
+Response<TaskResource> response = await client.GetAssetsExportAsync(body);
+]]></code>
+This sample shows how to call GetAssetsExportAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+AssetsExportRequest body = new AssetsExportRequest("<fileName>", new string[] { "<columns>" });
+Response<TaskResource> response = await client.GetAssetsExportAsync(body, filter: "<filter>", orderby: "<orderby>");
+]]></code></example>
+    </member>
+    <member name="GetAssetsExport(AssetsExportRequest,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetsExport.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+AssetsExportRequest body = new AssetsExportRequest("<fileName>", new string[] { "<columns>" });
+Response<TaskResource> response = client.GetAssetsExport(body);
+]]></code>
+This sample shows how to call GetAssetsExport with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+AssetsExportRequest body = new AssetsExportRequest("<fileName>", new string[] { "<columns>" });
+Response<TaskResource> response = client.GetAssetsExport(body, filter: "<filter>", orderby: "<orderby>");
+]]></code></example>
+    </member>
+    <member name="GetAssetsExportAsync(RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetsExportAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    fileName = "<fileName>",
+    columns = new object[]
+    {
+        "<columns>"
+    },
+});
+Response response = await client.GetAssetsExportAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetAssetsExportAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    fileName = "<fileName>",
+    columns = new object[]
+    {
+        "<columns>"
+    },
+});
+Response response = await client.GetAssetsExportAsync(content, filter: "<filter>", orderby: "<orderby>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetsExport(RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetsExport and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    fileName = "<fileName>",
+    columns = new object[]
+    {
+        "<columns>"
+    },
+});
+Response response = client.GetAssetsExport(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetAssetsExport with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    fileName = "<fileName>",
+    columns = new object[]
+    {
+        "<columns>"
+    },
+});
+Response response = client.GetAssetsExport(content, filter: "<filter>", orderby: "<orderby>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetObservationsAsync(string,string,string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetObservationsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<ObservationPageResult> response = await client.GetObservationsAsync("<assetId>");
+]]></code>
+This sample shows how to call GetObservationsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<ObservationPageResult> response = await client.GetObservationsAsync("<assetId>", filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234);
+]]></code></example>
+    </member>
+    <member name="GetObservations(string,string,string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetObservations.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<ObservationPageResult> response = client.GetObservations("<assetId>");
+]]></code>
+This sample shows how to call GetObservations with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<ObservationPageResult> response = client.GetObservations("<assetId>", filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234);
+]]></code></example>
+    </member>
+    <member name="GetObservationsAsync(string,string,string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetObservationsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.GetObservationsAsync("<assetId>", null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("prioritySummary").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("types")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("cvssScoreV2").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("cvssScoreV3").ToString());
+]]></code>
+This sample shows how to call GetObservationsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.GetObservationsAsync("<assetId>", "<filter>", "<orderby>", 1234, 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("prioritySummary").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("types")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("cvssScoreV2").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("cvssScoreV3").ToString());
+]]></code></example>
+    </member>
+    <member name="GetObservations(string,string,string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetObservations and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.GetObservations("<assetId>", null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("prioritySummary").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("types")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("cvssScoreV2").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("cvssScoreV3").ToString());
+]]></code>
+This sample shows how to call GetObservations with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.GetObservations("<assetId>", "<filter>", "<orderby>", 1234, 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("prioritySummary").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("types")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("priority").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("cvssScoreV2").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("cvssScoreV3").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDeltaSummaryAsync(DeltaSummaryRequest,CancellationToken)">
+      <example>
+This sample shows how to call GetDeltaSummaryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DeltaSummaryRequest body = new DeltaSummaryRequest();
+Response<DeltaSummaryResult> response = await client.GetDeltaSummaryAsync(body);
+]]></code>
+This sample shows how to call GetDeltaSummaryAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DeltaSummaryRequest body = new DeltaSummaryRequest
+{
+    PriorDays = 1234,
+    Date = "<date>",
+};
+Response<DeltaSummaryResult> response = await client.GetDeltaSummaryAsync(body);
+]]></code></example>
+    </member>
+    <member name="GetDeltaSummary(DeltaSummaryRequest,CancellationToken)">
+      <example>
+This sample shows how to call GetDeltaSummary.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DeltaSummaryRequest body = new DeltaSummaryRequest();
+Response<DeltaSummaryResult> response = client.GetDeltaSummary(body);
+]]></code>
+This sample shows how to call GetDeltaSummary with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DeltaSummaryRequest body = new DeltaSummaryRequest
+{
+    PriorDays = 1234,
+    Date = "<date>",
+};
+Response<DeltaSummaryResult> response = client.GetDeltaSummary(body);
+]]></code></example>
+    </member>
+    <member name="GetDeltaSummaryAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetDeltaSummaryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.GetDeltaSummaryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("summary").GetProperty("range").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("difference").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("difference").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("date").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("count").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("difference").ToString());
+]]></code>
+This sample shows how to call GetDeltaSummaryAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    priorDays = 1234,
+    date = "<date>",
+});
+Response response = await client.GetDeltaSummaryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("summary").GetProperty("range").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("difference").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("difference").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("date").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("count").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("difference").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDeltaSummary(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetDeltaSummary and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.GetDeltaSummary(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("summary").GetProperty("range").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("difference").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("difference").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("date").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("count").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("difference").ToString());
+]]></code>
+This sample shows how to call GetDeltaSummary with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    priorDays = 1234,
+    date = "<date>",
+});
+Response response = client.GetDeltaSummary(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("summary").GetProperty("range").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("difference").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("kindSummaries")[0].GetProperty("difference").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("date").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("count").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("removed").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("added").ToString());
+Console.WriteLine(result.GetProperty("daily")[0].GetProperty("deltas")[0].GetProperty("difference").ToString());
+]]></code></example>
+    </member>
+    <member name="ValidateDataConnectionAsync(DataConnectionPayload,CancellationToken)">
       <example>
 This sample shows how to call ValidateDataConnectionAsync.
 <code><![CDATA[
@@ -263,7 +677,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ValidateResult> response = await client.ValidateDataConnectionAsync("logAnalytics");
+DataConnectionPayload body = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
+Response<ValidateResult> response = await client.ValidateDataConnectionAsync(body);
 ]]></code>
 This sample shows how to call ValidateDataConnectionAsync with all parameters.
 <code><![CDATA[
@@ -271,10 +686,21 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ValidateResult> response = await client.ValidateDataConnectionAsync("logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
+DataConnectionPayload body = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
+{
+    ApiKey = "<apiKey>",
+    WorkspaceId = "<workspaceId>",
+})
+{
+    Name = "<name>",
+    Content = DataConnectionContent.Assets,
+    Frequency = DataConnectionFrequency.Daily,
+    FrequencyOffset = 1234,
+};
+Response<ValidateResult> response = await client.ValidateDataConnectionAsync(body);
 ]]></code></example>
     </member>
-    <member name="ValidateDataConnection(string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)">
+    <member name="ValidateDataConnection(DataConnectionPayload,CancellationToken)">
       <example>
 This sample shows how to call ValidateDataConnection.
 <code><![CDATA[
@@ -282,7 +708,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ValidateResult> response = client.ValidateDataConnection("logAnalytics");
+DataConnectionPayload body = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
+Response<ValidateResult> response = client.ValidateDataConnection(body);
 ]]></code>
 This sample shows how to call ValidateDataConnection with all parameters.
 <code><![CDATA[
@@ -290,7 +717,18 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ValidateResult> response = client.ValidateDataConnection("logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
+DataConnectionPayload body = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
+{
+    ApiKey = "<apiKey>",
+    WorkspaceId = "<workspaceId>",
+})
+{
+    Name = "<name>",
+    Content = DataConnectionContent.Assets,
+    Frequency = DataConnectionFrequency.Daily,
+    FrequencyOffset = 1234,
+};
+Response<ValidateResult> response = client.ValidateDataConnection(body);
 ]]></code></example>
     </member>
     <member name="ValidateDataConnectionAsync(RequestContent,RequestContext)">
@@ -499,7 +937,7 @@ Console.WriteLine(result.GetProperty("active").ToString());
 Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDataConnectionAsync(string,string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)">
+    <member name="CreateOrReplaceDataConnectionAsync(string,DataConnectionPayload,CancellationToken)">
       <example>
 This sample shows how to call CreateOrReplaceDataConnectionAsync.
 <code><![CDATA[
@@ -507,7 +945,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", "logAnalytics");
+DataConnectionPayload body = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
+Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", body);
 ]]></code>
 This sample shows how to call CreateOrReplaceDataConnectionAsync with all parameters.
 <code><![CDATA[
@@ -515,10 +954,21 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", "logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
+DataConnectionPayload body = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
+{
+    ApiKey = "<apiKey>",
+    WorkspaceId = "<workspaceId>",
+})
+{
+    Name = "<name>",
+    Content = DataConnectionContent.Assets,
+    Frequency = DataConnectionFrequency.Daily,
+    FrequencyOffset = 1234,
+};
+Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", body);
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDataConnection(string,string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)">
+    <member name="CreateOrReplaceDataConnection(string,DataConnectionPayload,CancellationToken)">
       <example>
 This sample shows how to call CreateOrReplaceDataConnection.
 <code><![CDATA[
@@ -526,7 +976,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", "logAnalytics");
+DataConnectionPayload body = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
+Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", body);
 ]]></code>
 This sample shows how to call CreateOrReplaceDataConnection with all parameters.
 <code><![CDATA[
@@ -534,7 +985,18 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", "logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
+DataConnectionPayload body = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
+{
+    ApiKey = "<apiKey>",
+    WorkspaceId = "<workspaceId>",
+})
+{
+    Name = "<name>",
+    Content = DataConnectionContent.Assets,
+    Frequency = DataConnectionFrequency.Daily,
+    FrequencyOffset = 1234,
+};
+Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", body);
 ]]></code></example>
     </member>
     <member name="CreateOrReplaceDataConnectionAsync(string,RequestContent,RequestContext)">
@@ -693,79 +1155,91 @@ Response response = client.DeleteDataConnection("<dataConnectionName>");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoveryGroupAsync(string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
+    <member name="ValidateDiscoGroupAsync(DiscoveryGroupPayload,CancellationToken)">
       <example>
-This sample shows how to call ValidateDiscoveryGroupAsync.
+This sample shows how to call ValidateDiscoGroupAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync();
+DiscoveryGroupPayload body = new DiscoveryGroupPayload();
+Response<ValidateResult> response = await client.ValidateDiscoGroupAsync(body);
 ]]></code>
-This sample shows how to call ValidateDiscoveryGroupAsync with all parameters.
+This sample shows how to call ValidateDiscoGroupAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
+DiscoveryGroupPayload body = new DiscoveryGroupPayload
 {
-    new DiscoverySource
+    Name = "<name>",
+    Description = "<description>",
+    Tier = "<tier>",
+    FrequencyMilliseconds = 1234L,
+    Seeds = {new DiscoverySource
     {
         Kind = DiscoverySourceKind.As,
         Name = "<name>",
-    }
-}, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
-{
-    default
-}, templateId: "<templateId>");
+    }},
+    Names = { "<names>" },
+    Excludes = { default },
+    TemplateId = "<templateId>",
+};
+Response<ValidateResult> response = await client.ValidateDiscoGroupAsync(body);
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoveryGroup(string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
+    <member name="ValidateDiscoGroup(DiscoveryGroupPayload,CancellationToken)">
       <example>
-This sample shows how to call ValidateDiscoveryGroup.
+This sample shows how to call ValidateDiscoGroup.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ValidateResult> response = client.ValidateDiscoveryGroup();
+DiscoveryGroupPayload body = new DiscoveryGroupPayload();
+Response<ValidateResult> response = client.ValidateDiscoGroup(body);
 ]]></code>
-This sample shows how to call ValidateDiscoveryGroup with all parameters.
+This sample shows how to call ValidateDiscoGroup with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ValidateResult> response = client.ValidateDiscoveryGroup(name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
+DiscoveryGroupPayload body = new DiscoveryGroupPayload
 {
-    new DiscoverySource
+    Name = "<name>",
+    Description = "<description>",
+    Tier = "<tier>",
+    FrequencyMilliseconds = 1234L,
+    Seeds = {new DiscoverySource
     {
         Kind = DiscoverySourceKind.As,
         Name = "<name>",
-    }
-}, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
-{
-    default
-}, templateId: "<templateId>");
+    }},
+    Names = { "<names>" },
+    Excludes = { default },
+    TemplateId = "<templateId>",
+};
+Response<ValidateResult> response = client.ValidateDiscoGroup(body);
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoveryGroupAsync(RequestContent,RequestContext)">
+    <member name="ValidateDiscoGroupAsync(RequestContent,RequestContext)">
       <example>
-This sample shows how to call ValidateDiscoveryGroupAsync and parse the result.
+This sample shows how to call ValidateDiscoGroupAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
-Response response = await client.ValidateDiscoveryGroupAsync(content);
+Response response = await client.ValidateDiscoGroupAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ValidateDiscoveryGroupAsync with all request content and parse the result.
+This sample shows how to call ValidateDiscoGroupAsync with all request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -795,7 +1269,7 @@ using RequestContent content = RequestContent.Create(new
     },
     templateId = "<templateId>",
 });
-Response response = await client.ValidateDiscoveryGroupAsync(content);
+Response response = await client.ValidateDiscoGroupAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
@@ -805,21 +1279,21 @@ Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetPrope
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoveryGroup(RequestContent,RequestContext)">
+    <member name="ValidateDiscoGroup(RequestContent,RequestContext)">
       <example>
-This sample shows how to call ValidateDiscoveryGroup and parse the result.
+This sample shows how to call ValidateDiscoGroup and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
-Response response = client.ValidateDiscoveryGroup(content);
+Response response = client.ValidateDiscoGroup(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ValidateDiscoveryGroup with all request content and parse the result.
+This sample shows how to call ValidateDiscoGroup with all request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -849,7 +1323,7 @@ using RequestContent content = RequestContent.Create(new
     },
     templateId = "<templateId>",
 });
-Response response = client.ValidateDiscoveryGroup(content);
+Response response = client.ValidateDiscoGroup(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
@@ -859,112 +1333,64 @@ Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetPrope
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroupAsync(string,CancellationToken)">
+    <member name="GetDiscoGroupAsync(string,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryGroupAsync.
+This sample shows how to call GetDiscoGroupAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryGroup> response = await client.GetDiscoveryGroupAsync("<groupName>");
+Response<DiscoveryGroup> response = await client.GetDiscoGroupAsync("<groupName>");
 ]]></code>
-This sample shows how to call GetDiscoveryGroupAsync with all parameters.
+This sample shows how to call GetDiscoGroupAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryGroup> response = await client.GetDiscoveryGroupAsync("<groupName>");
+Response<DiscoveryGroup> response = await client.GetDiscoGroupAsync("<groupName>");
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroup(string,CancellationToken)">
+    <member name="GetDiscoGroup(string,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryGroup.
+This sample shows how to call GetDiscoGroup.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryGroup> response = client.GetDiscoveryGroup("<groupName>");
+Response<DiscoveryGroup> response = client.GetDiscoGroup("<groupName>");
 ]]></code>
-This sample shows how to call GetDiscoveryGroup with all parameters.
+This sample shows how to call GetDiscoGroup with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryGroup> response = client.GetDiscoveryGroup("<groupName>");
+Response<DiscoveryGroup> response = client.GetDiscoGroup("<groupName>");
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroupAsync(string,RequestContext)">
+    <member name="GetDiscoGroupAsync(string,RequestContext)">
       <example>
-This sample shows how to call GetDiscoveryGroupAsync and parse the result.
+This sample shows how to call GetDiscoGroupAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetDiscoveryGroupAsync("<groupName>", null);
+Response response = await client.GetDiscoGroupAsync("<groupName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
-This sample shows how to call GetDiscoveryGroupAsync with all parameters and parse the result.
+This sample shows how to call GetDiscoGroupAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetDiscoveryGroupAsync("<groupName>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("tier").ToString());
-Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
-Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("names")[0].ToString());
-Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
-Console.WriteLine(result.GetProperty("createdDate").ToString());
-Console.WriteLine(result.GetProperty("templateId").ToString());
-]]></code></example>
-    </member>
-    <member name="GetDiscoveryGroup(string,RequestContext)">
-      <example>
-This sample shows how to call GetDiscoveryGroup and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, credential);
-
-Response response = client.GetDiscoveryGroup("<groupName>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-]]></code>
-This sample shows how to call GetDiscoveryGroup with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, credential);
-
-Response response = client.GetDiscoveryGroup("<groupName>", null);
+Response response = await client.GetDiscoGroupAsync("<groupName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -993,23 +1419,117 @@ Console.WriteLine(result.GetProperty("createdDate").ToString());
 Console.WriteLine(result.GetProperty("templateId").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoveryGroupAsync(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
+    <member name="GetDiscoGroup(string,RequestContext)">
       <example>
-This sample shows how to call CreateOrReplaceDiscoveryGroupAsync.
+This sample shows how to call GetDiscoGroup and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>");
+Response response = client.GetDiscoGroup("<groupName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
-This sample shows how to call CreateOrReplaceDiscoveryGroupAsync with all parameters.
+This sample shows how to call GetDiscoGroup with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
+Response response = client.GetDiscoGroup("<groupName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteDiscoGroupAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteDiscoGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.DeleteDiscoGroupAsync("<groupName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteDiscoGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.DeleteDiscoGroupAsync("<groupName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteDiscoGroup(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteDiscoGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.DeleteDiscoGroup("<groupName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteDiscoGroup with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.DeleteDiscoGroup("<groupName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceDiscoGroupAsync(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceDiscoGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>");
+]]></code>
+This sample shows how to call CreateOrReplaceDiscoGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
 {
     new DiscoverySource
     {
@@ -1022,23 +1542,23 @@ Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAs
 }, templateId: "<templateId>");
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoveryGroup(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
+    <member name="CreateOrReplaceDiscoGroup(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
       <example>
-This sample shows how to call CreateOrReplaceDiscoveryGroup.
+This sample shows how to call CreateOrReplaceDiscoGroup.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>");
+Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoGroup("<groupName>");
 ]]></code>
-This sample shows how to call CreateOrReplaceDiscoveryGroup with all parameters.
+This sample shows how to call CreateOrReplaceDiscoGroup with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
+Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoGroup("<groupName>", name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
 {
     new DiscoverySource
     {
@@ -1051,21 +1571,21 @@ Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<group
 }, templateId: "<templateId>");
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoveryGroupAsync(string,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceDiscoGroupAsync(string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateOrReplaceDiscoveryGroupAsync and parse the result.
+This sample shows how to call CreateOrReplaceDiscoGroupAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
-Response response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", content);
+Response response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
-This sample shows how to call CreateOrReplaceDiscoveryGroupAsync with all parameters and request content and parse the result.
+This sample shows how to call CreateOrReplaceDiscoGroupAsync with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -1095,7 +1615,7 @@ using RequestContent content = RequestContent.Create(new
     },
     templateId = "<templateId>",
 });
-Response response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", content);
+Response response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1124,21 +1644,21 @@ Console.WriteLine(result.GetProperty("createdDate").ToString());
 Console.WriteLine(result.GetProperty("templateId").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoveryGroup(string,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceDiscoGroup(string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateOrReplaceDiscoveryGroup and parse the result.
+This sample shows how to call CreateOrReplaceDiscoGroup and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
-Response response = client.CreateOrReplaceDiscoveryGroup("<groupName>", content);
+Response response = client.CreateOrReplaceDiscoGroup("<groupName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
-This sample shows how to call CreateOrReplaceDiscoveryGroup with all parameters and request content and parse the result.
+This sample shows how to call CreateOrReplaceDiscoGroup with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -1168,7 +1688,7 @@ using RequestContent content = RequestContent.Create(new
     },
     templateId = "<templateId>",
 });
-Response response = client.CreateOrReplaceDiscoveryGroup("<groupName>", content);
+Response response = client.CreateOrReplaceDiscoGroup("<groupName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1197,110 +1717,398 @@ Console.WriteLine(result.GetProperty("createdDate").ToString());
 Console.WriteLine(result.GetProperty("templateId").ToString());
 ]]></code></example>
     </member>
-    <member name="RunDiscoveryGroupAsync(string,RequestContext)">
+    <member name="RunDiscoGroupAsync(string,RequestContext)">
       <example>
-This sample shows how to call RunDiscoveryGroupAsync.
+This sample shows how to call RunDiscoGroupAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.RunDiscoveryGroupAsync("<groupName>");
+Response response = await client.RunDiscoGroupAsync("<groupName>");
 
 Console.WriteLine(response.Status);
 ]]></code>
-This sample shows how to call RunDiscoveryGroupAsync with all parameters.
+This sample shows how to call RunDiscoGroupAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.RunDiscoveryGroupAsync("<groupName>");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="RunDiscoveryGroup(string,RequestContext)">
-      <example>
-This sample shows how to call RunDiscoveryGroup.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, credential);
-
-Response response = client.RunDiscoveryGroup("<groupName>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call RunDiscoveryGroup with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, credential);
-
-Response response = client.RunDiscoveryGroup("<groupName>");
+Response response = await client.RunDiscoGroupAsync("<groupName>");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryTemplateAsync(string,CancellationToken)">
+    <member name="RunDiscoGroup(string,RequestContext)">
       <example>
-This sample shows how to call GetDiscoveryTemplateAsync.
+This sample shows how to call RunDiscoGroup.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryTemplate> response = await client.GetDiscoveryTemplateAsync("<templateId>");
+Response response = client.RunDiscoGroup("<groupName>");
+
+Console.WriteLine(response.Status);
 ]]></code>
-This sample shows how to call GetDiscoveryTemplateAsync with all parameters.
+This sample shows how to call RunDiscoGroup with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryTemplate> response = await client.GetDiscoveryTemplateAsync("<templateId>");
+Response response = client.RunDiscoGroup("<groupName>");
+
+Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryTemplate(string,CancellationToken)">
+    <member name="GetAssetChainSummaryAsync(AssetChainRequest,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryTemplate.
+This sample shows how to call GetAssetChainSummaryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryTemplate> response = client.GetDiscoveryTemplate("<templateId>");
+AssetChainRequest body = new AssetChainRequest(AssetChainSource.DISCOGROUP, new string[] { "<sourceIds>" });
+Response<AssetChainSummaryResult> response = await client.GetAssetChainSummaryAsync(body);
 ]]></code>
-This sample shows how to call GetDiscoveryTemplate with all parameters.
+This sample shows how to call GetAssetChainSummaryAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoveryTemplate> response = client.GetDiscoveryTemplate("<templateId>");
+AssetChainRequest body = new AssetChainRequest(AssetChainSource.DISCOGROUP, new string[] { "<sourceIds>" });
+Response<AssetChainSummaryResult> response = await client.GetAssetChainSummaryAsync(body);
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryTemplateAsync(string,RequestContext)">
+    <member name="GetAssetChainSummary(AssetChainRequest,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryTemplateAsync and parse the result.
+This sample shows how to call GetAssetChainSummary.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetDiscoveryTemplateAsync("<templateId>", null);
+AssetChainRequest body = new AssetChainRequest(AssetChainSource.DISCOGROUP, new string[] { "<sourceIds>" });
+Response<AssetChainSummaryResult> response = client.GetAssetChainSummary(body);
+]]></code>
+This sample shows how to call GetAssetChainSummary with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+AssetChainRequest body = new AssetChainRequest(AssetChainSource.DISCOGROUP, new string[] { "<sourceIds>" });
+Response<AssetChainSummaryResult> response = client.GetAssetChainSummary(body);
+]]></code></example>
+    </member>
+    <member name="GetAssetChainSummaryAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetAssetChainSummaryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assetChainSource = "DISCO_GROUP",
+    sourceIds = new object[]
+    {
+        "<sourceIds>"
+    },
+});
+Response response = await client.GetAssetChainSummaryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("affectedAssetsSummary")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("affectedAssetsSummary")[0].GetProperty("affectedCount").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("displayName").ToString());
+]]></code>
+This sample shows how to call GetAssetChainSummaryAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assetChainSource = "DISCO_GROUP",
+    sourceIds = new object[]
+    {
+        "<sourceIds>"
+    },
+});
+Response response = await client.GetAssetChainSummaryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("affectedAssetsSummary")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("affectedAssetsSummary")[0].GetProperty("affectedCount").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetChainSummary(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetAssetChainSummary and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assetChainSource = "DISCO_GROUP",
+    sourceIds = new object[]
+    {
+        "<sourceIds>"
+    },
+});
+Response response = client.GetAssetChainSummary(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("affectedAssetsSummary")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("affectedAssetsSummary")[0].GetProperty("affectedCount").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("displayName").ToString());
+]]></code>
+This sample shows how to call GetAssetChainSummary with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assetChainSource = "DISCO_GROUP",
+    sourceIds = new object[]
+    {
+        "<sourceIds>"
+    },
+});
+Response response = client.GetAssetChainSummary(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("affectedAssetsSummary")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("affectedAssetsSummary")[0].GetProperty("affectedCount").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("affectedGroupsSummary")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
+]]></code></example>
+    </member>
+    <member name="DismissAssetChainAsync(AssetChainRequest,CancellationToken)">
+      <example>
+This sample shows how to call DismissAssetChainAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+AssetChainRequest body = new AssetChainRequest(AssetChainSource.DISCOGROUP, new string[] { "<sourceIds>" });
+Response<TaskResource> response = await client.DismissAssetChainAsync(body);
+]]></code>
+This sample shows how to call DismissAssetChainAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+AssetChainRequest body = new AssetChainRequest(AssetChainSource.DISCOGROUP, new string[] { "<sourceIds>" });
+Response<TaskResource> response = await client.DismissAssetChainAsync(body);
+]]></code></example>
+    </member>
+    <member name="DismissAssetChain(AssetChainRequest,CancellationToken)">
+      <example>
+This sample shows how to call DismissAssetChain.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+AssetChainRequest body = new AssetChainRequest(AssetChainSource.DISCOGROUP, new string[] { "<sourceIds>" });
+Response<TaskResource> response = client.DismissAssetChain(body);
+]]></code>
+This sample shows how to call DismissAssetChain with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+AssetChainRequest body = new AssetChainRequest(AssetChainSource.DISCOGROUP, new string[] { "<sourceIds>" });
+Response<TaskResource> response = client.DismissAssetChain(body);
+]]></code></example>
+    </member>
+    <member name="DismissAssetChainAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call DismissAssetChainAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assetChainSource = "DISCO_GROUP",
+    sourceIds = new object[]
+    {
+        "<sourceIds>"
+    },
+});
+Response response = await client.DismissAssetChainAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
-This sample shows how to call GetDiscoveryTemplateAsync with all parameters and parse the result.
+This sample shows how to call DismissAssetChainAsync with all request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetDiscoveryTemplateAsync("<templateId>", null);
+using RequestContent content = RequestContent.Create(new
+{
+    assetChainSource = "DISCO_GROUP",
+    sourceIds = new object[]
+    {
+        "<sourceIds>"
+    },
+});
+Response response = await client.DismissAssetChainAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="DismissAssetChain(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call DismissAssetChain and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assetChainSource = "DISCO_GROUP",
+    sourceIds = new object[]
+    {
+        "<sourceIds>"
+    },
+});
+Response response = client.DismissAssetChain(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call DismissAssetChain with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assetChainSource = "DISCO_GROUP",
+    sourceIds = new object[]
+    {
+        "<sourceIds>"
+    },
+});
+Response response = client.DismissAssetChain(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDiscoTemplateAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetDiscoTemplateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<DiscoveryTemplate> response = await client.GetDiscoTemplateAsync("<templateId>");
+]]></code>
+This sample shows how to call GetDiscoTemplateAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<DiscoveryTemplate> response = await client.GetDiscoTemplateAsync("<templateId>");
+]]></code></example>
+    </member>
+    <member name="GetDiscoTemplate(string,CancellationToken)">
+      <example>
+This sample shows how to call GetDiscoTemplate.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<DiscoveryTemplate> response = client.GetDiscoTemplate("<templateId>");
+]]></code>
+This sample shows how to call GetDiscoTemplate with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<DiscoveryTemplate> response = client.GetDiscoTemplate("<templateId>");
+]]></code></example>
+    </member>
+    <member name="GetDiscoTemplateAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetDiscoTemplateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.GetDiscoTemplateAsync("<templateId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetDiscoTemplateAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.GetDiscoTemplateAsync("<templateId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1316,26 +2124,26 @@ Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString())
 Console.WriteLine(result.GetProperty("names")[0].ToString());
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryTemplate(string,RequestContext)">
+    <member name="GetDiscoTemplate(string,RequestContext)">
       <example>
-This sample shows how to call GetDiscoveryTemplate and parse the result.
+This sample shows how to call GetDiscoTemplate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = client.GetDiscoveryTemplate("<templateId>", null);
+Response response = client.GetDiscoTemplate("<templateId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
-This sample shows how to call GetDiscoveryTemplate with all parameters and parse the result.
+This sample shows how to call GetDiscoTemplate with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = client.GetDiscoveryTemplate("<templateId>", null);
+Response response = client.GetDiscoTemplate("<templateId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1445,7 +2253,7 @@ Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("assetBrea
 Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("assetBreakdown")[0].GetProperty("count").ToString());
 ]]></code></example>
     </member>
-    <member name="GetSnapshotAsync(string,string,int?,int?,CancellationToken)">
+    <member name="GetSnapshotAsync(ReportAssetSnapshotPayload,CancellationToken)">
       <example>
 This sample shows how to call GetSnapshotAsync.
 <code><![CDATA[
@@ -1453,7 +2261,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync();
+ReportAssetSnapshotPayload body = new ReportAssetSnapshotPayload();
+Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(body);
 ]]></code>
 This sample shows how to call GetSnapshotAsync with all parameters.
 <code><![CDATA[
@@ -1461,10 +2270,17 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(metric: "<metric>", labelName: "<labelName>", size: 1234, page: 1234);
+ReportAssetSnapshotPayload body = new ReportAssetSnapshotPayload
+{
+    Metric = "<metric>",
+    LabelName = "<labelName>",
+    Size = 1234,
+    Page = 1234,
+};
+Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(body);
 ]]></code></example>
     </member>
-    <member name="GetSnapshot(string,string,int?,int?,CancellationToken)">
+    <member name="GetSnapshot(ReportAssetSnapshotPayload,CancellationToken)">
       <example>
 This sample shows how to call GetSnapshot.
 <code><![CDATA[
@@ -1472,7 +2288,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ReportAssetSnapshotResult> response = client.GetSnapshot();
+ReportAssetSnapshotPayload body = new ReportAssetSnapshotPayload();
+Response<ReportAssetSnapshotResult> response = client.GetSnapshot(body);
 ]]></code>
 This sample shows how to call GetSnapshot with all parameters.
 <code><![CDATA[
@@ -1480,7 +2297,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ReportAssetSnapshotResult> response = client.GetSnapshot(metric: "<metric>", labelName: "<labelName>", size: 1234, page: 1234);
+ReportAssetSnapshotPayload body = new ReportAssetSnapshotPayload
+{
+    Metric = "<metric>",
+    LabelName = "<labelName>",
+    Size = 1234,
+    Page = 1234,
+};
+Response<ReportAssetSnapshotResult> response = client.GetSnapshot(body);
 ]]></code></example>
     </member>
     <member name="GetSnapshotAsync(RequestContent,RequestContext)">
@@ -1599,7 +2423,7 @@ Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProper
 Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("reason").ToString());
 ]]></code></example>
     </member>
-    <member name="GetSummaryAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},string,string,string,CancellationToken)">
+    <member name="GetSummaryAsync(ReportAssetSummaryPayload,CancellationToken)">
       <example>
 This sample shows how to call GetSummaryAsync.
 <code><![CDATA[
@@ -1607,7 +2431,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync();
+ReportAssetSummaryPayload body = new ReportAssetSummaryPayload();
+Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(body);
 ]]></code>
 This sample shows how to call GetSummaryAsync with all parameters.
 <code><![CDATA[
@@ -1615,10 +2440,19 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(metricCategories: new string[] { "<metricCategories>" }, metrics: new string[] { "<metrics>" }, filters: new string[] { "<filters>" }, groupBy: "<groupBy>", segmentBy: "<segmentBy>", labelName: "<labelName>");
+ReportAssetSummaryPayload body = new ReportAssetSummaryPayload
+{
+    MetricCategories = { "<metricCategories>" },
+    Metrics = { "<metrics>" },
+    Filters = { "<filters>" },
+    GroupBy = "<groupBy>",
+    SegmentBy = "<segmentBy>",
+    LabelName = "<labelName>",
+};
+Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(body);
 ]]></code></example>
     </member>
-    <member name="GetSummary(IEnumerable{string},IEnumerable{string},IEnumerable{string},string,string,string,CancellationToken)">
+    <member name="GetSummary(ReportAssetSummaryPayload,CancellationToken)">
       <example>
 This sample shows how to call GetSummary.
 <code><![CDATA[
@@ -1626,7 +2460,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ReportAssetSummaryResult> response = client.GetSummary();
+ReportAssetSummaryPayload body = new ReportAssetSummaryPayload();
+Response<ReportAssetSummaryResult> response = client.GetSummary(body);
 ]]></code>
 This sample shows how to call GetSummary with all parameters.
 <code><![CDATA[
@@ -1634,7 +2469,16 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-Response<ReportAssetSummaryResult> response = client.GetSummary(metricCategories: new string[] { "<metricCategories>" }, metrics: new string[] { "<metrics>" }, filters: new string[] { "<filters>" }, groupBy: "<groupBy>", segmentBy: "<segmentBy>", labelName: "<labelName>");
+ReportAssetSummaryPayload body = new ReportAssetSummaryPayload
+{
+    MetricCategories = { "<metricCategories>" },
+    Metrics = { "<metrics>" },
+    Filters = { "<filters>" },
+    GroupBy = "<groupBy>",
+    SegmentBy = "<segmentBy>",
+    LabelName = "<labelName>",
+};
+Response<ReportAssetSummaryResult> response = client.GetSummary(body);
 ]]></code></example>
     </member>
     <member name="GetSummaryAsync(RequestContent,RequestContext)">
@@ -1739,6 +2583,142 @@ Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("filter").
 Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("labelName").ToString());
 Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("count").ToString());
 Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("link").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSnapshotExportAsync(ReportAssetSnapshotExportPayload,CancellationToken)">
+      <example>
+This sample shows how to call GetSnapshotExportAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+ReportAssetSnapshotExportPayload body = new ReportAssetSnapshotExportPayload();
+Response<TaskResource> response = await client.GetSnapshotExportAsync(body);
+]]></code>
+This sample shows how to call GetSnapshotExportAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+ReportAssetSnapshotExportPayload body = new ReportAssetSnapshotExportPayload
+{
+    Metric = "<metric>",
+    FileName = "<fileName>",
+    Columns = { "<columns>" },
+};
+Response<TaskResource> response = await client.GetSnapshotExportAsync(body);
+]]></code></example>
+    </member>
+    <member name="GetSnapshotExport(ReportAssetSnapshotExportPayload,CancellationToken)">
+      <example>
+This sample shows how to call GetSnapshotExport.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+ReportAssetSnapshotExportPayload body = new ReportAssetSnapshotExportPayload();
+Response<TaskResource> response = client.GetSnapshotExport(body);
+]]></code>
+This sample shows how to call GetSnapshotExport with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+ReportAssetSnapshotExportPayload body = new ReportAssetSnapshotExportPayload
+{
+    Metric = "<metric>",
+    FileName = "<fileName>",
+    Columns = { "<columns>" },
+};
+Response<TaskResource> response = client.GetSnapshotExport(body);
+]]></code></example>
+    </member>
+    <member name="GetSnapshotExportAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetSnapshotExportAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.GetSnapshotExportAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetSnapshotExportAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    metric = "<metric>",
+    fileName = "<fileName>",
+    columns = new object[]
+    {
+        "<columns>"
+    },
+});
+Response response = await client.GetSnapshotExportAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSnapshotExport(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetSnapshotExport and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.GetSnapshotExport(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetSnapshotExport with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    metric = "<metric>",
+    fileName = "<fileName>",
+    columns = new object[]
+    {
+        "<columns>"
+    },
+});
+Response response = client.GetSnapshotExport(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
     <member name="GetSavedFilterAsync(string,CancellationToken)">
@@ -2203,7 +3183,339 @@ Console.WriteLine(result.GetProperty("reason").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
-    <member name="GetAssetResourcesAsync(string,string,int?,int?,string,CancellationToken)">
+    <member name="RunTaskAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call RunTaskAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<TaskResource> response = await client.RunTaskAsync("<taskId>");
+]]></code>
+This sample shows how to call RunTaskAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<TaskResource> response = await client.RunTaskAsync("<taskId>");
+]]></code></example>
+    </member>
+    <member name="RunTask(string,CancellationToken)">
+      <example>
+This sample shows how to call RunTask.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<TaskResource> response = client.RunTask("<taskId>");
+]]></code>
+This sample shows how to call RunTask with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<TaskResource> response = client.RunTask("<taskId>");
+]]></code></example>
+    </member>
+    <member name="RunTaskAsync(string,RequestContext)">
+      <example>
+This sample shows how to call RunTaskAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.RunTaskAsync("<taskId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call RunTaskAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.RunTaskAsync("<taskId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="RunTask(string,RequestContext)">
+      <example>
+This sample shows how to call RunTask and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.RunTask("<taskId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call RunTask with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.RunTask("<taskId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="DownloadTaskAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call DownloadTaskAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<TaskResource> response = await client.DownloadTaskAsync("<taskId>");
+]]></code>
+This sample shows how to call DownloadTaskAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<TaskResource> response = await client.DownloadTaskAsync("<taskId>");
+]]></code></example>
+    </member>
+    <member name="DownloadTask(string,CancellationToken)">
+      <example>
+This sample shows how to call DownloadTask.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<TaskResource> response = client.DownloadTask("<taskId>");
+]]></code>
+This sample shows how to call DownloadTask with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<TaskResource> response = client.DownloadTask("<taskId>");
+]]></code></example>
+    </member>
+    <member name="DownloadTaskAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DownloadTaskAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.DownloadTaskAsync("<taskId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call DownloadTaskAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.DownloadTaskAsync("<taskId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="DownloadTask(string,RequestContext)">
+      <example>
+This sample shows how to call DownloadTask and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.DownloadTask("<taskId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call DownloadTask with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.DownloadTask("<taskId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCisaCveAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetCisaCveAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<CisaCveResult> response = await client.GetCisaCveAsync("<cveId>");
+]]></code>
+This sample shows how to call GetCisaCveAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<CisaCveResult> response = await client.GetCisaCveAsync("<cveId>");
+]]></code></example>
+    </member>
+    <member name="GetCisaCve(string,CancellationToken)">
+      <example>
+This sample shows how to call GetCisaCve.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<CisaCveResult> response = client.GetCisaCve("<cveId>");
+]]></code>
+This sample shows how to call GetCisaCve with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<CisaCveResult> response = client.GetCisaCve("<cveId>");
+]]></code></example>
+    </member>
+    <member name="GetCisaCveAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetCisaCveAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.GetCisaCveAsync("<cveId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("cveId").ToString());
+Console.WriteLine(result.GetProperty("vendorProject").ToString());
+Console.WriteLine(result.GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("vulnerabilityName").ToString());
+Console.WriteLine(result.GetProperty("shortDescription").ToString());
+Console.WriteLine(result.GetProperty("requiredAction").ToString());
+Console.WriteLine(result.GetProperty("notes").ToString());
+Console.WriteLine(result.GetProperty("dateAdded").ToString());
+Console.WriteLine(result.GetProperty("dueDate").ToString());
+Console.WriteLine(result.GetProperty("updatedAt").ToString());
+Console.WriteLine(result.GetProperty("count").ToString());
+]]></code>
+This sample shows how to call GetCisaCveAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.GetCisaCveAsync("<cveId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("cveId").ToString());
+Console.WriteLine(result.GetProperty("vendorProject").ToString());
+Console.WriteLine(result.GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("vulnerabilityName").ToString());
+Console.WriteLine(result.GetProperty("shortDescription").ToString());
+Console.WriteLine(result.GetProperty("requiredAction").ToString());
+Console.WriteLine(result.GetProperty("notes").ToString());
+Console.WriteLine(result.GetProperty("dateAdded").ToString());
+Console.WriteLine(result.GetProperty("dueDate").ToString());
+Console.WriteLine(result.GetProperty("updatedAt").ToString());
+Console.WriteLine(result.GetProperty("count").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCisaCve(string,RequestContext)">
+      <example>
+This sample shows how to call GetCisaCve and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.GetCisaCve("<cveId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("cveId").ToString());
+Console.WriteLine(result.GetProperty("vendorProject").ToString());
+Console.WriteLine(result.GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("vulnerabilityName").ToString());
+Console.WriteLine(result.GetProperty("shortDescription").ToString());
+Console.WriteLine(result.GetProperty("requiredAction").ToString());
+Console.WriteLine(result.GetProperty("notes").ToString());
+Console.WriteLine(result.GetProperty("dateAdded").ToString());
+Console.WriteLine(result.GetProperty("dueDate").ToString());
+Console.WriteLine(result.GetProperty("updatedAt").ToString());
+Console.WriteLine(result.GetProperty("count").ToString());
+]]></code>
+This sample shows how to call GetCisaCve with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = client.GetCisaCve("<cveId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("cveId").ToString());
+Console.WriteLine(result.GetProperty("vendorProject").ToString());
+Console.WriteLine(result.GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("vulnerabilityName").ToString());
+Console.WriteLine(result.GetProperty("shortDescription").ToString());
+Console.WriteLine(result.GetProperty("requiredAction").ToString());
+Console.WriteLine(result.GetProperty("notes").ToString());
+Console.WriteLine(result.GetProperty("dateAdded").ToString());
+Console.WriteLine(result.GetProperty("dueDate").ToString());
+Console.WriteLine(result.GetProperty("updatedAt").ToString());
+Console.WriteLine(result.GetProperty("count").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetResourcesAsync(string,string,int?,int?,string,AssetResponseType?,IEnumerable{string},bool?,CancellationToken)">
       <example>
 This sample shows how to call GetAssetResourcesAsync.
 <code><![CDATA[
@@ -2221,12 +3533,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (AssetResource item in client.GetAssetResourcesAsync(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234, mark: "<mark>"))
+await foreach (AssetResource item in client.GetAssetResourcesAsync(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234, mark: "<mark>", responseType: AssetResponseType.Id, responseIncludes: new string[] { "<responseIncludes>" }, recentOnly: true))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetAssetResources(string,string,int?,int?,string,CancellationToken)">
+    <member name="GetAssetResources(string,string,int?,int?,string,AssetResponseType?,IEnumerable{string},bool?,CancellationToken)">
       <example>
 This sample shows how to call GetAssetResources.
 <code><![CDATA[
@@ -2244,12 +3556,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (AssetResource item in client.GetAssetResources(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234, mark: "<mark>"))
+foreach (AssetResource item in client.GetAssetResources(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234, mark: "<mark>", responseType: AssetResponseType.Id, responseIncludes: new string[] { "<responseIncludes>" }, recentOnly: true))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetAssetResourcesAsync(string,string,int?,int?,string,RequestContext)">
+    <member name="GetAssetResourcesAsync(string,string,int?,int?,string,string,IEnumerable{string},bool?,RequestContext)">
       <example>
 This sample shows how to call GetAssetResourcesAsync and parse the result.
 <code><![CDATA[
@@ -2257,7 +3569,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetAssetResourcesAsync(null, null, null, null, null, null))
+await foreach (BinaryData item in client.GetAssetResourcesAsync(null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
@@ -2270,7 +3582,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetAssetResourcesAsync("<filter>", "<orderby>", 1234, 1234, "<mark>", null))
+await foreach (BinaryData item in client.GetAssetResourcesAsync("<filter>", "<orderby>", 1234, 1234, "<mark>", "id", new string[] { "<responseIncludes>" }, true, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
@@ -2294,7 +3606,7 @@ await foreach (BinaryData item in client.GetAssetResourcesAsync("<filter>", "<or
 }
 ]]></code></example>
     </member>
-    <member name="GetAssetResources(string,string,int?,int?,string,RequestContext)">
+    <member name="GetAssetResources(string,string,int?,int?,string,string,IEnumerable{string},bool?,RequestContext)">
       <example>
 This sample shows how to call GetAssetResources and parse the result.
 <code><![CDATA[
@@ -2302,7 +3614,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetAssetResources(null, null, null, null, null, null))
+foreach (BinaryData item in client.GetAssetResources(null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
@@ -2315,7 +3627,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetAssetResources("<filter>", "<orderby>", 1234, 1234, "<mark>", null))
+foreach (BinaryData item in client.GetAssetResources("<filter>", "<orderby>", 1234, 1234, "<mark>", "id", new string[] { "<responseIncludes>" }, true, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
@@ -2336,6 +3648,158 @@ foreach (BinaryData item in client.GetAssetResources("<filter>", "<orderby>", 12
     Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToString());
     Console.WriteLine(result.GetProperty("reason").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetDeltaDetailsAsync(DeltaDetailsRequest,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetDeltaDetailsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DeltaDetailsRequest body = new DeltaDetailsRequest(DeltaDetailType.Added, GlobalAssetType.Page);
+await foreach (DeltaResult item in client.GetDeltaDetailsAsync(body))
+{
+}
+]]></code>
+This sample shows how to call GetDeltaDetailsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DeltaDetailsRequest body = new DeltaDetailsRequest(DeltaDetailType.Added, GlobalAssetType.Page)
+{
+    PriorDays = 1234,
+    Date = "<date>",
+};
+await foreach (DeltaResult item in client.GetDeltaDetailsAsync(body, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetDeltaDetails(DeltaDetailsRequest,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetDeltaDetails.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DeltaDetailsRequest body = new DeltaDetailsRequest(DeltaDetailType.Added, GlobalAssetType.Page);
+foreach (DeltaResult item in client.GetDeltaDetails(body))
+{
+}
+]]></code>
+This sample shows how to call GetDeltaDetails with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DeltaDetailsRequest body = new DeltaDetailsRequest(DeltaDetailType.Added, GlobalAssetType.Page)
+{
+    PriorDays = 1234,
+    Date = "<date>",
+};
+foreach (DeltaResult item in client.GetDeltaDetails(body, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetDeltaDetailsAsync(RequestContent,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetDeltaDetailsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    deltaDetailType = "added",
+    kind = "page",
+});
+await foreach (BinaryData item in client.GetDeltaDetailsAsync(content))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("updatedAt").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+}
+]]></code>
+This sample shows how to call GetDeltaDetailsAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    deltaDetailType = "added",
+    priorDays = 1234,
+    kind = "page",
+    date = "<date>",
+});
+await foreach (BinaryData item in client.GetDeltaDetailsAsync(content, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("updatedAt").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetDeltaDetails(RequestContent,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetDeltaDetails and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    deltaDetailType = "added",
+    kind = "page",
+});
+foreach (BinaryData item in client.GetDeltaDetails(content))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("updatedAt").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+}
+]]></code>
+This sample shows how to call GetDeltaDetails with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    deltaDetailType = "added",
+    priorDays = 1234,
+    kind = "page",
+    date = "<date>",
+});
+foreach (BinaryData item in client.GetDeltaDetails(content, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("updatedAt").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
 }
 ]]></code></example>
     </member>
@@ -2463,73 +3927,73 @@ foreach (BinaryData item in client.GetDataConnections(1234, 1234, null))
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroupsAsync(string,int?,int?,CancellationToken)">
+    <member name="GetDiscoGroupsAsync(string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryGroupsAsync.
+This sample shows how to call GetDiscoGroupsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoveryGroup item in client.GetDiscoveryGroupsAsync())
+await foreach (DiscoveryGroup item in client.GetDiscoGroupsAsync())
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoveryGroupsAsync with all parameters.
+This sample shows how to call GetDiscoGroupsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoveryGroup item in client.GetDiscoveryGroupsAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+await foreach (DiscoveryGroup item in client.GetDiscoGroupsAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroups(string,int?,int?,CancellationToken)">
+    <member name="GetDiscoGroups(string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryGroups.
+This sample shows how to call GetDiscoGroups.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoveryGroup item in client.GetDiscoveryGroups())
+foreach (DiscoveryGroup item in client.GetDiscoGroups())
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoveryGroups with all parameters.
+This sample shows how to call GetDiscoGroups with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoveryGroup item in client.GetDiscoveryGroups(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+foreach (DiscoveryGroup item in client.GetDiscoGroups(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroupsAsync(string,int?,int?,RequestContext)">
+    <member name="GetDiscoGroupsAsync(string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoveryGroupsAsync and parse the result.
+This sample shows how to call GetDiscoGroupsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoveryGroupsAsync(null, null, null, null))
+await foreach (BinaryData item in client.GetDiscoGroupsAsync(null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoveryGroupsAsync with all parameters and parse the result.
+This sample shows how to call GetDiscoGroupsAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoveryGroupsAsync("<filter>", 1234, 1234, null))
+await foreach (BinaryData item in client.GetDiscoGroupsAsync("<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2559,27 +4023,27 @@ await foreach (BinaryData item in client.GetDiscoveryGroupsAsync("<filter>", 123
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroups(string,int?,int?,RequestContext)">
+    <member name="GetDiscoGroups(string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoveryGroups and parse the result.
+This sample shows how to call GetDiscoGroups and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoveryGroups(null, null, null, null))
+foreach (BinaryData item in client.GetDiscoGroups(null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoveryGroups with all parameters and parse the result.
+This sample shows how to call GetDiscoGroups with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoveryGroups("<filter>", 1234, 1234, null))
+foreach (BinaryData item in client.GetDiscoGroups("<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2609,73 +4073,73 @@ foreach (BinaryData item in client.GetDiscoveryGroups("<filter>", 1234, 1234, nu
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroupRunsAsync(string,string,int?,int?,CancellationToken)">
+    <member name="GetRunsAsync(string,string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryGroupRunsAsync.
+This sample shows how to call GetRunsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRunsAsync("<groupName>"))
+await foreach (DiscoveryRunResult item in client.GetRunsAsync("<groupName>"))
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoveryGroupRunsAsync with all parameters.
+This sample shows how to call GetRunsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRunsAsync("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
+await foreach (DiscoveryRunResult item in client.GetRunsAsync("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroupRuns(string,string,int?,int?,CancellationToken)">
+    <member name="GetRuns(string,string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryGroupRuns.
+This sample shows how to call GetRuns.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRuns("<groupName>"))
+foreach (DiscoveryRunResult item in client.GetRuns("<groupName>"))
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoveryGroupRuns with all parameters.
+This sample shows how to call GetRuns with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRuns("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
+foreach (DiscoveryRunResult item in client.GetRuns("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroupRunsAsync(string,string,int?,int?,RequestContext)">
+    <member name="GetRunsAsync(string,string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoveryGroupRunsAsync and parse the result.
+This sample shows how to call GetRunsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoveryGroupRunsAsync("<groupName>", null, null, null, null))
+await foreach (BinaryData item in client.GetRunsAsync("<groupName>", null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoveryGroupRunsAsync with all parameters and parse the result.
+This sample shows how to call GetRunsAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoveryGroupRunsAsync("<groupName>", "<filter>", 1234, 1234, null))
+await foreach (BinaryData item in client.GetRunsAsync("<groupName>", "<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("submittedDate").ToString());
@@ -2692,27 +4156,27 @@ await foreach (BinaryData item in client.GetDiscoveryGroupRunsAsync("<groupName>
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryGroupRuns(string,string,int?,int?,RequestContext)">
+    <member name="GetRuns(string,string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoveryGroupRuns and parse the result.
+This sample shows how to call GetRuns and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoveryGroupRuns("<groupName>", null, null, null, null))
+foreach (BinaryData item in client.GetRuns("<groupName>", null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoveryGroupRuns with all parameters and parse the result.
+This sample shows how to call GetRuns with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoveryGroupRuns("<groupName>", "<filter>", 1234, 1234, null))
+foreach (BinaryData item in client.GetRuns("<groupName>", "<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("submittedDate").ToString());
@@ -2729,73 +4193,73 @@ foreach (BinaryData item in client.GetDiscoveryGroupRuns("<groupName>", "<filter
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryTemplatesAsync(string,int?,int?,CancellationToken)">
+    <member name="GetDiscoTemplatesAsync(string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryTemplatesAsync.
+This sample shows how to call GetDiscoTemplatesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoveryTemplate item in client.GetDiscoveryTemplatesAsync())
+await foreach (DiscoveryTemplate item in client.GetDiscoTemplatesAsync())
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoveryTemplatesAsync with all parameters.
+This sample shows how to call GetDiscoTemplatesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoveryTemplate item in client.GetDiscoveryTemplatesAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+await foreach (DiscoveryTemplate item in client.GetDiscoTemplatesAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryTemplates(string,int?,int?,CancellationToken)">
+    <member name="GetDiscoTemplates(string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoveryTemplates.
+This sample shows how to call GetDiscoTemplates.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoveryTemplate item in client.GetDiscoveryTemplates())
+foreach (DiscoveryTemplate item in client.GetDiscoTemplates())
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoveryTemplates with all parameters.
+This sample shows how to call GetDiscoTemplates with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoveryTemplate item in client.GetDiscoveryTemplates(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+foreach (DiscoveryTemplate item in client.GetDiscoTemplates(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryTemplatesAsync(string,int?,int?,RequestContext)">
+    <member name="GetDiscoTemplatesAsync(string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoveryTemplatesAsync and parse the result.
+This sample shows how to call GetDiscoTemplatesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoveryTemplatesAsync(null, null, null, null))
+await foreach (BinaryData item in client.GetDiscoTemplatesAsync(null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoveryTemplatesAsync with all parameters and parse the result.
+This sample shows how to call GetDiscoTemplatesAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoveryTemplatesAsync("<filter>", 1234, 1234, null))
+await foreach (BinaryData item in client.GetDiscoTemplatesAsync("<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2812,27 +4276,27 @@ await foreach (BinaryData item in client.GetDiscoveryTemplatesAsync("<filter>", 
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoveryTemplates(string,int?,int?,RequestContext)">
+    <member name="GetDiscoTemplates(string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoveryTemplates and parse the result.
+This sample shows how to call GetDiscoTemplates and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoveryTemplates(null, null, null, null))
+foreach (BinaryData item in client.GetDiscoTemplates(null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoveryTemplates with all parameters and parse the result.
+This sample shows how to call GetDiscoTemplates with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoveryTemplates("<filter>", 1234, 1234, null))
+foreach (BinaryData item in client.GetDiscoTemplates("<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -3068,6 +4532,146 @@ foreach (BinaryData item in client.GetTasks("<filter>", "<orderby>", 1234, 1234,
     Console.WriteLine(result.GetProperty("phase").ToString());
     Console.WriteLine(result.GetProperty("reason").ToString());
     Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetCisaCvesAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetCisaCvesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+await foreach (CisaCveResult item in client.GetCisaCvesAsync())
+{
+}
+]]></code>
+This sample shows how to call GetCisaCvesAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+await foreach (CisaCveResult item in client.GetCisaCvesAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetCisaCves(CancellationToken)">
+      <example>
+This sample shows how to call GetCisaCves.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+foreach (CisaCveResult item in client.GetCisaCves())
+{
+}
+]]></code>
+This sample shows how to call GetCisaCves with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+foreach (CisaCveResult item in client.GetCisaCves())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetCisaCvesAsync(RequestContext)">
+      <example>
+This sample shows how to call GetCisaCvesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetCisaCvesAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("cveId").ToString());
+    Console.WriteLine(result.GetProperty("vendorProject").ToString());
+    Console.WriteLine(result.GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("vulnerabilityName").ToString());
+    Console.WriteLine(result.GetProperty("shortDescription").ToString());
+    Console.WriteLine(result.GetProperty("requiredAction").ToString());
+    Console.WriteLine(result.GetProperty("notes").ToString());
+    Console.WriteLine(result.GetProperty("dateAdded").ToString());
+    Console.WriteLine(result.GetProperty("dueDate").ToString());
+    Console.WriteLine(result.GetProperty("updatedAt").ToString());
+    Console.WriteLine(result.GetProperty("count").ToString());
+}
+]]></code>
+This sample shows how to call GetCisaCvesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetCisaCvesAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("cveId").ToString());
+    Console.WriteLine(result.GetProperty("vendorProject").ToString());
+    Console.WriteLine(result.GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("vulnerabilityName").ToString());
+    Console.WriteLine(result.GetProperty("shortDescription").ToString());
+    Console.WriteLine(result.GetProperty("requiredAction").ToString());
+    Console.WriteLine(result.GetProperty("notes").ToString());
+    Console.WriteLine(result.GetProperty("dateAdded").ToString());
+    Console.WriteLine(result.GetProperty("dueDate").ToString());
+    Console.WriteLine(result.GetProperty("updatedAt").ToString());
+    Console.WriteLine(result.GetProperty("count").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetCisaCves(RequestContext)">
+      <example>
+This sample shows how to call GetCisaCves and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetCisaCves(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("cveId").ToString());
+    Console.WriteLine(result.GetProperty("vendorProject").ToString());
+    Console.WriteLine(result.GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("vulnerabilityName").ToString());
+    Console.WriteLine(result.GetProperty("shortDescription").ToString());
+    Console.WriteLine(result.GetProperty("requiredAction").ToString());
+    Console.WriteLine(result.GetProperty("notes").ToString());
+    Console.WriteLine(result.GetProperty("dateAdded").ToString());
+    Console.WriteLine(result.GetProperty("dueDate").ToString());
+    Console.WriteLine(result.GetProperty("updatedAt").ToString());
+    Console.WriteLine(result.GetProperty("count").ToString());
+}
+]]></code>
+This sample shows how to call GetCisaCves with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetCisaCves(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("cveId").ToString());
+    Console.WriteLine(result.GetProperty("vendorProject").ToString());
+    Console.WriteLine(result.GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("vulnerabilityName").ToString());
+    Console.WriteLine(result.GetProperty("shortDescription").ToString());
+    Console.WriteLine(result.GetProperty("requiredAction").ToString());
+    Console.WriteLine(result.GetProperty("notes").ToString());
+    Console.WriteLine(result.GetProperty("dateAdded").ToString());
+    Console.WriteLine(result.GetProperty("dueDate").ToString());
+    Console.WriteLine(result.GetProperty("updatedAt").ToString());
+    Console.WriteLine(result.GetProperty("count").ToString());
 }
 ]]></code></example>
     </member>

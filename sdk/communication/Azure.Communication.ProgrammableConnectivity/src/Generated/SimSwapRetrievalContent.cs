@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.ProgrammableConnectivity
 {
     /// <summary> Request to retrieve SimSwap date. </summary>
-    internal partial class SimSwapRetrievalContent
+    public partial class SimSwapRetrievalContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

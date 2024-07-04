@@ -47,12 +47,31 @@ namespace Azure.Communication.ProgrammableConnectivity
             return new NumberVerificationResult(verificationResult, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.SimSwapRetrievalContent"/>. </summary>
+        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
+        /// <param name="networkIdentifier"> Network to query for this device. </param>
+        /// <returns> A new <see cref="ProgrammableConnectivity.SimSwapRetrievalContent"/> instance for mocking. </returns>
+        public static SimSwapRetrievalContent SimSwapRetrievalContent(string phoneNumber = null, NetworkIdentifier networkIdentifier = null)
+        {
+            return new SimSwapRetrievalContent(phoneNumber, networkIdentifier, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.SimSwapRetrievalResult"/>. </summary>
         /// <param name="date"> Datetime of most recent swap for SIM. </param>
         /// <returns> A new <see cref="ProgrammableConnectivity.SimSwapRetrievalResult"/> instance for mocking. </returns>
         public static SimSwapRetrievalResult SimSwapRetrievalResult(DateTimeOffset? date = null)
         {
             return new SimSwapRetrievalResult(date, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.SimSwapVerificationContent"/>. </summary>
+        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
+        /// <param name="maxAgeHours"> Maximum lookback for SimSwap verification. </param>
+        /// <param name="networkIdentifier"> Identifier for the network to query for this device. </param>
+        /// <returns> A new <see cref="ProgrammableConnectivity.SimSwapVerificationContent"/> instance for mocking. </returns>
+        public static SimSwapVerificationContent SimSwapVerificationContent(string phoneNumber = null, int? maxAgeHours = null, NetworkIdentifier networkIdentifier = null)
+        {
+            return new SimSwapVerificationContent(phoneNumber, maxAgeHours, networkIdentifier, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProgrammableConnectivity.SimSwapVerificationResult"/>. </summary>

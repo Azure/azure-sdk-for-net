@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="SendAsync(Guid,IEnumerable{string},CommunicationMessageKind,CancellationToken)">
+    <member name="SendAsync(NotificationContent,CancellationToken)">
       <example>
 This sample shows how to call SendAsync.
 <code><![CDATA[
 NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-Response<SendMessageResult> response = await client.SendAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, CommunicationMessageKind.Text);
+NotificationContent body = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+Response<SendMessageResult> response = await client.SendAsync(body);
 ]]></code>
 This sample shows how to call SendAsync with all parameters.
 <code><![CDATA[
 NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-Response<SendMessageResult> response = await client.SendAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, CommunicationMessageKind.Text);
+NotificationContent body = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+Response<SendMessageResult> response = await client.SendAsync(body);
 ]]></code></example>
     </member>
-    <member name="Send(Guid,IEnumerable{string},CommunicationMessageKind,CancellationToken)">
+    <member name="Send(NotificationContent,CancellationToken)">
       <example>
 This sample shows how to call Send.
 <code><![CDATA[
 NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-Response<SendMessageResult> response = client.Send(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, CommunicationMessageKind.Text);
+NotificationContent body = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+Response<SendMessageResult> response = client.Send(body);
 ]]></code>
 This sample shows how to call Send with all parameters.
 <code><![CDATA[
 NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-Response<SendMessageResult> response = client.Send(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, CommunicationMessageKind.Text);
+NotificationContent body = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+Response<SendMessageResult> response = client.Send(body);
 ]]></code></example>
     </member>
     <member name="SendAsync(RequestContent,RequestContext)">

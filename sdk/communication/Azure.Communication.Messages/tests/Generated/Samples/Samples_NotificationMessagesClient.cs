@@ -68,7 +68,8 @@ namespace Azure.Communication.Messages.Samples
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-            Response<SendMessageResult> response = client.Send(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, CommunicationMessageKind.Text);
+            NotificationContent body = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+            Response<SendMessageResult> response = client.Send(body);
         }
 
         [Test]
@@ -77,7 +78,8 @@ namespace Azure.Communication.Messages.Samples
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-            Response<SendMessageResult> response = await client.SendAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, CommunicationMessageKind.Text);
+            NotificationContent body = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+            Response<SendMessageResult> response = await client.SendAsync(body);
         }
 
         [Test]
@@ -132,7 +134,8 @@ namespace Azure.Communication.Messages.Samples
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-            Response<SendMessageResult> response = client.Send(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, CommunicationMessageKind.Text);
+            NotificationContent body = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+            Response<SendMessageResult> response = client.Send(body);
         }
 
         [Test]
@@ -141,7 +144,8 @@ namespace Azure.Communication.Messages.Samples
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-            Response<SendMessageResult> response = await client.SendAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, CommunicationMessageKind.Text);
+            NotificationContent body = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+            Response<SendMessageResult> response = await client.SendAsync(body);
         }
     }
 }
