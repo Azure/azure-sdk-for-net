@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="operationPhaseDetails"> The operation phase details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, PhaseDetails operationPhaseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DatabaseOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, DatabaseOperationPhaseDetails operationPhaseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DatabaseName = databaseName;
             Operation = operation;
@@ -137,6 +137,6 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? IsCancellable { get; }
         /// <summary> The operation phase details. </summary>
         [WirePath("properties.operationPhaseDetails")]
-        public PhaseDetails OperationPhaseDetails { get; }
+        public DatabaseOperationPhaseDetails OperationPhaseDetails { get; }
     }
 }

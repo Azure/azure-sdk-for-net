@@ -5367,7 +5367,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="operationPhaseDetails"> The operation phase details. </param>
         /// <returns> A new <see cref="Models.DatabaseOperationData"/> instance for mocking. </returns>
-        public static DatabaseOperationData DatabaseOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null, PhaseDetails operationPhaseDetails = null)
+        public static DatabaseOperationData DatabaseOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null, DatabaseOperationPhaseDetails operationPhaseDetails = null)
         {
             return new DatabaseOperationData(
                 id,
@@ -5392,15 +5392,15 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PhaseDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseOperationPhaseDetails"/>. </summary>
         /// <param name="phase"> The operation phase. </param>
         /// <param name="phaseInformation"> The operation phase information. </param>
-        /// <returns> A new <see cref="Models.PhaseDetails"/> instance for mocking. </returns>
-        public static PhaseDetails PhaseDetails(Phase? phase = null, IReadOnlyDictionary<string, string> phaseInformation = null)
+        /// <returns> A new <see cref="Models.DatabaseOperationPhaseDetails"/> instance for mocking. </returns>
+        public static DatabaseOperationPhaseDetails DatabaseOperationPhaseDetails(DatabaseOperationPhase? phase = null, IReadOnlyDictionary<string, string> phaseInformation = null)
         {
             phaseInformation ??= new Dictionary<string, string>();
 
-            return new PhaseDetails(phase, phaseInformation, serializedAdditionalRawData: null);
+            return new DatabaseOperationPhaseDetails(phase, phaseInformation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.IPv6FirewallRuleData"/>. </summary>

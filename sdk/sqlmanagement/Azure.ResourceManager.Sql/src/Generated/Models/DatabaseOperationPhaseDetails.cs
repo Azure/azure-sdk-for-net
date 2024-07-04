@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The phase details properties of a database operation. </summary>
-    public partial class PhaseDetails
+    public partial class DatabaseOperationPhaseDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PhaseDetails"/>. </summary>
-        internal PhaseDetails()
+        /// <summary> Initializes a new instance of <see cref="DatabaseOperationPhaseDetails"/>. </summary>
+        internal DatabaseOperationPhaseDetails()
         {
             PhaseInformation = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhaseDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseOperationPhaseDetails"/>. </summary>
         /// <param name="phase"> The operation phase. </param>
         /// <param name="phaseInformation"> The operation phase information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PhaseDetails(Phase? phase, IReadOnlyDictionary<string, string> phaseInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatabaseOperationPhaseDetails(DatabaseOperationPhase? phase, IReadOnlyDictionary<string, string> phaseInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Phase = phase;
             PhaseInformation = phaseInformation;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The operation phase. </summary>
         [WirePath("phase")]
-        public Phase? Phase { get; }
+        public DatabaseOperationPhase? Phase { get; }
         /// <summary> The operation phase information. </summary>
         [WirePath("phaseInformation")]
         public IReadOnlyDictionary<string, string> PhaseInformation { get; }

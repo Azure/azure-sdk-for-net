@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql.Models
             DateTimeOffset? estimatedCompletionTime = default;
             string description = default;
             bool? isCancellable = default;
-            PhaseDetails operationPhaseDetails = default;
+            DatabaseOperationPhaseDetails operationPhaseDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            operationPhaseDetails = PhaseDetails.DeserializePhaseDetails(property0.Value, options);
+                            operationPhaseDetails = DatabaseOperationPhaseDetails.DeserializeDatabaseOperationPhaseDetails(property0.Value, options);
                             continue;
                         }
                     }

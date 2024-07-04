@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class PhaseDetails : IUtf8JsonSerializable, IJsonModel<PhaseDetails>
+    public partial class DatabaseOperationPhaseDetails : IUtf8JsonSerializable, IJsonModel<DatabaseOperationPhaseDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhaseDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseOperationPhaseDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PhaseDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatabaseOperationPhaseDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PhaseDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseOperationPhaseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PhaseDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseOperationPhaseDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteEndObject();
         }
 
-        PhaseDetails IJsonModel<PhaseDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatabaseOperationPhaseDetails IJsonModel<DatabaseOperationPhaseDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PhaseDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseOperationPhaseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PhaseDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseOperationPhaseDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePhaseDetails(document.RootElement, options);
+            return DeserializeDatabaseOperationPhaseDetails(document.RootElement, options);
         }
 
-        internal static PhaseDetails DeserializePhaseDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DatabaseOperationPhaseDetails DeserializeDatabaseOperationPhaseDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Phase? phase = default;
+            DatabaseOperationPhase? phase = default;
             IReadOnlyDictionary<string, string> phaseInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    phase = new Phase(property.Value.GetString());
+                    phase = new DatabaseOperationPhase(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("phaseInformation"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PhaseDetails(phase, phaseInformation ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DatabaseOperationPhaseDetails(phase, phaseInformation ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<PhaseDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DatabaseOperationPhaseDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PhaseDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseOperationPhaseDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -198,26 +198,26 @@ namespace Azure.ResourceManager.Sql.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PhaseDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseOperationPhaseDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PhaseDetails IPersistableModel<PhaseDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DatabaseOperationPhaseDetails IPersistableModel<DatabaseOperationPhaseDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PhaseDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseOperationPhaseDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePhaseDetails(document.RootElement, options);
+                        return DeserializeDatabaseOperationPhaseDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PhaseDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseOperationPhaseDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PhaseDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatabaseOperationPhaseDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

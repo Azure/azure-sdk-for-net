@@ -6997,7 +6997,8 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.DatabaseExportDefinition DatabaseExportDefinition(Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType = default(Azure.ResourceManager.Sql.Models.StorageKeyType), string storageKey = null, System.Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, Azure.ResourceManager.Sql.Models.NetworkIsolationSettings networkIsolation = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.DatabaseIdentity DatabaseIdentity(Azure.ResourceManager.Sql.Models.DatabaseIdentityType? identityType = default(Azure.ResourceManager.Sql.Models.DatabaseIdentityType?), System.Guid? tenantId = default(System.Guid?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.DatabaseImportDefinition DatabaseImportDefinition(string databaseName = null, string edition = null, string serviceObjectiveName = null, string maxSizeBytes = null, Azure.ResourceManager.Sql.Models.StorageKeyType storageKeyType = default(Azure.ResourceManager.Sql.Models.StorageKeyType), string storageKey = null, System.Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, Azure.ResourceManager.Sql.Models.NetworkIsolationSettings networkIsolation = null) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.DatabaseOperationData DatabaseOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string databaseName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = default(int?), string serverName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagementOperationState? state = default(Azure.ResourceManager.Sql.Models.ManagementOperationState?), int? errorCode = default(int?), string errorDescription = null, int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTimeOffset? estimatedCompleteOn = default(System.DateTimeOffset?), string description = null, bool? isCancellable = default(bool?), Azure.ResourceManager.Sql.Models.PhaseDetails operationPhaseDetails = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.DatabaseOperationData DatabaseOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string databaseName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = default(int?), string serverName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagementOperationState? state = default(Azure.ResourceManager.Sql.Models.ManagementOperationState?), int? errorCode = default(int?), string errorDescription = null, int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTimeOffset? estimatedCompleteOn = default(System.DateTimeOffset?), string description = null, bool? isCancellable = default(bool?), Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails operationPhaseDetails = null) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails DatabaseOperationPhaseDetails(Azure.ResourceManager.Sql.Models.DatabaseOperationPhase? phase = default(Azure.ResourceManager.Sql.Models.DatabaseOperationPhase?), System.Collections.Generic.IReadOnlyDictionary<string, string> phaseInformation = null) { throw null; }
         public static Azure.ResourceManager.Sql.DatabaseSchemaData DatabaseSchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
         public static Azure.ResourceManager.Sql.DatabaseTableData DatabaseTableData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.TableTemporalType? temporalType = default(Azure.ResourceManager.Sql.Models.TableTemporalType?), bool? isMemoryOptimized = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.DatabaseUsage DatabaseUsage(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, double? currentValue = default(double?), double? limit = default(double?), string unit = null) { throw null; }
@@ -7098,7 +7099,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.PartnerRegionInfo PartnerRegionInfo(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReplicationRole? replicationRole = default(Azure.ResourceManager.Sql.Models.InstanceFailoverGroupReplicationRole?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.PartnerServerInfo PartnerServerInfo(Azure.Core.ResourceIdentifier id = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.FailoverGroupReplicationRole? replicationRole = default(Azure.ResourceManager.Sql.Models.FailoverGroupReplicationRole?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.PerformanceLevelCapability PerformanceLevelCapability(double? value = default(double?), Azure.ResourceManager.Sql.Models.PerformanceLevelUnit? unit = default(Azure.ResourceManager.Sql.Models.PerformanceLevelUnit?)) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.PhaseDetails PhaseDetails(Azure.ResourceManager.Sql.Models.Phase? phase = default(Azure.ResourceManager.Sql.Models.Phase?), System.Collections.Generic.IReadOnlyDictionary<string, string> phaseInformation = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.PrivateEndpointConnectionRequestStatus PrivateEndpointConnectionRequestStatus(Azure.Core.ResourceIdentifier privateLinkServiceId = null, string privateEndpointConnectionName = null, string status = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.ProxyResourceWithWritableName ProxyResourceWithWritableName(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.QueryMetricInterval QueryMetricInterval(string intervalStartTime = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? intervalType = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), long? executionCount = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.QueryMetricProperties> metrics = null) { throw null; }
@@ -7548,7 +7548,7 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? IsUserError { get { throw null; } }
         public string Operation { get { throw null; } }
         public string OperationFriendlyName { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.PhaseDetails OperationPhaseDetails { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails OperationPhaseDetails { get { throw null; } }
         public int? PercentComplete { get { throw null; } }
         public string ServerName { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -7558,6 +7558,37 @@ namespace Azure.ResourceManager.Sql.Models
         Azure.ResourceManager.Sql.Models.DatabaseOperationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DatabaseOperationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DatabaseOperationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DatabaseOperationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DatabaseOperationPhase : System.IEquatable<Azure.ResourceManager.Sql.Models.DatabaseOperationPhase>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DatabaseOperationPhase(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase Catchup { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase Copying { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase CutoverInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.DatabaseOperationPhase WaitingForCutover { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.DatabaseOperationPhase other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.DatabaseOperationPhase left, Azure.ResourceManager.Sql.Models.DatabaseOperationPhase right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.DatabaseOperationPhase (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.DatabaseOperationPhase left, Azure.ResourceManager.Sql.Models.DatabaseOperationPhase right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DatabaseOperationPhaseDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails>
+    {
+        internal DatabaseOperationPhaseDetails() { }
+        public Azure.ResourceManager.Sql.Models.DatabaseOperationPhase? Phase { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> PhaseInformation { get { throw null; } }
+        Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.DatabaseOperationPhaseDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DatabaseReadScale : System.IEquatable<Azure.ResourceManager.Sql.Models.DatabaseReadScale>
@@ -9483,37 +9514,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.PerformanceLevelUnit (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.PerformanceLevelUnit left, Azure.ResourceManager.Sql.Models.PerformanceLevelUnit right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Phase : System.IEquatable<Azure.ResourceManager.Sql.Models.Phase>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Phase(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.Phase Catchup { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.Phase Copying { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.Phase CutoverInProgress { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.Phase WaitingForCutover { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.Phase other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.Phase left, Azure.ResourceManager.Sql.Models.Phase right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.Phase (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.Phase left, Azure.ResourceManager.Sql.Models.Phase right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PhaseDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.PhaseDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PhaseDetails>
-    {
-        internal PhaseDetails() { }
-        public Azure.ResourceManager.Sql.Models.Phase? Phase { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> PhaseInformation { get { throw null; } }
-        Azure.ResourceManager.Sql.Models.PhaseDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.PhaseDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.PhaseDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sql.Models.PhaseDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PhaseDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PhaseDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PhaseDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PrivateEndpointConnectionRequestStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.PrivateEndpointConnectionRequestStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.PrivateEndpointConnectionRequestStatus>
     {
