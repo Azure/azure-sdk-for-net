@@ -183,7 +183,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             IReadOnlyList<FhirR4CodeableConcept> interpretation = default;
             IReadOnlyList<FhirR4ObservationReferenceRange> referenceRange = default;
             string id = default;
-            IList<FhirR4Extension> extension = default;
+            IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

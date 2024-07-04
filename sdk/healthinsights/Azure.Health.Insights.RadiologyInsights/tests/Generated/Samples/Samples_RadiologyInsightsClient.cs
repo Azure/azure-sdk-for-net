@@ -79,11 +79,10 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -95,11 +94,10 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -767,7 +765,27 @@ value = "<value>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsModelConfiguration configuration = new RadiologyInsightsModelConfiguration
+            {
+                Verbose = true,
+                IncludeEvidence = true,
+                InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+                InferenceOptions = new RadiologyInsightsInferenceOptions
+                {
+                    FollowupRecommendationOptions = new FollowupRecommendationOptions
+                    {
+                        IncludeRecommendationsWithNoSpecifiedModality = true,
+                        IncludeRecommendationsInReferences = true,
+                        ProvideFocusedSentenceEvidence = true,
+                    },
+                    FindingOptions = new FindingOptions
+                    {
+                        ProvideFocusedSentenceEvidence = true,
+                    },
+                },
+                Locale = "<locale>",
+            };
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -790,83 +808,6 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
-Id = "<id>",
-Extension = {new FhirR4Extension("<url>")
-{
-ValueQuantity = new FhirR4Quantity
-{
-Value = 123.45,
-Comparator = "<comparator>",
-Unit = "<unit>",
-System = "<system>",
-Code = "<code>",
-Id = "<id>",
-Extension = {default},
-},
-ValueCodeableConcept = new FhirR4CodeableConcept
-{
-Coding = {default},
-Text = "<text>",
-Id = "<id>",
-Extension = {default},
-},
-ValueString = "<valueString>",
-ValueBoolean = true,
-ValueInteger = 1234,
-ValueRange = new FhirR4Range
-{
-Low = default,
-High = default,
-Id = "<id>",
-Extension = {default},
-},
-ValueRatio = new FhirR4Ratio
-{
-Numerator = default,
-Denominator = default,
-Id = "<id>",
-Extension = {default},
-},
-ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
-{
-Factor = 123.45,
-LowerLimit = 123.45,
-UpperLimit = 123.45,
-Data = "<data>",
-Id = "<id>",
-Extension = {default},
-},
-ValueTime = TimeSpan.Parse("01:23:45"),
-ValueDateTime = "<valueDateTime>",
-ValuePeriod = new FhirR4Period
-{
-Start = "<start>",
-End = "<end>",
-Id = "<id>",
-Extension = {default},
-},
-ValueReference = new FhirR4Reference
-{
-Reference = "<reference>",
-Type = "<type>",
-Identifier = new FhirR4Identifier
-{
-Use = "<use>",
-Type = default,
-System = "<system>",
-Value = "<value>",
-Period = default,
-Assigner = default,
-Id = "<id>",
-Extension = {default},
-},
-Display = "<display>",
-Id = "<id>",
-Extension = {default},
-},
-Id = "<id>",
-Extension = {default},
-}},
 }},
 Tag = {default},
 },
@@ -906,30 +847,7 @@ EncounterId = "<encounterId>",
 },
 }},
 }
-            })
-            {
-                Configuration = new RadiologyInsightsModelConfiguration
-                {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-                    InferenceOptions = new RadiologyInsightsInferenceOptions
-                    {
-                        FollowupRecommendationOptions = new FollowupRecommendationOptions
-                        {
-                            IncludeRecommendationsWithNoSpecifiedModality = true,
-                            IncludeRecommendationsInReferences = true,
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                        FindingOptions = new FindingOptions
-                        {
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                    },
-                    Locale = "<locale>",
-                },
-            };
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            }, configuration: configuration);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -941,7 +859,27 @@ EncounterId = "<encounterId>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsModelConfiguration configuration = new RadiologyInsightsModelConfiguration
+            {
+                Verbose = true,
+                IncludeEvidence = true,
+                InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+                InferenceOptions = new RadiologyInsightsInferenceOptions
+                {
+                    FollowupRecommendationOptions = new FollowupRecommendationOptions
+                    {
+                        IncludeRecommendationsWithNoSpecifiedModality = true,
+                        IncludeRecommendationsInReferences = true,
+                        ProvideFocusedSentenceEvidence = true,
+                    },
+                    FindingOptions = new FindingOptions
+                    {
+                        ProvideFocusedSentenceEvidence = true,
+                    },
+                },
+                Locale = "<locale>",
+            };
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -964,83 +902,6 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
-Id = "<id>",
-Extension = {new FhirR4Extension("<url>")
-{
-ValueQuantity = new FhirR4Quantity
-{
-Value = 123.45,
-Comparator = "<comparator>",
-Unit = "<unit>",
-System = "<system>",
-Code = "<code>",
-Id = "<id>",
-Extension = {default},
-},
-ValueCodeableConcept = new FhirR4CodeableConcept
-{
-Coding = {default},
-Text = "<text>",
-Id = "<id>",
-Extension = {default},
-},
-ValueString = "<valueString>",
-ValueBoolean = true,
-ValueInteger = 1234,
-ValueRange = new FhirR4Range
-{
-Low = default,
-High = default,
-Id = "<id>",
-Extension = {default},
-},
-ValueRatio = new FhirR4Ratio
-{
-Numerator = default,
-Denominator = default,
-Id = "<id>",
-Extension = {default},
-},
-ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
-{
-Factor = 123.45,
-LowerLimit = 123.45,
-UpperLimit = 123.45,
-Data = "<data>",
-Id = "<id>",
-Extension = {default},
-},
-ValueTime = TimeSpan.Parse("01:23:45"),
-ValueDateTime = "<valueDateTime>",
-ValuePeriod = new FhirR4Period
-{
-Start = "<start>",
-End = "<end>",
-Id = "<id>",
-Extension = {default},
-},
-ValueReference = new FhirR4Reference
-{
-Reference = "<reference>",
-Type = "<type>",
-Identifier = new FhirR4Identifier
-{
-Use = "<use>",
-Type = default,
-System = "<system>",
-Value = "<value>",
-Period = default,
-Assigner = default,
-Id = "<id>",
-Extension = {default},
-},
-Display = "<display>",
-Id = "<id>",
-Extension = {default},
-},
-Id = "<id>",
-Extension = {default},
-}},
 }},
 Tag = {default},
 },
@@ -1080,30 +941,7 @@ EncounterId = "<encounterId>",
 },
 }},
 }
-            })
-            {
-                Configuration = new RadiologyInsightsModelConfiguration
-                {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-                    InferenceOptions = new RadiologyInsightsInferenceOptions
-                    {
-                        FollowupRecommendationOptions = new FollowupRecommendationOptions
-                        {
-                            IncludeRecommendationsWithNoSpecifiedModality = true,
-                            IncludeRecommendationsInReferences = true,
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                        FindingOptions = new FindingOptions
-                        {
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                    },
-                    Locale = "<locale>",
-                },
-            };
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+            }, configuration: configuration);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
     }
