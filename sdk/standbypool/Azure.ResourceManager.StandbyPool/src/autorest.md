@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: StandbyPool
 namespace: Azure.ResourceManager.StandbyPool
-require: https://github.com/Azure/azure-rest-api-specs/blob/cc9d271a9921738fb518d7ca6b1b89a3114c4725/specification/standbypool/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/aa7135876c2eb7cd04214f394778dab9e34edf25/specification/standbypool/resource-manager/readme.md
 #tag: package-preview-2023-12
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
