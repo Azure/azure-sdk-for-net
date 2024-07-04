@@ -155,7 +155,7 @@ namespace Azure.Analytics.Purview.DataMap
                 return null;
             }
             string guid = default;
-            IList<AtlasClassification> classifications = default;
+            IReadOnlyList<AtlasClassification> classifications = default;
             string longDescription = default;
             string name = default;
             string qualifiedName = default;
@@ -165,9 +165,9 @@ namespace Azure.Analytics.Purview.DataMap
             string createdBy = default;
             long? updateTime = default;
             string updatedBy = default;
-            IList<AtlasRelatedCategoryHeader> categories = default;
+            IReadOnlyList<AtlasRelatedCategoryHeader> categories = default;
             string language = default;
-            IList<AtlasRelatedTermHeader> terms = default;
+            IReadOnlyList<AtlasRelatedTermHeader> terms = default;
             string usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

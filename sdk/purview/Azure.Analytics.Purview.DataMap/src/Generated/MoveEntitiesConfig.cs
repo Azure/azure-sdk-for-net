@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> MoveEntitiesOptions. </summary>
-    public partial class MoveEntitiesConfig
+    internal partial class MoveEntitiesConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
