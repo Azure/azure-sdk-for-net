@@ -157,7 +157,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            IDictionary<string, BinaryData> attributes = default;
+            IReadOnlyDictionary<string, BinaryData> attributes = default;
             string typeName = default;
             string lastModifiedTS = default;
             long? createTime = default;
