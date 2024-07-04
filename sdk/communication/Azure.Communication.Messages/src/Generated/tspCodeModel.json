@@ -12,7 +12,9 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.CommunicationMessageKind",
    "ValueType": {
     "$id": "3",
-    "Kind": "string"
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string"
    },
    "Values": [
     {
@@ -45,7 +47,9 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValueKind",
    "ValueType": {
     "$id": "8",
-    "Kind": "string"
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string"
    },
    "Values": [
     {
@@ -87,7 +91,7 @@
    ],
    "Description": "The type of the template parameter.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "None"
   },
   {
    "$id": "15",
@@ -96,7 +100,9 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindingsKind",
    "ValueType": {
     "$id": "16",
-    "Kind": "string"
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string"
    },
    "Values": [
     {
@@ -108,7 +114,7 @@
    ],
    "Description": "The type of the message template.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "None"
   },
   {
    "$id": "18",
@@ -117,7 +123,9 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageButtonSubType",
    "ValueType": {
     "$id": "19",
-    "Kind": "string"
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string"
    },
    "Values": [
     {
@@ -135,7 +143,7 @@
    ],
    "Description": "The WhatsApp button sub type.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "None"
   },
   {
    "$id": "22",
@@ -144,7 +152,9 @@
    "CrossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
    "ValueType": {
     "$id": "23",
-    "Kind": "string"
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string"
    },
    "Values": [
     {
@@ -171,7 +181,9 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
    "ValueType": {
     "$id": "27",
-    "Kind": "string"
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string"
    },
    "Values": [
     {
@@ -210,7 +222,9 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.CommunicationMessagesChannel",
    "ValueType": {
     "$id": "33",
-    "Kind": "string"
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string"
    },
    "Values": [
     {
@@ -231,7 +245,9 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
    "ValueType": {
     "$id": "36",
-    "Kind": "string"
+    "Kind": "string",
+    "Name": "string",
+    "CrossLanguageDefinitionId": "TypeSpec.string"
    },
    "Values": [
     {
@@ -274,8 +290,9 @@
      "Description": "The Channel Registration ID for the Business Identifier.",
      "Type": {
       "$id": "41",
-      "Kind": "uuid",
-      "Encode": "string"
+      "Kind": "string",
+      "Name": "uuid",
+      "CrossLanguageDefinitionId": "Azure.Core.uuid"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -288,10 +305,14 @@
      "Type": {
       "$id": "43",
       "Kind": "array",
+      "Name": "Array",
       "ValueType": {
        "$id": "44",
-       "Kind": "string"
-      }
+       "Kind": "string",
+       "Name": "string",
+       "CrossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -324,7 +345,9 @@
         "Kind": "constant",
         "ValueType": {
          "$id": "49",
-         "Kind": "string"
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
         },
         "Value": "text"
        },
@@ -339,7 +362,9 @@
        "Description": "Message content.",
        "Type": {
         "$id": "51",
-        "Kind": "string"
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string"
        },
        "IsRequired": true,
        "IsReadOnly": false
@@ -368,7 +393,9 @@
         "Kind": "constant",
         "ValueType": {
          "$id": "55",
-         "Kind": "string"
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
         },
         "Value": "image"
        },
@@ -383,7 +410,9 @@
        "Description": "Optional text content.",
        "Type": {
         "$id": "57",
-        "Kind": "string"
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string"
        },
        "IsRequired": false,
        "IsReadOnly": false
@@ -395,7 +424,9 @@
        "Description": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
        "Type": {
         "$id": "59",
-        "Kind": "url"
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url"
        },
        "IsRequired": true,
        "IsReadOnly": false
@@ -424,7 +455,9 @@
         "Kind": "constant",
         "ValueType": {
          "$id": "63",
-         "Kind": "string"
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
         },
         "Value": "template"
        },
@@ -452,7 +485,9 @@
           "Description": "Name of the template.",
           "Type": {
            "$id": "67",
-           "Kind": "string"
+           "Kind": "string",
+           "Name": "string",
+           "CrossLanguageDefinitionId": "TypeSpec.string"
           },
           "IsRequired": true,
           "IsReadOnly": false
@@ -464,7 +499,9 @@
           "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
           "Type": {
            "$id": "69",
-           "Kind": "string"
+           "Kind": "string",
+           "Name": "string",
+           "CrossLanguageDefinitionId": "TypeSpec.string"
           },
           "IsRequired": true,
           "IsReadOnly": false
@@ -477,6 +514,7 @@
           "Type": {
            "$id": "71",
            "Kind": "array",
+           "Name": "ArrayMessageTemplateValue",
            "ValueType": {
             "$id": "72",
             "Kind": "model",
@@ -504,7 +542,9 @@
               "Description": "Template binding reference name",
               "Type": {
                "$id": "75",
-               "Kind": "string"
+               "Kind": "string",
+               "Name": "string",
+               "CrossLanguageDefinitionId": "TypeSpec.string"
               },
               "IsRequired": true,
               "IsReadOnly": false
@@ -537,7 +577,9 @@
                  "Kind": "constant",
                  "ValueType": {
                   "$id": "80",
-                  "Kind": "string"
+                  "Kind": "string",
+                  "Name": "string",
+                  "CrossLanguageDefinitionId": "TypeSpec.string"
                  },
                  "Value": "text"
                 },
@@ -552,7 +594,9 @@
                 "Description": "The text value.",
                 "Type": {
                  "$id": "82",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": true,
                 "IsReadOnly": false
@@ -581,7 +625,9 @@
                  "Kind": "constant",
                  "ValueType": {
                   "$id": "86",
-                  "Kind": "string"
+                  "Kind": "string",
+                  "Name": "string",
+                  "CrossLanguageDefinitionId": "TypeSpec.string"
                  },
                  "Value": "image"
                 },
@@ -596,7 +642,9 @@
                 "Description": "The (public) URL of the media.",
                 "Type": {
                  "$id": "88",
-                 "Kind": "url"
+                 "Kind": "url",
+                 "Name": "url",
+                 "CrossLanguageDefinitionId": "TypeSpec.url"
                 },
                 "IsRequired": true,
                 "IsReadOnly": false
@@ -608,7 +656,9 @@
                 "Description": "The [optional] caption of the media object.",
                 "Type": {
                  "$id": "90",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -620,7 +670,9 @@
                 "Description": "The [optional] filename of the media file.",
                 "Type": {
                  "$id": "92",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -649,7 +701,9 @@
                  "Kind": "constant",
                  "ValueType": {
                   "$id": "96",
-                  "Kind": "string"
+                  "Kind": "string",
+                  "Name": "string",
+                  "CrossLanguageDefinitionId": "TypeSpec.string"
                  },
                  "Value": "document"
                 },
@@ -664,7 +718,9 @@
                 "Description": "The (public) URL of the media.",
                 "Type": {
                  "$id": "98",
-                 "Kind": "url"
+                 "Kind": "url",
+                 "Name": "url",
+                 "CrossLanguageDefinitionId": "TypeSpec.url"
                 },
                 "IsRequired": true,
                 "IsReadOnly": false
@@ -676,7 +732,9 @@
                 "Description": "The [optional] caption of the media object.",
                 "Type": {
                  "$id": "100",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -688,7 +746,9 @@
                 "Description": "The [optional] filename of the media file.",
                 "Type": {
                  "$id": "102",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -717,7 +777,9 @@
                  "Kind": "constant",
                  "ValueType": {
                   "$id": "106",
-                  "Kind": "string"
+                  "Kind": "string",
+                  "Name": "string",
+                  "CrossLanguageDefinitionId": "TypeSpec.string"
                  },
                  "Value": "video"
                 },
@@ -732,7 +794,9 @@
                 "Description": "The (public) URL of the media.",
                 "Type": {
                  "$id": "108",
-                 "Kind": "url"
+                 "Kind": "url",
+                 "Name": "url",
+                 "CrossLanguageDefinitionId": "TypeSpec.url"
                 },
                 "IsRequired": true,
                 "IsReadOnly": false
@@ -744,7 +808,9 @@
                 "Description": "The [optional] caption of the media object.",
                 "Type": {
                  "$id": "110",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -756,7 +822,9 @@
                 "Description": "The [optional] filename of the media file.",
                 "Type": {
                  "$id": "112",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -785,7 +853,9 @@
                  "Kind": "constant",
                  "ValueType": {
                   "$id": "116",
-                  "Kind": "string"
+                  "Kind": "string",
+                  "Name": "string",
+                  "CrossLanguageDefinitionId": "TypeSpec.string"
                  },
                  "Value": "location"
                 },
@@ -800,7 +870,9 @@
                 "Description": "The [Optional] name of the location.",
                 "Type": {
                  "$id": "118",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -812,7 +884,9 @@
                 "Description": "The [Optional] address of the location.",
                 "Type": {
                  "$id": "120",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -824,7 +898,9 @@
                 "Description": "The latitude of the location.",
                 "Type": {
                  "$id": "122",
-                 "Kind": "float64"
+                 "Kind": "float64",
+                 "Name": "float64",
+                 "CrossLanguageDefinitionId": "TypeSpec.float64"
                 },
                 "IsRequired": true,
                 "IsReadOnly": false
@@ -836,7 +912,9 @@
                 "Description": "The longitude of the location.",
                 "Type": {
                  "$id": "124",
-                 "Kind": "float64"
+                 "Kind": "float64",
+                 "Name": "float64",
+                 "CrossLanguageDefinitionId": "TypeSpec.float64"
                 },
                 "IsRequired": true,
                 "IsReadOnly": false
@@ -865,7 +943,9 @@
                  "Kind": "constant",
                  "ValueType": {
                   "$id": "128",
-                  "Kind": "string"
+                  "Kind": "string",
+                  "Name": "string",
+                  "CrossLanguageDefinitionId": "TypeSpec.string"
                  },
                  "Value": "quickAction"
                 },
@@ -880,7 +960,9 @@
                 "Description": "The [Optional] quick action text",
                 "Type": {
                  "$id": "130",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -892,7 +974,9 @@
                 "Description": "The [Optional] quick action payload",
                 "Type": {
                  "$id": "132",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "IsRequired": false,
                 "IsReadOnly": false
@@ -900,7 +984,8 @@
               ]
              }
             }
-           }
+           },
+           "CrossLanguageDefinitionId": "TypeSpec.Array"
           },
           "IsRequired": false,
           "IsReadOnly": false
@@ -958,7 +1043,9 @@
                 "Kind": "constant",
                 "ValueType": {
                  "$id": "140",
-                 "Kind": "string"
+                 "Kind": "string",
+                 "Name": "string",
+                 "CrossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "Value": "whatsApp"
                },
@@ -974,6 +1061,7 @@
                "Type": {
                 "$id": "142",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsComponent",
                 "ValueType": {
                  "$id": "143",
                  "Kind": "model",
@@ -989,13 +1077,16 @@
                    "Description": "The name of the referenced item in the template values.",
                    "Type": {
                     "$id": "145",
-                    "Kind": "string"
+                    "Kind": "string",
+                    "Name": "string",
+                    "CrossLanguageDefinitionId": "TypeSpec.string"
                    },
                    "IsRequired": true,
                    "IsReadOnly": false
                   }
                  ]
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1008,9 +1099,11 @@
                "Type": {
                 "$id": "147",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsComponent",
                 "ValueType": {
                  "$ref": "143"
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1023,9 +1116,11 @@
                "Type": {
                 "$id": "149",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsComponent",
                 "ValueType": {
                  "$ref": "143"
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1038,6 +1133,7 @@
                "Type": {
                 "$id": "151",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsButton",
                 "ValueType": {
                  "$id": "152",
                  "Kind": "model",
@@ -1064,13 +1160,16 @@
                    "Description": "The name of the referenced item in the template values.",
                    "Type": {
                     "$id": "155",
-                    "Kind": "string"
+                    "Kind": "string",
+                    "Name": "string",
+                    "CrossLanguageDefinitionId": "TypeSpec.string"
                    },
                    "IsRequired": true,
                    "IsReadOnly": false
                   }
                  ]
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1152,6 +1251,7 @@
      "Type": {
       "$id": "158",
       "Kind": "array",
+      "Name": "ArrayMessageReceipt",
       "ValueType": {
        "$id": "159",
        "Kind": "model",
@@ -1167,7 +1267,9 @@
          "Description": "The message id.",
          "Type": {
           "$id": "161",
-          "Kind": "string"
+          "Kind": "string",
+          "Name": "string",
+          "CrossLanguageDefinitionId": "TypeSpec.string"
          },
          "IsRequired": true,
          "IsReadOnly": false
@@ -1179,13 +1281,16 @@
          "Description": "The native external platform user identifier of the recipient.",
          "Type": {
           "$id": "163",
-          "Kind": "string"
+          "Kind": "string",
+          "Name": "string",
+          "CrossLanguageDefinitionId": "TypeSpec.string"
          },
          "IsRequired": true,
          "IsReadOnly": false
         }
        ]
-      }
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -1211,6 +1316,7 @@
      "Type": {
       "$id": "166",
       "Kind": "array",
+      "Name": "ArrayMessageTemplateItem",
       "ValueType": {
        "$id": "167",
        "Kind": "model",
@@ -1238,7 +1344,9 @@
          "Description": "The template's name.",
          "Type": {
           "$id": "170",
-          "Kind": "string"
+          "Kind": "string",
+          "Name": "string",
+          "CrossLanguageDefinitionId": "TypeSpec.string"
          },
          "IsRequired": true,
          "IsReadOnly": true
@@ -1250,7 +1358,9 @@
          "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
          "Type": {
           "$id": "172",
-          "Kind": "string"
+          "Kind": "string",
+          "Name": "string",
+          "CrossLanguageDefinitionId": "TypeSpec.string"
          },
          "IsRequired": true,
          "IsReadOnly": false
@@ -1291,7 +1401,9 @@
            "Description": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
            "Type": {
             "$id": "177",
-            "Kind": "any"
+            "Kind": "any",
+            "Name": "unknown",
+            "CrossLanguageDefinitionId": ""
            },
            "IsRequired": false,
            "IsReadOnly": false
@@ -1306,7 +1418,9 @@
             "Kind": "constant",
             "ValueType": {
              "$id": "180",
-             "Kind": "string"
+             "Kind": "string",
+             "Name": "string",
+             "CrossLanguageDefinitionId": "TypeSpec.string"
             },
             "Value": "whatsApp"
            },
@@ -1317,7 +1431,8 @@
          ]
         }
        }
-      }
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -1329,7 +1444,9 @@
      "Description": "The link to the next page of items",
      "Type": {
       "$id": "182",
-      "Kind": "url"
+      "Kind": "url",
+      "Name": "ResourceLocation",
+      "CrossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation"
      },
      "IsRequired": false,
      "IsReadOnly": false
@@ -1341,30 +1458,85 @@
   },
   {
    "$ref": "175"
+  },
+  {
+   "$id": "183",
+   "Kind": "model",
+   "Name": "SendRequest",
+   "CrossLanguageDefinitionId": "send.Request.anonymous",
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "184",
+     "Name": "channelRegistrationId",
+     "SerializedName": "channelRegistrationId",
+     "Description": "The Channel Registration ID for the Business Identifier.",
+     "Type": {
+      "$id": "185",
+      "Kind": "string",
+      "Name": "uuid",
+      "CrossLanguageDefinitionId": "Azure.Core.uuid"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "186",
+     "Name": "to",
+     "SerializedName": "to",
+     "Description": "The native external platform user identifiers of the recipient.",
+     "Type": {
+      "$id": "187",
+      "Kind": "array",
+      "Name": "Array",
+      "ValueType": {
+       "$id": "188",
+       "Kind": "string",
+       "Name": "string",
+       "CrossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "189",
+     "Name": "kind",
+     "SerializedName": "kind",
+     "Description": "The type discriminator describing a notification type.",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
   }
  ],
  "Clients": [
   {
-   "$id": "183",
+   "$id": "190",
    "Name": "NotificationMessagesClient",
    "Description": "",
    "Operations": [
     {
-     "$id": "184",
+     "$id": "191",
      "Name": "send",
      "ResourceName": "NotificationMessagesClient",
      "Description": "Sends a notification message from Business to User.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "185",
+       "$id": "192",
        "Name": "endpoint",
        "NameInRequest": "endpoint",
        "Description": "The communication resource, for example https://my-resource.communication.azure.com",
        "Type": {
-        "$id": "186",
-        "Kind": "uri",
-        "IsNullable": false
+        "$id": "193",
+        "Kind": "url",
+        "Name": "url",
+        "CrossLanguageDefinitionId": "TypeSpec.url"
        },
        "Location": "Uri",
        "IsApiVersion": false,
@@ -1377,21 +1549,24 @@
        "Kind": "Client"
       },
       {
-       "$id": "187",
+       "$id": "194",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "188",
-        "Kind": "string"
+        "$id": "195",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string"
        },
        "Location": "Query",
        "DefaultValue": {
-        "$id": "189",
+        "$id": "196",
         "Type": {
-         "$id": "190",
+         "$id": "197",
          "Kind": "string",
-         "IsNullable": false
+         "Name": "string",
+         "CrossLanguageDefinitionId": ""
         },
         "Value": "2024-02-01"
        },
@@ -1405,13 +1580,15 @@
        "Kind": "Client"
       },
       {
-       "$id": "191",
+       "$id": "198",
        "Name": "repeatabilityRequestId",
        "NameInRequest": "Repeatability-Request-ID",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "192",
-        "Kind": "string"
+        "$id": "199",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string"
        },
        "Location": "Header",
        "IsRequired": false,
@@ -1424,18 +1601,22 @@
        "Kind": "Method"
       },
       {
-       "$id": "193",
+       "$id": "200",
        "Name": "repeatabilityFirstSent",
        "NameInRequest": "Repeatability-First-Sent",
        "Description": "Specifies the date and time at which the request was first created.",
        "Type": {
-        "$id": "194",
+        "$id": "201",
         "Kind": "utcDateTime",
+        "Name": "utcDateTime",
         "Encode": "rfc7231",
         "WireType": {
-         "$id": "195",
-         "Kind": "string"
-        }
+         "$id": "202",
+         "Kind": "string",
+         "Name": "string",
+         "CrossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "CrossLanguageDefinitionId": "TypeSpec.utcDateTime"
        },
        "Location": "Header",
        "IsRequired": false,
@@ -1448,14 +1629,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "196",
+       "$id": "203",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "197",
-        "Kind": "uuid",
-        "Encode": "string"
+        "$id": "204",
+        "Kind": "string",
+        "Name": "uuid",
+        "CrossLanguageDefinitionId": "Azure.Core.uuid"
        },
        "Location": "Header",
        "IsRequired": false,
@@ -1468,7 +1650,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "198",
+       "$id": "205",
        "Name": "NotificationContent",
        "NameInRequest": "NotificationContent",
        "Description": "Details of the message to send.",
@@ -1483,16 +1665,17 @@
        "IsEndpoint": false,
        "SkipUrlEncoding": false,
        "Explode": false,
-       "Kind": "Method"
+       "Kind": "Spread"
       },
       {
-       "$id": "199",
+       "$id": "206",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "200",
+        "$id": "207",
         "Kind": "string",
-        "IsNullable": false
+        "Name": "string",
+        "CrossLanguageDefinitionId": ""
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1504,21 +1687,22 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "201",
+        "$id": "208",
         "Type": {
-         "$ref": "200"
+         "$ref": "207"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "202",
+       "$id": "209",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "203",
+        "$id": "210",
         "Kind": "string",
-        "IsNullable": false
+        "Name": "string",
+        "CrossLanguageDefinitionId": ""
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1530,9 +1714,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "204",
+        "$id": "211",
         "Type": {
-         "$ref": "203"
+         "$ref": "210"
         },
         "Value": "application/json"
        }
@@ -1540,7 +1724,7 @@
      ],
      "Responses": [
       {
-       "$id": "205",
+       "$id": "212",
        "StatusCodes": [
         202
        ],
@@ -1550,7 +1734,7 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "206",
+         "$id": "213",
          "Name": "Repeatability-Result",
          "NameInResponse": "repeatabilityResult",
          "Description": "Indicates whether the repeatable request was accepted or rejected.",
@@ -1559,14 +1743,15 @@
          }
         },
         {
-         "$id": "207",
+         "$id": "214",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "208",
-          "Kind": "uuid",
-          "Encode": "string"
+          "$id": "215",
+          "Kind": "string",
+          "Name": "uuid",
+          "CrossLanguageDefinitionId": "Azure.Core.uuid"
          }
         }
        ],
@@ -1588,27 +1773,29 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "209",
+     "$id": "216",
      "Name": "downloadMediaInternal",
      "ResourceName": "MessageDataStream",
      "Description": "Download the Media payload from a User to Business message.",
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "185"
+       "$ref": "192"
       },
       {
-       "$id": "210",
+       "$id": "217",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "211",
-        "Kind": "string"
+        "$id": "218",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string"
        },
        "Location": "Query",
        "DefaultValue": {
-        "$ref": "189"
+        "$ref": "196"
        },
        "IsRequired": true,
        "IsApiVersion": true,
@@ -1620,13 +1807,15 @@
        "Kind": "Client"
       },
       {
-       "$id": "212",
+       "$id": "219",
        "Name": "id",
        "NameInRequest": "id",
        "Description": "The stream ID.",
        "Type": {
-        "$id": "213",
-        "Kind": "string"
+        "$id": "220",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string"
        },
        "Location": "Path",
        "IsRequired": true,
@@ -1639,14 +1828,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "214",
+       "$id": "221",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "215",
-        "Kind": "uuid",
-        "Encode": "string"
+        "$id": "222",
+        "Kind": "string",
+        "Name": "uuid",
+        "CrossLanguageDefinitionId": "Azure.Core.uuid"
        },
        "Location": "Header",
        "IsRequired": false,
@@ -1659,13 +1849,14 @@
        "Kind": "Method"
       },
       {
-       "$id": "216",
+       "$id": "223",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "217",
+        "$id": "224",
         "Kind": "string",
-        "IsNullable": false
+        "Name": "string",
+        "CrossLanguageDefinitionId": ""
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1677,9 +1868,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "218",
+        "$id": "225",
         "Type": {
-         "$ref": "217"
+         "$ref": "224"
         },
         "Value": "application/octet-stream"
        }
@@ -1687,26 +1878,29 @@
      ],
      "Responses": [
       {
-       "$id": "219",
+       "$id": "226",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "220",
+        "$id": "227",
         "Kind": "bytes",
-        "Encode": "base64"
+        "Name": "bytes",
+        "Encode": "base64",
+        "CrossLanguageDefinitionId": "TypeSpec.bytes"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "221",
+         "$id": "228",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "222",
-          "Kind": "uuid",
-          "Encode": "string"
+          "$id": "229",
+          "Kind": "string",
+          "Name": "uuid",
+          "CrossLanguageDefinitionId": "Azure.Core.uuid"
          }
         }
        ],
@@ -1726,41 +1920,43 @@
     }
    ],
    "Protocol": {
-    "$id": "223"
+    "$id": "230"
    },
    "Parameters": [
     {
-     "$ref": "185"
+     "$ref": "192"
     }
    ]
   },
   {
-   "$id": "224",
+   "$id": "231",
    "Name": "MessageTemplateClient",
    "Description": "",
    "Operations": [
     {
-     "$id": "225",
+     "$id": "232",
      "Name": "getTemplates",
      "ResourceName": "MessageTemplateItem",
      "Description": "List all templates for given Azure Communication Services channel",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$ref": "185"
+       "$ref": "192"
       },
       {
-       "$id": "226",
+       "$id": "233",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "227",
-        "Kind": "string"
+        "$id": "234",
+        "Kind": "string",
+        "Name": "string",
+        "CrossLanguageDefinitionId": "TypeSpec.string"
        },
        "Location": "Query",
        "DefaultValue": {
-        "$ref": "189"
+        "$ref": "196"
        },
        "IsRequired": true,
        "IsApiVersion": true,
@@ -1772,14 +1968,15 @@
        "Kind": "Client"
       },
       {
-       "$id": "228",
+       "$id": "235",
        "Name": "channelId",
        "NameInRequest": "channelId",
        "Description": "The registration ID of the channel.",
        "Type": {
-        "$id": "229",
-        "Kind": "uuid",
-        "Encode": "string"
+        "$id": "236",
+        "Kind": "string",
+        "Name": "uuid",
+        "CrossLanguageDefinitionId": "Azure.Core.uuid"
        },
        "Location": "Path",
        "IsRequired": true,
@@ -1792,13 +1989,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "230",
+       "$id": "237",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "231",
-        "Kind": "int32"
+        "$id": "238",
+        "Kind": "int32",
+        "Name": "int32",
+        "CrossLanguageDefinitionId": "TypeSpec.int32"
        },
        "Location": "Query",
        "IsRequired": false,
@@ -1811,14 +2010,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "232",
+       "$id": "239",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "233",
-        "Kind": "uuid",
-        "Encode": "string"
+        "$id": "240",
+        "Kind": "string",
+        "Name": "uuid",
+        "CrossLanguageDefinitionId": "Azure.Core.uuid"
        },
        "Location": "Header",
        "IsRequired": false,
@@ -1831,13 +2031,14 @@
        "Kind": "Method"
       },
       {
-       "$id": "234",
+       "$id": "241",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "235",
+        "$id": "242",
         "Kind": "string",
-        "IsNullable": false
+        "Name": "string",
+        "CrossLanguageDefinitionId": ""
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1849,9 +2050,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "236",
+        "$id": "243",
         "Type": {
-         "$ref": "235"
+         "$ref": "242"
         },
         "Value": "application/json"
        }
@@ -1859,7 +2060,7 @@
      ],
      "Responses": [
       {
-       "$id": "237",
+       "$id": "244",
        "StatusCodes": [
         200
        ],
@@ -1869,14 +2070,15 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "238",
+         "$id": "245",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "239",
-          "Kind": "uuid",
-          "Encode": "string"
+          "$id": "246",
+          "Kind": "string",
+          "Name": "uuid",
+          "CrossLanguageDefinitionId": "Azure.Core.uuid"
          }
         }
        ],
@@ -1892,7 +2094,7 @@
      "Path": "/messages/channels/{channelId}/templates",
      "BufferResponse": true,
      "Paging": {
-      "$id": "240",
+      "$id": "247",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -1901,23 +2103,23 @@
     }
    ],
    "Protocol": {
-    "$id": "241"
+    "$id": "248"
    },
    "Parameters": [
     {
-     "$ref": "185"
+     "$ref": "192"
     }
    ]
   }
  ],
  "Auth": {
-  "$id": "242",
+  "$id": "249",
   "ApiKey": {
-   "$id": "243",
+   "$id": "250",
    "Name": "Authorization"
   },
   "OAuth2": {
-   "$id": "244",
+   "$id": "251",
    "Scopes": [
     "https://communication.azure.com/.default"
    ]
