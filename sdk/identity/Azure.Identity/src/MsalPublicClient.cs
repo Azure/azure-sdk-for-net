@@ -13,7 +13,7 @@ namespace Azure.Identity
 {
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
-        private Action<PublicClientApplicationBuilder> _beforeBuildClient;
+        private List<Action<PublicClientApplicationBuilder>> _beforeBuildClient = new();
         internal string RedirectUrl { get; }
 
         protected MsalPublicClient()
@@ -26,7 +26,11 @@ namespace Azure.Identity
 
             if (options is IMsalPublicClientInitializerOptions initializerOptions)
             {
-                _beforeBuildClient = initializerOptions.BeforeBuildClient;
+                _beforeBuildClient.Add(initializerOptions.BeforeBuildClient);
+            };
+            if (options is InteractiveBrowserCredentialOptions browserCredentialOptions)
+            {
+                _beforeBuildClient.Add(browserCredentialOptions.CustomizeClientAppBuilder);
             };
         }
 
@@ -58,9 +62,9 @@ namespace Azure.Identity
                 pubAppBuilder.WithClientCapabilities(clientCapabilities);
             }
 
-            if (_beforeBuildClient != null)
+            foreach (var beforeBuildClient in _beforeBuildClient)
             {
-                _beforeBuildClient(pubAppBuilder);
+                beforeBuildClient(pubAppBuilder);
             }
 
             if (DisableInstanceDiscovery)

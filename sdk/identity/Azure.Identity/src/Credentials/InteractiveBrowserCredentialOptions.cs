@@ -70,5 +70,10 @@ namespace Azure.Identity
         /// The options for customizing the browser for interactive authentication.
         /// </summary>
         public BrowserCustomizationOptions BrowserCustomization { get; set; }
+
+        /// <summary>
+        /// Callback to customize the ClientApplicationBuilder.
+        /// </summary>
+        public Action<PublicClientApplicationBuilder> CustomizeClientAppBuilder { get; set; }
     }
 }
