@@ -939,10 +939,10 @@
 # ServiceOwners:                                                   @banggaurav
 
 # PRLabel: %NewRelicObservability
-/sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability/       @dipeshbhakat @vipray-ms
+/sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability/       @dipeshbhakat-microsoft @vipray-ms
 
 # ServiceLabel: %NewRelicObservability %Mgmt
-# ServiceOwners:                                                   @dipeshbhakat @vipray-ms
+# ServiceOwners:                                                   @dipeshbhakat-microsoft @vipray-ms
 
 
 # PRLabel: %Communication - Resource Manager
