@@ -99,7 +99,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.Creates a URI with authentication token for the clients. For MQTT clients, specify "clientEndpointType" to MQTT. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one..
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
