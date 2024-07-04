@@ -39,30 +39,58 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new assistant. </summary>
-        /// <param name="assistantCreationOptions"> The request details to use when creating a new assistant. </param>
+        /// <param name="model"> The ID of the model to use. </param>
+        /// <param name="name"> The name of the new assistant. </param>
+        /// <param name="description"> The description of the new assistant. </param>
+        /// <param name="instructions"> The system instructions for the new assistant to use. </param>
+        /// <param name="tools"> The collection of tools to enable for the new assistant. </param>
+        /// <param name="fileIds"> A list of previously uploaded file IDs to attach to the assistant. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantCreationOptions"/> is null. </exception>
-        public virtual async Task<Response<Assistant>> CreateAssistantAsync(AssistantCreationOptions assistantCreationOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        public virtual async Task<Response<Assistant>> CreateAssistantAsync(string model, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assistantCreationOptions, nameof(assistantCreationOptions));
+            Argument.AssertNotNull(model, nameof(model));
 
-            using RequestContent content = assistantCreationOptions.ToRequestContent();
+            AssistantCreationOptions assistantCreationOptions = new AssistantCreationOptions(
+                model,
+                name,
+                description,
+                instructions,
+                tools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAssistantAsync(content, context).ConfigureAwait(false);
+            Response response = await CreateAssistantAsync(assistantCreationOptions.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(Assistant.FromResponse(response), response);
         }
 
         /// <summary> Creates a new assistant. </summary>
-        /// <param name="assistantCreationOptions"> The request details to use when creating a new assistant. </param>
+        /// <param name="model"> The ID of the model to use. </param>
+        /// <param name="name"> The name of the new assistant. </param>
+        /// <param name="description"> The description of the new assistant. </param>
+        /// <param name="instructions"> The system instructions for the new assistant to use. </param>
+        /// <param name="tools"> The collection of tools to enable for the new assistant. </param>
+        /// <param name="fileIds"> A list of previously uploaded file IDs to attach to the assistant. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantCreationOptions"/> is null. </exception>
-        public virtual Response<Assistant> CreateAssistant(AssistantCreationOptions assistantCreationOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        public virtual Response<Assistant> CreateAssistant(string model, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assistantCreationOptions, nameof(assistantCreationOptions));
+            Argument.AssertNotNull(model, nameof(model));
 
-            using RequestContent content = assistantCreationOptions.ToRequestContent();
+            AssistantCreationOptions assistantCreationOptions = new AssistantCreationOptions(
+                model,
+                name,
+                description,
+                instructions,
+                tools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateAssistant(content, context);
+            Response response = CreateAssistant(assistantCreationOptions.ToRequestContent(), context);
             return Response.FromValue(Assistant.FromResponse(response), response);
         }
 
@@ -332,35 +360,61 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Modifies an existing assistant. </summary>
         /// <param name="assistantId"> The ID of the assistant to modify. </param>
-        /// <param name="updateAssistantOptions"> The request details to use when modifying an existing assistant. </param>
+        /// <param name="model"> The ID of the model to use. </param>
+        /// <param name="name"> The modified name for the assistant to use. </param>
+        /// <param name="description"> The modified description for the assistant to use. </param>
+        /// <param name="instructions"> The modified system instructions for the new assistant to use. </param>
+        /// <param name="tools"> The modified collection of tools to enable for the assistant. </param>
+        /// <param name="fileIds"> The modified list of previously uploaded fileIDs to attach to the assistant. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="updateAssistantOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Assistant>> UpdateAssistantAsync(string assistantId, UpdateAssistantOptions updateAssistantOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Assistant>> UpdateAssistantAsync(string assistantId, string model = null, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(updateAssistantOptions, nameof(updateAssistantOptions));
 
-            using RequestContent content = updateAssistantOptions.ToRequestContent();
+            UpdateAssistantOptions updateAssistantOptions = new UpdateAssistantOptions(
+                model,
+                name,
+                description,
+                instructions,
+                tools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateAssistantAsync(assistantId, content, context).ConfigureAwait(false);
+            Response response = await UpdateAssistantAsync(assistantId, updateAssistantOptions.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(Assistant.FromResponse(response), response);
         }
 
         /// <summary> Modifies an existing assistant. </summary>
         /// <param name="assistantId"> The ID of the assistant to modify. </param>
-        /// <param name="updateAssistantOptions"> The request details to use when modifying an existing assistant. </param>
+        /// <param name="model"> The ID of the model to use. </param>
+        /// <param name="name"> The modified name for the assistant to use. </param>
+        /// <param name="description"> The modified description for the assistant to use. </param>
+        /// <param name="instructions"> The modified system instructions for the new assistant to use. </param>
+        /// <param name="tools"> The modified collection of tools to enable for the assistant. </param>
+        /// <param name="fileIds"> The modified list of previously uploaded fileIDs to attach to the assistant. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="updateAssistantOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Assistant> UpdateAssistant(string assistantId, UpdateAssistantOptions updateAssistantOptions, CancellationToken cancellationToken = default)
+        public virtual Response<Assistant> UpdateAssistant(string assistantId, string model = null, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(updateAssistantOptions, nameof(updateAssistantOptions));
 
-            using RequestContent content = updateAssistantOptions.ToRequestContent();
+            UpdateAssistantOptions updateAssistantOptions = new UpdateAssistantOptions(
+                model,
+                name,
+                description,
+                instructions,
+                tools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateAssistant(assistantId, content, context);
+            Response response = UpdateAssistant(assistantId, updateAssistantOptions.ToRequestContent(), context);
             return Response.FromValue(Assistant.FromResponse(response), response);
         }
 
@@ -997,30 +1051,26 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new thread. Threads contain messages and can be run by assistants. </summary>
-        /// <param name="assistantThreadCreationOptions"> The details used to create a new assistant thread. </param>
+        /// <param name="messages"> The initial messages to associate with the new thread. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantThreadCreationOptions"/> is null. </exception>
-        public virtual async Task<Response<AssistantThread>> CreateThreadAsync(AssistantThreadCreationOptions assistantThreadCreationOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssistantThread>> CreateThreadAsync(IEnumerable<ThreadInitializationMessage> messages = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assistantThreadCreationOptions, nameof(assistantThreadCreationOptions));
-
-            using RequestContent content = assistantThreadCreationOptions.ToRequestContent();
+            AssistantThreadCreationOptions assistantThreadCreationOptions = new AssistantThreadCreationOptions(messages?.ToList() as IList<ThreadInitializationMessage> ?? new ChangeTrackingList<ThreadInitializationMessage>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateThreadAsync(content, context).ConfigureAwait(false);
+            Response response = await CreateThreadAsync(assistantThreadCreationOptions.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
         }
 
         /// <summary> Creates a new thread. Threads contain messages and can be run by assistants. </summary>
-        /// <param name="assistantThreadCreationOptions"> The details used to create a new assistant thread. </param>
+        /// <param name="messages"> The initial messages to associate with the new thread. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantThreadCreationOptions"/> is null. </exception>
-        public virtual Response<AssistantThread> CreateThread(AssistantThreadCreationOptions assistantThreadCreationOptions, CancellationToken cancellationToken = default)
+        public virtual Response<AssistantThread> CreateThread(IEnumerable<ThreadInitializationMessage> messages = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assistantThreadCreationOptions, nameof(assistantThreadCreationOptions));
-
-            using RequestContent content = assistantThreadCreationOptions.ToRequestContent();
+            AssistantThreadCreationOptions assistantThreadCreationOptions = new AssistantThreadCreationOptions(messages?.ToList() as IList<ThreadInitializationMessage> ?? new ChangeTrackingList<ThreadInitializationMessage>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateThread(content, context);
+            Response response = CreateThread(assistantThreadCreationOptions.ToRequestContent(), context);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
         }
 
@@ -2751,30 +2801,54 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new assistant thread and immediately starts a run using that new thread. </summary>
-        /// <param name="createAndRunThreadOptions"> The details used when creating and immediately running a new assistant thread. </param>
+        /// <param name="assistantId"> The ID of the assistant for which the thread should be created. </param>
+        /// <param name="thread"> The details used to create the new thread. </param>
+        /// <param name="overrideModelName"> The overridden model that the assistant should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions the assistant should use to run the thread. </param>
+        /// <param name="overrideTools"> The overridden list of enabled tools the assistant should use to run the thread. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createAndRunThreadOptions"/> is null. </exception>
-        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(CreateAndRunThreadOptions createAndRunThreadOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, AssistantThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createAndRunThreadOptions, nameof(createAndRunThreadOptions));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
-            using RequestContent content = createAndRunThreadOptions.ToRequestContent();
+            CreateAndRunThreadOptions createAndRunThreadOptions = new CreateAndRunThreadOptions(
+                assistantId,
+                thread,
+                overrideModelName,
+                overrideInstructions,
+                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateThreadAndRunAsync(content, context).ConfigureAwait(false);
+            Response response = await CreateThreadAndRunAsync(createAndRunThreadOptions.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Creates a new assistant thread and immediately starts a run using that new thread. </summary>
-        /// <param name="createAndRunThreadOptions"> The details used when creating and immediately running a new assistant thread. </param>
+        /// <param name="assistantId"> The ID of the assistant for which the thread should be created. </param>
+        /// <param name="thread"> The details used to create the new thread. </param>
+        /// <param name="overrideModelName"> The overridden model that the assistant should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions the assistant should use to run the thread. </param>
+        /// <param name="overrideTools"> The overridden list of enabled tools the assistant should use to run the thread. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createAndRunThreadOptions"/> is null. </exception>
-        public virtual Response<ThreadRun> CreateThreadAndRun(CreateAndRunThreadOptions createAndRunThreadOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, AssistantThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createAndRunThreadOptions, nameof(createAndRunThreadOptions));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
-            using RequestContent content = createAndRunThreadOptions.ToRequestContent();
+            CreateAndRunThreadOptions createAndRunThreadOptions = new CreateAndRunThreadOptions(
+                assistantId,
+                thread,
+                overrideModelName,
+                overrideInstructions,
+                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateThreadAndRun(content, context);
+            Response response = CreateThreadAndRun(createAndRunThreadOptions.ToRequestContent(), context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 

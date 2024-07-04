@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class UpdateAssistantOptions : IUtf8JsonSerializable, IJsonModel<UpdateAssistantOptions>
+    internal partial class UpdateAssistantOptions : IUtf8JsonSerializable, IJsonModel<UpdateAssistantOptions>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateAssistantOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
