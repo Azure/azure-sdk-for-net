@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI;
-using OpenAI.Assistants;
-using System.ClientModel.Primitives;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
+using OpenAI.Assistants;
 
 namespace Azure.AI.OpenAI.Assistants;
 
