@@ -939,7 +939,7 @@
 # ServiceOwners:                                                   @banggaurav
 
 # PRLabel: %NewRelicObservability
-/sdk/astronomer/Azure.ResourceManager.NewRelicObservability/       @dipeshbhakat @vipray-ms
+/sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability/       @dipeshbhakat @vipray-ms
 
 # ServiceLabel: %NewRelicObservability %Mgmt
 # ServiceOwners:                                                   @dipeshbhakat @vipray-ms
