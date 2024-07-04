@@ -154,7 +154,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.Creates a URI with authentication token for the clients. For MQTT clients, specify "clientEndpointType" to MQTT. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -217,7 +217,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.Creates a URI with authentication token for the clients. For MQTT clients, specify "clientEndpointType" to MQTT. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients. Specify clientEndpointType to MQTT for MQTT clients, others use the default one.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
