@@ -938,6 +938,13 @@
 # ServiceLabel: %Astronomer %Mgmt
 # ServiceOwners:                                                   @banggaurav
 
+# PRLabel: %NewRelicObservability
+/sdk/astronomer/Azure.ResourceManager.NewRelicObservability/       @dipeshbhakat @vipray-ms
+
+# ServiceLabel: %NewRelicObservability %Mgmt
+# ServiceOwners:                                                   @dipeshbhakat @vipray-ms
+
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
