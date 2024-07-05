@@ -24,11 +24,11 @@ namespace Azure.Identity
         {
             RedirectUrl = redirectUrl;
 
-            if (options is IMsalPublicClientInitializerOptions initializerOptions)
+            if (options is IMsalPublicClientInitializerOptions initializerOptions && initializerOptions.BeforeBuildClient != null)
             {
                 _beforeBuildClient.Add(initializerOptions.BeforeBuildClient);
             };
-            if (options is InteractiveBrowserCredentialOptions browserCredentialOptions)
+            if (options is InteractiveBrowserCredentialOptions browserCredentialOptions && browserCredentialOptions.CustomizeClientAppBuilder != null)
             {
                 _beforeBuildClient.Add(browserCredentialOptions.CustomizeClientAppBuilder);
             };
