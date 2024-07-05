@@ -310,8 +310,8 @@ namespace Azure.Data.SchemaRegistry.Tests
                     return SchemaFormat.Json;
                 case Custom:
                     return SchemaFormat.Custom;
-                case Protobuf:
-                    return SchemaFormat.Protobuf;
+                //case Protobuf:
+                //    return SchemaFormat.Protobuf;
                 default:
                     throw new ArgumentException("Format name was invalid.");
             }

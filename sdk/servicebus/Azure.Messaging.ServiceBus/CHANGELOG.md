@@ -19,6 +19,8 @@
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains a fix for decoding messages with a null format code as the body.
 
+- Instances of `ServiceBusSender` created with no explicit `ServiceBusSenderOptions` value allocate less memory.
+
 ## 7.18.0-beta.1 (2024-05-08)
 
 ### Features Added
