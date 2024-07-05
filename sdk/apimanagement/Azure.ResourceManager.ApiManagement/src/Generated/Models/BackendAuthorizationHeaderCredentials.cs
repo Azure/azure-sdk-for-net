@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Authentication Scheme name. </summary>
+        [WirePath("scheme")]
         public string Scheme { get; set; }
         /// <summary> Authentication Parameter value. </summary>
+        [WirePath("parameter")]
         public string Parameter { get; set; }
     }
 }
