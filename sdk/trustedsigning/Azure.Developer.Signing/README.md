@@ -49,7 +49,7 @@ Since the interaction of the client is at the certificate profile level, the cli
 
 ```C# Snippet:Azure_Developer_Signing_CreateCertificateProfileClient
 var credential = new DefaultAzureCredential();
-CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(region, credential).GetCertificateProfileClient();
 ```
 
 ### Thread safety
@@ -76,7 +76,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 Sign the digest corresponding to a file using an algorithm.
 
 ```C# Snippet:Azure_Developer_Signing_SigningBytes
-CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(region, credential).GetCertificateProfileClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -95,7 +95,7 @@ JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Request all the available customer extended key usages from a certificate profile.
 
 ```C# Snippet:Azure_Developer_Signing_GetExtendedKeyUsages
-CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(region, credential).GetCertificateProfileClient();
 
 List<string> ekus = new();
 
@@ -113,7 +113,7 @@ foreach (BinaryData item in certificateProfileClient.GetExtendedKeyUsages(accoun
 Request the sign root certificate from a certificate profile.
 
 ```C# Snippet:Azure_Developer_Signing_GetSignRootCertificate
-CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(region, credential).GetCertificateProfileClient();
 
 Response<BinaryData> response = certificateProfileClient.GetSignRootCertificate(accountName, profileName);
 
