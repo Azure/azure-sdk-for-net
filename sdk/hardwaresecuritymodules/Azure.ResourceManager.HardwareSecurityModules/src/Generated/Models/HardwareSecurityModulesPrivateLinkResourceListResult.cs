@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
+        /// <param name="nextLink"> URL to get the next set of operation list results (if there are any). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HardwareSecurityModulesPrivateLinkResourceListResult(IReadOnlyList<HardwareSecurityModulesPrivateLinkData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HardwareSecurityModulesPrivateLinkResourceListResult(IReadOnlyList<HardwareSecurityModulesPrivateLinkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>
         public IReadOnlyList<HardwareSecurityModulesPrivateLinkData> Value { get; }
+        /// <summary> URL to get the next set of operation list results (if there are any). </summary>
+        public Uri NextLink { get; }
     }
 }

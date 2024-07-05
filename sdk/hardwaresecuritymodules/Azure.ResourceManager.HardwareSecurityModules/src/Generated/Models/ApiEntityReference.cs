@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Security domain properties information for Cloud HSM cluster. </summary>
-    public partial class CloudHsmClusterSecurityDomainProperties
+    /// <summary> The API entity reference. </summary>
+    internal partial class ApiEntityReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +46,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSecurityDomainProperties"/>. </summary>
-        public CloudHsmClusterSecurityDomainProperties()
+        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
+        public ApiEntityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSecurityDomainProperties"/>. </summary>
-        /// <param name="fipsState"> FIPS state information for security domain. </param>
-        /// <param name="activationStatus"> status of security domain activation. </param>
+        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
+        /// <param name="resourceId"> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudHsmClusterSecurityDomainProperties(int? fipsState, string activationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiEntityReference(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FipsState = fipsState;
-            ActivationStatus = activationStatus;
+            ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> FIPS state information for security domain. </summary>
-        public int? FipsState { get; set; }
-        /// <summary> status of security domain activation. </summary>
-        public string ActivationStatus { get; set; }
+        /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

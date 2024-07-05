@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Cloud Hsm Cluster backup information. </summary>
-    public partial class BackupProperties
+    /// <summary> Properties of a private link resource. </summary>
+    public partial class HardwareSecurityModulesPrivateLinkResourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,31 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
-        public BackupProperties()
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkResourceProperties"/>. </summary>
+        public HardwareSecurityModulesPrivateLinkResourceProperties()
         {
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
-        /// <param name="azureStorageResourceUri"> Azure storage Resource Uri. </param>
-        /// <param name="lastBackupOn"> Last Date Time that Customer Enabled Backup was taken. </param>
-        /// <param name="lastBackupStatus"> Status of last backup. </param>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkResourceProperties"/>. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupProperties(Uri azureStorageResourceUri, DateTimeOffset? lastBackupOn, string lastBackupStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HardwareSecurityModulesPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AzureStorageResourceUri = azureStorageResourceUri;
-            LastBackupOn = lastBackupOn;
-            LastBackupStatus = lastBackupStatus;
+            GroupId = groupId;
+            RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure storage Resource Uri. </summary>
-        public Uri AzureStorageResourceUri { get; set; }
-        /// <summary> Last Date Time that Customer Enabled Backup was taken. </summary>
-        public DateTimeOffset? LastBackupOn { get; }
-        /// <summary> Status of last backup. </summary>
-        public string LastBackupStatus { get; }
+        /// <summary> The private link resource group id. </summary>
+        public string GroupId { get; }
+        /// <summary> The private link resource required member names. </summary>
+        public IReadOnlyList<string> RequiredMembers { get; }
+        /// <summary> The private link resource private link DNS zone name. </summary>
+        public IList<string> RequiredZoneNames { get; }
     }
 }

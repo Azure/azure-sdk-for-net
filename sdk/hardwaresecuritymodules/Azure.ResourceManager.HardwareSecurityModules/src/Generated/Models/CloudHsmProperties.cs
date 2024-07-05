@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmProperties"/>. </summary>
-        public CloudHsmProperties()
+        internal CloudHsmProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmProperties"/>. </summary>
         /// <param name="fqdn"> FQDN of the Cloud HSM. </param>
-        /// <param name="state"> The Cloud HSM State. </param>
+        /// <param name="state"> The Cloud HSM State. Values are: Deploying, ConfiguringSlb, Starting, Starting, Failed, Failed, Deleting, DeletingSlbEntry, InitialProvisioning, Updating. </param>
         /// <param name="stateMessage"> The Cloud HSM State message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudHsmProperties(string fqdn, string state, string stateMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> FQDN of the Cloud HSM. </summary>
-        public string Fqdn { get; set; }
-        /// <summary> The Cloud HSM State. </summary>
-        public string State { get; set; }
+        public string Fqdn { get; }
+        /// <summary> The Cloud HSM State. Values are: Deploying, ConfiguringSlb, Starting, Starting, Failed, Failed, Deleting, DeletingSlbEntry, InitialProvisioning, Updating. </summary>
+        public string State { get; }
         /// <summary> The Cloud HSM State message. </summary>
-        public string StateMessage { get; set; }
+        public string StateMessage { get; }
     }
 }

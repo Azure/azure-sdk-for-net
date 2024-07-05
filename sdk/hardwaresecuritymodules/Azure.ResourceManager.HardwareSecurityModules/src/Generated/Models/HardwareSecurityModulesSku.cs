@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> SKU of the dedicated HSM. </summary>
-    internal partial class HardwareSecurityModulesSku
+    public partial class HardwareSecurityModulesSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

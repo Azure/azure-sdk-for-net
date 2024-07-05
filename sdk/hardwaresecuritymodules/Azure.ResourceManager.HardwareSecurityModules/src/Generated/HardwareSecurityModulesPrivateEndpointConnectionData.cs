@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateEndpointConnectionData"/>. </summary>
         public HardwareSecurityModulesPrivateEndpointConnectionData()
         {
-            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateEndpointConnectionData"/>. </summary>
@@ -63,37 +61,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
-        /// <param name="privateEndpoint"> The private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HardwareSecurityModulesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, SubResource privateEndpoint, HardwareSecurityModulesPrivateLinkServiceConnectionState connectionState, HardwareSecurityModulesPrivateEndpointConnectionProvisioningState? provisioningState, IReadOnlyList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HardwareSecurityModulesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             ETag = etag;
-            PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
-            ProvisioningState = provisioningState;
-            GroupIds = groupIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource properties. </summary>
+        public PrivateEndpointConnectionProperties Properties { get; set; }
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
         public ETag? ETag { get; set; }
-        /// <summary> The private endpoint resource. </summary>
-        internal SubResource PrivateEndpoint { get; set; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
-        }
-
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public HardwareSecurityModulesPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public HardwareSecurityModulesPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
-        /// <summary> The group ids for the private endpoint resource. </summary>
-        public IReadOnlyList<string> GroupIds { get; }
     }
 }
