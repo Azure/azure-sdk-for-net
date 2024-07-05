@@ -26,7 +26,7 @@ namespace Azure.Developer.Signing.Tests.Samples
             random.NextBytes(digest);
 
             #region Snippet:Azure_Developer_Signing_SigningBytes
-            CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+            CertificateProfile certificateProfileClient = new SigningClient(region, credential).GetCertificateProfileClient();
 
             using RequestContent content = RequestContent.Create(new
             {
