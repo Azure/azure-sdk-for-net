@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: ComputeFleet
 namespace: Azure.ResourceManager.ComputeFleet
-require: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/computefleet/resource-manager/readme.md
+require: D:\Lwm\SourceCode\azure-rest-api-specs\specification\azurefleet\resource-manager\readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -52,5 +52,8 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDiskContent
 
 ```
