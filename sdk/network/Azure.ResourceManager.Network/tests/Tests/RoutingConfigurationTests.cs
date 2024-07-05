@@ -55,8 +55,6 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create test virtual networks and subnets
             (_vnets, _subnets) = await _resourceGroup.CreateTestVirtualNetworksAsync(_location);
-
-            await StopSessionRecordingAsync();
         }
 
         [OneTimeTearDown]
@@ -71,6 +69,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Delete the resource group
             await _resourceGroup.DeleteAsync(WaitUntil.Completed);
+
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]
@@ -83,6 +83,9 @@ namespace Azure.ResourceManager.Network.Tests
             // Create a routing configuration
             (_routingConfiguration, _routingCollections, _routingRules) = await _networkManager.CreateRoutingConfigurationAsync
                 (new List<ResourceIdentifier>() { _networkGroupSubnet.Id, _networkGroupVnet.Id });
+
+            // Add static members to the network groups
+            await _networkGroupVnet.AddVnetStaticMemberToNetworkGroup(_vnets);
         }
 
         [TearDown]
@@ -133,9 +136,6 @@ namespace Azure.ResourceManager.Network.Tests
             var expectedValues = _routingRules.ToDictionary(
                 rule => rule.Data.Destination.DestinationAddress,
                 rule => (rule.Data.NextHop.NextHopAddress, rule.Data.NextHop.NextHopType));
-
-            // Add static members to the network groups
-            await _networkGroupVnet.AddVnetStaticMemberToNetworkGroup(_vnets);
 
             // Act
             // Commit the routing configuration
