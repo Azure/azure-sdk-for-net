@@ -5,31 +5,76 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    /// <summary> Object received from the registry containing the list of schema groups and link to next batch page. </summary>
+    /// <summary> The list of schema group names with server paging support. </summary>
     internal partial class SchemaGroups
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SchemaGroups"/>. </summary>
+        /// <param name="value"> The collection of pageable schema group name items. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SchemaGroups(IEnumerable<string> value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SchemaGroups"/>. </summary>
+        /// <param name="value"> The collection of pageable schema group name items. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaGroups(IReadOnlyList<string> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SchemaGroups"/> for deserialization. </summary>
         internal SchemaGroups()
         {
-            Groups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchemaGroups"/>. </summary>
-        /// <param name="groups"> Array of schema groups. </param>
-        /// <param name="nextLink"> URl to next batch of schema groups. </param>
-        internal SchemaGroups(IReadOnlyList<string> groups, string nextLink)
-        {
-            Groups = groups;
-            NextLink = nextLink;
-        }
-
-        /// <summary> Array of schema groups. </summary>
-        public IReadOnlyList<string> Groups { get; }
-        /// <summary> URl to next batch of schema groups. </summary>
+        /// <summary> The collection of pageable schema group name items. </summary>
+        public IReadOnlyList<string> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }
 }
