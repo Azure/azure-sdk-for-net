@@ -80,10 +80,12 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Enable or disable Basic authentication method. </summary>
+        [WirePath("properties.enableBasicAuth")]
         public bool? EnableBasicAuth { get; set; }
         /// <summary> Gets or sets the signin. </summary>
         internal PortalConfigPropertiesSignin Signin { get; set; }
         /// <summary> Redirect anonymous users to the sign-in page. </summary>
+        [WirePath("properties.signin.require")]
         public bool? Require
         {
             get => Signin is null ? default : Signin.Require;
@@ -98,6 +100,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets or sets the signup. </summary>
         internal PortalConfigPropertiesSignup Signup { get; set; }
         /// <summary> Terms of service settings. </summary>
+        [WirePath("properties.signup.termsOfService")]
         public PortalConfigTermsOfServiceProperties SignupTermsOfService
         {
             get => Signup is null ? default : Signup.TermsOfService;
@@ -110,10 +113,12 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The developer portal delegation settings. </summary>
+        [WirePath("properties.delegation")]
         public PortalConfigDelegationProperties Delegation { get; set; }
         /// <summary> The developer portal Cross-Origin Resource Sharing (CORS) settings. </summary>
         internal PortalConfigCorsProperties Cors { get; set; }
         /// <summary> Allowed origins, e.g. `https://trusted.com`. </summary>
+        [WirePath("properties.cors.allowedOrigins")]
         public IList<string> CorsAllowedOrigins
         {
             get
@@ -125,6 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The developer portal Content Security Policy (CSP) settings. </summary>
+        [WirePath("properties.csp")]
         public PortalConfigCspProperties Csp { get; set; }
     }
 }

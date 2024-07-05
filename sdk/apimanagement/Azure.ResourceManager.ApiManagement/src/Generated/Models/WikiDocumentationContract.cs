@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Documentation Identifier. </summary>
+        [WirePath("documentationId")]
         public string DocumentationId { get; set; }
     }
 }

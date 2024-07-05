@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> The Tenant Id. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> The Object Id. </summary>
+        [WirePath("properties.objectId")]
         public string ObjectId { get; set; }
     }
 }

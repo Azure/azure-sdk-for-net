@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class AuthorizationLoginRequestContract : IUtf8JsonSerializable, IJsonModel<AuthorizationLoginRequestContract>
+    public partial class AuthorizationLoginContent : IUtf8JsonSerializable, IJsonModel<AuthorizationLoginContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationLoginRequestContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationLoginContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AuthorizationLoginRequestContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AuthorizationLoginContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationLoginRequestContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationLoginContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationLoginRequestContract)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationLoginContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        AuthorizationLoginRequestContract IJsonModel<AuthorizationLoginRequestContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AuthorizationLoginContent IJsonModel<AuthorizationLoginContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationLoginRequestContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationLoginContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationLoginRequestContract)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationLoginContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAuthorizationLoginRequestContract(document.RootElement, options);
+            return DeserializeAuthorizationLoginContent(document.RootElement, options);
         }
 
-        internal static AuthorizationLoginRequestContract DeserializeAuthorizationLoginRequestContract(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AuthorizationLoginContent DeserializeAuthorizationLoginContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,38 +89,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthorizationLoginRequestContract(postLoginRedirectUri, serializedAdditionalRawData);
+            return new AuthorizationLoginContent(postLoginRedirectUri, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AuthorizationLoginRequestContract>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AuthorizationLoginContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationLoginRequestContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationLoginContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationLoginRequestContract)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationLoginContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AuthorizationLoginRequestContract IPersistableModel<AuthorizationLoginRequestContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AuthorizationLoginContent IPersistableModel<AuthorizationLoginContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationLoginRequestContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationLoginContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAuthorizationLoginRequestContract(document.RootElement, options);
+                        return DeserializeAuthorizationLoginContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationLoginRequestContract)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationLoginContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AuthorizationLoginRequestContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AuthorizationLoginContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

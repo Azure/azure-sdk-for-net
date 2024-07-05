@@ -452,18 +452,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationConfirmConsentCodeRequestContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationConfirmConsentCodeRequestContract"/> is null. </exception>
-        public virtual async Task<Response> ConfirmConsentCodeAsync(AuthorizationConfirmConsentCodeRequestContract authorizationConfirmConsentCodeRequestContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> ConfirmConsentCodeAsync(AuthorizationConfirmConsentCodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(authorizationConfirmConsentCodeRequestContract, nameof(authorizationConfirmConsentCodeRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.ConfirmConsentCode");
             scope.Start();
             try
             {
-                var response = await _authorizationContractAuthorizationRestClient.ConfirmConsentCodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, authorizationConfirmConsentCodeRequestContract, cancellationToken).ConfigureAwait(false);
+                var response = await _authorizationContractAuthorizationRestClient.ConfirmConsentCodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -494,18 +494,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationConfirmConsentCodeRequestContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationConfirmConsentCodeRequestContract"/> is null. </exception>
-        public virtual Response ConfirmConsentCode(AuthorizationConfirmConsentCodeRequestContract authorizationConfirmConsentCodeRequestContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response ConfirmConsentCode(AuthorizationConfirmConsentCodeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(authorizationConfirmConsentCodeRequestContract, nameof(authorizationConfirmConsentCodeRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.ConfirmConsentCode");
             scope.Start();
             try
             {
-                var response = _authorizationContractAuthorizationRestClient.ConfirmConsentCode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, authorizationConfirmConsentCodeRequestContract, cancellationToken);
+                var response = _authorizationContractAuthorizationRestClient.ConfirmConsentCode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -532,18 +532,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationLoginRequestContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationLoginRequestContract"/> is null. </exception>
-        public virtual async Task<Response<AuthorizationLoginResponseContract>> PostAuthorizationLoginLinkAsync(AuthorizationLoginRequestContract authorizationLoginRequestContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AuthorizationLoginResult>> PostAuthorizationLoginLinkAsync(AuthorizationLoginContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(authorizationLoginRequestContract, nameof(authorizationLoginRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _authorizationLoginLinksClientDiagnostics.CreateScope("AuthorizationContractResource.PostAuthorizationLoginLink");
             scope.Start();
             try
             {
-                var response = await _authorizationLoginLinksRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, authorizationLoginRequestContract, cancellationToken).ConfigureAwait(false);
+                var response = await _authorizationLoginLinksRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -570,18 +570,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="authorizationLoginRequestContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationLoginRequestContract"/> is null. </exception>
-        public virtual Response<AuthorizationLoginResponseContract> PostAuthorizationLoginLink(AuthorizationLoginRequestContract authorizationLoginRequestContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AuthorizationLoginResult> PostAuthorizationLoginLink(AuthorizationLoginContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(authorizationLoginRequestContract, nameof(authorizationLoginRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _authorizationLoginLinksClientDiagnostics.CreateScope("AuthorizationContractResource.PostAuthorizationLoginLink");
             scope.Start();
             try
             {
-                var response = _authorizationLoginLinksRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, authorizationLoginRequestContract, cancellationToken);
+                var response = _authorizationLoginLinksRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="error"> Authorization error details. </param>
         /// <param name="status"> Status of the Authorization. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AuthorizationType? authorizationType, OAuth2GrantType? oAuth2GrantType, IDictionary<string, string> parameters, AuthorizationError error, string status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AuthorizationContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementAuthorizationType? authorizationType, OAuth2GrantType? oAuth2GrantType, IDictionary<string, string> parameters, ApiManagementAuthorizationError error, string status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AuthorizationType = authorizationType;
             OAuth2GrantType = oAuth2GrantType;
@@ -79,14 +79,19 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Authorization type options. </summary>
-        public AuthorizationType? AuthorizationType { get; set; }
+        [WirePath("properties.authorizationType")]
+        public ApiManagementAuthorizationType? AuthorizationType { get; set; }
         /// <summary> OAuth2 grant type options. </summary>
+        [WirePath("properties.oauth2grantType")]
         public OAuth2GrantType? OAuth2GrantType { get; set; }
         /// <summary> Authorization parameters. </summary>
+        [WirePath("properties.parameters")]
         public IDictionary<string, string> Parameters { get; }
         /// <summary> Authorization error details. </summary>
-        public AuthorizationError Error { get; set; }
+        [WirePath("properties.error")]
+        public ApiManagementAuthorizationError Error { get; set; }
         /// <summary> Status of the Authorization. </summary>
+        [WirePath("properties.status")]
         public string Status { get; set; }
     }
 }

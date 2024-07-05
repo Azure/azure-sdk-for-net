@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
+        [WirePath("delegateRegistration")]
         public bool? DelegateRegistration { get; set; }
         /// <summary> Enable or disable delegation for product subscriptions. </summary>
+        [WirePath("delegateSubscription")]
         public bool? DelegateSubscription { get; set; }
         /// <summary> A delegation endpoint URL. </summary>
+        [WirePath("delegationUrl")]
         public Uri DelegationUri { get; set; }
         /// <summary> A base64-encoded validation key to ensure requests originate from Azure API Management service. </summary>
+        [WirePath("validationKey")]
         public string ValidationKey { get; set; }
     }
 }

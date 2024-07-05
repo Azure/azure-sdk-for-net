@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Collection wiki documents included into this wiki. </summary>
+        [WirePath("properties.documents")]
         public IList<WikiDocumentationContract> Documents { get; }
     }
 }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> documentation title. </summary>
+        [WirePath("properties.title")]
         public string Title { get; set; }
         /// <summary> Markdown documentation content. </summary>
+        [WirePath("properties.content")]
         public string Content { get; set; }
     }
 }

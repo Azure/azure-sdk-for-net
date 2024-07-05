@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Redirect URL to be set in the OAuth application. </summary>
+        [WirePath("redirectUrl")]
         public Uri RedirectUri { get; set; }
         /// <summary> OAuth2 settings. </summary>
+        [WirePath("grantTypes")]
         public AuthorizationProviderOAuth2GrantTypes GrantTypes { get; set; }
     }
 }

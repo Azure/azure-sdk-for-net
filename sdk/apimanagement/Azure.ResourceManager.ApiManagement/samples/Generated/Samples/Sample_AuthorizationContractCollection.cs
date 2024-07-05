@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string authorizationId = "authz2";
             AuthorizationContractData data = new AuthorizationContractData()
             {
-                AuthorizationType = AuthorizationType.OAuth2,
+                AuthorizationType = ApiManagementAuthorizationType.OAuth2,
                 OAuth2GrantType = OAuth2GrantType.AuthorizationCode,
             };
             ArmOperation<AuthorizationContractResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, authorizationId, data);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string authorizationId = "authz1";
             AuthorizationContractData data = new AuthorizationContractData()
             {
-                AuthorizationType = AuthorizationType.OAuth2,
+                AuthorizationType = ApiManagementAuthorizationType.OAuth2,
                 OAuth2GrantType = OAuth2GrantType.AuthorizationCode,
                 Parameters =
 {

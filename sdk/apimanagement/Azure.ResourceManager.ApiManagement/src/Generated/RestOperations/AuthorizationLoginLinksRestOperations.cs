@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreatePostRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationLoginRequestContract authorizationLoginRequestContract)
+        internal RequestUriBuilder CreatePostRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationLoginContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreatePostRequest(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationLoginRequestContract authorizationLoginRequestContract)
+        internal HttpMessage CreatePostRequest(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationLoginContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(authorizationLoginRequestContract, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -90,28 +90,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
         /// <param name="authorizationId"> Identifier of the authorization. </param>
-        /// <param name="authorizationLoginRequestContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/>, <paramref name="authorizationId"/> or <paramref name="authorizationLoginRequestContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/>, <paramref name="authorizationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/> or <paramref name="authorizationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AuthorizationLoginResponseContract>> PostAsync(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationLoginRequestContract authorizationLoginRequestContract, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthorizationLoginResult>> PostAsync(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationLoginContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authorizationProviderId, nameof(authorizationProviderId));
             Argument.AssertNotNullOrEmpty(authorizationId, nameof(authorizationId));
-            Argument.AssertNotNull(authorizationLoginRequestContract, nameof(authorizationLoginRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePostRequest(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId, authorizationLoginRequestContract);
+            using var message = CreatePostRequest(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AuthorizationLoginResponseContract value = default;
+                        AuthorizationLoginResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AuthorizationLoginResponseContract.DeserializeAuthorizationLoginResponseContract(document.RootElement);
+                        value = AuthorizationLoginResult.DeserializeAuthorizationLoginResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -125,28 +125,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
         /// <param name="authorizationId"> Identifier of the authorization. </param>
-        /// <param name="authorizationLoginRequestContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/>, <paramref name="authorizationId"/> or <paramref name="authorizationLoginRequestContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/>, <paramref name="authorizationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/> or <paramref name="authorizationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AuthorizationLoginResponseContract> Post(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationLoginRequestContract authorizationLoginRequestContract, CancellationToken cancellationToken = default)
+        public Response<AuthorizationLoginResult> Post(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationLoginContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authorizationProviderId, nameof(authorizationProviderId));
             Argument.AssertNotNullOrEmpty(authorizationId, nameof(authorizationId));
-            Argument.AssertNotNull(authorizationLoginRequestContract, nameof(authorizationLoginRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePostRequest(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId, authorizationLoginRequestContract);
+            using var message = CreatePostRequest(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AuthorizationLoginResponseContract value = default;
+                        AuthorizationLoginResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AuthorizationLoginResponseContract.DeserializeAuthorizationLoginResponseContract(document.RootElement);
+                        value = AuthorizationLoginResult.DeserializeAuthorizationLoginResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

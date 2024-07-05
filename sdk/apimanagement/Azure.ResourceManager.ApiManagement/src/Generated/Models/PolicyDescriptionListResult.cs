@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Descriptions of API Management policies. </summary>
+        [WirePath("value")]
         public IReadOnlyList<PolicyDescriptionContractData> Value { get; }
         /// <summary> Total record count number. </summary>
+        [WirePath("count")]
         public long? Count { get; }
     }
 }

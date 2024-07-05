@@ -374,7 +374,7 @@ IdentityClientId = "329419bc-adec-4dce-9568-25a6d486e468",
             string serviceName = "apimService1";
             ApiManagementServiceData data = new ApiManagementServiceData(new AzureLocation("East US"), new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 1), "apim@autorestsdk.com", "autorestsdk")
             {
-                NatGatewayState = NatGatewayState.Enabled,
+                NatGatewayState = ApiManagementNatGatewayState.Enabled,
                 Tags =
 {
 ["tag1"] = "value1",

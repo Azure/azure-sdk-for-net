@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // invoke the operation
             AuthorizationContractData data = new AuthorizationContractData()
             {
-                AuthorizationType = AuthorizationType.OAuth2,
+                AuthorizationType = ApiManagementAuthorizationType.OAuth2,
                 OAuth2GrantType = OAuth2GrantType.AuthorizationCode,
             };
             ArmOperation<AuthorizationContractResource> lro = await authorizationContract.UpdateAsync(WaitUntil.Completed, data);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // invoke the operation
             AuthorizationContractData data = new AuthorizationContractData()
             {
-                AuthorizationType = AuthorizationType.OAuth2,
+                AuthorizationType = ApiManagementAuthorizationType.OAuth2,
                 OAuth2GrantType = OAuth2GrantType.AuthorizationCode,
                 Parameters =
 {
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationContractResource authorizationContract = client.GetAuthorizationContractResource(authorizationContractResourceId);
 
             // invoke the operation
-            AuthorizationConfirmConsentCodeRequestContract authorizationConfirmConsentCodeRequestContract = new AuthorizationConfirmConsentCodeRequestContract()
+            AuthorizationConfirmConsentCodeContent content = new AuthorizationConfirmConsentCodeContent()
             {
                 ConsentCode = "theconsentcode",
             };
-            await authorizationContract.ConfirmConsentCodeAsync(authorizationConfirmConsentCodeRequestContract);
+            await authorizationContract.ConfirmConsentCodeAsync(content);
 
             Console.WriteLine($"Succeeded");
         }
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationContractResource authorizationContract = client.GetAuthorizationContractResource(authorizationContractResourceId);
 
             // invoke the operation
-            AuthorizationLoginRequestContract authorizationLoginRequestContract = new AuthorizationLoginRequestContract()
+            AuthorizationLoginContent content = new AuthorizationLoginContent()
             {
                 PostLoginRedirectUri = new Uri("https://www.bing.com/"),
             };
-            AuthorizationLoginResponseContract result = await authorizationContract.PostAuthorizationLoginLinkAsync(authorizationLoginRequestContract);
+            AuthorizationLoginResult result = await authorizationContract.PostAuthorizationLoginLinkAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

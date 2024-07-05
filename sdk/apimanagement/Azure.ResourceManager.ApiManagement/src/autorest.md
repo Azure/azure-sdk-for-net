@@ -20,8 +20,10 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 skip-serialization-format-xml: true
-# mgmt-debug:
-#   show-serialized-names: true
+enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}
@@ -115,6 +117,9 @@ override-operation-name:
 prepend-rp-prefix:
 - ResourceSkuCapacity
 - ResourceSkuCapacityScaleType
+- AuthorizationType
+- AuthorizationError
+- NatGatewayState
 
 rename-mapping:
   GatewayHostnameConfigurationContract.properties.negotiateClientCertificate: IsClientCertificateRequired
@@ -281,6 +286,9 @@ rename-mapping:
   ApiCreateOrUpdateParameter.properties.termsOfServiceUrl: termsOfServiceLink
   ApiCreateOrUpdateParameter.properties.serviceUrl: serviceLink
   ApiEntityBaseContract.termsOfServiceUrl: termsOfServiceLink
+  AuthorizationConfirmConsentCodeRequestContract: AuthorizationConfirmConsentCodeContent
+  AuthorizationLoginRequestContract: AuthorizationLoginContent
+  AuthorizationLoginResponseContract: AuthorizationLoginResult
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'

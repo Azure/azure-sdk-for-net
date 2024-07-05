@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Authorization login request contract. </summary>
-    public partial class AuthorizationLoginRequestContract
+    /// <summary> Authorization confirm consent code request contract. </summary>
+    public partial class AuthorizationConfirmConsentCodeContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizationLoginRequestContract"/>. </summary>
-        public AuthorizationLoginRequestContract()
+        /// <summary> Initializes a new instance of <see cref="AuthorizationConfirmConsentCodeContent"/>. </summary>
+        public AuthorizationConfirmConsentCodeContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizationLoginRequestContract"/>. </summary>
-        /// <param name="postLoginRedirectUri"> The redirect URL after login has completed. </param>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationConfirmConsentCodeContent"/>. </summary>
+        /// <param name="consentCode"> The consent code from the authorization server after authorizing and consenting. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationLoginRequestContract(Uri postLoginRedirectUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthorizationConfirmConsentCodeContent(string consentCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PostLoginRedirectUri = postLoginRedirectUri;
+            ConsentCode = consentCode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The redirect URL after login has completed. </summary>
-        public Uri PostLoginRedirectUri { get; set; }
+        /// <summary> The consent code from the authorization server after authorizing and consenting. </summary>
+        [WirePath("consentCode")]
+        public string ConsentCode { get; set; }
     }
 }

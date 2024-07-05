@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Contents of the policy fragment. </summary>
+        [WirePath("properties.value")]
         public string Value { get; set; }
         /// <summary> Policy fragment description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Format of the policy fragment content. </summary>
+        [WirePath("properties.format")]
         public PolicyFragmentContentFormat? Format { get; set; }
     }
 }

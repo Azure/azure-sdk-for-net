@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Authorization login response contract. </summary>
-    public partial class AuthorizationLoginResponseContract
+    /// <summary> Authorization login request contract. </summary>
+    public partial class AuthorizationLoginContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizationLoginResponseContract"/>. </summary>
-        internal AuthorizationLoginResponseContract()
+        /// <summary> Initializes a new instance of <see cref="AuthorizationLoginContent"/>. </summary>
+        public AuthorizationLoginContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizationLoginResponseContract"/>. </summary>
-        /// <param name="loginLink"> The login link. </param>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationLoginContent"/>. </summary>
+        /// <param name="postLoginRedirectUri"> The redirect URL after login has completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationLoginResponseContract(string loginLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthorizationLoginContent(Uri postLoginRedirectUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LoginLink = loginLink;
+            PostLoginRedirectUri = postLoginRedirectUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The login link. </summary>
-        public string LoginLink { get; }
+        /// <summary> The redirect URL after login has completed. </summary>
+        [WirePath("postLoginRedirectUrl")]
+        public Uri PostLoginRedirectUri { get; set; }
     }
 }

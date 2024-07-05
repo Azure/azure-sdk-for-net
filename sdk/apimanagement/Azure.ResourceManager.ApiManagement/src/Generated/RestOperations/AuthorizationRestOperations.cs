@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateConfirmConsentCodeRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationConfirmConsentCodeRequestContract authorizationConfirmConsentCodeRequestContract)
+        internal RequestUriBuilder CreateConfirmConsentCodeRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationConfirmConsentCodeContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateConfirmConsentCodeRequest(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationConfirmConsentCodeRequestContract authorizationConfirmConsentCodeRequestContract)
+        internal HttpMessage CreateConfirmConsentCodeRequest(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationConfirmConsentCodeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -548,9 +548,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(authorizationConfirmConsentCodeRequestContract, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -561,20 +561,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
         /// <param name="authorizationId"> Identifier of the authorization. </param>
-        /// <param name="authorizationConfirmConsentCodeRequestContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/>, <paramref name="authorizationId"/> or <paramref name="authorizationConfirmConsentCodeRequestContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/>, <paramref name="authorizationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/> or <paramref name="authorizationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ConfirmConsentCodeAsync(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationConfirmConsentCodeRequestContract authorizationConfirmConsentCodeRequestContract, CancellationToken cancellationToken = default)
+        public async Task<Response> ConfirmConsentCodeAsync(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationConfirmConsentCodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authorizationProviderId, nameof(authorizationProviderId));
             Argument.AssertNotNullOrEmpty(authorizationId, nameof(authorizationId));
-            Argument.AssertNotNull(authorizationConfirmConsentCodeRequestContract, nameof(authorizationConfirmConsentCodeRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateConfirmConsentCodeRequest(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId, authorizationConfirmConsentCodeRequestContract);
+            using var message = CreateConfirmConsentCodeRequest(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -591,20 +591,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
         /// <param name="authorizationId"> Identifier of the authorization. </param>
-        /// <param name="authorizationConfirmConsentCodeRequestContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/>, <paramref name="authorizationId"/> or <paramref name="authorizationConfirmConsentCodeRequestContract"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/>, <paramref name="authorizationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authorizationProviderId"/> or <paramref name="authorizationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ConfirmConsentCode(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationConfirmConsentCodeRequestContract authorizationConfirmConsentCodeRequestContract, CancellationToken cancellationToken = default)
+        public Response ConfirmConsentCode(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId, AuthorizationConfirmConsentCodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(authorizationProviderId, nameof(authorizationProviderId));
             Argument.AssertNotNullOrEmpty(authorizationId, nameof(authorizationId));
-            Argument.AssertNotNull(authorizationConfirmConsentCodeRequestContract, nameof(authorizationConfirmConsentCodeRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateConfirmConsentCodeRequest(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId, authorizationConfirmConsentCodeRequestContract);
+            using var message = CreateConfirmConsentCodeRequest(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -68,12 +68,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> OAuth2 Authentication settings. </summary>
+        [WirePath("oAuth2")]
         public OAuth2AuthenticationSettingsContract OAuth2 { get; set; }
         /// <summary> OpenID Connect Authentication Settings. </summary>
+        [WirePath("openid")]
         public OpenIdAuthenticationSettingsContract OpenId { get; set; }
         /// <summary> Collection of OAuth2 authentication settings included into this API. </summary>
+        [WirePath("oAuth2AuthenticationSettings")]
         public IList<OAuth2AuthenticationSettingsContract> OAuth2AuthenticationSettings { get; }
         /// <summary> Collection of Open ID Connect authentication settings included into this API. </summary>
+        [WirePath("openidAuthenticationSettings")]
         public IList<OpenIdAuthenticationSettingsContract> OpenidAuthenticationSettings { get; }
     }
 }

@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The mode of the developer portal Content Security Policy (CSP). </summary>
+        [WirePath("mode")]
         public PortalSettingsCspMode? Mode { get; set; }
         /// <summary> The URLs used by the browser to report CSP violations. </summary>
+        [WirePath("reportUri")]
         public IList<Uri> ReportUri { get; }
         /// <summary> Allowed sources, e.g. `*.trusted.com`, `trusted.com`, `https://`. </summary>
+        [WirePath("allowedSources")]
         public IList<string> AllowedSources { get; }
     }
 }

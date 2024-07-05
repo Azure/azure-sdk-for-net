@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Authorization confirm consent code request contract. </summary>
-    public partial class AuthorizationConfirmConsentCodeRequestContract
+    /// <summary> Authorization login response contract. </summary>
+    public partial class AuthorizationLoginResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizationConfirmConsentCodeRequestContract"/>. </summary>
-        public AuthorizationConfirmConsentCodeRequestContract()
+        /// <summary> Initializes a new instance of <see cref="AuthorizationLoginResult"/>. </summary>
+        internal AuthorizationLoginResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizationConfirmConsentCodeRequestContract"/>. </summary>
-        /// <param name="consentCode"> The consent code from the authorization server after authorizing and consenting. </param>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationLoginResult"/>. </summary>
+        /// <param name="loginLink"> The login link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationConfirmConsentCodeRequestContract(string consentCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthorizationLoginResult(string loginLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConsentCode = consentCode;
+            LoginLink = loginLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The consent code from the authorization server after authorizing and consenting. </summary>
-        public string ConsentCode { get; set; }
+        /// <summary> The login link. </summary>
+        [WirePath("loginLink")]
+        public string LoginLink { get; }
     }
 }

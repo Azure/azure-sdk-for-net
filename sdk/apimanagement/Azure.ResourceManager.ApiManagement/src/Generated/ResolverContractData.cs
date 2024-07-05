@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Resolver Name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Path is type/field being resolved. </summary>
+        [WirePath("properties.path")]
         public string Path { get; set; }
         /// <summary> Description of the resolver. May include HTML formatting tags. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
     }
 }

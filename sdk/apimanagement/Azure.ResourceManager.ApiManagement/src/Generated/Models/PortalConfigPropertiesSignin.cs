@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Redirect anonymous users to the sign-in page. </summary>
+        [WirePath("require")]
         public bool? Require { get; set; }
     }
 }
