@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Avro.Specific;
 using Azure;
-using Azure.Identity;
 using Azure.Messaging;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;

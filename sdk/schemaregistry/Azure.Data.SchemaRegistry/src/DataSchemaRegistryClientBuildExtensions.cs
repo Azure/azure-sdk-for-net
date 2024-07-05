@@ -5,9 +5,6 @@ using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry
 {
-    /// <summary>
-    /// Todo.
-    /// </summary>
     [CodeGenClient("DataSchemaRegistryClientBuilderExtensions")]
     internal static partial class DataSchemaRegistryClientBuilderExtensions
     {
