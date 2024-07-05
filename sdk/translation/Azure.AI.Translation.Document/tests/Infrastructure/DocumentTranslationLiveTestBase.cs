@@ -83,7 +83,7 @@ namespace Azure.AI.Translation.Document.Tests
             string accountUrl = String.Format("https://{0}.blob.core.windows.net/", TestEnvironment.StorageAccountName);
             BlobServiceClient blobServiceClient = new BlobServiceClient(
                 new Uri(accountUrl),
-                new DefaultAzureCredential(),
+                TestEnvironment.Credential,
                 InstrumentClientOptions(new BlobClientOptions(BlobClientOptions.ServiceVersion.V2020_04_08)));
             BlobContainerClient blobContainerClient = blobServiceClient.CreateBlobContainer(containerName, PublicAccessType.None);
             return InstrumentClient(blobContainerClient);
