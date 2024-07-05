@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <summary> Initializes a new instance of <see cref="SnapshotResourceData"/>. </summary>
         public SnapshotResourceData()
         {
+            ComplianceResults = new ChangeTrackingList<ComplianceResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotResourceData"/>. </summary>
@@ -61,15 +62,35 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Snapshot's property'. </param>
+        /// <param name="snapshotName"> Snapshot name. </param>
+        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="reportProperties"> The report essential info. </param>
+        /// <param name="reportSystemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="complianceResults"> List of compliance results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SnapshotResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotName, DateTimeOffset? createdOn, ProvisioningState? provisioningState, ReportProperties reportProperties, SystemData reportSystemData, IReadOnlyList<ComplianceResult> complianceResults, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            SnapshotName = snapshotName;
+            CreatedOn = createdOn;
+            ProvisioningState = provisioningState;
+            ReportProperties = reportProperties;
+            ReportSystemData = reportSystemData;
+            ComplianceResults = complianceResults;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Snapshot's property'. </summary>
-        public SnapshotProperties Properties { get; }
+        /// <summary> Snapshot name. </summary>
+        public string SnapshotName { get; }
+        /// <summary> The timestamp of resource creation (UTC). </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Azure lifecycle management. </summary>
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> The report essential info. </summary>
+        public ReportProperties ReportProperties { get; }
+        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
+        public SystemData ReportSystemData { get; }
+        /// <summary> List of compliance results. </summary>
+        public IReadOnlyList<ComplianceResult> ComplianceResults { get; }
     }
 }

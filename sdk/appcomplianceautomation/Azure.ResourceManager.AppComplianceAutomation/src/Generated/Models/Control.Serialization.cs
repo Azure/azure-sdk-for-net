@@ -31,20 +31,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("controlId"u8);
                 writer.WriteStringValue(ControlId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlShortName))
+            if (options.Format != "W" && Optional.IsDefined(ControlName))
             {
-                writer.WritePropertyName("controlShortName"u8);
-                writer.WriteStringValue(ControlShortName);
+                writer.WritePropertyName("controlName"u8);
+                writer.WriteStringValue(ControlName);
             }
             if (options.Format != "W" && Optional.IsDefined(ControlFullName))
             {
                 writer.WritePropertyName("controlFullName"u8);
                 writer.WriteStringValue(ControlFullName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ControlType))
-            {
-                writer.WritePropertyName("controlType"u8);
-                writer.WriteStringValue(ControlType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ControlDescription))
             {
@@ -61,11 +56,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("controlStatus"u8);
                 writer.WriteStringValue(ControlStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Assessments))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Responsibilities))
             {
-                writer.WritePropertyName("assessments"u8);
+                writer.WritePropertyName("responsibilities"u8);
                 writer.WriteStartArray();
-                foreach (var item in Assessments)
+                foreach (var item in Responsibilities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -110,13 +105,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 return null;
             }
             string controlId = default;
-            string controlShortName = default;
+            string controlName = default;
             string controlFullName = default;
-            ControlType? controlType = default;
             string controlDescription = default;
             string controlDescriptionHyperLink = default;
             ControlStatus? controlStatus = default;
-            IReadOnlyList<Assessment> assessments = default;
+            IReadOnlyList<Responsibility> responsibilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,23 +120,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     controlId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlShortName"u8))
+                if (property.NameEquals("controlName"u8))
                 {
-                    controlShortName = property.Value.GetString();
+                    controlName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("controlFullName"u8))
                 {
                     controlFullName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("controlType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    controlType = new ControlType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("controlDescription"u8))
@@ -164,18 +149,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     controlStatus = new ControlStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("assessments"u8))
+                if (property.NameEquals("responsibilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<Assessment> array = new List<Assessment>();
+                    List<Responsibility> array = new List<Responsibility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Assessment.DeserializeAssessment(item, options));
+                        array.Add(Responsibility.DeserializeResponsibility(item, options));
                     }
-                    assessments = array;
+                    responsibilities = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,13 +171,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new Control(
                 controlId,
-                controlShortName,
+                controlName,
                 controlFullName,
-                controlType,
                 controlDescription,
                 controlDescriptionHyperLink,
                 controlStatus,
-                assessments ?? new ChangeTrackingList<Assessment>(),
+                responsibilities ?? new ChangeTrackingList<Responsibility>(),
                 serializedAdditionalRawData);
         }
 

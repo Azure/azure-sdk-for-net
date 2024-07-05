@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             try
             {
                 var response = await _snapshotResourceSnapshotRestClient.DownloadAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             try
             {
                 var response = _snapshotResourceSnapshotRestClient.Download(Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

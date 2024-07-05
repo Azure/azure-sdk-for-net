@@ -9,12 +9,17 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class MockableAppComplianceAutomationTenantResource : ArmResource
     {
+        private ClientDiagnostics _providerActionsClientDiagnostics;
+        private ProviderActionsRestOperations _providerActionsRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableAppComplianceAutomationTenantResource"/> class for mocking. </summary>
         protected MockableAppComplianceAutomationTenantResource()
         {
@@ -26,6 +31,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         internal MockableAppComplianceAutomationTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ProviderActionsClientDiagnostics => _providerActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ProviderActionsRestOperations ProviderActionsRestClient => _providerActionsRestClient ??= new ProviderActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -53,7 +61,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +92,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -100,6 +108,478 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         public virtual Response<ReportResource> GetReportResource(string reportName, CancellationToken cancellationToken = default)
         {
             return GetReportResources().Get(reportName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Check if the given name is available for a report.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityProviderActionAsync(CheckNameAvailabilityRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.CheckNameAvailabilityProviderAction");
+            scope.Start();
+            try
+            {
+                var response = await ProviderActionsRestClient.CheckNameAvailabilityAsync(body, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check if the given name is available for a report.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityProviderAction(CheckNameAvailabilityRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.CheckNameAvailabilityProviderAction");
+            scope.Start();
+            try
+            {
+                var response = ProviderActionsRestClient.CheckNameAvailability(body, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the count of reports.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/getCollectionCount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_GetCollectionCount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<GetCollectionCountResponse>> GetCollectionCountProviderActionAsync(GetCollectionCountContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderAction");
+            scope.Start();
+            try
+            {
+                var response = await ProviderActionsRestClient.GetCollectionCountAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the count of reports.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/getCollectionCount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_GetCollectionCount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<GetCollectionCountResponse> GetCollectionCountProviderAction(GetCollectionCountContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderAction");
+            scope.Start();
+            try
+            {
+                var response = ProviderActionsRestClient.GetCollectionCount(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the resource overview status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/getOverviewStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_GetOverviewStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<GetOverviewStatusResponse>> GetOverviewStatusProviderActionAsync(GetOverviewStatusContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderAction");
+            scope.Start();
+            try
+            {
+                var response = await ProviderActionsRestClient.GetOverviewStatusAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the resource overview status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/getOverviewStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_GetOverviewStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<GetOverviewStatusResponse> GetOverviewStatusProviderAction(GetOverviewStatusContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderAction");
+            scope.Start();
+            try
+            {
+                var response = ProviderActionsRestClient.GetOverviewStatus(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List the storage accounts which are in use by related reports
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/listInUseStorageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_ListInUseStorageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ListInUseStorageAccountsResponse>> GetInUseStorageAccountsProviderActionAsync(ListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderAction");
+            scope.Start();
+            try
+            {
+                var response = await ProviderActionsRestClient.ListInUseStorageAccountsAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List the storage accounts which are in use by related reports
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/listInUseStorageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_ListInUseStorageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ListInUseStorageAccountsResponse> GetInUseStorageAccountsProviderAction(ListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderAction");
+            scope.Start();
+            try
+            {
+                var response = ProviderActionsRestClient.ListInUseStorageAccounts(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Onboard given subscriptions to Microsoft.AppComplianceAutomation provider.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/onboard</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_Onboard</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<OnboardResponse>> OnboardProviderActionAsync(WaitUntil waitUntil, OnboardContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.OnboardProviderAction");
+            scope.Start();
+            try
+            {
+                var response = await ProviderActionsRestClient.OnboardAsync(content, cancellationToken).ConfigureAwait(false);
+                var operation = new AppComplianceAutomationArmOperation<OnboardResponse>(new OnboardResponseOperationSource(), ProviderActionsClientDiagnostics, Pipeline, ProviderActionsRestClient.CreateOnboardRequest(content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Onboard given subscriptions to Microsoft.AppComplianceAutomation provider.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/onboard</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_Onboard</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<OnboardResponse> OnboardProviderAction(WaitUntil waitUntil, OnboardContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.OnboardProviderAction");
+            scope.Start();
+            try
+            {
+                var response = ProviderActionsRestClient.Onboard(content, cancellationToken);
+                var operation = new AppComplianceAutomationArmOperation<OnboardResponse>(new OnboardResponseOperationSource(), ProviderActionsClientDiagnostics, Pipeline, ProviderActionsRestClient.CreateOnboardRequest(content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger quick evaluation for the given subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/triggerEvaluation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_TriggerEvaluation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<TriggerEvaluationResponse>> TriggerEvaluationProviderActionAsync(WaitUntil waitUntil, TriggerEvaluationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderAction");
+            scope.Start();
+            try
+            {
+                var response = await ProviderActionsRestClient.TriggerEvaluationAsync(content, cancellationToken).ConfigureAwait(false);
+                var operation = new AppComplianceAutomationArmOperation<TriggerEvaluationResponse>(new TriggerEvaluationResponseOperationSource(), ProviderActionsClientDiagnostics, Pipeline, ProviderActionsRestClient.CreateTriggerEvaluationRequest(content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger quick evaluation for the given subscriptions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/triggerEvaluation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_TriggerEvaluation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<TriggerEvaluationResponse> TriggerEvaluationProviderAction(WaitUntil waitUntil, TriggerEvaluationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderAction");
+            scope.Start();
+            try
+            {
+                var response = ProviderActionsRestClient.TriggerEvaluation(content, cancellationToken);
+                var operation = new AppComplianceAutomationArmOperation<TriggerEvaluationResponse>(new TriggerEvaluationResponseOperationSource(), ProviderActionsClientDiagnostics, Pipeline, ProviderActionsRestClient.CreateTriggerEvaluationRequest(content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

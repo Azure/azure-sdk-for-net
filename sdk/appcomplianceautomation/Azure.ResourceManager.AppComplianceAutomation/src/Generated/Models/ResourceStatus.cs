@@ -24,14 +24,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         private const string HealthyValue = "Healthy";
         private const string UnhealthyValue = "Unhealthy";
-        private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary> Healthy. </summary>
+        /// <summary> The resource is healthy. </summary>
         public static ResourceStatus Healthy { get; } = new ResourceStatus(HealthyValue);
-        /// <summary> Unhealthy. </summary>
+        /// <summary> The resource is unhealthy. </summary>
         public static ResourceStatus Unhealthy { get; } = new ResourceStatus(UnhealthyValue);
-        /// <summary> NotApplicable. </summary>
-        public static ResourceStatus NotApplicable { get; } = new ResourceStatus(NotApplicableValue);
         /// <summary> Determines if two <see cref="ResourceStatus"/> values are the same. </summary>
         public static bool operator ==(ResourceStatus left, ResourceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceStatus"/> values are not the same. </summary>

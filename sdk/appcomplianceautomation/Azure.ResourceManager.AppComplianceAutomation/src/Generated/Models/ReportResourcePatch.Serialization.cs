@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            ReportProperties properties = default;
+            ReportPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    properties = ReportProperties.DeserializeReportProperties(property.Value, options);
+                    properties = ReportPatchProperties.DeserializeReportPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

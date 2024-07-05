@@ -27,19 +27,25 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         private const string CanceledValue = "Canceled";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
+        private const string FixingValue = "Fixing";
+        private const string VerifyingValue = "Verifying";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> The provision is succeeded. </summary>
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The provision is failed. </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> The provision is canceled. </summary>
         public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
-        /// <summary> Creating. </summary>
+        /// <summary> The creation is in progress. </summary>
         public static ProvisioningState Creating { get; } = new ProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> The deletion is in progress. </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
+        /// <summary> The fix of the resource in progress. </summary>
+        public static ProvisioningState Fixing { get; } = new ProvisioningState(FixingValue);
+        /// <summary> The verification of the resource in progress. </summary>
+        public static ProvisioningState Verifying { get; } = new ProvisioningState(VerifyingValue);
+        /// <summary> The update of the resource in progress. </summary>
         public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);

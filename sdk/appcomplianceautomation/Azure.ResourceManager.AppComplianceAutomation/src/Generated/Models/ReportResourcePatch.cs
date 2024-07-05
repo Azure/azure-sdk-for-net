@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of <see cref="ReportResourcePatch"/>. </summary>
         /// <param name="properties"> Report property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportResourcePatch(ReportProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReportResourcePatch(ReportPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Report property. </summary>
-        public ReportProperties Properties { get; set; }
+        public ReportPatchProperties Properties { get; set; }
     }
 }

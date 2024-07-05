@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
@@ -26,8 +27,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     {
         private readonly ClientDiagnostics _snapshotResourceSnapshotClientDiagnostics;
         private readonly SnapshotRestOperations _snapshotResourceSnapshotRestClient;
-        private readonly ClientDiagnostics _snapshotResourceSnapshotsClientDiagnostics;
-        private readonly SnapshotsRestOperations _snapshotResourceSnapshotsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SnapshotResourceCollection"/> class for mocking. </summary>
         protected SnapshotResourceCollection()
@@ -42,9 +41,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _snapshotResourceSnapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", SnapshotResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SnapshotResource.ResourceType, out string snapshotResourceSnapshotApiVersion);
             _snapshotResourceSnapshotRestClient = new SnapshotRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, snapshotResourceSnapshotApiVersion);
-            _snapshotResourceSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", SnapshotResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SnapshotResource.ResourceType, out string snapshotResourceSnapshotsApiVersion);
-            _snapshotResourceSnapshotsRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, snapshotResourceSnapshotsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,7 +65,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -114,7 +110,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,11 +151,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Snapshots_List</description>
+        /// <description>Snapshot_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,18 +163,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SnapshotResource> GetAllAsync(string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SnapshotResource> GetAllAsync(SnapshotResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotsRestClient.CreateListRequest(Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotsClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            options ??= new SnapshotResourceCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,11 +184,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Snapshots_List</description>
+        /// <description>Snapshot_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -202,18 +196,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SnapshotResource> GetAll(string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SnapshotResource> GetAll(SnapshotResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotsRestClient.CreateListRequest(Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotsClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            options ??= new SnapshotResourceCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,7 +221,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +264,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +307,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +352,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -394,17 +386,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         IEnumerator<SnapshotResource> IEnumerable<SnapshotResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<SnapshotResource> IAsyncEnumerable<SnapshotResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

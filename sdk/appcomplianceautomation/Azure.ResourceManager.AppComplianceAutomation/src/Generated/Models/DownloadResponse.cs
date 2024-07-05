@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DownloadResponse"/>. </summary>
-        /// <param name="resourceList"> List of the reports. </param>
+        /// <param name="resourceList"> Resource list of the report. </param>
         /// <param name="complianceReport"> List of the compliance result. </param>
-        /// <param name="compliancePdfReport"> compliance pdf report. </param>
-        /// <param name="complianceDetailedPdfReport"> compliance detailed pdf report. </param>
+        /// <param name="compliancePdfReport"> Compliance pdf report. </param>
+        /// <param name="complianceDetailedPdfReport"> The detailed compliance pdf report. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DownloadResponse(IReadOnlyList<ResourceItem> resourceList, IReadOnlyList<ComplianceReportItem> complianceReport, DownloadResponseCompliancePdfReport compliancePdfReport, DownloadResponseComplianceDetailedPdfReport complianceDetailedPdfReport, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,21 +67,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of the reports. </summary>
+        /// <summary> Resource list of the report. </summary>
         public IReadOnlyList<ResourceItem> ResourceList { get; }
         /// <summary> List of the compliance result. </summary>
         public IReadOnlyList<ComplianceReportItem> ComplianceReport { get; }
-        /// <summary> compliance pdf report. </summary>
+        /// <summary> Compliance pdf report. </summary>
         internal DownloadResponseCompliancePdfReport CompliancePdfReport { get; }
-        /// <summary> uri of compliance pdf report. </summary>
+        /// <summary> The uri of compliance pdf report. </summary>
         public Uri CompliancePdfReportSasUri
         {
             get => CompliancePdfReport?.SasUri;
         }
 
-        /// <summary> compliance detailed pdf report. </summary>
+        /// <summary> The detailed compliance pdf report. </summary>
         internal DownloadResponseComplianceDetailedPdfReport ComplianceDetailedPdfReport { get; }
-        /// <summary> uri of compliance detailed pdf report. </summary>
+        /// <summary> The uri of detailed compliance pdf report. </summary>
         public Uri ComplianceDetailedPdfReportSasUri
         {
             get => ComplianceDetailedPdfReport?.SasUri;

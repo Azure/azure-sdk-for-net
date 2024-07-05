@@ -16,72 +16,319 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAppComplianceAutomationModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResponse"/>. </summary>
+        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is available. </param>
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        {
+            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GetCollectionCountResponse"/>. </summary>
+        /// <param name="count"> The count of the specified resource. </param>
+        /// <returns> A new <see cref="Models.GetCollectionCountResponse"/> instance for mocking. </returns>
+        public static GetCollectionCountResponse GetCollectionCountResponse(int? count = null)
+        {
+            return new GetCollectionCountResponse(count, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GetOverviewStatusResponse"/>. </summary>
+        /// <param name="statusList"> List of different status items. </param>
+        /// <returns> A new <see cref="Models.GetOverviewStatusResponse"/> instance for mocking. </returns>
+        public static GetOverviewStatusResponse GetOverviewStatusResponse(IEnumerable<StatusItem> statusList = null)
+        {
+            statusList ??= new List<StatusItem>();
+
+            return new GetOverviewStatusResponse(statusList?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StatusItem"/>. </summary>
+        /// <param name="statusName"> Status name - e.g. "Active", "Failed". </param>
+        /// <param name="statusValue"> Status value. e.g. "100", or "100%". </param>
+        /// <returns> A new <see cref="Models.StatusItem"/> instance for mocking. </returns>
+        public static StatusItem StatusItem(string statusName = null, string statusValue = null)
+        {
+            return new StatusItem(statusName, statusValue, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ListInUseStorageAccountsResponse"/>. </summary>
+        /// <param name="storageAccountList"> The storage account list which in use in related reports. </param>
+        /// <returns> A new <see cref="Models.ListInUseStorageAccountsResponse"/> instance for mocking. </returns>
+        public static ListInUseStorageAccountsResponse ListInUseStorageAccountsResponse(IEnumerable<StorageInfo> storageAccountList = null)
+        {
+            storageAccountList ??= new List<StorageInfo>();
+
+            return new ListInUseStorageAccountsResponse(storageAccountList?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OnboardResponse"/>. </summary>
+        /// <param name="subscriptionIds"> List of subscription ids that are onboarded. </param>
+        /// <returns> A new <see cref="Models.OnboardResponse"/> instance for mocking. </returns>
+        public static OnboardResponse OnboardResponse(IEnumerable<string> subscriptionIds = null)
+        {
+            subscriptionIds ??= new List<string>();
+
+            return new OnboardResponse(subscriptionIds?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AppComplianceAutomation.ReportResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Report property. </param>
+        /// <param name="triggerOn"> Report collection trigger time. </param>
+        /// <param name="timeZone">
+        /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
+        /// An example of valid timezone id is "Pacific Standard Time".
+        /// </param>
+        /// <param name="resources"> List of resource data. </param>
+        /// <param name="status"> Report status. </param>
+        /// <param name="errors"> List of report error codes. </param>
+        /// <param name="tenantId"> Report's tenant id. </param>
+        /// <param name="offerGuid"> A list of comma-separated offerGuids indicates a series of offerGuids that map to the report. For example, "00000000-0000-0000-0000-000000000001,00000000-0000-0000-0000-000000000002" and "00000000-0000-0000-0000-000000000003". </param>
+        /// <param name="nextTriggerOn"> Report next collection trigger time. </param>
+        /// <param name="lastTriggerOn"> Report last collection trigger time. </param>
+        /// <param name="subscriptions"> List of subscription Ids. </param>
+        /// <param name="complianceStatusM365"> Report compliance status. </param>
+        /// <param name="storageInfo"> The information of 'bring your own storage' binding to the report. </param>
+        /// <param name="certRecords"> List of synchronized certification records. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="AppComplianceAutomation.ReportResourceData"/> instance for mocking. </returns>
-        public static ReportResourceData ReportResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReportProperties properties = null)
+        public static ReportResourceData ReportResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset triggerOn = default, string timeZone = null, IEnumerable<ResourceMetadata> resources = null, ReportStatus? status = null, IEnumerable<string> errors = null, Guid? tenantId = null, string offerGuid = null, DateTimeOffset? nextTriggerOn = null, DateTimeOffset? lastTriggerOn = null, IEnumerable<string> subscriptions = null, OverviewStatus complianceStatusM365 = null, StorageInfo storageInfo = null, IEnumerable<CertSyncRecord> certRecords = null, ProvisioningState? provisioningState = null)
         {
+            resources ??= new List<ResourceMetadata>();
+            errors ??= new List<string>();
+            subscriptions ??= new List<string>();
+            certRecords ??= new List<CertSyncRecord>();
+
             return new ReportResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                triggerOn,
+                timeZone,
+                resources?.ToList(),
+                status,
+                errors?.ToList(),
+                tenantId,
+                offerGuid,
+                nextTriggerOn,
+                lastTriggerOn,
+                subscriptions?.ToList(),
+                complianceStatusM365 != null ? new ReportComplianceStatus(complianceStatusM365, serializedAdditionalRawData: null) : null,
+                storageInfo,
+                certRecords?.ToList(),
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReportProperties"/>. </summary>
-        /// <param name="id"> Report id in database. </param>
-        /// <param name="status"> Report status. </param>
-        /// <param name="tenantId"> Report's tenant id. </param>
-        /// <param name="reportName"> Report name. </param>
-        /// <param name="offerGuid"> Report offer Guid. </param>
+        /// <param name="triggerOn"> Report collection trigger time. </param>
         /// <param name="timeZone">
         /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
         /// An example of valid timezone id is "Pacific Standard Time".
         /// </param>
-        /// <param name="triggerOn"> Report collection trigger time. </param>
+        /// <param name="resources"> List of resource data. </param>
+        /// <param name="status"> Report status. </param>
+        /// <param name="errors"> List of report error codes. </param>
+        /// <param name="tenantId"> Report's tenant id. </param>
+        /// <param name="offerGuid"> A list of comma-separated offerGuids indicates a series of offerGuids that map to the report. For example, "00000000-0000-0000-0000-000000000001,00000000-0000-0000-0000-000000000002" and "00000000-0000-0000-0000-000000000003". </param>
         /// <param name="nextTriggerOn"> Report next collection trigger time. </param>
         /// <param name="lastTriggerOn"> Report last collection trigger time. </param>
         /// <param name="subscriptions"> List of subscription Ids. </param>
-        /// <param name="resources"> List of resource data. </param>
         /// <param name="complianceStatusM365"> Report compliance status. </param>
+        /// <param name="storageInfo"> The information of 'bring your own storage' binding to the report. </param>
+        /// <param name="certRecords"> List of synchronized certification records. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="Models.ReportProperties"/> instance for mocking. </returns>
-        public static ReportProperties ReportProperties(string id = null, ReportStatus? status = null, Guid? tenantId = null, string reportName = null, string offerGuid = null, string timeZone = null, DateTimeOffset triggerOn = default, DateTimeOffset? nextTriggerOn = null, DateTimeOffset? lastTriggerOn = null, IEnumerable<string> subscriptions = null, IEnumerable<ResourceMetadata> resources = null, OverviewStatus complianceStatusM365 = null, ProvisioningState? provisioningState = null)
+        public static ReportProperties ReportProperties(DateTimeOffset triggerOn = default, string timeZone = null, IEnumerable<ResourceMetadata> resources = null, ReportStatus? status = null, IEnumerable<string> errors = null, Guid? tenantId = null, string offerGuid = null, DateTimeOffset? nextTriggerOn = null, DateTimeOffset? lastTriggerOn = null, IEnumerable<string> subscriptions = null, OverviewStatus complianceStatusM365 = null, StorageInfo storageInfo = null, IEnumerable<CertSyncRecord> certRecords = null, ProvisioningState? provisioningState = null)
         {
-            subscriptions ??= new List<string>();
             resources ??= new List<ResourceMetadata>();
+            errors ??= new List<string>();
+            subscriptions ??= new List<string>();
+            certRecords ??= new List<CertSyncRecord>();
 
             return new ReportProperties(
-                id,
-                status,
-                tenantId,
-                reportName,
-                offerGuid,
-                timeZone,
                 triggerOn,
+                timeZone,
+                resources?.ToList(),
+                status,
+                errors?.ToList(),
+                tenantId,
+                offerGuid,
                 nextTriggerOn,
                 lastTriggerOn,
                 subscriptions?.ToList(),
-                resources?.ToList(),
                 complianceStatusM365 != null ? new ReportComplianceStatus(complianceStatusM365, serializedAdditionalRawData: null) : null,
+                storageInfo,
+                certRecords?.ToList(),
                 provisioningState,
                 serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OverviewStatus"/>. </summary>
-        /// <param name="passedCount"> The count of all passed full automation control. </param>
-        /// <param name="failedCount"> The count of all failed full automation control. </param>
+        /// <param name="passedCount"> The count of all passed control. </param>
+        /// <param name="failedCount"> The count of all failed control. </param>
         /// <param name="manualCount"> The count of all manual control. </param>
+        /// <param name="notApplicableCount"> The count of all not applicable control. </param>
+        /// <param name="pendingCount"> The count of all pending for approval control. </param>
         /// <returns> A new <see cref="Models.OverviewStatus"/> instance for mocking. </returns>
-        public static OverviewStatus OverviewStatus(int? passedCount = null, int? failedCount = null, int? manualCount = null)
+        public static OverviewStatus OverviewStatus(int? passedCount = null, int? failedCount = null, int? manualCount = null, int? notApplicableCount = null, int? pendingCount = null)
         {
-            return new OverviewStatus(passedCount, failedCount, manualCount, serializedAdditionalRawData: null);
+            return new OverviewStatus(
+                passedCount,
+                failedCount,
+                manualCount,
+                notApplicableCount,
+                pendingCount,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReportPatchProperties"/>. </summary>
+        /// <param name="triggerOn"> Report collection trigger time. </param>
+        /// <param name="timeZone">
+        /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
+        /// An example of valid timezone id is "Pacific Standard Time".
+        /// </param>
+        /// <param name="resources"> List of resource data. </param>
+        /// <param name="status"> Report status. </param>
+        /// <param name="errors"> List of report error codes. </param>
+        /// <param name="tenantId"> Report's tenant id. </param>
+        /// <param name="offerGuid"> A list of comma-separated offerGuids indicates a series of offerGuids that map to the report. For example, "00000000-0000-0000-0000-000000000001,00000000-0000-0000-0000-000000000002" and "00000000-0000-0000-0000-000000000003". </param>
+        /// <param name="nextTriggerOn"> Report next collection trigger time. </param>
+        /// <param name="lastTriggerOn"> Report last collection trigger time. </param>
+        /// <param name="subscriptions"> List of subscription Ids. </param>
+        /// <param name="complianceStatusM365"> Report compliance status. </param>
+        /// <param name="storageInfo"> The information of 'bring your own storage' binding to the report. </param>
+        /// <param name="certRecords"> List of synchronized certification records. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <returns> A new <see cref="Models.ReportPatchProperties"/> instance for mocking. </returns>
+        public static ReportPatchProperties ReportPatchProperties(DateTimeOffset? triggerOn = null, string timeZone = null, IEnumerable<ResourceMetadata> resources = null, ReportStatus? status = null, IEnumerable<string> errors = null, Guid? tenantId = null, string offerGuid = null, DateTimeOffset? nextTriggerOn = null, DateTimeOffset? lastTriggerOn = null, IEnumerable<string> subscriptions = null, OverviewStatus complianceStatusM365 = null, StorageInfo storageInfo = null, IEnumerable<CertSyncRecord> certRecords = null, ProvisioningState? provisioningState = null)
+        {
+            resources ??= new List<ResourceMetadata>();
+            errors ??= new List<string>();
+            subscriptions ??= new List<string>();
+            certRecords ??= new List<CertSyncRecord>();
+
+            return new ReportPatchProperties(
+                triggerOn,
+                timeZone,
+                resources?.ToList(),
+                status,
+                errors?.ToList(),
+                tenantId,
+                offerGuid,
+                nextTriggerOn,
+                lastTriggerOn,
+                subscriptions?.ToList(),
+                complianceStatusM365 != null ? new ReportComplianceStatus(complianceStatusM365, serializedAdditionalRawData: null) : null,
+                storageInfo,
+                certRecords?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppComplianceAutomation.EvidenceResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="evidenceType"> Evidence type. </param>
+        /// <param name="filePath"> The path of the file in storage. </param>
+        /// <param name="extraData"> Extra data considered as evidence. </param>
+        /// <param name="controlId"> Control id. </param>
+        /// <param name="responsibilityId"> Responsibility id. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <returns> A new <see cref="AppComplianceAutomation.EvidenceResourceData"/> instance for mocking. </returns>
+        public static EvidenceResourceData EvidenceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EvidenceType? evidenceType = null, string filePath = null, string extraData = null, string controlId = null, string responsibilityId = null, ProvisioningState? provisioningState = null)
+        {
+            return new EvidenceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                evidenceType,
+                filePath,
+                extraData,
+                controlId,
+                responsibilityId,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EvidenceFileDownloadResponse"/>. </summary>
+        /// <param name="evidenceFileUri"> The uri of evidence file. </param>
+        /// <returns> A new <see cref="Models.EvidenceFileDownloadResponse"/> instance for mocking. </returns>
+        public static EvidenceFileDownloadResponse EvidenceFileDownloadResponse(Uri evidenceFileUri = null)
+        {
+            return new EvidenceFileDownloadResponse(evidenceFileUri != null ? new EvidenceFileDownloadResponseEvidenceFile(evidenceFileUri, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReportFixResult"/>. </summary>
+        /// <param name="result"> Indicates whether the fix action is Succeeded or Failed. </param>
+        /// <param name="reason"> If the report fix action failed, to indicate the detailed failed reason. </param>
+        /// <returns> A new <see cref="Models.ReportFixResult"/> instance for mocking. </returns>
+        public static ReportFixResult ReportFixResult(Result? result = null, string reason = null)
+        {
+            return new ReportFixResult(result, reason, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScopingQuestions"/>. </summary>
+        /// <param name="questions"> List of scoping questions. </param>
+        /// <returns> A new <see cref="Models.ScopingQuestions"/> instance for mocking. </returns>
+        public static ScopingQuestions ScopingQuestions(IEnumerable<ScopingQuestion> questions = null)
+        {
+            questions ??= new List<ScopingQuestion>();
+
+            return new ScopingQuestions(questions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScopingQuestion"/>. </summary>
+        /// <param name="questionId"> Question id. </param>
+        /// <param name="superiorQuestionId"> Superior question id. </param>
+        /// <param name="inputType"> Input type of the question answer. </param>
+        /// <param name="optionIds"> Option id list. </param>
+        /// <param name="rules"> The rule of the question. </param>
+        /// <param name="showSubQuestionsValue"> The answer value to show the sub questions. </param>
+        /// <returns> A new <see cref="Models.ScopingQuestion"/> instance for mocking. </returns>
+        public static ScopingQuestion ScopingQuestion(string questionId = null, string superiorQuestionId = null, InputType inputType = default, IEnumerable<string> optionIds = null, IEnumerable<Rule> rules = null, string showSubQuestionsValue = null)
+        {
+            optionIds ??= new List<string>();
+            rules ??= new List<Rule>();
+
+            return new ScopingQuestion(
+                questionId,
+                superiorQuestionId,
+                inputType,
+                optionIds?.ToList(),
+                rules?.ToList(),
+                showSubQuestionsValue,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppComplianceAutomation.ScopingConfigurationResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="answers"> List of scoping question answers. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <returns> A new <see cref="AppComplianceAutomation.ScopingConfigurationResourceData"/> instance for mocking. </returns>
+        public static ScopingConfigurationResourceData ScopingConfigurationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ScopingAnswer> answers = null, ProvisioningState? provisioningState = null)
+        {
+            answers ??= new List<ScopingAnswer>();
+
+            return new ScopingConfigurationResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                answers?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceAutomation.SnapshotResourceData"/>. </summary>
@@ -89,34 +336,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Snapshot's property'. </param>
-        /// <returns> A new <see cref="AppComplianceAutomation.SnapshotResourceData"/> instance for mocking. </returns>
-        public static SnapshotResourceData SnapshotResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SnapshotProperties properties = null)
-        {
-            return new SnapshotResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SnapshotProperties"/>. </summary>
-        /// <param name="id"> Snapshot id in the database. </param>
         /// <param name="snapshotName"> Snapshot name. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="reportProperties"> The report essential info. </param>
         /// <param name="reportSystemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="complianceResults"> List of compliance results. </param>
-        /// <returns> A new <see cref="Models.SnapshotProperties"/> instance for mocking. </returns>
-        public static SnapshotProperties SnapshotProperties(string id = null, string snapshotName = null, DateTimeOffset? createdOn = null, ProvisioningState? provisioningState = null, ReportProperties reportProperties = null, SystemData reportSystemData = null, IEnumerable<ComplianceResult> complianceResults = null)
+        /// <returns> A new <see cref="AppComplianceAutomation.SnapshotResourceData"/> instance for mocking. </returns>
+        public static SnapshotResourceData SnapshotResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string snapshotName = null, DateTimeOffset? createdOn = null, ProvisioningState? provisioningState = null, ReportProperties reportProperties = null, SystemData reportSystemData = null, IEnumerable<ComplianceResult> complianceResults = null)
         {
             complianceResults ??= new List<ComplianceResult>();
 
-            return new SnapshotProperties(
+            return new SnapshotResourceData(
                 id,
+                name,
+                resourceType,
+                systemData,
                 snapshotName,
                 createdOn,
                 provisioningState,
@@ -139,89 +374,136 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.Category"/>. </summary>
         /// <param name="categoryName"> The name of the compliance category. e.g. "Operational Security". </param>
-        /// <param name="categoryType"> The category type. </param>
         /// <param name="categoryStatus"> Category status. </param>
         /// <param name="controlFamilies"> List of control families. </param>
         /// <returns> A new <see cref="Models.Category"/> instance for mocking. </returns>
-        public static Category Category(string categoryName = null, CategoryType? categoryType = null, CategoryStatus? categoryStatus = null, IEnumerable<ControlFamily> controlFamilies = null)
+        public static Category Category(string categoryName = null, CategoryStatus? categoryStatus = null, IEnumerable<ControlFamily> controlFamilies = null)
         {
             controlFamilies ??= new List<ControlFamily>();
 
-            return new Category(categoryName, categoryType, categoryStatus, controlFamilies?.ToList(), serializedAdditionalRawData: null);
+            return new Category(categoryName, categoryStatus, controlFamilies?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ControlFamily"/>. </summary>
-        /// <param name="familyName"> The name of the control family. e.g. "Malware Protection - Anti-Virus". </param>
-        /// <param name="familyType"> The control family type. </param>
-        /// <param name="familyStatus"> Control family status. </param>
+        /// <param name="controlFamilyName"> The name of the control family. e.g. "Malware Protection - Anti-Virus". </param>
+        /// <param name="controlFamilyStatus"> The control family status. </param>
         /// <param name="controls"> List of controls. </param>
         /// <returns> A new <see cref="Models.ControlFamily"/> instance for mocking. </returns>
-        public static ControlFamily ControlFamily(string familyName = null, ControlFamilyType? familyType = null, ControlFamilyStatus? familyStatus = null, IEnumerable<Control> controls = null)
+        public static ControlFamily ControlFamily(string controlFamilyName = null, ControlFamilyStatus? controlFamilyStatus = null, IEnumerable<Control> controls = null)
         {
             controls ??= new List<Control>();
 
-            return new ControlFamily(familyName, familyType, familyStatus, controls?.ToList(), serializedAdditionalRawData: null);
+            return new ControlFamily(controlFamilyName, controlFamilyStatus, controls?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Control"/>. </summary>
-        /// <param name="controlId"> The Id of the control. e.g. "Operational Security#10". </param>
-        /// <param name="controlShortName"> The short name of the control. e.g. "Unsupported OS and Software.". </param>
+        /// <param name="controlId"> The Id of the control. e.g. "Operational_Security_10". </param>
+        /// <param name="controlName"> The name of the control. e.g. "Unsupported OS and Software.". </param>
         /// <param name="controlFullName"> The full name of the control. e.g. "Validate that unsupported operating systems and software components are not in use.". </param>
-        /// <param name="controlType"> The control type. </param>
         /// <param name="controlDescription"> The control's description. </param>
         /// <param name="controlDescriptionHyperLink"> The hyper link to the control's description'. </param>
         /// <param name="controlStatus"> Control status. </param>
-        /// <param name="assessments"> List of assessments. </param>
+        /// <param name="responsibilities"> List of customer responsibility. </param>
         /// <returns> A new <see cref="Models.Control"/> instance for mocking. </returns>
-        public static Control Control(string controlId = null, string controlShortName = null, string controlFullName = null, ControlType? controlType = null, string controlDescription = null, string controlDescriptionHyperLink = null, ControlStatus? controlStatus = null, IEnumerable<Assessment> assessments = null)
+        public static Control Control(string controlId = null, string controlName = null, string controlFullName = null, string controlDescription = null, string controlDescriptionHyperLink = null, ControlStatus? controlStatus = null, IEnumerable<Responsibility> responsibilities = null)
         {
-            assessments ??= new List<Assessment>();
+            responsibilities ??= new List<Responsibility>();
 
             return new Control(
                 controlId,
-                controlShortName,
+                controlName,
                 controlFullName,
-                controlType,
                 controlDescription,
                 controlDescriptionHyperLink,
                 controlStatus,
-                assessments?.ToList(),
+                responsibilities?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Assessment"/>. </summary>
-        /// <param name="name"> The name of the assessment. </param>
-        /// <param name="severity"> The severity level of this assessment. </param>
-        /// <param name="description"> The description of the assessment. </param>
-        /// <param name="remediation"> The remediation of the assessment. </param>
-        /// <param name="isPass"> Indicates whether all the resource(s) are compliant. </param>
-        /// <param name="policyId"> The policy id mapping to this assessment. </param>
-        /// <param name="resourceList"> List of resource assessments. </param>
-        /// <returns> A new <see cref="Models.Assessment"/> instance for mocking. </returns>
-        public static Assessment Assessment(string name = null, AssessmentSeverity? severity = null, string description = null, string remediation = null, IsPass? isPass = null, string policyId = null, IEnumerable<AssessmentResourceContent> resourceList = null)
+        /// <summary> Initializes a new instance of <see cref="Models.Responsibility"/>. </summary>
+        /// <param name="responsibilityId"> The id of the customer responsibility. </param>
+        /// <param name="responsibilityTitle"> The title of the customer responsibility. </param>
+        /// <param name="responsibilityDescription"> The description of the customer responsibility. </param>
+        /// <param name="responsibilityType"> The type of customer responsibility. </param>
+        /// <param name="responsibilitySeverity"> The severity level of this customer responsibility. </param>
+        /// <param name="responsibilityStatus"> The status of this customer responsibility. </param>
+        /// <param name="responsibilityEnvironment"> The supported cloud environment of this customer responsibility. </param>
+        /// <param name="failedResourceCount"> The count of all failed resources. </param>
+        /// <param name="totalResourceCount"> The count of all resources. </param>
+        /// <param name="resourceList"> List of resource. </param>
+        /// <param name="recommendationList"> List of recommendation. </param>
+        /// <param name="guidance"> The evidence upload guidance description. </param>
+        /// <param name="justification"> The justification given by the user to clarify the reason. </param>
+        /// <param name="evidenceFiles"> List of evidence file url. </param>
+        /// <returns> A new <see cref="Models.Responsibility"/> instance for mocking. </returns>
+        public static Responsibility Responsibility(string responsibilityId = null, string responsibilityTitle = null, string responsibilityDescription = null, ResponsibilityType? responsibilityType = null, ResponsibilitySeverity? responsibilitySeverity = null, ResponsibilityStatus? responsibilityStatus = null, ResponsibilityEnvironment? responsibilityEnvironment = null, int? failedResourceCount = null, int? totalResourceCount = null, IEnumerable<ResponsibilityResource> resourceList = null, IEnumerable<Recommendation> recommendationList = null, string guidance = null, string justification = null, IEnumerable<string> evidenceFiles = null)
         {
-            resourceList ??= new List<AssessmentResourceContent>();
+            resourceList ??= new List<ResponsibilityResource>();
+            recommendationList ??= new List<Recommendation>();
+            evidenceFiles ??= new List<string>();
 
-            return new Assessment(
-                name,
-                severity,
-                description,
-                remediation,
-                isPass,
-                policyId,
+            return new Responsibility(
+                responsibilityId,
+                responsibilityTitle,
+                responsibilityDescription,
+                responsibilityType,
+                responsibilitySeverity,
+                responsibilityStatus,
+                responsibilityEnvironment,
+                failedResourceCount,
+                totalResourceCount,
                 resourceList?.ToList(),
+                recommendationList?.ToList(),
+                guidance,
+                justification,
+                evidenceFiles?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AssessmentResourceContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResponsibilityResource"/>. </summary>
         /// <param name="resourceId"> The Id of the resource. </param>
+        /// <param name="accountId"> Account Id. For example - AWS account Id. </param>
+        /// <param name="resourceType"> The type of the resource. e.g. "Microsoft.SignalRService/SignalR". </param>
+        /// <param name="resourceOrigin"> Resource origin. </param>
         /// <param name="resourceStatus"> Resource status. </param>
-        /// <param name="reason"> The reason for the N/A resource. </param>
-        /// <param name="statusChangeDate"> The status change date for the resource. For unavailable date, set it as N/A. </param>
-        /// <returns> A new <see cref="Models.AssessmentResourceContent"/> instance for mocking. </returns>
-        public static AssessmentResourceContent AssessmentResourceContent(string resourceId = null, ResourceStatus? resourceStatus = null, string reason = null, string statusChangeDate = null)
+        /// <param name="resourceStatusChangeOn"> The status change date for the resource. </param>
+        /// <param name="recommendationIds"> List of recommendation id. </param>
+        /// <returns> A new <see cref="Models.ResponsibilityResource"/> instance for mocking. </returns>
+        public static ResponsibilityResource ResponsibilityResource(string resourceId = null, string accountId = null, string resourceType = null, ResourceOrigin? resourceOrigin = null, ResourceStatus? resourceStatus = null, DateTimeOffset? resourceStatusChangeOn = null, IEnumerable<string> recommendationIds = null)
         {
-            return new AssessmentResourceContent(resourceId, resourceStatus, reason, statusChangeDate, serializedAdditionalRawData: null);
+            recommendationIds ??= new List<string>();
+
+            return new ResponsibilityResource(
+                resourceId,
+                accountId,
+                resourceType,
+                resourceOrigin,
+                resourceStatus,
+                resourceStatusChangeOn,
+                recommendationIds?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Recommendation"/>. </summary>
+        /// <param name="recommendationId"> The Id of the recommendation. </param>
+        /// <param name="recommendationShortName"> The short name of the recommendation. e.g. "Invalid TLS config". </param>
+        /// <param name="recommendationSolutions"> List of recommendation solutions. </param>
+        /// <returns> A new <see cref="Models.Recommendation"/> instance for mocking. </returns>
+        public static Recommendation Recommendation(string recommendationId = null, string recommendationShortName = null, IEnumerable<RecommendationSolution> recommendationSolutions = null)
+        {
+            recommendationSolutions ??= new List<RecommendationSolution>();
+
+            return new Recommendation(recommendationId, recommendationShortName, recommendationSolutions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendationSolution"/>. </summary>
+        /// <param name="recommendationSolutionIndex"> The index of the recommendation solution. </param>
+        /// <param name="recommendationSolutionContent"> The detail steps of the recommendation solution. </param>
+        /// <param name="isRecommendSolution"> Indicates whether this solution is the recommended. </param>
+        /// <returns> A new <see cref="Models.RecommendationSolution"/> instance for mocking. </returns>
+        public static RecommendationSolution RecommendationSolution(string recommendationSolutionIndex = null, string recommendationSolutionContent = null, IsRecommendSolution? isRecommendSolution = null)
+        {
+            return new RecommendationSolution(recommendationSolutionIndex, recommendationSolutionContent, isRecommendSolution, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SnapshotDownloadContent"/>. </summary>
@@ -235,10 +517,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DownloadResponse"/>. </summary>
-        /// <param name="resourceList"> List of the reports. </param>
+        /// <param name="resourceList"> Resource list of the report. </param>
         /// <param name="complianceReport"> List of the compliance result. </param>
-        /// <param name="compliancePdfReportSasUri"> compliance pdf report. </param>
-        /// <param name="complianceDetailedPdfReportSasUri"> compliance detailed pdf report. </param>
+        /// <param name="compliancePdfReportSasUri"> Compliance pdf report. </param>
+        /// <param name="complianceDetailedPdfReportSasUri"> The detailed compliance pdf report. </param>
         /// <returns> A new <see cref="Models.DownloadResponse"/> instance for mocking. </returns>
         public static DownloadResponse DownloadResponse(IEnumerable<ResourceItem> resourceList = null, IEnumerable<ComplianceReportItem> complianceReport = null, Uri compliancePdfReportSasUri = null, Uri complianceDetailedPdfReportSasUri = null)
         {
@@ -251,7 +533,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of <see cref="Models.ResourceItem"/>. </summary>
         /// <param name="subscriptionId"> The subscription Id of this resource. </param>
         /// <param name="resourceGroup"> The resource group name of this resource. </param>
-        /// <param name="resourceType"> The resource type of this resource. </param>
+        /// <param name="resourceType"> The resource type of this resource. e.g. "Microsoft.SignalRService/SignalR". </param>
         /// <param name="resourceId"> The resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
         /// <returns> A new <see cref="Models.ResourceItem"/> instance for mocking. </returns>
         public static ResourceItem ResourceItem(string subscriptionId = null, string resourceGroup = null, string resourceType = null, string resourceId = null)
@@ -261,35 +543,174 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.ComplianceReportItem"/>. </summary>
         /// <param name="categoryName"> The category name. </param>
+        /// <param name="controlFamilyName"> The control family name. </param>
         /// <param name="controlId"> The control Id - e.g. "1". </param>
         /// <param name="controlName"> The control name. </param>
-        /// <param name="controlType"> The control type. </param>
-        /// <param name="complianceState"> The compliance result's status. </param>
-        /// <param name="policyId"> The compliance result mapped policy Id. </param>
-        /// <param name="policyDisplayName"> The policy's display name. </param>
-        /// <param name="policyDescription"> The policy's detail description. </param>
-        /// <param name="subscriptionId"> The compliance result mapped subscription Id. </param>
-        /// <param name="resourceGroup"> The compliance result mapped resource group. </param>
-        /// <param name="resourceType"> The compliance result mapped resource type. </param>
-        /// <param name="resourceId"> The compliance result mapped resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
-        /// <param name="statusChangeDate"> The compliance result last changed date - e.g. "2022-10-24T02:55:16.3274379Z". For unavailable date, set it as "N/A". </param>
+        /// <param name="controlStatus"> Control status. </param>
+        /// <param name="responsibilityTitle"> The title of the customer responsibility. </param>
+        /// <param name="responsibilityDescription"> The description of the customer responsibility. </param>
+        /// <param name="resourceId"> The Id of the resource. </param>
+        /// <param name="resourceType"> The type of the resource.  e.g. "Microsoft.SignalRService/SignalR". </param>
+        /// <param name="resourceOrigin"> Resource origin. </param>
+        /// <param name="resourceStatus"> Resource status. </param>
+        /// <param name="resourceStatusChangeOn"> The status change date for the resource. </param>
         /// <returns> A new <see cref="Models.ComplianceReportItem"/> instance for mocking. </returns>
-        public static ComplianceReportItem ComplianceReportItem(string categoryName = null, string controlId = null, string controlName = null, ControlType? controlType = null, ComplianceState? complianceState = null, string policyId = null, string policyDisplayName = null, string policyDescription = null, string subscriptionId = null, string resourceGroup = null, string resourceType = null, string resourceId = null, string statusChangeDate = null)
+        public static ComplianceReportItem ComplianceReportItem(string categoryName = null, string controlFamilyName = null, string controlId = null, string controlName = null, ControlStatus? controlStatus = null, string responsibilityTitle = null, string responsibilityDescription = null, string resourceId = null, string resourceType = null, ResourceOrigin? resourceOrigin = null, ResourceStatus? resourceStatus = null, DateTimeOffset? resourceStatusChangeOn = null)
         {
             return new ComplianceReportItem(
                 categoryName,
+                controlFamilyName,
                 controlId,
                 controlName,
-                controlType,
-                complianceState,
-                policyId,
-                policyDisplayName,
-                policyDescription,
-                subscriptionId,
-                resourceGroup,
-                resourceType,
+                controlStatus,
+                responsibilityTitle,
+                responsibilityDescription,
                 resourceId,
-                statusChangeDate,
+                resourceType,
+                resourceOrigin,
+                resourceStatus,
+                resourceStatusChangeOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SyncCertRecordResponse"/>. </summary>
+        /// <param name="certRecord"> certification record synchronized. </param>
+        /// <returns> A new <see cref="Models.SyncCertRecordResponse"/> instance for mocking. </returns>
+        public static SyncCertRecordResponse SyncCertRecordResponse(CertSyncRecord certRecord = null)
+        {
+            return new SyncCertRecordResponse(certRecord, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReportVerificationResult"/>. </summary>
+        /// <param name="result"> Indicates whether the report verification action is Succeeded or Failed. </param>
+        /// <param name="reason"> If the report verification action failed, to indicate the detailed failed reason. </param>
+        /// <returns> A new <see cref="Models.ReportVerificationResult"/> instance for mocking. </returns>
+        public static ReportVerificationResult ReportVerificationResult(Result? result = null, string reason = null)
+        {
+            return new ReportVerificationResult(result, reason, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppComplianceAutomation.WebhookResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="webhookId"> Webhook id in database. </param>
+        /// <param name="status"> Webhook status. </param>
+        /// <param name="tenantId"> Tenant id. </param>
+        /// <param name="sendAllEvents"> whether to send notification under any event. </param>
+        /// <param name="events"> under which event notification should be sent. </param>
+        /// <param name="payloadUri"> webhook payload url. </param>
+        /// <param name="contentType"> content type. </param>
+        /// <param name="webhookKey"> webhook secret token. If not set, this field value is null; otherwise, please set a string value. </param>
+        /// <param name="updateWebhookKey"> whether to update webhookKey. </param>
+        /// <param name="webhookKeyEnabled"> whether webhookKey is enabled. </param>
+        /// <param name="enableSslVerification"> whether to enable ssl verification. </param>
+        /// <param name="deliveryStatus"> webhook deliveryStatus. </param>
+        /// <param name="provisioningState"> Azure Resource Provisioning State. </param>
+        /// <returns> A new <see cref="AppComplianceAutomation.WebhookResourceData"/> instance for mocking. </returns>
+        public static WebhookResourceData WebhookResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string webhookId = null, WebhookStatus? status = null, Guid? tenantId = null, SendAllEvent? sendAllEvents = null, IEnumerable<NotificationEvent> events = null, Uri payloadUri = null, ContentType? contentType = null, string webhookKey = null, UpdateWebhookKey? updateWebhookKey = null, WebhookKeyEnabled? webhookKeyEnabled = null, EnableSslVerification? enableSslVerification = null, DeliveryStatus? deliveryStatus = null, ProvisioningState? provisioningState = null)
+        {
+            events ??= new List<NotificationEvent>();
+
+            return new WebhookResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                webhookId,
+                status,
+                tenantId,
+                sendAllEvents,
+                events?.ToList(),
+                payloadUri,
+                contentType,
+                webhookKey,
+                updateWebhookKey,
+                webhookKeyEnabled,
+                enableSslVerification,
+                deliveryStatus,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WebhookProperties"/>. </summary>
+        /// <param name="webhookId"> Webhook id in database. </param>
+        /// <param name="status"> Webhook status. </param>
+        /// <param name="tenantId"> Tenant id. </param>
+        /// <param name="sendAllEvents"> whether to send notification under any event. </param>
+        /// <param name="events"> under which event notification should be sent. </param>
+        /// <param name="payloadUri"> webhook payload url. </param>
+        /// <param name="contentType"> content type. </param>
+        /// <param name="webhookKey"> webhook secret token. If not set, this field value is null; otherwise, please set a string value. </param>
+        /// <param name="updateWebhookKey"> whether to update webhookKey. </param>
+        /// <param name="webhookKeyEnabled"> whether webhookKey is enabled. </param>
+        /// <param name="enableSslVerification"> whether to enable ssl verification. </param>
+        /// <param name="deliveryStatus"> webhook deliveryStatus. </param>
+        /// <param name="provisioningState"> Azure Resource Provisioning State. </param>
+        /// <returns> A new <see cref="Models.WebhookProperties"/> instance for mocking. </returns>
+        public static WebhookProperties WebhookProperties(string webhookId = null, WebhookStatus? status = null, Guid? tenantId = null, SendAllEvent? sendAllEvents = null, IEnumerable<NotificationEvent> events = null, Uri payloadUri = null, ContentType? contentType = null, string webhookKey = null, UpdateWebhookKey? updateWebhookKey = null, WebhookKeyEnabled? webhookKeyEnabled = null, EnableSslVerification? enableSslVerification = null, DeliveryStatus? deliveryStatus = null, ProvisioningState? provisioningState = null)
+        {
+            events ??= new List<NotificationEvent>();
+
+            return new WebhookProperties(
+                webhookId,
+                status,
+                tenantId,
+                sendAllEvents,
+                events?.ToList(),
+                payloadUri,
+                contentType,
+                webhookKey,
+                updateWebhookKey,
+                webhookKeyEnabled,
+                enableSslVerification,
+                deliveryStatus,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TriggerEvaluationResponse"/>. </summary>
+        /// <param name="properties"> trigger evaluation property. </param>
+        /// <returns> A new <see cref="Models.TriggerEvaluationResponse"/> instance for mocking. </returns>
+        public static TriggerEvaluationResponse TriggerEvaluationResponse(TriggerEvaluationProperty properties = null)
+        {
+            return new TriggerEvaluationResponse(properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TriggerEvaluationProperty"/>. </summary>
+        /// <param name="triggerOn"> The time when the evaluation is triggered. </param>
+        /// <param name="evaluationEndOn"> The time when the evaluation is end. </param>
+        /// <param name="resourceIds"> List of resource ids to be evaluated. </param>
+        /// <param name="quickAssessments"> List of quick assessments. </param>
+        /// <returns> A new <see cref="Models.TriggerEvaluationProperty"/> instance for mocking. </returns>
+        public static TriggerEvaluationProperty TriggerEvaluationProperty(DateTimeOffset? triggerOn = null, DateTimeOffset? evaluationEndOn = null, IEnumerable<string> resourceIds = null, IEnumerable<QuickAssessment> quickAssessments = null)
+        {
+            resourceIds ??= new List<string>();
+            quickAssessments ??= new List<QuickAssessment>();
+
+            return new TriggerEvaluationProperty(triggerOn, evaluationEndOn, resourceIds?.ToList(), quickAssessments?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QuickAssessment"/>. </summary>
+        /// <param name="resourceId"> Resource id. </param>
+        /// <param name="responsibilityId"> Responsibility id. </param>
+        /// <param name="timestamp"> The timestamp of resource creation (UTC). </param>
+        /// <param name="resourceStatus"> Quick assessment status. </param>
+        /// <param name="displayName"> Quick assessment display name. </param>
+        /// <param name="description"> Quick assessment display name. </param>
+        /// <param name="remediationLink"> Link to remediation steps for this quick assessment. </param>
+        /// <returns> A new <see cref="Models.QuickAssessment"/> instance for mocking. </returns>
+        public static QuickAssessment QuickAssessment(string resourceId = null, string responsibilityId = null, DateTimeOffset? timestamp = null, ResourceStatus? resourceStatus = null, string displayName = null, string description = null, string remediationLink = null)
+        {
+            return new QuickAssessment(
+                resourceId,
+                responsibilityId,
+                timestamp,
+                resourceStatus,
+                displayName,
+                description,
+                remediationLink,
                 serializedAdditionalRawData: null);
         }
     }

@@ -31,11 +31,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("categoryName"u8);
                 writer.WriteStringValue(CategoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CategoryType))
-            {
-                writer.WritePropertyName("categoryType"u8);
-                writer.WriteStringValue(CategoryType.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(CategoryStatus))
             {
                 writer.WritePropertyName("categoryStatus"u8);
@@ -90,7 +85,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 return null;
             }
             string categoryName = default;
-            CategoryType? categoryType = default;
             CategoryStatus? categoryStatus = default;
             IReadOnlyList<ControlFamily> controlFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,15 +94,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 if (property.NameEquals("categoryName"u8))
                 {
                     categoryName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("categoryType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    categoryType = new CategoryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("categoryStatus"u8))
@@ -140,7 +125,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Category(categoryName, categoryType, categoryStatus, controlFamilies ?? new ChangeTrackingList<ControlFamily>(), serializedAdditionalRawData);
+            return new Category(categoryName, categoryStatus, controlFamilies ?? new ChangeTrackingList<ControlFamily>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Category>.Write(ModelReaderWriterOptions options)

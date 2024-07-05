@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppComplianceAutomation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
@@ -27,8 +28,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     {
         private readonly ClientDiagnostics _reportResourceReportClientDiagnostics;
         private readonly ReportRestOperations _reportResourceReportRestClient;
-        private readonly ClientDiagnostics _reportResourceReportsClientDiagnostics;
-        private readonly ReportsRestOperations _reportResourceReportsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ReportResourceCollection"/> class for mocking. </summary>
         protected ReportResourceCollection()
@@ -43,9 +42,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _reportResourceReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ReportResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ReportResource.ResourceType, out string reportResourceReportApiVersion);
             _reportResourceReportRestClient = new ReportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reportResourceReportApiVersion);
-            _reportResourceReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ReportResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ReportResource.ResourceType, out string reportResourceReportsApiVersion);
-            _reportResourceReportsRestClient = new ReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reportResourceReportsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +66,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -119,7 +115,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,7 +164,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +209,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,11 +250,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_List</description>
+        /// <description>Report_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -266,18 +262,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportResource> GetAllAsync(string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportResource> GetAllAsync(ReportResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportsRestClient.CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            options ??= new ReportResourceCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportRestClient.CreateListRequest(options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -289,11 +283,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Reports_List</description>
+        /// <description>Report_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,18 +295,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportResource> GetAll(string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportResource> GetAll(ReportResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportsRestClient.CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            options ??= new ReportResourceCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportRestClient.CreateListRequest(options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -328,7 +320,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,7 +363,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,7 +406,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,7 +451,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-16-preview</description>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -493,17 +485,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         IEnumerator<ReportResource> IEnumerable<ReportResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<ReportResource> IAsyncEnumerable<ReportResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

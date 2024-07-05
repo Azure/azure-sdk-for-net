@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("categoryName"u8);
                 writer.WriteStringValue(CategoryName);
             }
+            if (options.Format != "W" && Optional.IsDefined(ControlFamilyName))
+            {
+                writer.WritePropertyName("controlFamilyName"u8);
+                writer.WriteStringValue(ControlFamilyName);
+            }
             if (options.Format != "W" && Optional.IsDefined(ControlId))
             {
                 writer.WritePropertyName("controlId"u8);
@@ -41,55 +46,45 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("controlName"u8);
                 writer.WriteStringValue(ControlName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlType))
+            if (options.Format != "W" && Optional.IsDefined(ControlStatus))
             {
-                writer.WritePropertyName("controlType"u8);
-                writer.WriteStringValue(ControlType.Value.ToString());
+                writer.WritePropertyName("controlStatus"u8);
+                writer.WriteStringValue(ControlStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ComplianceState))
+            if (options.Format != "W" && Optional.IsDefined(ResponsibilityTitle))
             {
-                writer.WritePropertyName("complianceState"u8);
-                writer.WriteStringValue(ComplianceState.Value.ToString());
+                writer.WritePropertyName("responsibilityTitle"u8);
+                writer.WriteStringValue(ResponsibilityTitle);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyId))
+            if (options.Format != "W" && Optional.IsDefined(ResponsibilityDescription))
             {
-                writer.WritePropertyName("policyId"u8);
-                writer.WriteStringValue(PolicyId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PolicyDisplayName))
-            {
-                writer.WritePropertyName("policyDisplayName"u8);
-                writer.WriteStringValue(PolicyDisplayName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PolicyDescription))
-            {
-                writer.WritePropertyName("policyDescription"u8);
-                writer.WriteStringValue(PolicyDescription);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
-            {
-                writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
-            {
-                writer.WritePropertyName("resourceGroup"u8);
-                writer.WriteStringValue(ResourceGroup);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
-            {
-                writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WritePropertyName("responsibilityDescription"u8);
+                writer.WriteStringValue(ResponsibilityDescription);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusChangeDate))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("statusChangeDate"u8);
-                writer.WriteStringValue(StatusChangeDate);
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceOrigin))
+            {
+                writer.WritePropertyName("resourceOrigin"u8);
+                writer.WriteStringValue(ResourceOrigin.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceStatus))
+            {
+                writer.WritePropertyName("resourceStatus"u8);
+                writer.WriteStringValue(ResourceStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceStatusChangeOn))
+            {
+                writer.WritePropertyName("resourceStatusChangeDate"u8);
+                writer.WriteStringValue(ResourceStatusChangeOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -130,18 +125,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 return null;
             }
             string categoryName = default;
+            string controlFamilyName = default;
             string controlId = default;
             string controlName = default;
-            ControlType? controlType = default;
-            ComplianceState? complianceState = default;
-            string policyId = default;
-            string policyDisplayName = default;
-            string policyDescription = default;
-            string subscriptionId = default;
-            string resourceGroup = default;
-            string resourceType = default;
+            ControlStatus? controlStatus = default;
+            string responsibilityTitle = default;
+            string responsibilityDescription = default;
             string resourceId = default;
-            string statusChangeDate = default;
+            string resourceType = default;
+            ResourceOrigin? resourceOrigin = default;
+            ResourceStatus? resourceStatus = default;
+            DateTimeOffset? resourceStatusChangeDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,6 +143,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 if (property.NameEquals("categoryName"u8))
                 {
                     categoryName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("controlFamilyName"u8))
+                {
+                    controlFamilyName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("controlId"u8))
@@ -161,52 +160,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     controlName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlType"u8))
+                if (property.NameEquals("controlStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    controlType = new ControlType(property.Value.GetString());
+                    controlStatus = new ControlStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("complianceState"u8))
+                if (property.NameEquals("responsibilityTitle"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    complianceState = new ComplianceState(property.Value.GetString());
+                    responsibilityTitle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyId"u8))
+                if (property.NameEquals("responsibilityDescription"u8))
                 {
-                    policyId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("policyDisplayName"u8))
-                {
-                    policyDisplayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("policyDescription"u8))
-                {
-                    policyDescription = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("subscriptionId"u8))
-                {
-                    subscriptionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceGroup"u8))
-                {
-                    resourceGroup = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceType"u8))
-                {
-                    resourceType = property.Value.GetString();
+                    responsibilityDescription = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))
@@ -214,9 +184,36 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusChangeDate"u8))
+                if (property.NameEquals("resourceType"u8))
                 {
-                    statusChangeDate = property.Value.GetString();
+                    resourceType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resourceOrigin"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceOrigin = new ResourceOrigin(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceStatus = new ResourceStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceStatusChangeDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceStatusChangeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -227,18 +224,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ComplianceReportItem(
                 categoryName,
+                controlFamilyName,
                 controlId,
                 controlName,
-                controlType,
-                complianceState,
-                policyId,
-                policyDisplayName,
-                policyDescription,
-                subscriptionId,
-                resourceGroup,
-                resourceType,
+                controlStatus,
+                responsibilityTitle,
+                responsibilityDescription,
                 resourceId,
-                statusChangeDate,
+                resourceType,
+                resourceOrigin,
+                resourceStatus,
+                resourceStatusChangeDate,
                 serializedAdditionalRawData);
         }
 

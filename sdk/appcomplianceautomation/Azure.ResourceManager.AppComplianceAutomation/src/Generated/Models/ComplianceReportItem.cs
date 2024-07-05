@@ -52,62 +52,58 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Initializes a new instance of <see cref="ComplianceReportItem"/>. </summary>
         /// <param name="categoryName"> The category name. </param>
+        /// <param name="controlFamilyName"> The control family name. </param>
         /// <param name="controlId"> The control Id - e.g. "1". </param>
         /// <param name="controlName"> The control name. </param>
-        /// <param name="controlType"> The control type. </param>
-        /// <param name="complianceState"> The compliance result's status. </param>
-        /// <param name="policyId"> The compliance result mapped policy Id. </param>
-        /// <param name="policyDisplayName"> The policy's display name. </param>
-        /// <param name="policyDescription"> The policy's detail description. </param>
-        /// <param name="subscriptionId"> The compliance result mapped subscription Id. </param>
-        /// <param name="resourceGroup"> The compliance result mapped resource group. </param>
-        /// <param name="resourceType"> The compliance result mapped resource type. </param>
-        /// <param name="resourceId"> The compliance result mapped resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
-        /// <param name="statusChangeDate"> The compliance result last changed date - e.g. "2022-10-24T02:55:16.3274379Z". For unavailable date, set it as "N/A". </param>
+        /// <param name="controlStatus"> Control status. </param>
+        /// <param name="responsibilityTitle"> The title of the customer responsibility. </param>
+        /// <param name="responsibilityDescription"> The description of the customer responsibility. </param>
+        /// <param name="resourceId"> The Id of the resource. </param>
+        /// <param name="resourceType"> The type of the resource.  e.g. "Microsoft.SignalRService/SignalR". </param>
+        /// <param name="resourceOrigin"> Resource origin. </param>
+        /// <param name="resourceStatus"> Resource status. </param>
+        /// <param name="resourceStatusChangeOn"> The status change date for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComplianceReportItem(string categoryName, string controlId, string controlName, ControlType? controlType, ComplianceState? complianceState, string policyId, string policyDisplayName, string policyDescription, string subscriptionId, string resourceGroup, string resourceType, string resourceId, string statusChangeDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComplianceReportItem(string categoryName, string controlFamilyName, string controlId, string controlName, ControlStatus? controlStatus, string responsibilityTitle, string responsibilityDescription, string resourceId, string resourceType, ResourceOrigin? resourceOrigin, ResourceStatus? resourceStatus, DateTimeOffset? resourceStatusChangeOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CategoryName = categoryName;
+            ControlFamilyName = controlFamilyName;
             ControlId = controlId;
             ControlName = controlName;
-            ControlType = controlType;
-            ComplianceState = complianceState;
-            PolicyId = policyId;
-            PolicyDisplayName = policyDisplayName;
-            PolicyDescription = policyDescription;
-            SubscriptionId = subscriptionId;
-            ResourceGroup = resourceGroup;
-            ResourceType = resourceType;
+            ControlStatus = controlStatus;
+            ResponsibilityTitle = responsibilityTitle;
+            ResponsibilityDescription = responsibilityDescription;
             ResourceId = resourceId;
-            StatusChangeDate = statusChangeDate;
+            ResourceType = resourceType;
+            ResourceOrigin = resourceOrigin;
+            ResourceStatus = resourceStatus;
+            ResourceStatusChangeOn = resourceStatusChangeOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The category name. </summary>
         public string CategoryName { get; }
+        /// <summary> The control family name. </summary>
+        public string ControlFamilyName { get; }
         /// <summary> The control Id - e.g. "1". </summary>
         public string ControlId { get; }
         /// <summary> The control name. </summary>
         public string ControlName { get; }
-        /// <summary> The control type. </summary>
-        public ControlType? ControlType { get; }
-        /// <summary> The compliance result's status. </summary>
-        public ComplianceState? ComplianceState { get; }
-        /// <summary> The compliance result mapped policy Id. </summary>
-        public string PolicyId { get; }
-        /// <summary> The policy's display name. </summary>
-        public string PolicyDisplayName { get; }
-        /// <summary> The policy's detail description. </summary>
-        public string PolicyDescription { get; }
-        /// <summary> The compliance result mapped subscription Id. </summary>
-        public string SubscriptionId { get; }
-        /// <summary> The compliance result mapped resource group. </summary>
-        public string ResourceGroup { get; }
-        /// <summary> The compliance result mapped resource type. </summary>
-        public string ResourceType { get; }
-        /// <summary> The compliance result mapped resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </summary>
+        /// <summary> Control status. </summary>
+        public ControlStatus? ControlStatus { get; }
+        /// <summary> The title of the customer responsibility. </summary>
+        public string ResponsibilityTitle { get; }
+        /// <summary> The description of the customer responsibility. </summary>
+        public string ResponsibilityDescription { get; }
+        /// <summary> The Id of the resource. </summary>
         public string ResourceId { get; }
-        /// <summary> The compliance result last changed date - e.g. "2022-10-24T02:55:16.3274379Z". For unavailable date, set it as "N/A". </summary>
-        public string StatusChangeDate { get; }
+        /// <summary> The type of the resource.  e.g. "Microsoft.SignalRService/SignalR". </summary>
+        public string ResourceType { get; }
+        /// <summary> Resource origin. </summary>
+        public ResourceOrigin? ResourceOrigin { get; }
+        /// <summary> Resource status. </summary>
+        public ResourceStatus? ResourceStatus { get; }
+        /// <summary> The status change date for the resource. </summary>
+        public DateTimeOffset? ResourceStatusChangeOn { get; }
     }
 }

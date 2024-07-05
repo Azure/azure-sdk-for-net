@@ -24,13 +24,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         private const string ActiveValue = "Active";
         private const string FailedValue = "Failed";
+        private const string ReviewingValue = "Reviewing";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Active. </summary>
+        /// <summary> The report is active. </summary>
         public static ReportStatus Active { get; } = new ReportStatus(ActiveValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The report is failed. </summary>
         public static ReportStatus Failed { get; } = new ReportStatus(FailedValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> The report is under reviewing. </summary>
+        public static ReportStatus Reviewing { get; } = new ReportStatus(ReviewingValue);
+        /// <summary> The report is disabled. </summary>
         public static ReportStatus Disabled { get; } = new ReportStatus(DisabledValue);
         /// <summary> Determines if two <see cref="ReportStatus"/> values are the same. </summary>
         public static bool operator ==(ReportStatus left, ReportStatus right) => left.Equals(right);

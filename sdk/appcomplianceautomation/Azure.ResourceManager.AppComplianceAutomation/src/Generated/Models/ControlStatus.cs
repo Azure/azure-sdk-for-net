@@ -25,13 +25,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         private const string PassedValue = "Passed";
         private const string FailedValue = "Failed";
         private const string NotApplicableValue = "NotApplicable";
+        private const string PendingApprovalValue = "PendingApproval";
 
-        /// <summary> Passed. </summary>
+        /// <summary> The control is passed. </summary>
         public static ControlStatus Passed { get; } = new ControlStatus(PassedValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The control is failed. </summary>
         public static ControlStatus Failed { get; } = new ControlStatus(FailedValue);
-        /// <summary> NotApplicable. </summary>
+        /// <summary> The control is not applicable. </summary>
         public static ControlStatus NotApplicable { get; } = new ControlStatus(NotApplicableValue);
+        /// <summary> The control is pending for approval. </summary>
+        public static ControlStatus PendingApproval { get; } = new ControlStatus(PendingApprovalValue);
         /// <summary> Determines if two <see cref="ControlStatus"/> values are the same. </summary>
         public static bool operator ==(ControlStatus left, ControlStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ControlStatus"/> values are not the same. </summary>

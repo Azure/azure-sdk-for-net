@@ -26,35 +26,42 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            writer.WritePropertyName("triggerTime"u8);
+            writer.WriteStringValue(TriggerOn, "O");
+            writer.WritePropertyName("timeZone"u8);
+            writer.WriteStringValue(TimeZone);
+            writer.WritePropertyName("resources"u8);
+            writer.WriteStartArray();
+            foreach (var item in Resources)
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportName))
-            {
-                writer.WritePropertyName("reportName"u8);
-                writer.WriteStringValue(ReportName);
-            }
             if (Optional.IsDefined(OfferGuid))
             {
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
             }
-            writer.WritePropertyName("timeZone"u8);
-            writer.WriteStringValue(TimeZone);
-            writer.WritePropertyName("triggerTime"u8);
-            writer.WriteStringValue(TriggerOn, "O");
             if (options.Format != "W" && Optional.IsDefined(NextTriggerOn))
             {
                 writer.WritePropertyName("nextTriggerTime"u8);
@@ -75,17 +82,25 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("resources"u8);
-            writer.WriteStartArray();
-            foreach (var item in Resources)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteObjectValue(ComplianceStatus, options);
+            }
+            if (Optional.IsDefined(StorageInfo))
+            {
+                writer.WritePropertyName("storageInfo"u8);
+                writer.WriteObjectValue(StorageInfo, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(CertRecords))
+            {
+                writer.WritePropertyName("certRecords"u8);
+                writer.WriteStartArray();
+                foreach (var item in CertRecords)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -130,26 +145,42 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            string id = default;
-            ReportStatus? status = default;
-            Guid? tenantId = default;
-            string reportName = default;
-            string offerGuid = default;
-            string timeZone = default;
             DateTimeOffset triggerTime = default;
+            string timeZone = default;
+            IReadOnlyList<ResourceMetadata> resources = default;
+            ReportStatus? status = default;
+            IReadOnlyList<string> errors = default;
+            Guid? tenantId = default;
+            string offerGuid = default;
             DateTimeOffset? nextTriggerTime = default;
             DateTimeOffset? lastTriggerTime = default;
             IReadOnlyList<string> subscriptions = default;
-            IList<ResourceMetadata> resources = default;
             ReportComplianceStatus complianceStatus = default;
+            StorageInfo storageInfo = default;
+            IReadOnlyList<CertSyncRecord> certRecords = default;
             ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("triggerTime"u8))
                 {
-                    id = property.Value.GetString();
+                    triggerTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("timeZone"u8))
+                {
+                    timeZone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resources"u8))
+                {
+                    List<ResourceMetadata> array = new List<ResourceMetadata>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceMetadata.DeserializeResourceMetadata(item, options));
+                    }
+                    resources = array;
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -161,6 +192,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     status = new ReportStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("errors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    errors = array;
+                    continue;
+                }
                 if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -170,24 +215,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("reportName"u8))
-                {
-                    reportName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("offerGuid"u8))
                 {
                     offerGuid = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timeZone"u8))
-                {
-                    timeZone = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("triggerTime"u8))
-                {
-                    triggerTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("nextTriggerTime"u8))
@@ -222,16 +252,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     subscriptions = array;
                     continue;
                 }
-                if (property.NameEquals("resources"u8))
-                {
-                    List<ResourceMetadata> array = new List<ResourceMetadata>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ResourceMetadata.DeserializeResourceMetadata(item, options));
-                    }
-                    resources = array;
-                    continue;
-                }
                 if (property.NameEquals("complianceStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -239,6 +259,29 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         continue;
                     }
                     complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("storageInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageInfo = StorageInfo.DeserializeStorageInfo(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("certRecords"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CertSyncRecord> array = new List<CertSyncRecord>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CertSyncRecord.DeserializeCertSyncRecord(item, options));
+                    }
+                    certRecords = array;
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -257,18 +300,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ReportProperties(
-                id,
-                status,
-                tenantId,
-                reportName,
-                offerGuid,
-                timeZone,
                 triggerTime,
+                timeZone,
+                resources,
+                status,
+                errors ?? new ChangeTrackingList<string>(),
+                tenantId,
+                offerGuid,
                 nextTriggerTime,
                 lastTriggerTime,
                 subscriptions ?? new ChangeTrackingList<string>(),
-                resources,
                 complianceStatus,
+                storageInfo,
+                certRecords ?? new ChangeTrackingList<CertSyncRecord>(),
                 provisioningState,
                 serializedAdditionalRawData);
         }
