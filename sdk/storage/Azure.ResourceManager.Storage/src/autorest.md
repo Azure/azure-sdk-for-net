@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://github.com/Azure/azure-rest-api-specs/blob/da0cfefaa0e6c237e1e3819f1cb2e11d7606878d/specification/storage/resource-manager/readme.md
-#tag: package-2022-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/220ad9c6554fc7d6d10a89bdb441c1e3b36e3285/specification/storage/resource-manager/readme.md
+#tag: package-2023-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -16,11 +16,16 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/accountMigrations/{migrationName}
 
 override-operation-name:
   StorageAccounts_CheckNameAvailability: CheckStorageAccountNameAvailability
@@ -233,6 +238,30 @@ rename-mapping:
   StorageAccountInternetEndpoints.dfs: DfsUri
   FailoverType: StorageAccountFailoverType
   ListEncryptionScopesInclude: EncryptionScopesIncludeType
+  StorageAccount.properties.accountMigrationInProgress: IsAccountMigrationInProgress
+  StorageAccount.properties.enableExtendedGroups: IsExtendedGroupEnabled
+  StorageAccountCreateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
+  StorageAccountUpdateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
+  LocalUser.properties.allowAclAuthorization: IsAclAuthorizationAllowed
+  LocalUser.properties.isNFSv3Enabled: IsNfsV3Enabled
+  StorageAccountMigration.type: ResourceType|resource-type
+  IntervalUnit: ExecutionIntervalUnit
+  IssueType: NetworkSecurityPerimeterProvisioningIssueType
+  MigrationName: StorageAccountMigrationName
+  MigrationStatus: StorageAccountMigrationStatus
+  ProvisioningIssue: NetworkSecurityPerimeterProvisioningIssue
+  ProvisioningIssueProperties: NetworkSecurityPerimeterProvisioningIssueProperties
+  RunResult: StorageTaskRunResult
+  RunStatusEnum: StorageTaskRunStatus
+  Severity: NetworkSecurityPerimeterProvisioningIssueSeverity
+  StorageTaskAssignmentUpdateProperties: StorageTaskAssignmentPatchProperties
+  StorageTaskAssignmentUpdateProperties.enabled: IsEnabled
+  StorageTaskAssignmentProperties.enabled: IsEnabled
+  StorageTaskReportProperties.startTime: StartedOn|date-time
+  StorageTaskReportProperties.finishTime: FinishedOn|date-time
+  TriggerParameters: ExecutionTriggerParameters
+  TriggerParametersUpdate: ExecutionTriggerParametersUpdate
+  TriggerType: ExecutionTriggerType
 
 directive:
   - from: swagger-document
@@ -318,4 +347,20 @@ directive:
   - from: swagger-document
     where: $.definitions.StorageAccountCheckNameAvailabilityParameters.properties.type
     transform: $["x-ms-constant"] = true;
+# maxpagesize should be int
+  - from: blob.json
+    where: $.paths..parameters[?(@.name === "$maxpagesize")]
+    transform: >
+      $['type'] = "integer";
+      $['format'] = "int32";
+  - from: file.json
+    where: $.paths..parameters[?(@.name === "$maxpagesize")]
+    transform: >
+      $['type'] = "integer";
+      $['format'] = "int32";
+  - from: queue.json
+    where: $.paths..parameters[?(@.name === "$maxpagesize")]
+    transform: >
+      $['type'] = "integer";
+      $['format'] = "int32";
 ```
