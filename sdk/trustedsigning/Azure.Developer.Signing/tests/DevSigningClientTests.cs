@@ -20,7 +20,7 @@ namespace Azure.Developer.Signing.Tests
         }
 
         internal CertificateProfile GetCertificateProfileClient() =>
-            InstrumentClient(new SigningClient(TestEnvironment.Credential, InstrumentClientOptions(new SigningClientOptions()))
+            InstrumentClient(new SigningClient(TestEnvironment.Region, TestEnvironment.Credential, InstrumentClientOptions(new SigningClientOptions()))
             .GetCertificateProfileClient(TestEnvironment.Region));
 
         [SetUp]

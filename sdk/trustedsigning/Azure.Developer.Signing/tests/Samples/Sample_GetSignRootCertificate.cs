@@ -18,7 +18,7 @@ namespace Azure.Developer.Signing.Tests.Samples
             var credential = new DefaultAzureCredential();
 
             #region Snippet:Azure_Developer_Signing_GetSignRootCertificate
-            CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+            CertificateProfile certificateProfileClient = new SigningClient(region, credential).GetCertificateProfileClient();
 
             Response<BinaryData> response = certificateProfileClient.GetSignRootCertificate(accountName, profileName);
 

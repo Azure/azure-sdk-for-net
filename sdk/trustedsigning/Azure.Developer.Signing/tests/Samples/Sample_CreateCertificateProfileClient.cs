@@ -15,7 +15,7 @@ namespace Azure.Developer.Signing.Tests.Samples
             #region Snippet:Azure_Developer_Signing_CreateCertificateProfileClient
 
             var credential = new DefaultAzureCredential();
-            CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+            CertificateProfile certificateProfileClient = new SigningClient(region, credential).GetCertificateProfileClient();
 
             #endregion Snippet:Azure_Developer_Signing_CreateCertificateProfileClient
         }
