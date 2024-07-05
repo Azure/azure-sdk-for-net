@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var geoCatalogData = new GeoCatalogData(location);
             string resourceName = Recording.GenerateAssetName("geoCatalog");
 
+            var gc = rg.GetGeoCatalogs();
             var resource = await gc.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, geoCatalogData);
             Assert.AreEqual(resourceName, resource.Value.Data.Name);
         }
