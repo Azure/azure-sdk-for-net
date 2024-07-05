@@ -8,7 +8,7 @@ csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
 require: https://github.com/Azure/azure-rest-api-specs/blob/d1296700aa6cd650970e9891dd58eef5698327fd/specification/keyvault/resource-manager/readme.md
-#tag: package-2023-02
+#tag: package-2023-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -162,22 +162,19 @@ directive:
       $.VaultProperties.properties.provisioningState['x-ms-enum']['name'] = 'KeyVaultProvisioningState';
       $.Vault['x-csharp-usage'] = 'model,input,output';
       $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'KeyVaultNameUnavailableReason';
-# Remove the flatten since it will cause Tag operation error
+  # Remove keysManagedHsm.json and keys.json since these 2 are part of data plane
   - from: keysManagedHsm.json
-    where: $.definitions
-    transform: >    
-      delete $.ManagedHsmKey.properties.properties['x-ms-client-flatten']
-```
-
-### Tag: package-2023-02
-
-These settings apply only when `--tag=package-2023-02` is specified on the command line.
-
-```yaml $(tag) == 'package-2023-02'
-input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/common.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/keyvault.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/managedHsm.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/providers.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/secrets.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  - from: keys.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
 ```
