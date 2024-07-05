@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
+            string dedicatedHsmName = "hsm1";
             DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new HardwareSecurityModulesSku()
             {
                 Name = HardwareSecurityModulesSkuName.SafeNetLunaNetworkHSMA790,
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             {
                 NetworkProfile = new NetworkProfile()
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
 new NetworkInterface()
@@ -66,7 +66,7 @@ PrivateIPAddress = "1.0.0.1",
 ["Environment"] = "dogfood",
 },
             };
-            ArmOperation<DedicatedHsmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            ArmOperation<DedicatedHsmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dedicatedHsmName, data);
             DedicatedHsmResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -100,7 +100,7 @@ PrivateIPAddress = "1.0.0.1",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
+            string dedicatedHsmName = "hsm1";
             DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new HardwareSecurityModulesSku()
             {
                 Name = HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60,
@@ -108,7 +108,7 @@ PrivateIPAddress = "1.0.0.1",
             {
                 NetworkProfile = new NetworkProfile()
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
 new NetworkInterface()
@@ -126,7 +126,7 @@ PrivateIPAddress = "1.0.0.1",
 ["Environment"] = "dogfood",
 },
             };
-            ArmOperation<DedicatedHsmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            ArmOperation<DedicatedHsmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dedicatedHsmName, data);
             DedicatedHsmResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -160,7 +160,7 @@ PrivateIPAddress = "1.0.0.1",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
+            string dedicatedHsmName = "hsm1";
             DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new HardwareSecurityModulesSku()
             {
                 Name = HardwareSecurityModulesSkuName.PayShield10KLMK1CPS60,
@@ -168,7 +168,7 @@ PrivateIPAddress = "1.0.0.1",
             {
                 NetworkProfile = new NetworkProfile()
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
 new NetworkInterface()
@@ -179,7 +179,7 @@ PrivateIPAddress = "1.0.0.1",
                 },
                 ManagementNetworkProfile = new NetworkProfile()
                 {
-                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
                     NetworkInterfaces =
 {
 new NetworkInterface()
@@ -197,7 +197,7 @@ PrivateIPAddress = "1.0.0.2",
 ["Environment"] = "dogfood",
 },
             };
-            ArmOperation<DedicatedHsmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            ArmOperation<DedicatedHsmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dedicatedHsmName, data);
             DedicatedHsmResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -231,8 +231,8 @@ PrivateIPAddress = "1.0.0.2",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
-            DedicatedHsmResource result = await collection.GetAsync(name);
+            string dedicatedHsmName = "hsm1";
+            DedicatedHsmResource result = await collection.GetAsync(dedicatedHsmName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -265,8 +265,8 @@ PrivateIPAddress = "1.0.0.2",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
-            bool result = await collection.ExistsAsync(name);
+            string dedicatedHsmName = "hsm1";
+            bool result = await collection.ExistsAsync(dedicatedHsmName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -295,8 +295,8 @@ PrivateIPAddress = "1.0.0.2",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
-            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(name);
+            string dedicatedHsmName = "hsm1";
+            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(dedicatedHsmName);
             DedicatedHsmResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
@@ -337,8 +337,8 @@ PrivateIPAddress = "1.0.0.2",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
-            DedicatedHsmResource result = await collection.GetAsync(name);
+            string dedicatedHsmName = "hsm1";
+            DedicatedHsmResource result = await collection.GetAsync(dedicatedHsmName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -371,8 +371,8 @@ PrivateIPAddress = "1.0.0.2",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
-            bool result = await collection.ExistsAsync(name);
+            string dedicatedHsmName = "hsm1";
+            bool result = await collection.ExistsAsync(dedicatedHsmName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -401,8 +401,8 @@ PrivateIPAddress = "1.0.0.2",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
-            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(name);
+            string dedicatedHsmName = "hsm1";
+            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(dedicatedHsmName);
             DedicatedHsmResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
@@ -443,8 +443,8 @@ PrivateIPAddress = "1.0.0.2",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
-            DedicatedHsmResource result = await collection.GetAsync(name);
+            string dedicatedHsmName = "hsm1";
+            DedicatedHsmResource result = await collection.GetAsync(dedicatedHsmName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -477,8 +477,8 @@ PrivateIPAddress = "1.0.0.2",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
-            bool result = await collection.ExistsAsync(name);
+            string dedicatedHsmName = "hsm1";
+            bool result = await collection.ExistsAsync(dedicatedHsmName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -507,8 +507,8 @@ PrivateIPAddress = "1.0.0.2",
             DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
 
             // invoke the operation
-            string name = "hsm1";
-            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(name);
+            string dedicatedHsmName = "hsm1";
+            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(dedicatedHsmName);
             DedicatedHsmResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             // for more information of creating DedicatedHsmResource, please refer to the document of DedicatedHsmResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "hsm-group";
-            string name = "hsm1";
-            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string dedicatedHsmName = "hsm1";
+            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedHsmName);
             DedicatedHsmResource dedicatedHsm = client.GetDedicatedHsmResource(dedicatedHsmResourceId);
 
             // invoke the operation
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             // for more information of creating DedicatedHsmResource, please refer to the document of DedicatedHsmResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "hsm-group";
-            string name = "hsm1";
-            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string dedicatedHsmName = "hsm1";
+            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedHsmName);
             DedicatedHsmResource dedicatedHsm = client.GetDedicatedHsmResource(dedicatedHsmResourceId);
 
             // invoke the operation
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             // for more information of creating DedicatedHsmResource, please refer to the document of DedicatedHsmResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "hsm-group";
-            string name = "hsm1";
-            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string dedicatedHsmName = "hsm1";
+            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedHsmName);
             DedicatedHsmResource dedicatedHsm = client.GetDedicatedHsmResource(dedicatedHsmResourceId);
 
             // invoke the operation
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             // for more information of creating DedicatedHsmResource, please refer to the document of DedicatedHsmResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "hsm-group";
-            string name = "hsm1";
-            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string dedicatedHsmName = "hsm1";
+            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedHsmName);
             DedicatedHsmResource dedicatedHsm = client.GetDedicatedHsmResource(dedicatedHsmResourceId);
 
             // invoke the operation
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             // for more information of creating DedicatedHsmResource, please refer to the document of DedicatedHsmResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "hsm-group";
-            string name = "hsm1";
-            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string dedicatedHsmName = "hsm1";
+            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedHsmName);
             DedicatedHsmResource dedicatedHsm = client.GetDedicatedHsmResource(dedicatedHsmResourceId);
 
             // invoke the operation
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             // for more information of creating DedicatedHsmResource, please refer to the document of DedicatedHsmResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "hsm-group";
-            string name = "hsm1";
-            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string dedicatedHsmName = "hsm1";
+            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedHsmName);
             DedicatedHsmResource dedicatedHsm = client.GetDedicatedHsmResource(dedicatedHsmResourceId);
 
             // invoke the operation
@@ -299,8 +299,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             // for more information of creating DedicatedHsmResource, please refer to the document of DedicatedHsmResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "hsm-group";
-            string name = "hsm1";
-            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string dedicatedHsmName = "hsm1";
+            ResourceIdentifier dedicatedHsmResourceId = DedicatedHsmResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedHsmName);
             DedicatedHsmResource dedicatedHsm = client.GetDedicatedHsmResource(dedicatedHsmResourceId);
 
             // invoke the operation and iterate over the result

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string InProgressValue = "InProgress";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CancelledValue = "Cancelled";
 
         /// <summary> InProgress. </summary>
         public static BackupRestoreOperationStatus InProgress { get; } = new BackupRestoreOperationStatus(InProgressValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static BackupRestoreOperationStatus Succeeded { get; } = new BackupRestoreOperationStatus(SucceededValue);
         /// <summary> Failed. </summary>
         public static BackupRestoreOperationStatus Failed { get; } = new BackupRestoreOperationStatus(FailedValue);
+        /// <summary> Cancelled. </summary>
+        public static BackupRestoreOperationStatus Cancelled { get; } = new BackupRestoreOperationStatus(CancelledValue);
         /// <summary> Determines if two <see cref="BackupRestoreOperationStatus"/> values are the same. </summary>
         public static bool operator ==(BackupRestoreOperationStatus left, BackupRestoreOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupRestoreOperationStatus"/> values are not the same. </summary>
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

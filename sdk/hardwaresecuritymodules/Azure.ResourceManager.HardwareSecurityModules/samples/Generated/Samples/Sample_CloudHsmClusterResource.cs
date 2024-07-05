@@ -155,13 +155,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // CloudHsmCluster_PreBackup_Validation_MaximumSet_Gen
+        // CloudHsmCluster_ValidateBackup_Validation_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PreBackup_CloudHsmClusterPreBackupValidationMaximumSetGen()
+        public async Task ValidateBackup_CloudHsmClusterValidateBackupValidationMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2024-06-30/examples/CloudHsmCluster_CreateOrValidate_Backup_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_PreBackup" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "CloudHsmClusters_ValidateBackup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation
-            ArmOperation<BackupResult> lro = await cloudHsmCluster.PreBackupAsync(WaitUntil.Completed);
+            ArmOperation<BackupResult> lro = await cloudHsmCluster.ValidateBackupAsync(WaitUntil.Completed);
             BackupResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -211,13 +211,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CloudHsmCluster_PreRestore_MaximumSet_Gen
+        // CloudHsmCluster_ValidateRestore_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PreRestore_CloudHsmClusterPreRestoreMaximumSetGen()
+        public async Task ValidateRestore_CloudHsmClusterValidateRestoreMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2024-06-30/examples/CloudHsmCluster_RequestOrValidate_Restore_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_PreRestore" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "CloudHsmClusters_ValidateRestore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             {
                 BackupId = "backupId",
             };
-            ArmOperation<RestoreResult> lro = await cloudHsmCluster.PreRestoreAsync(WaitUntil.Completed, restoreRequestProperties: restoreRequestProperties);
+            ArmOperation<RestoreResult> lro = await cloudHsmCluster.ValidateRestoreAsync(WaitUntil.Completed, restoreRequestProperties: restoreRequestProperties);
             RestoreResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

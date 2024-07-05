@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Create or Update a Cloud HSM Cluster in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="data"> Parameters to create Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="data"/> is null. </exception>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Create or Update a Cloud HSM Cluster in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="data"> Parameters to create Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="data"/> is null. </exception>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Update a Cloud HSM Cluster in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="patch"> Parameters to create Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="patch"/> is null. </exception>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Update a Cloud HSM Cluster in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="patch"> Parameters to create Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="patch"/> is null. </exception>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Gets the specified Cloud HSM Cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Gets the specified Cloud HSM Cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Deletes the specified Cloud HSM Cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Deletes the specified Cloud HSM Cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        internal RequestUriBuilder CreatePreBackupRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
+        internal RequestUriBuilder CreateValidateBackupRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -594,12 +594,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendPath("/prebackup", false);
+            uri.AppendPath("/validateBackupProperties", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreatePreBackupRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
+        internal HttpMessage CreateValidateBackupRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendPath("/prebackup", false);
+            uri.AppendPath("/validateBackupProperties", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -630,18 +630,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Pre Backup operation to validate whether the customer can perform a backup on the Cloud HSM Cluster resource in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
-        /// <param name="backupRequestProperties"> Azure Storage blob container URI. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="backupRequestProperties"> Backup Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PreBackupAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateBackupAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
+            using var message = CreateValidateBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -656,18 +656,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Pre Backup operation to validate whether the customer can perform a backup on the Cloud HSM Cluster resource in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
-        /// <param name="backupRequestProperties"> Azure Storage blob container URI. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="backupRequestProperties"> Backup Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PreBackup(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
+        public Response ValidateBackup(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreatePreBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
+            using var message = CreateValidateBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Create a backup of the Cloud HSM Cluster in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="backupRequestProperties"> Azure storage Resource Uri. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Create a backup of the Cloud HSM Cluster in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="backupRequestProperties"> Azure storage Resource Uri. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        internal RequestUriBuilder CreatePreRestoreRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
+        internal RequestUriBuilder CreateValidateRestoreRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -784,12 +784,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendPath("/prerestore", false);
+            uri.AppendPath("/validateRestoreProperties", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreatePreRestoreRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
+        internal HttpMessage CreateValidateRestoreRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
             uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendPath("/prerestore", false);
+            uri.AppendPath("/validateRestoreProperties", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -820,18 +820,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Queued validating pre restore operation. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="restoreRequestProperties"> Optional Parameters to validate prior performing a restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PreRestoreAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateRestoreAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreatePreRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
+            using var message = CreateValidateRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -846,18 +846,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Queued validating pre restore operation. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="restoreRequestProperties"> Optional Parameters to validate prior performing a restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PreRestore(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
+        public Response ValidateRestore(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreatePreRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
+            using var message = CreateValidateRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -912,8 +912,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Restores all key materials of a specified Cloud HSM Cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
-        /// <param name="restoreRequestProperties"> Backup Operation Required properties. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="restoreRequestProperties"> Restore Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="restoreRequestProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -939,8 +939,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Restores all key materials of a specified Cloud HSM Cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
-        /// <param name="restoreRequestProperties"> Backup Operation Required properties. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="restoreRequestProperties"> Restore Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="restoreRequestProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>

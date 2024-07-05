@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DedicatedHsmResource>> GetDedicatedHsmAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DedicatedHsmResource>> GetDedicatedHsmAsync(string dedicatedHsmName, CancellationToken cancellationToken = default)
         {
-            return await GetDedicatedHsms().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetDedicatedHsms().GetAsync(dedicatedHsmName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DedicatedHsmResource> GetDedicatedHsm(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DedicatedHsmResource> GetDedicatedHsm(string dedicatedHsmName, CancellationToken cancellationToken = default)
         {
-            return GetDedicatedHsms().Get(name, cancellationToken);
+            return GetDedicatedHsms().Get(dedicatedHsmName, cancellationToken);
         }
     }
 }

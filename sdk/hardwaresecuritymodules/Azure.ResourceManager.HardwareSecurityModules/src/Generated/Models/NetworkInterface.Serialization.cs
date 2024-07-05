@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
@@ -74,19 +74,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string resourceId = default;
             string privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAddress"u8))
@@ -100,7 +96,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkInterface(id, privateIPAddress, serializedAdditionalRawData);
+            return new NetworkInterface(resourceId, privateIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterface>.Write(ModelReaderWriterOptions options)

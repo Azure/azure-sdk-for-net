@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="data"> Parameters to create or update the dedicated hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DedicatedHsmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DedicatedHsmData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DedicatedHsmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dedicatedHsmName, DedicatedHsmData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(dedicatedHsmName, nameof(dedicatedHsmName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dedicatedHsmRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(new DedicatedHsmOperationSource(Client), _dedicatedHsmClientDiagnostics, Pipeline, _dedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _dedicatedHsmRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(new DedicatedHsmOperationSource(Client), _dedicatedHsmClientDiagnostics, Pipeline, _dedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -123,22 +123,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="data"> Parameters to create or update the dedicated hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DedicatedHsmResource> CreateOrUpdate(WaitUntil waitUntil, string name, DedicatedHsmData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DedicatedHsmResource> CreateOrUpdate(WaitUntil waitUntil, string dedicatedHsmName, DedicatedHsmData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(dedicatedHsmName, nameof(dedicatedHsmName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dedicatedHsmRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(new DedicatedHsmOperationSource(Client), _dedicatedHsmClientDiagnostics, Pipeline, _dedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _dedicatedHsmRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, data, cancellationToken);
+                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(new DedicatedHsmOperationSource(Client), _dedicatedHsmClientDiagnostics, Pipeline, _dedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -171,19 +171,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<DedicatedHsmResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> is null. </exception>
+        public virtual async Task<Response<DedicatedHsmResource>> GetAsync(string dedicatedHsmName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(dedicatedHsmName, nameof(dedicatedHsmName));
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var response = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -216,19 +216,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<DedicatedHsmResource> Get(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> is null. </exception>
+        public virtual Response<DedicatedHsmResource> Get(string dedicatedHsmName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(dedicatedHsmName, nameof(dedicatedHsmName));
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.Get");
             scope.Start();
             try
             {
-                var response = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                var response = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -323,19 +323,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string dedicatedHsmName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(dedicatedHsmName, nameof(dedicatedHsmName));
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -366,19 +366,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> is null. </exception>
+        public virtual Response<bool> Exists(string dedicatedHsmName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(dedicatedHsmName, nameof(dedicatedHsmName));
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -409,19 +409,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<DedicatedHsmResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DedicatedHsmResource>> GetIfExistsAsync(string dedicatedHsmName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(dedicatedHsmName, nameof(dedicatedHsmName));
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<DedicatedHsmResource>(response.GetRawResponse());
                 return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{dedicatedHsmName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -454,19 +454,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsmName"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<DedicatedHsmResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHsmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHsmName"/> is null. </exception>
+        public virtual NullableResponse<DedicatedHsmResource> GetIfExists(string dedicatedHsmName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(dedicatedHsmName, nameof(dedicatedHsmName));
 
             using var scope = _dedicatedHsmClientDiagnostics.CreateScope("DedicatedHsmCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _dedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dedicatedHsmName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<DedicatedHsmResource>(response.GetRawResponse());
                 return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());

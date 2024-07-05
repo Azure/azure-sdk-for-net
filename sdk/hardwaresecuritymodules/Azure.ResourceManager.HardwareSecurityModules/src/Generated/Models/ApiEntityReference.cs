@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> The network interface definition. </summary>
-    public partial class NetworkInterface
+    /// <summary> The API entity reference. </summary>
+    internal partial class ApiEntityReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +46,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
-        public NetworkInterface()
+        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
+        public ApiEntityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiEntityReference"/>. </summary>
         /// <param name="resourceId"> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
-        /// <param name="privateIPAddress"> Private Ip address of the interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkInterface(string resourceId, string privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiEntityReference(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
-            PrivateIPAddress = privateIPAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public string ResourceId { get; }
-        /// <summary> Private Ip address of the interface. </summary>
-        public string PrivateIPAddress { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }
