@@ -71,12 +71,6 @@ namespace System.ClientModel
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
-    public abstract partial class OperationResult : System.ClientModel.ClientResult
-    {
-        protected OperationResult(System.ClientModel.ContinuationToken rehydrationToken, System.ClientModel.Primitives.PipelineResponse response) { }
-        public bool HasCompleted { get { throw null; } protected set { } }
-        public System.ClientModel.ContinuationToken RehydrationToken { get { throw null; } protected set { } }
-    }
     public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>, System.Collections.IEnumerable
     {
         protected PageCollection() { }
@@ -191,6 +185,12 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public abstract partial class OperationResult : System.ClientModel.ClientResult
+    {
+        protected OperationResult(System.ClientModel.ContinuationToken rehydrationToken, System.ClientModel.Primitives.PipelineResponse response) { }
+        public bool HasCompleted { get { throw null; } protected set { } }
+        public System.ClientModel.ContinuationToken RehydrationToken { get { throw null; } protected set { } }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
