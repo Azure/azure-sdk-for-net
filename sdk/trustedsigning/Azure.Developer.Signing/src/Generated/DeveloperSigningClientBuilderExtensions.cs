@@ -15,10 +15,11 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="SigningClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        public static IAzureClientBuilder<SigningClient, SigningClientOptions> AddSigningClient<TBuilder>(this TBuilder builder)
+        /// <param name="region"> The Azure region wherein requests for signing will be sent. </param>
+        public static IAzureClientBuilder<SigningClient, SigningClientOptions> AddSigningClient<TBuilder>(this TBuilder builder, string region)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<SigningClient, SigningClientOptions>((options, cred) => new SigningClient(cred, options));
+            return builder.RegisterClientFactory<SigningClient, SigningClientOptions>((options, cred) => new SigningClient(region, cred, options));
         }
 
         /// <summary> Registers a <see cref="SigningClient"/> instance. </summary>

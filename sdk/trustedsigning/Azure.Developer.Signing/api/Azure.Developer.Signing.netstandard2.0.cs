@@ -24,7 +24,7 @@ namespace Azure.Developer.Signing
     public static partial class DeveloperSigningModelFactory
     {
         public static Azure.Developer.Signing.ExtendedKeyUsage ExtendedKeyUsage(string eku = null) { throw null; }
-        public static Azure.Developer.Signing.OperationStatusSignResultError OperationStatusSignResultError(string id = null, Azure.Developer.Signing.OperationState status = Azure.Developer.Signing.OperationState.NotStarted, Azure.ResponseError error = null, Azure.Developer.Signing.SignResult result = null) { throw null; }
+        public static Azure.Developer.Signing.OperationStatusSignResultError OperationStatusSignResultError(string id = null, Azure.Developer.Signing.OperationState status = default(Azure.Developer.Signing.OperationState), Azure.ResponseError error = null, Azure.Developer.Signing.SignResult result = null) { throw null; }
         public static Azure.Developer.Signing.SigningPayloadOptions SigningPayloadOptions(Azure.Developer.Signing.SignatureAlgorithm signatureAlgorithm = Azure.Developer.Signing.SignatureAlgorithm.RS256, System.BinaryData digest = null, System.Collections.Generic.IEnumerable<System.BinaryData> fileHashList = null, System.Collections.Generic.IEnumerable<System.BinaryData> authenticodeHashList = null) { throw null; }
         public static Azure.Developer.Signing.SignResult SignResult(System.BinaryData signature = null, System.BinaryData signingCertificate = null) { throw null; }
     }
@@ -38,13 +38,26 @@ namespace Azure.Developer.Signing
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.Signing.ExtendedKeyUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.Signing.ExtendedKeyUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum OperationState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationState : System.IEquatable<Azure.Developer.Signing.OperationState>
     {
-        NotStarted = 0,
-        Running = 1,
-        Succeeded = 2,
-        Failed = 3,
-        Canceled = 4,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationState(string value) { throw null; }
+        public static Azure.Developer.Signing.OperationState Canceled { get { throw null; } }
+        public static Azure.Developer.Signing.OperationState Failed { get { throw null; } }
+        public static Azure.Developer.Signing.OperationState NotStarted { get { throw null; } }
+        public static Azure.Developer.Signing.OperationState Running { get { throw null; } }
+        public static Azure.Developer.Signing.OperationState Succeeded { get { throw null; } }
+        public bool Equals(Azure.Developer.Signing.OperationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Developer.Signing.OperationState left, Azure.Developer.Signing.OperationState right) { throw null; }
+        public static implicit operator Azure.Developer.Signing.OperationState (string value) { throw null; }
+        public static bool operator !=(Azure.Developer.Signing.OperationState left, Azure.Developer.Signing.OperationState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class OperationStatusSignResultError : System.ClientModel.Primitives.IJsonModel<Azure.Developer.Signing.OperationStatusSignResultError>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.Signing.OperationStatusSignResultError>
     {
@@ -75,10 +88,10 @@ namespace Azure.Developer.Signing
     public partial class SigningClient
     {
         protected SigningClient() { }
-        public SigningClient(Azure.Core.TokenCredential credential) { }
-        public SigningClient(Azure.Core.TokenCredential credential, Azure.Developer.Signing.SigningClientOptions options) { }
+        public SigningClient(string region, Azure.Core.TokenCredential credential) { }
+        public SigningClient(string region, Azure.Core.TokenCredential credential, Azure.Developer.Signing.SigningClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Developer.Signing.CertificateProfile GetCertificateProfileClient(string region, string apiVersion = "2023-06-15-preview") { throw null; }
+        public virtual Azure.Developer.Signing.CertificateProfile GetCertificateProfileClient(string apiVersion = "2023-06-15-preview") { throw null; }
     }
     public partial class SigningClientOptions : Azure.Core.ClientOptions
     {
@@ -117,7 +130,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class DeveloperSigningClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.Signing.SigningClient, Azure.Developer.Signing.SigningClientOptions> AddSigningClient<TBuilder>(this TBuilder builder) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.Signing.SigningClient, Azure.Developer.Signing.SigningClientOptions> AddSigningClient<TBuilder>(this TBuilder builder, string region) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.Signing.SigningClient, Azure.Developer.Signing.SigningClientOptions> AddSigningClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

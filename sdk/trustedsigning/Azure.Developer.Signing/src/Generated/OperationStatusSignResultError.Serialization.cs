@@ -29,7 +29,7 @@ namespace Azure.Developer.Signing
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
@@ -93,7 +93,7 @@ namespace Azure.Developer.Signing
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString().ToOperationState();
+                    status = new OperationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
