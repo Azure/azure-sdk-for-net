@@ -83,28 +83,40 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates the license status of the OS. </summary>
+        [WirePath("licenseStatus")]
         public HybridComputeLicenseStatus? LicenseStatus { get; }
         /// <summary> Indicates the license channel. </summary>
+        [WirePath("licenseChannel")]
         public string LicenseChannel { get; }
         /// <summary> Properties for the Machine ESU profile. </summary>
+        [WirePath("esuProfile")]
         public LicenseProfileMachineInstanceViewEsuProperties EsuProfile { get; set; }
         /// <summary> Indicates the subscription status of the product. </summary>
+        [WirePath("productProfile.subscriptionStatus")]
         public LicenseProfileSubscriptionStatus? SubscriptionStatus { get; set; }
         /// <summary> Indicates the product type of the license. </summary>
+        [WirePath("productProfile.productType")]
         public LicenseProfileProductType? ProductType { get; set; }
         /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
+        [WirePath("productProfile.enrollmentDate")]
         public DateTimeOffset? EnrollmentOn { get; }
         /// <summary> The timestamp in UTC when the billing starts. </summary>
+        [WirePath("productProfile.billingStartDate")]
         public DateTimeOffset? BillingStartOn { get; }
         /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
+        [WirePath("productProfile.disenrollmentDate")]
         public DateTimeOffset? DisenrollmentOn { get; }
         /// <summary> The timestamp in UTC when the billing ends. </summary>
+        [WirePath("productProfile.billingEndDate")]
         public DateTimeOffset? BillingEndOn { get; }
         /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
+        [WirePath("productProfile.error")]
         public ResponseError Error { get; }
         /// <summary> The list of product features. </summary>
+        [WirePath("productProfile.productFeatures")]
         public IList<HybridComputeProductFeature> ProductFeatures { get; }
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
+        [WirePath("softwareAssurance.softwareAssuranceCustomer")]
         public bool? IsSoftwareAssuranceCustomer { get; set; }
     }
 }

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         private LicensesRestOperations _hybridComputeLicenseLicensesRestClient;
         private ClientDiagnostics _hybridComputeMachineMachinesClientDiagnostics;
         private MachinesRestOperations _hybridComputeMachineMachinesRestClient;
-        private ClientDiagnostics _gatewayClientDiagnostics;
-        private GatewaysRestOperations _gatewayRestClient;
+        private ClientDiagnostics _hybridComputeGatewayGatewaysClientDiagnostics;
+        private GatewaysRestOperations _hybridComputeGatewayGatewaysRestClient;
         private ClientDiagnostics _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics;
         private PrivateLinkScopesRestOperations _hybridComputePrivateLinkScopePrivateLinkScopesRestClient;
 
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         private LicensesRestOperations HybridComputeLicenseLicensesRestClient => _hybridComputeLicenseLicensesRestClient ??= new LicensesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeLicenseResource.ResourceType));
         private ClientDiagnostics HybridComputeMachineMachinesClientDiagnostics => _hybridComputeMachineMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
         private MachinesRestOperations HybridComputeMachineMachinesRestClient => _hybridComputeMachineMachinesRestClient ??= new MachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeMachineResource.ResourceType));
-        private ClientDiagnostics GatewayClientDiagnostics => _gatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", GatewayResource.ResourceType.Namespace, Diagnostics);
-        private GatewaysRestOperations GatewayRestClient => _gatewayRestClient ??= new GatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GatewayResource.ResourceType));
+        private ClientDiagnostics HybridComputeGatewayGatewaysClientDiagnostics => _hybridComputeGatewayGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeGatewayResource.ResourceType.Namespace, Diagnostics);
+        private GatewaysRestOperations HybridComputeGatewayGatewaysRestClient => _hybridComputeGatewayGatewaysRestClient ??= new GatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeGatewayResource.ResourceType));
         private ClientDiagnostics HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics => _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
         private PrivateLinkScopesRestOperations HybridComputePrivateLinkScopePrivateLinkScopesRestClient => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient ??= new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputePrivateLinkScopeResource.ResourceType));
 
@@ -271,17 +271,17 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="HybridComputeGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GatewayResource> GetGatewaysAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridComputeGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeGatewayResource> GetHybridComputeGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GatewayRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GatewayResource(Client, GatewayData.DeserializeGatewayData(e)), GatewayClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetGateways", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeGatewayGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeGatewayGatewaysRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeGatewayResource(Client, HybridComputeGatewayData.DeserializeHybridComputeGatewayData(e)), HybridComputeGatewayGatewaysClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetHybridComputeGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -301,17 +301,17 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="HybridComputeGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GatewayResource> GetGateways(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeGatewayResource> GetHybridComputeGateways(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GatewayRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GatewayResource(Client, GatewayData.DeserializeGatewayData(e)), GatewayClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetGateways", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeGatewayGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeGatewayGatewaysRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeGatewayResource(Client, HybridComputeGatewayData.DeserializeHybridComputeGatewayData(e)), HybridComputeGatewayGatewaysClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetHybridComputeGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

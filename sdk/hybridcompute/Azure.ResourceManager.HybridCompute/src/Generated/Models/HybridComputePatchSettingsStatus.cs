@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Status of the hotpatch capability enrollment or disenrollment. </summary>
-    public partial class PatchSettingsStatus
+    public partial class HybridComputePatchSettingsStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PatchSettingsStatus"/>. </summary>
-        internal PatchSettingsStatus()
+        /// <summary> Initializes a new instance of <see cref="HybridComputePatchSettingsStatus"/>. </summary>
+        internal HybridComputePatchSettingsStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PatchSettingsStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePatchSettingsStatus"/>. </summary>
         /// <param name="hotpatchEnablementStatus"> Indicates the current status of the hotpatch being enabled or disabled. </param>
         /// <param name="error"> The errors that were encountered during the hotpatch capability enrollment or disenrollment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PatchSettingsStatus(HotpatchEnablementStatus? hotpatchEnablementStatus, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputePatchSettingsStatus(HotpatchEnablementStatus? hotpatchEnablementStatus, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HotpatchEnablementStatus = hotpatchEnablementStatus;
             Error = error;
@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates the current status of the hotpatch being enabled or disabled. </summary>
+        [WirePath("hotpatchEnablementStatus")]
         public HotpatchEnablementStatus? HotpatchEnablementStatus { get; }
         /// <summary> The errors that were encountered during the hotpatch capability enrollment or disenrollment. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class GatewayPatch : IUtf8JsonSerializable, IJsonModel<GatewayPatch>
+    public partial class HybridComputeGatewayPatch : IUtf8JsonSerializable, IJsonModel<HybridComputeGatewayPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeGatewayPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GatewayPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeGatewayPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeGatewayPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        GatewayPatch IJsonModel<GatewayPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeGatewayPatch IJsonModel<HybridComputeGatewayPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeGatewayPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGatewayPatch(document.RootElement, options);
+            return DeserializeHybridComputeGatewayPatch(document.RootElement, options);
         }
 
-        internal static GatewayPatch DeserializeGatewayPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeGatewayPatch DeserializeHybridComputeGatewayPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -140,38 +140,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, allowedFeatures ?? new ChangeTrackingList<string>());
+            return new HybridComputeGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, allowedFeatures ?? new ChangeTrackingList<string>());
         }
 
-        BinaryData IPersistableModel<GatewayPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeGatewayPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeGatewayPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GatewayPatch IPersistableModel<GatewayPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeGatewayPatch IPersistableModel<HybridComputeGatewayPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGatewayPatch(document.RootElement, options);
+                        return DeserializeHybridComputeGatewayPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeGatewayPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GatewayPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeGatewayPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

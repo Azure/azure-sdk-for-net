@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                     {
                         AssessmentMode = AssessmentModeType.ImageDefault,
                         PatchMode = PatchModeType.AutomaticByPlatform,
-                        EnableHotpatching = true,
+                        IsHotpatchingEnabled = true,
                     },
                     LinuxConfiguration = new HybridComputeLinuxConfiguration()
                     {

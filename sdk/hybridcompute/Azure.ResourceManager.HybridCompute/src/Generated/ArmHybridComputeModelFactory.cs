@@ -85,32 +85,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputeWindowsConfiguration"/>. </summary>
         /// <param name="assessmentMode"> Specifies the assessment mode. </param>
         /// <param name="patchMode"> Specifies the patch mode. </param>
-        /// <param name="enableHotpatching"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
         /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
         /// <returns> A new <see cref="Models.HybridComputeWindowsConfiguration"/> instance for mocking. </returns>
-        public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode = null, PatchModeType? patchMode = null, bool? enableHotpatching = null, PatchSettingsStatus status = null)
+        public static HybridComputeWindowsConfiguration HybridComputeWindowsConfiguration(AssessmentModeType? assessmentMode = null, PatchModeType? patchMode = null, bool? isHotpatchingEnabled = null, HybridComputePatchSettingsStatus status = null)
         {
-            return new HybridComputeWindowsConfiguration(assessmentMode, patchMode, enableHotpatching, status, serializedAdditionalRawData: null);
+            return new HybridComputeWindowsConfiguration(assessmentMode, patchMode, isHotpatchingEnabled, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PatchSettingsStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputePatchSettingsStatus"/>. </summary>
         /// <param name="hotpatchEnablementStatus"> Indicates the current status of the hotpatch being enabled or disabled. </param>
         /// <param name="error"> The errors that were encountered during the hotpatch capability enrollment or disenrollment. </param>
-        /// <returns> A new <see cref="Models.PatchSettingsStatus"/> instance for mocking. </returns>
-        public static PatchSettingsStatus PatchSettingsStatus(HotpatchEnablementStatus? hotpatchEnablementStatus = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.HybridComputePatchSettingsStatus"/> instance for mocking. </returns>
+        public static HybridComputePatchSettingsStatus HybridComputePatchSettingsStatus(HotpatchEnablementStatus? hotpatchEnablementStatus = null, ResponseError error = null)
         {
-            return new PatchSettingsStatus(hotpatchEnablementStatus, error, serializedAdditionalRawData: null);
+            return new HybridComputePatchSettingsStatus(hotpatchEnablementStatus, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLinuxConfiguration"/>. </summary>
         /// <param name="assessmentMode"> Specifies the assessment mode. </param>
         /// <param name="patchMode"> Specifies the patch mode. </param>
-        /// <param name="enableHotpatching"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
+        /// <param name="isHotpatchingEnabled"> Captures the hotpatch capability enrollment intent of the customers, which enables customers to patch their Windows machines without requiring a reboot. </param>
         /// <param name="status"> Status of the hotpatch capability enrollment or disenrollment. </param>
         /// <returns> A new <see cref="Models.HybridComputeLinuxConfiguration"/> instance for mocking. </returns>
-        public static HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode = null, PatchModeType? patchMode = null, bool? enableHotpatching = null, PatchSettingsStatus status = null)
+        public static HybridComputeLinuxConfiguration HybridComputeLinuxConfiguration(AssessmentModeType? assessmentMode = null, PatchModeType? patchMode = null, bool? isHotpatchingEnabled = null, HybridComputePatchSettingsStatus status = null)
         {
-            return new HybridComputeLinuxConfiguration(assessmentMode, patchMode, enableHotpatching, status, serializedAdditionalRawData: null);
+            return new HybridComputeLinuxConfiguration(assessmentMode, patchMode, isHotpatchingEnabled, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AgentUpgrade"/>. </summary>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridCompute.GatewayData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -704,13 +704,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="gatewayType"> The type of the Gateway resource. </param>
         /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
-        /// <returns> A new <see cref="HybridCompute.GatewayData"/> instance for mocking. </returns>
-        public static GatewayData GatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, string gatewayId = null, GatewayType? gatewayType = null, string gatewayEndpoint = null, IEnumerable<string> allowedFeatures = null)
+        /// <returns> A new <see cref="HybridCompute.HybridComputeGatewayData"/> instance for mocking. </returns>
+        public static HybridComputeGatewayData HybridComputeGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, string gatewayId = null, HybridComputeGatewayType? gatewayType = null, string gatewayEndpoint = null, IEnumerable<string> allowedFeatures = null)
         {
             tags ??= new Dictionary<string, string>();
             allowedFeatures ??= new List<string>();
 
-            return new GatewayData(
+            return new HybridComputeGatewayData(
                 id,
                 name,
                 resourceType,
@@ -725,17 +725,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Settings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeTargetResourceSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tenantId"> Azure resource tenant Id. </param>
         /// <param name="gatewayResourceId"> Associated Gateway Resource Id. </param>
-        /// <returns> A new <see cref="Models.Settings"/> instance for mocking. </returns>
-        public static Settings Settings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, ResourceIdentifier gatewayResourceId = null)
+        /// <returns> A new <see cref="Models.HybridComputeTargetResourceSettings"/> instance for mocking. </returns>
+        public static HybridComputeTargetResourceSettings HybridComputeTargetResourceSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, ResourceIdentifier gatewayResourceId = null)
         {
-            return new Settings(
+            return new HybridComputeTargetResourceSettings(
                 id,
                 name,
                 resourceType,

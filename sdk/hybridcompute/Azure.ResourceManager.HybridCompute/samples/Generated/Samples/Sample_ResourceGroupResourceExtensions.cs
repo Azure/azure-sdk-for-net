@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         // SettingsUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateSetting_SettingsUpdate()
+        public async Task UpdateTargetResourceSetting_SettingsUpdate()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-05-20-preview/examples/settings/SettingsUpdate.json
             // this example is just showing the usage of "Settings_Update" operation, for the dependent resources, they will have to be created separately.
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             string baseResourceType = "machines";
             string baseResourceName = "testMachine";
             string settingsResourceName = "default";
-            Settings settings = new Settings()
+            HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings = new HybridComputeTargetResourceSettings()
             {
                 GatewayResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/hybridRG/providers/Microsoft.HybridCompute/gateways/newGateway"),
             };
-            Settings result = await resourceGroupResource.UpdateSettingAsync(baseProvider, baseResourceType, baseResourceName, settingsResourceName, settings);
+            HybridComputeTargetResourceSettings result = await resourceGroupResource.UpdateTargetResourceSettingAsync(baseProvider, baseResourceType, baseResourceName, settingsResourceName, hybridComputeTargetResourceSettings);
 
             Console.WriteLine($"Succeeded: {result}");
         }

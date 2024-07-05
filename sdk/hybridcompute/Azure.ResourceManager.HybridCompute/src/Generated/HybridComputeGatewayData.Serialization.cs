@@ -17,16 +17,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    public partial class HybridComputeLicenseData : IUtf8JsonSerializable, IJsonModel<HybridComputeLicenseData>
+    public partial class HybridComputeGatewayData : IUtf8JsonSerializable, IJsonModel<HybridComputeGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeLicenseData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HybridComputeLicenseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicenseData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,20 +70,30 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(TenantId))
+            if (options.Format != "W" && Optional.IsDefined(GatewayId))
             {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WritePropertyName("gatewayId"u8);
+                writer.WriteStringValue(GatewayId);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(GatewayType))
             {
-                writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
+                writer.WritePropertyName("gatewayType"u8);
+                writer.WriteStringValue(GatewayType.Value.ToString());
             }
-            if (Optional.IsDefined(LicenseDetails))
+            if (options.Format != "W" && Optional.IsDefined(GatewayEndpoint))
             {
-                writer.WritePropertyName("licenseDetails"u8);
-                writer.WriteObjectValue(LicenseDetails, options);
+                writer.WritePropertyName("gatewayEndpoint"u8);
+                writer.WriteStringValue(GatewayEndpoint);
+            }
+            if (Optional.IsCollectionDefined(AllowedFeatures))
+            {
+                writer.WritePropertyName("allowedFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedFeatures)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -104,19 +114,19 @@ namespace Azure.ResourceManager.HybridCompute
             writer.WriteEndObject();
         }
 
-        HybridComputeLicenseData IJsonModel<HybridComputeLicenseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeGatewayData IJsonModel<HybridComputeGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicenseData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridComputeLicenseData(document.RootElement, options);
+            return DeserializeHybridComputeGatewayData(document.RootElement, options);
         }
 
-        internal static HybridComputeLicenseData DeserializeHybridComputeLicenseData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeGatewayData DeserializeHybridComputeGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -131,9 +141,10 @@ namespace Azure.ResourceManager.HybridCompute
             ResourceType type = default;
             SystemData systemData = default;
             HybridComputeProvisioningState? provisioningState = default;
-            Guid? tenantId = default;
-            HybridComputeLicenseType? licenseType = default;
-            HybridComputeLicenseDetails licenseDetails = default;
+            string gatewayId = default;
+            HybridComputeGatewayType? gatewayType = default;
+            string gatewayEndpoint = default;
+            IList<string> allowedFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,31 +210,37 @@ namespace Azure.ResourceManager.HybridCompute
                             provisioningState = new HybridComputeProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"u8))
+                        if (property0.NameEquals("gatewayId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tenantId = property0.Value.GetGuid();
+                            gatewayId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("licenseType"u8))
+                        if (property0.NameEquals("gatewayType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            licenseType = new HybridComputeLicenseType(property0.Value.GetString());
+                            gatewayType = new HybridComputeGatewayType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("licenseDetails"u8))
+                        if (property0.NameEquals("gatewayEndpoint"u8))
+                        {
+                            gatewayEndpoint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("allowedFeatures"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            licenseDetails = HybridComputeLicenseDetails.DeserializeHybridComputeLicenseDetails(property0.Value, options);
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            allowedFeatures = array;
                             continue;
                         }
                     }
@@ -235,7 +252,7 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HybridComputeLicenseData(
+            return new HybridComputeGatewayData(
                 id,
                 name,
                 type,
@@ -243,9 +260,10 @@ namespace Azure.ResourceManager.HybridCompute
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 provisioningState,
-                tenantId,
-                licenseType,
-                licenseDetails,
+                gatewayId,
+                gatewayType,
+                gatewayEndpoint,
+                allowedFeatures ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
@@ -379,48 +397,100 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayId), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    tenantId: ");
+                builder.Append("    gatewayId: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(TenantId))
+                if (Optional.IsDefined(GatewayId))
                 {
-                    builder.Append("    tenantId: ");
-                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                    builder.Append("    gatewayId: ");
+                    if (GatewayId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GatewayId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GatewayId}'");
+                    }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LicenseType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayType), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    licenseType: ");
+                builder.Append("    gatewayType: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(LicenseType))
+                if (Optional.IsDefined(GatewayType))
                 {
-                    builder.Append("    licenseType: ");
-                    builder.AppendLine($"'{LicenseType.Value.ToString()}'");
+                    builder.Append("    gatewayType: ");
+                    builder.AppendLine($"'{GatewayType.Value.ToString()}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LicenseDetails), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayEndpoint), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    licenseDetails: ");
+                builder.Append("    gatewayEndpoint: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(LicenseDetails))
+                if (Optional.IsDefined(GatewayEndpoint))
                 {
-                    builder.Append("    licenseDetails: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LicenseDetails, options, 4, false, "    licenseDetails: ");
+                    builder.Append("    gatewayEndpoint: ");
+                    if (GatewayEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GatewayEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GatewayEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedFeatures), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowedFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedFeatures))
+                {
+                    if (AllowedFeatures.Any())
+                    {
+                        builder.Append("    allowedFeatures: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedFeatures)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
@@ -429,9 +499,9 @@ namespace Azure.ResourceManager.HybridCompute
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<HybridComputeLicenseData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeGatewayData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -440,26 +510,26 @@ namespace Azure.ResourceManager.HybridCompute
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicenseData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HybridComputeLicenseData IPersistableModel<HybridComputeLicenseData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeGatewayData IPersistableModel<HybridComputeGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHybridComputeLicenseData(document.RootElement, options);
+                        return DeserializeHybridComputeGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicenseData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HybridComputeLicenseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

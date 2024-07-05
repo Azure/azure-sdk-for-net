@@ -21,6 +21,7 @@ modelerfour:
   # Mitigate the duplication schema named 'ErrorDetail'
   lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -63,6 +64,9 @@ prepend-rp-prefix:
   - ProvisioningIssue
   - ProvisioningIssueSeverity
   - ProvisioningIssueType
+  - Gateway
+  - GatewayUpdate
+  - GatewayType
 
 list-exception: 
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}
@@ -99,6 +103,13 @@ rename-mapping:
   RunCommandManagedIdentity.objectId: -|uuid
   StatusLevelTypes: HybridComputeStatusLevelType
   StatusTypes: HybridComputeStatusType
+  OSProfileWindowsConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
+  PatchSettingsStatus: HybridComputePatchSettingsStatus
+  Settings: HybridComputeTargetResourceSettings
+  OSProfileLinuxConfiguration.patchSettings.enableHotpatching: IsHotpatchingEnabled
+
+override-operation-name:
+  Settings_Update: UpdateTargetResourceSetting
 
 format-by-name-rules:
   'tenantId': 'uuid'

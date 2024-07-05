@@ -12,8 +12,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> The Settings. </summary>
-    public partial class Settings : ResourceData
+    /// <summary> The HybridComputeTargetResourceSettings. </summary>
+    public partial class HybridComputeTargetResourceSettings : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Settings"/>. </summary>
-        public Settings()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeTargetResourceSettings"/>. </summary>
+        public HybridComputeTargetResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Settings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeTargetResourceSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="tenantId"> Azure resource tenant Id. </param>
         /// <param name="gatewayResourceId"> Associated Gateway Resource Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Settings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier gatewayResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HybridComputeTargetResourceSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier gatewayResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
             GatewayResourceId = gatewayResourceId;
@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Azure resource tenant Id. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> Associated Gateway Resource Id. </summary>
+        [WirePath("properties.gatewayResourceId")]
         public ResourceIdentifier GatewayResourceId { get; set; }
     }
 }

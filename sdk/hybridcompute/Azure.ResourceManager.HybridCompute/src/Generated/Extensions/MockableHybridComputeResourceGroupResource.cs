@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of GatewayResources and their operations over a GatewayResource. </returns>
-        public virtual GatewayCollection GetGateways()
+        /// <summary> Gets a collection of HybridComputeGatewayResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HybridComputeGatewayResources and their operations over a HybridComputeGatewayResource. </returns>
+        public virtual HybridComputeGatewayCollection GetHybridComputeGateways()
         {
-            return GetCachedClient(client => new GatewayCollection(client, Id));
+            return GetCachedClient(client => new HybridComputeGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="HybridComputeGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GatewayResource>> GetGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeGatewayResource>> GetHybridComputeGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await GetGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridComputeGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="HybridComputeGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,9 +245,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GatewayResource> GetGateway(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeGatewayResource> GetHybridComputeGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return GetGateways().Get(gatewayName, cancellationToken);
+            return GetHybridComputeGateways().Get(gatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HybridComputePrivateLinkScopeResources in the ResourceGroupResource. </summary>
@@ -340,23 +340,23 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="baseResourceType"> The name of the base Resource Type. </param>
         /// <param name="baseResourceName"> The name of the base resource. </param>
         /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="settings"> Settings details. </param>
+        /// <param name="hybridComputeTargetResourceSettings"> Settings details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="settings"/> is null. </exception>
-        public virtual async Task<Response<Settings>> UpdateSettingAsync(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, Settings settings, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="hybridComputeTargetResourceSettings"/> is null. </exception>
+        public virtual async Task<Response<HybridComputeTargetResourceSettings>> UpdateTargetResourceSettingAsync(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseProvider, nameof(baseProvider));
             Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
             Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-            Argument.AssertNotNull(settings, nameof(settings));
+            Argument.AssertNotNull(hybridComputeTargetResourceSettings, nameof(hybridComputeTargetResourceSettings));
 
-            using var scope = SettingsClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.UpdateSetting");
+            using var scope = SettingsClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.UpdateTargetResourceSetting");
             scope.Start();
             try
             {
-                var response = await SettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, settings, cancellationToken).ConfigureAwait(false);
+                var response = await SettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, hybridComputeTargetResourceSettings, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -387,23 +387,23 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="baseResourceType"> The name of the base Resource Type. </param>
         /// <param name="baseResourceName"> The name of the base resource. </param>
         /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="settings"> Settings details. </param>
+        /// <param name="hybridComputeTargetResourceSettings"> Settings details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="settings"/> is null. </exception>
-        public virtual Response<Settings> UpdateSetting(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, Settings settings, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="hybridComputeTargetResourceSettings"/> is null. </exception>
+        public virtual Response<HybridComputeTargetResourceSettings> UpdateTargetResourceSetting(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseProvider, nameof(baseProvider));
             Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
             Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-            Argument.AssertNotNull(settings, nameof(settings));
+            Argument.AssertNotNull(hybridComputeTargetResourceSettings, nameof(hybridComputeTargetResourceSettings));
 
-            using var scope = SettingsClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.UpdateSetting");
+            using var scope = SettingsClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.UpdateTargetResourceSetting");
             scope.Start();
             try
             {
-                var response = SettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, settings, cancellationToken);
+                var response = SettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, hybridComputeTargetResourceSettings, cancellationToken);
                 return response;
             }
             catch (Exception e)

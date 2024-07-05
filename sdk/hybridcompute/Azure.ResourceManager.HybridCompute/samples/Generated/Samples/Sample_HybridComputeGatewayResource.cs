@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
-    public partial class Sample_GatewayResource
+    public partial class Sample_HybridComputeGatewayResource
     {
         // Update a Gateway
         [NUnit.Framework.Test]
@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this HybridComputeGatewayResource created on azure
+            // for more information of creating HybridComputeGatewayResource, please refer to the document of HybridComputeGatewayResource
             string subscriptionId = "ffd506c8-3415-42d3-9612-fdb423fb17df";
             string resourceGroupName = "myResourceGroup";
             string gatewayName = "{gatewayName}";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gateway = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier hybridComputeGatewayResourceId = HybridComputeGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            HybridComputeGatewayResource hybridComputeGateway = client.GetHybridComputeGatewayResource(hybridComputeGatewayResourceId);
 
             // invoke the operation
-            GatewayPatch patch = new GatewayPatch()
+            HybridComputeGatewayPatch patch = new HybridComputeGatewayPatch()
             {
                 AllowedFeatures =
 {
 "*"
 },
             };
-            GatewayResource result = await gateway.UpdateAsync(patch);
+            HybridComputeGatewayResource result = await hybridComputeGateway.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GatewayData resourceData = result.Data;
+            HybridComputeGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -67,20 +67,20 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this HybridComputeGatewayResource created on azure
+            // for more information of creating HybridComputeGatewayResource, please refer to the document of HybridComputeGatewayResource
             string subscriptionId = "ffd506c8-3415-42d3-9612-fdb423fb17df";
             string resourceGroupName = "myResourceGroup";
             string gatewayName = "{gatewayName}";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gateway = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier hybridComputeGatewayResourceId = HybridComputeGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            HybridComputeGatewayResource hybridComputeGateway = client.GetHybridComputeGatewayResource(hybridComputeGatewayResourceId);
 
             // invoke the operation
-            GatewayResource result = await gateway.GetAsync();
+            HybridComputeGatewayResource result = await hybridComputeGateway.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GatewayData resourceData = result.Data;
+            HybridComputeGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -98,16 +98,16 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this HybridComputeGatewayResource created on azure
+            // for more information of creating HybridComputeGatewayResource, please refer to the document of HybridComputeGatewayResource
             string subscriptionId = "ffd506c8-3415-42d3-9612-fdb423fb17df";
             string resourceGroupName = "myResourceGroup";
             string gatewayName = "{gatewayName}";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gateway = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier hybridComputeGatewayResourceId = HybridComputeGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            HybridComputeGatewayResource hybridComputeGateway = client.GetHybridComputeGatewayResource(hybridComputeGatewayResourceId);
 
             // invoke the operation
-            await gateway.DeleteAsync(WaitUntil.Completed);
+            await hybridComputeGateway.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         // List Gateways by Subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetGateways_ListGatewaysBySubscription()
+        public async Task GetHybridComputeGateways_ListGatewaysBySubscription()
         {
             // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-05-20-preview/examples/gateway/Gateway_ListBySubscription.json
             // this example is just showing the usage of "Gateways_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GatewayResource item in subscriptionResource.GetGatewaysAsync())
+            await foreach (HybridComputeGatewayResource item in subscriptionResource.GetHybridComputeGatewaysAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                GatewayData resourceData = item.Data;
+                HybridComputeGatewayData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

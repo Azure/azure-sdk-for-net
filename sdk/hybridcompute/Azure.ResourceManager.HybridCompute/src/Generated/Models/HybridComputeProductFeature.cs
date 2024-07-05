@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Product feature name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Indicates the current status of the product features. </summary>
+        [WirePath("subscriptionStatus")]
         public LicenseProfileSubscriptionStatus? SubscriptionStatus { get; set; }
         /// <summary> The timestamp in UTC when the user enrolls the feature. </summary>
+        [WirePath("enrollmentDate")]
         public DateTimeOffset? EnrollmentOn { get; }
         /// <summary> The timestamp in UTC when the billing starts. </summary>
+        [WirePath("billingStartDate")]
         public DateTimeOffset? BillingStartOn { get; }
         /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
+        [WirePath("disenrollmentDate")]
         public DateTimeOffset? DisenrollmentOn { get; }
         /// <summary> The timestamp in UTC when the billing ends. </summary>
+        [WirePath("billingEndDate")]
         public DateTimeOffset? BillingEndOn { get; }
         /// <summary> The errors that were encountered during the feature enrollment or disenrollment. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }
