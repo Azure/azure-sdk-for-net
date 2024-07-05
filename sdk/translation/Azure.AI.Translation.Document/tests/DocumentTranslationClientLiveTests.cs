@@ -33,7 +33,9 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
             TranslationSource translationSource = new TranslationSource(sourceUri, "en");
-            var input = new DocumentTranslationInput(translationSource, targetUri, "fr");
+            TranslationTarget translationTarget = new TranslationTarget(targetUri, "fr");
+            var targets = new List<TranslationTarget> { translationTarget };
+            var input = new DocumentTranslationInput(translationSource, targets);
             var translationOp = await client.StartTranslationAsync(input);
             await translationOp.WaitForCompletionAsync();
 

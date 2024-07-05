@@ -41,30 +41,6 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="DocumentTranslationInput"/>.
-        /// </summary>
-        /// <param name="translationSource">The TranslationSource object containing source document info to be translated.
-        /// See the service documentation for the supported SAS permissions for accessing
-        /// source storage containers/blobs: <a href="https://aka.ms/azsdk/documenttranslation/sas-permissions"/>.</param>
-        /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written.
-        /// See the service documentation for the supported SAS permissions for accessing
-        /// target storage containers/blobs: <a href="https://aka.ms/azsdk/documenttranslation/sas-permissions"/>.</param>
-        /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
-        /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see
-        /// <see cref="DocumentTranslationClient.GetSupportedFormatsAsync(FileFormatType?, System.Threading.CancellationToken)"/>.</param>
-        public DocumentTranslationInput(TranslationSource translationSource, Uri targetUri, string targetLanguageCode, TranslationGlossary glossary = default)
-        {
-            Source = translationSource;
-            var target = new TranslationTarget(targetUri, targetLanguageCode);
-            if (glossary != null)
-            {
-                target.Glossaries.Add(glossary);
-            }
-            Targets = new List<TranslationTarget> { target };
-        }
-
-        /// <summary>
         /// Add a <see cref="TranslationTarget"/> to the translation input.
         /// </summary>
         /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written.

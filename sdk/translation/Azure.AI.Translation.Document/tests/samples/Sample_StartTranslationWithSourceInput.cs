@@ -15,6 +15,12 @@ namespace Azure.AI.Translation.Document.Samples
         [SyncOnly]
         public void StartTranslationwithSourceInput()
         {
+            /**
+            FILE: SampleTranslationWithAzureBlob.cs
+            DESCRIPTION: 
+                This sample demonstrates how to start batch document translation by specifying some of the sourceInput options like 
+                source language, storage source and DocumentFilter prefix and suffix
+            **/
 #if SNIPPET
             string endpoint = "<Document Translator Resource Endpoint>";
             string apiKey = "<Document Translator Resource API Key>";
@@ -24,8 +30,7 @@ namespace Azure.AI.Translation.Document.Samples
 #endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-
-            #region Snippet:StartTranslationwithSourceInput
+            
 #if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
@@ -35,7 +40,9 @@ namespace Azure.AI.Translation.Document.Samples
 #endif
             //Creating a TranslationSource object with sourceURI, sourceLanguage, storageSource, DocumentFilterPrefix and DocumentFilterSuffix
             TranslationSource translationSource = new TranslationSource(sourceUri, "en", "AzureBlob", "File", "txt");
-            var input = new DocumentTranslationInput(translationSource, targetUri, "fr");
+            TranslationTarget translationTarget = new TranslationTarget(targetUri, "fr");
+            var targets = new List<TranslationTarget> { translationTarget };
+            var input = new DocumentTranslationInput(translationSource, targets);
             DocumentTranslationOperation operation = client.StartTranslation(input);
 
             TimeSpan pollingInterval = new(1000);
@@ -84,7 +91,6 @@ namespace Azure.AI.Translation.Document.Samples
                     Console.WriteLine($"Message: {document.Error.Message}");
                 }
             }
-#endregion
         }
     }
 }
