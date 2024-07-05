@@ -114,26 +114,31 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The name of the rule. This must be unique within the parent service. You must not use any of the following reserved strings - `default`, `requested` or `service`.
         /// Serialized Name: PccRuleConfiguration.ruleName
         /// </summary>
+        [WirePath("ruleName")]
         public string RuleName { get; set; }
         /// <summary>
         /// A precedence value that is used to decide between data flow policy rules when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all data flow policy rules configured in the mobile network.
         /// Serialized Name: PccRuleConfiguration.rulePrecedence
         /// </summary>
+        [WirePath("rulePrecedence")]
         public int RulePrecedence { get; set; }
         /// <summary>
         /// The QoS policy to use for packets matching this rule. If this field is null then the parent service will define the QoS settings.
         /// Serialized Name: PccRuleConfiguration.ruleQosPolicy
         /// </summary>
+        [WirePath("ruleQosPolicy")]
         public PccRuleQosPolicy RuleQosPolicy { get; set; }
         /// <summary>
         /// Determines whether flows that match this data flow policy rule are permitted.
         /// Serialized Name: PccRuleConfiguration.trafficControl
         /// </summary>
+        [WirePath("trafficControl")]
         public MobileNetworkTrafficControlPermission? TrafficControl { get; set; }
         /// <summary>
         /// The set of data flow templates to use for this data flow policy rule.
         /// Serialized Name: PccRuleConfiguration.serviceDataFlowTemplates
         /// </summary>
+        [WirePath("serviceDataFlowTemplates")]
         public IList<MobileNetworkServiceDataFlowTemplate> ServiceDataFlowTemplates { get; }
     }
 }

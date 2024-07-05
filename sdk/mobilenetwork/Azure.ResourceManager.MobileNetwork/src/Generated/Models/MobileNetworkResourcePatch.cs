@@ -75,11 +75,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The managed service identity associated with this resource.
         /// Serialized Name: IdentityAndTagsObject.identity
         /// </summary>
+        [WirePath("identity")]
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary>
         /// Resource tags.
         /// Serialized Name: IdentityAndTagsObject.tags
         /// </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

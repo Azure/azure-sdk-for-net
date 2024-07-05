@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         internal WritableSubResource Slice { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("slice.id")]
         public ResourceIdentifier SliceId
         {
             get => Slice is null ? default : Slice.Id;
@@ -126,6 +127,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         internal WritableSubResource DefaultDataNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("defaultDataNetwork.id")]
         public ResourceIdentifier DefaultDataNetworkId
         {
             get => DefaultDataNetwork is null ? default : DefaultDataNetwork.Id;
@@ -141,6 +143,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item.
         /// Serialized Name: SliceConfiguration.dataNetworkConfigurations
         /// </summary>
+        [WirePath("dataNetworkConfigurations")]
         public IList<DataNetworkConfiguration> DataNetworkConfigurations { get; }
     }
 }

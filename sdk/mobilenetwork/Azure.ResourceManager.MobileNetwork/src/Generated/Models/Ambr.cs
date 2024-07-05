@@ -93,11 +93,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Uplink bit rate.
         /// Serialized Name: Ambr.uplink
         /// </summary>
+        [WirePath("uplink")]
         public string Uplink { get; set; }
         /// <summary>
         /// Downlink bit rate.
         /// Serialized Name: Ambr.downlink
         /// </summary>
+        [WirePath("downlink")]
         public string Downlink { get; set; }
     }
 }

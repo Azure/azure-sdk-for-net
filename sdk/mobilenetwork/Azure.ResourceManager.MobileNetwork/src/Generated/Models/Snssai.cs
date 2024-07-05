@@ -84,11 +84,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Slice/service type (SST).
         /// Serialized Name: Snssai.sst
         /// </summary>
+        [WirePath("sst")]
         public int Sst { get; set; }
         /// <summary>
         /// Slice differentiator (SD).
         /// Serialized Name: Snssai.sd
         /// </summary>
+        [WirePath("sd")]
         public string Sd { get; set; }
     }
 }

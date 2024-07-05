@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         internal WritableSubResource AttachedDataNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("attachedDataNetwork.id")]
         public ResourceIdentifier AttachedDataNetworkId
         {
             get => AttachedDataNetwork is null ? default : AttachedDataNetwork.Id;
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// A list of IPv4 routes.
         /// Serialized Name: UserPlaneDataRoutesItem.routes
         /// </summary>
+        [WirePath("routes")]
         public IList<MobileNetworkIPv4Route> Routes { get; }
     }
 }

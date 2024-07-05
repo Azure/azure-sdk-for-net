@@ -136,31 +136,37 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The upload file format version.
         /// Serialized Name: EncryptedSimUploadList.version
         /// </summary>
+        [WirePath("version")]
         public int Version { get; }
         /// <summary>
         /// An identifier for the Azure SIM onboarding public key used for encrypted upload.
         /// Serialized Name: EncryptedSimUploadList.azureKeyIdentifier
         /// </summary>
+        [WirePath("azureKeyIdentifier")]
         public int AzureKeyIdentifier { get; }
         /// <summary>
         /// The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key.
         /// Serialized Name: EncryptedSimUploadList.vendorKeyFingerprint
         /// </summary>
+        [WirePath("vendorKeyFingerprint")]
         public string VendorKeyFingerprint { get; }
         /// <summary>
         /// The transport key used for encrypting SIM credentials, encrypted using the SIM onboarding public key.
         /// Serialized Name: EncryptedSimUploadList.encryptedTransportKey
         /// </summary>
+        [WirePath("encryptedTransportKey")]
         public string EncryptedTransportKey { get; }
         /// <summary>
         /// The encrypted transport key, signed using the SIM vendor private key.
         /// Serialized Name: EncryptedSimUploadList.signedTransportKey
         /// </summary>
+        [WirePath("signedTransportKey")]
         public string SignedTransportKey { get; }
         /// <summary>
         /// A list of SIMs to upload, with encrypted properties.
         /// Serialized Name: EncryptedSimUploadList.sims
         /// </summary>
+        [WirePath("sims")]
         public IList<SimNameAndEncryptedProperties> Sims { get; }
     }
 }

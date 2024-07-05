@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// The SIMs to move.
     /// Serialized Name: SimMove
     /// </summary>
-    public partial class SimMove
+    public partial class SimMoveContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SimMove"/>. </summary>
-        public SimMove()
+        /// <summary> Initializes a new instance of <see cref="SimMoveContent"/>. </summary>
+        public SimMoveContent()
         {
             Sims = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SimMove"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimMoveContent"/>. </summary>
         /// <param name="targetSimGroupId">
         /// The SIM Group where the SIMs should be moved.
         /// Serialized Name: SimMove.targetSimGroupId
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Serialized Name: SimMove.sims
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SimMove(SubResource targetSimGroupId, IList<string> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SimMoveContent(SubResource targetSimGroupId, IList<string> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetSimGroupId = targetSimGroupId;
             Sims = sims;
@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         internal SubResource TargetSimGroupId { get; set; }
         /// <summary> Gets Id. </summary>
+        [WirePath("targetSimGroupId.id")]
         public ResourceIdentifier TargetSimGroupIdId
         {
             get => TargetSimGroupId is null ? default : TargetSimGroupId.Id;
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// A list of SIM resource names to be moved.
         /// Serialized Name: SimMove.sims
         /// </summary>
+        [WirePath("sims")]
         public IList<string> Sims { get; }
     }
 }

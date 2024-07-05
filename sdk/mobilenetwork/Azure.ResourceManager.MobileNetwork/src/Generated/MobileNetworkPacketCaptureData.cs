@@ -119,46 +119,55 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The provisioning state of the packet capture session resource.
         /// Serialized Name: PacketCapture.properties.provisioningState
         /// </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The status of the packet capture session.
         /// Serialized Name: PacketCapture.properties.status
         /// </summary>
+        [WirePath("properties.status")]
         public MobileNetworkPacketCaptureStatus? Status { get; }
         /// <summary>
         /// The reason the current packet capture session state.
         /// Serialized Name: PacketCapture.properties.reason
         /// </summary>
+        [WirePath("properties.reason")]
         public string Reason { get; }
         /// <summary>
         /// The start time of the packet capture session.
         /// Serialized Name: PacketCapture.properties.captureStartTime
         /// </summary>
+        [WirePath("properties.captureStartTime")]
         public DateTimeOffset? CaptureStartOn { get; }
         /// <summary>
         /// List of network interfaces to capture on.
         /// Serialized Name: PacketCapture.properties.networkInterfaces
         /// </summary>
+        [WirePath("properties.networkInterfaces")]
         public IList<string> NetworkInterfaces { get; }
         /// <summary>
         /// Number of bytes captured per packet, the remaining bytes are truncated. The default "0" means the entire packet is captured.
         /// Serialized Name: PacketCapture.properties.bytesToCapturePerPacket
         /// </summary>
+        [WirePath("properties.bytesToCapturePerPacket")]
         public long? BytesToCapturePerPacket { get; set; }
         /// <summary>
         /// Maximum size of the capture output.
         /// Serialized Name: PacketCapture.properties.totalBytesPerSession
         /// </summary>
+        [WirePath("properties.totalBytesPerSession")]
         public long? TotalBytesPerSession { get; set; }
         /// <summary>
         /// Maximum duration of the capture session in seconds.
         /// Serialized Name: PacketCapture.properties.timeLimitInSeconds
         /// </summary>
+        [WirePath("properties.timeLimitInSeconds")]
         public int? TimeLimitInSeconds { get; set; }
         /// <summary>
         /// The list of output files of a packet capture session.
         /// Serialized Name: PacketCapture.properties.outputFiles
         /// </summary>
+        [WirePath("properties.outputFiles")]
         public IReadOnlyList<string> OutputFiles { get; }
     }
 }

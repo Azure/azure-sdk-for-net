@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The Storage Account Blob URL to upload the diagnostics package to.
         /// Serialized Name: PacketCoreControlPlaneCollectDiagnosticsPackage.storageAccountBlobUrl
         /// </summary>
+        [WirePath("storageAccountBlobUrl")]
         public Uri StorageAccountBlobUri { get; }
     }
 }

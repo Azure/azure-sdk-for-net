@@ -103,18 +103,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// RAT Type
         /// Serialized Name: UeInfo.properties.ratType
         /// </summary>
+        [WirePath("properties.ratType")]
         public RatType RatType { get; set; }
         /// <summary>
         /// State of the UE.
         /// Serialized Name: UeInfo.properties.ueState
         /// </summary>
+        [WirePath("properties.ueState")]
         public UEState UEState { get; set; }
         /// <summary> Serialized Name: UeInfo.properties.ueIpAddresses. </summary>
+        [WirePath("properties.ueIpAddresses")]
         public IList<DnnIPPair> UEIPAddresses { get; }
         /// <summary>
         /// The timestamp of last list UEs call to the packet core (UTC).
         /// Serialized Name: UeInfo.properties.lastReadAt
         /// </summary>
+        [WirePath("properties.lastReadAt")]
         public DateTimeOffset? LastReadOn { get; set; }
     }
 }

@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Resource tags.
         /// Serialized Name: TagsObject.tags
         /// </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

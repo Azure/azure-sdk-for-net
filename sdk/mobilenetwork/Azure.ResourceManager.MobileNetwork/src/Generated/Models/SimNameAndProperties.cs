@@ -152,36 +152,43 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The name of the SIM.
         /// Serialized Name: SimNameAndProperties.name
         /// </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary>
         /// The provisioning state of the SIM resource.
         /// Serialized Name: SimNameAndProperties.properties.provisioningState
         /// </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The state of the SIM resource.
         /// Serialized Name: SimNameAndProperties.properties.simState
         /// </summary>
+        [WirePath("properties.simState")]
         public MobileNetworkSimState? SimState { get; }
         /// <summary>
         /// A dictionary of sites to the provisioning state of this SIM on that site.
         /// Serialized Name: SimNameAndProperties.properties.siteProvisioningState
         /// </summary>
+        [WirePath("properties.siteProvisioningState")]
         public IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> SiteProvisioningState { get; }
         /// <summary>
         /// The international mobile subscriber identity (IMSI) for the SIM.
         /// Serialized Name: SimNameAndProperties.properties.internationalMobileSubscriberIdentity
         /// </summary>
+        [WirePath("properties.internationalMobileSubscriberIdentity")]
         public string InternationalMobileSubscriberIdentity { get; }
         /// <summary>
         /// The integrated circuit card ID (ICCID) for the SIM.
         /// Serialized Name: SimNameAndProperties.properties.integratedCircuitCardIdentifier
         /// </summary>
+        [WirePath("properties.integratedCircuitCardIdentifier")]
         public string IntegratedCircuitCardIdentifier { get; set; }
         /// <summary>
         /// An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value.
         /// Serialized Name: SimNameAndProperties.properties.deviceType
         /// </summary>
+        [WirePath("properties.deviceType")]
         public string DeviceType { get; set; }
         /// <summary>
         /// The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM.
@@ -189,6 +196,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         internal WritableSubResource SimPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.simPolicy.id")]
         public ResourceIdentifier SimPolicyId
         {
             get => SimPolicy is null ? default : SimPolicy.Id;
@@ -204,26 +212,31 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}.
         /// Serialized Name: SimNameAndProperties.properties.staticIpConfiguration
         /// </summary>
+        [WirePath("properties.staticIpConfiguration")]
         public IList<SimStaticIPProperties> StaticIPConfiguration { get; }
         /// <summary>
         /// The name of the SIM vendor who provided this SIM, if any.
         /// Serialized Name: SimNameAndProperties.properties.vendorName
         /// </summary>
+        [WirePath("properties.vendorName")]
         public string VendorName { get; }
         /// <summary>
         /// The public key fingerprint of the SIM vendor who provided this SIM, if any.
         /// Serialized Name: SimNameAndProperties.properties.vendorKeyFingerprint
         /// </summary>
+        [WirePath("properties.vendorKeyFingerprint")]
         public string VendorKeyFingerprint { get; }
         /// <summary>
         /// The Ki value for the SIM.
         /// Serialized Name: SimNameAndProperties.properties.authenticationKey
         /// </summary>
+        [WirePath("properties.authenticationKey")]
         public string AuthenticationKey { get; set; }
         /// <summary>
         /// The Opc value for the SIM.
         /// Serialized Name: SimNameAndProperties.properties.operatorKeyCode
         /// </summary>
+        [WirePath("properties.operatorKeyCode")]
         public string OperatorKeyCode { get; set; }
     }
 }

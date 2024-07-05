@@ -107,21 +107,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// EPS bearer identifier
         /// Serialized Name: UeSessionInfo4G.ebi
         /// </summary>
+        [WirePath("ebi")]
         public int Ebi { get; set; }
         /// <summary>
         /// Access point name
         /// Serialized Name: UeSessionInfo4G.apn
         /// </summary>
+        [WirePath("apn")]
         public string Apn { get; set; }
         /// <summary>
         /// Packet Data Network Type
         /// Serialized Name: UeSessionInfo4G.pdnType
         /// </summary>
+        [WirePath("pdnType")]
         public PdnType PdnType { get; set; }
         /// <summary>
         /// IPv4 address.
         /// Serialized Name: UeSessionInfo4G.ueIpAddress.ipV4Addr
         /// </summary>
+        [WirePath("ueIpAddress.ipV4Addr")]
         public string IPV4Addr { get; set; }
     }
 }

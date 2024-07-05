@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The Storage Account Container URL to upload diagnostics to.
         /// Serialized Name: DiagnosticsUploadConfiguration.storageAccountContainerUrl
         /// </summary>
+        [WirePath("storageAccountContainerUrl")]
         public Uri StorageAccountContainerUri { get; set; }
     }
 }

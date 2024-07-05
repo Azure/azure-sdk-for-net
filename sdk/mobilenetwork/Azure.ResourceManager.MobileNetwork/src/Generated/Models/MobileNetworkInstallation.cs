@@ -92,21 +92,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The desired installation state
         /// Serialized Name: Installation.desiredState
         /// </summary>
+        [WirePath("desiredState")]
         public DesiredInstallationState? DesiredState { get; set; }
         /// <summary>
         /// Installation state
         /// Serialized Name: Installation.state
         /// </summary>
+        [WirePath("state")]
         public MobileNetworkInstallationState? State { get; }
         /// <summary>
         /// Whether a reinstall of the packet core is required to pick up the latest configuration changes.
         /// Serialized Name: Installation.reinstallRequired
         /// </summary>
+        [WirePath("reinstallRequired")]
         public MobileNetworkReinstallRequired? ReinstallRequired { get; }
         /// <summary>
         /// Reason(s) for the current installation state of the packet core.
         /// Serialized Name: Installation.reasons
         /// </summary>
+        [WirePath("reasons")]
         public IReadOnlyList<MobileNetworkInstallationReason> Reasons { get; }
         /// <summary>
         /// A reference to an in-progress installation operation
@@ -114,6 +118,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         internal SubResource Operation { get; }
         /// <summary> Gets Id. </summary>
+        [WirePath("operation.id")]
         public ResourceIdentifier OperationId
         {
             get => Operation?.Id;

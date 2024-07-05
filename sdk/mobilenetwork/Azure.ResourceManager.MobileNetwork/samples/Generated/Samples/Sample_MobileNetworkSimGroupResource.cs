@@ -197,14 +197,14 @@ EncryptedCredentials = "ABC123",
             MobileNetworkSimGroupResource mobileNetworkSimGroup = client.GetMobileNetworkSimGroupResource(mobileNetworkSimGroupResourceId);
 
             // invoke the operation
-            SimMove simMove = new SimMove()
+            SimMoveContent content = new SimMoveContent()
             {
                 Sims =
 {
 "testSim","testSim2"
 },
             };
-            ArmOperation<AsyncOperationStatus> lro = await mobileNetworkSimGroup.MoveSimAsync(WaitUntil.Completed, simMove);
+            ArmOperation<AsyncOperationStatus> lro = await mobileNetworkSimGroup.MoveSimAsync(WaitUntil.Completed, content);
             AsyncOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -232,14 +232,14 @@ EncryptedCredentials = "ABC123",
             MobileNetworkSimGroupResource mobileNetworkSimGroup = client.GetMobileNetworkSimGroupResource(mobileNetworkSimGroupResourceId);
 
             // invoke the operation
-            SimClone simClone = new SimClone()
+            SimCloneContent content = new SimCloneContent()
             {
                 Sims =
 {
 "testSim","testSim2"
 },
             };
-            ArmOperation<AsyncOperationStatus> lro = await mobileNetworkSimGroup.CloneSimAsync(WaitUntil.Completed, simClone);
+            ArmOperation<AsyncOperationStatus> lro = await mobileNetworkSimGroup.CloneSimAsync(WaitUntil.Completed, content);
             AsyncOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

@@ -114,26 +114,31 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The identity used to retrieve any private keys used for SUPI concealment from Azure key vault.
         /// Serialized Name: MobileNetwork.identity
         /// </summary>
+        [WirePath("identity")]
         public MobileNetworkManagedServiceIdentity Identity { get; set; }
         /// <summary>
         /// The provisioning state of the mobile network resource.
         /// Serialized Name: MobileNetwork.properties.provisioningState
         /// </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The unique public land mobile network identifier for the network. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence.
         /// Serialized Name: MobileNetwork.properties.publicLandMobileNetworkIdentifier
         /// </summary>
+        [WirePath("properties.publicLandMobileNetworkIdentifier")]
         public MobileNetworkPlmnId PublicLandMobileNetworkIdentifier { get; set; }
         /// <summary>
         /// A list of public land mobile networks including their identifiers. If both 'publicLandMobileNetworks' and 'publicLandMobileNetworkIdentifier' are specified, then the 'publicLandMobileNetworks' will take precedence.
         /// Serialized Name: MobileNetwork.properties.publicLandMobileNetworks
         /// </summary>
+        [WirePath("properties.publicLandMobileNetworks")]
         public IList<PublicLandMobileNetwork> PublicLandMobileNetworks { get; }
         /// <summary>
         /// The mobile network resource identifier
         /// Serialized Name: MobileNetwork.properties.serviceKey
         /// </summary>
+        [WirePath("properties.serviceKey")]
         public string ServiceKey { get; }
     }
 }

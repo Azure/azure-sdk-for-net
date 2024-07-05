@@ -19,6 +19,7 @@ sample-gen:
   clear-output-folder: true
 use-model-reader-writer: true
 client-side-validation: false
+enable-bicep-serialization: true
 
 mgmt-debug:
   show-serialized-names: true
@@ -121,6 +122,9 @@ rename-mapping:
   RrcEstablishmentCause.SMS: Sms
   UeQOSFlow: UEQosFlow
   RoutingInfoModel: MobileNetworkRoutingInfo
+  SimMove: SimMoveContent
+  SimClone: SimCloneContent
+  SignalingConfiguration: PacketCoreSignalingConfiguration
 
 prepend-rp-prefix:
   - Ipv4Route

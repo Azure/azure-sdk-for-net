@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// A list of SIMs to upload.
         /// Serialized Name: SimUploadList.sims
         /// </summary>
+        [WirePath("sims")]
         public IList<SimNameAndProperties> Sims { get; }
     }
 }

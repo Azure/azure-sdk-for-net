@@ -74,11 +74,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The next hop address.
         /// Serialized Name: Ipv4RouteNextHop.address
         /// </summary>
+        [WirePath("address")]
         public string Address { get; set; }
         /// <summary>
         /// The priority of this next hop. Next hops with lower preference values are preferred.
         /// Serialized Name: Ipv4RouteNextHop.priority
         /// </summary>
+        [WirePath("priority")]
         public int? Priority { get; set; }
     }
 }

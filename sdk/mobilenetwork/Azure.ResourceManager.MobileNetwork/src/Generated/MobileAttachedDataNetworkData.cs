@@ -132,22 +132,26 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The provisioning state of the attached data network resource.
         /// Serialized Name: AttachedDataNetwork.properties.provisioningState
         /// </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface.
         /// Serialized Name: AttachedDataNetwork.properties.userPlaneDataInterface
         /// </summary>
+        [WirePath("properties.userPlaneDataInterface")]
         public MobileNetworkInterfaceProperties UserPlaneDataInterface { get; set; }
         /// <summary>
         /// The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array.
         /// Serialized Name: AttachedDataNetwork.properties.dnsAddresses
         /// </summary>
+        [WirePath("properties.dnsAddresses")]
         public IList<string> DnsAddresses { get; }
         /// <summary>
         /// The network address and port translation (NAPT) configuration.
         /// If this is not specified, the attached data network will use a default NAPT configuration with NAPT enabled.
         /// Serialized Name: AttachedDataNetwork.properties.naptConfiguration
         /// </summary>
+        [WirePath("properties.naptConfiguration")]
         public NaptConfiguration NaptConfiguration { get; set; }
         /// <summary>
         /// The user equipment (UE) address pool prefixes for the attached data network from which the packet core instance will dynamically assign IP addresses to UEs.
@@ -155,6 +159,7 @@ namespace Azure.ResourceManager.MobileNetwork
         ///  You must define at least one of userEquipmentAddressPoolPrefix and userEquipmentStaticAddressPoolPrefix. If you define both, they must be of the same size.
         /// Serialized Name: AttachedDataNetwork.properties.userEquipmentAddressPoolPrefix
         /// </summary>
+        [WirePath("properties.userEquipmentAddressPoolPrefix")]
         public IList<string> UserEquipmentAddressPoolPrefix { get; }
         /// <summary>
         /// The user equipment (UE) address pool prefixes for the attached data network from which the packet core instance will assign static IP addresses to UEs.
@@ -162,6 +167,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// At least one of userEquipmentAddressPoolPrefix and userEquipmentStaticAddressPoolPrefix must be defined. If both are defined, they must be of the same size.
         /// Serialized Name: AttachedDataNetwork.properties.userEquipmentStaticAddressPoolPrefix
         /// </summary>
+        [WirePath("properties.userEquipmentStaticAddressPoolPrefix")]
         public IList<string> UserEquipmentStaticAddressPoolPrefix { get; }
     }
 }

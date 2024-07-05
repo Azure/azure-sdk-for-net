@@ -75,11 +75,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The destination IPv4 prefix.
         /// Serialized Name: Ipv4Route.destination
         /// </summary>
+        [WirePath("destination")]
         public string Destination { get; set; }
         /// <summary>
         /// A list of next hops for the destination.
         /// Serialized Name: Ipv4Route.nextHops
         /// </summary>
+        [WirePath("nextHops")]
         public IList<MobileNetworkIPv4RouteNextHop> NextHops { get; }
     }
 }

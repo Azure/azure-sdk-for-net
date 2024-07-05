@@ -92,11 +92,13 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The provisioning state of the site resource.
         /// Serialized Name: Site.properties.provisioningState
         /// </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// An array of IDs of the network functions deployed in the site. Deleting the site will delete any network functions that are deployed in the site.
         /// Serialized Name: Site.properties.networkFunctions
         /// </summary>
+        [WirePath("properties.networkFunctions")]
         public IReadOnlyList<SubResource> NetworkFunctions { get; }
     }
 }

@@ -93,11 +93,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Mobile country code (MCC).
         /// Serialized Name: PlmnId.mcc
         /// </summary>
+        [WirePath("mcc")]
         public string Mcc { get; set; }
         /// <summary>
         /// Mobile network code (MNC).
         /// Serialized Name: PlmnId.mnc
         /// </summary>
+        [WirePath("mnc")]
         public string Mnc { get; set; }
     }
 }

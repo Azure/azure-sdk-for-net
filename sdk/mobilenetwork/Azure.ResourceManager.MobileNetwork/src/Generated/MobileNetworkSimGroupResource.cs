@@ -710,19 +710,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="simMove"> Parameters supplied to move the SIMs. </param>
+        /// <param name="content"> Parameters supplied to move the SIMs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="simMove"/> is null. </exception>
-        public virtual async Task<ArmOperation<AsyncOperationStatus>> MoveSimAsync(WaitUntil waitUntil, SimMove simMove, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<AsyncOperationStatus>> MoveSimAsync(WaitUntil waitUntil, SimMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(simMove, nameof(simMove));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.MoveSim");
             scope.Start();
             try
             {
-                var response = await _mobileNetworkSimSimsRestClient.MoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simMove, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simMove).Request, response, OperationFinalStateVia.Location);
+                var response = await _mobileNetworkSimSimsRestClient.MoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -756,19 +756,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="simMove"> Parameters supplied to move the SIMs. </param>
+        /// <param name="content"> Parameters supplied to move the SIMs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="simMove"/> is null. </exception>
-        public virtual ArmOperation<AsyncOperationStatus> MoveSim(WaitUntil waitUntil, SimMove simMove, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<AsyncOperationStatus> MoveSim(WaitUntil waitUntil, SimMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(simMove, nameof(simMove));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.MoveSim");
             scope.Start();
             try
             {
-                var response = _mobileNetworkSimSimsRestClient.Move(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simMove, cancellationToken);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simMove).Request, response, OperationFinalStateVia.Location);
+                var response = _mobileNetworkSimSimsRestClient.Move(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -802,19 +802,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="simClone"> Parameters supplied to clone the SIMs. </param>
+        /// <param name="content"> Parameters supplied to clone the SIMs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="simClone"/> is null. </exception>
-        public virtual async Task<ArmOperation<AsyncOperationStatus>> CloneSimAsync(WaitUntil waitUntil, SimClone simClone, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<AsyncOperationStatus>> CloneSimAsync(WaitUntil waitUntil, SimCloneContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(simClone, nameof(simClone));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.CloneSim");
             scope.Start();
             try
             {
-                var response = await _mobileNetworkSimSimsRestClient.CloneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simClone, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateCloneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simClone).Request, response, OperationFinalStateVia.Location);
+                var response = await _mobileNetworkSimSimsRestClient.CloneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateCloneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -848,19 +848,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="simClone"> Parameters supplied to clone the SIMs. </param>
+        /// <param name="content"> Parameters supplied to clone the SIMs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="simClone"/> is null. </exception>
-        public virtual ArmOperation<AsyncOperationStatus> CloneSim(WaitUntil waitUntil, SimClone simClone, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<AsyncOperationStatus> CloneSim(WaitUntil waitUntil, SimCloneContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(simClone, nameof(simClone));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimGroupResource.CloneSim");
             scope.Start();
             try
             {
-                var response = _mobileNetworkSimSimsRestClient.Clone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simClone, cancellationToken);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateCloneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simClone).Request, response, OperationFinalStateVia.Location);
+                var response = _mobileNetworkSimSimsRestClient.Clone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateCloneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

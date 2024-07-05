@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// A list of SIM resource names to delete.
         /// Serialized Name: SimDeleteList.sims
         /// </summary>
+        [WirePath("sims")]
         public IList<string> Sims { get; }
     }
 }

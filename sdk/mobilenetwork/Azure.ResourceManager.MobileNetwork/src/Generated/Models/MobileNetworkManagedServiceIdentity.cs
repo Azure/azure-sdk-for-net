@@ -86,11 +86,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Type of managed service identity (currently only UserAssigned allowed).
         /// Serialized Name: ManagedServiceIdentity.type
         /// </summary>
+        [WirePath("type")]
         public MobileNetworkManagedServiceIdentityType IdentityType { get; set; }
         /// <summary>
         /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
         /// Serialized Name: ManagedServiceIdentity.userAssignedIdentities
         /// </summary>
+        [WirePath("userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

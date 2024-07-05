@@ -74,11 +74,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Data network name
         /// Serialized Name: DnnIpPair.dnn
         /// </summary>
+        [WirePath("dnn")]
         public string Dnn { get; set; }
         /// <summary>
         /// IPv4 address.
         /// Serialized Name: DnnIpPair.ueIpAddress.ipV4Addr
         /// </summary>
+        [WirePath("ueIpAddress.ipV4Addr")]
         public string IPV4Addr { get; set; }
     }
 }

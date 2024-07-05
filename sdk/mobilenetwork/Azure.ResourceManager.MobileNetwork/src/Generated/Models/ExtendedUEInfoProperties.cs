@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The timestamp of last UE info read from the packet core (UTC).
         /// Serialized Name: ExtendedUeInfoProperties.lastReadAt
         /// </summary>
+        [WirePath("lastReadAt")]
         public DateTimeOffset? LastReadOn { get; set; }
     }
 }

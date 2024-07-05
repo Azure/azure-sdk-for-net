@@ -87,11 +87,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress.
         /// Serialized Name: HttpsServerCertificate.certificateUrl
         /// </summary>
+        [WirePath("certificateUrl")]
         public Uri CertificateUri { get; set; }
         /// <summary>
         /// The provisioning state of the certificate.
         /// Serialized Name: HttpsServerCertificate.provisioning
         /// </summary>
+        [WirePath("provisioning")]
         public MobileNetworkCertificateProvisioning Provisioning { get; }
     }
 }

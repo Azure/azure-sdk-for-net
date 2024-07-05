@@ -101,11 +101,13 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The identity used to retrieve the encryption key from Azure key vault.
         /// Serialized Name: SimGroup.identity
         /// </summary>
+        [WirePath("identity")]
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary>
         /// The provisioning state of the SIM group resource.
         /// Serialized Name: SimGroup.properties.provisioningState
         /// </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// A key to encrypt the SIM data that belongs to this SIM group.
@@ -116,6 +118,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey.
         /// Serialized Name: KeyVaultKey.keyUrl
         /// </summary>
+        [WirePath("properties.encryptionKey.keyUrl")]
         public Uri KeyUri
         {
             get => EncryptionKey is null ? default : EncryptionKey.KeyUri;
@@ -133,6 +136,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         internal WritableSubResource MobileNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.mobileNetwork.id")]
         public ResourceIdentifier MobileNetworkId
         {
             get => MobileNetwork is null ? default : MobileNetwork.Id;

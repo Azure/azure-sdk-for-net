@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Allow Microsoft to access non-PII telemetry information from the packet core.
         /// Serialized Name: UserConsentConfiguration.allowSupportTelemetryAccess
         /// </summary>
+        [WirePath("allowSupportTelemetryAccess")]
         public bool? AllowSupportTelemetryAccess { get; set; }
     }
 }

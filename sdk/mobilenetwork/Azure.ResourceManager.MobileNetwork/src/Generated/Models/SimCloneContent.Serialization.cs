@@ -14,16 +14,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class SimClone : IUtf8JsonSerializable, IJsonModel<SimClone>
+    public partial class SimCloneContent : IUtf8JsonSerializable, IJsonModel<SimCloneContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimClone>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimCloneContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SimClone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SimCloneContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimClone>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SimCloneContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimClone)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SimCloneContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
         }
 
-        SimClone IJsonModel<SimClone>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SimCloneContent IJsonModel<SimCloneContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimClone>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SimCloneContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimClone)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SimCloneContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSimClone(document.RootElement, options);
+            return DeserializeSimCloneContent(document.RootElement, options);
         }
 
-        internal static SimClone DeserializeSimClone(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SimCloneContent DeserializeSimCloneContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -115,38 +115,38 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SimClone(targetSimGroupId, sims ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SimCloneContent(targetSimGroupId, sims ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SimClone>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SimCloneContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimClone>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SimCloneContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SimClone)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimCloneContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SimClone IPersistableModel<SimClone>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SimCloneContent IPersistableModel<SimCloneContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimClone>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SimCloneContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSimClone(document.RootElement, options);
+                        return DeserializeSimCloneContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SimClone)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimCloneContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SimClone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SimCloneContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

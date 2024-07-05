@@ -76,11 +76,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// This provides a mapping to identify which public key has been used for SUPI concealment using the Profile A Protection Scheme.
         /// Serialized Name: PublicLandMobileNetworkHomeNetworkPublicKeys.profileA
         /// </summary>
+        [WirePath("profileA")]
         public IList<HomeNetworkPublicKey> ProfileA { get; }
         /// <summary>
         /// This provides a mapping to identify which public key has been used for SUPI concealment using the Profile B Protection Scheme.
         /// Serialized Name: PublicLandMobileNetworkHomeNetworkPublicKeys.profileB
         /// </summary>
+        [WirePath("profileB")]
         public IList<HomeNetworkPublicKey> ProfileB { get; }
     }
 }

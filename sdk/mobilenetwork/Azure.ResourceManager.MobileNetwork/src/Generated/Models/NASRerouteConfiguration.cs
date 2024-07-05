@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute.
         /// Serialized Name: NASRerouteConfiguration.macroMmeGroupId
         /// </summary>
+        [WirePath("macroMmeGroupId")]
         public int MacroMmeGroupId { get; set; }
     }
 }

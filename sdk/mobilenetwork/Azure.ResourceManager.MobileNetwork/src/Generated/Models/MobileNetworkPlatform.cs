@@ -100,36 +100,43 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The platform type where this version can be deployed.
         /// Serialized Name: Platform.platformType
         /// </summary>
+        [WirePath("platformType")]
         public MobileNetworkPlatformType? PlatformType { get; set; }
         /// <summary>
         /// The state of this packet core control plane version on this platform.
         /// Serialized Name: Platform.versionState
         /// </summary>
+        [WirePath("versionState")]
         public MobileNetworkVersionState? VersionState { get; set; }
         /// <summary>
         /// The minimum software version of the platform where this packet core version can be deployed.
         /// Serialized Name: Platform.minimumPlatformSoftwareVersion
         /// </summary>
+        [WirePath("minimumPlatformSoftwareVersion")]
         public string MinimumPlatformSoftwareVersion { get; set; }
         /// <summary>
         /// The maximum software version of the platform where this packet core version can be deployed.
         /// Serialized Name: Platform.maximumPlatformSoftwareVersion
         /// </summary>
+        [WirePath("maximumPlatformSoftwareVersion")]
         public string MaximumPlatformSoftwareVersion { get; set; }
         /// <summary>
         /// Indicates whether this is the recommended version for this platform.
         /// Serialized Name: Platform.recommendedVersion
         /// </summary>
+        [WirePath("recommendedVersion")]
         public MobileNetworkRecommendedVersion? RecommendedVersion { get; set; }
         /// <summary>
         /// Indicates whether this version is obsoleted for this platform.
         /// Serialized Name: Platform.obsoleteVersion
         /// </summary>
+        [WirePath("obsoleteVersion")]
         public MobileNetworkObsoleteVersion? ObsoleteVersion { get; set; }
         /// <summary>
         /// The list of versions to which a high availability upgrade from this version is supported.
         /// Serialized Name: Platform.haUpgradesAvailable
         /// </summary>
+        [WirePath("haUpgradesAvailable")]
         public IList<string> HaUpgradesAvailable { get; }
     }
 }

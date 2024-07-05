@@ -90,16 +90,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// A list of IPv4 routes.
         /// Serialized Name: RoutingInfoModel.properties.controlPlaneAccessRoutes
         /// </summary>
+        [WirePath("properties.controlPlaneAccessRoutes")]
         public IList<MobileNetworkIPv4Route> ControlPlaneAccessRoutes { get; }
         /// <summary>
         /// A list of IPv4 routes.
         /// Serialized Name: RoutingInfoModel.properties.userPlaneAccessRoutes
         /// </summary>
+        [WirePath("properties.userPlaneAccessRoutes")]
         public IList<MobileNetworkIPv4Route> UserPlaneAccessRoutes { get; }
         /// <summary>
         /// A list of attached data networks and their IPv4 routes.
         /// Serialized Name: RoutingInfoModel.properties.userPlaneDataRoutes
         /// </summary>
+        [WirePath("properties.userPlaneDataRoutes")]
         public IList<UserPlaneDataRoutesItem> UserPlaneDataRoutes { get; }
     }
 }

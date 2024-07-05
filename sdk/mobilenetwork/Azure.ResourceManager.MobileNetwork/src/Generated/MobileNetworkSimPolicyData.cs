@@ -138,16 +138,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The provisioning state of the SIM policy resource.
         /// Serialized Name: SimPolicy.properties.provisioningState
         /// </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// A dictionary of sites to the provisioning state of this SIM policy on that site.
         /// Serialized Name: SimPolicy.properties.siteProvisioningState
         /// </summary>
+        [WirePath("properties.siteProvisioningState")]
         public IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> SiteProvisioningState { get; }
         /// <summary>
         /// Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR.
         /// Serialized Name: SimPolicy.properties.ueAmbr
         /// </summary>
+        [WirePath("properties.ueAmbr")]
         public Ambr UEAmbr { get; set; }
         /// <summary>
         /// The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy.
@@ -155,6 +158,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         internal WritableSubResource DefaultSlice { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.defaultSlice.id")]
         public ResourceIdentifier DefaultSliceId
         {
             get => DefaultSlice is null ? default : DefaultSlice.Id;
@@ -170,16 +174,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// RAT/Frequency Selection Priority Index, defined in 3GPP TS 36.413. This is an optional setting and by default is unspecified.
         /// Serialized Name: SimPolicy.properties.rfspIndex
         /// </summary>
+        [WirePath("properties.rfspIndex")]
         public int? RfspIndex { get; set; }
         /// <summary>
         /// UE periodic registration update timer (5G) or UE periodic tracking area update timer (4G), in seconds.
         /// Serialized Name: SimPolicy.properties.registrationTimer
         /// </summary>
+        [WirePath("properties.registrationTimer")]
         public int? RegistrationTimer { get; set; }
         /// <summary>
         /// The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item.
         /// Serialized Name: SimPolicy.properties.sliceConfigurations
         /// </summary>
+        [WirePath("properties.sliceConfigurations")]
         public IList<MobileNetworkSliceConfiguration> SliceConfigurations { get; }
     }
 }

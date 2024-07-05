@@ -178,7 +178,7 @@ Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000
                 {
                     ReportingInterval = 60,
                 },
-                Signaling = new SignalingConfiguration()
+                Signaling = new PacketCoreSignalingConfiguration()
                 {
                     NasRerouteMacroMmeGroupId = 1024,
                     NasEncryption =

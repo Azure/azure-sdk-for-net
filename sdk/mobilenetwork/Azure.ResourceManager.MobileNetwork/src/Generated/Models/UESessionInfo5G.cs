@@ -150,43 +150,52 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// PDU session identifier
         /// Serialized Name: UeSessionInfo5G.pduSessionId
         /// </summary>
+        [WirePath("pduSessionId")]
         public int PduSessionId { get; set; }
         /// <summary>
         /// Data network name
         /// Serialized Name: UeSessionInfo5G.dnn
         /// </summary>
+        [WirePath("dnn")]
         public string Dnn { get; set; }
         /// <summary>
         /// Packet Data Network Type
         /// Serialized Name: UeSessionInfo5G.pdnType
         /// </summary>
+        [WirePath("pdnType")]
         public PdnType PdnType { get; set; }
         /// <summary> Serialized Name: UeSessionInfo5G.qosFlow. </summary>
+        [WirePath("qosFlow")]
         public IList<UEQosFlow> QosFlow { get; }
         /// <summary>
         /// Uplink bit rate.
         /// Serialized Name: UeSessionInfo5G.ambr.uplink
         /// </summary>
+        [WirePath("ambr.uplink")]
         public string Uplink { get; set; }
         /// <summary>
         /// Downlink bit rate.
         /// Serialized Name: UeSessionInfo5G.ambr.downlink
         /// </summary>
+        [WirePath("ambr.downlink")]
         public string Downlink { get; set; }
         /// <summary>
         /// IPv4 address.
         /// Serialized Name: UeSessionInfo5G.ueIpAddress.ipV4Addr
         /// </summary>
+        [WirePath("ueIpAddress.ipV4Addr")]
         public string IPV4Addr { get; set; }
         /// <summary>
         /// Slice/service type (SST).
         /// Serialized Name: UeSessionInfo5G.snssai.sst
         /// </summary>
+        [WirePath("snssai.sst")]
         public int Sst { get; set; }
         /// <summary>
         /// Slice differentiator (SD).
         /// Serialized Name: UeSessionInfo5G.snssai.sd
         /// </summary>
+        [WirePath("snssai.sd")]
         public string Sd { get; set; }
     }
 }

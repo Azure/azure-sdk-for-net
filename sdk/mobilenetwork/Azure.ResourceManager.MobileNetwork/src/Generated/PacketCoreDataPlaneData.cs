@@ -104,16 +104,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The provisioning state of the packet core data plane resource.
         /// Serialized Name: PacketCoreDataPlane.properties.provisioningState
         /// </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface.
         /// Serialized Name: PacketCoreDataPlane.properties.userPlaneAccessInterface
         /// </summary>
+        [WirePath("properties.userPlaneAccessInterface")]
         public MobileNetworkInterfaceProperties UserPlaneAccessInterface { get; set; }
         /// <summary>
         /// The virtual IP address(es) for the user plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to forward traffic for this address to the control plane access interface on the active or standby node. In non-HA system this list should be omitted or empty.
         /// Serialized Name: PacketCoreDataPlane.properties.userPlaneAccessVirtualIpv4Addresses
         /// </summary>
+        [WirePath("properties.userPlaneAccessVirtualIpv4Addresses")]
         public IList<string> UserPlaneAccessVirtualIPv4Addresses { get; }
     }
 }

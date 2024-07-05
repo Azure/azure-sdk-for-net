@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The IPv4 address assigned to the SIM at this network scope. This address must be in the userEquipmentStaticAddressPoolPrefix defined in the attached data network.
         /// Serialized Name: SimStaticIpPropertiesStaticIp.ipv4Address
         /// </summary>
+        [WirePath("ipv4Address")]
         public string IPv4Address { get; set; }
     }
 }

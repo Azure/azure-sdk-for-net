@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The provisioning state of the private keys for SUPI concealment.
         /// Serialized Name: HomeNetworkPrivateKeysProvisioning.state
         /// </summary>
+        [WirePath("state")]
         public HomeNetworkPrivateKeysProvisioningState State { get; }
     }
 }

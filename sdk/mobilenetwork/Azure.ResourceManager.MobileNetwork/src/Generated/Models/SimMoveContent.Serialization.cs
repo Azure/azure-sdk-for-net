@@ -14,16 +14,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class SimMove : IUtf8JsonSerializable, IJsonModel<SimMove>
+    public partial class SimMoveContent : IUtf8JsonSerializable, IJsonModel<SimMoveContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimMove>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimMoveContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SimMove>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SimMoveContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimMove>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SimMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimMove)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SimMoveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
         }
 
-        SimMove IJsonModel<SimMove>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SimMoveContent IJsonModel<SimMoveContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimMove>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SimMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimMove)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SimMoveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSimMove(document.RootElement, options);
+            return DeserializeSimMoveContent(document.RootElement, options);
         }
 
-        internal static SimMove DeserializeSimMove(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SimMoveContent DeserializeSimMoveContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -115,38 +115,38 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SimMove(targetSimGroupId, sims ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SimMoveContent(targetSimGroupId, sims ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SimMove>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SimMoveContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimMove>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SimMoveContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SimMove)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimMoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SimMove IPersistableModel<SimMove>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SimMoveContent IPersistableModel<SimMoveContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SimMove>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SimMoveContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSimMove(document.RootElement, options);
+                        return DeserializeSimMoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SimMove)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimMoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SimMove>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SimMoveContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

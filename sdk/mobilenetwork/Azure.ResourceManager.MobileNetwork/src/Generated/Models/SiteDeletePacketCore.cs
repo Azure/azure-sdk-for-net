@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         internal SubResource PacketCore { get; set; }
         /// <summary> Gets Id. </summary>
+        [WirePath("packetCore.id")]
         public ResourceIdentifier PacketCoreId
         {
             get => PacketCore is null ? default : PacketCore.Id;

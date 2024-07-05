@@ -5,6 +5,7 @@
 ### Features Added
 
 - Upgraded api-version tag from 'package-2024-02' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/45ed7d13be79760a39301ff85cc0937f017329de/specification/mobilenetwork/resource-manager/readme.md
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ### Other Changes
 
@@ -16,7 +17,7 @@
 ### Features Added
 
 - Upgraded api-version tag from 'package-2023-09' to 'package-2024-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/812012235b51ef1edf0e99f6ce9741c2c4c9df9a/specification/mobilenetwork/resource-manager/readme.md.
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
 
@@ -27,7 +28,7 @@
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -51,7 +52,7 @@ This package is the first stable release of the Azure Mobile Network management 
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

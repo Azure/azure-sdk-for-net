@@ -109,31 +109,37 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Qos Flow Identifier
         /// Serialized Name: UeQOSFlow.qfi
         /// </summary>
+        [WirePath("qfi")]
         public int Qfi { get; set; }
         /// <summary>
         /// 5G QoS Identifier.
         /// Serialized Name: UeQOSFlow.fiveqi
         /// </summary>
+        [WirePath("fiveqi")]
         public int Fiveqi { get; set; }
         /// <summary>
         /// Uplink bit rate.
         /// Serialized Name: UeQOSFlow.gbr.uplink
         /// </summary>
+        [WirePath("gbr.uplink")]
         public string UplinkGbrUplink { get; set; }
         /// <summary>
         /// Downlink bit rate.
         /// Serialized Name: UeQOSFlow.gbr.downlink
         /// </summary>
+        [WirePath("gbr.downlink")]
         public string DownlinkGbrDownlink { get; set; }
         /// <summary>
         /// Uplink bit rate.
         /// Serialized Name: UeQOSFlow.mbr.uplink
         /// </summary>
+        [WirePath("mbr.uplink")]
         public string UplinkMbrUplink { get; set; }
         /// <summary>
         /// Downlink bit rate.
         /// Serialized Name: UeQOSFlow.mbr.downlink
         /// </summary>
+        [WirePath("mbr.downlink")]
         public string DownlinkMbrDownlink { get; set; }
     }
 }

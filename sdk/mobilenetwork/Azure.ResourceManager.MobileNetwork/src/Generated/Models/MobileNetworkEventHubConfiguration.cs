@@ -88,11 +88,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Resource ID  of Azure Event Hub to send packet core events to.
         /// Serialized Name: EventHubConfiguration.id
         /// </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary>
         /// The duration (in seconds) between UE usage reports.
         /// Serialized Name: EventHubConfiguration.reportingInterval
         /// </summary>
+        [WirePath("reportingInterval")]
         public int? ReportingInterval { get; set; }
     }
 }

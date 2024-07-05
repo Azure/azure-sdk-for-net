@@ -228,147 +228,178 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// International mobile subscriber identifier
         /// Serialized Name: UeInfo4G.info.imsi
         /// </summary>
+        [WirePath("info.imsi")]
         public string Imsi { get; set; }
         /// <summary>
         /// International mobile equipment identity
         /// Serialized Name: UeInfo4G.info.imei
         /// </summary>
+        [WirePath("info.imei")]
         public string Imei { get; set; }
         /// <summary>
         /// International mobile equipment identity – software version
         /// Serialized Name: UeInfo4G.info.imeisv
         /// </summary>
+        [WirePath("info.imeisv")]
         public string Imeisv { get; set; }
         /// <summary> Serialized Name: UeInfo4G.info.sessionInfo. </summary>
+        [WirePath("info.sessionInfo")]
         public IList<UESessionInfo4G> SessionInfo { get; }
         /// <summary>
         /// Per-UE transport network layer association
         /// Serialized Name: UeInfo4G.info.connectionInfo.perUeTnla
         /// </summary>
+        [WirePath("info.perUeTnla")]
         public string PerUETnla { get; set; }
         /// <summary>
         /// MME S1AP identifier
         /// Serialized Name: UeInfo4G.info.connectionInfo.mmeS1apId
         /// </summary>
+        [WirePath("info.mmeS1apId")]
         public int? MmeS1ApId { get; set; }
         /// <summary>
         /// eNodeB S1AP identifier
         /// Serialized Name: UeInfo4G.info.connectionInfo.enbS1apId
         /// </summary>
+        [WirePath("info.enbS1apId")]
         public int? EnbS1ApId { get; set; }
         /// <summary>
         /// Last Visited TAI
         /// Serialized Name: UeInfo4G.info.connectionInfo.lastVisitedTai
         /// </summary>
+        [WirePath("info.lastVisitedTai")]
         public string LastVisitedTai { get; set; }
         /// <summary>
         /// State of the UE.
         /// Serialized Name: UeInfo4G.info.connectionInfo.ueState
         /// </summary>
+        [WirePath("info.ueState")]
         public UEState? UEState { get; set; }
         /// <summary>
         /// Radio connection establishment cause
         /// Serialized Name: UeInfo4G.info.connectionInfo.rrcEstablishmentCause
         /// </summary>
+        [WirePath("info.rrcEstablishmentCause")]
         public RrcEstablishmentCause? RrcEstablishmentCause { get; set; }
         /// <summary>
         /// The UE's usage setting
         /// Serialized Name: UeInfo4G.info.connectionInfo.ueUsageSetting
         /// </summary>
+        [WirePath("info.ueUsageSetting")]
         public UEUsageSetting? UEUsageSetting { get; set; }
         /// <summary>
         /// The timestamp of last activity of UE (UTC).
         /// Serialized Name: UeInfo4G.info.connectionInfo.lastActivityTime
         /// </summary>
+        [WirePath("info.lastActivityTime")]
         public DateTimeOffset? LastActivityOn { get; set; }
         /// <summary>
         /// NG-eNodeB identifier
         /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.ngeNbId
         /// </summary>
+        [WirePath("info.ngeNbId")]
         public string NgeNbId { get; set; }
         /// <summary>
         /// eNodeB identifier
         /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.eNbId
         /// </summary>
+        [WirePath("info.eNbId")]
         public string ENbId { get; set; }
         /// <summary>
         /// N3 IWF identifier
         /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.n3IwfId
         /// </summary>
+        [WirePath("info.n3IwfId")]
         public string N3IwfId { get; set; }
         /// <summary>
         /// W-AGF identifier
         /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.wagfId
         /// </summary>
+        [WirePath("info.wagfId")]
         public string WagfId { get; set; }
         /// <summary>
         /// TNGF identifier
         /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.tngfId
         /// </summary>
+        [WirePath("info.tngfId")]
         public string TngfId { get; set; }
         /// <summary>
         /// Network identifier
         /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.nid
         /// </summary>
+        [WirePath("info.nid")]
         public string Nid { get; set; }
         /// <summary> Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.gNbId.bitLength. </summary>
+        [WirePath("info.bitLength")]
         public int? BitLength { get; set; }
         /// <summary> Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.gNbId.gNBValue. </summary>
+        [WirePath("info.gNBValue")]
         public string GNBValue { get; set; }
         /// <summary>
         /// Mobile country code (MCC).
         /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.plmnId.mcc
         /// </summary>
+        [WirePath("info.mcc")]
         public string MccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc { get; set; }
         /// <summary>
         /// Mobile network code (MNC).
         /// Serialized Name: UeInfo4G.info.connectionInfo.globalRanNodeId.plmnId.mnc
         /// </summary>
+        [WirePath("info.mnc")]
         public string MncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc { get; set; }
         /// <summary>
         /// Location Type
         /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.locationType
         /// </summary>
+        [WirePath("info.locationType")]
         public string LocationType { get; set; }
         /// <summary>
         /// Type Allocation Code of UE
         /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.tac
         /// </summary>
+        [WirePath("info.tac")]
         public string Tac { get; set; }
         /// <summary>
         /// Mobile country code (MCC).
         /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.plmn.mcc
         /// </summary>
+        [WirePath("info.mcc")]
         public string MccInfoConnectionInfoLocationInfoPlmnMcc { get; set; }
         /// <summary>
         /// Mobile network code (MNC).
         /// Serialized Name: UeInfo4G.info.connectionInfo.locationInfo.plmn.mnc
         /// </summary>
+        [WirePath("info.mnc")]
         public string MncInfoConnectionInfoLocationInfoPlmnMnc { get; set; }
         /// <summary>
         /// MME Temporary Mobile Subscriber Identity
         /// Serialized Name: UeInfo4G.info.guti.mTmsi
         /// </summary>
+        [WirePath("info.mTmsi")]
         public int MTmsi { get; set; }
         /// <summary>
         /// MME group identifier
         /// Serialized Name: UeInfo4G.info.guti.mmeId.groupId
         /// </summary>
+        [WirePath("info.groupId")]
         public int GroupId { get; set; }
         /// <summary>
         /// MME code
         /// Serialized Name: UeInfo4G.info.guti.mmeId.code
         /// </summary>
+        [WirePath("info.code")]
         public int Code { get; set; }
         /// <summary>
         /// Mobile country code (MCC).
         /// Serialized Name: UeInfo4G.info.guti.plmn.mcc
         /// </summary>
+        [WirePath("info.mcc")]
         public string MccInfoGutiPlmnMcc { get; set; }
         /// <summary>
         /// Mobile network code (MNC).
         /// Serialized Name: UeInfo4G.info.guti.plmn.mnc
         /// </summary>
+        [WirePath("info.mnc")]
         public string MncInfoGutiPlmnMnc { get; set; }
     }
 }

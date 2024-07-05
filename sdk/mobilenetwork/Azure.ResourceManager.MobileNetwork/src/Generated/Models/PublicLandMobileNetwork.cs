@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Configuration relating to SUPI concealment.
         /// Serialized Name: PublicLandMobileNetwork.homeNetworkPublicKeys
         /// </summary>
+        [WirePath("homeNetworkPublicKeys")]
         public PublicLandMobileNetworkHomeNetworkPublicKeys HomeNetworkPublicKeys { get; set; }
     }
 }

@@ -76,11 +76,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The minimum port number
         /// Serialized Name: PortRange.minPort
         /// </summary>
+        [WirePath("minPort")]
         public int? MinPort { get; set; }
         /// <summary>
         /// The maximum port number
         /// Serialized Name: PortRange.maxPort
         /// </summary>
+        [WirePath("maxPort")]
         public int? MaxPort { get; set; }
     }
 }

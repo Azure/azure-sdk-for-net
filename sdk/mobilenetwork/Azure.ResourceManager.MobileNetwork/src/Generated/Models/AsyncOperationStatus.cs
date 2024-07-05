@@ -122,36 +122,43 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// Fully qualified ID for the async operation.
         /// Serialized Name: AsyncOperationStatus.id
         /// </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary>
         /// Name of the async operation.
         /// Serialized Name: AsyncOperationStatus.name
         /// </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary>
         /// The operation status.
         /// Serialized Name: AsyncOperationStatus.status
         /// </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary>
         /// Fully qualified ID for the resource that this async operation status relates to.
         /// Serialized Name: AsyncOperationStatus.resourceId
         /// </summary>
+        [WirePath("resourceId")]
         public string ResourceId { get; }
         /// <summary>
         /// The start time of the operation.
         /// Serialized Name: AsyncOperationStatus.startTime
         /// </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary>
         /// The end time of the operation.
         /// Serialized Name: AsyncOperationStatus.endTime
         /// </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary>
         /// Percentage of the operation that is complete.
         /// Serialized Name: AsyncOperationStatus.percentComplete
         /// </summary>
+        [WirePath("percentComplete")]
         public double? PercentComplete { get; }
         /// <summary>
         /// Properties returned by the resource provider on a successful operation
@@ -184,11 +191,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; }
         /// <summary>
         /// If present, details of the operation error.
         /// Serialized Name: AsyncOperationStatus.error
         /// </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

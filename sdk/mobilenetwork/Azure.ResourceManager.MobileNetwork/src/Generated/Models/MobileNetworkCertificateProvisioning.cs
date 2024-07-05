@@ -74,11 +74,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// The certificate's provisioning state
         /// Serialized Name: CertificateProvisioning.state
         /// </summary>
+        [WirePath("state")]
         public CertificateProvisioningState? State { get; }
         /// <summary>
         /// Reason for certificate provisioning failure.
         /// Serialized Name: CertificateProvisioning.reason
         /// </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }
