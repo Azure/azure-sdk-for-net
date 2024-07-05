@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The New Relic Organization Id. </summary>
+        [WirePath("organizationId")]
         public string OrganizationId { get; }
         /// <summary> The New Relic Organization Name. </summary>
+        [WirePath("organizationName")]
         public string OrganizationName { get; }
     }
 }

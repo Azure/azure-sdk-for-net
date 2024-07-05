@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 PlanData = new NewRelicPlanDetails()
                 {
                     UsageType = NewRelicObservabilityUsageType.Payg,
-                    BillingCycle = "Yearly",
+                    NewRelicPlanBillingCycle = "Yearly",
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },
@@ -445,7 +445,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
                 PlanData = new NewRelicPlanDetails()
                 {
                     UsageType = NewRelicObservabilityUsageType.Payg,
-                    BillingCycle = "Yearly",
+                    NewRelicPlanBillingCycle = "Yearly",
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },
@@ -731,7 +731,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation
-            BillingInfoResult result = await newRelicMonitorResource.GetBillingInfoAsync();
+            NewRelicBillingInfoResult result = await newRelicMonitorResource.GetBillingInfoAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -758,7 +758,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ConnectedPartnerResourcesListFormat item in newRelicMonitorResource.GetConnectedPartnerResourcesAsync())
+            await foreach (NewRelicConnectedPartnerResourceInfo item in newRelicMonitorResource.GetConnectedPartnerResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -19,28 +19,28 @@ using Azure.ResourceManager.NewRelicObservability.Models;
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MonitoredSubscriptionPropertyResource"/> and their operations.
-    /// Each <see cref="MonitoredSubscriptionPropertyResource"/> in the collection will belong to the same instance of <see cref="NewRelicMonitorResource"/>.
-    /// To get a <see cref="MonitoredSubscriptionPropertyCollection"/> instance call the GetMonitoredSubscriptionProperties method from an instance of <see cref="NewRelicMonitorResource"/>.
+    /// A class representing a collection of <see cref="NewRelicMonitoredSubscriptionResource"/> and their operations.
+    /// Each <see cref="NewRelicMonitoredSubscriptionResource"/> in the collection will belong to the same instance of <see cref="NewRelicMonitorResource"/>.
+    /// To get a <see cref="NewRelicMonitoredSubscriptionCollection"/> instance call the GetNewRelicMonitoredSubscriptions method from an instance of <see cref="NewRelicMonitorResource"/>.
     /// </summary>
-    public partial class MonitoredSubscriptionPropertyCollection : ArmCollection, IEnumerable<MonitoredSubscriptionPropertyResource>, IAsyncEnumerable<MonitoredSubscriptionPropertyResource>
+    public partial class NewRelicMonitoredSubscriptionCollection : ArmCollection, IEnumerable<NewRelicMonitoredSubscriptionResource>, IAsyncEnumerable<NewRelicMonitoredSubscriptionResource>
     {
-        private readonly ClientDiagnostics _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics;
-        private readonly MonitoredSubscriptionsRestOperations _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient;
+        private readonly ClientDiagnostics _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics;
+        private readonly MonitoredSubscriptionsRestOperations _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MonitoredSubscriptionPropertyCollection"/> class for mocking. </summary>
-        protected MonitoredSubscriptionPropertyCollection()
+        /// <summary> Initializes a new instance of the <see cref="NewRelicMonitoredSubscriptionCollection"/> class for mocking. </summary>
+        protected NewRelicMonitoredSubscriptionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MonitoredSubscriptionPropertyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NewRelicMonitoredSubscriptionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MonitoredSubscriptionPropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NewRelicMonitoredSubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", MonitoredSubscriptionPropertyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MonitoredSubscriptionPropertyResource.ResourceType, out string monitoredSubscriptionPropertyMonitoredSubscriptionsApiVersion);
-            _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient = new MonitoredSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, monitoredSubscriptionPropertyMonitoredSubscriptionsApiVersion);
+            _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", NewRelicMonitoredSubscriptionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NewRelicMonitoredSubscriptionResource.ResourceType, out string newRelicMonitoredSubscriptionMonitoredSubscriptionsApiVersion);
+            _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient = new MonitoredSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, newRelicMonitoredSubscriptionMonitoredSubscriptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
-        /// <param name="data"> The <see cref="MonitoredSubscriptionPropertyData"/> to use. </param>
+        /// <param name="data"> The <see cref="NewRelicMonitoredSubscriptionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MonitoredSubscriptionPropertyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ConfigurationName configurationName, MonitoredSubscriptionPropertyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NewRelicMonitoredSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MonitoredSubscriptionConfigurationName configurationName, NewRelicMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyCollection.CreateOrUpdate");
+            using var scope = _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("NewRelicMonitoredSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NewRelicObservabilityArmOperation<MonitoredSubscriptionPropertyResource>(new MonitoredSubscriptionPropertyOperationSource(Client), _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics, Pipeline, _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource>(new NewRelicMonitoredSubscriptionOperationSource(Client), _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -116,25 +116,25 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
-        /// <param name="data"> The <see cref="MonitoredSubscriptionPropertyData"/> to use. </param>
+        /// <param name="data"> The <see cref="NewRelicMonitoredSubscriptionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MonitoredSubscriptionPropertyResource> CreateOrUpdate(WaitUntil waitUntil, ConfigurationName configurationName, MonitoredSubscriptionPropertyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NewRelicMonitoredSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, MonitoredSubscriptionConfigurationName configurationName, NewRelicMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyCollection.CreateOrUpdate");
+            using var scope = _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("NewRelicMonitoredSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
-                var operation = new NewRelicObservabilityArmOperation<MonitoredSubscriptionPropertyResource>(new MonitoredSubscriptionPropertyOperationSource(Client), _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics, Pipeline, _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
+                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource>(new NewRelicMonitoredSubscriptionOperationSource(Client), _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,22 +163,22 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MonitoredSubscriptionPropertyResource>> GetAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NewRelicMonitoredSubscriptionResource>> GetAsync(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyCollection.Get");
+            using var scope = _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("NewRelicMonitoredSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
+                var response = await _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitoredSubscriptionPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NewRelicMonitoredSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,22 +204,22 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MonitoredSubscriptionPropertyResource> Get(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<NewRelicMonitoredSubscriptionResource> Get(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyCollection.Get");
+            using var scope = _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("NewRelicMonitoredSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
+                var response = _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitoredSubscriptionPropertyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NewRelicMonitoredSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,17 +245,17 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoredSubscriptionPropertyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitoredSubscriptionPropertyResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NewRelicMonitoredSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NewRelicMonitoredSubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitoredSubscriptionPropertyResource(Client, MonitoredSubscriptionPropertyData.DeserializeMonitoredSubscriptionPropertyData(e)), _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics, Pipeline, "MonitoredSubscriptionPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NewRelicMonitoredSubscriptionResource(Client, NewRelicMonitoredSubscriptionData.DeserializeNewRelicMonitoredSubscriptionData(e)), _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, "NewRelicMonitoredSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -275,17 +275,17 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoredSubscriptionPropertyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitoredSubscriptionPropertyResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NewRelicMonitoredSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NewRelicMonitoredSubscriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitoredSubscriptionPropertyResource(Client, MonitoredSubscriptionPropertyData.DeserializeMonitoredSubscriptionPropertyData(e)), _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics, Pipeline, "MonitoredSubscriptionPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NewRelicMonitoredSubscriptionResource(Client, NewRelicMonitoredSubscriptionData.DeserializeNewRelicMonitoredSubscriptionData(e)), _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics, Pipeline, "NewRelicMonitoredSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -305,19 +305,19 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyCollection.Exists");
+            using var scope = _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("NewRelicMonitoredSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,19 +344,19 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyCollection.Exists");
+            using var scope = _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("NewRelicMonitoredSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                var response = _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -383,22 +383,22 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<MonitoredSubscriptionPropertyResource>> GetIfExistsAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NewRelicMonitoredSubscriptionResource>> GetIfExistsAsync(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyCollection.GetIfExists");
+            using var scope = _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("NewRelicMonitoredSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<MonitoredSubscriptionPropertyResource>(response.GetRawResponse());
-                return Response.FromValue(new MonitoredSubscriptionPropertyResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NewRelicMonitoredSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new NewRelicMonitoredSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -424,22 +424,22 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<MonitoredSubscriptionPropertyResource> GetIfExists(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NewRelicMonitoredSubscriptionResource> GetIfExists(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitoredSubscriptionPropertyMonitoredSubscriptionsClientDiagnostics.CreateScope("MonitoredSubscriptionPropertyCollection.GetIfExists");
+            using var scope = _newRelicMonitoredSubscriptionMonitoredSubscriptionsClientDiagnostics.CreateScope("NewRelicMonitoredSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _monitoredSubscriptionPropertyMonitoredSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                var response = _newRelicMonitoredSubscriptionMonitoredSubscriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<MonitoredSubscriptionPropertyResource>(response.GetRawResponse());
-                return Response.FromValue(new MonitoredSubscriptionPropertyResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NewRelicMonitoredSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new NewRelicMonitoredSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
-        IEnumerator<MonitoredSubscriptionPropertyResource> IEnumerable<MonitoredSubscriptionPropertyResource>.GetEnumerator()
+        IEnumerator<NewRelicMonitoredSubscriptionResource> IEnumerable<NewRelicMonitoredSubscriptionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MonitoredSubscriptionPropertyResource> IAsyncEnumerable<MonitoredSubscriptionPropertyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NewRelicMonitoredSubscriptionResource> IAsyncEnumerable<NewRelicMonitoredSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

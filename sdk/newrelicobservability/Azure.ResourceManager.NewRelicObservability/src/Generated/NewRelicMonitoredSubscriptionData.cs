@@ -14,10 +14,10 @@ using Azure.ResourceManager.NewRelicObservability.Models;
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
-    /// A class representing the MonitoredSubscriptionProperty data model.
+    /// A class representing the NewRelicMonitoredSubscription data model.
     /// The request to update subscriptions needed to be monitored by the NewRelic monitor resource.
     /// </summary>
-    public partial class MonitoredSubscriptionPropertyData : ResourceData
+    public partial class NewRelicMonitoredSubscriptionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +51,26 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertyData"/>. </summary>
-        public MonitoredSubscriptionPropertyData()
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionData"/>. </summary>
+        public NewRelicMonitoredSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscriptionPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubscriptionList properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NewRelicMonitoredSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewRelicMonitoredSubscriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
-        public SubscriptionList Properties { get; set; }
+        [WirePath("properties")]
+        public NewRelicMonitoredSubscriptionProperties Properties { get; set; }
     }
 }

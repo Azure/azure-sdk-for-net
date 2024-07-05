@@ -227,13 +227,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BillingInfoResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicBillingInfoResult"/>. </summary>
         /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
         /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
-        /// <returns> A new <see cref="Models.BillingInfoResult"/> instance for mocking. </returns>
-        public static BillingInfoResult BillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo = null, PartnerBillingEntity partnerBillingEntity = null)
+        /// <returns> A new <see cref="Models.NewRelicBillingInfoResult"/> instance for mocking. </returns>
+        public static NewRelicBillingInfoResult NewRelicBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo = null, PartnerBillingEntity partnerBillingEntity = null)
         {
-            return new BillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, serializedAdditionalRawData: null);
+            return new NewRelicBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
@@ -263,23 +263,23 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new PartnerBillingEntity(organizationId, organizationName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectedPartnerResourcesListFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicConnectedPartnerResourceInfo"/>. </summary>
         /// <param name="properties"> Connected Partner Resource Properties. </param>
-        /// <returns> A new <see cref="Models.ConnectedPartnerResourcesListFormat"/> instance for mocking. </returns>
-        public static ConnectedPartnerResourcesListFormat ConnectedPartnerResourcesListFormat(ConnectedPartnerResourceProperties properties = null)
+        /// <returns> A new <see cref="Models.NewRelicConnectedPartnerResourceInfo"/> instance for mocking. </returns>
+        public static NewRelicConnectedPartnerResourceInfo NewRelicConnectedPartnerResourceInfo(NewRelicConnectedPartnerResourceProperties properties = null)
         {
-            return new ConnectedPartnerResourcesListFormat(properties, serializedAdditionalRawData: null);
+            return new NewRelicConnectedPartnerResourceInfo(properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectedPartnerResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicConnectedPartnerResourceProperties"/>. </summary>
         /// <param name="accountName"> NewRelic account name. </param>
         /// <param name="accountId"> NewRelic Account Id. </param>
         /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
         /// <param name="location"> The location of the deployment. </param>
-        /// <returns> A new <see cref="Models.ConnectedPartnerResourceProperties"/> instance for mocking. </returns>
-        public static ConnectedPartnerResourceProperties ConnectedPartnerResourceProperties(string accountName = null, string accountId = null, string azureResourceId = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="Models.NewRelicConnectedPartnerResourceProperties"/> instance for mocking. </returns>
+        public static NewRelicConnectedPartnerResourceProperties NewRelicConnectedPartnerResourceProperties(string accountName = null, string accountId = null, string azureResourceId = null, AzureLocation? location = null)
         {
-            return new ConnectedPartnerResourceProperties(accountName, accountId, azureResourceId, location, serializedAdditionalRawData: null);
+            return new NewRelicConnectedPartnerResourceProperties(accountName, accountId, azureResourceId, location, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservability.NewRelicObservabilityTagRuleData"/>. </summary>
@@ -304,26 +304,26 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MonitoringTagRulesProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicMonitoringTagRules"/>. </summary>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
-        /// <returns> A new <see cref="Models.MonitoringTagRulesProperties"/> instance for mocking. </returns>
-        public static MonitoringTagRulesProperties MonitoringTagRulesProperties(NewRelicProvisioningState? provisioningState = null, NewRelicObservabilityLogRules logRules = null, NewRelicObservabilityMetricRules metricRules = null)
+        /// <returns> A new <see cref="Models.NewRelicMonitoringTagRules"/> instance for mocking. </returns>
+        public static NewRelicMonitoringTagRules NewRelicMonitoringTagRules(NewRelicProvisioningState? provisioningState = null, NewRelicObservabilityLogRules logRules = null, NewRelicObservabilityMetricRules metricRules = null)
         {
-            return new MonitoringTagRulesProperties(provisioningState, logRules, metricRules, serializedAdditionalRawData: null);
+            return new NewRelicMonitoringTagRules(provisioningState, logRules, metricRules, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservability.MonitoredSubscriptionPropertyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservability.NewRelicMonitoredSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </param>
-        /// <returns> A new <see cref="NewRelicObservability.MonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
-        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionList properties = null)
+        /// <returns> A new <see cref="NewRelicObservability.NewRelicMonitoredSubscriptionData"/> instance for mocking. </returns>
+        public static NewRelicMonitoredSubscriptionData NewRelicMonitoredSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NewRelicMonitoredSubscriptionProperties properties = null)
         {
-            return new MonitoredSubscriptionPropertyData(
+            return new NewRelicMonitoredSubscriptionData(
                 id,
                 name,
                 resourceType,
@@ -332,16 +332,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicMonitoredSubscriptionProperties"/>. </summary>
         /// <param name="patchOperation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <returns> A new <see cref="Models.SubscriptionList"/> instance for mocking. </returns>
-        public static SubscriptionList SubscriptionList(PatchOperation? patchOperation = null, IEnumerable<MonitoredSubscription> monitoredSubscriptionList = null, NewRelicProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.NewRelicMonitoredSubscriptionProperties"/> instance for mocking. </returns>
+        public static NewRelicMonitoredSubscriptionProperties NewRelicMonitoredSubscriptionProperties(MonitoredSubscriptionPatchOperation? patchOperation = null, IEnumerable<NewRelicMonitoredSubscriptionInfo> monitoredSubscriptionList = null, NewRelicProvisioningState? provisioningState = null)
         {
-            monitoredSubscriptionList ??= new List<MonitoredSubscription>();
+            monitoredSubscriptionList ??= new List<NewRelicMonitoredSubscriptionInfo>();
 
-            return new SubscriptionList(patchOperation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new NewRelicMonitoredSubscriptionProperties(patchOperation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NewRelicObservabilityVmExtensionPayload"/>. </summary>

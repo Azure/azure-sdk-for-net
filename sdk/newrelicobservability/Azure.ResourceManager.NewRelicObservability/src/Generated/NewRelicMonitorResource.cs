@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.NewRelicObservability
             return GetNewRelicObservabilityTagRules().Get(ruleSetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MonitoredSubscriptionPropertyResources in the NewRelicMonitorResource. </summary>
-        /// <returns> An object representing collection of MonitoredSubscriptionPropertyResources and their operations over a MonitoredSubscriptionPropertyResource. </returns>
-        public virtual MonitoredSubscriptionPropertyCollection GetMonitoredSubscriptionProperties()
+        /// <summary> Gets a collection of NewRelicMonitoredSubscriptionResources in the NewRelicMonitorResource. </summary>
+        /// <returns> An object representing collection of NewRelicMonitoredSubscriptionResources and their operations over a NewRelicMonitoredSubscriptionResource. </returns>
+        public virtual NewRelicMonitoredSubscriptionCollection GetNewRelicMonitoredSubscriptions()
         {
-            return GetCachedClient(client => new MonitoredSubscriptionPropertyCollection(client, Id));
+            return GetCachedClient(client => new NewRelicMonitoredSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -194,16 +194,16 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MonitoredSubscriptionPropertyResource>> GetMonitoredSubscriptionPropertyAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NewRelicMonitoredSubscriptionResource>> GetNewRelicMonitoredSubscriptionAsync(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitoredSubscriptionProperties().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+            return await GetNewRelicMonitoredSubscriptions().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -223,16 +223,16 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MonitoredSubscriptionPropertyResource"/></description>
+        /// <description><see cref="NewRelicMonitoredSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. Only 'default' value is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<MonitoredSubscriptionPropertyResource> GetMonitoredSubscriptionProperty(ConfigurationName configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<NewRelicMonitoredSubscriptionResource> GetNewRelicMonitoredSubscription(MonitoredSubscriptionConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            return GetMonitoredSubscriptionProperties().Get(configurationName, cancellationToken);
+            return GetNewRelicMonitoredSubscriptions().Get(configurationName, cancellationToken);
         }
 
         /// <summary>
@@ -399,50 +399,6 @@ namespace Azure.ResourceManager.NewRelicObservability
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a NewRelicMonitorResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicMonitorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<NewRelicMonitorResource>> UpdateAsync(NewRelicMonitorResourcePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _newRelicMonitorResourceMonitorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NewRelicObservabilityArmOperation<NewRelicMonitorResource>(new NewRelicMonitorResourceOperationSource(Client), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, _newRelicMonitorResourceMonitorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
-                var finalResponse = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(finalResponse.Value, finalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1145,7 +1101,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingInfoResult>> GetBillingInfoAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NewRelicBillingInfoResult>> GetBillingInfoAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _billingInfoClientDiagnostics.CreateScope("NewRelicMonitorResource.GetBillingInfo");
             scope.Start();
@@ -1179,7 +1135,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingInfoResult> GetBillingInfo(CancellationToken cancellationToken = default)
+        public virtual Response<NewRelicBillingInfoResult> GetBillingInfo(CancellationToken cancellationToken = default)
         {
             using var scope = _billingInfoClientDiagnostics.CreateScope("NewRelicMonitorResource.GetBillingInfo");
             scope.Start();
@@ -1214,12 +1170,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </summary>
         /// <param name="body"> Email Id of the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectedPartnerResourcesListFormat"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConnectedPartnerResourcesListFormat> GetConnectedPartnerResourcesAsync(string body = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NewRelicConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NewRelicConnectedPartnerResourceInfo> GetConnectedPartnerResourcesAsync(string body = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedPartnerResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedPartnerResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConnectedPartnerResourcesListFormat.DeserializeConnectedPartnerResourcesListFormat(e), _connectedPartnerResourcesClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetConnectedPartnerResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NewRelicConnectedPartnerResourceInfo.DeserializeNewRelicConnectedPartnerResourceInfo(e), _connectedPartnerResourcesClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetConnectedPartnerResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1241,12 +1197,12 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </summary>
         /// <param name="body"> Email Id of the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectedPartnerResourcesListFormat"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConnectedPartnerResourcesListFormat> GetConnectedPartnerResources(string body = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NewRelicConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NewRelicConnectedPartnerResourceInfo> GetConnectedPartnerResources(string body = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedPartnerResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedPartnerResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConnectedPartnerResourcesListFormat.DeserializeConnectedPartnerResourcesListFormat(e), _connectedPartnerResourcesClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetConnectedPartnerResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NewRelicConnectedPartnerResourceInfo.DeserializeNewRelicConnectedPartnerResourceInfo(e), _connectedPartnerResourcesClientDiagnostics, Pipeline, "NewRelicMonitorResource.GetConnectedPartnerResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

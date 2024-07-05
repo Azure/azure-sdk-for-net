@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
-    public partial class SubscriptionList
+    public partial class NewRelicMonitoredSubscriptionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
-        public SubscriptionList()
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionProperties"/>. </summary>
+        public NewRelicMonitoredSubscriptionProperties()
         {
-            MonitoredSubscriptionList = new ChangeTrackingList<MonitoredSubscription>();
+            MonitoredSubscriptionList = new ChangeTrackingList<NewRelicMonitoredSubscriptionInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionProperties"/>. </summary>
         /// <param name="patchOperation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionList(PatchOperation? patchOperation, IList<MonitoredSubscription> monitoredSubscriptionList, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NewRelicMonitoredSubscriptionProperties(MonitoredSubscriptionPatchOperation? patchOperation, IList<NewRelicMonitoredSubscriptionInfo> monitoredSubscriptionList, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PatchOperation = patchOperation;
             MonitoredSubscriptionList = monitoredSubscriptionList;
@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The operation for the patch on the resource. </summary>
-        public PatchOperation? PatchOperation { get; set; }
+        [WirePath("patchOperation")]
+        public MonitoredSubscriptionPatchOperation? PatchOperation { get; set; }
         /// <summary> List of subscriptions and the state of the monitoring. </summary>
-        public IList<MonitoredSubscription> MonitoredSubscriptionList { get; }
+        [WirePath("monitoredSubscriptionList")]
+        public IList<NewRelicMonitoredSubscriptionInfo> MonitoredSubscriptionList { get; }
         /// <summary> Provisioning State of the resource. </summary>
+        [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; }
     }
 }

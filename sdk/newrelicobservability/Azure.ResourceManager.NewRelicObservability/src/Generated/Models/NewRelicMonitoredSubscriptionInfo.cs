@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Connected Partner Resource Properties. </summary>
-    public partial class ConnectedPartnerResourceProperties
+    /// <summary> The list of subscriptions and it's monitoring status by current NewRelic monitor. </summary>
+    public partial class NewRelicMonitoredSubscriptionInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,33 +45,37 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourceProperties"/>. </summary>
-        internal ConnectedPartnerResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionInfo"/>. </summary>
+        public NewRelicMonitoredSubscriptionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourceProperties"/>. </summary>
-        /// <param name="accountName"> NewRelic account name. </param>
-        /// <param name="accountId"> NewRelic Account Id. </param>
-        /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
-        /// <param name="location"> The location of the deployment. </param>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionInfo"/>. </summary>
+        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
+        /// <param name="status"> The state of monitoring. </param>
+        /// <param name="error"> The reason of not monitoring the subscription. </param>
+        /// <param name="tagRules"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedPartnerResourceProperties(string accountName, string accountId, string azureResourceId, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NewRelicMonitoredSubscriptionInfo(string subscriptionId, NewRelicMonitoringStatus? status, string error, NewRelicMonitoringTagRules tagRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AccountName = accountName;
-            AccountId = accountId;
-            AzureResourceId = azureResourceId;
-            Location = location;
+            SubscriptionId = subscriptionId;
+            Status = status;
+            Error = error;
+            TagRules = tagRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> NewRelic account name. </summary>
-        public string AccountName { get; }
-        /// <summary> NewRelic Account Id. </summary>
-        public string AccountId { get; }
-        /// <summary> The azure resource Id of the deployment. </summary>
-        public string AzureResourceId { get; }
-        /// <summary> The location of the deployment. </summary>
-        public AzureLocation? Location { get; }
+        /// <summary> The subscriptionId to be monitored. </summary>
+        [WirePath("subscriptionId")]
+        public string SubscriptionId { get; set; }
+        /// <summary> The state of monitoring. </summary>
+        [WirePath("status")]
+        public NewRelicMonitoringStatus? Status { get; set; }
+        /// <summary> The reason of not monitoring the subscription. </summary>
+        [WirePath("error")]
+        public string Error { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("tagRules")]
+        public NewRelicMonitoringTagRules TagRules { get; set; }
     }
 }

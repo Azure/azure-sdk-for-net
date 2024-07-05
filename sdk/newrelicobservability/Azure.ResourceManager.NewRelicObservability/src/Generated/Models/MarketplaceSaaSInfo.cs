@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Marketplace Subscription Id. This is a GUID-formatted string. </summary>
+        [WirePath("marketplaceSubscriptionId")]
         public string MarketplaceSubscriptionId { get; }
         /// <summary> Marketplace Subscription Details: SAAS Name. </summary>
+        [WirePath("marketplaceSubscriptionName")]
         public string MarketplaceSubscriptionName { get; }
         /// <summary> Marketplace Subscription Details: Resource URI. </summary>
+        [WirePath("marketplaceResourceId")]
         public string MarketplaceResourceId { get; }
         /// <summary> Marketplace Subscription Details: SaaS Subscription Status. </summary>
+        [WirePath("marketplaceStatus")]
         public string MarketplaceStatus { get; }
         /// <summary> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </summary>
+        [WirePath("billedAzureSubscriptionId")]
         public string BilledAzureSubscriptionId { get; }
     }
 }

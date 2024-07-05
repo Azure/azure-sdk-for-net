@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The resource-specific properties for this resource. </summary>
-    public partial class MonitoringTagRulesProperties
+    public partial class NewRelicMonitoringTagRules
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
-        public MonitoringTagRulesProperties()
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitoringTagRules"/>. </summary>
+        public NewRelicMonitoringTagRules()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitoringTagRules"/>. </summary>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringTagRulesProperties(NewRelicProvisioningState? provisioningState, NewRelicObservabilityLogRules logRules, NewRelicObservabilityMetricRules metricRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NewRelicMonitoringTagRules(NewRelicProvisioningState? provisioningState, NewRelicObservabilityLogRules logRules, NewRelicObservabilityMetricRules metricRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             LogRules = logRules;
@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Provisioning State of the resource. </summary>
+        [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; }
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+        [WirePath("logRules")]
         public NewRelicObservabilityLogRules LogRules { get; set; }
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
+        [WirePath("metricRules")]
         public NewRelicObservabilityMetricRules MetricRules { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -138,6 +139,136 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketplaceSubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketplaceSubscriptionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MarketplaceSubscriptionId))
+                {
+                    builder.Append("  marketplaceSubscriptionId: ");
+                    if (MarketplaceSubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MarketplaceSubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MarketplaceSubscriptionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketplaceSubscriptionName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketplaceSubscriptionName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MarketplaceSubscriptionName))
+                {
+                    builder.Append("  marketplaceSubscriptionName: ");
+                    if (MarketplaceSubscriptionName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MarketplaceSubscriptionName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MarketplaceSubscriptionName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketplaceResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketplaceResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MarketplaceResourceId))
+                {
+                    builder.Append("  marketplaceResourceId: ");
+                    if (MarketplaceResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MarketplaceResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MarketplaceResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketplaceStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketplaceStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MarketplaceStatus))
+                {
+                    builder.Append("  marketplaceStatus: ");
+                    if (MarketplaceStatus.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MarketplaceStatus}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MarketplaceStatus}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BilledAzureSubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billedAzureSubscriptionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BilledAzureSubscriptionId))
+                {
+                    builder.Append("  billedAzureSubscriptionId: ");
+                    if (BilledAzureSubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BilledAzureSubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BilledAzureSubscriptionId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MarketplaceSaaSInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceSaaSInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,6 +277,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MarketplaceSaaSInfo)} does not support writing '{options.Format}' format.");
             }

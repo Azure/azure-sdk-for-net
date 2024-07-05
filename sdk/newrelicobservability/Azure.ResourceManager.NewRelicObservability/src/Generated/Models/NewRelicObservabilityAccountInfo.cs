@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Account id. </summary>
+        [WirePath("accountId")]
         public string AccountId { get; set; }
         /// <summary> ingestion key of account. </summary>
+        [WirePath("ingestionKey")]
         public string IngestionKey { get; set; }
         /// <summary> Region where New Relic account is present. </summary>
+        [WirePath("region")]
         public AzureLocation? Region { get; set; }
     }
 }

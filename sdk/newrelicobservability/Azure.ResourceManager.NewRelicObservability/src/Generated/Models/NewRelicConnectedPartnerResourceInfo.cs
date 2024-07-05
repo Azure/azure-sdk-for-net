@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Connected Partner Resources List Format. </summary>
-    public partial class ConnectedPartnerResourcesListFormat
+    public partial class NewRelicConnectedPartnerResourceInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourcesListFormat"/>. </summary>
-        internal ConnectedPartnerResourcesListFormat()
+        /// <summary> Initializes a new instance of <see cref="NewRelicConnectedPartnerResourceInfo"/>. </summary>
+        internal NewRelicConnectedPartnerResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourcesListFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicConnectedPartnerResourceInfo"/>. </summary>
         /// <param name="properties"> Connected Partner Resource Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedPartnerResourcesListFormat(ConnectedPartnerResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NewRelicConnectedPartnerResourceInfo(NewRelicConnectedPartnerResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Connected Partner Resource Properties. </summary>
-        public ConnectedPartnerResourceProperties Properties { get; }
+        [WirePath("properties")]
+        public NewRelicConnectedPartnerResourceProperties Properties { get; }
     }
 }

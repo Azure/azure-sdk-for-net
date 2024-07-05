@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> organization id. </summary>
+        [WirePath("properties.organizationId")]
         public string OrganizationId { get; set; }
         /// <summary> account id. </summary>
+        [WirePath("properties.accountId")]
         public string AccountId { get; set; }
         /// <summary> account name. </summary>
+        [WirePath("properties.accountName")]
         public string AccountName { get; set; }
         /// <summary> Region where New Relic account is present. </summary>
+        [WirePath("properties.region")]
         public AzureLocation? Region { get; set; }
     }
 }

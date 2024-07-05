@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
                 PlanData = new NewRelicPlanDetails()
                 {
                     UsageType = NewRelicObservabilityUsageType.Payg,
-                    BillingCycle = "Yearly",
+                    NewRelicPlanBillingCycle = "Yearly",
                     PlanDetails = "tbbiaga",
                     EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
                 },

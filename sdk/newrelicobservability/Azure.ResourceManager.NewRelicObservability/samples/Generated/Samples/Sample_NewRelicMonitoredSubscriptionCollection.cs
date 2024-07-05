@@ -13,7 +13,7 @@ using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Samples
 {
-    public partial class Sample_MonitoredSubscriptionPropertyCollection
+    public partial class Sample_NewRelicMonitoredSubscriptionCollection
     {
         // Monitors_GetMonitoredSubscriptions
         [NUnit.Framework.Test]
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = newRelicMonitorResource.GetMonitoredSubscriptionProperties();
+            // get the collection of this NewRelicMonitoredSubscriptionResource
+            NewRelicMonitoredSubscriptionCollection collection = newRelicMonitorResource.GetNewRelicMonitoredSubscriptions();
 
             // invoke the operation and iterate over the result
-            await foreach (MonitoredSubscriptionPropertyResource item in collection.GetAllAsync())
+            await foreach (NewRelicMonitoredSubscriptionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MonitoredSubscriptionPropertyData resourceData = item.Data;
+                NewRelicMonitoredSubscriptionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = newRelicMonitorResource.GetMonitoredSubscriptionProperties();
+            // get the collection of this NewRelicMonitoredSubscriptionResource
+            NewRelicMonitoredSubscriptionCollection collection = newRelicMonitorResource.GetNewRelicMonitoredSubscriptions();
 
             // invoke the operation
-            ConfigurationName configurationName = ConfigurationName.Default;
-            MonitoredSubscriptionPropertyResource result = await collection.GetAsync(configurationName);
+            MonitoredSubscriptionConfigurationName configurationName = MonitoredSubscriptionConfigurationName.Default;
+            NewRelicMonitoredSubscriptionResource result = await collection.GetAsync(configurationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MonitoredSubscriptionPropertyData resourceData = result.Data;
+            NewRelicMonitoredSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = newRelicMonitorResource.GetMonitoredSubscriptionProperties();
+            // get the collection of this NewRelicMonitoredSubscriptionResource
+            NewRelicMonitoredSubscriptionCollection collection = newRelicMonitorResource.GetNewRelicMonitoredSubscriptions();
 
             // invoke the operation
-            ConfigurationName configurationName = ConfigurationName.Default;
+            MonitoredSubscriptionConfigurationName configurationName = MonitoredSubscriptionConfigurationName.Default;
             bool result = await collection.ExistsAsync(configurationName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = newRelicMonitorResource.GetMonitoredSubscriptionProperties();
+            // get the collection of this NewRelicMonitoredSubscriptionResource
+            NewRelicMonitoredSubscriptionCollection collection = newRelicMonitorResource.GetNewRelicMonitoredSubscriptions();
 
             // invoke the operation
-            ConfigurationName configurationName = ConfigurationName.Default;
-            NullableResponse<MonitoredSubscriptionPropertyResource> response = await collection.GetIfExistsAsync(configurationName);
-            MonitoredSubscriptionPropertyResource result = response.HasValue ? response.Value : null;
+            MonitoredSubscriptionConfigurationName configurationName = MonitoredSubscriptionConfigurationName.Default;
+            NullableResponse<NewRelicMonitoredSubscriptionResource> response = await collection.GetIfExistsAsync(configurationName);
+            NewRelicMonitoredSubscriptionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MonitoredSubscriptionPropertyData resourceData = result.Data;
+                NewRelicMonitoredSubscriptionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -182,18 +182,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
             NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
 
-            // get the collection of this MonitoredSubscriptionPropertyResource
-            MonitoredSubscriptionPropertyCollection collection = newRelicMonitorResource.GetMonitoredSubscriptionProperties();
+            // get the collection of this NewRelicMonitoredSubscriptionResource
+            NewRelicMonitoredSubscriptionCollection collection = newRelicMonitorResource.GetNewRelicMonitoredSubscriptions();
 
             // invoke the operation
-            ConfigurationName configurationName = ConfigurationName.Default;
-            MonitoredSubscriptionPropertyData data = new MonitoredSubscriptionPropertyData();
-            ArmOperation<MonitoredSubscriptionPropertyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
-            MonitoredSubscriptionPropertyResource result = lro.Value;
+            MonitoredSubscriptionConfigurationName configurationName = MonitoredSubscriptionConfigurationName.Default;
+            NewRelicMonitoredSubscriptionData data = new NewRelicMonitoredSubscriptionData();
+            ArmOperation<NewRelicMonitoredSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            NewRelicMonitoredSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MonitoredSubscriptionPropertyData resourceData = result.Data;
+            NewRelicMonitoredSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

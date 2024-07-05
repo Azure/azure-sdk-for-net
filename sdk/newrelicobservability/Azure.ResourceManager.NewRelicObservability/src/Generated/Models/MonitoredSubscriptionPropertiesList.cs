@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
         internal MonitoredSubscriptionPropertiesList()
         {
-            Value = new ChangeTrackingList<MonitoredSubscriptionPropertyData>();
+            Value = new ChangeTrackingList<NewRelicMonitoredSubscriptionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionPropertiesList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoredSubscriptionPropertiesList(IReadOnlyList<MonitoredSubscriptionPropertyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitoredSubscriptionPropertiesList(IReadOnlyList<NewRelicMonitoredSubscriptionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<MonitoredSubscriptionPropertyData> Value { get; }
+        public IReadOnlyList<NewRelicMonitoredSubscriptionData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }
