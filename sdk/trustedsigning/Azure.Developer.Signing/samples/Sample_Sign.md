@@ -7,7 +7,7 @@ To use these samples, you'll first need to set up resources. See [getting starte
 The signing action is used to sign a certificate. This sample demonstrates how to submit a request to sign a byte array using a signature algorithm.
 
 ```C# Snippet:Azure_Developer_Signing_SigningBytes
-CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(region, credential).GetCertificateProfileClient();
 
 using RequestContent content = RequestContent.Create(new
 {
