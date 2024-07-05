@@ -39,41 +39,8 @@ public abstract class CollectionResult<T> : ClientResult, IEnumerable<T>
     {
     }
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="firstPage"></param>
-    /// <returns></returns>
-    public static CollectionResult<T> FromPage(PageResult<T> firstPage)
-        => new PageableCollectionResult(firstPage);
-
     /// <inheritdoc/>
     public abstract IEnumerator<T> GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    private class PageableCollectionResult : CollectionResult<T>
-    {
-        private readonly PageResult<T> _firstPage;
-
-        public PageableCollectionResult(PageResult<T> firstPage)
-        {
-            _firstPage = firstPage;
-            SetRawResponse(firstPage.GetRawResponse());
-        }
-
-        public override IEnumerator<T> GetEnumerator()
-        {
-            PageResult<T> page = _firstPage;
-            while (page.HasNext)
-            {
-                foreach (T value in page.Values)
-                {
-                    yield return value;
-                }
-
-                page = (PageResult<T>)page.GetNextResult();
-            }
-        }
-    }
 }

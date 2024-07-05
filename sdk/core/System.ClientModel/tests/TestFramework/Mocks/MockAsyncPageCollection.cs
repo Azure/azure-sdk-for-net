@@ -4,37 +4,41 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockPageCollection<T> : PageCollection<T>
+public class MockAsyncPageCollection<T> : AsyncPageCollection<T>
 {
     private readonly List<T> _values;
     private readonly int _pageSize;
 
     private int _current;
 
-    public MockPageCollection(List<T> values, int pageSize)
+    public MockAsyncPageCollection(List<T> values, int pageSize)
     {
         _values = values;
         _pageSize = pageSize;
     }
 
-    protected override PageResult<T> GetCurrentPageCore()
-        => GetPageFromCurrentState();
+    protected override async Task<PageResult<T>> GetCurrentPageAsyncCore()
+        => await GetPageFromCurrentStateAsync().ConfigureAwait(false);
 
-    protected override IEnumerator<PageResult<T>> GetEnumeratorCore()
+    protected override async IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken)
     {
         while (_current < _values.Count)
         {
-            yield return GetPageFromCurrentState();
+            yield return await GetPageFromCurrentStateAsync().ConfigureAwait(false);
 
             _current += _pageSize;
         }
     }
 
-    private PageResult<T> GetPageFromCurrentState()
+    private async Task<PageResult<T>> GetPageFromCurrentStateAsync()
     {
+        await Task.Delay(0);
+
         int pageSize = Math.Min(_pageSize, _values.Count - _current);
         List<T> pageValues = _values.GetRange(_current, pageSize);
 
