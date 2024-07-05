@@ -82,17 +82,22 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Logger type. </summary>
+        [WirePath("properties.loggerType")]
         public LoggerType? LoggerType { get; set; }
         /// <summary> Logger description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The name and SendRule connection string of the event hub for azureEventHub logger.
         /// Instrumentation key for applicationInsights logger.
         /// </summary>
+        [WirePath("properties.credentials")]
         public IDictionary<string, string> Credentials { get; }
         /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
+        [WirePath("properties.isBuffered")]
         public bool? IsBuffered { get; set; }
         /// <summary> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </summary>
+        [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
     }
 }

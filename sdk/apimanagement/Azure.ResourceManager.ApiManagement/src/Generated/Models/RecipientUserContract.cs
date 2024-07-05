@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> API Management UserId subscribed to notification. </summary>
+        [WirePath("properties.userId")]
         public string UserId { get; set; }
     }
 }

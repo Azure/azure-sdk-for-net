@@ -80,6 +80,19 @@ param (
     [ValidateNotNull()]
     [hashtable] $EnvironmentVariables = @{},
 
+    # List of CIDR ranges to add to specific resource firewalls, e.g. @(10.100.0.0/16, 10.200.0.0/16)
+    [Parameter()]
+    [ValidateCount(0,399)]
+    [Validatescript({
+        foreach ($range in $PSItem) {
+            if ($range -like '*/31' -or $range -like '*/32') {
+                throw "Firewall IP Ranges cannot contain a /31 or /32 CIDR"
+            }
+        }
+        return $true
+    })]
+    [array] $AllowIpRanges = @(),
+
     [Parameter()]
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
 
@@ -105,15 +118,6 @@ param (
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
-
-$azsdkPipelineVnet = "/subscriptions/a18897a6-7e44-457d-9260-f2854c0aca42/resourceGroups/azsdk-pools/providers/Microsoft.Network/virtualNetworks/azsdk-pipeline-vnet-wus"
-$azsdkPipelineSubnets = @(
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-1804-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2004-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-ubuntu-2204-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2019-general"),
-    ($azsdkPipelineVnet + "/subnets/pipeline-subnet-win-2022-general")
-)
 
 if (!$ServicePrincipalAuth) {
     # Clear secrets if not using Service Principal auth. This prevents secrets
@@ -262,7 +266,7 @@ function MergeHashes([hashtable] $source, [psvariable] $dest)
 function BuildBicepFile([System.IO.FileSystemInfo] $file)
 {
     if (!(Get-Command bicep -ErrorAction Ignore)) {
-        Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/install-bicep-pwsh"
+        Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See aka.ms/bicep-install"
         throw
     }
 
@@ -758,8 +762,9 @@ try {
     if ($TestApplicationSecret -and $ServicePrincipalAuth) {
         $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
     }
-    if ($CI -and $Environment -eq 'AzureCloud') {
-        $templateParameters.Add('azsdkPipelineSubnetList', $azsdkPipelineSubnets)
+    # Only add subnets when running in an azure pipeline context
+    if ($CI -and $Environment -eq 'AzureCloud' -and $env:PoolSubnet) {
+        $templateParameters.Add('azsdkPipelineSubnetList', @($env:PoolSubnet))
     }
 
     $defaultCloudParameters = LoadCloudConfig $Environment
@@ -838,6 +843,32 @@ try {
                                                                 -templateFile $templateFile `
                                                                 -environmentVariables $EnvironmentVariables
 
+        $storageAccounts = Retry { Get-AzResource -ResourceGroupName $ResourceGroupName -ResourceType "Microsoft.Storage/storageAccounts" }
+        # Add client IP to storage account when running as local user. Pipeline's have their own vnet with access
+        if ($storageAccounts) {
+            foreach ($account in $storageAccounts) {
+                $rules = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -AccountName $account.Name
+                if ($rules -and $rules.DefaultAction -eq "Allow") {
+                    Write-Host "Restricting network rules in storage account '$($account.Name)' to deny access by default"
+                    Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -DefaultAction Deny }
+                    if ($CI -and $env:PoolSubnet) {
+                        Write-Host "Enabling access to '$($account.Name)' from pipeline subnet $($env:PoolSubnet)"
+                        Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -VirtualNetworkResourceId $env:PoolSubnet }
+                    } elseif ($AllowIpRanges) {
+                        Write-Host "Enabling access to '$($account.Name)' to $($AllowIpRanges.Length) IP ranges"
+                        $ipRanges = $AllowIpRanges | ForEach-Object {
+                            @{ Action = 'allow'; IPAddressOrRange = $_ }
+                        }
+                        Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -IPRule $ipRanges | Out-Null }
+                    } elseif (!$CI) {
+                        Write-Host "Enabling access to '$($account.Name)' from client IP"
+                        $clientIp ??= Retry { Invoke-RestMethod -Uri 'https://icanhazip.com/' }  # cloudflare owned ip site
+                        Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
+                    }
+                }
+            }
+        }
+
         $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-post.ps1"
         if (Test-Path $postDeploymentScript) {
             Log "Invoking post-deployment script '$postDeploymentScript'"
@@ -852,7 +883,6 @@ try {
         Write-Host "Deleting ARM deployment as it may contain secrets. Deployed resources will not be affected."
         $null = $deployment | Remove-AzResourceGroupDeployment
     }
-
 } finally {
     $exitActions.Invoke()
 }
@@ -1022,6 +1052,10 @@ Optional key-value pairs of parameters to pass to the ARM template(s).
 
 .PARAMETER EnvironmentVariables
 Optional key-value pairs of parameters to set as environment variables to the shell.
+
+.PARAMETER AllowIpRanges
+Optional array of CIDR ranges to add to the network firewall for resource types like storage.
+When running locally, if this parameter is not set then the client's IP will be queried and added to the firewall instead.
 
 .PARAMETER CI
 Indicates the script is run as part of a Continuous Integration / Continuous
