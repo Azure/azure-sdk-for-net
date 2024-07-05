@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> ApiError for Fleet. </summary>
-    public partial class ApiError
+    /// <summary> BaseVirtualMachineProfile. </summary>
+    public partial class BaseVirtualMachineProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiError"/>. </summary>
-        internal ApiError()
+        /// <summary> Initializes a new instance of <see cref="BaseVirtualMachineProfile"/>. </summary>
+        public BaseVirtualMachineProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseVirtualMachineProfile"/>. </summary>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiError(IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BaseVirtualMachineProfile(IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
