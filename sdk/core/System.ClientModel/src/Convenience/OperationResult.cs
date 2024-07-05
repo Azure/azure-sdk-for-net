@@ -14,6 +14,8 @@ public abstract class OperationResult : ClientResult
     }
 
     public ContinuationToken RehydrationToken { get; protected set; }
+
+    // Note: OAI LROs can stop before completing, and user needs to resume them somehow.
     public bool HasCompleted {  get; protected set; }
 }
 #pragma warning restore CS1591 // public XML comments
