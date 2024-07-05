@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly CloudHsmClustersRestOperations _cloudHsmClusterRestClient;
         private readonly ClientDiagnostics _cloudHsmClusterPrivateLinkResourcesClientDiagnostics;
         private readonly CloudHsmClusterPrivateLinkResourcesRestOperations _cloudHsmClusterPrivateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _cloudHsmClustersBackupStatusClientDiagnostics;
-        private readonly CloudHsmClustersBackupStatusRestOperations _cloudHsmClustersBackupStatusRestClient;
-        private readonly ClientDiagnostics _cloudHsmClustersRestoreStatusClientDiagnostics;
-        private readonly CloudHsmClustersRestoreStatusRestOperations _cloudHsmClustersRestoreStatusRestClient;
+        private readonly ClientDiagnostics _cloudHsmClusterBackupStatusClientDiagnostics;
+        private readonly CloudHsmClusterBackupStatusRestOperations _cloudHsmClusterBackupStatusRestClient;
+        private readonly ClientDiagnostics _cloudHsmClusterRestoreStatusClientDiagnostics;
+        private readonly CloudHsmClusterRestoreStatusRestOperations _cloudHsmClusterRestoreStatusRestClient;
         private readonly CloudHsmClusterData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             _cloudHsmClusterRestClient = new CloudHsmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion);
             _cloudHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _cloudHsmClusterPrivateLinkResourcesRestClient = new CloudHsmClusterPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _cloudHsmClustersBackupStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _cloudHsmClustersBackupStatusRestClient = new CloudHsmClustersBackupStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _cloudHsmClustersRestoreStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _cloudHsmClustersRestoreStatusRestClient = new CloudHsmClustersRestoreStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _cloudHsmClusterBackupStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _cloudHsmClusterBackupStatusRestClient = new CloudHsmClusterBackupStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _cloudHsmClusterRestoreStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _cloudHsmClusterRestoreStatusRestClient = new CloudHsmClusterRestoreStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClustersBackupStatus_Get</description>
+        /// <description>CloudHsmClusterBackupStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -851,15 +851,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response<BackupResult>> GetCloudHsmClustersBackupStatuAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupResult>> GetCloudHsmClusterBackupStatuAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClustersBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClustersBackupStatu");
+            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterBackupStatu");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClustersBackupStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudHsmClusterBackupStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClustersBackupStatus_Get</description>
+        /// <description>CloudHsmClusterBackupStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -890,15 +890,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response<BackupResult> GetCloudHsmClustersBackupStatu(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<BackupResult> GetCloudHsmClusterBackupStatu(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClustersBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClustersBackupStatu");
+            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterBackupStatu");
             scope.Start();
             try
             {
-                var response = _cloudHsmClustersBackupStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken);
+                var response = _cloudHsmClusterBackupStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClustersRestoreStatus_Get</description>
+        /// <description>CloudHsmClusterRestoreStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -929,15 +929,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response<RestoreResult>> GetCloudHsmClustersRestoreStatuAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestoreResult>> GetCloudHsmClusterRestoreStatuAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClustersRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClustersRestoreStatu");
+            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterRestoreStatu");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClustersRestoreStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudHsmClusterRestoreStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClustersRestoreStatus_Get</description>
+        /// <description>CloudHsmClusterRestoreStatus_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -968,15 +968,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response<RestoreResult> GetCloudHsmClustersRestoreStatu(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<RestoreResult> GetCloudHsmClusterRestoreStatu(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClustersRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClustersRestoreStatu");
+            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterRestoreStatu");
             scope.Start();
             try
             {
-                var response = _cloudHsmClustersRestoreStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken);
+                var response = _cloudHsmClusterRestoreStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken);
                 return response;
             }
             catch (Exception e)

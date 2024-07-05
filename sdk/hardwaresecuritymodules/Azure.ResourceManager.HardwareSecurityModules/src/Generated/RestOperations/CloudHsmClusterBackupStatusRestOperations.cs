@@ -15,20 +15,20 @@ using Azure.ResourceManager.HardwareSecurityModules.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    internal partial class CloudHsmClustersBackupStatusRestOperations
+    internal partial class CloudHsmClusterBackupStatusRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of CloudHsmClustersBackupStatusRestOperations. </summary>
+        /// <summary> Initializes a new instance of CloudHsmClusterBackupStatusRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CloudHsmClustersBackupStatusRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public CloudHsmClusterBackupStatusRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");

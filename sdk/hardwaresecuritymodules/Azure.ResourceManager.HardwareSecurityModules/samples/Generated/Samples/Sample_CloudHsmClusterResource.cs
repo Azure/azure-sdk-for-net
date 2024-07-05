@@ -308,10 +308,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         // CloudHsmCluster_Get_Backup_Status_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCloudHsmClustersBackupStatu_CloudHsmClusterGetBackupStatusMaximumSetGen()
+        public async Task GetCloudHsmClusterBackupStatu_CloudHsmClusterGetBackupStatusMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Backup_Pending_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClustersBackupStatus_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "CloudHsmClusterBackupStatus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
             // invoke the operation
             string jobId = "572a45927fc240e1ac075de27371680b";
-            BackupResult result = await cloudHsmCluster.GetCloudHsmClustersBackupStatuAsync(jobId);
+            BackupResult result = await cloudHsmCluster.GetCloudHsmClusterBackupStatuAsync(jobId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -336,10 +336,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         // CloudHsmCluster_Get_Restore_Status_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCloudHsmClustersRestoreStatu_CloudHsmClusterGetRestoreStatusMaximumSetGen()
+        public async Task GetCloudHsmClusterRestoreStatu_CloudHsmClusterGetRestoreStatusMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Restore_Pending_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClustersRestoreStatus_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "CloudHsmClusterRestoreStatus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
             // invoke the operation
             string jobId = "572a45927fc240e1ac075de27371680b";
-            RestoreResult result = await cloudHsmCluster.GetCloudHsmClustersRestoreStatuAsync(jobId);
+            RestoreResult result = await cloudHsmCluster.GetCloudHsmClusterRestoreStatuAsync(jobId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
