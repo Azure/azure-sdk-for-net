@@ -28,6 +28,7 @@ namespace Azure.Identity
         private const int MsalLogWarningEvent = 9;
         private const int MsalLogErrorEvent = 10;
         private const int MsalLogCriticalEvent = 23;
+        private const int MsalLogAlwaysEvent = 24;
         private const int InteractiveAuthenticationThreadPoolExecutionEvent = 11;
         private const int InteractiveAuthenticationInlineExecutionEvent = 12;
         private const int DefaultAzureCredentialCredentialSelectedEvent = 13;
@@ -83,8 +84,10 @@ namespace Azure.Identity
                     LogMsalInformational(entry.Message);
                     break;
                 case EventLogLevel.Verbose when IsEnabled(EventLevel.Verbose, EventKeywords.All):
-                case EventLogLevel.LogAlways when IsEnabled(EventLevel.Verbose, EventKeywords.All):
                     LogMsalVerbose(entry.Message);
+                    break;
+                case EventLogLevel.LogAlways when IsEnabled(EventLevel.Verbose, EventKeywords.All):
+                    LogMsalAlways(entry.Message);
                     break;
             }
         }
@@ -264,6 +267,12 @@ namespace Azure.Identity
         public void LogMsalVerbose(string message)
         {
             WriteEvent(MsalLogVerboseEvent, message);
+        }
+
+        [Event(MsalLogAlwaysEvent, Level = EventLevel.LogAlways, Message = "{0}")]
+        public void LogMsalAlways(string message)
+        {
+            WriteEvent(MsalLogAlwaysEvent, message);
         }
 
         [NonEvent]
