@@ -471,7 +471,7 @@ Message = "ulvhmhokezathzzauiitu",
         public async Task GenerateDownloadUri_FirmwaresGenerateDownloadUrlMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_GenerateDownloadUrl_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_GenerateDownloadUrl" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firmwares_GenerateDownloadUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -499,7 +499,7 @@ Message = "ulvhmhokezathzzauiitu",
         public async Task GenerateDownloadUri_FirmwaresGenerateDownloadUrlMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_GenerateDownloadUrl_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_GenerateDownloadUrl" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firmwares_GenerateDownloadUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -527,7 +527,7 @@ Message = "ulvhmhokezathzzauiitu",
         public async Task GenerateFilesystemDownloadUri_FirmwaresGenerateFilesystemDownloadUrlMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_GenerateFilesystemDownloadUrl_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_GenerateFilesystemDownloadUrl" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firmwares_GenerateFilesystemDownloadUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -555,7 +555,7 @@ Message = "ulvhmhokezathzzauiitu",
         public async Task GenerateFilesystemDownloadUri_FirmwaresGenerateFilesystemDownloadUrlMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_GenerateFilesystemDownloadUrl_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_GenerateFilesystemDownloadUrl" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firmwares_GenerateFilesystemDownloadUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

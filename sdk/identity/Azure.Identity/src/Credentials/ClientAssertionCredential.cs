@@ -86,7 +86,7 @@ namespace Azure.Identity
 
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
 
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {
@@ -110,7 +110,7 @@ namespace Azure.Identity
 
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
 
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {

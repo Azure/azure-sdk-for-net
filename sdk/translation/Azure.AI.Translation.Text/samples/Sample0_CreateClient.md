@@ -54,8 +54,8 @@ Instead of API key and Region authentication you can use JWT token. For informat
 Once you have the value for the token, create an class that extends `Azure.Core.TokenCredential`. With the value of the `AzureKeyCredential` and your service returning tokens, you can create the [TextTranslationClient][translator_client_class]:
 
 ```C# Snippet:CreateTextTranslationClientWithToken
-string apiKey = "<Text Translator Resource API Key>";
-TokenCredential credential = new CustomTokenCredential(new AzureKeyCredential(apiKey));
+string token = "<Cognitive Services Token>";
+TokenCredential credential = new StaticAccessTokenCredential(new AccessToken(token, DateTimeOffset.Now.AddMinutes(1)));
 TextTranslationClient client = new(credential);
 ```
 

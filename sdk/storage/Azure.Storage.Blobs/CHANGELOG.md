@@ -1,6 +1,6 @@
 # Release History
 
-## 12.21.0-beta.1 (Unreleased)
+## 12.21.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.21.0-beta.1 (2024-06-11)
+- Added support for service version 2024-08-04.
+- Added BlobContainerClient.GetAccountInfo(), .GetAccountInfoAsync(), BlobBaseClient.GetAccountInfo(), and .GetAccountInfoAsync() APIs.
+- Added more detailed messaging for authorization failure cases.
 
 ## 12.20.0 (2024-05-13)
 - Includes all features from 12.20.0-beta.1 and 12.20.0-beta.2.

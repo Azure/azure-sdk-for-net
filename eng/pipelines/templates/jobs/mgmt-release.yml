@@ -55,15 +55,12 @@ jobs:
             GH_TOKEN: $(azuresdk-github-pat)
           condition: and(succeeded(), ne(variables['SkipCreateTagAndGitRelease'], 'true'))
 
-        - task: MSBuild@1
+        - template: pipelines/steps/publish-symbols.yml@azure-sdk-build-tools
           displayName: 'Upload Symbols'
-          inputs:
-            solution: '${{ parameters.BuildToolsPath }}/tools/symboltool/SymbolUploader.proj'
-            msbuildArguments: >
-              /p:PackagesPath=$(PIPELINE.WORKSPACE)/packages
-              /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
-              /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
-              /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
+          parameters:
+            BuildToolsRepositoryPath: ${{ parameters.BuildToolsPath }}
+            PackagesPath: $(PIPELINE.WORKSPACE)/packages
+            StagingDirectory: $(Build.ArtifactStagingDirectory)/symbols
 
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet ${{ parameters.NugetVersion }}'

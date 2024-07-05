@@ -16,7 +16,7 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.ResourceDetectors.Azure;
+using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -28,8 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     public static class OpenTelemetryBuilderExtensions
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
-
-        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
 
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
@@ -50,12 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-#pragma warning disable CS0618 // Type or member is obsolete
-        // Note: OpenTelemetryBuilder is obsolete because users should target
-        // IOpenTelemetryBuilder for extensions but this method is valid and
-        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>,
                         DefaultAzureMonitorOptions>();
@@ -82,12 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
-#pragma warning disable CS0618 // Type or member is obsolete
-        // Note: OpenTelemetryBuilder is obsolete because users should target
-        // IOpenTelemetryBuilder for extensions but this method is valid and
-        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             if (builder.Services == null)
             {
@@ -142,53 +130,29 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             .AddHttpClientAndServerMetrics()
                             .AddAzureMonitorMetricExporter());
 
-            builder.Services.AddLogging(logging =>
-            {
-                logging.AddOpenTelemetry(builderOptions =>
-                {
-                    builderOptions.IncludeFormattedMessage = true;
-                });
-            });
-
-            // Add AzureMonitorLogExporter to AzureMonitorOptions
-            // once the service provider is available containing the final
-            // AzureMonitorOptions.
-            builder.Services.AddOptions<OpenTelemetryLoggerOptions>()
-                    .Configure<IOptionsMonitor<AzureMonitorOptions>>((loggingOptions, azureOptions) =>
+            builder.WithLogging(
+                    logging => logging.AddProcessor(sp =>
                     {
-                        var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
+                        var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().CurrentValue;
+                        var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
+                        azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
 
-                        bool enableLogSampling = false;
-                        try
-                        {
-                            var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
-                            bool.TryParse(enableLogSamplingEnvVar, out enableLogSampling);
-                        }
-                        catch (Exception ex)
-                        {
-                            AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
-                        }
-
-                        if (enableLogSampling)
-                        {
-                            var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
-                            azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
-                            loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
-                        }
-                        else
-                        {
-                            loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
-                        }
+                        var exporter = new AzureMonitorLogExporter(azureMonitorExporterOptions);
 
                         if (azureMonitorOptions.EnableLiveMetrics)
                         {
-                            loggingOptions.AddProcessor(sp =>
+                            var manager = sp.GetRequiredService<Manager>();
+
+                            return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
                             {
-                                var manager = sp.GetRequiredService<Manager>();
-                                return new LiveMetricsLogProcessor(manager);
+                                new LiveMetricsLogProcessor(manager),
+                                new BatchLogRecordExportProcessor(exporter)
                             });
                         }
-                    });
+
+                        return new BatchLogRecordExportProcessor(exporter);
+                    }),
+                    options => options.IncludeFormattedMessage = true);
 
             // Register a configuration action so that when
             // AzureMonitorExporterOptions is requested it is populated from
@@ -219,7 +183,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             builder.Services.AddSingleton<Manager>(sp =>
             {
                 AzureMonitorOptions options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
-                return new Manager(options, new DefaultPlatform());
+                return new Manager(options, new DefaultPlatformDistro());
             });
 
             builder.Services.AddOptions<AzureMonitorOptions>()

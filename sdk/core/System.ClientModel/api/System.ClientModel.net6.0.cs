@@ -7,6 +7,12 @@ namespace System.ClientModel
         public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
+    public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncResultCollection<T>
+    {
+        protected AsyncPageableCollection() { }
+        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
+        public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public abstract partial class AsyncResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
         protected internal AsyncResultCollection() { }
@@ -48,12 +54,25 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
+    public abstract partial class PageableCollection<T> : System.ClientModel.ResultCollection<T>
+    {
+        protected PageableCollection() { }
+        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
+        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+    }
     public abstract partial class ResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
         protected internal ResultCollection() { }
         protected internal ResultCollection(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ResultPage<T> : System.ClientModel.ResultCollection<T>
+    {
+        internal ResultPage() { }
+        public string? ContinuationToken { get { throw null; } }
+        public static System.ClientModel.ResultPage<T> Create(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }
 }
 namespace System.ClientModel.Primitives

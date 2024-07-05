@@ -118,6 +118,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
+            if (Optional.IsDefined(IsExtendedGroupEnabled))
+            {
+                writer.WritePropertyName("enableExtendedGroups"u8);
+                writer.WriteBooleanValue(IsExtendedGroupEnabled.Value);
+            }
             if (Optional.IsDefined(IsHnsEnabled))
             {
                 writer.WritePropertyName("isHnsEnabled"u8);
@@ -230,6 +235,7 @@ namespace Azure.ResourceManager.Storage.Models
             bool? supportsHttpsTrafficOnly = default;
             bool? isSftpEnabled = default;
             bool? isLocalUserEnabled = default;
+            bool? enableExtendedGroups = default;
             bool? isHnsEnabled = default;
             LargeFileSharesState? largeFileSharesState = default;
             StorageRoutingPreference routingPreference = default;
@@ -410,6 +416,15 @@ namespace Azure.ResourceManager.Storage.Models
                             isLocalUserEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableExtendedGroups"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableExtendedGroups = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("isHnsEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -537,6 +552,7 @@ namespace Azure.ResourceManager.Storage.Models
                 supportsHttpsTrafficOnly,
                 isSftpEnabled,
                 isLocalUserEnabled,
+                enableExtendedGroups,
                 isHnsEnabled,
                 largeFileSharesState,
                 routingPreference,

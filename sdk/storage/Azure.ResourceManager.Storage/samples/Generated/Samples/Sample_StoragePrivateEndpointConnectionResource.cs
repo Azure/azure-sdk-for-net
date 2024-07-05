@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_StorageAccountGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountGetPrivateEndpointConnection.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_StorageAccountPutPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountPutPrivateEndpointConnection.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountPutPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_StorageAccountDeletePrivateEndpointConnection()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2022-09-01/examples/StorageAccountDeletePrivateEndpointConnection.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountDeletePrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -23,7 +23,7 @@ Remove-TestResources.ps1 [-BaseName <String>] [-SubscriptionId <String>] [[-Serv
 ### Default+Provisioner
 ```
 Remove-TestResources.ps1 -BaseName <String> -TenantId <String> [-SubscriptionId <String>]
- -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [[-ServiceDirectory] <String>]
+ -ProvisionerApplicationId <String> [-ProvisionerApplicationSecret <String>] [[-ServiceDirectory] <String>]
  [-Environment <String>] [-ResourceType <String>] [-ServicePrincipalAuth] [-Force]
  [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
@@ -32,7 +32,7 @@ Remove-TestResources.ps1 -BaseName <String> -TenantId <String> [-SubscriptionId 
 ### ResourceGroup+Provisioner
 ```
 Remove-TestResources.ps1 [-ResourceGroupName <String>] -TenantId <String> [-SubscriptionId <String>]
- -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [[-ServiceDirectory] <String>]
+ -ProvisionerApplicationId <String> [-ProvisionerApplicationSecret <String>] [[-ServiceDirectory] <String>]
  [-Environment <String>] [-CI] [-ResourceType <String>] [-ServicePrincipalAuth] [-Force]
  [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
@@ -184,7 +184,7 @@ Type: String
 Parameter Sets: Default+Provisioner, ResourceGroup+Provisioner
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

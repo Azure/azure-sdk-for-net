@@ -65,8 +65,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource,  WritableSubResource trafficManagementProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.Dns
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             TargetResource = targetResource;
+            TrafficManagementProfile = trafficManagementProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -98,6 +100,19 @@ namespace Azure.ResourceManager.Dns
                 if (TargetResource is null)
                     TargetResource = new WritableSubResource();
                 TargetResource.Id = value;
+            }
+        }
+        /// <summary> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </summary>
+        internal WritableSubResource TrafficManagementProfile { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier TrafficManagementProfileId
+        {
+            get => TrafficManagementProfile is null ? default : TrafficManagementProfile.Id;
+            set
+            {
+                if (TrafficManagementProfile is null)
+                    TrafficManagementProfile = new WritableSubResource();
+                TrafficManagementProfile.Id = value;
             }
         }
     }

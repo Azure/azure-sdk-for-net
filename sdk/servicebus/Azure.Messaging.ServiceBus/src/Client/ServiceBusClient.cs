@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -256,7 +255,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueOrTopicName"/> value specified here.
         /// </exception>
-        public virtual ServiceBusSender CreateSender(string queueOrTopicName) => CreateSender(queueOrTopicName, new ServiceBusSenderOptions());
+        public virtual ServiceBusSender CreateSender(string queueOrTopicName) => CreateSender(queueOrTopicName, null);
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
