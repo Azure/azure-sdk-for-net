@@ -18,6 +18,7 @@ namespace Azure.Developer.Signing
         private static readonly string[] AuthorizationScopes = new string[] { "https://codesigning.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
+        private readonly string _region;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -31,37 +32,40 @@ namespace Azure.Developer.Signing
         }
 
         /// <summary> Initializes a new instance of SigningClient. </summary>
+        /// <param name="region"> The Azure region wherein requests for signing will be sent. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public SigningClient(TokenCredential credential) : this(credential, new SigningClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
+        public SigningClient(string region, TokenCredential credential) : this(region, credential, new SigningClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of SigningClient. </summary>
+        /// <param name="region"> The Azure region wherein requests for signing will be sent. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public SigningClient(TokenCredential credential, SigningClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
+        public SigningClient(string region, TokenCredential credential, SigningClientOptions options)
         {
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new SigningClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _region = region;
         }
 
         /// <summary> Initializes a new instance of CertificateProfile. </summary>
-        /// <param name="region"> The Azure region wherein requests for signing will be sent. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual CertificateProfile GetCertificateProfileClient(string region, string apiVersion = "2023-06-15-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual CertificateProfile GetCertificateProfileClient(string apiVersion = "2023-06-15-preview")
         {
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new CertificateProfile(ClientDiagnostics, _pipeline, _tokenCredential, region, apiVersion);
+            return new CertificateProfile(ClientDiagnostics, _pipeline, _tokenCredential, _region, apiVersion);
         }
     }
 }

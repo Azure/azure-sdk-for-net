@@ -21,7 +21,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_GetSigningStatus_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response response = client.GetSigningStatus("<accountName>", "<certificateProfile>", "<operationId>", null);
 
@@ -35,7 +35,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_GetSigningStatus_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response response = await client.GetSigningStatusAsync("<accountName>", "<certificateProfile>", "<operationId>", null);
 
@@ -49,7 +49,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_GetSigningStatus_ShortVersion_Convenience()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response<OperationStatusSignResultError> response = client.GetSigningStatus("<accountName>", "<certificateProfile>", "<operationId>");
         }
@@ -59,7 +59,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_GetSigningStatus_ShortVersion_Convenience_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response<OperationStatusSignResultError> response = await client.GetSigningStatusAsync("<accountName>", "<certificateProfile>", "<operationId>");
         }
@@ -69,7 +69,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_GetSigningStatus_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response response = client.GetSigningStatus("<accountName>", "<certificateProfile>", "<operationId>", null);
 
@@ -89,7 +89,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_GetSigningStatus_AllParameters_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response response = await client.GetSigningStatusAsync("<accountName>", "<certificateProfile>", "<operationId>", null);
 
@@ -109,7 +109,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_GetSigningStatus_AllParameters_Convenience()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response<OperationStatusSignResultError> response = client.GetSigningStatus("<accountName>", "<certificateProfile>", "<operationId>");
         }
@@ -119,7 +119,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_GetSigningStatus_AllParameters_Convenience_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response<OperationStatusSignResultError> response = await client.GetSigningStatusAsync("<accountName>", "<certificateProfile>", "<operationId>");
         }
@@ -129,7 +129,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_GetSignRootCertificate_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response response = client.GetSignRootCertificate("<accountName>", "<certificateProfile>", null);
 
@@ -142,7 +142,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_GetSignRootCertificate_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response response = await client.GetSignRootCertificateAsync("<accountName>", "<certificateProfile>", null);
 
@@ -155,7 +155,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_GetSignRootCertificate_ShortVersion_Convenience()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response<BinaryData> response = client.GetSignRootCertificate("<accountName>", "<certificateProfile>");
         }
@@ -165,7 +165,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_GetSignRootCertificate_ShortVersion_Convenience_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response<BinaryData> response = await client.GetSignRootCertificateAsync("<accountName>", "<certificateProfile>");
         }
@@ -175,7 +175,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_GetSignRootCertificate_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response response = client.GetSignRootCertificate("<accountName>", "<certificateProfile>", null);
 
@@ -188,7 +188,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_GetSignRootCertificate_AllParameters_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response response = await client.GetSignRootCertificateAsync("<accountName>", "<certificateProfile>", null);
 
@@ -201,7 +201,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_GetSignRootCertificate_AllParameters_Convenience()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response<BinaryData> response = client.GetSignRootCertificate("<accountName>", "<certificateProfile>");
         }
@@ -211,7 +211,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_GetSignRootCertificate_AllParameters_Convenience_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             Response<BinaryData> response = await client.GetSignRootCertificateAsync("<accountName>", "<certificateProfile>");
         }
@@ -221,7 +221,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_ExtendedKeyUsage_GetExtendedKeyUsages_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             foreach (BinaryData item in client.GetExtendedKeyUsages("<accountName>", "<certificateProfile>", null))
             {
@@ -235,7 +235,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_ExtendedKeyUsage_GetExtendedKeyUsages_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             await foreach (BinaryData item in client.GetExtendedKeyUsagesAsync("<accountName>", "<certificateProfile>", null))
             {
@@ -249,7 +249,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_ExtendedKeyUsage_GetExtendedKeyUsages_ShortVersion_Convenience()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsages("<accountName>", "<certificateProfile>"))
             {
@@ -261,7 +261,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_ExtendedKeyUsage_GetExtendedKeyUsages_ShortVersion_Convenience_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             await foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsagesAsync("<accountName>", "<certificateProfile>"))
             {
@@ -273,7 +273,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_ExtendedKeyUsage_GetExtendedKeyUsages_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             foreach (BinaryData item in client.GetExtendedKeyUsages("<accountName>", "<certificateProfile>", null))
             {
@@ -287,7 +287,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_ExtendedKeyUsage_GetExtendedKeyUsages_AllParameters_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             await foreach (BinaryData item in client.GetExtendedKeyUsagesAsync("<accountName>", "<certificateProfile>", null))
             {
@@ -301,7 +301,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_ExtendedKeyUsage_GetExtendedKeyUsages_AllParameters_Convenience()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsages("<accountName>", "<certificateProfile>"))
             {
@@ -313,7 +313,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_ExtendedKeyUsage_GetExtendedKeyUsages_AllParameters_Convenience_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             await foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsagesAsync("<accountName>", "<certificateProfile>"))
             {
@@ -325,7 +325,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_Sign_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -344,7 +344,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_Sign_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -363,7 +363,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_Sign_ShortVersion_Convenience()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()));
             Operation<SignResult> operation = client.Sign(WaitUntil.Completed, "<accountName>", "<certificateProfile>", signingPayloadOptions);
@@ -375,7 +375,7 @@ namespace Azure.Developer.Signing.Samples
         public async Task Example_CertificateProfileOperations_Sign_ShortVersion_Convenience_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()));
             Operation<SignResult> operation = await client.SignAsync(WaitUntil.Completed, "<accountName>", "<certificateProfile>", signingPayloadOptions);
@@ -387,7 +387,7 @@ namespace Azure.Developer.Signing.Samples
         public void Example_CertificateProfileOperations_Sign_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -415,7 +415,7 @@ new object()
         public async Task Example_CertificateProfileOperations_Sign_AllParameters_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -443,7 +443,7 @@ new object()
         public void Example_CertificateProfileOperations_Sign_AllParameters_Convenience()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()))
             {
@@ -459,7 +459,7 @@ new object()
         public async Task Example_CertificateProfileOperations_Sign_AllParameters_Convenience_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
-            CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+            CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
             SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()))
             {

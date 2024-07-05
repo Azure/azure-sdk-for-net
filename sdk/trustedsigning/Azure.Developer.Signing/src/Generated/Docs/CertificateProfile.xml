@@ -6,14 +6,14 @@
 This sample shows how to call GetSigningStatusAsync.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response<OperationStatusSignResultError> response = await client.GetSigningStatusAsync("<accountName>", "<certificateProfile>", "<operationId>");
 ]]></code>
 This sample shows how to call GetSigningStatusAsync with all parameters.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response<OperationStatusSignResultError> response = await client.GetSigningStatusAsync("<accountName>", "<certificateProfile>", "<operationId>");
 ]]></code></example>
@@ -23,14 +23,14 @@ Response<OperationStatusSignResultError> response = await client.GetSigningStatu
 This sample shows how to call GetSigningStatus.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response<OperationStatusSignResultError> response = client.GetSigningStatus("<accountName>", "<certificateProfile>", "<operationId>");
 ]]></code>
 This sample shows how to call GetSigningStatus with all parameters.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response<OperationStatusSignResultError> response = client.GetSigningStatus("<accountName>", "<certificateProfile>", "<operationId>");
 ]]></code></example>
@@ -40,7 +40,7 @@ Response<OperationStatusSignResultError> response = client.GetSigningStatus("<ac
 This sample shows how to call GetSigningStatusAsync and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response response = await client.GetSigningStatusAsync("<accountName>", "<certificateProfile>", "<operationId>", null);
 
@@ -51,7 +51,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 This sample shows how to call GetSigningStatusAsync with all parameters and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response response = await client.GetSigningStatusAsync("<accountName>", "<certificateProfile>", "<operationId>", null);
 
@@ -71,7 +71,7 @@ Console.WriteLine(result.GetProperty("result").GetProperty("signingCertificate")
 This sample shows how to call GetSigningStatus and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response response = client.GetSigningStatus("<accountName>", "<certificateProfile>", "<operationId>", null);
 
@@ -82,7 +82,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 This sample shows how to call GetSigningStatus with all parameters and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response response = client.GetSigningStatus("<accountName>", "<certificateProfile>", "<operationId>", null);
 
@@ -102,14 +102,14 @@ Console.WriteLine(result.GetProperty("result").GetProperty("signingCertificate")
 This sample shows how to call GetSignRootCertificateAsync.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response<BinaryData> response = await client.GetSignRootCertificateAsync("<accountName>", "<certificateProfile>");
 ]]></code>
 This sample shows how to call GetSignRootCertificateAsync with all parameters.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response<BinaryData> response = await client.GetSignRootCertificateAsync("<accountName>", "<certificateProfile>");
 ]]></code></example>
@@ -119,14 +119,14 @@ Response<BinaryData> response = await client.GetSignRootCertificateAsync("<accou
 This sample shows how to call GetSignRootCertificate.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response<BinaryData> response = client.GetSignRootCertificate("<accountName>", "<certificateProfile>");
 ]]></code>
 This sample shows how to call GetSignRootCertificate with all parameters.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response<BinaryData> response = client.GetSignRootCertificate("<accountName>", "<certificateProfile>");
 ]]></code></example>
@@ -136,7 +136,7 @@ Response<BinaryData> response = client.GetSignRootCertificate("<accountName>", "
 This sample shows how to call GetSignRootCertificateAsync and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response response = await client.GetSignRootCertificateAsync("<accountName>", "<certificateProfile>", null);
 
@@ -146,7 +146,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetSignRootCertificateAsync with all parameters and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response response = await client.GetSignRootCertificateAsync("<accountName>", "<certificateProfile>", null);
 
@@ -159,7 +159,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetSignRootCertificate and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response response = client.GetSignRootCertificate("<accountName>", "<certificateProfile>", null);
 
@@ -169,7 +169,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetSignRootCertificate with all parameters and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 Response response = client.GetSignRootCertificate("<accountName>", "<certificateProfile>", null);
 
@@ -182,7 +182,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetExtendedKeyUsagesAsync.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 await foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsagesAsync("<accountName>", "<certificateProfile>"))
 {
@@ -191,7 +191,7 @@ await foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsagesAsync("<accou
 This sample shows how to call GetExtendedKeyUsagesAsync with all parameters.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 await foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsagesAsync("<accountName>", "<certificateProfile>"))
 {
@@ -203,7 +203,7 @@ await foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsagesAsync("<accou
 This sample shows how to call GetExtendedKeyUsages.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsages("<accountName>", "<certificateProfile>"))
 {
@@ -212,7 +212,7 @@ foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsages("<accountName>", "
 This sample shows how to call GetExtendedKeyUsages with all parameters.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsages("<accountName>", "<certificateProfile>"))
 {
@@ -224,7 +224,7 @@ foreach (ExtendedKeyUsage item in client.GetExtendedKeyUsages("<accountName>", "
 This sample shows how to call GetExtendedKeyUsagesAsync and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 await foreach (BinaryData item in client.GetExtendedKeyUsagesAsync("<accountName>", "<certificateProfile>", null))
 {
@@ -235,7 +235,7 @@ await foreach (BinaryData item in client.GetExtendedKeyUsagesAsync("<accountName
 This sample shows how to call GetExtendedKeyUsagesAsync with all parameters and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 await foreach (BinaryData item in client.GetExtendedKeyUsagesAsync("<accountName>", "<certificateProfile>", null))
 {
@@ -249,7 +249,7 @@ await foreach (BinaryData item in client.GetExtendedKeyUsagesAsync("<accountName
 This sample shows how to call GetExtendedKeyUsages and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 foreach (BinaryData item in client.GetExtendedKeyUsages("<accountName>", "<certificateProfile>", null))
 {
@@ -260,7 +260,7 @@ foreach (BinaryData item in client.GetExtendedKeyUsages("<accountName>", "<certi
 This sample shows how to call GetExtendedKeyUsages with all parameters and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 foreach (BinaryData item in client.GetExtendedKeyUsages("<accountName>", "<certificateProfile>", null))
 {
@@ -274,7 +274,7 @@ foreach (BinaryData item in client.GetExtendedKeyUsages("<accountName>", "<certi
 This sample shows how to call SignAsync.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()));
 Operation<SignResult> operation = await client.SignAsync(WaitUntil.Completed, "<accountName>", "<certificateProfile>", signingPayloadOptions);
@@ -283,7 +283,7 @@ SignResult responseData = operation.Value;
 This sample shows how to call SignAsync with all parameters.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()))
 {
@@ -299,7 +299,7 @@ SignResult responseData = operation.Value;
 This sample shows how to call Sign.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()));
 Operation<SignResult> operation = client.Sign(WaitUntil.Completed, "<accountName>", "<certificateProfile>", signingPayloadOptions);
@@ -308,7 +308,7 @@ SignResult responseData = operation.Value;
 This sample shows how to call Sign with all parameters.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()))
 {
@@ -324,7 +324,7 @@ SignResult responseData = operation.Value;
 This sample shows how to call SignAsync and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -340,7 +340,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call SignAsync with all parameters and request content and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -368,7 +368,7 @@ Console.WriteLine(result.GetProperty("signingCertificate").ToString());
 This sample shows how to call Sign and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -384,7 +384,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call Sign with all parameters and request content and parse the result.
 <code><![CDATA[
 TokenCredential credential = new DefaultAzureCredential();
-CertificateProfile client = new SigningClient(credential).GetCertificateProfileClient("<region>", apiVersion: "2023-06-15-preview");
+CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
