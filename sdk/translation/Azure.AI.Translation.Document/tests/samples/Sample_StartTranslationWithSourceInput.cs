@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Azure.AI.Translation.Document.Tests;
 using Azure.Core.TestFramework;
@@ -17,8 +18,8 @@ namespace Azure.AI.Translation.Document.Samples
         {
             /**
             FILE: SampleTranslationWithAzureBlob.cs
-            DESCRIPTION: 
-                This sample demonstrates how to start batch document translation by specifying some of the sourceInput options like 
+            DESCRIPTION:
+                This sample demonstrates how to start batch document translation by specifying some of the sourceInput options like
                 source language, storage source and DocumentFilter prefix and suffix
             **/
 #if SNIPPET
@@ -30,7 +31,6 @@ namespace Azure.AI.Translation.Document.Samples
 #endif
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            
 #if SNIPPET
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
@@ -41,7 +41,7 @@ namespace Azure.AI.Translation.Document.Samples
             //Creating a TranslationSource object with sourceURI, sourceLanguage, storageSource, DocumentFilterPrefix and DocumentFilterSuffix
             TranslationSource translationSource = new TranslationSource(sourceUri, "en", "AzureBlob", "File", "txt");
             TranslationTarget translationTarget = new TranslationTarget(targetUri, "fr");
-            var targets = new List<TranslationTarget> { translationTarget };
+            List<TranslationTarget> targets = new List<TranslationTarget> { translationTarget };
             var input = new DocumentTranslationInput(translationSource, targets);
             DocumentTranslationOperation operation = client.StartTranslation(input);
 

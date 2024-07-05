@@ -23,7 +23,6 @@ namespace Azure.AI.Translation.Document.Tests
         /// <summary>The name of the environment variable from which the Document Translator Storage Account Name will be extracted for the live tests.</summary>
         private const string StorageAccountNameEnvironmentVariableName = "DOCUMENT_TRANSLATION_STORAGE_NAME";
 
-
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
         public string StorageAccountName => GetRecordedVariable(StorageAccountNameEnvironmentVariableName);
