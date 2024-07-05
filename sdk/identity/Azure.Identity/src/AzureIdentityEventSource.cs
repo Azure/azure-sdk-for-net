@@ -86,7 +86,7 @@ namespace Azure.Identity
                 case EventLogLevel.Verbose when IsEnabled(EventLevel.Verbose, EventKeywords.All):
                     LogMsalVerbose(entry.Message);
                     break;
-                case EventLogLevel.LogAlways when IsEnabled(EventLevel.Verbose, EventKeywords.All):
+                case EventLogLevel.LogAlways when IsEnabled(EventLevel.LogAlways, EventKeywords.All):
                     LogMsalAlways(entry.Message);
                     break;
             }
