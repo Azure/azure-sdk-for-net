@@ -762,7 +762,7 @@ namespace Azure.Data.SchemaRegistry
 
         internal HttpMessage CreateGetSchemaPropertiesByContentRequest(string groupName, string schemaName, RequestContent content, Core.ContentType contentType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();

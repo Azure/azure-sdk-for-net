@@ -174,10 +174,10 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = StringToSchemaFormat(formatName);
             var content = StringToSchemaContent(formatName, 1);
 
-            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content, format);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(registerProperties, schemaName, format);
 
-            SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Value.Id);
+            SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Id);
             AssertSchema(schema, schemaName, content, format);
             AssertPropertiesAreEqual(registerProperties, schema.Properties, format);
         }
