@@ -36,17 +36,19 @@ public class PageResult<T> : ClientResult
     public IReadOnlyList<T> Values { get; }
 
     /// <summary>
-    /// Gets a token that can be used to request or rehydrate a collection
-    /// beginning with this page of values.
+    /// Gets a token that can be passed to a client method to obtain a page
+    /// collection that begins with this page of values.
     /// </summary>
+    /// <remarks><seealso cref="ContinuationToken"/> for more details.</remarks>
     public ContinuationToken PageToken { get; }
 
     /// <summary>
-    /// Gets a token that can be used to request or rehydrate a collection
-    /// beginning with the next page of values after this page. If
+    /// Gets a token that can be passed to a client method to obtain a page
+    /// collection that begins with the page of values after this page. If
     /// <see cref="NextPageToken"/> is null, the current page is the last page
-    /// of values in the collection.
+    /// in the page collection.
     /// </summary>
+    /// <remarks><seealso cref="ContinuationToken"/> for more details.</remarks>
     public ContinuationToken? NextPageToken { get; }
 
     /// <summary>

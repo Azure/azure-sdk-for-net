@@ -7,7 +7,7 @@ namespace System.ClientModel;
 
 /// <summary>
 /// A token that can be passed to a client method to request or rehydrate a
-/// subclient.
+/// subclient from the state represented by the token.
 /// </summary>
 public class ContinuationToken
 {
