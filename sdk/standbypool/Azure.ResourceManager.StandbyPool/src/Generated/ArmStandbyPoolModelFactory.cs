@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -15,40 +16,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStandbyPoolModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyContainerGroupPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolData"/> instance for mocking. </returns>
-        public static StandbyContainerGroupPoolData StandbyContainerGroupPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StandbyContainerGroupPoolResourceProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new StandbyContainerGroupPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolResourceProperties"/>. </summary>
-        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
-        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.StandbyContainerGroupPoolResourceProperties"/> instance for mocking. </returns>
-        public static StandbyContainerGroupPoolResourceProperties StandbyContainerGroupPoolResourceProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile = null, StandbyContainerGroupProperties containerGroupProperties = null, StandbyPoolProvisioningState? provisioningState = null)
-        {
-            return new StandbyContainerGroupPoolResourceProperties(elasticityProfile, containerGroupProperties, provisioningState, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyVirtualMachinePoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -109,6 +76,40 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public static StandbyVirtualMachineResourceProperties StandbyVirtualMachineResourceProperties(string virtualMachineResourceId = null, StandbyPoolProvisioningState? provisioningState = null)
         {
             return new StandbyVirtualMachineResourceProperties(virtualMachineResourceId, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StandbyPool.StandbyContainerGroupPoolData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolData"/> instance for mocking. </returns>
+        public static StandbyContainerGroupPoolData StandbyContainerGroupPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StandbyContainerGroupPoolResourceProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new StandbyContainerGroupPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolResourceProperties"/>. </summary>
+        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
+        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.StandbyContainerGroupPoolResourceProperties"/> instance for mocking. </returns>
+        public static StandbyContainerGroupPoolResourceProperties StandbyContainerGroupPoolResourceProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile = null, StandbyContainerGroupProperties containerGroupProperties = null, StandbyPoolProvisioningState? provisioningState = null)
+        {
+            return new StandbyContainerGroupPoolResourceProperties(elasticityProfile, containerGroupProperties, provisioningState, serializedAdditionalRawData: null);
         }
     }
 }
