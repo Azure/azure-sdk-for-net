@@ -48,22 +48,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="AuthenticationSettingsContract"/>. </summary>
         public AuthenticationSettingsContract()
         {
+            OAuth2AuthenticationSettings = new ChangeTrackingList<OAuth2AuthenticationSettingsContract>();
+            OpenidAuthenticationSettings = new ChangeTrackingList<OpenIdAuthenticationSettingsContract>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationSettingsContract"/>. </summary>
         /// <param name="oAuth2"> OAuth2 Authentication settings. </param>
         /// <param name="openId"> OpenID Connect Authentication Settings. </param>
+        /// <param name="oAuth2AuthenticationSettings"> Collection of OAuth2 authentication settings included into this API. </param>
+        /// <param name="openidAuthenticationSettings"> Collection of Open ID Connect authentication settings included into this API. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId, IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings, IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OAuth2 = oAuth2;
             OpenId = openId;
+            OAuth2AuthenticationSettings = oAuth2AuthenticationSettings;
+            OpenidAuthenticationSettings = openidAuthenticationSettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> OAuth2 Authentication settings. </summary>
+        [WirePath("oAuth2")]
         public OAuth2AuthenticationSettingsContract OAuth2 { get; set; }
         /// <summary> OpenID Connect Authentication Settings. </summary>
+        [WirePath("openid")]
         public OpenIdAuthenticationSettingsContract OpenId { get; set; }
+        /// <summary> Collection of OAuth2 authentication settings included into this API. </summary>
+        [WirePath("oAuth2AuthenticationSettings")]
+        public IList<OAuth2AuthenticationSettingsContract> OAuth2AuthenticationSettings { get; }
+        /// <summary> Collection of Open ID Connect authentication settings included into this API. </summary>
+        [WirePath("openidAuthenticationSettings")]
+        public IList<OpenIdAuthenticationSettingsContract> OpenidAuthenticationSettings { get; }
     }
 }

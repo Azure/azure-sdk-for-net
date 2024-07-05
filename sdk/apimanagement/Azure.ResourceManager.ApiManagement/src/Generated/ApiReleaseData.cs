@@ -75,12 +75,16 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Identifier of the API the release belongs to. </summary>
+        [WirePath("properties.apiId")]
         public ResourceIdentifier ApiId { get; set; }
         /// <summary> The time the API was released. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.createdDateTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time the API release was updated. </summary>
+        [WirePath("properties.updatedDateTime")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Release Notes. </summary>
+        [WirePath("properties.notes")]
         public string Notes { get; set; }
     }
 }
