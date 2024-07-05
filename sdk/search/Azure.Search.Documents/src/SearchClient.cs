@@ -240,7 +240,6 @@ namespace Azure.Search.Documents
         /// Thrown when the <paramref name="endpoint"/> is not using HTTPS or
         /// the <paramref name="indexName"/> is empty.
         /// </exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0006:DO provide constructor overloads that allow specifying additional options.", Justification = "Avoid ambiguous method definition")]
         public SearchClient(
             Uri endpoint,
             string indexName,

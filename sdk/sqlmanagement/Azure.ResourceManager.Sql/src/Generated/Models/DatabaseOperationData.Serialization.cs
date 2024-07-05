@@ -120,6 +120,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("isCancellable"u8);
                 writer.WriteBooleanValue(IsCancellable.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(OperationPhaseDetails))
+            {
+                writer.WritePropertyName("operationPhaseDetails"u8);
+                writer.WriteObjectValue(OperationPhaseDetails, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -177,6 +182,7 @@ namespace Azure.ResourceManager.Sql.Models
             DateTimeOffset? estimatedCompletionTime = default;
             string description = default;
             bool? isCancellable = default;
+            DatabaseOperationPhaseDetails operationPhaseDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -316,6 +322,15 @@ namespace Azure.ResourceManager.Sql.Models
                             isCancellable = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("operationPhaseDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            operationPhaseDetails = DatabaseOperationPhaseDetails.DeserializeDatabaseOperationPhaseDetails(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -344,6 +359,7 @@ namespace Azure.ResourceManager.Sql.Models
                 estimatedCompletionTime,
                 description,
                 isCancellable,
+                operationPhaseDetails,
                 serializedAdditionalRawData);
         }
 
@@ -672,6 +688,21 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("    isCancellable: ");
                     var boolValue = IsCancellable.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationPhaseDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operationPhaseDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationPhaseDetails))
+                {
+                    builder.Append("    operationPhaseDetails: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OperationPhaseDetails, options, 4, false, "    operationPhaseDetails: ");
                 }
             }
 

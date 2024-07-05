@@ -39,11 +39,21 @@ namespace Azure.AI.OpenAI.Tests
                 MimeType = "image/png",
                 Url = new Uri("https://cdn.openai.com/API/images/guides/image_variation_original.webp")
             };
+            FineTuning = new()
+            {
+                Type = AssetType.Text,
+                Language = "en",
+                Description = "Fine tuning data for Open AI to generate a JSON object based on sports headlines",
+                Name = "fine_tuning.jsonl",
+                RelativePath = GetPath("fine_tuning.jsonl"),
+                MimeType = "text/plain"
+            };
         }
 
         public virtual AssetInfo HelloWorld { get; }
         public virtual AssetInfo WhisperFrenchDescription { get; }
         public virtual AssetInfo DogAndCat { get; }
+        public virtual AssetInfo FineTuning { get; }
 
         protected virtual string GetPath(string assetName)
         {

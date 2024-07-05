@@ -320,8 +320,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                properties = new object(),
                 kind = "logAnalytics",
+                properties = new object(),
             });
             Response response = client.ValidateDataConnection(content);
 
@@ -339,8 +339,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                properties = new object(),
                 kind = "logAnalytics",
+                properties = new object(),
             });
             Response response = await client.ValidateDataConnectionAsync(content);
 
@@ -382,12 +382,12 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                kind = "logAnalytics",
                 properties = new
                 {
                     apiKey = "<apiKey>",
                     workspaceId = "<workspaceId>",
                 },
-                kind = "logAnalytics",
                 name = "<name>",
                 content = "assets",
                 frequency = "daily",
@@ -413,12 +413,12 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                kind = "logAnalytics",
                 properties = new
                 {
                     apiKey = "<apiKey>",
                     workspaceId = "<workspaceId>",
                 },
-                kind = "logAnalytics",
                 name = "<name>",
                 content = "assets",
                 frequency = "daily",
@@ -612,8 +612,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                properties = new object(),
                 kind = "logAnalytics",
+                properties = new object(),
             });
             Response response = client.CreateOrReplaceDataConnection("<dataConnectionName>", content);
 
@@ -632,8 +632,8 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                properties = new object(),
                 kind = "logAnalytics",
+                properties = new object(),
             });
             Response response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", content);
 
@@ -676,12 +676,12 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                kind = "logAnalytics",
                 properties = new
                 {
                     apiKey = "<apiKey>",
                     workspaceId = "<workspaceId>",
                 },
-                kind = "logAnalytics",
                 name = "<name>",
                 content = "assets",
                 frequency = "daily",
@@ -714,12 +714,12 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                kind = "logAnalytics",
                 properties = new
                 {
                     apiKey = "<apiKey>",
                     workspaceId = "<workspaceId>",
                 },
-                kind = "logAnalytics",
                 name = "<name>",
                 content = "assets",
                 frequency = "daily",
