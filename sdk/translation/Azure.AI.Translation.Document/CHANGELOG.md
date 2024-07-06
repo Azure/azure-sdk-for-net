@@ -1,14 +1,12 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
+## 2.0.0-beta.2 (2024-07-05)
 
 ### Features Added
-
-### Breaking Changes
+- Single document translation client can be created using endpoint alone, mainly for SDK to work against containers.
 
 ### Bugs Fixed
-
-### Other Changes
+- SourceInput options which is a part of TranslationInput is now public. This allows users to enter source language, source storage, and document filter prefix and suffix.
 
 ## 2.0.0-beta.1 (2024-05-07)
 
