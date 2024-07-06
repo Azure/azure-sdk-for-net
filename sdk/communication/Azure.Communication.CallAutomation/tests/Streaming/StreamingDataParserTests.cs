@@ -13,9 +13,26 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
     internal class StreamingDataParserTests
     {
         #region Audio
-
         [Test]
         public void ParseAudioMetadata_Test()
+        {
+            string metadataJson = "{"
+                + "\"kind\": \"AudioMetadata\","
+                + "\"audioMetadata\": {"
+                + "\"subscriptionId\": \"subscriptionId\","
+                + "\"encoding\": \"encodingType\","
+                + "\"sampleRate\": 8,"
+                + "\"channels\": 2,"
+                + "\"length\": 640"
+                + "}"
+                + "}";
+
+            AudioMetadata streamingMetadata = (AudioMetadata)StreamingDataParser.Parse(metadataJson);
+            ValidateAudioMetadata(streamingMetadata);
+        }
+
+        [Test]
+        public void ParseAudioMetadata_bytes_Test()
         {
             string metadataJson = "{"
                 + "\"kind\": \"AudioMetadata\","
@@ -35,6 +52,23 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         }
 
         [Test]
+        public void ParseAudioData_Test()
+        {
+            string audioJson = "{"
+                + "\"kind\": \"AudioData\","
+                + "\"audioData\": {"
+                + "\"data\": \"AQIDBAU=\","      // [1, 2, 3, 4, 5]
+                + "\"timestamp\": \"2022-08-23T11:48:05Z\","
+                + "\"participantRawID\": \"participantId\","
+                + "\"silent\": false"
+                + "}"
+                + "}";
+
+            AudioData streamingAudio = (AudioData)StreamingDataParser.Parse(audioJson);
+            ValidateAudioData(streamingAudio);
+        }
+
+        [Test]
         public void ParseAudioData_NoParticipantIdSilent_Test()
         {
             string audioJson = "{"
@@ -48,6 +82,23 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(audioJson);
             AudioData streamingAudio = (AudioData)StreamingDataParser.Parse(receivedBytes);
             ValidateAudioDataNoParticipant(streamingAudio);
+        }
+
+        [Test]
+        public void ParseBinaryAudioData()
+        {
+            JObject jsonData = new JObject();
+            jsonData["kind"] = "AudioData";
+            jsonData["audioData"] = new JObject();
+            jsonData["audioData"]!["data"] = "AQIDBAU=";
+            jsonData["audioData"]!["timestamp"] = "2022-08-23T11:48:05Z";
+            jsonData["audioData"]!["participantRawID"] = "participantId";
+            jsonData["audioData"]!["silent"] = false;
+
+            var binaryData = BinaryData.FromString(jsonData.ToString());
+
+            AudioData streamingAudio = (AudioData)StreamingDataParser.Parse(binaryData);
+            ValidateAudioData(streamingAudio);
         }
 
         [Test]
@@ -98,6 +149,83 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         #endregion
 
         #region Transcription
+
+        [Test]
+        public void ParseTranscriptionData_Test()
+        {
+            var transcriptionJson =
+            "{" +
+                "\"kind\":\"TranscriptionData\"," +
+                "\"transcriptionData\":" +
+                "{" +
+                    "\"text\":\"Hello World!\"," +
+                    "\"format\":\"display\"," +
+                    "\"confidence\":0.98," +
+                    "\"offset\":1," +
+                    "\"duration\":2," +
+                    "\"words\":" +
+                    "[" +
+                        "{" +
+                            "\"text\":\"Hello\"," +
+                            "\"offset\":1," +
+                            "\"duration\":1" +
+                        "}," +
+                        "{" +
+                            "\"text\":\"World\"," +
+                            "\"offset\":6," +
+                            "\"duration\":1" +
+                        "}" +
+                    "]," +
+                    "\"participantRawID\":\"abc12345\"," +
+                    "\"resultStatus\":\"final\"" +
+                "}" +
+            "}";
+
+            TranscriptionData transcription = (TranscriptionData)StreamingDataParser.Parse(transcriptionJson);
+            ValidateTranscriptionData(transcription);
+        }
+
+        [Test]
+        public void ParseTranscriptionBinaryData()
+        {
+            JObject jsonData = new()
+            {
+                ["kind"] = "TranscriptionData",
+                ["transcriptionData"] = new JObject()
+            };
+            jsonData["transcriptionData"]!["text"] = "Hello World!";
+            jsonData["transcriptionData"]!["format"] = "display";
+            jsonData["transcriptionData"]!["confidence"] = 0.98d;
+            jsonData["transcriptionData"]!["offset"] = 1;
+            jsonData["transcriptionData"]!["duration"] = 2;
+
+            JArray words = new();
+            jsonData["transcriptionData"]!["words"] = words;
+
+            JObject word0 = new()
+            {
+                ["text"] = "Hello",
+                ["offset"] = 1,
+                ["duration"] = 1
+            };
+            words.Add(word0);
+
+            JObject word1 = new()
+            {
+                ["text"] = "World",
+                ["offset"] = 6,
+                ["duration"] = 1
+            };
+            words.Add(word1);
+
+            jsonData["transcriptionData"]!["participantRawID"] = "abc12345";
+            jsonData["transcriptionData"]!["resultStatus"] = "final";
+
+            var binaryData = BinaryData.FromString(jsonData.ToString());
+
+            TranscriptionData transcription = (TranscriptionData)StreamingDataParser.Parse(binaryData);
+            ValidateTranscriptionData(transcription);
+        }
 
         [Test]
         public void ParseTranscriptionMetadata_Test()
