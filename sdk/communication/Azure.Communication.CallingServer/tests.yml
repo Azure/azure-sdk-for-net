@@ -5,10 +5,13 @@ extends:
   parameters:
     ServiceDirectory: communication
     Project: Azure.Communication.CallingServer
+    UseFederatedAuth: true
     CloudConfig:
       Public:
+        ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json   
         SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
       Int:
@@ -17,7 +20,7 @@ extends:
           - $(sub-config-communication-int-test-resources-net)
     Clouds: Public
     TestResourceDirectories:
-      - communication/test-resources/
+      - communication/
     EnvVars:
       # SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS skips certain CallAutomation tests that required human interactions
       SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS: TRUE
