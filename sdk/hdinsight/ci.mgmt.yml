@@ -10,7 +10,6 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/hdinsight/ci.mgmt.yml
     - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers/
 
 extends:

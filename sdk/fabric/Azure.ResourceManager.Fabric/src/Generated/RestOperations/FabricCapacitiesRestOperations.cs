@@ -648,6 +648,7 @@ namespace Azure.ResourceManager.Fabric
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     {
                         FabricCapacityData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
