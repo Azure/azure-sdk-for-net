@@ -12,7 +12,6 @@ extends:
         SubscriptionConfigurationFilePaths:
           - eng/common/TestResources/sub-config/AzurePublicMsft.json   
         SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
       Int:
