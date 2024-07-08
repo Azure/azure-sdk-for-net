@@ -84,10 +84,10 @@ namespace Azure.Maps.Rendering
     }
     public partial class MapsRenderingClientOptions : Azure.Core.ClientOptions
     {
-        public MapsRenderingClientOptions(Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion version = Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion.V2022_08_01, System.Uri endpoint = null) { }
+        public MapsRenderingClientOptions(Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion version = Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion.V2024_04_01, System.Uri endpoint = null) { }
         public enum ServiceVersion
         {
-            V2022_08_01 = 1,
+            V2024_04_01 = 1,
         }
     }
     public static partial class MapsRenderingModelFactory
