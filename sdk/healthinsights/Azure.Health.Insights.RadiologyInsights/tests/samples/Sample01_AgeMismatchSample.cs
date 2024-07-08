@@ -42,7 +42,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         [Test]
         public void RadiologyInsightsAgeMismatchScenario()
         {
-            // Read endpoint and apiKey
+            // Read endpoint
             string endpoint = TestEnvironment.Endpoint;
             #region Snippet:Age_Mismatch_Sync_Tests_Samples_TokenCredential
             Uri endpointUri = new Uri(endpoint);
