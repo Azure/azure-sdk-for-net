@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public MongoClusterProperties()
         {
             NodeGroupSpecs = new ChangeTrackingList<NodeGroupSpec>();
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<MongoClusterPrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterProperties"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterProperties(CreateMode? createMode, MongoClusterRestoreParameters restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, ProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, IList<NodeGroupSpec> nodeGroupSpecs, IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterProperties(CreateMode? createMode, MongoClusterRestoreContent restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, ProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, IList<NodeGroupSpec> nodeGroupSpecs, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The mode to create a mongo cluster. </summary>
         public CreateMode? CreateMode { get; set; }
         /// <summary> The parameters to create a point-in-time restore mongo cluster. </summary>
-        public MongoClusterRestoreParameters RestoreParameters { get; set; }
+        public MongoClusterRestoreContent RestoreParameters { get; set; }
         /// <summary> The administrator's login for the mongo cluster. </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login. </summary>
@@ -106,6 +106,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The list of node group specs in the cluster. </summary>
         public IList<NodeGroupSpec> NodeGroupSpecs { get; }
         /// <summary> List of private endpoint connections. </summary>
-        public IReadOnlyList<PrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<MongoClusterPrivateEndpointConnection> PrivateEndpointConnections { get; }
     }
 }

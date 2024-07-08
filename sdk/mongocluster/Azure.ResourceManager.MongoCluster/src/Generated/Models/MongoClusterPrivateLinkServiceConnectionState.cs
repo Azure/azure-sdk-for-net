@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class PrivateLinkResource : ResourceData
+    /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+    public partial class MongoClusterPrivateLinkServiceConnectionState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,25 +45,29 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResource"/>. </summary>
-        internal PrivateLinkResource()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPrivateLinkServiceConnectionState"/>. </summary>
+        public MongoClusterPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPrivateLinkServiceConnectionState"/>. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MongoClusterPrivateLinkServiceConnectionState(MongoClusterPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Status = status;
+            Description = description;
+            ActionsRequired = actionsRequired;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public PrivateLinkResourceProperties Properties { get; }
+        /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
+        public MongoClusterPrivateEndpointServiceConnectionStatus? Status { get; set; }
+        /// <summary> The reason for approval/rejection of the connection. </summary>
+        public string Description { get; set; }
+        /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
+        public string ActionsRequired { get; set; }
     }
 }

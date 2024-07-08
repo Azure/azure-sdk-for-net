@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
-        public static MongoClusterProperties MongoClusterProperties(CreateMode? createMode = null, MongoClusterRestoreParameters restoreParameters = null, string administratorLogin = null, string administratorLoginPassword = null, string serverVersion = null, string connectionString = null, string earliestRestoreTime = null, ProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, PublicNetworkAccess? publicNetworkAccess = null, IEnumerable<NodeGroupSpec> nodeGroupSpecs = null, IEnumerable<PrivateEndpointConnection> privateEndpointConnections = null)
+        public static MongoClusterProperties MongoClusterProperties(CreateMode? createMode = null, MongoClusterRestoreContent restoreParameters = null, string administratorLogin = null, string administratorLoginPassword = null, string serverVersion = null, string connectionString = null, string earliestRestoreTime = null, ProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, PublicNetworkAccess? publicNetworkAccess = null, IEnumerable<NodeGroupSpec> nodeGroupSpecs = null, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = null)
         {
             nodeGroupSpecs ??= new List<NodeGroupSpec>();
-            privateEndpointConnections ??= new List<PrivateEndpointConnection>();
+            privateEndpointConnections ??= new List<MongoClusterPrivateEndpointConnection>();
 
             return new MongoClusterProperties(
                 createMode,
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnection"/> instance for mocking. </returns>
-        public static PrivateEndpointConnection PrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
+        /// <returns> A new <see cref="Models.MongoClusterPrivateEndpointConnection"/> instance for mocking. </returns>
+        public static MongoClusterPrivateEndpointConnection MongoClusterPrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
-            return new PrivateEndpointConnection(
+            return new MongoClusterPrivateEndpointConnection(
                 id,
                 name,
                 resourceType,
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, PrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, PrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, MongoClusterPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, MongoClusterPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             groupIds ??= new List<string>();
 
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new ConnectionString(uri, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoCluster.FirewallRuleData"/>. </summary>
@@ -181,16 +181,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResource"/> instance for mocking. </returns>
-        public static PrivateLinkResource PrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateLinkResourceProperties properties = null)
+        /// <returns> A new <see cref="Models.MongoClusterPrivateLinkResource"/> instance for mocking. </returns>
+        public static MongoClusterPrivateLinkResource MongoClusterPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterPrivateLinkResourceProperties properties = null)
         {
-            return new PrivateLinkResource(
+            return new MongoClusterPrivateLinkResource(
                 id,
                 name,
                 resourceType,
@@ -199,17 +199,17 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static PrivateLinkResourceProperties PrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.MongoClusterPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static MongoClusterPrivateLinkResourceProperties MongoClusterPrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new PrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new MongoClusterPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

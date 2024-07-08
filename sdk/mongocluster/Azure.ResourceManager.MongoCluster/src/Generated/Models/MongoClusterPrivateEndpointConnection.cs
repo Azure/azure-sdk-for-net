@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Properties of a private link resource. </summary>
-    public partial class PrivateLinkResourceProperties
+    /// <summary> The private endpoint connection resource. </summary>
+    public partial class MongoClusterPrivateEndpointConnection : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +47,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceProperties"/>. </summary>
-        internal PrivateLinkResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPrivateEndpointConnection"/>. </summary>
+        internal MongoClusterPrivateEndpointConnection()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceProperties"/>. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPrivateEndpointConnection"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The private endpoint connection properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            GroupId = groupId;
-            RequiredMembers = requiredMembers;
-            RequiredZoneNames = requiredZoneNames;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The private link resource group id. </summary>
-        public string GroupId { get; }
-        /// <summary> The private link resource required member names. </summary>
-        public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> The private link resource private link DNS zone name. </summary>
-        public IReadOnlyList<string> RequiredZoneNames { get; }
+        /// <summary> The private endpoint connection properties. </summary>
+        public PrivateEndpointConnectionProperties Properties { get; }
     }
 }

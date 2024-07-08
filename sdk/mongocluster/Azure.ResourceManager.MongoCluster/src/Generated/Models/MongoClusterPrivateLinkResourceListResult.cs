@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The check availability result. </summary>
-    public partial class CheckNameAvailabilityResponse
+    /// <summary> The response of a PrivateLinkResource list operation. </summary>
+    internal partial class MongoClusterPrivateLinkResourceListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +46,35 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
-        internal CheckNameAvailabilityResponse()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPrivateLinkResourceListResult"/>. </summary>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal MongoClusterPrivateLinkResourceListResult(IEnumerable<MongoClusterPrivateLinkResource> value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is not available. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPrivateLinkResourceListResult"/>. </summary>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityResponse(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterPrivateLinkResourceListResult(IReadOnlyList<MongoClusterPrivateLinkResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NameAvailable = nameAvailable;
-            Reason = reason;
-            Message = message;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates if the resource name is available. </summary>
-        public bool? NameAvailable { get; }
-        /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
-        /// <summary> Detailed reason why the given name is not available. </summary>
-        public string Message { get; }
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal MongoClusterPrivateLinkResourceListResult()
+        {
+        }
+
+        /// <summary> The PrivateLinkResource items on this page. </summary>
+        public IReadOnlyList<MongoClusterPrivateLinkResource> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

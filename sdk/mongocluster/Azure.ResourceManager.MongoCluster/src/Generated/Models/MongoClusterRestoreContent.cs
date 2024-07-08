@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The private endpoint connection resource. </summary>
-    public partial class PrivateEndpointConnection : ResourceData
+    /// <summary> Parameters used for restore operations. </summary>
+    public partial class MongoClusterRestoreContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,25 +45,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnection"/>. </summary>
-        internal PrivateEndpointConnection()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
+        public MongoClusterRestoreContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The private endpoint connection properties. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
+        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
+        /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MongoClusterRestoreContent(DateTimeOffset? pointInTimeUTC, string sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            PointInTimeUTC = pointInTimeUTC;
+            SourceResourceId = sourceResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The private endpoint connection properties. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; }
+        /// <summary> UTC point in time to restore a mongo cluster. </summary>
+        public DateTimeOffset? PointInTimeUTC { get; set; }
+        /// <summary> Resource ID to locate the source cluster to restore. </summary>
+        public string SourceResourceId { get; set; }
     }
 }

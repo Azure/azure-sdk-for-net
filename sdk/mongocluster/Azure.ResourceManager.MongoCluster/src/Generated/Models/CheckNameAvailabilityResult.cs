@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Parameters used for restore operations. </summary>
-    public partial class MongoClusterRestoreParameters
+    /// <summary> The check availability result. </summary>
+    public partial class CheckNameAvailabilityResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,29 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreParameters"/>. </summary>
-        public MongoClusterRestoreParameters()
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
+        internal CheckNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreParameters"/>. </summary>
-        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
-        /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
+        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterRestoreParameters(DateTimeOffset? pointInTimeUTC, string sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CheckNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PointInTimeUTC = pointInTimeUTC;
-            SourceResourceId = sourceResourceId;
+            NameAvailable = nameAvailable;
+            Reason = reason;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> UTC point in time to restore a mongo cluster. </summary>
-        public DateTimeOffset? PointInTimeUTC { get; set; }
-        /// <summary> Resource ID to locate the source cluster to restore. </summary>
-        public string SourceResourceId { get; set; }
+        /// <summary> Indicates if the resource name is available. </summary>
+        public bool? NameAvailable { get; }
+        /// <summary> The reason why the given name is not available. </summary>
+        public CheckNameAvailabilityReason? Reason { get; }
+        /// <summary> Detailed reason why the given name is not available. </summary>
+        public string Message { get; }
     }
 }

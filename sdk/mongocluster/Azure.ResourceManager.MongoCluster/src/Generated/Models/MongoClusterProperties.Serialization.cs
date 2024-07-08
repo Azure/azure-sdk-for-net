@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 return null;
             }
             CreateMode? createMode = default;
-            MongoClusterRestoreParameters restoreParameters = default;
+            MongoClusterRestoreContent restoreParameters = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
             string serverVersion = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             MongoClusterStatus? clusterStatus = default;
             PublicNetworkAccess? publicNetworkAccess = default;
             IList<NodeGroupSpec> nodeGroupSpecs = default;
-            IReadOnlyList<PrivateEndpointConnection> privateEndpointConnections = default;
+            IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    restoreParameters = MongoClusterRestoreParameters.DeserializeMongoClusterRestoreParameters(property.Value, options);
+                    restoreParameters = MongoClusterRestoreContent.DeserializeMongoClusterRestoreContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("administratorLogin"u8))
@@ -240,10 +240,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    List<PrivateEndpointConnection> array = new List<PrivateEndpointConnection>();
+                    List<MongoClusterPrivateEndpointConnection> array = new List<MongoClusterPrivateEndpointConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnection.DeserializePrivateEndpointConnection(item, options));
+                        array.Add(MongoClusterPrivateEndpointConnection.DeserializeMongoClusterPrivateEndpointConnection(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 clusterStatus,
                 publicNetworkAccess,
                 nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(),
-                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnection>(),
+                privateEndpointConnections ?? new ChangeTrackingList<MongoClusterPrivateEndpointConnection>(),
                 serializedAdditionalRawData);
         }
 

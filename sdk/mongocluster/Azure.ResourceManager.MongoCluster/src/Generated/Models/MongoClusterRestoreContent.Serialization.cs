@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class MongoClusterRestoreParameters : IUtf8JsonSerializable, IJsonModel<MongoClusterRestoreParameters>
+    public partial class MongoClusterRestoreContent : IUtf8JsonSerializable, IJsonModel<MongoClusterRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterRestoreParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MongoClusterRestoreParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterRestoreContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             writer.WriteEndObject();
         }
 
-        MongoClusterRestoreParameters IJsonModel<MongoClusterRestoreParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterRestoreContent IJsonModel<MongoClusterRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMongoClusterRestoreParameters(document.RootElement, options);
+            return DeserializeMongoClusterRestoreContent(document.RootElement, options);
         }
 
-        internal static MongoClusterRestoreParameters DeserializeMongoClusterRestoreParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterRestoreContent DeserializeMongoClusterRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MongoClusterRestoreParameters(pointInTimeUTC, sourceResourceId, serializedAdditionalRawData);
+            return new MongoClusterRestoreContent(pointInTimeUTC, sourceResourceId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MongoClusterRestoreParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterRestoreContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MongoClusterRestoreParameters IPersistableModel<MongoClusterRestoreParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterRestoreContent IPersistableModel<MongoClusterRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMongoClusterRestoreParameters(document.RootElement, options);
+                        return DeserializeMongoClusterRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MongoClusterRestoreParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

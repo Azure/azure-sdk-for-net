@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
             IReadOnlyList<string> groupIds = default;
             SubResource privateEndpoint = default;
-            PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            PrivateEndpointConnectionProvisioningState? provisioningState = default;
+            MongoClusterPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            MongoClusterPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property.Value, options);
+                    privateLinkServiceConnectionState = MongoClusterPrivateLinkServiceConnectionState.DeserializeMongoClusterPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    provisioningState = new PrivateEndpointConnectionProvisioningState(property.Value.GetString());
+                    provisioningState = new MongoClusterPrivateEndpointConnectionProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
