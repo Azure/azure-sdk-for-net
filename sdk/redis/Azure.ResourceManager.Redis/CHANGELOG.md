@@ -1,12 +1,9 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (2024-07-08)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+  - Adds support for Disabling Access Keys Authentication for your Azure Cache for Redis instance
 
 ### Other Changes
 
