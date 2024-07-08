@@ -22,6 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
+    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Folder Include="SessionRecords\" />
     <None Include="SessionRecords\**\*" />
   </ItemGroup>

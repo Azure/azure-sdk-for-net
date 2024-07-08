@@ -20,6 +20,11 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
+    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
+  </ItemGroup>
+  
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
