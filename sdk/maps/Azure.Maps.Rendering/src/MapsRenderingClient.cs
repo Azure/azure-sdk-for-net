@@ -189,9 +189,8 @@ namespace Azure.Maps.Rendering
                     }
                 }
                 var response = await restClient.GetMapStaticImageAsync(
-                    RasterTileFormat.Png,
-                    options?.MapImageLayer,
-                    options?.MapImageStyle,
+                    MapTileSetId.MicrosoftBaseRoad,
+                    TrafficTilesetId.MicrosoftTrafficRelativeMain,
                     options?.ZoomLevel,
                     coordinate,
                     boundingBox,
@@ -263,9 +262,8 @@ namespace Azure.Maps.Rendering
                     }
                 }
                 var response = restClient.GetMapStaticImage(
-                    RasterTileFormat.Png,
-                    options?.MapImageLayer,
-                    options?.MapImageStyle,
+                     MapTileSetId.MicrosoftBaseRoad,
+                    TrafficTilesetId.MicrosoftTrafficRelativeMain,
                     options?.ZoomLevel,
                     coordinate,
                     boundingBox,
