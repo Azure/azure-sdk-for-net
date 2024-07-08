@@ -907,6 +907,9 @@
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
 
+# ServiceLabel: %HardwareSecurityModules
+# ServiceOwners:                                                   @emmeliaAra
+
 # ######## Management Plane ########
 
 # PRLabel: %Mgmt

@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: HardwareSecurityModules
 namespace: Azure.ResourceManager.HardwareSecurityModules
-require: https://github.com/emmeliaAra/azure-rest-api-specs/blob/f3040e0e41beda6927e7669b64358506d3c8ce44/specification/hardwaresecuritymodules/resource-manager/readme.md
-#tag: package-2023-12-preview
+require: https://github.com/emmeliaAra/azure-rest-api-specs/blob/e5eb6756c5110f0694f4ebebe4ad08896d8144df/specification/hardwaresecuritymodules/resource-manager/readme.md
+#tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
