@@ -1349,13 +1349,9 @@ namespace Azure.Storage.Blobs.Specialized
                                 content,
                                 Constants.StructuredMessage.DefaultSegmentContentLength,
                                 StructuredMessage.Flags.StorageCrc64)
-                            : new StructuredMessageEncodingStream(
+                            : new StructuredMessagePrecalculatedCrcWrapperStream(
                                 content,
-                                Constants.StructuredMessage.DefaultSegmentContentLength,
-                                StructuredMessage.Flags.StorageCrc64);
-                            //: new StructuredMessagePrecalculatedCrcWrapperStream(
-                            //    content,
-                            //    validationOptions.PrecalculatedChecksum.Span);
+                                validationOptions.PrecalculatedChecksum.Span);
                         contentLength = (content?.Length - content?.Position) ?? 0;
                     }
                     else
