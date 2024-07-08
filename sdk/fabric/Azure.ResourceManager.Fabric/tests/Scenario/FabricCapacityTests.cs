@@ -118,19 +118,10 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
 
             // Act
             await capacity.DeleteAsync(WaitUntil.Completed);
-            while (true)
-            {
-                try
-                {
-                    var result = await _fabricCapacityCollection.GetAsync(capacityName);
-                    Assert.AreEqual(result.Value.Data.ProvisioningState, ProvisioningState.Deleting);
-                }
-                catch (RequestFailedException ex) when (ex.Status == StatusCodes.Status404NotFound)
-                {
-                    return;
-                }
-                await Task.Delay(2000);
-            }
+
+            // Assert
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _fabricCapacityCollection.GetAsync(capacityName));
+            Assert.AreEqual(ex.Status, StatusCodes.Status404NotFound);
         }
 
         [TestCase]
