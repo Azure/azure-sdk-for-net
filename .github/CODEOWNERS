@@ -528,6 +528,12 @@
 # ServiceLabel: %Guest Configuration
 # ServiceOwners:                                                   @mgreenegit @vivlingaiah
 
+# PRLabel: %Hardware Security Modules
+sdk/hardwaresecuritymodules/									   @emmeliaAra
+
+# ServiceLabel: %Hardware Security Modules
+# ServiceOwners:                                                   @emmeliaAra
+
 # PRlabel: %HDInsight
 /sdk/hdinsight/                                                    @aim-for-better @idear1203 @deshriva
 
@@ -906,9 +912,6 @@
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
-
-# ServiceLabel: %HardwareSecurityModules
-# ServiceOwners:                                                   @emmeliaAra
 
 # ######## Management Plane ########
 
