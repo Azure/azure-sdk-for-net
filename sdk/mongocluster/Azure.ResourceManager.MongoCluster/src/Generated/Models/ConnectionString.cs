@@ -51,18 +51,18 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionString"/>. </summary>
-        /// <param name="uri"> Value of the connection string. </param>
+        /// <param name="connectionStringValue"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionString(string uri, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionString(string connectionStringValue, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Uri = uri;
+            ConnectionStringValue = connectionStringValue;
             Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the connection string. </summary>
-        public string Uri { get; }
+        public string ConnectionStringValue { get; }
         /// <summary> Description of the connection string. </summary>
         public string Description { get; }
     }

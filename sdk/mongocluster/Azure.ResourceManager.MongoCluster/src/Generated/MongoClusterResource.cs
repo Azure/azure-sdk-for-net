@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_ListByMongoCluster</description>
+        /// <description>PrivateLinks_ListByMongoCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_ListByMongoCluster</description>
+        /// <description>PrivateLinks_ListByMongoCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

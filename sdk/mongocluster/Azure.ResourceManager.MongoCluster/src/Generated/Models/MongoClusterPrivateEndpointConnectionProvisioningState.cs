@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Connection has been provisioned. </summary>
+        /// <summary> Succeeded. </summary>
         public static MongoClusterPrivateEndpointConnectionProvisioningState Succeeded { get; } = new MongoClusterPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Connection is being created. </summary>
+        /// <summary> Creating. </summary>
         public static MongoClusterPrivateEndpointConnectionProvisioningState Creating { get; } = new MongoClusterPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Connection is being deleted. </summary>
+        /// <summary> Deleting. </summary>
         public static MongoClusterPrivateEndpointConnectionProvisioningState Deleting { get; } = new MongoClusterPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Connection provisioning has failed. </summary>
+        /// <summary> Failed. </summary>
         public static MongoClusterPrivateEndpointConnectionProvisioningState Failed { get; } = new MongoClusterPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="MongoClusterPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MongoClusterPrivateEndpointConnectionProvisioningState left, MongoClusterPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

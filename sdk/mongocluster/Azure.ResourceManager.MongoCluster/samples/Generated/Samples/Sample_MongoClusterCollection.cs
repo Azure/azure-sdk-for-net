@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             MongoClusterData data = new MongoClusterData(new AzureLocation("westus2"))
             {
                 CreateMode = CreateMode.PointInTimeRestore,
-                RestoreParameters = new MongoClusterRestoreParameters()
+                RestoreParameters = new MongoClusterRestoreContent()
                 {
                     PointInTimeUTC = DateTimeOffset.Parse("2023-01-13T20:07:35Z"),
                     SourceResourceId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myOtherMongoCluster",

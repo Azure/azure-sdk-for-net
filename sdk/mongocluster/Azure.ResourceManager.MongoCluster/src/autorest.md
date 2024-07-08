@@ -52,5 +52,9 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+rename-mapping:
+  CheckNameAvailabilityResponse: CheckNameAvailabilityResult
+  MongoClusterRestoreParameters: MongoClusterRestoreContent
+
 
 ```

@@ -61,15 +61,23 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
+        /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirewallRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string startIPAddress, string endIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public FirewallRuleProperties Properties { get; set; }
+        /// <summary> The provisioning state of the firewall rule. </summary>
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
+        public string StartIPAddress { get; set; }
+        /// <summary> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
+        public string EndIPAddress { get; set; }
     }
 }

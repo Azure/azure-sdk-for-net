@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 Name = "newmongocluster",
                 ResourceType = "Microsoft.DocumentDB/mongoClusters",
             };
-            CheckNameAvailabilityResponse result = await subscriptionResource.CheckNameAvailabilityMongoClusterAsync(location, content);
+            CheckNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityMongoClusterAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 Name = "existingmongocluster",
                 ResourceType = "Microsoft.DocumentDB/mongoClusters",
             };
-            CheckNameAvailabilityResponse result = await subscriptionResource.CheckNameAvailabilityMongoClusterAsync(location, content);
+            CheckNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityMongoClusterAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

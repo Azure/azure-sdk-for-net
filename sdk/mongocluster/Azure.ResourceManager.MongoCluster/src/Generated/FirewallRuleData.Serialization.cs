@@ -28,11 +28,6 @@ namespace Azure.ResourceManager.MongoCluster
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -53,6 +48,24 @@ namespace Azure.ResourceManager.MongoCluster
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(StartIPAddress))
+            {
+                writer.WritePropertyName("startIpAddress"u8);
+                writer.WriteStringValue(StartIPAddress);
+            }
+            if (Optional.IsDefined(EndIPAddress))
+            {
+                writer.WritePropertyName("endIpAddress"u8);
+                writer.WriteStringValue(EndIPAddress);
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,24 +104,17 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 return null;
             }
-            FirewallRuleProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            ProvisioningState? provisioningState = default;
+            string startIPAddress = default;
+            string endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = FirewallRuleProperties.DeserializeFirewallRuleProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -133,6 +139,37 @@ namespace Azure.ResourceManager.MongoCluster
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("startIpAddress"u8))
+                        {
+                            startIPAddress = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("endIpAddress"u8))
+                        {
+                            endIPAddress = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -144,7 +181,9 @@ namespace Azure.ResourceManager.MongoCluster
                 name,
                 type,
                 systemData,
-                properties,
+                provisioningState,
+                startIPAddress,
+                endIPAddress,
                 serializedAdditionalRawData);
         }
 

@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityContent(string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CheckNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            Type = type;
+            ResourceType = resourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
-        public string Type { get; set; }
+        public string ResourceType { get; set; }
     }
 }

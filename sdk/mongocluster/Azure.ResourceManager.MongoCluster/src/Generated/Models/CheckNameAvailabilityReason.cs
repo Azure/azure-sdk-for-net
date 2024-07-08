@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Possible reasons for a name not being available. </summary>
+    /// <summary> The reason why the given name is not available. </summary>
     public readonly partial struct CheckNameAvailabilityReason : IEquatable<CheckNameAvailabilityReason>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> Name is invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static CheckNameAvailabilityReason Invalid { get; } = new CheckNameAvailabilityReason(InvalidValue);
-        /// <summary> Name already exists. </summary>
+        /// <summary> AlreadyExists. </summary>
         public static CheckNameAvailabilityReason AlreadyExists { get; } = new CheckNameAvailabilityReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="CheckNameAvailabilityReason"/> values are the same. </summary>
         public static bool operator ==(CheckNameAvailabilityReason left, CheckNameAvailabilityReason right) => left.Equals(right);
