@@ -43,6 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- This is used to automatically update the playback configuration file when recording -->
     <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
       <_Parameter1>TestProjectSourceBasePath</_Parameter1>
