@@ -69,8 +69,6 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Delete the resource group
             await _resourceGroup.DeleteAsync(WaitUntil.Completed);
-
-            await StopSessionRecordingAsync();
         }
 
         [SetUp]
@@ -97,6 +95,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Delete the network groups
             await _networkManager.DeleteNetworkGroupAsync(_networkGroupSubnet);
             await _networkManager.DeleteNetworkGroupAsync(_networkGroupVnet);
+
+            await StopSessionRecordingAsync();
         }
 
         [Test]

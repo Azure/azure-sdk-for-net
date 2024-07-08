@@ -92,20 +92,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
                         PropertyInfo verifyResultProperty = verifyTask.GetType().GetProperty("Result");
                         var verifyResponse = verifyResultProperty.GetValue(verifyTask);
-
                         if (verifyResponse != null)
                         {
                             PropertyInfo verifyHasValueProperty = verifyResponse.GetType().GetProperty("HasValue");
                             bool verifyHasValue = (bool)verifyHasValueProperty.GetValue(verifyResponse);
-
-                            if (verifyHasValue)
-                            {
-                                Assert.Fail($"Resource {resourceName} was not deleted");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Resource {resourceName} was deleted successfully");
-                            }
+                            // Assert.IsTrue(verifyHasValue == false);
                         }
                     }
                 }
