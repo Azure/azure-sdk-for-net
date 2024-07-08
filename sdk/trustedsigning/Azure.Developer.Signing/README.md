@@ -4,8 +4,8 @@ Azure.Developer.Signing is a fully managed end-to-end signing solution for 3rd p
 
 Use the client library for Azure Developer Signing to:
 
-* [Perform Signing of bits](https://docs.microsoft.com/azure)
-* [Access Signing information](https://docs.microsoft.com/azure)
+* [Perform Signing of bits](https://learn.microsoft.com/en-us/azure/trusted-signing/how-to-signing-integrations/)
+* [Access Signing information](https://learn.microsoft.com/en-us/azure/trusted-signing/how-to-sign-ci-policy/)
 
 [Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
 
