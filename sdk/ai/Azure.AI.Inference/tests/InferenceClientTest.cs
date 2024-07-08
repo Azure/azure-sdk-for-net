@@ -14,8 +14,11 @@ using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using static System.Net.WebRequestMethods;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -215,6 +218,7 @@ namespace Azure.AI.Inference.Tests
         }
 
         [RecordedTest]
+        [TestCase(ToolChoiceTestType.DoNotSpecifyToolChoice)]
         [TestCase(ToolChoiceTestType.UseAutoPresetToolChoice)]
         [TestCase(ToolChoiceTestType.UseNonePresetToolChoice)]
         [TestCase(ToolChoiceTestType.UseRequiredPresetToolChoice)]
@@ -248,14 +252,23 @@ namespace Azure.AI.Inference.Tests
 
             ChatCompletionsFunctionToolDefinition functionToolDef = new ChatCompletionsFunctionToolDefinition(futureTemperatureFunction);
 
-            var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
-            var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+            // var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
+            // var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+
+            var githubEndpoint = new Uri(TestEnvironment.GithubEndpoint);
+            var githubModelName = "gpt-4o";
+            var githubCredential = new AzureKeyCredential(TestEnvironment.GithubToken);
+
+            /// AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
 
             // var client = CreateClient(endpoint, credential);
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
             ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
-            var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
+            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
+            //var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
+
+            var client = new ChatCompletionsClient(githubEndpoint, githubCredential, clientOptions);
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -265,7 +278,8 @@ namespace Azure.AI.Inference.Tests
                     new ChatRequestUserMessage("What should I wear in Honolulu in 3 days?"),
                 },
                 MaxTokens = 512,
-                Tools = { functionToolDef }
+                Tools = { functionToolDef },
+                Model = githubModelName,
             };
 
             requestOptions.ToolChoice = toolChoiceType switch
@@ -286,7 +300,8 @@ namespace Azure.AI.Inference.Tests
             catch (Exception ex)
             {
                 var requestPayload = captureRequestPayloadPolicy._requestContent;
-                Assert.True(false, $"Request failed with the following exception: {ex}\n Request payload: {requestPayload}");
+                var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
             }
 
             Assert.That(response, Is.Not.Null);
@@ -328,12 +343,13 @@ namespace Azure.AI.Inference.Tests
             Dictionary<string, string> arguments
                 = JsonConvert.DeserializeObject<Dictionary<string, string>>(functionToolCall.Arguments);
             Assert.That(arguments.ContainsKey("locationName"));
-            Assert.That(arguments.ContainsKey("date"));
+            Assert.That(arguments.ContainsKey("daysInAdvance"));
 
             ChatCompletionsOptions followupOptions = new()
             {
                 Tools = { functionToolDef },
                 MaxTokens = 512,
+                Model = githubModelName,
             };
 
             // Include all original messages
@@ -349,7 +365,18 @@ namespace Azure.AI.Inference.Tests
                 toolCallId: functionToolCall.Id,
                 content: "31 celsius"));
 
-            Response<ChatCompletions> followupResponse = await client.CompleteAsync(followupOptions);
+            Response<ChatCompletions> followupResponse = null;
+            try
+            {
+                followupResponse = await client.CompleteAsync(followupOptions);
+            }
+            catch (Exception ex)
+            {
+                var requestPayload = captureRequestPayloadPolicy._requestContent;
+                var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+            }
+
             Assert.That(followupResponse, Is.Not.Null);
             Assert.That(followupResponse.Value, Is.Not.Null);
             Assert.That(followupResponse.Value.Choices, Is.Not.Null.Or.Empty);

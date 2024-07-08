@@ -17,13 +17,15 @@ namespace Azure.AI.Inference
         /// </exception>
         public ChatRequestAssistantMessage(ChatResponseMessage responseMessage)
         {
-            if (Role != ChatRole.Assistant)
+            if (responseMessage.Role != ChatRole.Assistant)
             {
                 throw new ArgumentException($"Assistant message request messages may only be instantiated from response "
                     + $"message instances of the Assistant role.");
             }
 
+            Role = ChatRole.Assistant;
             Content = responseMessage.Content;
+            ToolCalls = new ChangeTrackingList<ChatCompletionsToolCall>();
             foreach (ChatCompletionsToolCall chatCompletionsToolCall in responseMessage.ToolCalls)
             {
                 ToolCalls.Add(chatCompletionsToolCall);
