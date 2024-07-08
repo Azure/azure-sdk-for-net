@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Sampling type. </summary>
+        [WirePath("samplingType")]
         public SamplingType? SamplingType { get; set; }
         /// <summary> Rate of sampling for fixed-rate sampling. </summary>
+        [WirePath("percentage")]
         public double? Percentage { get; set; }
     }
 }

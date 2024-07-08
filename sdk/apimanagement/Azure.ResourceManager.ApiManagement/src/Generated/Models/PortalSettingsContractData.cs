@@ -76,12 +76,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> A delegation Url. </summary>
+        [WirePath("properties.url")]
         public Uri Uri { get; set; }
         /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
+        [WirePath("properties.validationKey")]
         public string ValidationKey { get; set; }
         /// <summary> Subscriptions delegation settings. </summary>
         internal SubscriptionDelegationSettingProperties IsSubscriptions { get; set; }
         /// <summary> Enable or disable delegation for subscriptions. </summary>
+        [WirePath("properties.subscriptions.enabled")]
         public bool? IsSubscriptionDelegationEnabled
         {
             get => IsSubscriptions is null ? default : IsSubscriptions.IsSubscriptionDelegationEnabled;
@@ -96,6 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> User registration delegation settings. </summary>
         internal RegistrationDelegationSettingProperties IsUserRegistration { get; set; }
         /// <summary> Enable or disable delegation for user registration. </summary>
+        [WirePath("properties.userRegistration.enabled")]
         public bool? IsUserRegistrationDelegationEnabled
         {
             get => IsUserRegistration is null ? default : IsUserRegistration.IsUserRegistrationDelegationEnabled;
@@ -108,8 +112,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsRedirectEnabled { get; set; }
         /// <summary> Terms of service contract properties. </summary>
+        [WirePath("properties.termsOfService")]
         public TermsOfServiceProperties TermsOfService { get; set; }
     }
 }

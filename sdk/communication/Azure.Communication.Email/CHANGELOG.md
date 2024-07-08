@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Consumers can now provide their own value for the Operation ID when sending emails.
+  New overloads have been added to `EmailClient` with the `operationId` parameter.
+
 ### Breaking Changes
 
 ### Bugs Fixed
