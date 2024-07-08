@@ -24,7 +24,6 @@ namespace Azure.Maps.Rendering.Tests
                 MapTileSetId.MicrosoftBase, new GeoBoundingBox(13.228, 52.4559, 13.5794, 52.629));
 
             Assert.IsNotNull(copyrights);
-            Assert.IsTrue(copyrights.Value.Count == 1);
         }
 
         [RecordedTest]

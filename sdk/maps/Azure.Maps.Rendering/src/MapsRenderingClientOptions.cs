@@ -12,13 +12,13 @@ namespace Azure.Maps.Rendering
     /// <summary> Client options for MapsRenderClient. </summary>
     public partial class MapsRenderingClientOptions : Azure.Core.ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2022_08_01;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2024_04_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2022-08-01". </summary>
-            V2022_08_01 = 1,
+            /// <summary> Service version "2024-04-01". </summary>
+            V2024_04_01 = 1,
         }
 
         internal string Version { get; }
@@ -32,7 +32,7 @@ namespace Azure.Maps.Rendering
         {
             Version = version switch
             {
-                ServiceVersion.V2022_08_01 => "2022-08-01",
+                ServiceVersion.V2024_04_01 => "2024-04-01",
                 _ => throw new NotSupportedException()
             };
             Endpoint = endpoint;
