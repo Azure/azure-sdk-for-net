@@ -513,7 +513,7 @@ namespace Azure.Storage.Test.Shared
             };
 
             // Tamper with stream contents in the pipeline to simulate silent failure in the transit layer
-            var streamTamperPolicy = new TamperStreamContentsPolicy();
+            var streamTamperPolicy = TamperStreamContentsPolicy.TamperByteAt(100);
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(streamTamperPolicy, HttpPipelinePosition.PerCall);
 
