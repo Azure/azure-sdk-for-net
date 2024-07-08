@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.MongoCluster
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -61,79 +66,6 @@ namespace Azure.ResourceManager.MongoCluster
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
-            if (Optional.IsDefined(RestoreParameters))
-            {
-                writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters, options);
-            }
-            if (Optional.IsDefined(AdministratorLogin))
-            {
-                writer.WritePropertyName("administratorLogin"u8);
-                writer.WriteStringValue(AdministratorLogin);
-            }
-            if (Optional.IsDefined(AdministratorLoginPassword))
-            {
-                writer.WritePropertyName("administratorLoginPassword"u8);
-                writer.WriteStringValue(AdministratorLoginPassword);
-            }
-            if (Optional.IsDefined(ServerVersion))
-            {
-                writer.WritePropertyName("serverVersion"u8);
-                writer.WriteStringValue(ServerVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionString))
-            {
-                writer.WritePropertyName("connectionString"u8);
-                writer.WriteStringValue(ConnectionString);
-            }
-            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreTime))
-            {
-                writer.WritePropertyName("earliestRestoreTime"u8);
-                writer.WriteStringValue(EarliestRestoreTime);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterStatus))
-            {
-                writer.WritePropertyName("clusterStatus"u8);
-                writer.WriteStringValue(ClusterStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(NodeGroupSpecs))
-            {
-                writer.WritePropertyName("nodeGroupSpecs"u8);
-                writer.WriteStartArray();
-                foreach (var item in NodeGroupSpecs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -172,28 +104,26 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 return null;
             }
+            MongoClusterProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            CreateMode? createMode = default;
-            MongoClusterRestoreParameters restoreParameters = default;
-            string administratorLogin = default;
-            string administratorLoginPassword = default;
-            string serverVersion = default;
-            string connectionString = default;
-            string earliestRestoreTime = default;
-            ProvisioningState? provisioningState = default;
-            MongoClusterStatus? clusterStatus = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
-            IList<NodeGroupSpec> nodeGroupSpecs = default;
-            IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = MongoClusterProperties.DeserializeMongoClusterProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -237,116 +167,6 @@ namespace Azure.ResourceManager.MongoCluster
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("createMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createMode = new CreateMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("restoreParameters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            restoreParameters = MongoClusterRestoreParameters.DeserializeMongoClusterRestoreParameters(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("administratorLogin"u8))
-                        {
-                            administratorLogin = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("administratorLoginPassword"u8))
-                        {
-                            administratorLoginPassword = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serverVersion"u8))
-                        {
-                            serverVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionString"u8))
-                        {
-                            connectionString = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("earliestRestoreTime"u8))
-                        {
-                            earliestRestoreTime = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterStatus = new MongoClusterStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("nodeGroupSpecs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NodeGroupSpec> array = new List<NodeGroupSpec>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NodeGroupSpec.DeserializeNodeGroupSpec(item, options));
-                            }
-                            nodeGroupSpecs = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("privateEndpointConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<MongoClusterPrivateEndpointConnection> array = new List<MongoClusterPrivateEndpointConnection>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(MongoClusterPrivateEndpointConnection.DeserializeMongoClusterPrivateEndpointConnection(item, options));
-                            }
-                            privateEndpointConnections = array;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -360,18 +180,7 @@ namespace Azure.ResourceManager.MongoCluster
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                createMode,
-                restoreParameters,
-                administratorLogin,
-                administratorLoginPassword,
-                serverVersion,
-                connectionString,
-                earliestRestoreTime,
-                provisioningState,
-                clusterStatus,
-                publicNetworkAccess,
-                nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(),
-                privateEndpointConnections ?? new ChangeTrackingList<MongoClusterPrivateEndpointConnection>(),
+                properties,
                 serializedAdditionalRawData);
         }
 

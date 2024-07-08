@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Connection string for the mongo cluster. </summary>
-    public partial class ConnectionString
+    /// <summary> The private endpoint connection resource. </summary>
+    public partial class PrivateEndpointConnection : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +47,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionString"/>. </summary>
-        internal ConnectionString()
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnection"/>. </summary>
+        internal PrivateEndpointConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionString"/>. </summary>
-        /// <param name="uri"> Value of the connection string. </param>
-        /// <param name="description"> Description of the connection string. </param>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnection"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The private endpoint connection properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionString(string uri, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Uri = uri;
-            Description = description;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Value of the connection string. </summary>
-        public string Uri { get; }
-        /// <summary> Description of the connection string. </summary>
-        public string Description { get; }
+        /// <summary> The private endpoint connection properties. </summary>
+        public PrivateEndpointConnectionProperties Properties { get; }
     }
 }

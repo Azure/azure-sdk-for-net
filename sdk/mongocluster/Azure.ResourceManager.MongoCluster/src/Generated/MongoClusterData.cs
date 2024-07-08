@@ -55,8 +55,6 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="location"> The location. </param>
         public MongoClusterData(AzureLocation location) : base(location)
         {
-            NodeGroupSpecs = new ChangeTrackingList<NodeGroupSpec>();
-            PrivateEndpointConnections = new ChangeTrackingList<MongoClusterPrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterData"/>. </summary>
@@ -66,33 +64,11 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="createMode"> The mode to create a mongo cluster. </param>
-        /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
-        /// <param name="administratorLogin"> The administrator's login for the mongo cluster. </param>
-        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
-        /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
-        /// <param name="connectionString"> The default mongo connection string for the cluster. </param>
-        /// <param name="earliestRestoreTime"> Earliest restore timestamp in UTC ISO8601 format. </param>
-        /// <param name="provisioningState"> The provisioning state of the mongo cluster. </param>
-        /// <param name="clusterStatus"> The status of the mongo cluster. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
-        /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CreateMode? createMode, MongoClusterRestoreParameters restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, ProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, IList<NodeGroupSpec> nodeGroupSpecs, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MongoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MongoClusterProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            CreateMode = createMode;
-            RestoreParameters = restoreParameters;
-            AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
-            ServerVersion = serverVersion;
-            ConnectionString = connectionString;
-            EarliestRestoreTime = earliestRestoreTime;
-            ProvisioningState = provisioningState;
-            ClusterStatus = clusterStatus;
-            PublicNetworkAccess = publicNetworkAccess;
-            NodeGroupSpecs = nodeGroupSpecs;
-            PrivateEndpointConnections = privateEndpointConnections;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -101,29 +77,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
         }
 
-        /// <summary> The mode to create a mongo cluster. </summary>
-        public CreateMode? CreateMode { get; set; }
-        /// <summary> The parameters to create a point-in-time restore mongo cluster. </summary>
-        public MongoClusterRestoreParameters RestoreParameters { get; set; }
-        /// <summary> The administrator's login for the mongo cluster. </summary>
-        public string AdministratorLogin { get; set; }
-        /// <summary> The password of the administrator login. </summary>
-        public string AdministratorLoginPassword { get; set; }
-        /// <summary> The Mongo DB server version. Defaults to the latest available version if not specified. </summary>
-        public string ServerVersion { get; set; }
-        /// <summary> The default mongo connection string for the cluster. </summary>
-        public string ConnectionString { get; }
-        /// <summary> Earliest restore timestamp in UTC ISO8601 format. </summary>
-        public string EarliestRestoreTime { get; }
-        /// <summary> The provisioning state of the mongo cluster. </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The status of the mongo cluster. </summary>
-        public MongoClusterStatus? ClusterStatus { get; }
-        /// <summary> Whether or not public endpoint access is allowed for this mongo cluster. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> The list of node group specs in the cluster. </summary>
-        public IList<NodeGroupSpec> NodeGroupSpecs { get; }
-        /// <summary> List of private endpoint connections. </summary>
-        public IReadOnlyList<MongoClusterPrivateEndpointConnection> PrivateEndpointConnections { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public MongoClusterProperties Properties { get; set; }
     }
 }

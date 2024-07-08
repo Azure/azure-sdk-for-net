@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MongoCluster.Models;
 
-namespace Azure.ResourceManager.MongoCluster
+namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class PrivateEndpointConnectionResourceData : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionResourceData>
+    public partial class PrivateEndpointConnection : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PrivateEndpointConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +70,19 @@ namespace Azure.ResourceManager.MongoCluster
             writer.WriteEndObject();
         }
 
-        PrivateEndpointConnectionResourceData IJsonModel<PrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PrivateEndpointConnection IJsonModel<PrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateEndpointConnectionResourceData(document.RootElement, options);
+            return DeserializePrivateEndpointConnection(document.RootElement, options);
         }
 
-        internal static PrivateEndpointConnectionResourceData DeserializePrivateEndpointConnectionResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PrivateEndpointConnection DeserializePrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.MongoCluster
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PrivateEndpointConnectionResourceData(
+            return new PrivateEndpointConnection(
                 id,
                 name,
                 type,
@@ -148,35 +147,35 @@ namespace Azure.ResourceManager.MongoCluster
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PrivateEndpointConnection>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PrivateEndpointConnectionResourceData IPersistableModel<PrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PrivateEndpointConnection IPersistableModel<PrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePrivateEndpointConnectionResourceData(document.RootElement, options);
+                        return DeserializePrivateEndpointConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
