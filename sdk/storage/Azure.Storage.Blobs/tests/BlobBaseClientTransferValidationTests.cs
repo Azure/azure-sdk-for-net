@@ -95,59 +95,6 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         #region Added Tests
-        [TestCaseSource("GetValidationAlgorithms")]
-        public async Task ExpectedDownloadStreamingStreamTypeReturned(StorageChecksumAlgorithm algorithm)
-        {
-            await using var test = await GetDisposingContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(Constants.KB);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewResourceName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-            // don't make options instance at all for no hash request
-            DownloadTransferValidationOptions transferValidation = algorithm == StorageChecksumAlgorithm.None
-                ? default
-                : new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
-
-            // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
-            {
-                TransferValidation = transferValidation,
-                Range = new HttpRange(length: data.Length)
-            });
-
-            // Assert
-            // validated stream is buffered
-            Assert.AreEqual(typeof(MemoryStream), response.Value.Content.GetType());
-        }
-
-        [Test]
-        public async Task ExpectedDownloadStreamingStreamTypeReturned_None()
-        {
-            await using var test = await GetDisposingContainerAsync();
-
-            // Arrange
-            var data = GetRandomBuffer(Constants.KB);
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewResourceName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadAsync(stream);
-            }
-
-            // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new BlobDownloadOptions
-            {
-                Range = new HttpRange(length: data.Length)
-            });
-
-            // Assert
-            // unvalidated stream type is private; just check we didn't get back a buffered stream
-            Assert.AreNotEqual(typeof(MemoryStream), response.Value.Content.GetType());
-        }
-
         [Test]
         public virtual async Task OlderServiceVersionThrowsOnStructuredMessage()
         {

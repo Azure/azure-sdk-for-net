@@ -19,6 +19,7 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     private long _decodedBytesRead;
 
     private readonly List<StructuredMessageDecodingStream.DecodedData> _decodedDatas;
+    private readonly Action<StructuredMessageDecodingStream.DecodedData> _onComplete;
 
     private readonly Func<long, (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> _decodingStreamFactory;
     private readonly Func<long, ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>> _decodingAsyncStreamFactory;
@@ -28,6 +29,7 @@ internal class StructuredMessageDecodingRetriableStream : Stream
         StructuredMessageDecodingStream.DecodedData initialDecodedData,
         Func<long, (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> decodingStreamFactory,
         Func<long, ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>> decodingAsyncStreamFactory,
+        Action<StructuredMessageDecodingStream.DecodedData> onComplete,
         ResponseClassifier responseClassifier,
         int maxRetries)
     {
@@ -35,6 +37,7 @@ internal class StructuredMessageDecodingRetriableStream : Stream
         _decodingAsyncStreamFactory = decodingAsyncStreamFactory;
         _innerRetriable = RetriableStream.Create(initialDecodingStream, StreamFactory, StreamFactoryAsync, responseClassifier, maxRetries);
         _decodedDatas = new() { initialDecodedData };
+        _onComplete = onComplete;
     }
 
     private Stream StreamFactory(long _)
@@ -86,11 +89,22 @@ internal class StructuredMessageDecodingRetriableStream : Stream
         _innerRetriable.Dispose();
     }
 
+    private void OnCompleted()
+    {
+        StructuredMessageDecodingStream.DecodedData final = new();
+        // TODO
+        _onComplete(final);
+    }
+
     #region Read
     public override int Read(byte[] buffer, int offset, int count)
     {
         int read = _innerRetriable.Read(buffer, offset, count);
         _decodedBytesRead += read;
+        if (read == 0)
+        {
+            OnCompleted();
+        }
         return read;
     }
 
@@ -98,6 +112,10 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     {
         int read = await _innerRetriable.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
         _decodedBytesRead += read;
+        if (read == 0)
+        {
+            OnCompleted();
+        }
         return read;
     }
 
@@ -106,6 +124,10 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     {
         int read = _innerRetriable.Read(buffer);
         _decodedBytesRead += read;
+        if (read == 0)
+        {
+            OnCompleted();
+        }
         return read;
     }
 
@@ -113,6 +135,10 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     {
         int read = await _innerRetriable.ReadAsync(buffer, cancellationToken).ConfigureAwait(false);
         _decodedBytesRead += read;
+        if (read == 0)
+        {
+            OnCompleted();
+        }
         return read;
     }
 #endif
@@ -121,6 +147,10 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     {
         int val = _innerRetriable.ReadByte();
         _decodedBytesRead += 1;
+        if (val == -1)
+        {
+            OnCompleted();
+        }
         return val;
     }
 
@@ -128,6 +158,10 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     {
         int read = _innerRetriable.EndRead(asyncResult);
         _decodedBytesRead += read;
+        if (read == 0)
+        {
+            OnCompleted();
+        }
         return read;
     }
     #endregion
