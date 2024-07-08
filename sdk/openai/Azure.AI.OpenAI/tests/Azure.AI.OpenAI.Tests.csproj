@@ -16,6 +16,9 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
+    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,11 +43,6 @@
     <Compile Include="..\src\Utility\Polyfill\**\*.cs">
       <Link>Utils\Polyfill\%(RecursiveDir)\%(Filename).cs</Link>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>

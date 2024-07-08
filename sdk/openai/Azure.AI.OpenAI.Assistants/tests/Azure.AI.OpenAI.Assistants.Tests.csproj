@@ -10,6 +10,9 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.AI.OpenAI.Assistants.csproj" />
+
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
+    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
   
   <ItemGroup>
@@ -22,8 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
   
   <ItemGroup>

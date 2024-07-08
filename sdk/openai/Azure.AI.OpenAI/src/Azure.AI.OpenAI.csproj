@@ -20,9 +20,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="OpenAI" />
-  </ItemGroup>
-
-  <ItemGroup>
+    
     <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
     <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
