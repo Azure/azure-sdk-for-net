@@ -5,8 +5,6 @@
 ### Features Added
   - Adds support for Disabling Access Keys Authentication for your Azure Cache for Redis instance
 
-### Other Changes
-
 ## 1.3.3 (2024-05-07)
 
 ### Bugs Fixed
