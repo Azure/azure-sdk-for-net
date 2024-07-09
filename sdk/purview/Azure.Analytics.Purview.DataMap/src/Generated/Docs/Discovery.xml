@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="QueryAsync(string,int?,string,IEnumerable{BinaryData},BinaryData,IEnumerable{SearchFacetItem},SearchTaxonomySetting,CancellationToken)">
+    <member name="QueryAsync(QueryConfig,CancellationToken)">
       <example>
 This sample shows how to call QueryAsync.
 <code><![CDATA[
@@ -9,7 +9,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<QueryResult> response = await client.QueryAsync();
+QueryConfig body = new QueryConfig();
+Response<QueryResult> response = await client.QueryAsync(body);
 ]]></code>
 This sample shows how to call QueryAsync with all parameters.
 <code><![CDATA[
@@ -17,17 +18,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-SearchTaxonomySetting taxonomySetting = new SearchTaxonomySetting
+QueryConfig body = new QueryConfig
 {
-    AssetTypes = { "<assetTypes>" },
-    Facet = default,
-};
-Response<QueryResult> response = await client.QueryAsync(keywords: "<keywords>", limit: 1234, continuationToken: "<continuationToken>", orderby: new BinaryData[]
-{
-    BinaryData.FromObjectAsJson(new object())
-}, filter: BinaryData.FromObjectAsJson(new object()), facets: new SearchFacetItem[]
-{
-    new SearchFacetItem
+    Keywords = "<keywords>",
+    Limit = 1234,
+    ContinuationToken = "<continuationToken>",
+    Orderby = { BinaryData.FromObjectAsJson(new object()) },
+    Filter = BinaryData.FromObjectAsJson(new object()),
+    Facets = {new SearchFacetItem
     {
         Count = 1234,
         Facet = "<facet>",
@@ -36,11 +34,17 @@ Response<QueryResult> response = await client.QueryAsync(keywords: "<keywords>",
             Count = SearchSortOrder.Ascend,
             Value = SearchSortOrder.Ascend,
         },
-    }
-}, taxonomySetting: taxonomySetting);
+    }},
+    TaxonomySetting = new SearchTaxonomySetting
+    {
+        AssetTypes = { "<assetTypes>" },
+        Facet = default,
+    },
+};
+Response<QueryResult> response = await client.QueryAsync(body);
 ]]></code></example>
     </member>
-    <member name="Query(string,int?,string,IEnumerable{BinaryData},BinaryData,IEnumerable{SearchFacetItem},SearchTaxonomySetting,CancellationToken)">
+    <member name="Query(QueryConfig,CancellationToken)">
       <example>
 This sample shows how to call Query.
 <code><![CDATA[
@@ -48,7 +52,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<QueryResult> response = client.Query();
+QueryConfig body = new QueryConfig();
+Response<QueryResult> response = client.Query(body);
 ]]></code>
 This sample shows how to call Query with all parameters.
 <code><![CDATA[
@@ -56,17 +61,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-SearchTaxonomySetting taxonomySetting = new SearchTaxonomySetting
+QueryConfig body = new QueryConfig
 {
-    AssetTypes = { "<assetTypes>" },
-    Facet = default,
-};
-Response<QueryResult> response = client.Query(keywords: "<keywords>", limit: 1234, continuationToken: "<continuationToken>", orderby: new BinaryData[]
-{
-    BinaryData.FromObjectAsJson(new object())
-}, filter: BinaryData.FromObjectAsJson(new object()), facets: new SearchFacetItem[]
-{
-    new SearchFacetItem
+    Keywords = "<keywords>",
+    Limit = 1234,
+    ContinuationToken = "<continuationToken>",
+    Orderby = { BinaryData.FromObjectAsJson(new object()) },
+    Filter = BinaryData.FromObjectAsJson(new object()),
+    Facets = {new SearchFacetItem
     {
         Count = 1234,
         Facet = "<facet>",
@@ -75,8 +77,14 @@ Response<QueryResult> response = client.Query(keywords: "<keywords>", limit: 123
             Count = SearchSortOrder.Ascend,
             Value = SearchSortOrder.Ascend,
         },
-    }
-}, taxonomySetting: taxonomySetting);
+    }},
+    TaxonomySetting = new SearchTaxonomySetting
+    {
+        AssetTypes = { "<assetTypes>" },
+        Facet = default,
+    },
+};
+Response<QueryResult> response = client.Query(body);
 ]]></code></example>
     </member>
     <member name="QueryAsync(RequestContent,RequestContext)">
@@ -297,7 +305,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("termTemplate")[0].
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("longDescription").ToString());
 ]]></code></example>
     </member>
-    <member name="SuggestAsync(string,int?,BinaryData,CancellationToken)">
+    <member name="SuggestAsync(SuggestConfig,CancellationToken)">
       <example>
 This sample shows how to call SuggestAsync.
 <code><![CDATA[
@@ -305,7 +313,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<SuggestResult> response = await client.SuggestAsync();
+SuggestConfig body = new SuggestConfig();
+Response<SuggestResult> response = await client.SuggestAsync(body);
 ]]></code>
 This sample shows how to call SuggestAsync with all parameters.
 <code><![CDATA[
@@ -313,10 +322,16 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<SuggestResult> response = await client.SuggestAsync(keywords: "<keywords>", limit: 1234, filter: BinaryData.FromObjectAsJson(new object()));
+SuggestConfig body = new SuggestConfig
+{
+    Keywords = "<keywords>",
+    Limit = 1234,
+    Filter = BinaryData.FromObjectAsJson(new object()),
+};
+Response<SuggestResult> response = await client.SuggestAsync(body);
 ]]></code></example>
     </member>
-    <member name="Suggest(string,int?,BinaryData,CancellationToken)">
+    <member name="Suggest(SuggestConfig,CancellationToken)">
       <example>
 This sample shows how to call Suggest.
 <code><![CDATA[
@@ -324,7 +339,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<SuggestResult> response = client.Suggest();
+SuggestConfig body = new SuggestConfig();
+Response<SuggestResult> response = client.Suggest(body);
 ]]></code>
 This sample shows how to call Suggest with all parameters.
 <code><![CDATA[
@@ -332,7 +348,13 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<SuggestResult> response = client.Suggest(keywords: "<keywords>", limit: 1234, filter: BinaryData.FromObjectAsJson(new object()));
+SuggestConfig body = new SuggestConfig
+{
+    Keywords = "<keywords>",
+    Limit = 1234,
+    Filter = BinaryData.FromObjectAsJson(new object()),
+};
+Response<SuggestResult> response = client.Suggest(body);
 ]]></code></example>
     </member>
     <member name="SuggestAsync(RequestContent,RequestContext)">
@@ -449,7 +471,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("termTemplate")[0].
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("longDescription").ToString());
 ]]></code></example>
     </member>
-    <member name="AutoCompleteAsync(string,int?,BinaryData,CancellationToken)">
+    <member name="AutoCompleteAsync(AutoCompleteConfig,CancellationToken)">
       <example>
 This sample shows how to call AutoCompleteAsync.
 <code><![CDATA[
@@ -457,7 +479,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<AutoCompleteResult> response = await client.AutoCompleteAsync();
+AutoCompleteConfig body = new AutoCompleteConfig();
+Response<AutoCompleteResult> response = await client.AutoCompleteAsync(body);
 ]]></code>
 This sample shows how to call AutoCompleteAsync with all parameters.
 <code><![CDATA[
@@ -465,10 +488,16 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<AutoCompleteResult> response = await client.AutoCompleteAsync(keywords: "<keywords>", limit: 1234, filter: BinaryData.FromObjectAsJson(new object()));
+AutoCompleteConfig body = new AutoCompleteConfig
+{
+    Keywords = "<keywords>",
+    Limit = 1234,
+    Filter = BinaryData.FromObjectAsJson(new object()),
+};
+Response<AutoCompleteResult> response = await client.AutoCompleteAsync(body);
 ]]></code></example>
     </member>
-    <member name="AutoComplete(string,int?,BinaryData,CancellationToken)">
+    <member name="AutoComplete(AutoCompleteConfig,CancellationToken)">
       <example>
 This sample shows how to call AutoComplete.
 <code><![CDATA[
@@ -476,7 +505,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<AutoCompleteResult> response = client.AutoComplete();
+AutoCompleteConfig body = new AutoCompleteConfig();
+Response<AutoCompleteResult> response = client.AutoComplete(body);
 ]]></code>
 This sample shows how to call AutoComplete with all parameters.
 <code><![CDATA[
@@ -484,7 +514,13 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-Response<AutoCompleteResult> response = client.AutoComplete(keywords: "<keywords>", limit: 1234, filter: BinaryData.FromObjectAsJson(new object()));
+AutoCompleteConfig body = new AutoCompleteConfig
+{
+    Keywords = "<keywords>",
+    Limit = 1234,
+    Filter = BinaryData.FromObjectAsJson(new object()),
+};
+Response<AutoCompleteResult> response = client.AutoComplete(body);
 ]]></code></example>
     </member>
     <member name="AutoCompleteAsync(RequestContent,RequestContext)">

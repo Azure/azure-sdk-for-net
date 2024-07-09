@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> An instance of an entity header map. </summary>
-    internal partial class AtlasEntityHeaders
+    public partial class AtlasEntityHeaders
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

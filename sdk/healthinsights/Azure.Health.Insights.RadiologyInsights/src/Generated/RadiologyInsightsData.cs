@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Contains the list of patients, and configuration data. </summary>
-    internal partial class RadiologyInsightsData
+    public partial class RadiologyInsightsData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

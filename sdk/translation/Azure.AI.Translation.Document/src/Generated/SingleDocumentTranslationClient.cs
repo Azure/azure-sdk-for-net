@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -97,8 +94,7 @@ namespace Azure.AI.Translation.Document
         /// The target language must be one of the supported languages included in the translation scope.
         /// For example if you want to translate the document in German language, then use targetLanguage=de
         /// </param>
-        /// <param name="document"> Document to be translated in the form. </param>
-        /// <param name="glossary"> Glossary-translation memory will be used during translation in the form. </param>
+        /// <param name="documentTranslateContent"> Document Translate Request Content. </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
@@ -114,14 +110,13 @@ namespace Azure.AI.Translation.Document
         /// Possible values are: true (default) or false.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="document"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
         /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        public virtual async Task<Response<BinaryData>> DocumentTranslateAsync(string targetLanguage, Stream document, IEnumerable<Stream> glossary = null, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> DocumentTranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(document, glossary?.ToList() as IList<Stream> ?? new ChangeTrackingList<Stream>(), null);
             using MultipartFormDataRequestContent content = documentTranslateContent.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DocumentTranslateAsync(targetLanguage, content, content.ContentType, sourceLanguage, category, allowFallback, context).ConfigureAwait(false);
@@ -134,8 +129,7 @@ namespace Azure.AI.Translation.Document
         /// The target language must be one of the supported languages included in the translation scope.
         /// For example if you want to translate the document in German language, then use targetLanguage=de
         /// </param>
-        /// <param name="document"> Document to be translated in the form. </param>
-        /// <param name="glossary"> Glossary-translation memory will be used during translation in the form. </param>
+        /// <param name="documentTranslateContent"> Document Translate Request Content. </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
@@ -151,14 +145,13 @@ namespace Azure.AI.Translation.Document
         /// Possible values are: true (default) or false.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="document"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
         /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        public virtual Response<BinaryData> DocumentTranslate(string targetLanguage, Stream document, IEnumerable<Stream> glossary = null, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> DocumentTranslate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(document, glossary?.ToList() as IList<Stream> ?? new ChangeTrackingList<Stream>(), null);
             using MultipartFormDataRequestContent content = documentTranslateContent.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DocumentTranslate(targetLanguage, content, content.ContentType, sourceLanguage, category, allowFallback, context);
@@ -175,7 +168,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DocumentTranslateAsync(string,Stream,IEnumerable{Stream},string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DocumentTranslateAsync(string,DocumentTranslateContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -234,7 +227,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DocumentTranslate(string,Stream,IEnumerable{Stream},string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DocumentTranslate(string,DocumentTranslateContent,string,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

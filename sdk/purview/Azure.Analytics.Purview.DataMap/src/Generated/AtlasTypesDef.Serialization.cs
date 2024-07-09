@@ -134,13 +134,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            IReadOnlyList<AtlasBusinessMetadataDef> businessMetadataDefs = default;
-            IReadOnlyList<AtlasClassificationDef> classificationDefs = default;
-            IReadOnlyList<AtlasEntityDef> entityDefs = default;
-            IReadOnlyList<AtlasEnumDef> enumDefs = default;
-            IReadOnlyList<AtlasRelationshipDef> relationshipDefs = default;
-            IReadOnlyList<AtlasStructDef> structDefs = default;
-            IReadOnlyList<TermTemplateDef> termTemplateDefs = default;
+            IList<AtlasBusinessMetadataDef> businessMetadataDefs = default;
+            IList<AtlasClassificationDef> classificationDefs = default;
+            IList<AtlasEntityDef> entityDefs = default;
+            IList<AtlasEnumDef> enumDefs = default;
+            IList<AtlasRelationshipDef> relationshipDefs = default;
+            IList<AtlasStructDef> structDefs = default;
+            IList<TermTemplateDef> termTemplateDefs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

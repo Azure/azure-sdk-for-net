@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -816,9 +815,9 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> Submit a document translation request to the Document Translation service. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
+        /// <param name="startTranslationDetails"> Translation job submission batch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="startTranslationDetails"/> is null. </exception>
         /// <remarks>
         /// Use this API to submit a bulk (batch) translation request to the Document
         /// Translation service.
@@ -840,20 +839,20 @@ namespace Azure.AI.Translation.Document
         /// destination, it will be overwritten. The targetUrl for each target language
         /// must be unique.
         /// </remarks>
-        public virtual async Task<Operation> StartTranslationAsync(WaitUntil waitUntil, IEnumerable<DocumentTranslationInput> inputs, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> StartTranslationAsync(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
 
-            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(inputs.ToList(), null);
+            using RequestContent content = startTranslationDetails.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await StartTranslationAsync(waitUntil, startTranslationDetails.ToRequestContent(), context).ConfigureAwait(false);
+            return await StartTranslationAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Submit a document translation request to the Document Translation service. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
+        /// <param name="startTranslationDetails"> Translation job submission batch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="startTranslationDetails"/> is null. </exception>
         /// <remarks>
         /// Use this API to submit a bulk (batch) translation request to the Document
         /// Translation service.
@@ -875,13 +874,13 @@ namespace Azure.AI.Translation.Document
         /// destination, it will be overwritten. The targetUrl for each target language
         /// must be unique.
         /// </remarks>
-        public virtual Operation StartTranslation(WaitUntil waitUntil, IEnumerable<DocumentTranslationInput> inputs, CancellationToken cancellationToken = default)
+        public virtual Operation StartTranslation(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
 
-            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(inputs.ToList(), null);
+            using RequestContent content = startTranslationDetails.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return StartTranslation(waitUntil, startTranslationDetails.ToRequestContent(), context);
+            return StartTranslation(waitUntil, content, context);
         }
 
         /// <summary>
@@ -894,7 +893,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StartTranslationAsync(WaitUntil,IEnumerable{DocumentTranslationInput},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StartTranslationAsync(WaitUntil,StartTranslationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -933,7 +932,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StartTranslation(WaitUntil,IEnumerable{DocumentTranslationInput},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StartTranslation(WaitUntil,StartTranslationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The details used when creating and immediately running a new assistant thread. </summary>
-    internal partial class CreateAndRunThreadOptions
+    public partial class CreateAndRunThreadOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

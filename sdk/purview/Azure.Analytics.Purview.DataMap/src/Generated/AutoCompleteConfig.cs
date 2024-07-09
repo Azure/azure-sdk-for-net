@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The payload of autocomplete request. </summary>
-    internal partial class AutoCompleteConfig
+    public partial class AutoCompleteConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

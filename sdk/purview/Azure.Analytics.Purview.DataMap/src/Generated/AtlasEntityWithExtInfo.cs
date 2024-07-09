@@ -49,7 +49,7 @@ namespace Azure.Analytics.Purview.DataMap
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AtlasEntityWithExtInfo"/>. </summary>
-        internal AtlasEntityWithExtInfo()
+        public AtlasEntityWithExtInfo()
         {
             ReferredEntities = new ChangeTrackingDictionary<string, AtlasEntity>();
         }
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="referredEntities"> The referred entities. </param>
         /// <param name="entity"> An instance of an entity - like hive_table, hive_database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasEntityWithExtInfo(IReadOnlyDictionary<string, AtlasEntity> referredEntities, AtlasEntity entity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasEntityWithExtInfo(IDictionary<string, AtlasEntity> referredEntities, AtlasEntity entity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReferredEntities = referredEntities;
             Entity = entity;
@@ -66,8 +66,8 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> The referred entities. </summary>
-        public IReadOnlyDictionary<string, AtlasEntity> ReferredEntities { get; }
+        public IDictionary<string, AtlasEntity> ReferredEntities { get; }
         /// <summary> An instance of an entity - like hive_table, hive_database. </summary>
-        public AtlasEntity Entity { get; }
+        public AtlasEntity Entity { get; set; }
     }
 }

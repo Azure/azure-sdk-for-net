@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The request payload for classification association. </summary>
-    internal partial class ClassificationAssociateConfig
+    public partial class ClassificationAssociateConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

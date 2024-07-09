@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Communication.ProgrammableConnectivity
 {
-    internal partial class SimSwapRetrievalContent : IUtf8JsonSerializable, IJsonModel<SimSwapRetrievalContent>
+    public partial class SimSwapRetrievalContent : IUtf8JsonSerializable, IJsonModel<SimSwapRetrievalContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimSwapRetrievalContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

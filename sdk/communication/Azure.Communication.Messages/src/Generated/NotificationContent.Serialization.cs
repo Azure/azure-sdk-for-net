@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Communication.Messages
 {
     [PersistableModelProxy(typeof(UnknownNotificationContent))]
-    internal partial class NotificationContent : IUtf8JsonSerializable, IJsonModel<NotificationContent>
+    public partial class NotificationContent : IUtf8JsonSerializable, IJsonModel<NotificationContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

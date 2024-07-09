@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Communication.ProgrammableConnectivity
 {
-    internal partial class DeviceLocationVerificationContent : IUtf8JsonSerializable, IJsonModel<DeviceLocationVerificationContent>
+    public partial class DeviceLocationVerificationContent : IUtf8JsonSerializable, IJsonModel<DeviceLocationVerificationContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceLocationVerificationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

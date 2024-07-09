@@ -14,17 +14,6 @@ namespace Azure.Analytics.Purview.DataMap
     /// <summary> Model factory for models. </summary>
     public static partial class AnalyticsPurviewDataMapModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasEntityWithExtInfo"/>. </summary>
-        /// <param name="referredEntities"> The referred entities. </param>
-        /// <param name="entity"> An instance of an entity - like hive_table, hive_database. </param>
-        /// <returns> A new <see cref="DataMap.AtlasEntityWithExtInfo"/> instance for mocking. </returns>
-        public static AtlasEntityWithExtInfo AtlasEntityWithExtInfo(IReadOnlyDictionary<string, AtlasEntity> referredEntities = null, AtlasEntity entity = null)
-        {
-            referredEntities ??= new Dictionary<string, AtlasEntity>();
-
-            return new AtlasEntityWithExtInfo(referredEntities, entity, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DataMap.AtlasEntity"/>. </summary>
         /// <param name="attributes"> The attributes of the struct. </param>
         /// <param name="typeName"> The name of the type. </param>
@@ -103,18 +92,6 @@ namespace Azure.Analytics.Purview.DataMap
             return new EntityMutationResult(guidAssignments, mutatedEntities, partialUpdatedEntities?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasEntitiesWithExtInfo"/>. </summary>
-        /// <param name="referredEntities"> The referred entities. </param>
-        /// <param name="entities"> An array of entities. </param>
-        /// <returns> A new <see cref="DataMap.AtlasEntitiesWithExtInfo"/> instance for mocking. </returns>
-        public static AtlasEntitiesWithExtInfo AtlasEntitiesWithExtInfo(IReadOnlyDictionary<string, AtlasEntity> referredEntities = null, IEnumerable<AtlasEntity> entities = null)
-        {
-            referredEntities ??= new Dictionary<string, AtlasEntity>();
-            entities ??= new List<AtlasEntity>();
-
-            return new AtlasEntitiesWithExtInfo(referredEntities, entities?.ToList(), serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DataMap.AtlasClassifications"/>. </summary>
         /// <param name="list"> An array of objects. </param>
         /// <param name="pageSize"> The size of the page. </param>
@@ -158,48 +135,6 @@ namespace Azure.Analytics.Purview.DataMap
         public static ImportInfo ImportInfo(string childObjectName = null, ImportStatus? importStatus = null, string parentObjectName = null, string remarks = null)
         {
             return new ImportInfo(childObjectName, importStatus, parentObjectName, remarks, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasGlossary"/>. </summary>
-        /// <param name="guid"> The GUID of the object. </param>
-        /// <param name="classifications"> An array of classifications. </param>
-        /// <param name="longDescription"> The long version description. </param>
-        /// <param name="name"> The name of the glossary object. </param>
-        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
-        /// <param name="shortDescription"> The short version of description. </param>
-        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
-        /// <param name="createTime"> The created time of the record. </param>
-        /// <param name="createdBy"> The user who created the record. </param>
-        /// <param name="updateTime"> The update time of the record. </param>
-        /// <param name="updatedBy"> The user who updated the record. </param>
-        /// <param name="categories"> An array of categories. </param>
-        /// <param name="language"> The language of the glossary. </param>
-        /// <param name="terms"> An array of related term headers. </param>
-        /// <param name="usage"> The usage of the glossary. </param>
-        /// <returns> A new <see cref="DataMap.AtlasGlossary"/> instance for mocking. </returns>
-        public static AtlasGlossary AtlasGlossary(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, IEnumerable<AtlasRelatedCategoryHeader> categories = null, string language = null, IEnumerable<AtlasRelatedTermHeader> terms = null, string usage = null)
-        {
-            classifications ??= new List<AtlasClassification>();
-            categories ??= new List<AtlasRelatedCategoryHeader>();
-            terms ??= new List<AtlasRelatedTermHeader>();
-
-            return new AtlasGlossary(
-                guid,
-                classifications?.ToList(),
-                longDescription,
-                name,
-                qualifiedName,
-                shortDescription,
-                lastModifiedTS,
-                createTime,
-                createdBy,
-                updateTime,
-                updatedBy,
-                categories?.ToList(),
-                language,
-                terms?.ToList(),
-                usage,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.AtlasGlossaryExtInfo"/>. </summary>
@@ -596,46 +531,6 @@ namespace Azure.Analytics.Purview.DataMap
             return new LineageRelation(fromEntityId, relationshipId, toEntityId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasRelationship"/>. </summary>
-        /// <param name="attributes"> The attributes of the struct. </param>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
-        /// <param name="createTime"> The created time of the record. </param>
-        /// <param name="createdBy"> The user who created the record. </param>
-        /// <param name="end1"> Reference to an object-instance of a type - like entity. </param>
-        /// <param name="end2"> Reference to an object-instance of a type - like entity. </param>
-        /// <param name="guid"> The GUID of the relationship. </param>
-        /// <param name="homeId"> The home ID of the relationship. </param>
-        /// <param name="label"> The label of the relationship. </param>
-        /// <param name="provenanceType"> Used to record the provenance of an instance of an entity or relationship. </param>
-        /// <param name="status"> The enum of relationship status. </param>
-        /// <param name="updateTime"> The update time of the record. </param>
-        /// <param name="updatedBy"> The user who updated the record. </param>
-        /// <param name="version"> The version of the relationship. </param>
-        /// <returns> A new <see cref="DataMap.AtlasRelationship"/> instance for mocking. </returns>
-        public static AtlasRelationship AtlasRelationship(IReadOnlyDictionary<string, BinaryData> attributes = null, string typeName = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, AtlasObjectId end1 = null, AtlasObjectId end2 = null, string guid = null, string homeId = null, string label = null, int? provenanceType = null, StatusAtlasRelationship? status = null, long? updateTime = null, string updatedBy = null, long? version = null)
-        {
-            attributes ??= new Dictionary<string, BinaryData>();
-
-            return new AtlasRelationship(
-                attributes,
-                typeName,
-                lastModifiedTS,
-                createTime,
-                createdBy,
-                end1,
-                end2,
-                guid,
-                homeId,
-                label,
-                provenanceType,
-                status,
-                updateTime,
-                updatedBy,
-                version,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DataMap.AtlasRelationshipWithExtInfo"/>. </summary>
         /// <param name="referredEntities"> The referred entity header. </param>
         /// <param name="relationship"> Atlas relationship instance. </param>
@@ -754,36 +649,6 @@ namespace Azure.Analytics.Purview.DataMap
                 relationshipCategory,
                 relationshipLabel,
                 attributeDefs?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasTypesDef"/>. </summary>
-        /// <param name="businessMetadataDefs"> businessMetadataDefs. </param>
-        /// <param name="classificationDefs"> An array of classification definitions. </param>
-        /// <param name="entityDefs"> An array of entity definitions. </param>
-        /// <param name="enumDefs"> An array of enum definitions. </param>
-        /// <param name="relationshipDefs"> An array of relationship definitions. </param>
-        /// <param name="structDefs"> An array of struct definitions. </param>
-        /// <param name="termTemplateDefs"> An array of term template definitions. </param>
-        /// <returns> A new <see cref="DataMap.AtlasTypesDef"/> instance for mocking. </returns>
-        public static AtlasTypesDef AtlasTypesDef(IEnumerable<AtlasBusinessMetadataDef> businessMetadataDefs = null, IEnumerable<AtlasClassificationDef> classificationDefs = null, IEnumerable<AtlasEntityDef> entityDefs = null, IEnumerable<AtlasEnumDef> enumDefs = null, IEnumerable<AtlasRelationshipDef> relationshipDefs = null, IEnumerable<AtlasStructDef> structDefs = null, IEnumerable<TermTemplateDef> termTemplateDefs = null)
-        {
-            businessMetadataDefs ??= new List<AtlasBusinessMetadataDef>();
-            classificationDefs ??= new List<AtlasClassificationDef>();
-            entityDefs ??= new List<AtlasEntityDef>();
-            enumDefs ??= new List<AtlasEnumDef>();
-            relationshipDefs ??= new List<AtlasRelationshipDef>();
-            structDefs ??= new List<AtlasStructDef>();
-            termTemplateDefs ??= new List<TermTemplateDef>();
-
-            return new AtlasTypesDef(
-                businessMetadataDefs?.ToList(),
-                classificationDefs?.ToList(),
-                entityDefs?.ToList(),
-                enumDefs?.ToList(),
-                relationshipDefs?.ToList(),
-                structDefs?.ToList(),
-                termTemplateDefs?.ToList(),
                 serializedAdditionalRawData: null);
         }
 

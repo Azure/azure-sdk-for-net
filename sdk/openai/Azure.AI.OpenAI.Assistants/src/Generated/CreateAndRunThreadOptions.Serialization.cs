@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class CreateAndRunThreadOptions : IUtf8JsonSerializable, IJsonModel<CreateAndRunThreadOptions>
+    public partial class CreateAndRunThreadOptions : IUtf8JsonSerializable, IJsonModel<CreateAndRunThreadOptions>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateAndRunThreadOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

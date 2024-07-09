@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1778,70 +1777,38 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        /// <summary>
-        /// Create all atlas type definitions in bulk, only new definitions will be
-        /// created.
-        /// Any changes to the existing definitions will be discarded.
-        /// </summary>
-        /// <param name="businessMetadataDefs"> businessMetadataDefs. </param>
-        /// <param name="classificationDefs"> An array of classification definitions. </param>
-        /// <param name="entityDefs"> An array of entity definitions. </param>
-        /// <param name="enumDefs"> An array of enum definitions. </param>
-        /// <param name="relationshipDefs"> An array of relationship definitions. </param>
-        /// <param name="structDefs"> An array of struct definitions. </param>
-        /// <param name="termTemplateDefs"> An array of term template definitions. </param>
+        /// <summary> Create all atlas type definitions in bulk. Please avoid recreating existing types. </summary>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreateAsync(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(IEnumerable<AtlasBusinessMetadataDef> businessMetadataDefs = null, IEnumerable<AtlasClassificationDef> classificationDefs = null, IEnumerable<AtlasEntityDef> entityDefs = null, IEnumerable<AtlasEnumDef> enumDefs = null, IEnumerable<AtlasRelationshipDef> relationshipDefs = null, IEnumerable<AtlasStructDef> structDefs = null, IEnumerable<TermTemplateDef> termTemplateDefs = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreateAsync(AtlasTypesDef,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef(
-                businessMetadataDefs?.ToList() as IReadOnlyList<AtlasBusinessMetadataDef> ?? new ChangeTrackingList<AtlasBusinessMetadataDef>(),
-                classificationDefs?.ToList() as IReadOnlyList<AtlasClassificationDef> ?? new ChangeTrackingList<AtlasClassificationDef>(),
-                entityDefs?.ToList() as IReadOnlyList<AtlasEntityDef> ?? new ChangeTrackingList<AtlasEntityDef>(),
-                enumDefs?.ToList() as IReadOnlyList<AtlasEnumDef> ?? new ChangeTrackingList<AtlasEnumDef>(),
-                relationshipDefs?.ToList() as IReadOnlyList<AtlasRelationshipDef> ?? new ChangeTrackingList<AtlasRelationshipDef>(),
-                structDefs?.ToList() as IReadOnlyList<AtlasStructDef> ?? new ChangeTrackingList<AtlasStructDef>(),
-                termTemplateDefs?.ToList() as IReadOnlyList<TermTemplateDef> ?? new ChangeTrackingList<TermTemplateDef>(),
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await BatchCreateAsync(atlasTypesDef.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await BatchCreateAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
+        }
+
+        /// <summary> Create all atlas type definitions in bulk. Please avoid recreating existing types. </summary>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreate(AtlasTypesDef,CancellationToken)']/*" />
+        public virtual Response<AtlasTypesDef> BatchCreate(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = BatchCreate(content, context);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
 
         /// <summary>
-        /// Create all atlas type definitions in bulk, only new definitions will be
-        /// created.
-        /// Any changes to the existing definitions will be discarded.
-        /// </summary>
-        /// <param name="businessMetadataDefs"> businessMetadataDefs. </param>
-        /// <param name="classificationDefs"> An array of classification definitions. </param>
-        /// <param name="entityDefs"> An array of entity definitions. </param>
-        /// <param name="enumDefs"> An array of enum definitions. </param>
-        /// <param name="relationshipDefs"> An array of relationship definitions. </param>
-        /// <param name="structDefs"> An array of struct definitions. </param>
-        /// <param name="termTemplateDefs"> An array of term template definitions. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreate(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)']/*" />
-        public virtual Response<AtlasTypesDef> BatchCreate(IEnumerable<AtlasBusinessMetadataDef> businessMetadataDefs = null, IEnumerable<AtlasClassificationDef> classificationDefs = null, IEnumerable<AtlasEntityDef> entityDefs = null, IEnumerable<AtlasEnumDef> enumDefs = null, IEnumerable<AtlasRelationshipDef> relationshipDefs = null, IEnumerable<AtlasStructDef> structDefs = null, IEnumerable<TermTemplateDef> termTemplateDefs = null, CancellationToken cancellationToken = default)
-        {
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef(
-                businessMetadataDefs?.ToList() as IReadOnlyList<AtlasBusinessMetadataDef> ?? new ChangeTrackingList<AtlasBusinessMetadataDef>(),
-                classificationDefs?.ToList() as IReadOnlyList<AtlasClassificationDef> ?? new ChangeTrackingList<AtlasClassificationDef>(),
-                entityDefs?.ToList() as IReadOnlyList<AtlasEntityDef> ?? new ChangeTrackingList<AtlasEntityDef>(),
-                enumDefs?.ToList() as IReadOnlyList<AtlasEnumDef> ?? new ChangeTrackingList<AtlasEnumDef>(),
-                relationshipDefs?.ToList() as IReadOnlyList<AtlasRelationshipDef> ?? new ChangeTrackingList<AtlasRelationshipDef>(),
-                structDefs?.ToList() as IReadOnlyList<AtlasStructDef> ?? new ChangeTrackingList<AtlasStructDef>(),
-                termTemplateDefs?.ToList() as IReadOnlyList<TermTemplateDef> ?? new ChangeTrackingList<TermTemplateDef>(),
-                null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = BatchCreate(atlasTypesDef.ToRequestContent(), context);
-            return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create all atlas type definitions in bulk, only new definitions will be
-        /// created.
-        /// Any changes to the existing definitions will be discarded.
+        /// [Protocol Method] Create all atlas type definitions in bulk. Please avoid recreating existing types.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1850,7 +1817,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchCreateAsync(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchCreateAsync(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1880,9 +1847,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Create all atlas type definitions in bulk, only new definitions will be
-        /// created.
-        /// Any changes to the existing definitions will be discarded.
+        /// [Protocol Method] Create all atlas type definitions in bulk. Please avoid recreating existing types.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1891,7 +1856,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchCreate(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchCreate(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1924,28 +1889,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// Update all types in bulk, changes detected in the type definitions would be
         /// persisted.
         /// </summary>
-        /// <param name="businessMetadataDefs"> businessMetadataDefs. </param>
-        /// <param name="classificationDefs"> An array of classification definitions. </param>
-        /// <param name="entityDefs"> An array of entity definitions. </param>
-        /// <param name="enumDefs"> An array of enum definitions. </param>
-        /// <param name="relationshipDefs"> An array of relationship definitions. </param>
-        /// <param name="structDefs"> An array of struct definitions. </param>
-        /// <param name="termTemplateDefs"> An array of term template definitions. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdateAsync(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(IEnumerable<AtlasBusinessMetadataDef> businessMetadataDefs = null, IEnumerable<AtlasClassificationDef> classificationDefs = null, IEnumerable<AtlasEntityDef> entityDefs = null, IEnumerable<AtlasEnumDef> enumDefs = null, IEnumerable<AtlasRelationshipDef> relationshipDefs = null, IEnumerable<AtlasStructDef> structDefs = null, IEnumerable<TermTemplateDef> termTemplateDefs = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdateAsync(AtlasTypesDef,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef(
-                businessMetadataDefs?.ToList() as IReadOnlyList<AtlasBusinessMetadataDef> ?? new ChangeTrackingList<AtlasBusinessMetadataDef>(),
-                classificationDefs?.ToList() as IReadOnlyList<AtlasClassificationDef> ?? new ChangeTrackingList<AtlasClassificationDef>(),
-                entityDefs?.ToList() as IReadOnlyList<AtlasEntityDef> ?? new ChangeTrackingList<AtlasEntityDef>(),
-                enumDefs?.ToList() as IReadOnlyList<AtlasEnumDef> ?? new ChangeTrackingList<AtlasEnumDef>(),
-                relationshipDefs?.ToList() as IReadOnlyList<AtlasRelationshipDef> ?? new ChangeTrackingList<AtlasRelationshipDef>(),
-                structDefs?.ToList() as IReadOnlyList<AtlasStructDef> ?? new ChangeTrackingList<AtlasStructDef>(),
-                termTemplateDefs?.ToList() as IReadOnlyList<TermTemplateDef> ?? new ChangeTrackingList<TermTemplateDef>(),
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await BatchUpdateAsync(atlasTypesDef.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await BatchUpdateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
 
@@ -1953,28 +1907,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// Update all types in bulk, changes detected in the type definitions would be
         /// persisted.
         /// </summary>
-        /// <param name="businessMetadataDefs"> businessMetadataDefs. </param>
-        /// <param name="classificationDefs"> An array of classification definitions. </param>
-        /// <param name="entityDefs"> An array of entity definitions. </param>
-        /// <param name="enumDefs"> An array of enum definitions. </param>
-        /// <param name="relationshipDefs"> An array of relationship definitions. </param>
-        /// <param name="structDefs"> An array of struct definitions. </param>
-        /// <param name="termTemplateDefs"> An array of term template definitions. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdate(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)']/*" />
-        public virtual Response<AtlasTypesDef> BatchUpdate(IEnumerable<AtlasBusinessMetadataDef> businessMetadataDefs = null, IEnumerable<AtlasClassificationDef> classificationDefs = null, IEnumerable<AtlasEntityDef> entityDefs = null, IEnumerable<AtlasEnumDef> enumDefs = null, IEnumerable<AtlasRelationshipDef> relationshipDefs = null, IEnumerable<AtlasStructDef> structDefs = null, IEnumerable<TermTemplateDef> termTemplateDefs = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdate(AtlasTypesDef,CancellationToken)']/*" />
+        public virtual Response<AtlasTypesDef> BatchUpdate(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef(
-                businessMetadataDefs?.ToList() as IReadOnlyList<AtlasBusinessMetadataDef> ?? new ChangeTrackingList<AtlasBusinessMetadataDef>(),
-                classificationDefs?.ToList() as IReadOnlyList<AtlasClassificationDef> ?? new ChangeTrackingList<AtlasClassificationDef>(),
-                entityDefs?.ToList() as IReadOnlyList<AtlasEntityDef> ?? new ChangeTrackingList<AtlasEntityDef>(),
-                enumDefs?.ToList() as IReadOnlyList<AtlasEnumDef> ?? new ChangeTrackingList<AtlasEnumDef>(),
-                relationshipDefs?.ToList() as IReadOnlyList<AtlasRelationshipDef> ?? new ChangeTrackingList<AtlasRelationshipDef>(),
-                structDefs?.ToList() as IReadOnlyList<AtlasStructDef> ?? new ChangeTrackingList<AtlasStructDef>(),
-                termTemplateDefs?.ToList() as IReadOnlyList<TermTemplateDef> ?? new ChangeTrackingList<TermTemplateDef>(),
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = BatchUpdate(atlasTypesDef.ToRequestContent(), context);
+            Response response = BatchUpdate(content, context);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
 
@@ -1989,7 +1932,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchUpdateAsync(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchUpdateAsync(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2029,7 +1972,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchUpdate(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchUpdate(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2059,54 +2002,32 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Delete API for all types in bulk. </summary>
-        /// <param name="businessMetadataDefs"> businessMetadataDefs. </param>
-        /// <param name="classificationDefs"> An array of classification definitions. </param>
-        /// <param name="entityDefs"> An array of entity definitions. </param>
-        /// <param name="enumDefs"> An array of enum definitions. </param>
-        /// <param name="relationshipDefs"> An array of relationship definitions. </param>
-        /// <param name="structDefs"> An array of struct definitions. </param>
-        /// <param name="termTemplateDefs"> An array of term template definitions. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDeleteAsync(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)']/*" />
-        public virtual async Task<Response> BatchDeleteAsync(IEnumerable<AtlasBusinessMetadataDef> businessMetadataDefs = null, IEnumerable<AtlasClassificationDef> classificationDefs = null, IEnumerable<AtlasEntityDef> entityDefs = null, IEnumerable<AtlasEnumDef> enumDefs = null, IEnumerable<AtlasRelationshipDef> relationshipDefs = null, IEnumerable<AtlasStructDef> structDefs = null, IEnumerable<TermTemplateDef> termTemplateDefs = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDeleteAsync(AtlasTypesDef,CancellationToken)']/*" />
+        public virtual async Task<Response> BatchDeleteAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef(
-                businessMetadataDefs?.ToList() as IReadOnlyList<AtlasBusinessMetadataDef> ?? new ChangeTrackingList<AtlasBusinessMetadataDef>(),
-                classificationDefs?.ToList() as IReadOnlyList<AtlasClassificationDef> ?? new ChangeTrackingList<AtlasClassificationDef>(),
-                entityDefs?.ToList() as IReadOnlyList<AtlasEntityDef> ?? new ChangeTrackingList<AtlasEntityDef>(),
-                enumDefs?.ToList() as IReadOnlyList<AtlasEnumDef> ?? new ChangeTrackingList<AtlasEnumDef>(),
-                relationshipDefs?.ToList() as IReadOnlyList<AtlasRelationshipDef> ?? new ChangeTrackingList<AtlasRelationshipDef>(),
-                structDefs?.ToList() as IReadOnlyList<AtlasStructDef> ?? new ChangeTrackingList<AtlasStructDef>(),
-                termTemplateDefs?.ToList() as IReadOnlyList<TermTemplateDef> ?? new ChangeTrackingList<TermTemplateDef>(),
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await BatchDeleteAsync(atlasTypesDef.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await BatchDeleteAsync(content, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Delete API for all types in bulk. </summary>
-        /// <param name="businessMetadataDefs"> businessMetadataDefs. </param>
-        /// <param name="classificationDefs"> An array of classification definitions. </param>
-        /// <param name="entityDefs"> An array of entity definitions. </param>
-        /// <param name="enumDefs"> An array of enum definitions. </param>
-        /// <param name="relationshipDefs"> An array of relationship definitions. </param>
-        /// <param name="structDefs"> An array of struct definitions. </param>
-        /// <param name="termTemplateDefs"> An array of term template definitions. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDelete(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)']/*" />
-        public virtual Response BatchDelete(IEnumerable<AtlasBusinessMetadataDef> businessMetadataDefs = null, IEnumerable<AtlasClassificationDef> classificationDefs = null, IEnumerable<AtlasEntityDef> entityDefs = null, IEnumerable<AtlasEnumDef> enumDefs = null, IEnumerable<AtlasRelationshipDef> relationshipDefs = null, IEnumerable<AtlasStructDef> structDefs = null, IEnumerable<TermTemplateDef> termTemplateDefs = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDelete(AtlasTypesDef,CancellationToken)']/*" />
+        public virtual Response BatchDelete(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef(
-                businessMetadataDefs?.ToList() as IReadOnlyList<AtlasBusinessMetadataDef> ?? new ChangeTrackingList<AtlasBusinessMetadataDef>(),
-                classificationDefs?.ToList() as IReadOnlyList<AtlasClassificationDef> ?? new ChangeTrackingList<AtlasClassificationDef>(),
-                entityDefs?.ToList() as IReadOnlyList<AtlasEntityDef> ?? new ChangeTrackingList<AtlasEntityDef>(),
-                enumDefs?.ToList() as IReadOnlyList<AtlasEnumDef> ?? new ChangeTrackingList<AtlasEnumDef>(),
-                relationshipDefs?.ToList() as IReadOnlyList<AtlasRelationshipDef> ?? new ChangeTrackingList<AtlasRelationshipDef>(),
-                structDefs?.ToList() as IReadOnlyList<AtlasStructDef> ?? new ChangeTrackingList<AtlasStructDef>(),
-                termTemplateDefs?.ToList() as IReadOnlyList<TermTemplateDef> ?? new ChangeTrackingList<TermTemplateDef>(),
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = BatchDelete(atlasTypesDef.ToRequestContent(), context);
+            Response response = BatchDelete(content, context);
             return response;
         }
 
@@ -2120,7 +2041,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchDeleteAsync(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchDeleteAsync(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2159,7 +2080,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BatchDelete(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BatchDelete(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

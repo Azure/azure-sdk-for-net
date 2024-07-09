@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The request details to use when modifying an existing assistant. </summary>
-    internal partial class UpdateAssistantOptions
+    public partial class UpdateAssistantOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

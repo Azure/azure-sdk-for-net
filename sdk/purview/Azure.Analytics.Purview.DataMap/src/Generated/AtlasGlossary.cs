@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.DataMap
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AtlasGlossary"/>. </summary>
-        internal AtlasGlossary()
+        public AtlasGlossary()
         {
             Classifications = new ChangeTrackingList<AtlasClassification>();
             Categories = new ChangeTrackingList<AtlasRelatedCategoryHeader>();
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="terms"> An array of related term headers. </param>
         /// <param name="usage"> The usage of the glossary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasGlossary(string guid, IReadOnlyList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, IReadOnlyList<AtlasRelatedCategoryHeader> categories, string language, IReadOnlyList<AtlasRelatedTermHeader> terms, string usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasGlossary(string guid, IList<AtlasClassification> classifications, string longDescription, string name, string qualifiedName, string shortDescription, string lastModifiedTS, long? createTime, string createdBy, long? updateTime, string updatedBy, IList<AtlasRelatedCategoryHeader> categories, string language, IList<AtlasRelatedTermHeader> terms, string usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Guid = guid;
             Classifications = classifications;
@@ -91,34 +91,34 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> The GUID of the object. </summary>
-        public string Guid { get; }
+        public string Guid { get; set; }
         /// <summary> An array of classifications. </summary>
-        public IReadOnlyList<AtlasClassification> Classifications { get; }
+        public IList<AtlasClassification> Classifications { get; }
         /// <summary> The long version description. </summary>
-        public string LongDescription { get; }
+        public string LongDescription { get; set; }
         /// <summary> The name of the glossary object. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The qualified name of the glossary object. </summary>
-        public string QualifiedName { get; }
+        public string QualifiedName { get; set; }
         /// <summary> The short version of description. </summary>
-        public string ShortDescription { get; }
+        public string ShortDescription { get; set; }
         /// <summary> ETag for concurrency control. </summary>
-        public string LastModifiedTS { get; }
+        public string LastModifiedTS { get; set; }
         /// <summary> The created time of the record. </summary>
-        public long? CreateTime { get; }
+        public long? CreateTime { get; set; }
         /// <summary> The user who created the record. </summary>
-        public string CreatedBy { get; }
+        public string CreatedBy { get; set; }
         /// <summary> The update time of the record. </summary>
-        public long? UpdateTime { get; }
+        public long? UpdateTime { get; set; }
         /// <summary> The user who updated the record. </summary>
-        public string UpdatedBy { get; }
+        public string UpdatedBy { get; set; }
         /// <summary> An array of categories. </summary>
-        public IReadOnlyList<AtlasRelatedCategoryHeader> Categories { get; }
+        public IList<AtlasRelatedCategoryHeader> Categories { get; }
         /// <summary> The language of the glossary. </summary>
-        public string Language { get; }
+        public string Language { get; set; }
         /// <summary> An array of related term headers. </summary>
-        public IReadOnlyList<AtlasRelatedTermHeader> Terms { get; }
+        public IList<AtlasRelatedTermHeader> Terms { get; }
         /// <summary> The usage of the glossary. </summary>
-        public string Usage { get; }
+        public string Usage { get; set; }
     }
 }
