@@ -9,6 +9,8 @@
 ### Bugs Fixed
 - Fixed an issue that could result in `BearerTokenAuthenticationPolicy` fails to refresh a token, resulting in a `OperationCanceledException`.
 
+- Fixed case where a GeoJSON string could not be deserialized when the BoundingBox JSON value ("bbox") was set explicitly to null ([#44835](https://github.com/Azure/azure-sdk-for-net/pull/44835))
+
 ### Other Changes
 
 ## 1.40.0 (2024-06-06)
