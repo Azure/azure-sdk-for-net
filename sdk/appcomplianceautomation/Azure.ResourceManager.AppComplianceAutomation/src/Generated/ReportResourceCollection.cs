@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Report_List</description>
+        /// <description>ReportResource_ListByTenant</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -269,8 +269,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             options ??= new ReportResourceCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportRestClient.CreateListRequest(options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportRestClient.CreateListByTenantRequest(options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportRestClient.CreateListByTenantNextPageRequest(nextLink, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Report_List</description>
+        /// <description>ReportResource_ListByTenant</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             options ??= new ReportResourceCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportRestClient.CreateListRequest(options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportRestClient.CreateListByTenantRequest(options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportRestClient.CreateListByTenantNextPageRequest(nextLink, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

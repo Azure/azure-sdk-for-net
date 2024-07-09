@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <summary> Initializes a new instance of ReportRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Azure Resource Manager url. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public ReportRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -34,140 +34,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2024-06-27";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            if (offerGuid != null)
-            {
-                uri.AppendQuery("offerGuid", offerGuid, true);
-            }
-            if (reportCreatorTenantId != null)
-            {
-                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            if (offerGuid != null)
-            {
-                uri.AppendQuery("offerGuid", offerGuid, true);
-            }
-            if (reportCreatorTenantId != null)
-            {
-                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ReportResourceListResult>> ListAsync(string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest(skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReportResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ReportResourceListResult.DeserializeReportResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ReportResourceListResult> List(string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest(skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReportResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ReportResourceListResult.DeserializeReportResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string reportName)
@@ -470,7 +336,219 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
-        internal RequestUriBuilder CreateNestedResourceCheckNameAvailabilityRequestUri(string reportName, CheckNameAvailabilityRequest body)
+        internal RequestUriBuilder CreateListByTenantRequestUri(string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListByTenantRequest(string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<ReportResourceListResult>> ListByTenantAsync(string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListByTenantRequest(skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ReportResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ReportResourceListResult.DeserializeReportResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the AppComplianceAutomation report list for the tenant. </summary>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<ReportResourceListResult> ListByTenant(string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListByTenantRequest(skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ReportResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ReportResourceListResult.DeserializeReportResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateSyncCertRecordRequestUri(string reportName, SyncCertRecordContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/syncCertRecord", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateSyncCertRecordRequest(string reportName, SyncCertRecordContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/syncCertRecord", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Synchronize attestation record from app compliance. </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> Parameters for synchronize certification record operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> SyncCertRecordAsync(string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateSyncCertRecordRequest(reportName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Synchronize attestation record from app compliance. </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="content"> Parameters for synchronize certification record operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response SyncCertRecord(string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateSyncCertRecordRequest(reportName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string reportName, CheckNameAvailabilityRequest body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -481,7 +559,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return uri;
         }
 
-        internal HttpMessage CreateNestedResourceCheckNameAvailabilityRequest(string reportName, CheckNameAvailabilityRequest body)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string reportName, CheckNameAvailabilityRequest body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -508,12 +586,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResponse>> NestedResourceCheckNameAvailabilityAsync(string reportName, CheckNameAvailabilityRequest body, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(string reportName, CheckNameAvailabilityRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using var message = CreateNestedResourceCheckNameAvailabilityRequest(reportName, body);
+            using var message = CreateCheckNameAvailabilityRequest(reportName, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -535,12 +613,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResponse> NestedResourceCheckNameAvailability(string reportName, CheckNameAvailabilityRequest body, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityResponse> CheckNameAvailability(string reportName, CheckNameAvailabilityRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using var message = CreateNestedResourceCheckNameAvailabilityRequest(reportName, body);
+            using var message = CreateCheckNameAvailabilityRequest(reportName, body);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -597,8 +675,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -618,8 +696,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -704,84 +782,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
-        internal RequestUriBuilder CreateSyncCertRecordRequestUri(string reportName, SyncCertRecordContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/syncCertRecord", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateSyncCertRecordRequest(string reportName, SyncCertRecordContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/syncCertRecord", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Synchronize attestation record from app compliance. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="content"> Parameters for synchronize certification record operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SyncCertRecordAsync(string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateSyncCertRecordRequest(reportName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Synchronize attestation record from app compliance. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="content"> Parameters for synchronize certification record operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SyncCertRecord(string reportName, SyncCertRecordContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateSyncCertRecordRequest(reportName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateVerifyRequestUri(string reportName)
         {
             var uri = new RawRequestUriBuilder();
@@ -823,8 +823,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -844,15 +844,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        internal RequestUriBuilder CreateListByTenantNextPageRequestUri(string nextLink, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        internal HttpMessage CreateListByTenantNextPageRequest(string nextLink, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -885,11 +885,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ReportResourceListResult>> ListNextPageAsync(string nextLink, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ReportResourceListResult>> ListByTenantNextPageAsync(string nextLink, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            using var message = CreateListByTenantNextPageRequest(nextLink, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -916,11 +916,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ReportResourceListResult> ListNextPage(string nextLink, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        public Response<ReportResourceListResult> ListByTenantNextPage(string nextLink, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            using var message = CreateListByTenantNextPageRequest(nextLink, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

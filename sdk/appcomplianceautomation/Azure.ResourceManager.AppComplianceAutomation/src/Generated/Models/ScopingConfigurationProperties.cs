@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> Trigger evaluation response. </summary>
-    public partial class TriggerEvaluationProperty
+    /// <summary> ScopingConfiguration's properties. </summary>
+    public partial class ScopingConfigurationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,26 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TriggerEvaluationProperty"/>. </summary>
-        internal TriggerEvaluationProperty()
+        /// <summary> Initializes a new instance of <see cref="ScopingConfigurationProperties"/>. </summary>
+        public ScopingConfigurationProperties()
         {
-            ResourceIds = new ChangeTrackingList<string>();
-            QuickAssessments = new ChangeTrackingList<QuickAssessment>();
+            Answers = new ChangeTrackingList<ScopingAnswer>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerEvaluationProperty"/>. </summary>
-        /// <param name="triggerOn"> The time when the evaluation is triggered. </param>
-        /// <param name="evaluationEndOn"> The time when the evaluation is end. </param>
-        /// <param name="resourceIds"> List of resource ids to be evaluated. </param>
-        /// <param name="quickAssessments"> List of quick assessments. </param>
+        /// <summary> Initializes a new instance of <see cref="ScopingConfigurationProperties"/>. </summary>
+        /// <param name="answers"> List of scoping question answers. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerEvaluationProperty(DateTimeOffset? triggerOn, DateTimeOffset? evaluationEndOn, IReadOnlyList<string> resourceIds, IReadOnlyList<QuickAssessment> quickAssessments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScopingConfigurationProperties(IList<ScopingAnswer> answers, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            TriggerOn = triggerOn;
-            EvaluationEndOn = evaluationEndOn;
-            ResourceIds = resourceIds;
-            QuickAssessments = quickAssessments;
+            Answers = answers;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The time when the evaluation is triggered. </summary>
-        public DateTimeOffset? TriggerOn { get; }
-        /// <summary> The time when the evaluation is end. </summary>
-        public DateTimeOffset? EvaluationEndOn { get; }
-        /// <summary> List of resource ids to be evaluated. </summary>
-        public IReadOnlyList<string> ResourceIds { get; }
-        /// <summary> List of quick assessments. </summary>
-        public IReadOnlyList<QuickAssessment> QuickAssessments { get; }
+        /// <summary> List of scoping question answers. </summary>
+        public IList<ScopingAnswer> Answers { get; }
+        /// <summary> Azure lifecycle management. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

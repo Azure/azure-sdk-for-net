@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WriteStringValue(TenantId);
             }
             if (Optional.IsDefined(SendAllEvents))
             {
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PayloadUri))
+            if (Optional.IsDefined(WebhookPropertiei))
             {
                 writer.WritePropertyName("payloadUrl"u8);
-                writer.WriteStringValue(PayloadUri.AbsoluteUri);
+                writer.WriteStringValue(WebhookPropertiei);
             }
             if (Optional.IsDefined(ContentType))
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
             string webhookId = default;
             WebhookStatus? status = default;
-            Guid? tenantId = default;
+            string tenantId = default;
             SendAllEvent? sendAllEvents = default;
             IList<NotificationEvent> events = default;
-            Uri payloadUrl = default;
+            string payloadUrl = default;
             ContentType? contentType = default;
             string webhookKey = default;
             UpdateWebhookKey? updateWebhookKey = default;
@@ -167,11 +167,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sendAllEvents"u8))
@@ -199,11 +195,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (property.NameEquals("payloadUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    payloadUrl = new Uri(property.Value.GetString());
+                    payloadUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))

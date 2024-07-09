@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GetOverviewStatusRequestType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(GetOverviewStatusRequestType);
+                writer.WriteStringValue(Type);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

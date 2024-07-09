@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// </param>
         /// <param name="resources"> List of resource data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> or <paramref name="resources"/> is null. </exception>
-        internal ReportProperties(DateTimeOffset triggerOn, string timeZone, IEnumerable<ResourceMetadata> resources)
+        public ReportProperties(DateTimeOffset triggerOn, string timeZone, IEnumerable<ResourceMetadata> resources)
         {
             Argument.AssertNotNull(timeZone, nameof(timeZone));
             Argument.AssertNotNull(resources, nameof(resources));
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="certRecords"> List of synchronized certification records. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportProperties(DateTimeOffset triggerOn, string timeZone, IReadOnlyList<ResourceMetadata> resources, ReportStatus? status, IReadOnlyList<string> errors, Guid? tenantId, string offerGuid, DateTimeOffset? nextTriggerOn, DateTimeOffset? lastTriggerOn, IReadOnlyList<string> subscriptions, ReportComplianceStatus complianceStatus, StorageInfo storageInfo, IReadOnlyList<CertSyncRecord> certRecords, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReportProperties(DateTimeOffset triggerOn, string timeZone, IList<ResourceMetadata> resources, ReportStatus? status, IReadOnlyList<string> errors, string tenantId, string offerGuid, DateTimeOffset? nextTriggerOn, DateTimeOffset? lastTriggerOn, IReadOnlyList<string> subscriptions, ReportComplianceStatus complianceStatus, StorageInfo storageInfo, IReadOnlyList<CertSyncRecord> certRecords, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TriggerOn = triggerOn;
             TimeZone = timeZone;
@@ -111,22 +111,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Report collection trigger time. </summary>
-        public DateTimeOffset TriggerOn { get; }
+        public DateTimeOffset TriggerOn { get; set; }
         /// <summary>
         /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
         /// An example of valid timezone id is "Pacific Standard Time".
         /// </summary>
-        public string TimeZone { get; }
+        public string TimeZone { get; set; }
         /// <summary> List of resource data. </summary>
-        public IReadOnlyList<ResourceMetadata> Resources { get; }
+        public IList<ResourceMetadata> Resources { get; }
         /// <summary> Report status. </summary>
         public ReportStatus? Status { get; }
         /// <summary> List of report error codes. </summary>
         public IReadOnlyList<string> Errors { get; }
         /// <summary> Report's tenant id. </summary>
-        public Guid? TenantId { get; }
+        public string TenantId { get; }
         /// <summary> A list of comma-separated offerGuids indicates a series of offerGuids that map to the report. For example, "00000000-0000-0000-0000-000000000001,00000000-0000-0000-0000-000000000002" and "00000000-0000-0000-0000-000000000003". </summary>
-        public string OfferGuid { get; }
+        public string OfferGuid { get; set; }
         /// <summary> Report next collection trigger time. </summary>
         public DateTimeOffset? NextTriggerOn { get; }
         /// <summary> Report last collection trigger time. </summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> The information of 'bring your own storage' binding to the report. </summary>
-        public StorageInfo StorageInfo { get; }
+        public StorageInfo StorageInfo { get; set; }
         /// <summary> List of synchronized certification records. </summary>
         public IReadOnlyList<CertSyncRecord> CertRecords { get; }
         /// <summary> Azure lifecycle management. </summary>

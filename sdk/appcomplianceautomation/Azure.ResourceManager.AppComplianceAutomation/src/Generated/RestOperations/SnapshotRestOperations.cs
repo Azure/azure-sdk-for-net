@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <summary> Initializes a new instance of SnapshotRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Azure Resource Manager url. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public SnapshotRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -34,154 +34,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2024-06-27";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/snapshots", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            if (offerGuid != null)
-            {
-                uri.AppendQuery("offerGuid", offerGuid, true);
-            }
-            if (reportCreatorTenantId != null)
-            {
-                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
-            uri.AppendPath(reportName, true);
-            uri.AppendPath("/snapshots", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (select != null)
-            {
-                uri.AppendQuery("$select", select, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (orderby != null)
-            {
-                uri.AppendQuery("$orderby", orderby, true);
-            }
-            if (offerGuid != null)
-            {
-                uri.AppendQuery("offerGuid", offerGuid, true);
-            }
-            if (reportCreatorTenantId != null)
-            {
-                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get the AppComplianceAutomation snapshot list. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SnapshotResourceListResult>> ListAsync(string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateListRequest(reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SnapshotResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the AppComplianceAutomation snapshot list. </summary>
-        /// <param name="reportName"> Report Name. </param>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="top"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SnapshotResourceListResult> List(string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
-            using var message = CreateListRequest(reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SnapshotResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string reportName, string snapshotName)
@@ -272,6 +124,154 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
+        internal RequestUriBuilder CreateListByReportResourceRequestUri(string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListByReportResourceRequest(string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the AppComplianceAutomation snapshot list. </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SnapshotResourceListResult>> ListByReportResourceAsync(string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var message = CreateListByReportResourceRequest(reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SnapshotResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the AppComplianceAutomation snapshot list. </summary>
+        /// <param name="reportName"> Report Name. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="orderby"> OData order by query option. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SnapshotResourceListResult> ListByReportResource(string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var message = CreateListByReportResourceRequest(reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SnapshotResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateDownloadRequestUri(string reportName, string snapshotName, SnapshotDownloadContent content)
         {
             var uri = new RawRequestUriBuilder();
@@ -325,8 +325,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -350,15 +350,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        internal RequestUriBuilder CreateListByReportResourceNextPageRequestUri(string nextLink, string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
+        internal HttpMessage CreateListByReportResourceNextPageRequest(string nextLink, string reportName, string skipToken, int? top, string select, string filter, string orderby, string offerGuid, string reportCreatorTenantId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -393,12 +393,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SnapshotResourceListResult>> ListNextPageAsync(string nextLink, string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SnapshotResourceListResult>> ListByReportResourceNextPageAsync(string nextLink, string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var message = CreateListNextPageRequest(nextLink, reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            using var message = CreateListByReportResourceNextPageRequest(nextLink, reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -427,12 +427,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="reportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SnapshotResourceListResult> ListNextPage(string nextLink, string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
+        public Response<SnapshotResourceListResult> ListByReportResourceNextPage(string nextLink, string reportName, string skipToken = null, int? top = null, string select = null, string filter = null, string orderby = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var message = CreateListNextPageRequest(nextLink, reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
+            using var message = CreateListByReportResourceNextPageRequest(nextLink, reportName, skipToken, top, select, filter, orderby, offerGuid, reportCreatorTenantId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

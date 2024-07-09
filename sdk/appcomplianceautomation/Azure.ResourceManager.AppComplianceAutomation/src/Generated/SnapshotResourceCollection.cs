@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Snapshot_List</description>
+        /// <description>SnapshotResource_ListByReportResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             options ??= new SnapshotResourceCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotRestClient.CreateListByReportResourceRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotRestClient.CreateListByReportResourceNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Snapshot_List</description>
+        /// <description>SnapshotResource_ListByReportResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             options ??= new SnapshotResourceCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotRestClient.CreateListByReportResourceRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotRestClient.CreateListByReportResourceNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

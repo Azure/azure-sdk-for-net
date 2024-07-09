@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> The uri of evidence file. </summary>
         internal EvidenceFileDownloadResponseEvidenceFile EvidenceFile { get; }
         /// <summary> The url of evidence file. </summary>
-        public Uri EvidenceFileUri
+        public string EvidenceFileDownloadResponseEvidenceFili
         {
-            get => EvidenceFile?.Uri;
+            get => EvidenceFile?.EvidenceFileDownloadResponseEvidenceFili;
         }
     }
 }

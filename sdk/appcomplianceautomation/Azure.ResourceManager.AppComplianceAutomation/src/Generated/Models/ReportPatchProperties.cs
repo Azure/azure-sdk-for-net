@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="certRecords"> List of synchronized certification records. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportPatchProperties(DateTimeOffset? triggerOn, string timeZone, IList<ResourceMetadata> resources, ReportStatus? status, IReadOnlyList<string> errors, Guid? tenantId, string offerGuid, DateTimeOffset? nextTriggerOn, DateTimeOffset? lastTriggerOn, IReadOnlyList<string> subscriptions, ReportComplianceStatus complianceStatus, StorageInfo storageInfo, IReadOnlyList<CertSyncRecord> certRecords, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReportPatchProperties(DateTimeOffset? triggerOn, string timeZone, IList<ResourceMetadata> resources, ReportStatus? status, IReadOnlyList<string> errors, string tenantId, string offerGuid, DateTimeOffset? nextTriggerOn, DateTimeOffset? lastTriggerOn, IReadOnlyList<string> subscriptions, ReportComplianceStatus complianceStatus, StorageInfo storageInfo, IReadOnlyList<CertSyncRecord> certRecords, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TriggerOn = triggerOn;
             TimeZone = timeZone;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> List of report error codes. </summary>
         public IReadOnlyList<string> Errors { get; }
         /// <summary> Report's tenant id. </summary>
-        public Guid? TenantId { get; }
+        public string TenantId { get; }
         /// <summary> A list of comma-separated offerGuids indicates a series of offerGuids that map to the report. For example, "00000000-0000-0000-0000-000000000001,00000000-0000-0000-0000-000000000002" and "00000000-0000-0000-0000-000000000003". </summary>
         public string OfferGuid { get; set; }
         /// <summary> Report next collection trigger time. </summary>

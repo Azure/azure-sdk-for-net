@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of <see cref="DownloadResponseCompliancePdfReport"/>. </summary>
         /// <param name="sasUri"> The uri of compliance pdf report. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DownloadResponseCompliancePdfReport(Uri sasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DownloadResponseCompliancePdfReport(string sasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SasUri = sasUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The uri of compliance pdf report. </summary>
-        public Uri SasUri { get; }
+        public string SasUri { get; }
     }
 }

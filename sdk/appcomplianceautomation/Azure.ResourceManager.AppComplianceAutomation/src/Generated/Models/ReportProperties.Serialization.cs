@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WriteStringValue(TenantId);
             }
             if (Optional.IsDefined(OfferGuid))
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
             DateTimeOffset triggerTime = default;
             string timeZone = default;
-            IReadOnlyList<ResourceMetadata> resources = default;
+            IList<ResourceMetadata> resources = default;
             ReportStatus? status = default;
             IReadOnlyList<string> errors = default;
-            Guid? tenantId = default;
+            string tenantId = default;
             string offerGuid = default;
             DateTimeOffset? nextTriggerTime = default;
             DateTimeOffset? lastTriggerTime = default;
@@ -208,11 +208,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("offerGuid"u8))

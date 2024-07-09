@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="accountName"> 'bring your own storage' account name. </param>
         /// <param name="location"> The region of 'bring your own storage' account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageInfo(string subscriptionId, string resourceGroup, string accountName, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageInfo(string subscriptionId, string resourceGroup, string accountName, string location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
@@ -73,6 +72,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> 'bring your own storage' account name. </summary>
         public string AccountName { get; set; }
         /// <summary> The region of 'bring your own storage' account. </summary>
-        public AzureLocation? Location { get; set; }
+        public string Location { get; set; }
     }
 }

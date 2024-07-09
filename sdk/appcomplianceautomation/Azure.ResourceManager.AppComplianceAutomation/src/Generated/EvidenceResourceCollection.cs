@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Evidence_ListByReport</description>
+        /// <description>EvidenceResource_ListByReportResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -276,8 +276,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             options ??= new EvidenceResourceCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _evidenceResourceEvidenceRestClient.CreateListByReportRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _evidenceResourceEvidenceRestClient.CreateListByReportNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _evidenceResourceEvidenceRestClient.CreateListByReportResourceRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _evidenceResourceEvidenceRestClient.CreateListByReportResourceNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EvidenceResource(Client, EvidenceResourceData.DeserializeEvidenceResourceData(e)), _evidenceResourceEvidenceClientDiagnostics, Pipeline, "EvidenceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Evidence_ListByReport</description>
+        /// <description>EvidenceResource_ListByReportResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,8 +309,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             options ??= new EvidenceResourceCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _evidenceResourceEvidenceRestClient.CreateListByReportRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _evidenceResourceEvidenceRestClient.CreateListByReportNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _evidenceResourceEvidenceRestClient.CreateListByReportResourceRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _evidenceResourceEvidenceRestClient.CreateListByReportResourceNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EvidenceResource(Client, EvidenceResourceData.DeserializeEvidenceResourceData(e)), _evidenceResourceEvidenceClientDiagnostics, Pipeline, "EvidenceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

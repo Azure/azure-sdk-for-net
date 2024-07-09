@@ -52,9 +52,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScopingConfigurationResourceData"/>. </summary>
-        public ScopingConfigurationResourceData()
+        /// <param name="properties"> ScopingConfiguration property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public ScopingConfigurationResourceData(ScopingConfigurationProperties properties)
         {
-            Answers = new ChangeTrackingList<ScopingAnswer>();
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScopingConfigurationResourceData"/>. </summary>
@@ -62,19 +66,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="answers"> List of scoping question answers. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="properties"> ScopingConfiguration property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScopingConfigurationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ScopingAnswer> answers, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ScopingConfigurationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScopingConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Answers = answers;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of scoping question answers. </summary>
-        public IList<ScopingAnswer> Answers { get; }
-        /// <summary> Azure lifecycle management. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Initializes a new instance of <see cref="ScopingConfigurationResourceData"/> for deserialization. </summary>
+        internal ScopingConfigurationResourceData()
+        {
+        }
+
+        /// <summary> ScopingConfiguration property. </summary>
+        public ScopingConfigurationProperties Properties { get; set; }
     }
 }

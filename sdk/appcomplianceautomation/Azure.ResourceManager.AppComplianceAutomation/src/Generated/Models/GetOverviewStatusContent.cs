@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetOverviewStatusContent"/>. </summary>
-        /// <param name="getOverviewStatusRequestType"> The resource type. </param>
+        /// <param name="type"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetOverviewStatusContent(string getOverviewStatusRequestType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetOverviewStatusContent(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            GetOverviewStatusRequestType = getOverviewStatusRequestType;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource type. </summary>
-        public string GetOverviewStatusRequestType { get; set; }
+        public string Type { get; set; }
     }
 }

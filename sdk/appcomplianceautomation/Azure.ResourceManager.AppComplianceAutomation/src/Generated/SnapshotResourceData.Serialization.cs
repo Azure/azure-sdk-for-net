@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -48,44 +53,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SnapshotName))
-            {
-                writer.WritePropertyName("snapshotName"u8);
-                writer.WriteStringValue(SnapshotName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReportProperties))
-            {
-                writer.WritePropertyName("reportProperties"u8);
-                writer.WriteObjectValue(ReportProperties, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
-            {
-                writer.WritePropertyName("reportSystemData"u8);
-                JsonSerializer.Serialize(writer, ReportSystemData);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceResults))
-            {
-                writer.WritePropertyName("complianceResults"u8);
-                writer.WriteStartArray();
-                foreach (var item in ComplianceResults)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -124,20 +91,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 return null;
             }
+            SnapshotProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string snapshotName = default;
-            DateTimeOffset? createdAt = default;
-            ProvisioningState? provisioningState = default;
-            ReportProperties reportProperties = default;
-            SystemData reportSystemData = default;
-            IReadOnlyList<ComplianceResult> complianceResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = SnapshotProperties.DeserializeSnapshotProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -162,73 +133,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("snapshotName"u8))
-                        {
-                            snapshotName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createdAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("reportProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reportProperties = ReportProperties.DeserializeReportProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("reportSystemData"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reportSystemData = JsonSerializer.Deserialize<SystemData>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("complianceResults"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ComplianceResult> array = new List<ComplianceResult>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ComplianceResult.DeserializeComplianceResult(item, options));
-                            }
-                            complianceResults = array;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -240,12 +144,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 name,
                 type,
                 systemData,
-                snapshotName,
-                createdAt,
-                provisioningState,
-                reportProperties,
-                reportSystemData,
-                complianceResults ?? new ChangeTrackingList<ComplianceResult>(),
+                properties,
                 serializedAdditionalRawData);
         }
 

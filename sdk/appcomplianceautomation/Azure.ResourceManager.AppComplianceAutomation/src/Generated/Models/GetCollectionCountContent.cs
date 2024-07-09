@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetCollectionCountContent"/>. </summary>
-        /// <param name="getCollectionCountRequestType"> The resource type. </param>
+        /// <param name="type"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetCollectionCountContent(string getCollectionCountRequestType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetCollectionCountContent(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            GetCollectionCountRequestType = getCollectionCountRequestType;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource type. </summary>
-        public string GetCollectionCountRequestType { get; set; }
+        public string Type { get; set; }
     }
 }

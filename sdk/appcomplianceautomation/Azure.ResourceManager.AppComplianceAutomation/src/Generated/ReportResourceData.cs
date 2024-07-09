@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 using Azure.ResourceManager.Models;
@@ -53,24 +52,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ReportResourceData"/>. </summary>
-        /// <param name="triggerOn"> Report collection trigger time. </param>
-        /// <param name="timeZone">
-        /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
-        /// An example of valid timezone id is "Pacific Standard Time".
-        /// </param>
-        /// <param name="resources"> List of resource data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> or <paramref name="resources"/> is null. </exception>
-        public ReportResourceData(DateTimeOffset triggerOn, string timeZone, IEnumerable<ResourceMetadata> resources)
+        /// <param name="properties"> Report property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public ReportResourceData(ReportProperties properties)
         {
-            Argument.AssertNotNull(timeZone, nameof(timeZone));
-            Argument.AssertNotNull(resources, nameof(resources));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            TriggerOn = triggerOn;
-            TimeZone = timeZone;
-            Resources = resources.ToList();
-            Errors = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<string>();
-            CertRecords = new ChangeTrackingList<CertSyncRecord>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ReportResourceData"/>. </summary>
@@ -78,40 +66,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="triggerOn"> Report collection trigger time. </param>
-        /// <param name="timeZone">
-        /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
-        /// An example of valid timezone id is "Pacific Standard Time".
-        /// </param>
-        /// <param name="resources"> List of resource data. </param>
-        /// <param name="status"> Report status. </param>
-        /// <param name="errors"> List of report error codes. </param>
-        /// <param name="tenantId"> Report's tenant id. </param>
-        /// <param name="offerGuid"> A list of comma-separated offerGuids indicates a series of offerGuids that map to the report. For example, "00000000-0000-0000-0000-000000000001,00000000-0000-0000-0000-000000000002" and "00000000-0000-0000-0000-000000000003". </param>
-        /// <param name="nextTriggerOn"> Report next collection trigger time. </param>
-        /// <param name="lastTriggerOn"> Report last collection trigger time. </param>
-        /// <param name="subscriptions"> List of subscription Ids. </param>
-        /// <param name="complianceStatus"> Report compliance status. </param>
-        /// <param name="storageInfo"> The information of 'bring your own storage' binding to the report. </param>
-        /// <param name="certRecords"> List of synchronized certification records. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="properties"> Report property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset triggerOn, string timeZone, IList<ResourceMetadata> resources, ReportStatus? status, IReadOnlyList<string> errors, Guid? tenantId, string offerGuid, DateTimeOffset? nextTriggerOn, DateTimeOffset? lastTriggerOn, IReadOnlyList<string> subscriptions, ReportComplianceStatus complianceStatus, StorageInfo storageInfo, IReadOnlyList<CertSyncRecord> certRecords, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ReportResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReportProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            TriggerOn = triggerOn;
-            TimeZone = timeZone;
-            Resources = resources;
-            Status = status;
-            Errors = errors;
-            TenantId = tenantId;
-            OfferGuid = offerGuid;
-            NextTriggerOn = nextTriggerOn;
-            LastTriggerOn = lastTriggerOn;
-            Subscriptions = subscriptions;
-            ComplianceStatus = complianceStatus;
-            StorageInfo = storageInfo;
-            CertRecords = certRecords;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -120,42 +79,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
         }
 
-        /// <summary> Report collection trigger time. </summary>
-        public DateTimeOffset TriggerOn { get; set; }
-        /// <summary>
-        /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
-        /// An example of valid timezone id is "Pacific Standard Time".
-        /// </summary>
-        public string TimeZone { get; set; }
-        /// <summary> List of resource data. </summary>
-        public IList<ResourceMetadata> Resources { get; }
-        /// <summary> Report status. </summary>
-        public ReportStatus? Status { get; }
-        /// <summary> List of report error codes. </summary>
-        public IReadOnlyList<string> Errors { get; }
-        /// <summary> Report's tenant id. </summary>
-        public Guid? TenantId { get; }
-        /// <summary> A list of comma-separated offerGuids indicates a series of offerGuids that map to the report. For example, "00000000-0000-0000-0000-000000000001,00000000-0000-0000-0000-000000000002" and "00000000-0000-0000-0000-000000000003". </summary>
-        public string OfferGuid { get; set; }
-        /// <summary> Report next collection trigger time. </summary>
-        public DateTimeOffset? NextTriggerOn { get; }
-        /// <summary> Report last collection trigger time. </summary>
-        public DateTimeOffset? LastTriggerOn { get; }
-        /// <summary> List of subscription Ids. </summary>
-        public IReadOnlyList<string> Subscriptions { get; }
-        /// <summary> Report compliance status. </summary>
-        internal ReportComplianceStatus ComplianceStatus { get; }
-        /// <summary> The Microsoft 365 certification name. </summary>
-        public OverviewStatus ComplianceStatusM365
-        {
-            get => ComplianceStatus?.M365;
-        }
-
-        /// <summary> The information of 'bring your own storage' binding to the report. </summary>
-        public StorageInfo StorageInfo { get; set; }
-        /// <summary> List of synchronized certification records. </summary>
-        public IReadOnlyList<CertSyncRecord> CertRecords { get; }
-        /// <summary> Azure lifecycle management. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Report property. </summary>
+        public ReportProperties Properties { get; set; }
     }
 }

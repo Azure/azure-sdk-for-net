@@ -47,27 +47,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EvidenceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EvidenceResource.CreateResourceIdentifier" /> to create an <see cref="EvidenceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="WebhookResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebhookResource.CreateResourceIdentifier" /> to create a <see cref="WebhookResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EvidenceResource"/> object. </returns>
-        public virtual EvidenceResource GetEvidenceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebhookResource"/> object. </returns>
+        public virtual WebhookResource GetWebhookResource(ResourceIdentifier id)
         {
-            EvidenceResource.ValidateResourceId(id);
-            return new EvidenceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ScopingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScopingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ScopingConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScopingConfigurationResource"/> object. </returns>
-        public virtual ScopingConfigurationResource GetScopingConfigurationResource(ResourceIdentifier id)
-        {
-            ScopingConfigurationResource.ValidateResourceId(id);
-            return new ScopingConfigurationResource(Client, id);
+            WebhookResource.ValidateResourceId(id);
+            return new WebhookResource(Client, id);
         }
 
         /// <summary>
@@ -83,15 +71,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebhookResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebhookResource.CreateResourceIdentifier" /> to create a <see cref="WebhookResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ScopingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScopingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ScopingConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebhookResource"/> object. </returns>
-        public virtual WebhookResource GetWebhookResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScopingConfigurationResource"/> object. </returns>
+        public virtual ScopingConfigurationResource GetScopingConfigurationResource(ResourceIdentifier id)
         {
-            WebhookResource.ValidateResourceId(id);
-            return new WebhookResource(Client, id);
+            ScopingConfigurationResource.ValidateResourceId(id);
+            return new ScopingConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EvidenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EvidenceResource.CreateResourceIdentifier" /> to create an <see cref="EvidenceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EvidenceResource"/> object. </returns>
+        public virtual EvidenceResource GetEvidenceResource(ResourceIdentifier id)
+        {
+            EvidenceResource.ValidateResourceId(id);
+            return new EvidenceResource(Client, id);
         }
     }
 }

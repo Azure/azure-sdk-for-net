@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScopingConfiguration_List</description>
+        /// <description>ScopingConfigurationResource_ListByReportResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> An async collection of <see cref="ScopingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScopingConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopingConfigurationResourceScopingConfigurationRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopingConfigurationResourceScopingConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopingConfigurationResourceScopingConfigurationRestClient.CreateListByReportResourceRequest(Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopingConfigurationResourceScopingConfigurationRestClient.CreateListByReportResourceNextPageRequest(nextLink, Id.Name);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopingConfigurationResource(Client, ScopingConfigurationResourceData.DeserializeScopingConfigurationResourceData(e)), _scopingConfigurationResourceScopingConfigurationClientDiagnostics, Pipeline, "ScopingConfigurationResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScopingConfiguration_List</description>
+        /// <description>ScopingConfigurationResource_ListByReportResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> A collection of <see cref="ScopingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScopingConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopingConfigurationResourceScopingConfigurationRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopingConfigurationResourceScopingConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopingConfigurationResourceScopingConfigurationRestClient.CreateListByReportResourceRequest(Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopingConfigurationResourceScopingConfigurationRestClient.CreateListByReportResourceNextPageRequest(nextLink, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopingConfigurationResource(Client, ScopingConfigurationResourceData.DeserializeScopingConfigurationResourceData(e)), _scopingConfigurationResourceScopingConfigurationClientDiagnostics, Pipeline, "ScopingConfigurationResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

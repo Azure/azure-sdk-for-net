@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GetCollectionCountRequestType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(GetCollectionCountRequestType);
+                writer.WriteStringValue(Type);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

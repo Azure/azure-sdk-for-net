@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="tenantId"> Tenant id. </param>
         /// <param name="sendAllEvents"> whether to send notification under any event. </param>
         /// <param name="events"> under which event notification should be sent. </param>
-        /// <param name="payloadUri"> webhook payload url. </param>
+        /// <param name="webhookPropertiei"> webhook payload url. </param>
         /// <param name="contentType"> content type. </param>
         /// <param name="webhookKey"> webhook secret token. If not set, this field value is null; otherwise, please set a string value. </param>
         /// <param name="updateWebhookKey"> whether to update webhookKey. </param>
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="deliveryStatus"> webhook deliveryStatus. </param>
         /// <param name="provisioningState"> Azure Resource Provisioning State. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebhookProperties(string webhookId, WebhookStatus? status, Guid? tenantId, SendAllEvent? sendAllEvents, IList<NotificationEvent> events, Uri payloadUri, ContentType? contentType, string webhookKey, UpdateWebhookKey? updateWebhookKey, WebhookKeyEnabled? webhookKeyEnabled, EnableSslVerification? enableSslVerification, DeliveryStatus? deliveryStatus, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebhookProperties(string webhookId, WebhookStatus? status, string tenantId, SendAllEvent? sendAllEvents, IList<NotificationEvent> events, string webhookPropertiei, ContentType? contentType, string webhookKey, UpdateWebhookKey? updateWebhookKey, WebhookKeyEnabled? webhookKeyEnabled, EnableSslVerification? enableSslVerification, DeliveryStatus? deliveryStatus, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebhookId = webhookId;
             Status = status;
             TenantId = tenantId;
             SendAllEvents = sendAllEvents;
             Events = events;
-            PayloadUri = payloadUri;
+            WebhookPropertiei = webhookPropertiei;
             ContentType = contentType;
             WebhookKey = webhookKey;
             UpdateWebhookKey = updateWebhookKey;
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Webhook status. </summary>
         public WebhookStatus? Status { get; set; }
         /// <summary> Tenant id. </summary>
-        public Guid? TenantId { get; }
+        public string TenantId { get; }
         /// <summary> whether to send notification under any event. </summary>
         public SendAllEvent? SendAllEvents { get; set; }
         /// <summary> under which event notification should be sent. </summary>
         public IList<NotificationEvent> Events { get; }
         /// <summary> webhook payload url. </summary>
-        public Uri PayloadUri { get; set; }
+        public string WebhookPropertiei { get; set; }
         /// <summary> content type. </summary>
         public ContentType? ContentType { get; set; }
         /// <summary> webhook secret token. If not set, this field value is null; otherwise, please set a string value. </summary>

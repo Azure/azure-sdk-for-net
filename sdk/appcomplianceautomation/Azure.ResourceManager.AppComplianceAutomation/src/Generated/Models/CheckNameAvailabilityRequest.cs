@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityRequest"/>. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="type"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityRequest(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CheckNameAvailabilityRequest(string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            ResourceType = resourceType;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
-        public string ResourceType { get; set; }
+        public string Type { get; set; }
     }
 }

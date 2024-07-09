@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EvidenceFileDownloadResponseEvidenceFile"/>. </summary>
-        /// <param name="uri"> The url of evidence file. </param>
+        /// <param name="evidenceFileDownloadResponseEvidenceFili"> The url of evidence file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvidenceFileDownloadResponseEvidenceFile(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvidenceFileDownloadResponseEvidenceFile(string evidenceFileDownloadResponseEvidenceFili, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Uri = uri;
+            EvidenceFileDownloadResponseEvidenceFili = evidenceFileDownloadResponseEvidenceFili;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The url of evidence file. </summary>
-        public Uri Uri { get; }
+        public string EvidenceFileDownloadResponseEvidenceFili { get; }
     }
 }

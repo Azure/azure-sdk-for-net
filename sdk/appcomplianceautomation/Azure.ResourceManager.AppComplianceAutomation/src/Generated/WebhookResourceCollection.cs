@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Webhook_List</description>
+        /// <description>WebhookResource_ListByReportResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             options ??= new WebhookResourceCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webhookResourceWebhookRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webhookResourceWebhookRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webhookResourceWebhookRestClient.CreateListByReportResourceRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webhookResourceWebhookRestClient.CreateListByReportResourceNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebhookResource(Client, WebhookResourceData.DeserializeWebhookResourceData(e)), _webhookResourceWebhookClientDiagnostics, Pipeline, "WebhookResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Webhook_List</description>
+        /// <description>WebhookResource_ListByReportResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -305,8 +305,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             options ??= new WebhookResourceCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webhookResourceWebhookRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webhookResourceWebhookRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webhookResourceWebhookRestClient.CreateListByReportResourceRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webhookResourceWebhookRestClient.CreateListByReportResourceNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebhookResource(Client, WebhookResourceData.DeserializeWebhookResourceData(e)), _webhookResourceWebhookClientDiagnostics, Pipeline, "WebhookResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Compliance pdf report. </summary>
         internal DownloadResponseCompliancePdfReport CompliancePdfReport { get; }
         /// <summary> The uri of compliance pdf report. </summary>
-        public Uri CompliancePdfReportSasUri
+        public string CompliancePdfReportSasUri
         {
             get => CompliancePdfReport?.SasUri;
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> The detailed compliance pdf report. </summary>
         internal DownloadResponseComplianceDetailedPdfReport ComplianceDetailedPdfReport { get; }
         /// <summary> The uri of detailed compliance pdf report. </summary>
-        public Uri ComplianceDetailedPdfReportSasUri
+        public string ComplianceDetailedPdfReportSasUri
         {
             get => ComplianceDetailedPdfReport?.SasUri;
         }
