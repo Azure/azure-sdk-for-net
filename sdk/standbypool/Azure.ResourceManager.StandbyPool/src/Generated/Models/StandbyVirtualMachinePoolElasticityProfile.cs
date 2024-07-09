@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.StandbyPool.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
         public StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity)
         {
             MaxReadyCapacity = maxReadyCapacity;
         }
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
         }
 
-        /// <summary> Specifies maximum number of virtual machines in the standby virtual machine pool. </summary>
+        /// <summary> Specifies the maximum number of virtual machines in the standby virtual machine pool. </summary>
         public long MaxReadyCapacity { get; set; }
     }
 }

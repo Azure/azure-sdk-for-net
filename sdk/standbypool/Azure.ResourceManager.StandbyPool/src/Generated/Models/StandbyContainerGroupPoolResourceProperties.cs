@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> The type used for update operations of the StandbyContainerGroupPoolResource. </summary>
-    public partial class StandbyContainerGroupPoolPatch
+    /// <summary> Details of the StandbyContainerGroupPool. </summary>
+    public partial class StandbyContainerGroupPoolResourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,30 +45,42 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolPatch"/>. </summary>
-        public StandbyContainerGroupPoolPatch()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceProperties"/>. </summary>
         /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
         /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolPatch(IDictionary<string, string> tags, StandbyContainerGroupPoolElasticityPatchProfile elasticityProfile, StandbyContainerGroupPatchProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticityProfile"/> or <paramref name="containerGroupProperties"/> is null. </exception>
+        public StandbyContainerGroupPoolResourceProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties)
         {
-            Tags = tags;
+            Argument.AssertNotNull(elasticityProfile, nameof(elasticityProfile));
+            Argument.AssertNotNull(containerGroupProperties, nameof(containerGroupProperties));
+
             ElasticityProfile = elasticityProfile;
             ContainerGroupProperties = containerGroupProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceProperties"/>. </summary>
+        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
+        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StandbyContainerGroupPoolResourceProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, StandbyPoolProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ElasticityProfile = elasticityProfile;
+            ContainerGroupProperties = containerGroupProperties;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolResourceProperties"/> for deserialization. </summary>
+        internal StandbyContainerGroupPoolResourceProperties()
+        {
+        }
+
         /// <summary> Specifies elasticity profile of standby container group pools. </summary>
-        public StandbyContainerGroupPoolElasticityPatchProfile ElasticityProfile { get; set; }
+        public StandbyContainerGroupPoolElasticityProfile ElasticityProfile { get; set; }
         /// <summary> Specifies container group properties of standby container group pools. </summary>
-        public StandbyContainerGroupPatchProperties ContainerGroupProperties { get; set; }
+        public StandbyContainerGroupProperties ContainerGroupProperties { get; set; }
+        /// <summary> The status of the last operation. </summary>
+        public StandbyPoolProvisioningState? ProvisioningState { get; }
     }
 }

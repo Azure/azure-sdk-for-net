@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Specifies the elasticity profile of the standby container group pools. </summary>
-    public partial class StandbyContainerGroupPoolElasticityPatchProfile
+    /// <summary> Details of the StandbyVirtualMachine. </summary>
+    public partial class StandbyVirtualMachineResourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,35 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolElasticityPatchProfile"/>. </summary>
-        public StandbyContainerGroupPoolElasticityPatchProfile()
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/>. </summary>
+        /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineResourceId"/> is null. </exception>
+        internal StandbyVirtualMachineResourceProperties(string virtualMachineResourceId)
         {
+            Argument.AssertNotNull(virtualMachineResourceId, nameof(virtualMachineResourceId));
+
+            VirtualMachineResourceId = virtualMachineResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolElasticityPatchProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies maximum number of standby container groups in the standby pool. </param>
-        /// <param name="refillPolicy"> Specifies refill policy of the pool. </param>
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/>. </summary>
+        /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolElasticityPatchProfile(long? maxReadyCapacity, StandbyPoolRefillPolicy? refillPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachineResourceProperties(string virtualMachineResourceId, StandbyPoolProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxReadyCapacity = maxReadyCapacity;
-            RefillPolicy = refillPolicy;
+            VirtualMachineResourceId = virtualMachineResourceId;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies maximum number of standby container groups in the standby pool. </summary>
-        public long? MaxReadyCapacity { get; set; }
-        /// <summary> Specifies refill policy of the pool. </summary>
-        public StandbyPoolRefillPolicy? RefillPolicy { get; set; }
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineResourceProperties"/> for deserialization. </summary>
+        internal StandbyVirtualMachineResourceProperties()
+        {
+        }
+
+        /// <summary> Resource id of the virtual machine. </summary>
+        public string VirtualMachineResourceId { get; }
+        /// <summary> The status of the last operation. </summary>
+        public StandbyPoolProvisioningState? ProvisioningState { get; }
     }
 }

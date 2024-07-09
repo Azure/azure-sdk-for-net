@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.StandbyPool.Models;
 
 namespace Azure.ResourceManager.StandbyPool
 {
@@ -275,18 +274,18 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<StandbyContainerGroupPoolResource>> UpdateAsync(StandbyContainerGroupPoolPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<StandbyContainerGroupPoolResource>> UpdateAsync(StandbyContainerGroupPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Update");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _standbyContainerGroupPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new StandbyContainerGroupPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -317,18 +316,18 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<StandbyContainerGroupPoolResource> Update(StandbyContainerGroupPoolPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<StandbyContainerGroupPoolResource> Update(StandbyContainerGroupPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _standbyContainerGroupPoolClientDiagnostics.CreateScope("StandbyContainerGroupPoolResource.Update");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var response = _standbyContainerGroupPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new StandbyContainerGroupPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -383,7 +382,7 @@ namespace Azure.ResourceManager.StandbyPool
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StandbyContainerGroupPoolPatch();
+                    var patch = new StandbyContainerGroupPoolData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -445,7 +444,7 @@ namespace Azure.ResourceManager.StandbyPool
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StandbyContainerGroupPoolPatch();
+                    var patch = new StandbyContainerGroupPoolData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -506,7 +505,7 @@ namespace Azure.ResourceManager.StandbyPool
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StandbyContainerGroupPoolPatch();
+                    var patch = new StandbyContainerGroupPoolData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -563,7 +562,7 @@ namespace Azure.ResourceManager.StandbyPool
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StandbyContainerGroupPoolPatch();
+                    var patch = new StandbyContainerGroupPoolData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -619,7 +618,7 @@ namespace Azure.ResourceManager.StandbyPool
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new StandbyContainerGroupPoolPatch();
+                    var patch = new StandbyContainerGroupPoolData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -679,7 +678,7 @@ namespace Azure.ResourceManager.StandbyPool
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new StandbyContainerGroupPoolPatch();
+                    var patch = new StandbyContainerGroupPoolData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
