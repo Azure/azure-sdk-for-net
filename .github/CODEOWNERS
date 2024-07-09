@@ -938,10 +938,10 @@
 # ServiceLabel: %Astronomer %Mgmt
 # ServiceOwners:                                                   @banggaurav
 
-# PRLabel: %NewRelicObservability
-/sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability/       @dipeshbhakat-microsoft @vipray-ms
+# PRLabel: %New Relic
+/sdk/newrelicobservability/Azure.ResourceManager.*/       @dipeshbhakat-microsoft @vipray-ms
 
-# ServiceLabel: %NewRelicObservability %Mgmt
+# ServiceLabel: %New Relic %Mgmt
 # ServiceOwners:                                                   @dipeshbhakat-microsoft @vipray-ms
 
 
