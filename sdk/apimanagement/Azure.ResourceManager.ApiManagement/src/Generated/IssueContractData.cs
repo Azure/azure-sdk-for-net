@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Date and time when the issue was created. </summary>
+        [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Status of the issue. </summary>
+        [WirePath("properties.state")]
         public IssueState? State { get; set; }
         /// <summary> A resource identifier for the API the issue was created for. </summary>
+        [WirePath("properties.apiId")]
         public ResourceIdentifier ApiId { get; set; }
         /// <summary> The issue title. </summary>
+        [WirePath("properties.title")]
         public string Title { get; set; }
         /// <summary> Text describing the issue. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> A resource identifier for the user created the issue. </summary>
+        [WirePath("properties.userId")]
         public ResourceIdentifier UserId { get; set; }
     }
 }

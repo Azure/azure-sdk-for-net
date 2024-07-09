@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The domain ownership identifier value. </summary>
+        [WirePath("domainOwnershipIdentifier")]
         public string DomainOwnershipIdentifier { get; }
     }
 }

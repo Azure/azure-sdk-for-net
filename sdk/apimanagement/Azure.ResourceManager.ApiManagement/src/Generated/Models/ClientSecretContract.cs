@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; }
     }
 }

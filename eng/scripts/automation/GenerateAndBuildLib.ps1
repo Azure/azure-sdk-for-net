@@ -846,15 +846,22 @@ function GeneratePackage()
     if ( $serviceType -eq "resource-manager" ) {
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
-    $generatedSDKPackages.Add(@{packageName="$packageName";
-                                result=$result;
-                                path=@("$path", "$ciFilePath");
-                                packageFolder="$projectFolder";
-                                artifacts=$artifacts;
-                                apiViewArtifact=$apiViewArtifact;
-                                language=".Net";
-                                changelog= $changelog;
-                                installInstructions = $installInstructions})
+
+    $packageDetails = @{
+        packageName="$packageName";
+        result=$result;
+        path=@("$path", "$ciFilePath");
+        packageFolder="$projectFolder";
+        artifacts=$artifacts;
+        apiViewArtifact=$apiViewArtifact;
+        language=".Net";
+        changelog=$changelog
+    }
+    
+    if ($installInstructions -ne $null) {
+        $packageDetails['installInstructions'] = $installInstructions
+    }    
+    $generatedSDKPackages.Add($packageDetails)
 }
 function UpdateExistingSDKByInputFiles()
 {
