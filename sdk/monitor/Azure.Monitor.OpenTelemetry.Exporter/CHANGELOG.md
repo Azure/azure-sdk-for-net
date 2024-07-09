@@ -7,6 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+* Rpc tags linked to `OperationType.Rpc`
+  ([...]())
 
 ### Features Added
 
