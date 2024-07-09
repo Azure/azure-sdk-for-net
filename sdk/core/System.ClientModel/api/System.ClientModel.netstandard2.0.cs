@@ -188,9 +188,11 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class OperationResult : System.ClientModel.ClientResult
     {
-        protected OperationResult(System.ClientModel.ContinuationToken rehydrationToken, System.ClientModel.Primitives.PipelineResponse response) { }
+        protected OperationResult() { }
+        protected OperationResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public bool HasCompleted { get { throw null; } protected set { } }
-        public System.ClientModel.ContinuationToken RehydrationToken { get { throw null; } protected set { } }
+        public abstract void WaitForCompletion();
+        public abstract System.Threading.Tasks.Task WaitForCompletionAsync();
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
