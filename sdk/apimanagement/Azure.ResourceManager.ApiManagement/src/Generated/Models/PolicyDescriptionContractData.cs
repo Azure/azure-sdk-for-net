@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Policy description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Binary OR value of the Snippet scope. </summary>
+        [WirePath("properties.scope")]
         public long? Scope { get; }
     }
 }

@@ -59,6 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 throw new InvalidOperationException("The provided TracerProviderBuilder does not implement IDeferredTracerProviderBuilder.");
             }
 
+            // TODO: Do we need provide an option to alter BatchExportActivityProcessorOptions?
             return deferredBuilder.Configure((sp, builder) =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
@@ -179,6 +180,68 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options)));
+        }
+
+        /// <summary>
+        /// Adds Azure Monitor Log Exporter to the LoggerProvider.
+        /// </summary>
+        /// <param name="builder"><see cref="LoggerProviderBuilder"/> builder to use.</param>
+        /// <param name="configure">Optional callback action for configuring <see cref="AzureMonitorExporterOptions"/>.</param>
+        /// <param name="credential">
+        /// An Azure <see cref="TokenCredential" /> capable of providing an OAuth token.
+        /// Note: if a credential is provided to both <see cref="AzureMonitorExporterOptions"/> and this parameter,
+        /// the Options will take precedence.
+        /// </param>
+        /// <param name="name">Optional name which is used when retrieving options.</param>
+        /// <returns>The instance of <see cref="LoggerProviderBuilder"/> to chain the calls.</returns>
+        public static LoggerProviderBuilder AddAzureMonitorLogExporter(
+            this LoggerProviderBuilder builder,
+            Action<AzureMonitorExporterOptions> configure = null,
+            TokenCredential credential = null,
+            string name = null)
+        {
+            var finalOptionsName = name ?? Options.DefaultName;
+
+            if (name != null && configure != null)
+            {
+                // If we are using named options we register the
+                // configuration delegate into options pipeline.
+                builder.ConfigureServices(services => services.Configure(finalOptionsName, configure));
+            }
+
+            return builder.AddProcessor(sp =>
+            {
+                AzureMonitorExporterOptions exporterOptions;
+
+                if (name == null)
+                {
+                    // If we are NOT using named options, we execute the
+                    // configuration delegate inline. The reason for this is
+                    // AzureMonitorExporterOptions is shared by all signals. Without a
+                    // name, delegates for all signals will mix together. See:
+                    // https://github.com/open-telemetry/opentelemetry-dotnet/issues/4043
+                    exporterOptions = sp.GetRequiredService<IOptionsFactory<AzureMonitorExporterOptions>>().Create(finalOptionsName);
+
+                    // Configuration delegate is executed inline on the fresh instance.
+                    configure?.Invoke(exporterOptions);
+                }
+                else
+                {
+                    // When using named options we can properly utilize Options
+                    // API to create or reuse an instance.
+                    exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
+                }
+
+                if (credential != null)
+                {
+                    // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
+                    // Options should take precedence.
+                    exporterOptions.Credential ??= credential;
+                }
+
+                // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
+                return new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(exporterOptions));
+            });
         }
     }
 }

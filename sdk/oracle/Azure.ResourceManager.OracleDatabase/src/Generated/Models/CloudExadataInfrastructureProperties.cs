@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// CloudExadataInfrastructure resource model
-    /// Serialized Name: CloudExadataInfrastructureProperties
-    /// </summary>
+    /// <summary> CloudExadataInfrastructure resource model. </summary>
     public partial class CloudExadataInfrastructureProperties
     {
         /// <summary>
@@ -49,159 +47,60 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureProperties"/>. </summary>
-        /// <param name="shape">
-        /// The model name of the cloud Exadata infrastructure resource.
-        /// Serialized Name: CloudExadataInfrastructureProperties.shape
-        /// </param>
-        /// <param name="displayName">
-        /// The name for the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.displayName
-        /// </param>
+        /// <param name="shape"> The model name of the cloud Exadata infrastructure resource. </param>
+        /// <param name="displayName"> The name for the Exadata infrastructure. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shape"/> or <paramref name="displayName"/> is null. </exception>
         public CloudExadataInfrastructureProperties(string shape, string displayName)
         {
             Argument.AssertNotNull(shape, nameof(shape));
             Argument.AssertNotNull(displayName, nameof(displayName));
 
-            CustomerContacts = new ChangeTrackingList<CustomerContact>();
+            CustomerContacts = new ChangeTrackingList<OracleCustomerContact>();
             Shape = shape;
             DisplayName = displayName;
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureProperties"/>. </summary>
-        /// <param name="ocid">
-        /// Exadata infra ocid
-        /// Serialized Name: CloudExadataInfrastructureProperties.ocid
-        /// </param>
-        /// <param name="computeCount">
-        /// The number of compute servers for the cloud Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.computeCount
-        /// </param>
-        /// <param name="storageCount">
-        /// The number of storage servers for the cloud Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.storageCount
-        /// </param>
-        /// <param name="totalStorageSizeInGbs">
-        /// The total storage allocated to the cloud Exadata infrastructure resource, in gigabytes (GB).
-        /// Serialized Name: CloudExadataInfrastructureProperties.totalStorageSizeInGbs
-        /// </param>
-        /// <param name="availableStorageSizeInGbs">
-        /// The available storage can be allocated to the cloud Exadata infrastructure resource, in gigabytes (GB).
-        /// Serialized Name: CloudExadataInfrastructureProperties.availableStorageSizeInGbs
-        /// </param>
-        /// <param name="timeCreated">
-        /// The date and time the cloud Exadata infrastructure resource was created.
-        /// Serialized Name: CloudExadataInfrastructureProperties.timeCreated
-        /// </param>
-        /// <param name="lifecycleDetails">
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: CloudExadataInfrastructureProperties.lifecycleDetails
-        /// </param>
-        /// <param name="maintenanceWindow">
-        /// maintenanceWindow property
-        /// Serialized Name: CloudExadataInfrastructureProperties.maintenanceWindow
-        /// </param>
-        /// <param name="estimatedPatchingTime">
-        /// The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching).
-        /// Serialized Name: CloudExadataInfrastructureProperties.estimatedPatchingTime
-        /// </param>
-        /// <param name="customerContacts">
-        /// The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance.
-        /// Serialized Name: CloudExadataInfrastructureProperties.customerContacts
-        /// </param>
-        /// <param name="provisioningState">
-        /// CloudExadataInfrastructure provisioning state
-        /// Serialized Name: CloudExadataInfrastructureProperties.provisioningState
-        /// </param>
-        /// <param name="lifecycleState">
-        /// CloudExadataInfrastructure lifecycle state
-        /// Serialized Name: CloudExadataInfrastructureProperties.lifecycleState
-        /// </param>
-        /// <param name="shape">
-        /// The model name of the cloud Exadata infrastructure resource.
-        /// Serialized Name: CloudExadataInfrastructureProperties.shape
-        /// </param>
-        /// <param name="ociUri">
-        /// HTTPS link to OCI resources exposed to Azure Customer via Azure Interface.
-        /// Serialized Name: CloudExadataInfrastructureProperties.ociUrl
-        /// </param>
-        /// <param name="cpuCount">
-        /// The total number of CPU cores allocated.
-        /// Serialized Name: CloudExadataInfrastructureProperties.cpuCount
-        /// </param>
-        /// <param name="maxCpuCount">
-        /// The total number of CPU cores available.
-        /// Serialized Name: CloudExadataInfrastructureProperties.maxCpuCount
-        /// </param>
-        /// <param name="memorySizeInGbs">
-        /// The memory allocated in GBs.
-        /// Serialized Name: CloudExadataInfrastructureProperties.memorySizeInGbs
-        /// </param>
-        /// <param name="maxMemoryInGbs">
-        /// The total memory available in GBs.
-        /// Serialized Name: CloudExadataInfrastructureProperties.maxMemoryInGbs
-        /// </param>
-        /// <param name="dbNodeStorageSizeInGbs">
-        /// The local node storage to be allocated in GBs.
-        /// Serialized Name: CloudExadataInfrastructureProperties.dbNodeStorageSizeInGbs
-        /// </param>
-        /// <param name="maxDbNodeStorageSizeInGbs">
-        /// The total local node storage available in GBs.
-        /// Serialized Name: CloudExadataInfrastructureProperties.maxDbNodeStorageSizeInGbs
-        /// </param>
-        /// <param name="dataStorageSizeInTbs">
-        /// The quantity of data in the database, in terabytes.
-        /// Serialized Name: CloudExadataInfrastructureProperties.dataStorageSizeInTbs
-        /// </param>
-        /// <param name="maxDataStorageInTbs">
-        /// The total available DATA disk group size.
-        /// Serialized Name: CloudExadataInfrastructureProperties.maxDataStorageInTbs
-        /// </param>
-        /// <param name="dbServerVersion">
-        /// The software version of the database servers (dom0) in the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.dbServerVersion
-        /// </param>
-        /// <param name="storageServerVersion">
-        /// The software version of the storage servers (cells) in the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.storageServerVersion
-        /// </param>
-        /// <param name="activatedStorageCount">
-        /// The requested number of additional storage servers activated for the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.activatedStorageCount
-        /// </param>
-        /// <param name="additionalStorageCount">
-        /// The requested number of additional storage servers for the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.additionalStorageCount
-        /// </param>
-        /// <param name="displayName">
-        /// The name for the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.displayName
-        /// </param>
-        /// <param name="lastMaintenanceRunId">
-        /// The OCID of the last maintenance run.
-        /// Serialized Name: CloudExadataInfrastructureProperties.lastMaintenanceRunId
-        /// </param>
-        /// <param name="nextMaintenanceRunId">
-        /// The OCID of the next maintenance run.
-        /// Serialized Name: CloudExadataInfrastructureProperties.nextMaintenanceRunId
-        /// </param>
-        /// <param name="monthlyDbServerVersion">
-        /// Monthly Db Server version
-        /// Serialized Name: CloudExadataInfrastructureProperties.monthlyDbServerVersion
-        /// </param>
-        /// <param name="monthlyStorageServerVersion">
-        /// Monthly Storage Server version
-        /// Serialized Name: CloudExadataInfrastructureProperties.monthlyStorageServerVersion
-        /// </param>
+        /// <param name="ocid"> Exadata infra ocid. </param>
+        /// <param name="computeCount"> The number of compute servers for the cloud Exadata infrastructure. </param>
+        /// <param name="storageCount"> The number of storage servers for the cloud Exadata infrastructure. </param>
+        /// <param name="totalStorageSizeInGbs"> The total storage allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </param>
+        /// <param name="availableStorageSizeInGbs"> The available storage can be allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </param>
+        /// <param name="createdOn"> The date and time the cloud Exadata infrastructure resource was created. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="maintenanceWindow"> maintenanceWindow property. </param>
+        /// <param name="estimatedPatchingTime"> The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching). </param>
+        /// <param name="customerContacts"> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </param>
+        /// <param name="provisioningState"> CloudExadataInfrastructure provisioning state. </param>
+        /// <param name="lifecycleState"> CloudExadataInfrastructure lifecycle state. </param>
+        /// <param name="shape"> The model name of the cloud Exadata infrastructure resource. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="cpuCount"> The total number of CPU cores allocated. </param>
+        /// <param name="maxCpuCount"> The total number of CPU cores available. </param>
+        /// <param name="memorySizeInGbs"> The memory allocated in GBs. </param>
+        /// <param name="maxMemoryInGbs"> The total memory available in GBs. </param>
+        /// <param name="dbNodeStorageSizeInGbs"> The local node storage to be allocated in GBs. </param>
+        /// <param name="maxDBNodeStorageSizeInGbs"> The total local node storage available in GBs. </param>
+        /// <param name="dataStorageSizeInTbs"> The quantity of data in the database, in terabytes. </param>
+        /// <param name="maxDataStorageInTbs"> The total available DATA disk group size. </param>
+        /// <param name="dbServerVersion"> The software version of the database servers (dom0) in the Exadata infrastructure. </param>
+        /// <param name="storageServerVersion"> The software version of the storage servers (cells) in the Exadata infrastructure. </param>
+        /// <param name="activatedStorageCount"> The requested number of additional storage servers activated for the Exadata infrastructure. </param>
+        /// <param name="additionalStorageCount"> The requested number of additional storage servers for the Exadata infrastructure. </param>
+        /// <param name="displayName"> The name for the Exadata infrastructure. </param>
+        /// <param name="lastMaintenanceRunId"> The OCID of the last maintenance run. </param>
+        /// <param name="nextMaintenanceRunId"> The OCID of the next maintenance run. </param>
+        /// <param name="monthlyDBServerVersion"> Monthly Db Server version. </param>
+        /// <param name="monthlyStorageServerVersion"> Monthly Storage Server version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructureProperties(string ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, string timeCreated, string lifecycleDetails, MaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<CustomerContact> customerContacts, AzureResourceProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDbNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, string lastMaintenanceRunId, string nextMaintenanceRunId, string monthlyDbServerVersion, string monthlyStorageServerVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudExadataInfrastructureProperties(ResourceIdentifier ocid, int? computeCount, int? storageCount, int? totalStorageSizeInGbs, int? availableStorageSizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, OracleDatabaseMaintenanceWindow maintenanceWindow, EstimatedPatchingTime estimatedPatchingTime, IList<OracleCustomerContact> customerContacts, OracleDatabaseProvisioningState? provisioningState, CloudExadataInfrastructureLifecycleState? lifecycleState, string shape, Uri ociUri, int? cpuCount, int? maxCpuCount, int? memorySizeInGbs, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, int? maxDBNodeStorageSizeInGbs, double? dataStorageSizeInTbs, double? maxDataStorageInTbs, string dbServerVersion, string storageServerVersion, int? activatedStorageCount, int? additionalStorageCount, string displayName, ResourceIdentifier lastMaintenanceRunId, ResourceIdentifier nextMaintenanceRunId, string monthlyDBServerVersion, string monthlyStorageServerVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ComputeCount = computeCount;
             StorageCount = storageCount;
             TotalStorageSizeInGbs = totalStorageSizeInGbs;
             AvailableStorageSizeInGbs = availableStorageSizeInGbs;
-            TimeCreated = timeCreated;
+            CreatedOn = createdOn;
             LifecycleDetails = lifecycleDetails;
             MaintenanceWindow = maintenanceWindow;
             EstimatedPatchingTime = estimatedPatchingTime;
@@ -214,18 +113,18 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             MaxCpuCount = maxCpuCount;
             MemorySizeInGbs = memorySizeInGbs;
             MaxMemoryInGbs = maxMemoryInGbs;
-            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
-            MaxDbNodeStorageSizeInGbs = maxDbNodeStorageSizeInGbs;
+            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            MaxDBNodeStorageSizeInGbs = maxDBNodeStorageSizeInGbs;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
             MaxDataStorageInTbs = maxDataStorageInTbs;
-            DbServerVersion = dbServerVersion;
+            DBServerVersion = dbServerVersion;
             StorageServerVersion = storageServerVersion;
             ActivatedStorageCount = activatedStorageCount;
             AdditionalStorageCount = additionalStorageCount;
             DisplayName = displayName;
             LastMaintenanceRunId = lastMaintenanceRunId;
             NextMaintenanceRunId = nextMaintenanceRunId;
-            MonthlyDbServerVersion = monthlyDbServerVersion;
+            MonthlyDBServerVersion = monthlyDBServerVersion;
             MonthlyStorageServerVersion = monthlyStorageServerVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -235,160 +134,67 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary>
-        /// Exadata infra ocid
-        /// Serialized Name: CloudExadataInfrastructureProperties.ocid
-        /// </summary>
-        public string Ocid { get; }
-        /// <summary>
-        /// The number of compute servers for the cloud Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.computeCount
-        /// </summary>
+        /// <summary> Exadata infra ocid. </summary>
+        public ResourceIdentifier Ocid { get; }
+        /// <summary> The number of compute servers for the cloud Exadata infrastructure. </summary>
         public int? ComputeCount { get; set; }
-        /// <summary>
-        /// The number of storage servers for the cloud Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.storageCount
-        /// </summary>
+        /// <summary> The number of storage servers for the cloud Exadata infrastructure. </summary>
         public int? StorageCount { get; set; }
-        /// <summary>
-        /// The total storage allocated to the cloud Exadata infrastructure resource, in gigabytes (GB).
-        /// Serialized Name: CloudExadataInfrastructureProperties.totalStorageSizeInGbs
-        /// </summary>
+        /// <summary> The total storage allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </summary>
         public int? TotalStorageSizeInGbs { get; }
-        /// <summary>
-        /// The available storage can be allocated to the cloud Exadata infrastructure resource, in gigabytes (GB).
-        /// Serialized Name: CloudExadataInfrastructureProperties.availableStorageSizeInGbs
-        /// </summary>
+        /// <summary> The available storage can be allocated to the cloud Exadata infrastructure resource, in gigabytes (GB). </summary>
         public int? AvailableStorageSizeInGbs { get; }
-        /// <summary>
-        /// The date and time the cloud Exadata infrastructure resource was created.
-        /// Serialized Name: CloudExadataInfrastructureProperties.timeCreated
-        /// </summary>
-        public string TimeCreated { get; }
-        /// <summary>
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: CloudExadataInfrastructureProperties.lifecycleDetails
-        /// </summary>
+        /// <summary> The date and time the cloud Exadata infrastructure resource was created. </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
-        /// <summary>
-        /// maintenanceWindow property
-        /// Serialized Name: CloudExadataInfrastructureProperties.maintenanceWindow
-        /// </summary>
-        public MaintenanceWindow MaintenanceWindow { get; set; }
-        /// <summary>
-        /// The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching).
-        /// Serialized Name: CloudExadataInfrastructureProperties.estimatedPatchingTime
-        /// </summary>
+        /// <summary> maintenanceWindow property. </summary>
+        public OracleDatabaseMaintenanceWindow MaintenanceWindow { get; set; }
+        /// <summary> The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching). </summary>
         public EstimatedPatchingTime EstimatedPatchingTime { get; }
-        /// <summary>
-        /// The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance.
-        /// Serialized Name: CloudExadataInfrastructureProperties.customerContacts
-        /// </summary>
-        public IList<CustomerContact> CustomerContacts { get; }
-        /// <summary>
-        /// CloudExadataInfrastructure provisioning state
-        /// Serialized Name: CloudExadataInfrastructureProperties.provisioningState
-        /// </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// CloudExadataInfrastructure lifecycle state
-        /// Serialized Name: CloudExadataInfrastructureProperties.lifecycleState
-        /// </summary>
+        /// <summary> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </summary>
+        public IList<OracleCustomerContact> CustomerContacts { get; }
+        /// <summary> CloudExadataInfrastructure provisioning state. </summary>
+        public OracleDatabaseProvisioningState? ProvisioningState { get; }
+        /// <summary> CloudExadataInfrastructure lifecycle state. </summary>
         public CloudExadataInfrastructureLifecycleState? LifecycleState { get; }
-        /// <summary>
-        /// The model name of the cloud Exadata infrastructure resource.
-        /// Serialized Name: CloudExadataInfrastructureProperties.shape
-        /// </summary>
+        /// <summary> The model name of the cloud Exadata infrastructure resource. </summary>
         public string Shape { get; set; }
-        /// <summary>
-        /// HTTPS link to OCI resources exposed to Azure Customer via Azure Interface.
-        /// Serialized Name: CloudExadataInfrastructureProperties.ociUrl
-        /// </summary>
+        /// <summary> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </summary>
         public Uri OciUri { get; }
-        /// <summary>
-        /// The total number of CPU cores allocated.
-        /// Serialized Name: CloudExadataInfrastructureProperties.cpuCount
-        /// </summary>
+        /// <summary> The total number of CPU cores allocated. </summary>
         public int? CpuCount { get; }
-        /// <summary>
-        /// The total number of CPU cores available.
-        /// Serialized Name: CloudExadataInfrastructureProperties.maxCpuCount
-        /// </summary>
+        /// <summary> The total number of CPU cores available. </summary>
         public int? MaxCpuCount { get; }
-        /// <summary>
-        /// The memory allocated in GBs.
-        /// Serialized Name: CloudExadataInfrastructureProperties.memorySizeInGbs
-        /// </summary>
+        /// <summary> The memory allocated in GBs. </summary>
         public int? MemorySizeInGbs { get; }
-        /// <summary>
-        /// The total memory available in GBs.
-        /// Serialized Name: CloudExadataInfrastructureProperties.maxMemoryInGbs
-        /// </summary>
+        /// <summary> The total memory available in GBs. </summary>
         public int? MaxMemoryInGbs { get; }
-        /// <summary>
-        /// The local node storage to be allocated in GBs.
-        /// Serialized Name: CloudExadataInfrastructureProperties.dbNodeStorageSizeInGbs
-        /// </summary>
-        public int? DbNodeStorageSizeInGbs { get; }
-        /// <summary>
-        /// The total local node storage available in GBs.
-        /// Serialized Name: CloudExadataInfrastructureProperties.maxDbNodeStorageSizeInGbs
-        /// </summary>
-        public int? MaxDbNodeStorageSizeInGbs { get; }
-        /// <summary>
-        /// The quantity of data in the database, in terabytes.
-        /// Serialized Name: CloudExadataInfrastructureProperties.dataStorageSizeInTbs
-        /// </summary>
+        /// <summary> The local node storage to be allocated in GBs. </summary>
+        public int? DBNodeStorageSizeInGbs { get; }
+        /// <summary> The total local node storage available in GBs. </summary>
+        public int? MaxDBNodeStorageSizeInGbs { get; }
+        /// <summary> The quantity of data in the database, in terabytes. </summary>
         public double? DataStorageSizeInTbs { get; }
-        /// <summary>
-        /// The total available DATA disk group size.
-        /// Serialized Name: CloudExadataInfrastructureProperties.maxDataStorageInTbs
-        /// </summary>
+        /// <summary> The total available DATA disk group size. </summary>
         public double? MaxDataStorageInTbs { get; }
-        /// <summary>
-        /// The software version of the database servers (dom0) in the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.dbServerVersion
-        /// </summary>
-        public string DbServerVersion { get; }
-        /// <summary>
-        /// The software version of the storage servers (cells) in the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.storageServerVersion
-        /// </summary>
+        /// <summary> The software version of the database servers (dom0) in the Exadata infrastructure. </summary>
+        public string DBServerVersion { get; }
+        /// <summary> The software version of the storage servers (cells) in the Exadata infrastructure. </summary>
         public string StorageServerVersion { get; }
-        /// <summary>
-        /// The requested number of additional storage servers activated for the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.activatedStorageCount
-        /// </summary>
+        /// <summary> The requested number of additional storage servers activated for the Exadata infrastructure. </summary>
         public int? ActivatedStorageCount { get; }
-        /// <summary>
-        /// The requested number of additional storage servers for the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.additionalStorageCount
-        /// </summary>
+        /// <summary> The requested number of additional storage servers for the Exadata infrastructure. </summary>
         public int? AdditionalStorageCount { get; }
-        /// <summary>
-        /// The name for the Exadata infrastructure.
-        /// Serialized Name: CloudExadataInfrastructureProperties.displayName
-        /// </summary>
+        /// <summary> The name for the Exadata infrastructure. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The OCID of the last maintenance run.
-        /// Serialized Name: CloudExadataInfrastructureProperties.lastMaintenanceRunId
-        /// </summary>
-        public string LastMaintenanceRunId { get; }
-        /// <summary>
-        /// The OCID of the next maintenance run.
-        /// Serialized Name: CloudExadataInfrastructureProperties.nextMaintenanceRunId
-        /// </summary>
-        public string NextMaintenanceRunId { get; }
-        /// <summary>
-        /// Monthly Db Server version
-        /// Serialized Name: CloudExadataInfrastructureProperties.monthlyDbServerVersion
-        /// </summary>
-        public string MonthlyDbServerVersion { get; }
-        /// <summary>
-        /// Monthly Storage Server version
-        /// Serialized Name: CloudExadataInfrastructureProperties.monthlyStorageServerVersion
-        /// </summary>
+        /// <summary> The OCID of the last maintenance run. </summary>
+        public ResourceIdentifier LastMaintenanceRunId { get; }
+        /// <summary> The OCID of the next maintenance run. </summary>
+        public ResourceIdentifier NextMaintenanceRunId { get; }
+        /// <summary> Monthly Db Server version. </summary>
+        public string MonthlyDBServerVersion { get; }
+        /// <summary> Monthly Storage Server version. </summary>
         public string MonthlyStorageServerVersion { get; }
     }
 }

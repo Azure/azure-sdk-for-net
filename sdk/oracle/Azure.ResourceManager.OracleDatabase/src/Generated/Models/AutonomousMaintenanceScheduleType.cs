@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Autonomous database maintenance schedule type enum.
-    /// Serialized Name: AutonomousMaintenanceScheduleType
-    /// </summary>
+    /// <summary> Autonomous database maintenance schedule type enum. </summary>
     public readonly partial struct AutonomousMaintenanceScheduleType : IEquatable<AutonomousMaintenanceScheduleType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string EarlyValue = "Early";
         private const string RegularValue = "Regular";
 
-        /// <summary>
-        /// Early maintenance schedule
-        /// Serialized Name: AutonomousMaintenanceScheduleType.Early
-        /// </summary>
+        /// <summary> Early maintenance schedule. </summary>
         public static AutonomousMaintenanceScheduleType Early { get; } = new AutonomousMaintenanceScheduleType(EarlyValue);
-        /// <summary>
-        /// Regular maintenance schedule
-        /// Serialized Name: AutonomousMaintenanceScheduleType.Regular
-        /// </summary>
+        /// <summary> Regular maintenance schedule. </summary>
         public static AutonomousMaintenanceScheduleType Regular { get; } = new AutonomousMaintenanceScheduleType(RegularValue);
         /// <summary> Determines if two <see cref="AutonomousMaintenanceScheduleType"/> values are the same. </summary>
         public static bool operator ==(AutonomousMaintenanceScheduleType left, AutonomousMaintenanceScheduleType right) => left.Equals(right);
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }
