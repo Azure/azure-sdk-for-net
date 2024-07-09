@@ -42,10 +42,8 @@ jobs:
         - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
           parameters:
             ArtifactLocation: '$(PIPELINE.WORKSPACE)/packages'
-            WorkingDirectory: $(System.DefaultWorkingDirectory)
             PackageRepository: Nuget
             ReleaseSha: $(Build.SourceVersion)
-            RepoId: Azure/azure-sdk-for-net
 
         - template: pipelines/steps/publish-symbols.yml@azure-sdk-build-tools
           displayName: 'Upload Symbols'
