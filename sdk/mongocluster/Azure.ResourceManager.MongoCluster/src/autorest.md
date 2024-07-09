@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: MongoCluster
 namespace: Azure.ResourceManager.MongoCluster
-require: https://github.com/welovej/azure-rest-api-specs/blob/5756410d00768cddd8c4cb414bbfbc6065c67a18/specification/mongocluster/resource-manager/readme.md
+require: https://github.com/welovej/azure-rest-api-specs/blob/9ffd9e0835d39d83623047904ce9643a6525fa4d/specification/mongocluster/resource-manager/readme.md
+# require: C:\repo\azure-rest-api-specs\specification\mongocluster\resource-manager\readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -16,12 +17,11 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: false
 use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
-
- 
 
 format-by-name-rules:
   'tenantId': 'uuid'

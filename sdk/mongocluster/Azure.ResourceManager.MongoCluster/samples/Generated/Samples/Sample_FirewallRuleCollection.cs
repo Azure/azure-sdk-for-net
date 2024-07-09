@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Samples
 {
@@ -188,8 +189,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             string firewallRuleName = "rule1";
             FirewallRuleData data = new FirewallRuleData()
             {
-                StartIPAddress = "0.0.0.0",
-                EndIPAddress = "255.255.255.255",
+                Properties = new FirewallRuleProperties("0.0.0.0", "255.255.255.255"),
             };
             ArmOperation<FirewallRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, data);
             FirewallRuleResource result = lro.Value;
