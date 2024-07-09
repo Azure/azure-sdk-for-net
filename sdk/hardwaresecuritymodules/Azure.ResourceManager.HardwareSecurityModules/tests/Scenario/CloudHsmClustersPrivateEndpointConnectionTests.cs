@@ -45,30 +45,31 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             var expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
             Assert.IsNotNull(privateEndpointConnectionResource);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(),privateEndpointConnectionResource.Data.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.ConnectionState.Description);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.GroupIds);
-            Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.ConnectionState.Status);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(),privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
+            Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);
 
-            //Update Private endpoint
-            _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionResource.Data.Name, new HardwareSecurityModulesPrivateEndpointConnectionData()
+            HardwareSecurityModulesPrivateEndpointConnectionData data = new HardwareSecurityModulesPrivateEndpointConnectionData()
             {
-                ConnectionState = new HardwareSecurityModulesPrivateLinkServiceConnectionState()
+                Properties = new PrivateEndpointConnectionProperties(new HardwareSecurityModulesPrivateLinkServiceConnectionState()
                 {
                     Status = "Approved",
                     Description = "Approve by sdk test case"
-                }
-            });
+                }),
+            };
+
+            _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionResource.Data.Name, data);
 
             privateEndpoint = await privateEndpoint.GetAsync();
             privateEndpointConnectionResource = await _privateEndpointConnectionCollection.GetAsync(privateEndpointConnectionResource.Data.Name);
             expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
             Assert.IsNotNull(privateEndpoint);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.ConnectionState.Description);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.GroupIds);
-            Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnectionResource.Data.ConnectionState.Status);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
+            Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);
         }
 
         [Ignore("Exception")]
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
 
             Assert.IsTrue(privateEndpointConnections.Count == 1);
             Assert.IsNotNull(privateEndpointConnectionResource);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.ConnectionState.Description);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.GroupIds);
-            Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.ConnectionState.Status);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
+            Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);
         }
 
         [Ignore("Exception")]
@@ -114,9 +115,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             string resourceName = Recording.GenerateAssetName("CloudhsmSDKTest");
             CloudHsmClusterData cloudHsmClusterBody = new CloudHsmClusterData(Location)
             {
-                SecurityDomain = new CloudHsmClusterSecurityDomainProperties()
+                Properties = new CloudHsmClusterProperties()
                 {
-                    FipsState = 2,
+                    FipsApprovedMode = false
                 },
                 Sku = new CloudHsmClusterSku(CloudHsmClusterSkuFamily.B, CloudHsmClusterSkuName.StandardB1),
                 Tags =

@@ -37,19 +37,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
 
             CloudHsmClusterData cloudHsmClusterBody = new CloudHsmClusterData(Location)
             {
-                SecurityDomain = new CloudHsmClusterSecurityDomainProperties()
+                Properties = new CloudHsmClusterProperties()
                 {
-                    FipsState = 2,
+                    FipsApprovedMode = false
                 },
+
                 Sku = new CloudHsmClusterSku(CloudHsmClusterSkuFamily.B, CloudHsmClusterSkuName.StandardB1),
                 Tags =
                 {
                     ["Dept"] = "SDK Testing",
                     ["Env"] = "df",
                 },
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned),
-                BackupProperties = new BackupProperties(azureStorageBlobContainerUri, null, null, null),
-                RestoreProperties = new RestoreProperties("blobDirectory", azureStorageBlobContainerUri, null)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
             };
 
             cloudHsmClusterBody.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 Location.Name,
                 CloudHsmClusterSkuFamily.B.ToString(),
                 CloudHsmClusterSkuName.StandardB1.ToString(),
-                (int)cloudHsmClusterBody.SecurityDomain.FipsState,
+                //(int)cloudHsmClusterBody.SecurityDomain.FipsState,
                 new Dictionary<string, string>(cloudHsmClusterBody.Tags),
                 ManagedServiceIdentityType.UserAssigned);
 
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 Location.Name,
                 CloudHsmClusterSkuFamily.B.ToString(),
                 CloudHsmClusterSkuName.StandardB1.ToString(),
-                (int)cloudHsmClusterBody.SecurityDomain.FipsState,
+                //(int)cloudHsmClusterBody.SecurityDomain.FipsState,
                 new Dictionary<string, string>(cloudHsmClusterBody.Tags),
                 ManagedServiceIdentityType.UserAssigned);
 
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             string expectedResourceLocation,
             string expectedSkuFamily,
             string expectedSkuName,
-            int expectedFipsState,
+            //int expectedFipsState,
             Dictionary<string, string> expectedTags,
             ManagedServiceIdentityType expectedIdentityType,
             int managedIdentityExpextedCount = 1
@@ -124,8 +123,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             Assert.AreEqual(expectedSkuName, cloudHsmClusterData.Sku.Name.ToString());
             Assert.NotNull(cloudHsmClusterData.Tags);
             Assert.True(expectedTags.Count == cloudHsmClusterData.Tags.Count && !expectedTags.Except(cloudHsmClusterData.Tags).Any());
-            Assert.NotNull(cloudHsmClusterData.SecurityDomain);
-            Assert.AreEqual(expectedFipsState, cloudHsmClusterData.SecurityDomain.FipsState);
+            //Assert.NotNull(cloudHsmClusterData.SecurityDomain);
+            //Assert.AreEqual(expectedFipsState, cloudHsmClusterData.SecurityDomain.FipsState);
             Assert.AreEqual(expectedIdentityType, cloudHsmClusterData.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(managedIdentityExpextedCount, cloudHsmClusterData.Identity.UserAssignedIdentities.Count);
         }
