@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.ProgrammableConnectivity
 {
     /// <summary> Request to verify Location. </summary>
-    internal partial class DeviceLocationVerificationContent
+    public partial class DeviceLocationVerificationContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

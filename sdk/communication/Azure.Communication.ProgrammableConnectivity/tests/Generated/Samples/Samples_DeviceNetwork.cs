@@ -62,7 +62,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
-            Response<NetworkRetrievalResult> response = client.Retrieve("<apcGatewayId>", "<identifierType>", "<identifier>");
+            NetworkIdentifier body = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<NetworkRetrievalResult> response = client.Retrieve("<apcGatewayId>", body);
         }
 
         [Test]
@@ -73,7 +74,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
-            Response<NetworkRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", "<identifierType>", "<identifier>");
+            NetworkIdentifier body = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<NetworkRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", body);
         }
 
         [Test]
@@ -122,7 +124,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
-            Response<NetworkRetrievalResult> response = client.Retrieve("<apcGatewayId>", "<identifierType>", "<identifier>");
+            NetworkIdentifier body = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<NetworkRetrievalResult> response = client.Retrieve("<apcGatewayId>", body);
         }
 
         [Test]
@@ -133,7 +136,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
-            Response<NetworkRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", "<identifierType>", "<identifier>");
+            NetworkIdentifier body = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<NetworkRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", body);
         }
     }
 }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -52,66 +50,32 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get data using search. </summary>
-        /// <param name="keywords"> The keywords applied to all searchable fields. </param>
-        /// <param name="limit">
-        /// The limit of the number of the search result. default value is 50; maximum
-        /// value is 1000.
-        /// </param>
-        /// <param name="continuationToken">
-        /// The token used to get next batch of data. Default 'Null' to get the first
-        /// batch, and will return new token in each response unless there's no more data.
-        /// </param>
-        /// <param name="orderby"> The sort order of search results, can specify multiple fields. </param>
-        /// <param name="filter"> The filter for the search. See examples for the usage of supported filters. </param>
-        /// <param name="facets"> The facets for search. See examples for the usage of supported facets. </param>
-        /// <param name="taxonomySetting"> The taxonomy setting for search. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='QueryAsync(string,int?,string,IEnumerable{BinaryData},BinaryData,IEnumerable{SearchFacetItem},SearchTaxonomySetting,CancellationToken)']/*" />
-        public virtual async Task<Response<QueryResult>> QueryAsync(string keywords = null, int? limit = null, string continuationToken = null, IEnumerable<BinaryData> orderby = null, BinaryData filter = null, IEnumerable<SearchFacetItem> facets = null, SearchTaxonomySetting taxonomySetting = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='QueryAsync(QueryConfig,CancellationToken)']/*" />
+        public virtual async Task<Response<QueryResult>> QueryAsync(QueryConfig body, CancellationToken cancellationToken = default)
         {
-            QueryConfig queryConfig = new QueryConfig(
-                keywords,
-                limit,
-                continuationToken,
-                orderby?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(),
-                filter,
-                facets?.ToList() as IList<SearchFacetItem> ?? new ChangeTrackingList<SearchFacetItem>(),
-                taxonomySetting,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await QueryAsync(queryConfig.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await QueryAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(QueryResult.FromResponse(response), response);
         }
 
         /// <summary> Get data using search. </summary>
-        /// <param name="keywords"> The keywords applied to all searchable fields. </param>
-        /// <param name="limit">
-        /// The limit of the number of the search result. default value is 50; maximum
-        /// value is 1000.
-        /// </param>
-        /// <param name="continuationToken">
-        /// The token used to get next batch of data. Default 'Null' to get the first
-        /// batch, and will return new token in each response unless there's no more data.
-        /// </param>
-        /// <param name="orderby"> The sort order of search results, can specify multiple fields. </param>
-        /// <param name="filter"> The filter for the search. See examples for the usage of supported filters. </param>
-        /// <param name="facets"> The facets for search. See examples for the usage of supported facets. </param>
-        /// <param name="taxonomySetting"> The taxonomy setting for search. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Query(string,int?,string,IEnumerable{BinaryData},BinaryData,IEnumerable{SearchFacetItem},SearchTaxonomySetting,CancellationToken)']/*" />
-        public virtual Response<QueryResult> Query(string keywords = null, int? limit = null, string continuationToken = null, IEnumerable<BinaryData> orderby = null, BinaryData filter = null, IEnumerable<SearchFacetItem> facets = null, SearchTaxonomySetting taxonomySetting = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Query(QueryConfig,CancellationToken)']/*" />
+        public virtual Response<QueryResult> Query(QueryConfig body, CancellationToken cancellationToken = default)
         {
-            QueryConfig queryConfig = new QueryConfig(
-                keywords,
-                limit,
-                continuationToken,
-                orderby?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(),
-                filter,
-                facets?.ToList() as IList<SearchFacetItem> ?? new ChangeTrackingList<SearchFacetItem>(),
-                taxonomySetting,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Query(queryConfig.ToRequestContent(), context);
+            Response response = Query(content, context);
             return Response.FromValue(QueryResult.FromResponse(response), response);
         }
 
@@ -125,7 +89,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="QueryAsync(string,int?,string,IEnumerable{BinaryData},BinaryData,IEnumerable{SearchFacetItem},SearchTaxonomySetting,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="QueryAsync(QueryConfig,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -164,7 +128,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Query(string,int?,string,IEnumerable{BinaryData},BinaryData,IEnumerable{SearchFacetItem},SearchTaxonomySetting,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Query(QueryConfig,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -194,46 +158,32 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="keywords">
-        /// The keywords applied to all fields that support suggest operation. It must be
-        /// at least 1 character, and no more than 100 characters. In the index schema we
-        /// defined a default suggester which lists all the supported fields and specifies
-        /// a search mode.
-        /// </param>
-        /// <param name="limit">
-        /// The number of suggestions we hope to return. The default value is 5. The value
-        /// must be a number between 1 and 100.
-        /// </param>
-        /// <param name="filter"> The filter for the search. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='SuggestAsync(string,int?,BinaryData,CancellationToken)']/*" />
-        public virtual async Task<Response<SuggestResult>> SuggestAsync(string keywords = null, int? limit = null, BinaryData filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='SuggestAsync(SuggestConfig,CancellationToken)']/*" />
+        public virtual async Task<Response<SuggestResult>> SuggestAsync(SuggestConfig body, CancellationToken cancellationToken = default)
         {
-            SuggestConfig suggestConfig = new SuggestConfig(keywords, limit, filter, null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await SuggestAsync(suggestConfig.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await SuggestAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(SuggestResult.FromResponse(response), response);
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="keywords">
-        /// The keywords applied to all fields that support suggest operation. It must be
-        /// at least 1 character, and no more than 100 characters. In the index schema we
-        /// defined a default suggester which lists all the supported fields and specifies
-        /// a search mode.
-        /// </param>
-        /// <param name="limit">
-        /// The number of suggestions we hope to return. The default value is 5. The value
-        /// must be a number between 1 and 100.
-        /// </param>
-        /// <param name="filter"> The filter for the search. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Suggest(string,int?,BinaryData,CancellationToken)']/*" />
-        public virtual Response<SuggestResult> Suggest(string keywords = null, int? limit = null, BinaryData filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Suggest(SuggestConfig,CancellationToken)']/*" />
+        public virtual Response<SuggestResult> Suggest(SuggestConfig body, CancellationToken cancellationToken = default)
         {
-            SuggestConfig suggestConfig = new SuggestConfig(keywords, limit, filter, null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Suggest(suggestConfig.ToRequestContent(), context);
+            Response response = Suggest(content, context);
             return Response.FromValue(SuggestResult.FromResponse(response), response);
         }
 
@@ -247,7 +197,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SuggestAsync(string,int?,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SuggestAsync(SuggestConfig,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -286,7 +236,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Suggest(string,int?,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Suggest(SuggestConfig,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -316,42 +266,32 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="keywords">
-        /// The keywords applied to all fields that support autocomplete operation. It must
-        /// be at least 1 character, and no more than 100 characters.
-        /// </param>
-        /// <param name="limit">
-        /// The number of autocomplete results we hope to return. The default value is 50.
-        /// The value must be a number between 1 and 100.
-        /// </param>
-        /// <param name="filter"> The filter for the autocomplete request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoCompleteAsync(string,int?,BinaryData,CancellationToken)']/*" />
-        public virtual async Task<Response<AutoCompleteResult>> AutoCompleteAsync(string keywords = null, int? limit = null, BinaryData filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoCompleteAsync(AutoCompleteConfig,CancellationToken)']/*" />
+        public virtual async Task<Response<AutoCompleteResult>> AutoCompleteAsync(AutoCompleteConfig body, CancellationToken cancellationToken = default)
         {
-            AutoCompleteConfig autoCompleteConfig = new AutoCompleteConfig(keywords, limit, filter, null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AutoCompleteAsync(autoCompleteConfig.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await AutoCompleteAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AutoCompleteResult.FromResponse(response), response);
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="keywords">
-        /// The keywords applied to all fields that support autocomplete operation. It must
-        /// be at least 1 character, and no more than 100 characters.
-        /// </param>
-        /// <param name="limit">
-        /// The number of autocomplete results we hope to return. The default value is 50.
-        /// The value must be a number between 1 and 100.
-        /// </param>
-        /// <param name="filter"> The filter for the autocomplete request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoComplete(string,int?,BinaryData,CancellationToken)']/*" />
-        public virtual Response<AutoCompleteResult> AutoComplete(string keywords = null, int? limit = null, BinaryData filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoComplete(AutoCompleteConfig,CancellationToken)']/*" />
+        public virtual Response<AutoCompleteResult> AutoComplete(AutoCompleteConfig body, CancellationToken cancellationToken = default)
         {
-            AutoCompleteConfig autoCompleteConfig = new AutoCompleteConfig(keywords, limit, filter, null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AutoComplete(autoCompleteConfig.ToRequestContent(), context);
+            Response response = AutoComplete(content, context);
             return Response.FromValue(AutoCompleteResult.FromResponse(response), response);
         }
 
@@ -365,7 +305,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AutoCompleteAsync(string,int?,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AutoCompleteAsync(AutoCompleteConfig,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -404,7 +344,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AutoComplete(string,int?,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AutoComplete(AutoCompleteConfig,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

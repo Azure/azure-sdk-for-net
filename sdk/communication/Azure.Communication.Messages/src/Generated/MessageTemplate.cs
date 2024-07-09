@@ -12,7 +12,7 @@ using Azure.Communication.Messages.Models.Channels;
 namespace Azure.Communication.Messages
 {
     /// <summary> The template object used to create templates. </summary>
-    internal partial class MessageTemplate
+    public partial class MessageTemplate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

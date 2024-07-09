@@ -13,6 +13,36 @@ namespace Azure.AI.OpenAI.Assistants
     /// <summary> Model factory for models. </summary>
     public static partial class AssistantsModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Assistants.AssistantCreationOptions"/>. </summary>
+        /// <param name="model"> The ID of the model to use. </param>
+        /// <param name="name"> The name of the new assistant. </param>
+        /// <param name="description"> The description of the new assistant. </param>
+        /// <param name="instructions"> The system instructions for the new assistant to use. </param>
+        /// <param name="tools">
+        /// The collection of tools to enable for the new assistant.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
+        /// <param name="fileIds"> A list of previously uploaded file IDs to attach to the assistant. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Assistants.AssistantCreationOptions"/> instance for mocking. </returns>
+        public static AssistantCreationOptions AssistantCreationOptions(string model = null, string name = null, string description = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, IEnumerable<string> fileIds = null, IDictionary<string, string> metadata = null)
+        {
+            tools ??= new List<ToolDefinition>();
+            fileIds ??= new List<string>();
+            metadata ??= new Dictionary<string, string>();
+
+            return new AssistantCreationOptions(
+                model,
+                name,
+                description,
+                instructions,
+                tools?.ToList(),
+                fileIds?.ToList(),
+                metadata,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Assistants.ThreadInitializationMessage"/>. </summary>
         /// <param name="role"> The role associated with the assistant thread message. Currently, only 'user' is supported when providing initial messages to a new thread. </param>
         /// <param name="content"> The textual content of the initial message. Currently, robust input including images and annotated text may only be provided via a separate call to the create message API. </param>
@@ -87,6 +117,33 @@ namespace Azure.AI.OpenAI.Assistants
         public static RunError RunError(string code = null, string message = null)
         {
             return new RunError(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.CreateAndRunThreadOptions"/>. </summary>
+        /// <param name="assistantId"> The ID of the assistant for which the thread should be created. </param>
+        /// <param name="thread"> The details used to create the new thread. </param>
+        /// <param name="overrideModelName"> The overridden model that the assistant should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions the assistant should use to run the thread. </param>
+        /// <param name="overrideTools">
+        /// The overridden list of enabled tools the assistant should use to run the thread.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Assistants.CreateAndRunThreadOptions"/> instance for mocking. </returns>
+        public static CreateAndRunThreadOptions CreateAndRunThreadOptions(string assistantId = null, AssistantThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, IDictionary<string, string> metadata = null)
+        {
+            overrideTools ??= new List<ToolDefinition>();
+            metadata ??= new Dictionary<string, string>();
+
+            return new CreateAndRunThreadOptions(
+                assistantId,
+                thread,
+                overrideModelName,
+                overrideInstructions,
+                overrideTools?.ToList(),
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepMessageCreationDetails"/>. </summary>

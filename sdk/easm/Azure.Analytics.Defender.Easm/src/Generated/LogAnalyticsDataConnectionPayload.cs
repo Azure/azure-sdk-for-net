@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The LogAnalyticsDataConnectionPayload. </summary>
-    internal partial class LogAnalyticsDataConnectionPayload : DataConnectionPayload
+    public partial class LogAnalyticsDataConnectionPayload : DataConnectionPayload
     {
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnectionPayload"/>. </summary>
         /// <param name="properties"> properties. </param>

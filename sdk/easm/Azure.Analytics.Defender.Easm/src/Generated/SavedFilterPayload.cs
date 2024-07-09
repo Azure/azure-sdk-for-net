@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to create a saved filter. </summary>
-    internal partial class SavedFilterPayload
+    public partial class SavedFilterPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

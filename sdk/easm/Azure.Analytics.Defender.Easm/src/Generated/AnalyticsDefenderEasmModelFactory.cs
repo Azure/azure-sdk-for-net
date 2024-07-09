@@ -2044,15 +2044,6 @@ namespace Azure.Analytics.Defender.Easm
                 properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.LogAnalyticsDataConnectionProperties"/>. </summary>
-        /// <param name="apiKey"> log analytics api key. </param>
-        /// <param name="workspaceId"> log analytics workspace id. </param>
-        /// <returns> A new <see cref="Easm.LogAnalyticsDataConnectionProperties"/> instance for mocking. </returns>
-        public static LogAnalyticsDataConnectionProperties LogAnalyticsDataConnectionProperties(string apiKey = null, string workspaceId = null)
-        {
-            return new LogAnalyticsDataConnectionProperties(serializedAdditionalRawData: null, apiKey, workspaceId);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Easm.AzureDataExplorerDataConnection"/>. </summary>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
@@ -2086,14 +2077,42 @@ namespace Azure.Analytics.Defender.Easm
                 properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.AzureDataExplorerDataConnectionProperties"/>. </summary>
-        /// <param name="clusterName"> The azure data explorer cluster name. </param>
-        /// <param name="region"> The azure data explorer region. </param>
-        /// <param name="databaseName"> The azure data explorer database name. </param>
-        /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnectionProperties"/> instance for mocking. </returns>
-        public static AzureDataExplorerDataConnectionProperties AzureDataExplorerDataConnectionProperties(string clusterName = null, string region = null, string databaseName = null)
+        /// <summary> Initializes a new instance of <see cref="Easm.LogAnalyticsDataConnectionPayload"/>. </summary>
+        /// <param name="name"> The name of data connection. </param>
+        /// <param name="content"> The type of data the data connection will transfer. </param>
+        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
+        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <param name="properties"> properties. </param>
+        /// <returns> A new <see cref="Easm.LogAnalyticsDataConnectionPayload"/> instance for mocking. </returns>
+        public static LogAnalyticsDataConnectionPayload LogAnalyticsDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, LogAnalyticsDataConnectionProperties properties = null)
         {
-            return new AzureDataExplorerDataConnectionProperties(serializedAdditionalRawData: null, clusterName, region, databaseName);
+            return new LogAnalyticsDataConnectionPayload(
+                "logAnalytics",
+                name,
+                content,
+                frequency,
+                frequencyOffset,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Easm.AzureDataExplorerDataConnectionPayload"/>. </summary>
+        /// <param name="name"> The name of data connection. </param>
+        /// <param name="content"> The type of data the data connection will transfer. </param>
+        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
+        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <param name="properties"> properties. </param>
+        /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnectionPayload"/> instance for mocking. </returns>
+        public static AzureDataExplorerDataConnectionPayload AzureDataExplorerDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, AzureDataExplorerDataConnectionProperties properties = null)
+        {
+            return new AzureDataExplorerDataConnectionPayload(
+                "azureDataExplorer",
+                name,
+                content,
+                frequency,
+                frequencyOffset,
+                serializedAdditionalRawData: null,
+                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ValidateResult"/>. </summary>

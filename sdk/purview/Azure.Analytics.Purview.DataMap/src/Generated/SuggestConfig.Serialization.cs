@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    internal partial class SuggestConfig : IUtf8JsonSerializable, IJsonModel<SuggestConfig>
+    public partial class SuggestConfig : IUtf8JsonSerializable, IJsonModel<SuggestConfig>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuggestConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

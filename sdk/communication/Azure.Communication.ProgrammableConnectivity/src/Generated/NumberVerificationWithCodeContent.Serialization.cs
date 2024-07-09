@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Communication.ProgrammableConnectivity
 {
-    internal partial class NumberVerificationWithCodeContent : IUtf8JsonSerializable, IJsonModel<NumberVerificationWithCodeContent>
+    public partial class NumberVerificationWithCodeContent : IUtf8JsonSerializable, IJsonModel<NumberVerificationWithCodeContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumberVerificationWithCodeContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

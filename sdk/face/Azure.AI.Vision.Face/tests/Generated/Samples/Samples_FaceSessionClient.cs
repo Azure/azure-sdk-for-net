@@ -63,7 +63,8 @@ namespace Azure.AI.Vision.Face.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(LivenessOperationMode.Passive);
+            CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive);
+            Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(body);
         }
 
         [Test]
@@ -74,7 +75,8 @@ namespace Azure.AI.Vision.Face.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(LivenessOperationMode.Passive);
+            CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive);
+            Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(body);
         }
 
         [Test]
@@ -131,7 +133,14 @@ namespace Azure.AI.Vision.Face.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(LivenessOperationMode.Passive, sendResultsToClient: true, deviceCorrelationIdSetInClient: true, deviceCorrelationId: "<deviceCorrelationId>", authTokenTimeToLiveInSeconds: 1234);
+            CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
+            {
+                SendResultsToClient = true,
+                DeviceCorrelationIdSetInClient = true,
+                DeviceCorrelationId = "<deviceCorrelationId>",
+                AuthTokenTimeToLiveInSeconds = 1234,
+            };
+            Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(body);
         }
 
         [Test]
@@ -142,7 +151,14 @@ namespace Azure.AI.Vision.Face.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-            Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(LivenessOperationMode.Passive, sendResultsToClient: true, deviceCorrelationIdSetInClient: true, deviceCorrelationId: "<deviceCorrelationId>", authTokenTimeToLiveInSeconds: 1234);
+            CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
+            {
+                SendResultsToClient = true,
+                DeviceCorrelationIdSetInClient = true,
+                DeviceCorrelationId = "<deviceCorrelationId>",
+                AuthTokenTimeToLiveInSeconds = 1234,
+            };
+            Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(body);
         }
 
         [Test]

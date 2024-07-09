@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -52,57 +51,35 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies whether a device is within a specified location area, defined as an accuracy (radius) around a point, specified by longitude and latitude. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Network to query for this device, or device information to enable network routing. </param>
-        /// <param name="latitude"> Latitude of location to be verified. </param>
-        /// <param name="longitude"> Longitude of location to be verified. </param>
-        /// <param name="accuracy"> Accuracy expected for location verification in kilometers. </param>
-        /// <param name="device"> The device to find the location for. Exactly one of Network Access Code, Phone Number, IPv4 address, or IPv6 address. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/>, <paramref name="networkIdentifier"/> or <paramref name="device"/> is null. </exception>
-        /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='VerifyAsync(string,NetworkIdentifier,double,double,int,LocationDevice,CancellationToken)']/*" />
-        public virtual async Task<Response<DeviceLocationVerificationResult>> VerifyAsync(string apcGatewayId, NetworkIdentifier networkIdentifier, double latitude, double longitude, int accuracy, LocationDevice device, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='VerifyAsync(string,DeviceLocationVerificationContent,CancellationToken)']/*" />
+        public virtual async Task<Response<DeviceLocationVerificationResult>> VerifyAsync(string apcGatewayId, DeviceLocationVerificationContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
-            Argument.AssertNotNull(device, nameof(device));
+            Argument.AssertNotNull(body, nameof(body));
 
-            DeviceLocationVerificationContent deviceLocationVerificationContent = new DeviceLocationVerificationContent(
-                networkIdentifier,
-                latitude,
-                longitude,
-                accuracy,
-                device,
-                null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await VerifyAsync(apcGatewayId, deviceLocationVerificationContent.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await VerifyAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(DeviceLocationVerificationResult.FromResponse(response), response);
         }
 
         /// <summary> Verifies whether a device is within a specified location area, defined as an accuracy (radius) around a point, specified by longitude and latitude. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Network to query for this device, or device information to enable network routing. </param>
-        /// <param name="latitude"> Latitude of location to be verified. </param>
-        /// <param name="longitude"> Longitude of location to be verified. </param>
-        /// <param name="accuracy"> Accuracy expected for location verification in kilometers. </param>
-        /// <param name="device"> The device to find the location for. Exactly one of Network Access Code, Phone Number, IPv4 address, or IPv6 address. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/>, <paramref name="networkIdentifier"/> or <paramref name="device"/> is null. </exception>
-        /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='Verify(string,NetworkIdentifier,double,double,int,LocationDevice,CancellationToken)']/*" />
-        public virtual Response<DeviceLocationVerificationResult> Verify(string apcGatewayId, NetworkIdentifier networkIdentifier, double latitude, double longitude, int accuracy, LocationDevice device, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='Verify(string,DeviceLocationVerificationContent,CancellationToken)']/*" />
+        public virtual Response<DeviceLocationVerificationResult> Verify(string apcGatewayId, DeviceLocationVerificationContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
-            Argument.AssertNotNull(device, nameof(device));
+            Argument.AssertNotNull(body, nameof(body));
 
-            DeviceLocationVerificationContent deviceLocationVerificationContent = new DeviceLocationVerificationContent(
-                networkIdentifier,
-                latitude,
-                longitude,
-                accuracy,
-                device,
-                null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Verify(apcGatewayId, deviceLocationVerificationContent.ToRequestContent(), context);
+            Response response = Verify(apcGatewayId, content, context);
             return Response.FromValue(DeviceLocationVerificationResult.FromResponse(response), response);
         }
 
@@ -116,7 +93,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="VerifyAsync(string,NetworkIdentifier,double,double,int,LocationDevice,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="VerifyAsync(string,DeviceLocationVerificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -157,7 +134,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Verify(string,NetworkIdentifier,double,double,int,LocationDevice,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Verify(string,DeviceLocationVerificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -52,45 +51,35 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Retrieves the network a given device is on. Returns network in a networkCode format that can be used for other APIs. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="identifierType"> The type of identifier for the network. one of: 'IPv4', 'IPv6', 'NetworkCode'. </param>
-        /// <param name="identifier">
-        /// The network identifier, based on the identifierType: an IPv4 address, and IPv6 address, or a Network Code.
-        /// A Network Code may be obtained from APC documentation or from the APC /Network:retrieve endpoint.
-        /// </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/>, <paramref name="identifierType"/> or <paramref name="identifier"/> is null. </exception>
-        /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='RetrieveAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<NetworkRetrievalResult>> RetrieveAsync(string apcGatewayId, string identifierType, string identifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='RetrieveAsync(string,NetworkIdentifier,CancellationToken)']/*" />
+        public virtual async Task<Response<NetworkRetrievalResult>> RetrieveAsync(string apcGatewayId, NetworkIdentifier body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(identifierType, nameof(identifierType));
-            Argument.AssertNotNull(identifier, nameof(identifier));
+            Argument.AssertNotNull(body, nameof(body));
 
-            NetworkIdentifier networkIdentifier = new NetworkIdentifier(identifierType, identifier, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RetrieveAsync(apcGatewayId, networkIdentifier.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await RetrieveAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(NetworkRetrievalResult.FromResponse(response), response);
         }
 
         /// <summary> Retrieves the network a given device is on. Returns network in a networkCode format that can be used for other APIs. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="identifierType"> The type of identifier for the network. one of: 'IPv4', 'IPv6', 'NetworkCode'. </param>
-        /// <param name="identifier">
-        /// The network identifier, based on the identifierType: an IPv4 address, and IPv6 address, or a Network Code.
-        /// A Network Code may be obtained from APC documentation or from the APC /Network:retrieve endpoint.
-        /// </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/>, <paramref name="identifierType"/> or <paramref name="identifier"/> is null. </exception>
-        /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='Retrieve(string,string,string,CancellationToken)']/*" />
-        public virtual Response<NetworkRetrievalResult> Retrieve(string apcGatewayId, string identifierType, string identifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='Retrieve(string,NetworkIdentifier,CancellationToken)']/*" />
+        public virtual Response<NetworkRetrievalResult> Retrieve(string apcGatewayId, NetworkIdentifier body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(identifierType, nameof(identifierType));
-            Argument.AssertNotNull(identifier, nameof(identifier));
+            Argument.AssertNotNull(body, nameof(body));
 
-            NetworkIdentifier networkIdentifier = new NetworkIdentifier(identifierType, identifier, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Retrieve(apcGatewayId, networkIdentifier.ToRequestContent(), context);
+            Response response = Retrieve(apcGatewayId, content, context);
             return Response.FromValue(NetworkRetrievalResult.FromResponse(response), response);
         }
 
@@ -104,7 +93,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RetrieveAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RetrieveAsync(string,NetworkIdentifier,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -145,7 +134,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Retrieve(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Retrieve(string,NetworkIdentifier,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
