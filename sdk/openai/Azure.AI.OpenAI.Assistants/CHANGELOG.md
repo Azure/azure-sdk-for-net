@@ -12,8 +12,7 @@
 
 ## 1.0.0-beta.4 (2024-04-30)
 
-This small, out-of-band version addresses a couple of critical blocking bugs. It does not yet include any of the latest
-features. Streaming support and Assistants v2 will come soon, in a future update.
+This small, out-of-band version addresses a couple of critical blocking bugs. To use the latest service features, including streaming support and the Assistants v2 API, migrate to the [Azure.AI.OpenAI package](https://www.nuget.org/packages/Azure.AI.OpenAI).
 
 ### Bugs Fixed
 
