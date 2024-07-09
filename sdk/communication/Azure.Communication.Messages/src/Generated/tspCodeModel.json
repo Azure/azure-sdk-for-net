@@ -1484,8 +1484,8 @@
       },
       {
        "$id": "198",
-       "Name": "NotificationContent",
-       "NameInRequest": "NotificationContent",
+       "Name": "notificationContent",
+       "NameInRequest": "body",
        "Description": "Details of the message to send.",
        "Type": {
         "$ref": "38"
@@ -1498,7 +1498,7 @@
        "IsEndpoint": false,
        "SkipUrlEncoding": false,
        "Explode": false,
-       "Kind": "Spread"
+       "Kind": "Method"
       },
       {
        "$id": "199",

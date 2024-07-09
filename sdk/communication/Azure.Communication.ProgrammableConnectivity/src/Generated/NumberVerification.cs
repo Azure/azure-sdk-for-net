@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -61,79 +60,37 @@ namespace Azure.Communication.ProgrammableConnectivity
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Verifies the phone number (MSISDN) associated with a device. As part of the frontend authorization flow, the device is redirected to the operator network to authenticate directly. </summary>
-        /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Identifier for the network to query for this device. </param>
-        /// <param name="redirectUri"> Redirect URI to backend application. </param>
-        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
-        /// <param name="hashedPhoneNumber"> Hashed phone number. SHA-256 (in hexadecimal representation) of the mobile phone number in **E.164 format (starting with country code)**. Optionally prefixed with '+'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/>, <paramref name="networkIdentifier"/> or <paramref name="redirectUri"/> is null. </exception>
-        /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithoutCodeAsync(string,NetworkIdentifier,Uri,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response> VerifyWithoutCodeAsync(string apcGatewayId, NetworkIdentifier networkIdentifier, Uri redirectUri, string phoneNumber = null, string hashedPhoneNumber = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
-            Argument.AssertNotNull(redirectUri, nameof(redirectUri));
-
-            NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent = new NumberVerificationWithoutCodeContent(networkIdentifier, phoneNumber, hashedPhoneNumber, redirectUri, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await VerifyWithoutCodeAsync(apcGatewayId, numberVerificationWithoutCodeContent.ToRequestContent(), context).ConfigureAwait(false);
-            return response;
-        }
-
-        /// <summary> Verifies the phone number (MSISDN) associated with a device. As part of the frontend authorization flow, the device is redirected to the operator network to authenticate directly. </summary>
-        /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Identifier for the network to query for this device. </param>
-        /// <param name="redirectUri"> Redirect URI to backend application. </param>
-        /// <param name="phoneNumber"> Phone number in E.164 format (starting with country code), and optionally prefixed with '+'. </param>
-        /// <param name="hashedPhoneNumber"> Hashed phone number. SHA-256 (in hexadecimal representation) of the mobile phone number in **E.164 format (starting with country code)**. Optionally prefixed with '+'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/>, <paramref name="networkIdentifier"/> or <paramref name="redirectUri"/> is null. </exception>
-        /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithoutCode(string,NetworkIdentifier,Uri,string,string,CancellationToken)']/*" />
-        public virtual Response VerifyWithoutCode(string apcGatewayId, NetworkIdentifier networkIdentifier, Uri redirectUri, string phoneNumber = null, string hashedPhoneNumber = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
-            Argument.AssertNotNull(redirectUri, nameof(redirectUri));
-
-            NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent = new NumberVerificationWithoutCodeContent(networkIdentifier, phoneNumber, hashedPhoneNumber, redirectUri, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = VerifyWithoutCode(apcGatewayId, numberVerificationWithoutCodeContent.ToRequestContent(), context);
-            return response;
-        }
-
         /// <summary> Verifies the phone number (MSISDN) associated with a device. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="apcCode"> The code provided by APC in exchange for the operator code. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="apcCode"/> is null. </exception>
-        /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCodeAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<NumberVerificationResult>> VerifyWithCodeAsync(string apcGatewayId, string apcCode, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCodeAsync(string,NumberVerificationWithCodeContent,CancellationToken)']/*" />
+        public virtual async Task<Response<NumberVerificationResult>> VerifyWithCodeAsync(string apcGatewayId, NumberVerificationWithCodeContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(apcCode, nameof(apcCode));
+            Argument.AssertNotNull(body, nameof(body));
 
-            NumberVerificationWithCodeContent numberVerificationWithCodeContent = new NumberVerificationWithCodeContent(apcCode, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await VerifyWithCodeAsync(apcGatewayId, numberVerificationWithCodeContent.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await VerifyWithCodeAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(NumberVerificationResult.FromResponse(response), response);
         }
 
         /// <summary> Verifies the phone number (MSISDN) associated with a device. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="apcCode"> The code provided by APC in exchange for the operator code. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="apcCode"/> is null. </exception>
-        /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCode(string,string,CancellationToken)']/*" />
-        public virtual Response<NumberVerificationResult> VerifyWithCode(string apcGatewayId, string apcCode, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCode(string,NumberVerificationWithCodeContent,CancellationToken)']/*" />
+        public virtual Response<NumberVerificationResult> VerifyWithCode(string apcGatewayId, NumberVerificationWithCodeContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(apcCode, nameof(apcCode));
+            Argument.AssertNotNull(body, nameof(body));
 
-            NumberVerificationWithCodeContent numberVerificationWithCodeContent = new NumberVerificationWithCodeContent(apcCode, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = VerifyWithCode(apcGatewayId, numberVerificationWithCodeContent.ToRequestContent(), context);
+            Response response = VerifyWithCode(apcGatewayId, content, context);
             return Response.FromValue(NumberVerificationResult.FromResponse(response), response);
         }
 
@@ -147,7 +104,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="VerifyWithCodeAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="VerifyWithCodeAsync(string,NumberVerificationWithCodeContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -188,7 +145,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="VerifyWithCode(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="VerifyWithCode(string,NumberVerificationWithCodeContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

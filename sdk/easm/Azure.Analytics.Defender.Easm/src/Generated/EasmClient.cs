@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -65,39 +63,35 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Update labels on assets matching the provided filter. </summary>
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
-        /// <param name="state"> The state to update the asset to. </param>
-        /// <param name="externalId"> A string which can be used to identify the asset in external systems. </param>
-        /// <param name="labels"> Any Labels to update the asset with. </param>
-        /// <param name="transfers"> A list of asset types to cascade the updates to. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssetsAsync(string,AssetUpdateState?,string,IDictionary{string,bool},AssetUpdateTransfers?,CancellationToken)']/*" />
-        public virtual async Task<Response<TaskResource>> UpdateAssetsAsync(string filter, AssetUpdateState? state = null, string externalId = null, IDictionary<string, bool> labels = null, AssetUpdateTransfers? transfers = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssetsAsync(string,AssetUpdatePayload,CancellationToken)']/*" />
+        public virtual async Task<Response<TaskResource>> UpdateAssetsAsync(string filter, AssetUpdatePayload body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(body, nameof(body));
 
-            AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload(state, externalId, labels ?? new ChangeTrackingDictionary<string, bool>(), transfers, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateAssetsAsync(filter, assetUpdatePayload.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await UpdateAssetsAsync(filter, content, context).ConfigureAwait(false);
             return Response.FromValue(TaskResource.FromResponse(response), response);
         }
 
         /// <summary> Update labels on assets matching the provided filter. </summary>
         /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
-        /// <param name="state"> The state to update the asset to. </param>
-        /// <param name="externalId"> A string which can be used to identify the asset in external systems. </param>
-        /// <param name="labels"> Any Labels to update the asset with. </param>
-        /// <param name="transfers"> A list of asset types to cascade the updates to. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssets(string,AssetUpdateState?,string,IDictionary{string,bool},AssetUpdateTransfers?,CancellationToken)']/*" />
-        public virtual Response<TaskResource> UpdateAssets(string filter, AssetUpdateState? state = null, string externalId = null, IDictionary<string, bool> labels = null, AssetUpdateTransfers? transfers = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssets(string,AssetUpdatePayload,CancellationToken)']/*" />
+        public virtual Response<TaskResource> UpdateAssets(string filter, AssetUpdatePayload body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(body, nameof(body));
 
-            AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload(state, externalId, labels ?? new ChangeTrackingDictionary<string, bool>(), transfers, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateAssets(filter, assetUpdatePayload.ToRequestContent(), context);
+            Response response = UpdateAssets(filter, content, context);
             return Response.FromValue(TaskResource.FromResponse(response), response);
         }
 
@@ -111,7 +105,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateAssetsAsync(string,AssetUpdateState?,string,IDictionary{string,bool},AssetUpdateTransfers?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateAssetsAsync(string,AssetUpdatePayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -152,7 +146,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateAssets(string,AssetUpdateState?,string,IDictionary{string,bool},AssetUpdateTransfers?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateAssets(string,AssetUpdatePayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -294,46 +288,32 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Validate a data connection with a given dataConnectionName. </summary>
-        /// <param name="kind"> Discriminator property for DataConnectionPayload. </param>
-        /// <param name="name"> The name of data connection. </param>
-        /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
-        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnectionAsync(string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<ValidateResult>> ValidateDataConnectionAsync(string kind, string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnectionAsync(DataConnectionPayload,CancellationToken)']/*" />
+        public virtual async Task<Response<ValidateResult>> ValidateDataConnectionAsync(DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
-            DataConnectionPayload dataConnectionPayload = new Easm.DataConnectionPayload(
-                kind,
-                name,
-                content,
-                frequency,
-                frequencyOffset,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ValidateDataConnectionAsync(dataConnectionPayload.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await ValidateDataConnectionAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ValidateResult.FromResponse(response), response);
         }
 
         /// <summary> Validate a data connection with a given dataConnectionName. </summary>
-        /// <param name="kind"> Discriminator property for DataConnectionPayload. </param>
-        /// <param name="name"> The name of data connection. </param>
-        /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
-        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnection(string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)']/*" />
-        public virtual Response<ValidateResult> ValidateDataConnection(string kind, string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnection(DataConnectionPayload,CancellationToken)']/*" />
+        public virtual Response<ValidateResult> ValidateDataConnection(DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
-            DataConnectionPayload dataConnectionPayload = new Easm.DataConnectionPayload(
-                kind,
-                name,
-                content,
-                frequency,
-                frequencyOffset,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ValidateDataConnection(dataConnectionPayload.ToRequestContent(), context);
+            Response response = ValidateDataConnection(content, context);
             return Response.FromValue(ValidateResult.FromResponse(response), response);
         }
 
@@ -347,7 +327,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ValidateDataConnectionAsync(string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ValidateDataConnectionAsync(DataConnectionPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -386,7 +366,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ValidateDataConnection(string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ValidateDataConnection(DataConnectionPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -527,55 +507,37 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Create or replace a data connection with a given dataConnectionName. </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
-        /// <param name="kind"> Discriminator property for DataConnectionPayload. </param>
-        /// <param name="name"> The name of data connection. </param>
-        /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
-        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnectionAsync(string,string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, string kind, string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnectionAsync(string,DataConnectionPayload,CancellationToken)']/*" />
+        public virtual async Task<Response<DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(body, nameof(body));
 
-            DataConnectionPayload dataConnectionPayload = new Easm.DataConnectionPayload(
-                kind,
-                name,
-                content,
-                frequency,
-                frequencyOffset,
-                null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrReplaceDataConnectionAsync(dataConnectionName, dataConnectionPayload.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateOrReplaceDataConnectionAsync(dataConnectionName, content, context).ConfigureAwait(false);
             return Response.FromValue(DataConnection.FromResponse(response), response);
         }
 
         /// <summary> Create or replace a data connection with a given dataConnectionName. </summary>
         /// <param name="dataConnectionName"> The caller provided unique name for the resource. </param>
-        /// <param name="kind"> Discriminator property for DataConnectionPayload. </param>
-        /// <param name="name"> The name of data connection. </param>
-        /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
-        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnection(string,string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)']/*" />
-        public virtual Response<DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, string kind, string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnection(string,DataConnectionPayload,CancellationToken)']/*" />
+        public virtual Response<DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(body, nameof(body));
 
-            DataConnectionPayload dataConnectionPayload = new Easm.DataConnectionPayload(
-                kind,
-                name,
-                content,
-                frequency,
-                frequencyOffset,
-                null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrReplaceDataConnection(dataConnectionName, dataConnectionPayload.ToRequestContent(), context);
+            Response response = CreateOrReplaceDataConnection(dataConnectionName, content, context);
             return Response.FromValue(DataConnection.FromResponse(response), response);
         }
 
@@ -589,7 +551,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceDataConnectionAsync(string,string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrReplaceDataConnectionAsync(string,DataConnectionPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -631,7 +593,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceDataConnection(string,string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrReplaceDataConnection(string,DataConnectionPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -736,58 +698,32 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Validate a discovery group with a given groupName. </summary>
-        /// <param name="name"> The name for a disco group. </param>
-        /// <param name="description"> The description for a disco group. </param>
-        /// <param name="tier"> The tier for the disco group which will affect the algorithm used for the disco runs in this group. </param>
-        /// <param name="frequencyMilliseconds"> The frequency at which the disco group is supposed to be rerun in milliseconds. </param>
-        /// <param name="seeds"> The list of seeds used for the disco group runs. </param>
-        /// <param name="names"> The list of names used for the disco group runs. </param>
-        /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
-        /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroupAsync(string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)']/*" />
-        public virtual async Task<Response<ValidateResult>> ValidateDiscoveryGroupAsync(string name = null, string description = null, string tier = null, long? frequencyMilliseconds = null, IEnumerable<DiscoverySource> seeds = null, IEnumerable<string> names = null, IEnumerable<DiscoverySource> excludes = null, string templateId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroupAsync(DiscoveryGroupPayload,CancellationToken)']/*" />
+        public virtual async Task<Response<ValidateResult>> ValidateDiscoveryGroupAsync(DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload(
-                name,
-                description,
-                tier,
-                frequencyMilliseconds,
-                seeds?.ToList() as IList<DiscoverySource> ?? new ChangeTrackingList<DiscoverySource>(),
-                names?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                excludes?.ToList() as IList<DiscoverySource> ?? new ChangeTrackingList<DiscoverySource>(),
-                templateId,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ValidateDiscoveryGroupAsync(discoveryGroupPayload.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await ValidateDiscoveryGroupAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ValidateResult.FromResponse(response), response);
         }
 
         /// <summary> Validate a discovery group with a given groupName. </summary>
-        /// <param name="name"> The name for a disco group. </param>
-        /// <param name="description"> The description for a disco group. </param>
-        /// <param name="tier"> The tier for the disco group which will affect the algorithm used for the disco runs in this group. </param>
-        /// <param name="frequencyMilliseconds"> The frequency at which the disco group is supposed to be rerun in milliseconds. </param>
-        /// <param name="seeds"> The list of seeds used for the disco group runs. </param>
-        /// <param name="names"> The list of names used for the disco group runs. </param>
-        /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
-        /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroup(string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)']/*" />
-        public virtual Response<ValidateResult> ValidateDiscoveryGroup(string name = null, string description = null, string tier = null, long? frequencyMilliseconds = null, IEnumerable<DiscoverySource> seeds = null, IEnumerable<string> names = null, IEnumerable<DiscoverySource> excludes = null, string templateId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroup(DiscoveryGroupPayload,CancellationToken)']/*" />
+        public virtual Response<ValidateResult> ValidateDiscoveryGroup(DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload(
-                name,
-                description,
-                tier,
-                frequencyMilliseconds,
-                seeds?.ToList() as IList<DiscoverySource> ?? new ChangeTrackingList<DiscoverySource>(),
-                names?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                excludes?.ToList() as IList<DiscoverySource> ?? new ChangeTrackingList<DiscoverySource>(),
-                templateId,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ValidateDiscoveryGroup(discoveryGroupPayload.ToRequestContent(), context);
+            Response response = ValidateDiscoveryGroup(content, context);
             return Response.FromValue(ValidateResult.FromResponse(response), response);
         }
 
@@ -801,7 +737,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ValidateDiscoveryGroupAsync(string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ValidateDiscoveryGroupAsync(DiscoveryGroupPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -840,7 +776,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ValidateDiscoveryGroup(string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ValidateDiscoveryGroup(DiscoveryGroupPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -981,67 +917,37 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Create a discovery group with a given groupName. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
-        /// <param name="name"> The name for a disco group. </param>
-        /// <param name="description"> The description for a disco group. </param>
-        /// <param name="tier"> The tier for the disco group which will affect the algorithm used for the disco runs in this group. </param>
-        /// <param name="frequencyMilliseconds"> The frequency at which the disco group is supposed to be rerun in milliseconds. </param>
-        /// <param name="seeds"> The list of seeds used for the disco group runs. </param>
-        /// <param name="names"> The list of names used for the disco group runs. </param>
-        /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
-        /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroupAsync(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)']/*" />
-        public virtual async Task<Response<DiscoveryGroup>> CreateOrReplaceDiscoveryGroupAsync(string groupName, string name = null, string description = null, string tier = null, long? frequencyMilliseconds = null, IEnumerable<DiscoverySource> seeds = null, IEnumerable<string> names = null, IEnumerable<DiscoverySource> excludes = null, string templateId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroupAsync(string,DiscoveryGroupPayload,CancellationToken)']/*" />
+        public virtual async Task<Response<DiscoveryGroup>> CreateOrReplaceDiscoveryGroupAsync(string groupName, DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(body, nameof(body));
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload(
-                name,
-                description,
-                tier,
-                frequencyMilliseconds,
-                seeds?.ToList() as IList<DiscoverySource> ?? new ChangeTrackingList<DiscoverySource>(),
-                names?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                excludes?.ToList() as IList<DiscoverySource> ?? new ChangeTrackingList<DiscoverySource>(),
-                templateId,
-                null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrReplaceDiscoveryGroupAsync(groupName, discoveryGroupPayload.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateOrReplaceDiscoveryGroupAsync(groupName, content, context).ConfigureAwait(false);
             return Response.FromValue(DiscoveryGroup.FromResponse(response), response);
         }
 
         /// <summary> Create a discovery group with a given groupName. </summary>
         /// <param name="groupName"> The caller provided unique name for the resource. </param>
-        /// <param name="name"> The name for a disco group. </param>
-        /// <param name="description"> The description for a disco group. </param>
-        /// <param name="tier"> The tier for the disco group which will affect the algorithm used for the disco runs in this group. </param>
-        /// <param name="frequencyMilliseconds"> The frequency at which the disco group is supposed to be rerun in milliseconds. </param>
-        /// <param name="seeds"> The list of seeds used for the disco group runs. </param>
-        /// <param name="names"> The list of names used for the disco group runs. </param>
-        /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
-        /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroup(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)']/*" />
-        public virtual Response<DiscoveryGroup> CreateOrReplaceDiscoveryGroup(string groupName, string name = null, string description = null, string tier = null, long? frequencyMilliseconds = null, IEnumerable<DiscoverySource> seeds = null, IEnumerable<string> names = null, IEnumerable<DiscoverySource> excludes = null, string templateId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroup(string,DiscoveryGroupPayload,CancellationToken)']/*" />
+        public virtual Response<DiscoveryGroup> CreateOrReplaceDiscoveryGroup(string groupName, DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNull(body, nameof(body));
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload(
-                name,
-                description,
-                tier,
-                frequencyMilliseconds,
-                seeds?.ToList() as IList<DiscoverySource> ?? new ChangeTrackingList<DiscoverySource>(),
-                names?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                excludes?.ToList() as IList<DiscoverySource> ?? new ChangeTrackingList<DiscoverySource>(),
-                templateId,
-                null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrReplaceDiscoveryGroup(groupName, discoveryGroupPayload.ToRequestContent(), context);
+            Response response = CreateOrReplaceDiscoveryGroup(groupName, content, context);
             return Response.FromValue(DiscoveryGroup.FromResponse(response), response);
         }
 
@@ -1055,7 +961,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceDiscoveryGroupAsync(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrReplaceDiscoveryGroupAsync(string,DiscoveryGroupPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1097,7 +1003,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceDiscoveryGroup(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrReplaceDiscoveryGroup(string,DiscoveryGroupPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1402,32 +1308,32 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Get the most recent snapshot of asset summary values for the snapshot request. </summary>
-        /// <param name="metric"> The metric to retrieve a snapshot for. </param>
-        /// <param name="labelName"> The name of the label to retrieve a snapshot for. </param>
-        /// <param name="size"> The number of assets per page. </param>
-        /// <param name="page"> The page to retrieve. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshotAsync(string,string,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<ReportAssetSnapshotResult>> GetSnapshotAsync(string metric = null, string labelName = null, int? size = null, int? page = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshotAsync(ReportAssetSnapshotPayload,CancellationToken)']/*" />
+        public virtual async Task<Response<ReportAssetSnapshotResult>> GetSnapshotAsync(ReportAssetSnapshotPayload body, CancellationToken cancellationToken = default)
         {
-            ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload(metric, labelName, size, page, null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSnapshotAsync(reportAssetSnapshotPayload.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await GetSnapshotAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ReportAssetSnapshotResult.FromResponse(response), response);
         }
 
         /// <summary> Get the most recent snapshot of asset summary values for the snapshot request. </summary>
-        /// <param name="metric"> The metric to retrieve a snapshot for. </param>
-        /// <param name="labelName"> The name of the label to retrieve a snapshot for. </param>
-        /// <param name="size"> The number of assets per page. </param>
-        /// <param name="page"> The page to retrieve. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshot(string,string,int?,int?,CancellationToken)']/*" />
-        public virtual Response<ReportAssetSnapshotResult> GetSnapshot(string metric = null, string labelName = null, int? size = null, int? page = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshot(ReportAssetSnapshotPayload,CancellationToken)']/*" />
+        public virtual Response<ReportAssetSnapshotResult> GetSnapshot(ReportAssetSnapshotPayload body, CancellationToken cancellationToken = default)
         {
-            ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload(metric, labelName, size, page, null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSnapshot(reportAssetSnapshotPayload.ToRequestContent(), context);
+            Response response = GetSnapshot(content, context);
             return Response.FromValue(ReportAssetSnapshotResult.FromResponse(response), response);
         }
 
@@ -1441,7 +1347,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSnapshotAsync(string,string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSnapshotAsync(ReportAssetSnapshotPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1480,7 +1386,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSnapshot(string,string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSnapshot(ReportAssetSnapshotPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1510,50 +1416,32 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Get asset summary details for the summary request. </summary>
-        /// <param name="metricCategories"> Categories to retrieve risk reporting data for. </param>
-        /// <param name="metrics"> Metrics to retrieve risk reporting data for. </param>
-        /// <param name="filters"> Query filters to apply to the asset summary. </param>
-        /// <param name="groupBy"> A parameter to group the assets by (first level facet field), only used when the chosen summary identifier is filters. </param>
-        /// <param name="segmentBy"> A parameter to segment the assets by (second level facet field), only used when the chosen summary identifier is filters. </param>
-        /// <param name="labelName"> Currently unused. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummaryAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<ReportAssetSummaryResult>> GetSummaryAsync(IEnumerable<string> metricCategories = null, IEnumerable<string> metrics = null, IEnumerable<string> filters = null, string groupBy = null, string segmentBy = null, string labelName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummaryAsync(ReportAssetSummaryPayload,CancellationToken)']/*" />
+        public virtual async Task<Response<ReportAssetSummaryResult>> GetSummaryAsync(ReportAssetSummaryPayload body, CancellationToken cancellationToken = default)
         {
-            ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload(
-                metricCategories?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                metrics?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                filters?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                groupBy,
-                segmentBy,
-                labelName,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSummaryAsync(reportAssetSummaryPayload.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await GetSummaryAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ReportAssetSummaryResult.FromResponse(response), response);
         }
 
         /// <summary> Get asset summary details for the summary request. </summary>
-        /// <param name="metricCategories"> Categories to retrieve risk reporting data for. </param>
-        /// <param name="metrics"> Metrics to retrieve risk reporting data for. </param>
-        /// <param name="filters"> Query filters to apply to the asset summary. </param>
-        /// <param name="groupBy"> A parameter to group the assets by (first level facet field), only used when the chosen summary identifier is filters. </param>
-        /// <param name="segmentBy"> A parameter to segment the assets by (second level facet field), only used when the chosen summary identifier is filters. </param>
-        /// <param name="labelName"> Currently unused. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummary(IEnumerable{string},IEnumerable{string},IEnumerable{string},string,string,string,CancellationToken)']/*" />
-        public virtual Response<ReportAssetSummaryResult> GetSummary(IEnumerable<string> metricCategories = null, IEnumerable<string> metrics = null, IEnumerable<string> filters = null, string groupBy = null, string segmentBy = null, string labelName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummary(ReportAssetSummaryPayload,CancellationToken)']/*" />
+        public virtual Response<ReportAssetSummaryResult> GetSummary(ReportAssetSummaryPayload body, CancellationToken cancellationToken = default)
         {
-            ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload(
-                metricCategories?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                metrics?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                filters?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                groupBy,
-                segmentBy,
-                labelName,
-                null);
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSummary(reportAssetSummaryPayload.ToRequestContent(), context);
+            Response response = GetSummary(content, context);
             return Response.FromValue(ReportAssetSummaryResult.FromResponse(response), response);
         }
 
@@ -1567,7 +1455,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSummaryAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSummaryAsync(ReportAssetSummaryPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1606,7 +1494,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSummary(IEnumerable{string},IEnumerable{string},IEnumerable{string},string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSummary(ReportAssetSummaryPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1747,41 +1635,37 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Create or replace a saved filter with a given filterName. </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
-        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
-        /// <param name="description"> A human readable description of the saved filter. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/>, <paramref name="filter"/> or <paramref name="description"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilterAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, string filter, string description, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilterAsync(string,SavedFilterPayload,CancellationToken)']/*" />
+        public virtual async Task<Response<SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, SavedFilterPayload body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
-            Argument.AssertNotNull(filter, nameof(filter));
-            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(body, nameof(body));
 
-            SavedFilterPayload savedFilterPayload = new SavedFilterPayload(filter, description, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrReplaceSavedFilterAsync(filterName, savedFilterPayload.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateOrReplaceSavedFilterAsync(filterName, content, context).ConfigureAwait(false);
             return Response.FromValue(SavedFilter.FromResponse(response), response);
         }
 
         /// <summary> Create or replace a saved filter with a given filterName. </summary>
         /// <param name="filterName"> The caller provided unique name for the resource. </param>
-        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
-        /// <param name="description"> A human readable description of the saved filter. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/>, <paramref name="filter"/> or <paramref name="description"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilter(string,string,string,CancellationToken)']/*" />
-        public virtual Response<SavedFilter> CreateOrReplaceSavedFilter(string filterName, string filter, string description, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilter(string,SavedFilterPayload,CancellationToken)']/*" />
+        public virtual Response<SavedFilter> CreateOrReplaceSavedFilter(string filterName, SavedFilterPayload body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
-            Argument.AssertNotNull(filter, nameof(filter));
-            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(body, nameof(body));
 
-            SavedFilterPayload savedFilterPayload = new SavedFilterPayload(filter, description, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrReplaceSavedFilter(filterName, savedFilterPayload.ToRequestContent(), context);
+            Response response = CreateOrReplaceSavedFilter(filterName, content, context);
             return Response.FromValue(SavedFilter.FromResponse(response), response);
         }
 
@@ -1795,7 +1679,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceSavedFilterAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrReplaceSavedFilterAsync(string,SavedFilterPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1837,7 +1721,7 @@ namespace Azure.Analytics.Defender.Easm
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceSavedFilter(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrReplaceSavedFilter(string,SavedFilterPayload,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

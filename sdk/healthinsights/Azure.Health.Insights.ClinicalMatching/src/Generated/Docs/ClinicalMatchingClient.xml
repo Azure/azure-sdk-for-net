@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="MatchTrialsAsync(WaitUntil,IEnumerable{PatientRecord},TrialMatcherModelConfiguration,CancellationToken)">
+    <member name="MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)">
       <example>
 This sample shows how to call MatchTrialsAsync.
 <code><![CDATA[
@@ -9,10 +9,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, new PatientRecord[]
+TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
+Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
 TrialMatcherResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call MatchTrialsAsync with all parameters.
@@ -21,62 +22,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-TrialMatcherModelConfiguration configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
-{
-    CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
-    {
-        Phases = {ClinicalTrialPhase.NotApplicable},
-        StudyType = ClinicalTrialStudyType.Interventional,
-        RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
-        Sponsors = {"<sponsors>"},
-        Contacts = {new ContactDetails
-        {
-            Name = "<name>",
-            Email = "<email>",
-            Phone = "<phone>",
-        }},
-        Facilities = {new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
-        {
-            City = "<city>",
-            State = "<state>",
-        }},
-    })
-    {
-        EligibilityCriteriaText = "<eligibilityCriteriaText>",
-        Demographics = new ClinicalTrialDemographics
-        {
-            AcceptedSex = ClinicalTrialAcceptedSex.All,
-            AcceptedAgeRange = new AcceptedAgeRange
-            {
-                MinimumAge = new AcceptedAge(AgeUnit.Years, 123.45F),
-                MaximumAge = default,
-            },
-        },
-    }},
-    RegistryFilters = {new ClinicalTrialRegistryFilter
-    {
-        Conditions = {"<conditions>"},
-        StudyTypes = {ClinicalTrialStudyType.Interventional},
-        RecruitmentStatuses = {ClinicalTrialRecruitmentStatus.UnknownStatus},
-        Sponsors = {"<sponsors>"},
-        Phases = {ClinicalTrialPhase.NotApplicable},
-        Purposes = {ClinicalTrialPurpose.NotApplicable},
-        Ids = {"<ids>"},
-        Sources = {ClinicalTrialSource.Custom},
-        FacilityNames = {"<facilityNames>"},
-        FacilityLocations = {new GeographicLocation("<countryOrRegion>")
-        {
-            City = "<city>",
-            State = "<state>",
-        }},
-        FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[]{123.45F}), new AreaProperties(GeoJsonPropertiesSubType.Circle, 123.45))},
-    }},
-})
-{
-    Verbose = true,
-    IncludeEvidence = true,
-};
-Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, new PatientRecord[]
+TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -97,11 +43,69 @@ Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUnt
             CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
         }},
     }
-}, configuration: configuration);
+})
+{
+    Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
+    {
+        CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
+        {
+            Phases = {ClinicalTrialPhase.NotApplicable},
+            StudyType = ClinicalTrialStudyType.Interventional,
+            RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
+            Sponsors = {"<sponsors>"},
+            Contacts = {new ContactDetails
+            {
+                Name = "<name>",
+                Email = "<email>",
+                Phone = "<phone>",
+            }},
+            Facilities = {new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+            {
+                City = "<city>",
+                State = "<state>",
+            }},
+        })
+        {
+            EligibilityCriteriaText = "<eligibilityCriteriaText>",
+            Demographics = new ClinicalTrialDemographics
+            {
+                AcceptedSex = ClinicalTrialAcceptedSex.All,
+                AcceptedAgeRange = new AcceptedAgeRange
+                {
+                    MinimumAge = new AcceptedAge(AgeUnit.Years, 123.45F),
+                    MaximumAge = default,
+                },
+            },
+        }},
+        RegistryFilters = {new ClinicalTrialRegistryFilter
+        {
+            Conditions = {"<conditions>"},
+            StudyTypes = {ClinicalTrialStudyType.Interventional},
+            RecruitmentStatuses = {ClinicalTrialRecruitmentStatus.UnknownStatus},
+            Sponsors = {"<sponsors>"},
+            Phases = {ClinicalTrialPhase.NotApplicable},
+            Purposes = {ClinicalTrialPurpose.NotApplicable},
+            Ids = {"<ids>"},
+            Sources = {ClinicalTrialSource.Custom},
+            FacilityNames = {"<facilityNames>"},
+            FacilityLocations = {new GeographicLocation("<countryOrRegion>")
+            {
+                City = "<city>",
+                State = "<state>",
+            }},
+            FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[]{123.45F}), new AreaProperties(GeoJsonPropertiesSubType.Circle, 123.45))},
+        }},
+    })
+    {
+        Verbose = true,
+        IncludeEvidence = true,
+    },
+};
+Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
 TrialMatcherResults responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="MatchTrials(WaitUntil,IEnumerable{PatientRecord},TrialMatcherModelConfiguration,CancellationToken)">
+    <member name="MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)">
       <example>
 This sample shows how to call MatchTrials.
 <code><![CDATA[
@@ -109,10 +113,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, new PatientRecord[]
+TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
+Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
 TrialMatcherResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call MatchTrials with all parameters.
@@ -121,62 +126,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-TrialMatcherModelConfiguration configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
-{
-    CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
-    {
-        Phases = {ClinicalTrialPhase.NotApplicable},
-        StudyType = ClinicalTrialStudyType.Interventional,
-        RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
-        Sponsors = {"<sponsors>"},
-        Contacts = {new ContactDetails
-        {
-            Name = "<name>",
-            Email = "<email>",
-            Phone = "<phone>",
-        }},
-        Facilities = {new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
-        {
-            City = "<city>",
-            State = "<state>",
-        }},
-    })
-    {
-        EligibilityCriteriaText = "<eligibilityCriteriaText>",
-        Demographics = new ClinicalTrialDemographics
-        {
-            AcceptedSex = ClinicalTrialAcceptedSex.All,
-            AcceptedAgeRange = new AcceptedAgeRange
-            {
-                MinimumAge = new AcceptedAge(AgeUnit.Years, 123.45F),
-                MaximumAge = default,
-            },
-        },
-    }},
-    RegistryFilters = {new ClinicalTrialRegistryFilter
-    {
-        Conditions = {"<conditions>"},
-        StudyTypes = {ClinicalTrialStudyType.Interventional},
-        RecruitmentStatuses = {ClinicalTrialRecruitmentStatus.UnknownStatus},
-        Sponsors = {"<sponsors>"},
-        Phases = {ClinicalTrialPhase.NotApplicable},
-        Purposes = {ClinicalTrialPurpose.NotApplicable},
-        Ids = {"<ids>"},
-        Sources = {ClinicalTrialSource.Custom},
-        FacilityNames = {"<facilityNames>"},
-        FacilityLocations = {new GeographicLocation("<countryOrRegion>")
-        {
-            City = "<city>",
-            State = "<state>",
-        }},
-        FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[]{123.45F}), new AreaProperties(GeoJsonPropertiesSubType.Circle, 123.45))},
-    }},
-})
-{
-    Verbose = true,
-    IncludeEvidence = true,
-};
-Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, new PatientRecord[]
+TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -197,7 +147,65 @@ Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Complete
             CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
         }},
     }
-}, configuration: configuration);
+})
+{
+    Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
+    {
+        CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
+        {
+            Phases = {ClinicalTrialPhase.NotApplicable},
+            StudyType = ClinicalTrialStudyType.Interventional,
+            RecruitmentStatus = ClinicalTrialRecruitmentStatus.UnknownStatus,
+            Sponsors = {"<sponsors>"},
+            Contacts = {new ContactDetails
+            {
+                Name = "<name>",
+                Email = "<email>",
+                Phone = "<phone>",
+            }},
+            Facilities = {new ClinicalTrialResearchFacility("<name>", "<countryOrRegion>")
+            {
+                City = "<city>",
+                State = "<state>",
+            }},
+        })
+        {
+            EligibilityCriteriaText = "<eligibilityCriteriaText>",
+            Demographics = new ClinicalTrialDemographics
+            {
+                AcceptedSex = ClinicalTrialAcceptedSex.All,
+                AcceptedAgeRange = new AcceptedAgeRange
+                {
+                    MinimumAge = new AcceptedAge(AgeUnit.Years, 123.45F),
+                    MaximumAge = default,
+                },
+            },
+        }},
+        RegistryFilters = {new ClinicalTrialRegistryFilter
+        {
+            Conditions = {"<conditions>"},
+            StudyTypes = {ClinicalTrialStudyType.Interventional},
+            RecruitmentStatuses = {ClinicalTrialRecruitmentStatus.UnknownStatus},
+            Sponsors = {"<sponsors>"},
+            Phases = {ClinicalTrialPhase.NotApplicable},
+            Purposes = {ClinicalTrialPurpose.NotApplicable},
+            Ids = {"<ids>"},
+            Sources = {ClinicalTrialSource.Custom},
+            FacilityNames = {"<facilityNames>"},
+            FacilityLocations = {new GeographicLocation("<countryOrRegion>")
+            {
+                City = "<city>",
+                State = "<state>",
+            }},
+            FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[]{123.45F}), new AreaProperties(GeoJsonPropertiesSubType.Circle, 123.45))},
+        }},
+    })
+    {
+        Verbose = true,
+        IncludeEvidence = true,
+    },
+};
+Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
 TrialMatcherResults responseData = operation.Value;
 ]]></code></example>
     </member>

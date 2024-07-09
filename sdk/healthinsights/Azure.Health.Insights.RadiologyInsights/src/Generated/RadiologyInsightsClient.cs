@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,37 +63,35 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Create Radiology Insights job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patients"> The list of patients, including their clinical information and data. </param>
-        /// <param name="configuration"> Configuration affecting the Radiology Insights model's inference. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Creates a Radiology Insights job with the given request body. </remarks>
-        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,IEnumerable{PatientRecord},RadiologyInsightsModelConfiguration,CancellationToken)']/*" />
-        public virtual async Task<Operation<RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(WaitUntil waitUntil, IEnumerable<PatientRecord> patients, RadiologyInsightsModelConfiguration configuration = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,RadiologyInsightsData,CancellationToken)']/*" />
+        public virtual async Task<Operation<RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(WaitUntil waitUntil, RadiologyInsightsData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patients, nameof(patients));
+            Argument.AssertNotNull(body, nameof(body));
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(patients.ToList(), configuration, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await InferRadiologyInsightsAsync(waitUntil, radiologyInsightsData.ToRequestContent(), context).ConfigureAwait(false);
+            Operation<BinaryData> response = await InferRadiologyInsightsAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchRadiologyInsightsInferenceResultFromRadiologyInsightsResult, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights");
         }
 
         /// <summary> Create Radiology Insights job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patients"> The list of patients, including their clinical information and data. </param>
-        /// <param name="configuration"> Configuration affecting the Radiology Insights model's inference. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Creates a Radiology Insights job with the given request body. </remarks>
-        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,IEnumerable{PatientRecord},RadiologyInsightsModelConfiguration,CancellationToken)']/*" />
-        public virtual Operation<RadiologyInsightsInferenceResult> InferRadiologyInsights(WaitUntil waitUntil, IEnumerable<PatientRecord> patients, RadiologyInsightsModelConfiguration configuration = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,RadiologyInsightsData,CancellationToken)']/*" />
+        public virtual Operation<RadiologyInsightsInferenceResult> InferRadiologyInsights(WaitUntil waitUntil, RadiologyInsightsData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patients, nameof(patients));
+            Argument.AssertNotNull(body, nameof(body));
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(patients.ToList(), configuration, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = InferRadiologyInsights(waitUntil, radiologyInsightsData.ToRequestContent(), context);
+            Operation<BinaryData> response = InferRadiologyInsights(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchRadiologyInsightsInferenceResultFromRadiologyInsightsResult, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights");
         }
 
@@ -109,7 +105,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InferRadiologyInsightsAsync(WaitUntil,IEnumerable{PatientRecord},RadiologyInsightsModelConfiguration,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InferRadiologyInsightsAsync(WaitUntil,RadiologyInsightsData,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -149,7 +145,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InferRadiologyInsights(WaitUntil,IEnumerable{PatientRecord},RadiologyInsightsModelConfiguration,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InferRadiologyInsights(WaitUntil,RadiologyInsightsData,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

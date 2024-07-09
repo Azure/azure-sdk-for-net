@@ -153,7 +153,7 @@ Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToSt
 Console.WriteLine(result[0].GetProperty("usage").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateAsync(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,CancellationToken)">
+    <member name="CreateAsync(AtlasGlossary,CancellationToken)">
       <example>
 This sample shows how to call CreateAsync.
 <code><![CDATA[
@@ -161,7 +161,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossary> response = await client.CreateAsync();
+AtlasGlossary body = new AtlasGlossary();
+Response<AtlasGlossary> response = await client.CreateAsync(body);
 ]]></code>
 This sample shows how to call CreateAsync with all parameters.
 <code><![CDATA[
@@ -169,9 +170,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossary> response = await client.CreateAsync(guid: "<guid>", classifications: new AtlasClassification[]
+AtlasGlossary body = new AtlasGlossary
 {
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -188,20 +190,26 @@ Response<AtlasGlossary> response = await client.CreateAsync(guid: "<guid>", clas
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", categories: new AtlasRelatedCategoryHeader[]
-{
-    new AtlasRelatedCategoryHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Categories = {new AtlasRelatedCategoryHeader
     {
         CategoryGuid = "<categoryGuid>",
         Description = "<description>",
         DisplayText = "<displayText>",
         ParentCategoryGuid = "<parentCategoryGuid>",
         RelationGuid = "<relationGuid>",
-    }
-}, language: "<language>", terms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    Language = "<language>",
+    Terms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -210,11 +218,13 @@ Response<AtlasGlossary> response = await client.CreateAsync(guid: "<guid>", clas
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-}, usage: "<usage>");
+    }},
+    Usage = "<usage>",
+};
+Response<AtlasGlossary> response = await client.CreateAsync(body);
 ]]></code></example>
     </member>
-    <member name="Create(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,CancellationToken)">
+    <member name="Create(AtlasGlossary,CancellationToken)">
       <example>
 This sample shows how to call Create.
 <code><![CDATA[
@@ -222,7 +232,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossary> response = client.Create();
+AtlasGlossary body = new AtlasGlossary();
+Response<AtlasGlossary> response = client.Create(body);
 ]]></code>
 This sample shows how to call Create with all parameters.
 <code><![CDATA[
@@ -230,9 +241,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossary> response = client.Create(guid: "<guid>", classifications: new AtlasClassification[]
+AtlasGlossary body = new AtlasGlossary
 {
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -249,20 +261,26 @@ Response<AtlasGlossary> response = client.Create(guid: "<guid>", classifications
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", categories: new AtlasRelatedCategoryHeader[]
-{
-    new AtlasRelatedCategoryHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Categories = {new AtlasRelatedCategoryHeader
     {
         CategoryGuid = "<categoryGuid>",
         Description = "<description>",
         DisplayText = "<displayText>",
         ParentCategoryGuid = "<parentCategoryGuid>",
         RelationGuid = "<relationGuid>",
-    }
-}, language: "<language>", terms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    Language = "<language>",
+    Terms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -271,8 +289,10 @@ Response<AtlasGlossary> response = client.Create(guid: "<guid>", classifications
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-}, usage: "<usage>");
+    }},
+    Usage = "<usage>",
+};
+Response<AtlasGlossary> response = client.Create(body);
 ]]></code></example>
     </member>
     <member name="CreateAsync(RequestContent,RequestContext)">
@@ -951,7 +971,7 @@ Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToStr
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateCategoryAsync(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)">
+    <member name="CreateCategoryAsync(AtlasGlossaryCategory,CancellationToken)">
       <example>
 This sample shows how to call CreateCategoryAsync.
 <code><![CDATA[
@@ -959,7 +979,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync();
+AtlasGlossaryCategory body = new AtlasGlossaryCategory();
+Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(body);
 ]]></code>
 This sample shows how to call CreateCategoryAsync with all parameters.
 <code><![CDATA[
@@ -967,16 +988,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryHeader anchor = new AtlasGlossaryHeader
+AtlasGlossaryCategory body = new AtlasGlossaryCategory
 {
-    DisplayText = "<displayText>",
-    GlossaryGuid = "<glossaryGuid>",
-    RelationGuid = "<relationGuid>",
-};
-AtlasRelatedCategoryHeader parentCategory = default;
-Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(guid: "<guid>", classifications: new AtlasClassification[]
-{
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -993,20 +1008,32 @@ Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(guid
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", anchor: anchor, childrenCategories: new AtlasRelatedCategoryHeader[]
-{
-    new AtlasRelatedCategoryHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Anchor = new AtlasGlossaryHeader
+    {
+        DisplayText = "<displayText>",
+        GlossaryGuid = "<glossaryGuid>",
+        RelationGuid = "<relationGuid>",
+    },
+    ChildrenCategories = {new AtlasRelatedCategoryHeader
     {
         CategoryGuid = "<categoryGuid>",
         Description = "<description>",
         DisplayText = "<displayText>",
         ParentCategoryGuid = "<parentCategoryGuid>",
         RelationGuid = "<relationGuid>",
-    }
-}, parentCategory: parentCategory, terms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    ParentCategory = default,
+    Terms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -1015,11 +1042,12 @@ Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(guid
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-});
+    }},
+};
+Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(body);
 ]]></code></example>
     </member>
-    <member name="CreateCategory(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)">
+    <member name="CreateCategory(AtlasGlossaryCategory,CancellationToken)">
       <example>
 This sample shows how to call CreateCategory.
 <code><![CDATA[
@@ -1027,7 +1055,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossaryCategory> response = client.CreateCategory();
+AtlasGlossaryCategory body = new AtlasGlossaryCategory();
+Response<AtlasGlossaryCategory> response = client.CreateCategory(body);
 ]]></code>
 This sample shows how to call CreateCategory with all parameters.
 <code><![CDATA[
@@ -1035,16 +1064,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryHeader anchor = new AtlasGlossaryHeader
+AtlasGlossaryCategory body = new AtlasGlossaryCategory
 {
-    DisplayText = "<displayText>",
-    GlossaryGuid = "<glossaryGuid>",
-    RelationGuid = "<relationGuid>",
-};
-AtlasRelatedCategoryHeader parentCategory = default;
-Response<AtlasGlossaryCategory> response = client.CreateCategory(guid: "<guid>", classifications: new AtlasClassification[]
-{
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -1061,20 +1084,32 @@ Response<AtlasGlossaryCategory> response = client.CreateCategory(guid: "<guid>",
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", anchor: anchor, childrenCategories: new AtlasRelatedCategoryHeader[]
-{
-    new AtlasRelatedCategoryHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Anchor = new AtlasGlossaryHeader
+    {
+        DisplayText = "<displayText>",
+        GlossaryGuid = "<glossaryGuid>",
+        RelationGuid = "<relationGuid>",
+    },
+    ChildrenCategories = {new AtlasRelatedCategoryHeader
     {
         CategoryGuid = "<categoryGuid>",
         Description = "<description>",
         DisplayText = "<displayText>",
         ParentCategoryGuid = "<parentCategoryGuid>",
         RelationGuid = "<relationGuid>",
-    }
-}, parentCategory: parentCategory, terms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    ParentCategory = default,
+    Terms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -1083,8 +1118,9 @@ Response<AtlasGlossaryCategory> response = client.CreateCategory(guid: "<guid>",
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-});
+    }},
+};
+Response<AtlasGlossaryCategory> response = client.CreateCategory(body);
 ]]></code></example>
     </member>
     <member name="CreateCategoryAsync(RequestContent,RequestContext)">
@@ -1513,7 +1549,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 ]]></code></example>
     </member>
-    <member name="UpdateCategoryAsync(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)">
+    <member name="UpdateCategoryAsync(string,AtlasGlossaryCategory,CancellationToken)">
       <example>
 This sample shows how to call UpdateCategoryAsync.
 <code><![CDATA[
@@ -1521,7 +1557,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>");
+AtlasGlossaryCategory body = new AtlasGlossaryCategory();
+Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", body);
 ]]></code>
 This sample shows how to call UpdateCategoryAsync with all parameters.
 <code><![CDATA[
@@ -1529,16 +1566,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryHeader anchor = new AtlasGlossaryHeader
+AtlasGlossaryCategory body = new AtlasGlossaryCategory
 {
-    DisplayText = "<displayText>",
-    GlossaryGuid = "<glossaryGuid>",
-    RelationGuid = "<relationGuid>",
-};
-AtlasRelatedCategoryHeader parentCategory = default;
-Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", guid: "<guid>", classifications: new AtlasClassification[]
-{
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -1555,20 +1586,32 @@ Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<ca
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", anchor: anchor, childrenCategories: new AtlasRelatedCategoryHeader[]
-{
-    new AtlasRelatedCategoryHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Anchor = new AtlasGlossaryHeader
+    {
+        DisplayText = "<displayText>",
+        GlossaryGuid = "<glossaryGuid>",
+        RelationGuid = "<relationGuid>",
+    },
+    ChildrenCategories = {new AtlasRelatedCategoryHeader
     {
         CategoryGuid = "<categoryGuid>",
         Description = "<description>",
         DisplayText = "<displayText>",
         ParentCategoryGuid = "<parentCategoryGuid>",
         RelationGuid = "<relationGuid>",
-    }
-}, parentCategory: parentCategory, terms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    ParentCategory = default,
+    Terms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -1577,11 +1620,12 @@ Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<ca
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-});
+    }},
+};
+Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", body);
 ]]></code></example>
     </member>
-    <member name="UpdateCategory(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)">
+    <member name="UpdateCategory(string,AtlasGlossaryCategory,CancellationToken)">
       <example>
 This sample shows how to call UpdateCategory.
 <code><![CDATA[
@@ -1589,7 +1633,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>");
+AtlasGlossaryCategory body = new AtlasGlossaryCategory();
+Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", body);
 ]]></code>
 This sample shows how to call UpdateCategory with all parameters.
 <code><![CDATA[
@@ -1597,16 +1642,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryHeader anchor = new AtlasGlossaryHeader
+AtlasGlossaryCategory body = new AtlasGlossaryCategory
 {
-    DisplayText = "<displayText>",
-    GlossaryGuid = "<glossaryGuid>",
-    RelationGuid = "<relationGuid>",
-};
-AtlasRelatedCategoryHeader parentCategory = default;
-Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", guid: "<guid>", classifications: new AtlasClassification[]
-{
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -1623,20 +1662,32 @@ Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>",
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", anchor: anchor, childrenCategories: new AtlasRelatedCategoryHeader[]
-{
-    new AtlasRelatedCategoryHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Anchor = new AtlasGlossaryHeader
+    {
+        DisplayText = "<displayText>",
+        GlossaryGuid = "<glossaryGuid>",
+        RelationGuid = "<relationGuid>",
+    },
+    ChildrenCategories = {new AtlasRelatedCategoryHeader
     {
         CategoryGuid = "<categoryGuid>",
         Description = "<description>",
         DisplayText = "<displayText>",
         ParentCategoryGuid = "<parentCategoryGuid>",
         RelationGuid = "<relationGuid>",
-    }
-}, parentCategory: parentCategory, terms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    ParentCategory = default,
+    Terms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -1645,8 +1696,9 @@ Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>",
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-});
+    }},
+};
+Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", body);
 ]]></code></example>
     </member>
     <member name="UpdateCategoryAsync(string,RequestContent,RequestContext)">
@@ -2345,7 +2397,7 @@ Console.WriteLine(result[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("termGuid").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateTermAsync(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)">
+    <member name="CreateTermAsync(AtlasGlossaryTerm,bool?,CancellationToken)">
       <example>
 This sample shows how to call CreateTermAsync.
 <code><![CDATA[
@@ -2353,7 +2405,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossaryTerm> response = await client.CreateTermAsync();
+AtlasGlossaryTerm body = new AtlasGlossaryTerm();
+Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(body);
 ]]></code>
 This sample shows how to call CreateTermAsync with all parameters.
 <code><![CDATA[
@@ -2361,15 +2414,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryHeader anchor = new AtlasGlossaryHeader
+AtlasGlossaryTerm body = new AtlasGlossaryTerm
 {
-    DisplayText = "<displayText>",
-    GlossaryGuid = "<glossaryGuid>",
-    RelationGuid = "<relationGuid>",
-};
-Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(guid: "<guid>", classifications: new AtlasClassification[]
-{
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -2386,13 +2434,25 @@ Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(guid: "<guid
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", abbreviation: "<abbreviation>", templateName: new BinaryData[]
-{
-    BinaryData.FromObjectAsJson(new object())
-}, anchor: anchor, antonyms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Abbreviation = "<abbreviation>",
+    TemplateName = { BinaryData.FromObjectAsJson(new object()) },
+    Anchor = new AtlasGlossaryHeader
+    {
+        DisplayText = "<displayText>",
+        GlossaryGuid = "<glossaryGuid>",
+        RelationGuid = "<relationGuid>",
+    },
+    Antonyms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -2401,10 +2461,10 @@ Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(guid: "<guid
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-}, status: TermStatus.Draft, nickName: "<nickName>", hierarchyInfo: new PurviewObjectId[]
-{
-    new PurviewObjectId
+    }},
+    Status = TermStatus.Draft,
+    NickName = "<nickName>",
+    HierarchyInfo = {new PurviewObjectId
     {
         Guid = "<guid>",
         TypeName = "<typeName>",
@@ -2420,33 +2480,28 @@ Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(guid: "<guid
         {
             ["key"] = BinaryData.FromObjectAsJson(new object())
         },
-    }
-}, resources: new ResourceLink[]
-{
-    new ResourceLink
+    }},
+    Resources = {new ResourceLink
     {
         DisplayName = "<displayName>",
         Url = "<url>",
-    }
-}, contacts: new Dictionary<string, IList<ContactInfo>>
-{
-    ["key"] = new ContactInfo[]
+    }},
+    Contacts =
     {
-        new ContactInfo
+        ["key"] = {new ContactInfo
         {
             Id = "<id>",
             Info = "<info>",
-        }
-    }
-}, attributes: new Dictionary<string, IDictionary<string, BinaryData>>
-{
-    ["key"] = new Dictionary<string, BinaryData>
+        }}
+    },
+    Attributes =
     {
-        ["key"] = BinaryData.FromObjectAsJson(new object())
-    }
-}, assignedEntities: new AtlasRelatedObjectId[]
-{
-    new AtlasRelatedObjectId
+        ["key"] =
+        {
+            ["key"] = BinaryData.FromObjectAsJson(new object())
+        }
+    },
+    AssignedEntities = {new AtlasRelatedObjectId
     {
         Guid = "<guid>",
         TypeName = "<typeName>",
@@ -2468,57 +2523,34 @@ Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(guid: "<guid
         },
         RelationshipGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         RelationshipStatus = StatusAtlasRelationship.Active,
-    }
-}, categories: new AtlasTermCategorizationHeader[]
-{
-    new AtlasTermCategorizationHeader
+    }},
+    Categories = {new AtlasTermCategorizationHeader
     {
         CategoryGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         Description = "<description>",
         DisplayText = "<displayText>",
         RelationGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         Status = AtlasTermRelationshipStatus.Draft,
-    }
-}, classifies: new AtlasRelatedTermHeader[]
-{
-    default
-}, examples: new string[] { "<examples>" }, isA: new AtlasRelatedTermHeader[]
-{
-    default
-}, preferredTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, preferredToTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, replacedBy: new AtlasRelatedTermHeader[]
-{
-    default
-}, replacementTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, seeAlso: new AtlasRelatedTermHeader[]
-{
-    default
-}, synonyms: new AtlasRelatedTermHeader[]
-{
-    default
-}, translatedTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, translationTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, usage: "<usage>", validValues: new AtlasRelatedTermHeader[]
-{
-    default
-}, validValuesFor: new AtlasRelatedTermHeader[]
-{
-    default
-}, includeTermHierarchy: true);
+    }},
+    Classifies = { default },
+    Examples = { "<examples>" },
+    IsA = { default },
+    PreferredTerms = { default },
+    PreferredToTerms = { default },
+    ReplacedBy = { default },
+    ReplacementTerms = { default },
+    SeeAlso = { default },
+    Synonyms = { default },
+    TranslatedTerms = { default },
+    TranslationTerms = { default },
+    Usage = "<usage>",
+    ValidValues = { default },
+    ValidValuesFor = { default },
+};
+Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(body, includeTermHierarchy: true);
 ]]></code></example>
     </member>
-    <member name="CreateTerm(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)">
+    <member name="CreateTerm(AtlasGlossaryTerm,bool?,CancellationToken)">
       <example>
 This sample shows how to call CreateTerm.
 <code><![CDATA[
@@ -2526,7 +2558,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossaryTerm> response = client.CreateTerm();
+AtlasGlossaryTerm body = new AtlasGlossaryTerm();
+Response<AtlasGlossaryTerm> response = client.CreateTerm(body);
 ]]></code>
 This sample shows how to call CreateTerm with all parameters.
 <code><![CDATA[
@@ -2534,15 +2567,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-AtlasGlossaryHeader anchor = new AtlasGlossaryHeader
+AtlasGlossaryTerm body = new AtlasGlossaryTerm
 {
-    DisplayText = "<displayText>",
-    GlossaryGuid = "<glossaryGuid>",
-    RelationGuid = "<relationGuid>",
-};
-Response<AtlasGlossaryTerm> response = client.CreateTerm(guid: "<guid>", classifications: new AtlasClassification[]
-{
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -2559,13 +2587,25 @@ Response<AtlasGlossaryTerm> response = client.CreateTerm(guid: "<guid>", classif
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", abbreviation: "<abbreviation>", templateName: new BinaryData[]
-{
-    BinaryData.FromObjectAsJson(new object())
-}, anchor: anchor, antonyms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Abbreviation = "<abbreviation>",
+    TemplateName = { BinaryData.FromObjectAsJson(new object()) },
+    Anchor = new AtlasGlossaryHeader
+    {
+        DisplayText = "<displayText>",
+        GlossaryGuid = "<glossaryGuid>",
+        RelationGuid = "<relationGuid>",
+    },
+    Antonyms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -2574,10 +2614,10 @@ Response<AtlasGlossaryTerm> response = client.CreateTerm(guid: "<guid>", classif
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-}, status: TermStatus.Draft, nickName: "<nickName>", hierarchyInfo: new PurviewObjectId[]
-{
-    new PurviewObjectId
+    }},
+    Status = TermStatus.Draft,
+    NickName = "<nickName>",
+    HierarchyInfo = {new PurviewObjectId
     {
         Guid = "<guid>",
         TypeName = "<typeName>",
@@ -2593,33 +2633,28 @@ Response<AtlasGlossaryTerm> response = client.CreateTerm(guid: "<guid>", classif
         {
             ["key"] = BinaryData.FromObjectAsJson(new object())
         },
-    }
-}, resources: new ResourceLink[]
-{
-    new ResourceLink
+    }},
+    Resources = {new ResourceLink
     {
         DisplayName = "<displayName>",
         Url = "<url>",
-    }
-}, contacts: new Dictionary<string, IList<ContactInfo>>
-{
-    ["key"] = new ContactInfo[]
+    }},
+    Contacts =
     {
-        new ContactInfo
+        ["key"] = {new ContactInfo
         {
             Id = "<id>",
             Info = "<info>",
-        }
-    }
-}, attributes: new Dictionary<string, IDictionary<string, BinaryData>>
-{
-    ["key"] = new Dictionary<string, BinaryData>
+        }}
+    },
+    Attributes =
     {
-        ["key"] = BinaryData.FromObjectAsJson(new object())
-    }
-}, assignedEntities: new AtlasRelatedObjectId[]
-{
-    new AtlasRelatedObjectId
+        ["key"] =
+        {
+            ["key"] = BinaryData.FromObjectAsJson(new object())
+        }
+    },
+    AssignedEntities = {new AtlasRelatedObjectId
     {
         Guid = "<guid>",
         TypeName = "<typeName>",
@@ -2641,54 +2676,31 @@ Response<AtlasGlossaryTerm> response = client.CreateTerm(guid: "<guid>", classif
         },
         RelationshipGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         RelationshipStatus = StatusAtlasRelationship.Active,
-    }
-}, categories: new AtlasTermCategorizationHeader[]
-{
-    new AtlasTermCategorizationHeader
+    }},
+    Categories = {new AtlasTermCategorizationHeader
     {
         CategoryGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         Description = "<description>",
         DisplayText = "<displayText>",
         RelationGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         Status = AtlasTermRelationshipStatus.Draft,
-    }
-}, classifies: new AtlasRelatedTermHeader[]
-{
-    default
-}, examples: new string[] { "<examples>" }, isA: new AtlasRelatedTermHeader[]
-{
-    default
-}, preferredTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, preferredToTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, replacedBy: new AtlasRelatedTermHeader[]
-{
-    default
-}, replacementTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, seeAlso: new AtlasRelatedTermHeader[]
-{
-    default
-}, synonyms: new AtlasRelatedTermHeader[]
-{
-    default
-}, translatedTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, translationTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, usage: "<usage>", validValues: new AtlasRelatedTermHeader[]
-{
-    default
-}, validValuesFor: new AtlasRelatedTermHeader[]
-{
-    default
-}, includeTermHierarchy: true);
+    }},
+    Classifies = { default },
+    Examples = { "<examples>" },
+    IsA = { default },
+    PreferredTerms = { default },
+    PreferredToTerms = { default },
+    ReplacedBy = { default },
+    ReplacementTerms = { default },
+    SeeAlso = { default },
+    Synonyms = { default },
+    TranslatedTerms = { default },
+    TranslationTerms = { default },
+    Usage = "<usage>",
+    ValidValues = { default },
+    ValidValuesFor = { default },
+};
+Response<AtlasGlossaryTerm> response = client.CreateTerm(body, includeTermHierarchy: true);
 ]]></code></example>
     </member>
     <member name="CreateTermAsync(RequestContent,bool?,RequestContext)">
@@ -3817,7 +3829,7 @@ Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward")
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
 ]]></code></example>
     </member>
-    <member name="UpdateTermAsync(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)">
+    <member name="UpdateTermAsync(string,AtlasGlossaryTerm,bool?,CancellationToken)">
       <example>
 This sample shows how to call UpdateTermAsync.
 <code><![CDATA[
@@ -3825,7 +3837,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>");
+AtlasGlossaryTerm body = new AtlasGlossaryTerm();
+Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", body);
 ]]></code>
 This sample shows how to call UpdateTermAsync with all parameters.
 <code><![CDATA[
@@ -3833,15 +3846,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-AtlasGlossaryHeader anchor = new AtlasGlossaryHeader
+AtlasGlossaryTerm body = new AtlasGlossaryTerm
 {
-    DisplayText = "<displayText>",
-    GlossaryGuid = "<glossaryGuid>",
-    RelationGuid = "<relationGuid>",
-};
-Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", guid: "<guid>", classifications: new AtlasClassification[]
-{
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -3858,13 +3866,25 @@ Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", 
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", abbreviation: "<abbreviation>", templateName: new BinaryData[]
-{
-    BinaryData.FromObjectAsJson(new object())
-}, anchor: anchor, antonyms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Abbreviation = "<abbreviation>",
+    TemplateName = { BinaryData.FromObjectAsJson(new object()) },
+    Anchor = new AtlasGlossaryHeader
+    {
+        DisplayText = "<displayText>",
+        GlossaryGuid = "<glossaryGuid>",
+        RelationGuid = "<relationGuid>",
+    },
+    Antonyms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -3873,10 +3893,10 @@ Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", 
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-}, status: TermStatus.Draft, nickName: "<nickName>", hierarchyInfo: new PurviewObjectId[]
-{
-    new PurviewObjectId
+    }},
+    Status = TermStatus.Draft,
+    NickName = "<nickName>",
+    HierarchyInfo = {new PurviewObjectId
     {
         Guid = "<guid>",
         TypeName = "<typeName>",
@@ -3892,33 +3912,28 @@ Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", 
         {
             ["key"] = BinaryData.FromObjectAsJson(new object())
         },
-    }
-}, resources: new ResourceLink[]
-{
-    new ResourceLink
+    }},
+    Resources = {new ResourceLink
     {
         DisplayName = "<displayName>",
         Url = "<url>",
-    }
-}, contacts: new Dictionary<string, IList<ContactInfo>>
-{
-    ["key"] = new ContactInfo[]
+    }},
+    Contacts =
     {
-        new ContactInfo
+        ["key"] = {new ContactInfo
         {
             Id = "<id>",
             Info = "<info>",
-        }
-    }
-}, attributes: new Dictionary<string, IDictionary<string, BinaryData>>
-{
-    ["key"] = new Dictionary<string, BinaryData>
+        }}
+    },
+    Attributes =
     {
-        ["key"] = BinaryData.FromObjectAsJson(new object())
-    }
-}, assignedEntities: new AtlasRelatedObjectId[]
-{
-    new AtlasRelatedObjectId
+        ["key"] =
+        {
+            ["key"] = BinaryData.FromObjectAsJson(new object())
+        }
+    },
+    AssignedEntities = {new AtlasRelatedObjectId
     {
         Guid = "<guid>",
         TypeName = "<typeName>",
@@ -3940,57 +3955,34 @@ Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", 
         },
         RelationshipGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         RelationshipStatus = StatusAtlasRelationship.Active,
-    }
-}, categories: new AtlasTermCategorizationHeader[]
-{
-    new AtlasTermCategorizationHeader
+    }},
+    Categories = {new AtlasTermCategorizationHeader
     {
         CategoryGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         Description = "<description>",
         DisplayText = "<displayText>",
         RelationGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         Status = AtlasTermRelationshipStatus.Draft,
-    }
-}, classifies: new AtlasRelatedTermHeader[]
-{
-    default
-}, examples: new string[] { "<examples>" }, isA: new AtlasRelatedTermHeader[]
-{
-    default
-}, preferredTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, preferredToTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, replacedBy: new AtlasRelatedTermHeader[]
-{
-    default
-}, replacementTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, seeAlso: new AtlasRelatedTermHeader[]
-{
-    default
-}, synonyms: new AtlasRelatedTermHeader[]
-{
-    default
-}, translatedTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, translationTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, usage: "<usage>", validValues: new AtlasRelatedTermHeader[]
-{
-    default
-}, validValuesFor: new AtlasRelatedTermHeader[]
-{
-    default
-}, includeTermHierarchy: true);
+    }},
+    Classifies = { default },
+    Examples = { "<examples>" },
+    IsA = { default },
+    PreferredTerms = { default },
+    PreferredToTerms = { default },
+    ReplacedBy = { default },
+    ReplacementTerms = { default },
+    SeeAlso = { default },
+    Synonyms = { default },
+    TranslatedTerms = { default },
+    TranslationTerms = { default },
+    Usage = "<usage>",
+    ValidValues = { default },
+    ValidValuesFor = { default },
+};
+Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", body, includeTermHierarchy: true);
 ]]></code></example>
     </member>
-    <member name="UpdateTerm(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)">
+    <member name="UpdateTerm(string,AtlasGlossaryTerm,bool?,CancellationToken)">
       <example>
 This sample shows how to call UpdateTerm.
 <code><![CDATA[
@@ -3998,7 +3990,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>");
+AtlasGlossaryTerm body = new AtlasGlossaryTerm();
+Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", body);
 ]]></code>
 This sample shows how to call UpdateTerm with all parameters.
 <code><![CDATA[
@@ -4006,15 +3999,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-AtlasGlossaryHeader anchor = new AtlasGlossaryHeader
+AtlasGlossaryTerm body = new AtlasGlossaryTerm
 {
-    DisplayText = "<displayText>",
-    GlossaryGuid = "<glossaryGuid>",
-    RelationGuid = "<relationGuid>",
-};
-Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", guid: "<guid>", classifications: new AtlasClassification[]
-{
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -4031,13 +4019,25 @@ Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", guid: "<gui
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", abbreviation: "<abbreviation>", templateName: new BinaryData[]
-{
-    BinaryData.FromObjectAsJson(new object())
-}, anchor: anchor, antonyms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Abbreviation = "<abbreviation>",
+    TemplateName = { BinaryData.FromObjectAsJson(new object()) },
+    Anchor = new AtlasGlossaryHeader
+    {
+        DisplayText = "<displayText>",
+        GlossaryGuid = "<glossaryGuid>",
+        RelationGuid = "<relationGuid>",
+    },
+    Antonyms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -4046,10 +4046,10 @@ Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", guid: "<gui
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-}, status: TermStatus.Draft, nickName: "<nickName>", hierarchyInfo: new PurviewObjectId[]
-{
-    new PurviewObjectId
+    }},
+    Status = TermStatus.Draft,
+    NickName = "<nickName>",
+    HierarchyInfo = {new PurviewObjectId
     {
         Guid = "<guid>",
         TypeName = "<typeName>",
@@ -4065,33 +4065,28 @@ Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", guid: "<gui
         {
             ["key"] = BinaryData.FromObjectAsJson(new object())
         },
-    }
-}, resources: new ResourceLink[]
-{
-    new ResourceLink
+    }},
+    Resources = {new ResourceLink
     {
         DisplayName = "<displayName>",
         Url = "<url>",
-    }
-}, contacts: new Dictionary<string, IList<ContactInfo>>
-{
-    ["key"] = new ContactInfo[]
+    }},
+    Contacts =
     {
-        new ContactInfo
+        ["key"] = {new ContactInfo
         {
             Id = "<id>",
             Info = "<info>",
-        }
-    }
-}, attributes: new Dictionary<string, IDictionary<string, BinaryData>>
-{
-    ["key"] = new Dictionary<string, BinaryData>
+        }}
+    },
+    Attributes =
     {
-        ["key"] = BinaryData.FromObjectAsJson(new object())
-    }
-}, assignedEntities: new AtlasRelatedObjectId[]
-{
-    new AtlasRelatedObjectId
+        ["key"] =
+        {
+            ["key"] = BinaryData.FromObjectAsJson(new object())
+        }
+    },
+    AssignedEntities = {new AtlasRelatedObjectId
     {
         Guid = "<guid>",
         TypeName = "<typeName>",
@@ -4113,54 +4108,31 @@ Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", guid: "<gui
         },
         RelationshipGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         RelationshipStatus = StatusAtlasRelationship.Active,
-    }
-}, categories: new AtlasTermCategorizationHeader[]
-{
-    new AtlasTermCategorizationHeader
+    }},
+    Categories = {new AtlasTermCategorizationHeader
     {
         CategoryGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         Description = "<description>",
         DisplayText = "<displayText>",
         RelationGuid = Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"),
         Status = AtlasTermRelationshipStatus.Draft,
-    }
-}, classifies: new AtlasRelatedTermHeader[]
-{
-    default
-}, examples: new string[] { "<examples>" }, isA: new AtlasRelatedTermHeader[]
-{
-    default
-}, preferredTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, preferredToTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, replacedBy: new AtlasRelatedTermHeader[]
-{
-    default
-}, replacementTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, seeAlso: new AtlasRelatedTermHeader[]
-{
-    default
-}, synonyms: new AtlasRelatedTermHeader[]
-{
-    default
-}, translatedTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, translationTerms: new AtlasRelatedTermHeader[]
-{
-    default
-}, usage: "<usage>", validValues: new AtlasRelatedTermHeader[]
-{
-    default
-}, validValuesFor: new AtlasRelatedTermHeader[]
-{
-    default
-}, includeTermHierarchy: true);
+    }},
+    Classifies = { default },
+    Examples = { "<examples>" },
+    IsA = { default },
+    PreferredTerms = { default },
+    PreferredToTerms = { default },
+    ReplacedBy = { default },
+    ReplacementTerms = { default },
+    SeeAlso = { default },
+    Synonyms = { default },
+    TranslatedTerms = { default },
+    TranslationTerms = { default },
+    Usage = "<usage>",
+    ValidValues = { default },
+    ValidValuesFor = { default },
+};
+Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", body, includeTermHierarchy: true);
 ]]></code></example>
     </member>
     <member name="UpdateTermAsync(string,RequestContent,bool?,RequestContext)">
@@ -7193,7 +7165,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToStrin
 Console.WriteLine(result.GetProperty("usage").ToString());
 ]]></code></example>
     </member>
-    <member name="UpdateAsync(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,bool?,CancellationToken)">
+    <member name="UpdateAsync(string,AtlasGlossary,bool?,CancellationToken)">
       <example>
 This sample shows how to call UpdateAsync.
 <code><![CDATA[
@@ -7201,7 +7173,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>");
+AtlasGlossary body = new AtlasGlossary();
+Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", body);
 ]]></code>
 This sample shows how to call UpdateAsync with all parameters.
 <code><![CDATA[
@@ -7209,9 +7182,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", guid: "<guid>", classifications: new AtlasClassification[]
+AtlasGlossary body = new AtlasGlossary
 {
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -7228,20 +7202,26 @@ Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", guid
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", categories: new AtlasRelatedCategoryHeader[]
-{
-    new AtlasRelatedCategoryHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Categories = {new AtlasRelatedCategoryHeader
     {
         CategoryGuid = "<categoryGuid>",
         Description = "<description>",
         DisplayText = "<displayText>",
         ParentCategoryGuid = "<parentCategoryGuid>",
         RelationGuid = "<relationGuid>",
-    }
-}, language: "<language>", terms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    Language = "<language>",
+    Terms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -7250,11 +7230,13 @@ Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", guid
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-}, usage: "<usage>", ignoreTermsAndCategories: true);
+    }},
+    Usage = "<usage>",
+};
+Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", body, ignoreTermsAndCategories: true);
 ]]></code></example>
     </member>
-    <member name="Update(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,bool?,CancellationToken)">
+    <member name="Update(string,AtlasGlossary,bool?,CancellationToken)">
       <example>
 This sample shows how to call Update.
 <code><![CDATA[
@@ -7262,7 +7244,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-Response<AtlasGlossary> response = client.Update("<glossaryId>");
+AtlasGlossary body = new AtlasGlossary();
+Response<AtlasGlossary> response = client.Update("<glossaryId>", body);
 ]]></code>
 This sample shows how to call Update with all parameters.
 <code><![CDATA[
@@ -7270,9 +7253,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-Response<AtlasGlossary> response = client.Update("<glossaryId>", guid: "<guid>", classifications: new AtlasClassification[]
+AtlasGlossary body = new AtlasGlossary
 {
-    new AtlasClassification
+    Guid = "<guid>",
+    Classifications = {new AtlasClassification
     {
         Attributes =
         {
@@ -7289,20 +7273,26 @@ Response<AtlasGlossary> response = client.Update("<glossaryId>", guid: "<guid>",
             StartTime = "<startTime>",
             TimeZone = "<timeZone>",
         }},
-    }
-}, longDescription: "<longDescription>", name: "<name>", qualifiedName: "<qualifiedName>", shortDescription: "<shortDescription>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", updateTime: 1234L, updatedBy: "<updatedBy>", categories: new AtlasRelatedCategoryHeader[]
-{
-    new AtlasRelatedCategoryHeader
+    }},
+    LongDescription = "<longDescription>",
+    Name = "<name>",
+    QualifiedName = "<qualifiedName>",
+    ShortDescription = "<shortDescription>",
+    LastModifiedTS = "<lastModifiedTS>",
+    CreateTime = 1234L,
+    CreatedBy = "<createdBy>",
+    UpdateTime = 1234L,
+    UpdatedBy = "<updatedBy>",
+    Categories = {new AtlasRelatedCategoryHeader
     {
         CategoryGuid = "<categoryGuid>",
         Description = "<description>",
         DisplayText = "<displayText>",
         ParentCategoryGuid = "<parentCategoryGuid>",
         RelationGuid = "<relationGuid>",
-    }
-}, language: "<language>", terms: new AtlasRelatedTermHeader[]
-{
-    new AtlasRelatedTermHeader
+    }},
+    Language = "<language>",
+    Terms = {new AtlasRelatedTermHeader
     {
         Description = "<description>",
         DisplayText = "<displayText>",
@@ -7311,8 +7301,10 @@ Response<AtlasGlossary> response = client.Update("<glossaryId>", guid: "<guid>",
         Status = AtlasTermRelationshipStatus.Draft,
         Steward = "<steward>",
         TermGuid = "<termGuid>",
-    }
-}, usage: "<usage>", ignoreTermsAndCategories: true);
+    }},
+    Usage = "<usage>",
+};
+Response<AtlasGlossary> response = client.Update("<glossaryId>", body, ignoreTermsAndCategories: true);
 ]]></code></example>
     </member>
     <member name="UpdateAsync(string,RequestContent,bool?,RequestContext)">

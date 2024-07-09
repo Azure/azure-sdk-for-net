@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,37 +63,35 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         /// <summary> Create Trial Matcher job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patients"> The list of patients, including their clinical information and data. </param>
-        /// <param name="configuration"> Configuration affecting the Trial Matcher model's inference. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
-        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,IEnumerable{PatientRecord},TrialMatcherModelConfiguration,CancellationToken)']/*" />
-        public virtual async Task<Operation<TrialMatcherResults>> MatchTrialsAsync(WaitUntil waitUntil, IEnumerable<PatientRecord> patients, TrialMatcherModelConfiguration configuration = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
+        public virtual async Task<Operation<TrialMatcherResults>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patients, nameof(patients));
+            Argument.AssertNotNull(body, nameof(body));
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(patients.ToList(), configuration, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, trialMatcherData.ToRequestContent(), context).ConfigureAwait(false);
+            Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchTrialMatcherResultsFromTrialMatcherResult, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
         /// <summary> Create Trial Matcher job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patients"> The list of patients, including their clinical information and data. </param>
-        /// <param name="configuration"> Configuration affecting the Trial Matcher model's inference. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
-        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,IEnumerable{PatientRecord},TrialMatcherModelConfiguration,CancellationToken)']/*" />
-        public virtual Operation<TrialMatcherResults> MatchTrials(WaitUntil waitUntil, IEnumerable<PatientRecord> patients, TrialMatcherModelConfiguration configuration = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
+        public virtual Operation<TrialMatcherResults> MatchTrials(WaitUntil waitUntil, TrialMatcherData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patients, nameof(patients));
+            Argument.AssertNotNull(body, nameof(body));
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(patients.ToList(), configuration, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = MatchTrials(waitUntil, trialMatcherData.ToRequestContent(), context);
+            Operation<BinaryData> response = MatchTrials(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchTrialMatcherResultsFromTrialMatcherResult, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
@@ -109,7 +105,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="MatchTrialsAsync(WaitUntil,IEnumerable{PatientRecord},TrialMatcherModelConfiguration,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -149,7 +145,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="MatchTrials(WaitUntil,IEnumerable{PatientRecord},TrialMatcherModelConfiguration,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

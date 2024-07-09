@@ -80,10 +80,11 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, new PatientRecord[]
+            OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
+            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, body);
             OncoPhenotypeResults responseData = operation.Value;
         }
 
@@ -95,10 +96,11 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, new PatientRecord[]
+            OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
+            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, body);
             OncoPhenotypeResults responseData = operation.Value;
         }
 
@@ -272,14 +274,7 @@ value = "<value>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            OncoPhenotypeModelConfiguration configuration = new OncoPhenotypeModelConfiguration
-            {
-                Verbose = true,
-                IncludeEvidence = true,
-                InferenceTypes = { OncoPhenotypeInferenceType.TumorSite },
-                CheckForCancerCase = true,
-            };
-            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, new PatientRecord[]
+            OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -300,7 +295,17 @@ Language = "<language>",
 CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
-            }, configuration: configuration);
+            })
+            {
+                Configuration = new OncoPhenotypeModelConfiguration
+                {
+                    Verbose = true,
+                    IncludeEvidence = true,
+                    InferenceTypes = { OncoPhenotypeInferenceType.TumorSite },
+                    CheckForCancerCase = true,
+                },
+            };
+            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, body);
             OncoPhenotypeResults responseData = operation.Value;
         }
 
@@ -312,14 +317,7 @@ CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            OncoPhenotypeModelConfiguration configuration = new OncoPhenotypeModelConfiguration
-            {
-                Verbose = true,
-                IncludeEvidence = true,
-                InferenceTypes = { OncoPhenotypeInferenceType.TumorSite },
-                CheckForCancerCase = true,
-            };
-            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, new PatientRecord[]
+            OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -340,7 +338,17 @@ Language = "<language>",
 CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
-            }, configuration: configuration);
+            })
+            {
+                Configuration = new OncoPhenotypeModelConfiguration
+                {
+                    Verbose = true,
+                    IncludeEvidence = true,
+                    InferenceTypes = { OncoPhenotypeInferenceType.TumorSite },
+                    CheckForCancerCase = true,
+                },
+            };
+            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, body);
             OncoPhenotypeResults responseData = operation.Value;
         }
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="InferRadiologyInsightsAsync(WaitUntil,IEnumerable{PatientRecord},RadiologyInsightsModelConfiguration,CancellationToken)">
+    <member name="InferRadiologyInsightsAsync(WaitUntil,RadiologyInsightsData,CancellationToken)">
       <example>
 This sample shows how to call InferRadiologyInsightsAsync.
 <code><![CDATA[
@@ -9,10 +9,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, new PatientRecord[]
+RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferRadiologyInsightsAsync with all parameters.
@@ -21,27 +22,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsModelConfiguration configuration = new RadiologyInsightsModelConfiguration
-{
-    Verbose = true,
-    IncludeEvidence = true,
-    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-    InferenceOptions = new RadiologyInsightsInferenceOptions
-    {
-        FollowupRecommendationOptions = new FollowupRecommendationOptions
-        {
-            IncludeRecommendationsWithNoSpecifiedModality = true,
-            IncludeRecommendationsInReferences = true,
-            ProvideFocusedSentenceEvidence = true,
-        },
-        FindingOptions = new FindingOptions
-        {
-            ProvideFocusedSentenceEvidence = true,
-        },
-    },
-    Locale = "<locale>",
-};
-Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, new PatientRecord[]
+RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -180,11 +161,34 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
             },
         }},
     }
-}, configuration: configuration);
+})
+{
+    Configuration = new RadiologyInsightsModelConfiguration
+    {
+        Verbose = true,
+        IncludeEvidence = true,
+        InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+        InferenceOptions = new RadiologyInsightsInferenceOptions
+        {
+            FollowupRecommendationOptions = new FollowupRecommendationOptions
+            {
+                IncludeRecommendationsWithNoSpecifiedModality = true,
+                IncludeRecommendationsInReferences = true,
+                ProvideFocusedSentenceEvidence = true,
+            },
+            FindingOptions = new FindingOptions
+            {
+                ProvideFocusedSentenceEvidence = true,
+            },
+        },
+        Locale = "<locale>",
+    },
+};
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="InferRadiologyInsights(WaitUntil,IEnumerable{PatientRecord},RadiologyInsightsModelConfiguration,CancellationToken)">
+    <member name="InferRadiologyInsights(WaitUntil,RadiologyInsightsData,CancellationToken)">
       <example>
 This sample shows how to call InferRadiologyInsights.
 <code><![CDATA[
@@ -192,10 +196,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, new PatientRecord[]
+RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferRadiologyInsights with all parameters.
@@ -204,27 +209,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsModelConfiguration configuration = new RadiologyInsightsModelConfiguration
-{
-    Verbose = true,
-    IncludeEvidence = true,
-    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-    InferenceOptions = new RadiologyInsightsInferenceOptions
-    {
-        FollowupRecommendationOptions = new FollowupRecommendationOptions
-        {
-            IncludeRecommendationsWithNoSpecifiedModality = true,
-            IncludeRecommendationsInReferences = true,
-            ProvideFocusedSentenceEvidence = true,
-        },
-        FindingOptions = new FindingOptions
-        {
-            ProvideFocusedSentenceEvidence = true,
-        },
-    },
-    Locale = "<locale>",
-};
-Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, new PatientRecord[]
+RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -363,7 +348,30 @@ Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyIns
             },
         }},
     }
-}, configuration: configuration);
+})
+{
+    Configuration = new RadiologyInsightsModelConfiguration
+    {
+        Verbose = true,
+        IncludeEvidence = true,
+        InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+        InferenceOptions = new RadiologyInsightsInferenceOptions
+        {
+            FollowupRecommendationOptions = new FollowupRecommendationOptions
+            {
+                IncludeRecommendationsWithNoSpecifiedModality = true,
+                IncludeRecommendationsInReferences = true,
+                ProvideFocusedSentenceEvidence = true,
+            },
+            FindingOptions = new FindingOptions
+            {
+                ProvideFocusedSentenceEvidence = true,
+            },
+        },
+        Locale = "<locale>",
+    },
+};
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code></example>
     </member>

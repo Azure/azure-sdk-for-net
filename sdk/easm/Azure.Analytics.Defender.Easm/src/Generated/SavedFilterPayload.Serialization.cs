@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class SavedFilterPayload : IUtf8JsonSerializable, IJsonModel<SavedFilterPayload>
+    public partial class SavedFilterPayload : IUtf8JsonSerializable, IJsonModel<SavedFilterPayload>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavedFilterPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

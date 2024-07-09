@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Health.Insights.CancerProfiling
 {
     /// <summary> The body of the Onco Phenotype request. </summary>
-    internal partial class OncoPhenotypeData
+    public partial class OncoPhenotypeData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    internal partial class AutoCompleteConfig : IUtf8JsonSerializable, IJsonModel<AutoCompleteConfig>
+    public partial class AutoCompleteConfig : IUtf8JsonSerializable, IJsonModel<AutoCompleteConfig>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoCompleteConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

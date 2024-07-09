@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The AzureDataExplorerDataConnectionPayload. </summary>
-    internal partial class AzureDataExplorerDataConnectionPayload : DataConnectionPayload
+    public partial class AzureDataExplorerDataConnectionPayload : DataConnectionPayload
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionPayload"/>. </summary>
         /// <param name="properties"> properties. </param>

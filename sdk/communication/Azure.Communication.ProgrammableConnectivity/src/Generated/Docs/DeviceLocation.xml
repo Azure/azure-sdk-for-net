@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="VerifyAsync(string,NetworkIdentifier,double,double,int,LocationDevice,CancellationToken)">
+    <member name="VerifyAsync(string,DeviceLocationVerificationContent,CancellationToken)">
       <example>
 This sample shows how to call VerifyAsync.
 <code><![CDATA[
@@ -9,9 +9,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
-LocationDevice device = new LocationDevice();
-Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", networkIdentifier, 123.45, 123.45, 1234, device);
+DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice());
+Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", body);
 ]]></code>
 This sample shows how to call VerifyAsync with all parameters.
 <code><![CDATA[
@@ -19,18 +18,17 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
-LocationDevice device = new LocationDevice
+DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice
 {
     NetworkAccessIdentifier = "<networkAccessIdentifier>",
     PhoneNumber = "<phoneNumber>",
     Ipv4Address = new Ipv4Address("<ipv4>", 1234),
     Ipv6Address = new Ipv6Address("<ipv6>", 1234),
-};
-Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", networkIdentifier, 123.45, 123.45, 1234, device);
+});
+Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", body);
 ]]></code></example>
     </member>
-    <member name="Verify(string,NetworkIdentifier,double,double,int,LocationDevice,CancellationToken)">
+    <member name="Verify(string,DeviceLocationVerificationContent,CancellationToken)">
       <example>
 This sample shows how to call Verify.
 <code><![CDATA[
@@ -38,9 +36,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
-LocationDevice device = new LocationDevice();
-Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", networkIdentifier, 123.45, 123.45, 1234, device);
+DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice());
+Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", body);
 ]]></code>
 This sample shows how to call Verify with all parameters.
 <code><![CDATA[
@@ -48,15 +45,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
-LocationDevice device = new LocationDevice
+DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice
 {
     NetworkAccessIdentifier = "<networkAccessIdentifier>",
     PhoneNumber = "<phoneNumber>",
     Ipv4Address = new Ipv4Address("<ipv4>", 1234),
     Ipv6Address = new Ipv6Address("<ipv6>", 1234),
-};
-Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", networkIdentifier, 123.45, 123.45, 1234, device);
+});
+Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", body);
 ]]></code></example>
     </member>
     <member name="VerifyAsync(string,RequestContent,RequestContext)">
