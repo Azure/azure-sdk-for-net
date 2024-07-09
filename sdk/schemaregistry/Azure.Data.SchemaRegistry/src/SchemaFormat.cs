@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Security.Cryptography;
 
 namespace Azure.Data.SchemaRegistry
 {
