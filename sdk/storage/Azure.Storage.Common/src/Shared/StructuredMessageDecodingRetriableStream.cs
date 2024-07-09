@@ -93,7 +93,7 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     {
         StructuredMessageDecodingStream.DecodedData final = new();
         // TODO
-        _onComplete(final);
+        _onComplete?.Invoke(final);
     }
 
     #region Read

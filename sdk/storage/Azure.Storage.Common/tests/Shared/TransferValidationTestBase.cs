@@ -1300,15 +1300,17 @@ namespace Azure.Storage.Test.Shared
             };
 
             // Act
-            var dest = new MemoryStream();
+            byte[] dest;
+            using (MemoryStream ms = new())
             using (checksumPipelineAssertion.CheckRequestScope())
             {
-                await ParallelDownloadAsync(client, dest, validationOptions, transferOptions);
+                await ParallelDownloadAsync(client, ms, validationOptions, transferOptions);
+                dest = ms.ToArray();
             }
 
             // Assert
             // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.IsTrue(dest.SequenceEqual(data));
         }
 
         [Test]
