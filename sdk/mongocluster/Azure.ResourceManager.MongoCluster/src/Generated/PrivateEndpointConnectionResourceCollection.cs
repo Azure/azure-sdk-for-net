@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionResource_ListByMongoCluster</description>
+        /// <description>PrivateEndpointConnections_ListByMongoCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionResource_ListByMongoCluster</description>
+        /// <description>PrivateEndpointConnections_ListByMongoCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

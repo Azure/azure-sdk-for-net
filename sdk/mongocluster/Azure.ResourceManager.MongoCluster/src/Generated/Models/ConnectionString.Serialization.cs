@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStringValue))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(ConnectionStringValue);
             }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
