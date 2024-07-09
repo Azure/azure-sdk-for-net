@@ -13,19 +13,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    public partial class FleetPropertiesUpdate : IUtf8JsonSerializable, IJsonModel<FleetPropertiesUpdate>
+    public partial class FleetProperties : IUtf8JsonSerializable, IJsonModel<FleetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FleetPropertiesUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FleetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FleetPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FleetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FleetPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FleetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FleetPropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FleetProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(SpotPriorityProfile))
             {
                 writer.WritePropertyName("spotPriorityProfile"u8);
@@ -36,21 +41,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("regularPriorityProfile"u8);
                 writer.WriteObjectValue(RegularPriorityProfile, options);
             }
-            if (Optional.IsCollectionDefined(VmSizesProfile))
+            writer.WritePropertyName("vmSizesProfile"u8);
+            writer.WriteStartArray();
+            foreach (var item in VmSizesProfile)
             {
-                writer.WritePropertyName("vmSizesProfile"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmSizesProfile)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (Optional.IsDefined(ComputeProfile))
-            {
-                writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile, options);
-            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("computeProfile"u8);
+            writer.WriteObjectValue(ComputeProfile, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -69,19 +68,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             writer.WriteEndObject();
         }
 
-        FleetPropertiesUpdate IJsonModel<FleetPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FleetProperties IJsonModel<FleetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FleetPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FleetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FleetPropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FleetProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFleetPropertiesUpdate(document.RootElement, options);
+            return DeserializeFleetProperties(document.RootElement, options);
         }
 
-        internal static FleetPropertiesUpdate DeserializeFleetPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FleetProperties DeserializeFleetProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,14 +88,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
+            ProvisioningState? provisioningState = default;
             SpotPriorityProfile spotPriorityProfile = default;
             RegularPriorityProfile regularPriorityProfile = default;
             IList<VmSizeProfile> vmSizesProfile = default;
-            ComputeProfileUpdate computeProfile = default;
+            ComputeProfile computeProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("spotPriorityProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -117,10 +126,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
                 if (property.NameEquals("vmSizesProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<VmSizeProfile> array = new List<VmSizeProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -131,11 +136,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
                 if (property.NameEquals("computeProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    computeProfile = ComputeProfileUpdate.DeserializeComputeProfileUpdate(property.Value, options);
+                    computeProfile = ComputeProfile.DeserializeComputeProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,38 +145,44 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FleetPropertiesUpdate(spotPriorityProfile, regularPriorityProfile, vmSizesProfile ?? new ChangeTrackingList<VmSizeProfile>(), computeProfile, serializedAdditionalRawData);
+            return new FleetProperties(
+                provisioningState,
+                spotPriorityProfile,
+                regularPriorityProfile,
+                vmSizesProfile,
+                computeProfile,
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FleetPropertiesUpdate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FleetProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FleetPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FleetProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FleetPropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FleetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FleetPropertiesUpdate IPersistableModel<FleetPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FleetProperties IPersistableModel<FleetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FleetPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FleetProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFleetPropertiesUpdate(document.RootElement, options);
+                        return DeserializeFleetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FleetPropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FleetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FleetPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FleetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

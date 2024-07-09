@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
         /// <param name="baseVirtualMachineProfile"> Base Virtual Machine Profile Properties to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachineScaleSet.json#/definitions/VirtualMachineScaleSetVMProfile". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseVirtualMachineProfile"/> is null. </exception>
-        public ComputeProfile(VirtualMachineScaleSetVmProfile baseVirtualMachineProfile)
+        public ComputeProfile(BaseVirtualMachineProfile baseVirtualMachineProfile)
         {
             Argument.AssertNotNull(baseVirtualMachineProfile, nameof(baseVirtualMachineProfile));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// This property cannot be updated.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeProfile(VirtualMachineScaleSetVmProfile baseVirtualMachineProfile, string computeApiVersion, int? platformFaultDomainCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeProfile(BaseVirtualMachineProfile baseVirtualMachineProfile, string computeApiVersion, int? platformFaultDomainCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BaseVirtualMachineProfile = baseVirtualMachineProfile;
             ComputeApiVersion = computeApiVersion;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Base Virtual Machine Profile Properties to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachineScaleSet.json#/definitions/VirtualMachineScaleSetVMProfile". </summary>
-        public VirtualMachineScaleSetVmProfile BaseVirtualMachineProfile { get; set; }
+        public BaseVirtualMachineProfile BaseVirtualMachineProfile { get; set; }
         /// <summary>
         /// Specifies the Microsoft.Compute API version to use when creating underlying Virtual Machine scale sets and Virtual Machines.
         /// The default value will be the latest supported computeApiVersion by Compute Fleet.

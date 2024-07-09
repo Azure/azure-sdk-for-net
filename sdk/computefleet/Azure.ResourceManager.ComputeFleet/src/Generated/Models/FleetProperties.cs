@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> Details of the Compute Fleet. </summary>
-    public partial class FleetPropertiesUpdate
+    public partial class FleetProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,20 +46,29 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FleetPropertiesUpdate"/>. </summary>
-        public FleetPropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="FleetProperties"/>. </summary>
+        /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
+        /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmSizesProfile"/> or <paramref name="computeProfile"/> is null. </exception>
+        public FleetProperties(IEnumerable<VmSizeProfile> vmSizesProfile, ComputeProfile computeProfile)
         {
-            VmSizesProfile = new ChangeTrackingList<VmSizeProfile>();
+            Argument.AssertNotNull(vmSizesProfile, nameof(vmSizesProfile));
+            Argument.AssertNotNull(computeProfile, nameof(computeProfile));
+
+            VmSizesProfile = vmSizesProfile.ToList();
+            ComputeProfile = computeProfile;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FleetPropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetProperties"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Compute Fleet. </param>
         /// <param name="regularPriorityProfile"> Configuration Options for Regular instances in Compute Fleet. </param>
         /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
         /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FleetPropertiesUpdate(SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<VmSizeProfile> vmSizesProfile, ComputeProfileUpdate computeProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FleetProperties(ProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<VmSizeProfile> vmSizesProfile, ComputeProfile computeProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ProvisioningState = provisioningState;
             SpotPriorityProfile = spotPriorityProfile;
             RegularPriorityProfile = regularPriorityProfile;
             VmSizesProfile = vmSizesProfile;
@@ -66,6 +76,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FleetProperties"/> for deserialization. </summary>
+        internal FleetProperties()
+        {
+        }
+
+        /// <summary> The status of the last operation. </summary>
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Configuration Options for Spot instances in Compute Fleet. </summary>
         public SpotPriorityProfile SpotPriorityProfile { get; set; }
         /// <summary> Configuration Options for Regular instances in Compute Fleet. </summary>
@@ -73,6 +90,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> List of VM sizes supported for Compute Fleet. </summary>
         public IList<VmSizeProfile> VmSizesProfile { get; }
         /// <summary> Compute Profile to use for running user's workloads. </summary>
-        public ComputeProfileUpdate ComputeProfile { get; set; }
+        public ComputeProfile ComputeProfile { get; set; }
     }
 }

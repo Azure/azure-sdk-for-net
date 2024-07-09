@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> Inner error details. </summary>
-    public partial class InnerError
+    /// <summary> BaseVirtualMachineProfile. </summary>
+    public partial class BaseVirtualMachineProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,16 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
-        internal InnerError()
+        /// <summary> Initializes a new instance of <see cref="BaseVirtualMachineProfile"/>. </summary>
+        public BaseVirtualMachineProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
-        /// <param name="exceptiontype"> The exception type. </param>
-        /// <param name="errordetail"> The internal error message or exception dump. </param>
+        /// <summary> Initializes a new instance of <see cref="BaseVirtualMachineProfile"/>. </summary>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InnerError(string exceptiontype, string errordetail, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BaseVirtualMachineProfile(IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Exceptiontype = exceptiontype;
-            Errordetail = errordetail;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> The exception type. </summary>
-        public string Exceptiontype { get; }
-        /// <summary> The internal error message or exception dump. </summary>
-        public string Errordetail { get; }
     }
 }
