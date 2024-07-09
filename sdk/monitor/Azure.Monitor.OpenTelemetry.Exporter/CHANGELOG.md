@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 * Rpc tags linked to `OperationType.Rpc`
-  ([...]())
+  ([#44906](https://github.com/Azure/azure-sdk-for-net/pull/44906))
 
 ### Features Added
 
