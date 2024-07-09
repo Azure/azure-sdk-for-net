@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/d1f4d6fcf1bbb2e71a32bb2079de12f17fedf56a/specification/network/resource-manager/readme.md
-# tag: package-2023-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/b22c642b361e6d6e7d72a2347a09b0bcf6075d70/specification/network/resource-manager/readme.md
+tag: package-2023-11-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -27,6 +27,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 model-namespace: true
 public-clients: false
@@ -580,6 +581,57 @@ directive:
       {
           delete $[path];
       }
+  - from: networkManager.json
+    where: $.definitions
+    transform: >
+      $.ConfigurationType['x-ms-enum']['values'] = [
+        { value: 'SecurityAdmin',   name: 'SecurityAdmin' },
+        { value: 'Connectivity',    name: 'Connectivity' },
+        { value: 'SecurityUser',    name: 'SecurityUser' },
+        { value: 'Routing',         name: 'Routing' }
+      ];
+  - from: networkManagerRoutingConfiguration.json
+    where: $.definitions
+    transform: >
+      $.RoutingRuleNextHopType['x-ms-enum']['values'] = [
+        { value: 'Internet',              name: 'Internet' },
+        { value: 'NoNextHop',             name: 'NoNextHop' },
+        { value: 'VirtualAppliance',      name: 'VirtualAppliance' },
+        { value: 'VirtualNetworkGateway', name: 'VirtualNetworkGateway' },
+        { value: 'VnetLocal',             name: 'VnetLocal' }
+      ];
+  - from: networkManagerRoutingConfiguration.json
+    where: $.definitions
+    transform: >
+      $.RoutingRuleCollectionPropertiesFormat['properties']['disableBgpRoutePropagation'] = {
+          "type": "string",
+          "default": true,
+          "description": "Determines whether BGP route propagation is enabled. Defaults to true."
+        };
+  - from: networkManagerGroup.json
+    where: $.definitions
+    transform: >
+      $.NetworkGroupProperties = {
+        'properties':{
+            'description':{
+              'type':'string',
+              'description':'A description of the network group.'
+            },
+            'memberType':{
+              'type':'string',
+              'description':'Group member type.'
+            },
+            'provisioningState':{
+              'readOnly': true,
+              'description':'Resource type.',
+              '$ref':'./network.json#/definitions/ProvisioningState'
+            }
+        },
+        'required':[
+            'memberType'
+        ],
+        'description':'Properties of network group'
+      };
   # - from: vmssPublicIpAddress.json
   #   where: $.paths
   #   transform: >

@@ -40,6 +40,120 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SecurityUserConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityUserConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityUserConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetSecurityUserConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SecurityUserConfigurationResource"/> object. </returns>
+        public static SecurityUserConfigurationResource GetSecurityUserConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetSecurityUserConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="UserRuleCollectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UserRuleCollectionResource.CreateResourceIdentifier" /> to create an <see cref="UserRuleCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetUserRuleCollectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="UserRuleCollectionResource"/> object. </returns>
+        public static UserRuleCollectionResource GetUserRuleCollectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetUserRuleCollectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BaseUserRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BaseUserRuleResource.CreateResourceIdentifier" /> to create a <see cref="BaseUserRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetBaseUserRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BaseUserRuleResource"/> object. </returns>
+        public static BaseUserRuleResource GetBaseUserRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetBaseUserRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoutingConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoutingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="RoutingConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetRoutingConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoutingConfigurationResource"/> object. </returns>
+        public static RoutingConfigurationResource GetRoutingConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetRoutingConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoutingRuleCollectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoutingRuleCollectionResource.CreateResourceIdentifier" /> to create a <see cref="RoutingRuleCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetRoutingRuleCollectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoutingRuleCollectionResource"/> object. </returns>
+        public static RoutingRuleCollectionResource GetRoutingRuleCollectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetRoutingRuleCollectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoutingRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoutingRuleResource.CreateResourceIdentifier" /> to create a <see cref="RoutingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetRoutingRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RoutingRuleResource"/> object. </returns>
+        public static RoutingRuleResource GetRoutingRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetRoutingRuleResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
