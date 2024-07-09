@@ -24,9 +24,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" />
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="System.IO.Pipelines" />
-
-    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
