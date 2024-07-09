@@ -185,11 +185,14 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             string mongoClusterName = "myMongoCluster";
             MongoClusterData data = new MongoClusterData(new AzureLocation("westus2"))
             {
-                CreateMode = CreateMode.PointInTimeRestore,
-                RestoreParameters = new MongoClusterRestoreContent()
+                Properties = new MongoClusterProperties()
                 {
-                    PointInTimeUTC = DateTimeOffset.Parse("2023-01-13T20:07:35Z"),
-                    SourceResourceId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myOtherMongoCluster",
+                    CreateMode = CreateMode.PointInTimeRestore,
+                    RestoreParameters = new MongoClusterRestoreContent()
+                    {
+                        PointInTimeUTC = DateTimeOffset.Parse("2023-01-13T20:07:35Z"),
+                        SourceResourceId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/myOtherMongoCluster",
+                    },
                 },
             };
             ArmOperation<MongoClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, mongoClusterName, data);
@@ -229,10 +232,12 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             string mongoClusterName = "myMongoCluster";
             MongoClusterData data = new MongoClusterData(new AzureLocation("westus2"))
             {
-                AdministratorLogin = "mongoAdmin",
-                AdministratorLoginPassword = "password",
-                ServerVersion = "5.0",
-                NodeGroupSpecs =
+                Properties = new MongoClusterProperties()
+                {
+                    AdministratorLogin = "mongoAdmin",
+                    AdministratorLoginPassword = "password",
+                    ServerVersion = "5.0",
+                    NodeGroupSpecs =
 {
 new NodeGroupSpec()
 {
@@ -243,6 +248,7 @@ Kind = NodeKind.Shard,
 NodeCount = 1,
 }
 },
+                },
             };
             ArmOperation<MongoClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, mongoClusterName, data);
             MongoClusterResource result = lro.Value;

@@ -16,6 +16,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: false
 use-model-reader-writer: true
 
 #mgmt-debug:

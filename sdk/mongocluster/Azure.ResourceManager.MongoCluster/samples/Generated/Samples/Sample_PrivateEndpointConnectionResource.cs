@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             // invoke the operation
             PrivateEndpointConnectionResourceData data = new PrivateEndpointConnectionResourceData()
             {
-                ConnectionState = new MongoClusterPrivateLinkServiceConnectionState()
+                Properties = new PrivateEndpointConnectionProperties(new MongoClusterPrivateLinkServiceConnectionState()
                 {
                     Status = MongoClusterPrivateEndpointServiceConnectionStatus.Approved,
                     Description = "Auto-Approved",
-                },
+                }),
             };
             ArmOperation<PrivateEndpointConnectionResource> lro = await privateEndpointConnectionResource.UpdateAsync(WaitUntil.Completed, data);
             PrivateEndpointConnectionResource result = lro.Value;

@@ -165,7 +165,10 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             // invoke the operation
             MongoClusterData data = new MongoClusterData(new AzureLocation("placeholder"))
             {
-                PublicNetworkAccess = PublicNetworkAccess.Disabled,
+                Properties = new MongoClusterProperties()
+                {
+                    PublicNetworkAccess = PublicNetworkAccess.Disabled,
+                },
             };
             ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, data);
             MongoClusterResource result = lro.Value;
@@ -201,11 +204,13 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             // invoke the operation
             MongoClusterData data = new MongoClusterData(new AzureLocation("placeholder"))
             {
-                AdministratorLogin = "mongoAdmin",
-                AdministratorLoginPassword = "password",
-                ServerVersion = "5.0",
-                PublicNetworkAccess = PublicNetworkAccess.Enabled,
-                NodeGroupSpecs =
+                Properties = new MongoClusterProperties()
+                {
+                    AdministratorLogin = "mongoAdmin",
+                    AdministratorLoginPassword = "password",
+                    ServerVersion = "5.0",
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                    NodeGroupSpecs =
 {
 new NodeGroupSpec()
 {
@@ -216,6 +221,7 @@ Kind = NodeKind.Shard,
 NodeCount = 1,
 }
 },
+                },
             };
             ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, data);
             MongoClusterResource result = lro.Value;
@@ -251,7 +257,9 @@ NodeCount = 1,
             // invoke the operation
             MongoClusterData data = new MongoClusterData(new AzureLocation("placeholder"))
             {
-                NodeGroupSpecs =
+                Properties = new MongoClusterProperties()
+                {
+                    NodeGroupSpecs =
 {
 new NodeGroupSpec()
 {
@@ -259,6 +267,7 @@ DiskSizeGB = 256,
 Kind = NodeKind.Shard,
 }
 },
+                },
             };
             ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, data);
             MongoClusterResource result = lro.Value;
