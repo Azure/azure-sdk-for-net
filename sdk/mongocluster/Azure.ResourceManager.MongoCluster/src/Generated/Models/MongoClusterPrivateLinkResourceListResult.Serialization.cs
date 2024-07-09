@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            IReadOnlyList<MongoClusterPrivateLinkResource> value = default;
+            IReadOnlyList<MongoClusterPrviateLinkResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MongoClusterPrivateLinkResource> array = new List<MongoClusterPrivateLinkResource>();
+                    List<MongoClusterPrviateLinkResourceData> array = new List<MongoClusterPrviateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoClusterPrivateLinkResource.DeserializeMongoClusterPrivateLinkResource(item, options));
+                        array.Add(MongoClusterPrviateLinkResourceData.DeserializeMongoClusterPrviateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

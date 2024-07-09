@@ -346,7 +346,7 @@ Kind = NodeKind.Shard,
             MongoClusterResource mongoCluster = client.GetMongoClusterResource(mongoClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MongoClusterPrivateLinkResource item in mongoCluster.GetPrivateLinksAsync())
+            await foreach (MongoClusterPrviateLinkResourceData item in mongoCluster.GetPrivateLinksAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

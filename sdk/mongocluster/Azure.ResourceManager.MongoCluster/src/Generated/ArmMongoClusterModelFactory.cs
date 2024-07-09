@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPrivateLinkResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPrviateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -175,13 +175,13 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.MongoClusterPrivateLinkResource"/> instance for mocking. </returns>
-        public static MongoClusterPrivateLinkResource MongoClusterPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <returns> A new <see cref="Models.MongoClusterPrviateLinkResourceData"/> instance for mocking. </returns>
+        public static MongoClusterPrviateLinkResourceData MongoClusterPrviateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new MongoClusterPrivateLinkResource(
+            return new MongoClusterPrviateLinkResourceData(
                 id,
                 name,
                 resourceType,

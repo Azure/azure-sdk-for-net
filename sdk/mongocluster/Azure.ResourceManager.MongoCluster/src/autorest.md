@@ -55,6 +55,5 @@ acronym-mapping:
 rename-mapping:
   CheckNameAvailabilityResponse: CheckNameAvailabilityResult
   MongoClusterRestoreParameters: MongoClusterRestoreContent
-
-
+  PrivateLinkResource: MongoClusterPrviateLinkResourceData
 ```
