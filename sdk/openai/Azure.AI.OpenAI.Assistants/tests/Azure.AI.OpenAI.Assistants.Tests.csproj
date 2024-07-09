@@ -10,9 +10,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.AI.OpenAI.Assistants.csproj" />
-
-    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
   
   <ItemGroup>
@@ -24,9 +21,6 @@
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
   </ItemGroup>
 
-  <ItemGroup>
-  </ItemGroup>
-  
   <ItemGroup>
     <Folder Include="SessionRecords\" />
     <None Include="SessionRecords\**\*" />

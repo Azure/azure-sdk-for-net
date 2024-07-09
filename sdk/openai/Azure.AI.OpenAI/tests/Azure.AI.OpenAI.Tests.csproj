@@ -16,9 +16,6 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
-
-    <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>
