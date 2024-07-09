@@ -1405,8 +1405,7 @@
         "$id": "189",
         "Type": {
          "$id": "190",
-         "Kind": "string",
-         "IsNullable": false
+         "Kind": "string"
         },
         "Value": "2024-02-01"
        },
@@ -1506,8 +1505,7 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "200",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1532,8 +1530,7 @@
        "NameInRequest": "Content-Type",
        "Type": {
         "$id": "203",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1679,8 +1676,7 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "217",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1851,8 +1847,7 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "235",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
