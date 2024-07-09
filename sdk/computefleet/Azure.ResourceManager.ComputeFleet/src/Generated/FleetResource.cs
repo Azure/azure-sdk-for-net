@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSet_ListVirtualMachineScaleSets</description>
+        /// <description>Fleets_ListVirtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -373,7 +373,8 @@ namespace Azure.ResourceManager.ComputeFleet
         public virtual AsyncPageable<VirtualMachineScaleSet> GetVirtualMachineScaleSetsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fleetRestClient.CreateListVirtualMachineScaleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(e), _fleetClientDiagnostics, Pipeline, "FleetResource.GetVirtualMachineScaleSets", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fleetRestClient.CreateListVirtualMachineScaleSetsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(e), _fleetClientDiagnostics, Pipeline, "FleetResource.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -385,7 +386,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSet_ListVirtualMachineScaleSets</description>
+        /// <description>Fleets_ListVirtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -402,7 +403,8 @@ namespace Azure.ResourceManager.ComputeFleet
         public virtual Pageable<VirtualMachineScaleSet> GetVirtualMachineScaleSets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fleetRestClient.CreateListVirtualMachineScaleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(e), _fleetClientDiagnostics, Pipeline, "FleetResource.GetVirtualMachineScaleSets", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fleetRestClient.CreateListVirtualMachineScaleSetsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet(e), _fleetClientDiagnostics, Pipeline, "FleetResource.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

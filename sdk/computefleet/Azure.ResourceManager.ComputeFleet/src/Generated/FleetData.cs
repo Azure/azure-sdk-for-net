@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.ComputeFleet
         public FleetData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
+            VmSizesProfile = new ChangeTrackingList<VmSizeProfile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FleetData"/>. </summary>
@@ -65,17 +66,25 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="zones"> Zones in which the Compute Fleet is available. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Compute Fleet. </param>
+        /// <param name="regularPriorityProfile"> Configuration Options for Regular instances in Compute Fleet. </param>
+        /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
+        /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FleetProperties properties, IList<string> zones, Models.ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal FleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, ArmPlan plan, ProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<VmSizeProfile> vmSizesProfile, ComputeProfile computeProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Properties = properties;
             Zones = zones;
             Identity = identity;
             Plan = plan;
+            ProvisioningState = provisioningState;
+            SpotPriorityProfile = spotPriorityProfile;
+            RegularPriorityProfile = regularPriorityProfile;
+            VmSizesProfile = vmSizesProfile;
+            ComputeProfile = computeProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,13 +93,21 @@ namespace Azure.ResourceManager.ComputeFleet
         {
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public FleetProperties Properties { get; set; }
         /// <summary> Zones in which the Compute Fleet is available. </summary>
         public IList<string> Zones { get; }
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public Models.ManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Details of the resource plan. </summary>
         public ArmPlan Plan { get; set; }
+        /// <summary> The status of the last operation. </summary>
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Configuration Options for Spot instances in Compute Fleet. </summary>
+        public SpotPriorityProfile SpotPriorityProfile { get; set; }
+        /// <summary> Configuration Options for Regular instances in Compute Fleet. </summary>
+        public RegularPriorityProfile RegularPriorityProfile { get; set; }
+        /// <summary> List of VM sizes supported for Compute Fleet. </summary>
+        public IList<VmSizeProfile> VmSizesProfile { get; }
+        /// <summary> Compute Profile to use for running user's workloads. </summary>
+        public ComputeProfile ComputeProfile { get; set; }
     }
 }

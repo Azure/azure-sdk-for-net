@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="plan"> Updatable resource plan. </param>
         /// <param name="properties"> RP-specific updatable properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FleetPatch(IDictionary<string, string> tags, ManagedServiceIdentityUpdate identity, ArmPlan plan, FleetProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FleetPatch(IDictionary<string, string> tags, ManagedServiceIdentityUpdate identity, ArmPlan plan, FleetPropertiesUpdate properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Updatable resource plan. </summary>
         public ArmPlan Plan { get; set; }
         /// <summary> RP-specific updatable properties. </summary>
-        public FleetProperties Properties { get; set; }
+        public FleetPropertiesUpdate Properties { get; set; }
     }
 }

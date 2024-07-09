@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            BaseVirtualMachineProfile baseVirtualMachineProfile = default;
+            VirtualMachineScaleSetVmProfile baseVirtualMachineProfile = default;
             string computeApiVersion = default;
             int? platformFaultDomainCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 if (property.NameEquals("baseVirtualMachineProfile"u8))
                 {
-                    baseVirtualMachineProfile = BaseVirtualMachineProfile.DeserializeBaseVirtualMachineProfile(property.Value, options);
+                    baseVirtualMachineProfile = VirtualMachineScaleSetVmProfile.DeserializeVirtualMachineScaleSetVmProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeApiVersion"u8))
