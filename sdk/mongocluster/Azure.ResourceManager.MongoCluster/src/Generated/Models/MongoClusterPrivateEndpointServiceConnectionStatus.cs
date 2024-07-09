@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Connectionaiting for approval or rejection. </summary>
         public static MongoClusterPrivateEndpointServiceConnectionStatus Pending { get; } = new MongoClusterPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary> Connection approved. </summary>
         public static MongoClusterPrivateEndpointServiceConnectionStatus Approved { get; } = new MongoClusterPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary> Connection Rejected. </summary>
         public static MongoClusterPrivateEndpointServiceConnectionStatus Rejected { get; } = new MongoClusterPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="MongoClusterPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(MongoClusterPrivateEndpointServiceConnectionStatus left, MongoClusterPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

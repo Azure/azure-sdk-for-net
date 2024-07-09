@@ -16,16 +16,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMongoClusterModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
-        {
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -90,7 +80,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Resource properties. </param>
+        /// <param name="properties"> The private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.MongoClusterPrivateEndpointConnection"/> instance for mocking. </returns>
         public static MongoClusterPrivateEndpointConnection MongoClusterPrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
@@ -106,14 +96,43 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpointId"> The private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, MongoClusterPrivateLinkServiceConnectionState connectionState = null, MongoClusterPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, MongoClusterPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, MongoClusterPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             groupIds ??= new List<string>();
 
-            return new PrivateEndpointConnectionProperties(groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new PrivateEndpointConnectionProperties(groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ListConnectionStringsResult"/>. </summary>
+        /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
+        /// <returns> A new <see cref="Models.ListConnectionStringsResult"/> instance for mocking. </returns>
+        public static ListConnectionStringsResult ListConnectionStringsResult(IEnumerable<ConnectionString> connectionStrings = null)
+        {
+            connectionStrings ??= new List<ConnectionString>();
+
+            return new ListConnectionStringsResult(connectionStrings?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionString"/>. </summary>
+        /// <param name="uri"> Value of the connection string. </param>
+        /// <param name="description"> Description of the connection string. </param>
+        /// <returns> A new <see cref="Models.ConnectionString"/> instance for mocking. </returns>
+        public static ConnectionString ConnectionString(string uri = null, string description = null)
+        {
+            return new ConnectionString(uri, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResult"/>. </summary>
+        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is not available. </param>
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        {
+            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoCluster.FirewallRuleData"/>. </summary>
@@ -142,25 +161,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static FirewallRuleProperties FirewallRuleProperties(ProvisioningState? provisioningState = null, string startIPAddress = null, string endIPAddress = null)
         {
             return new FirewallRuleProperties(provisioningState, startIPAddress, endIPAddress, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ListConnectionStringsResult"/>. </summary>
-        /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
-        /// <returns> A new <see cref="Models.ListConnectionStringsResult"/> instance for mocking. </returns>
-        public static ListConnectionStringsResult ListConnectionStringsResult(IEnumerable<ConnectionString> connectionStrings = null)
-        {
-            connectionStrings ??= new List<ConnectionString>();
-
-            return new ListConnectionStringsResult(connectionStrings?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectionString"/>. </summary>
-        /// <param name="connectionStringValue"> Value of the connection string. </param>
-        /// <param name="description"> Description of the connection string. </param>
-        /// <returns> A new <see cref="Models.ConnectionString"/> instance for mocking. </returns>
-        public static ConnectionString ConnectionString(string connectionStringValue = null, string description = null)
-        {
-            return new ConnectionString(connectionStringValue, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoCluster.PrivateEndpointConnectionResourceData"/>. </summary>
