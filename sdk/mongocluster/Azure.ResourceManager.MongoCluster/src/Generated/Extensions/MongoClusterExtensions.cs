@@ -184,80 +184,6 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Check if mongo cluster name is available for use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMongoClusterSubscriptionResource.CheckNameAvailabilityMongoCluster(AzureLocation,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The CheckAvailability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityMongoClusterAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableMongoClusterSubscriptionResource(subscriptionResource).CheckNameAvailabilityMongoClusterAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check if mongo cluster name is available for use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMongoClusterSubscriptionResource.CheckNameAvailabilityMongoCluster(AzureLocation,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The CheckAvailability request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityMongoCluster(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMongoClusterSubscriptionResource(subscriptionResource).CheckNameAvailabilityMongoCluster(location, content, cancellationToken);
-        }
-
-        /// <summary>
         /// List all the mongo clusters in a given subscription.
         /// <list type="bullet">
         /// <item>
@@ -266,7 +192,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_List</description>
+        /// <description>MongoCluster_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -302,7 +228,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_List</description>
+        /// <description>MongoCluster_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -327,6 +253,82 @@ namespace Azure.ResourceManager.MongoCluster
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMongoClusterSubscriptionResource(subscriptionResource).GetMongoClusters(cancellationToken);
+        }
+
+        /// <summary>
+        /// Check if mongo cluster name is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMongoClusterSubscriptionResource.CheckNameAvailabilityMongoCluster(string,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The CheckAvailability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityMongoClusterAsync(this SubscriptionResource subscriptionResource, string location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableMongoClusterSubscriptionResource(subscriptionResource).CheckNameAvailabilityMongoClusterAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check if mongo cluster name is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMongoClusterSubscriptionResource.CheckNameAvailabilityMongoCluster(string,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The CheckAvailability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityMongoCluster(this SubscriptionResource subscriptionResource, string location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMongoClusterSubscriptionResource(subscriptionResource).CheckNameAvailabilityMongoCluster(location, content, cancellationToken);
         }
     }
 }
