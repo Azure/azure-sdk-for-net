@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerRestOperations _serverOperationsRestClient;
         private readonly ClientDiagnostics _tdeCertificatesClientDiagnostics;
         private readonly TdeCertificatesRestOperations _tdeCertificatesRestClient;
-        private readonly ClientDiagnostics _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics;
-        private readonly ReplicationLinksRestOperations _sqlServerDatabaseReplicationLinkReplicationLinksRestClient;
         private readonly ClientDiagnostics _sqlDatabaseDatabasesClientDiagnostics;
         private readonly DatabasesRestOperations _sqlDatabaseDatabasesRestClient;
+        private readonly ClientDiagnostics _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics;
+        private readonly ReplicationLinksRestOperations _sqlServerDatabaseReplicationLinkReplicationLinksRestClient;
         private readonly SqlServerData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.Sql
             _serverOperationsRestClient = new ServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _tdeCertificatesRestClient = new TdeCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDatabaseReplicationLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerDatabaseReplicationLinkResource.ResourceType, out string sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
-            _sqlServerDatabaseReplicationLinkReplicationLinksRestClient = new ReplicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlDatabaseResource.ResourceType, out string sqlDatabaseDatabasesApiVersion);
             _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseDatabasesApiVersion);
+            _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDatabaseReplicationLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlServerDatabaseReplicationLinkResource.ResourceType, out string sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
+            _sqlServerDatabaseReplicationLinkReplicationLinksRestClient = new ReplicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseReplicationLinkReplicationLinksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -2044,7 +2044,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2075,7 +2075,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-02-01-preview</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2538,66 +2538,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of replication links.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationLinks_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of replication links.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationLinks_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a list of inaccessible databases in a logical server
         /// <list type="bullet">
         /// <item>
@@ -2831,6 +2771,66 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of replication links.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLinks_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of replication links.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/replicationLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationLinks_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlServerDatabaseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

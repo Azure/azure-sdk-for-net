@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> OAuth authorization server identifier. </summary>
+        [WirePath("openidProviderId")]
         public string OpenIdProviderId { get; set; }
         /// <summary> How to send token to the server. </summary>
+        [WirePath("bearerTokenSendingMethods")]
         public IList<BearerTokenSendingMethod> BearerTokenSendingMethods { get; }
     }
 }

@@ -105,7 +105,6 @@ stages:
                             ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
                             PackageRepository: Nuget
                             ReleaseSha: $(Build.SourceVersion)
-                            RepoId: Azure/azure-sdk-for-net
 
             - ${{if ne(artifact.skipPublishPackage, 'true')}}:
               - deployment: PublishPackage
