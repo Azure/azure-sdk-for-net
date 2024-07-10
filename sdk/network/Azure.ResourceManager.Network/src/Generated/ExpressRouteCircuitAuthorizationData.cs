@@ -31,12 +31,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="authorizationKey"> The authorization key. </param>
         /// <param name="authorizationUseStatus"> The authorization use status. </param>
+        /// <param name="connectionResourceUri"> The reference to the ExpressRoute connection resource using the authorization. </param>
         /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
-        internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, Uri connectionResourceUri, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             AuthorizationKey = authorizationKey;
             AuthorizationUseStatus = authorizationUseStatus;
+            ConnectionResourceUri = connectionResourceUri;
             ProvisioningState = provisioningState;
         }
 
@@ -46,6 +48,8 @@ namespace Azure.ResourceManager.Network
         public string AuthorizationKey { get; set; }
         /// <summary> The authorization use status. </summary>
         public AuthorizationUseStatus? AuthorizationUseStatus { get; set; }
+        /// <summary> The reference to the ExpressRoute connection resource using the authorization. </summary>
+        public Uri ConnectionResourceUri { get; }
         /// <summary> The provisioning state of the authorization resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }
