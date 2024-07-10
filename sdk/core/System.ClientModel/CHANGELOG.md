@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.5 (Unreleased)
-
-### Features Added
+## 1.1.0-beta.5 (2024-07-11)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Renamed `AsyncResultCollection<T>` and `ResultCollection<T>` to `AsyncCollectionResult<T>` and `CollectionResult<T>` given that they represent results that are collections.
+- Changed the design for collection return types from paginated service operations.  `AsyncPageableCollection<T>`, `PageableCollection<T>` and `ResultPage<T>` have been renamed to `AsyncPageCollection<T>`, `PageCollection<T>` and `PageResult<T>`, and `ContinuationToken` type has been added for resuming collection state across processes.  `PageCollection<T>` now represents a collection of pages rather than a collection of items.
 
 ## 1.1.0-beta.4 (2024-05-16)
 
