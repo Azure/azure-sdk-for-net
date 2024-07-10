@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RestrictionsType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RestrictionsType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WritePropertyName("values"u8);
             writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 return null;
             }
             ResourceSkuRestrictionsType? type = default;
-            IList<string> values = default;
+            IReadOnlyList<string> values = default;
             ResourceSkuRestrictionInfo restrictionInfo = default;
             ResourceSkuRestrictionsReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

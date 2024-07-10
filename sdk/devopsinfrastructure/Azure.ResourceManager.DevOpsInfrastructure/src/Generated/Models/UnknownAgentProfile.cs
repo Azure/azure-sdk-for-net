@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// The available derived classes include <see cref="AutomaticResourcePredictionsProfile"/> and <see cref="ManualResourcePredictionsProfile"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAgentProfile(string kind, BinaryData resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, resourcePredictions, resourcePredictionsProfile, serializedAdditionalRawData)
+        internal UnknownAgentProfile(string kind, ResourcePredictions resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, resourcePredictions, resourcePredictionsProfile, serializedAdditionalRawData)
         {
             Kind = kind ?? "Unknown";
         }

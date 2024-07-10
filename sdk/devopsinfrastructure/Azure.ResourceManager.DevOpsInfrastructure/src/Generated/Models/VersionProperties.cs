@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> Initializes a new instance of <see cref="VersionProperties"/>. </summary>
         /// <param name="version"> Version of the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public VersionProperties(string version)
+        internal VersionProperties(string version)
         {
             Argument.AssertNotNull(version, nameof(version));
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Version of the image. </summary>
-        public string Version { get; set; }
+        public string Version { get; }
     }
 }

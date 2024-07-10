@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 return null;
             }
-            AzureLocation location = default;
-            IList<string> zones = default;
-            IList<ResourceSkuZoneDetails> zoneDetails = default;
+            string location = default;
+            IReadOnlyList<string> zones = default;
+            IReadOnlyList<ResourceSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("zones"u8))

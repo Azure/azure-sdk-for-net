@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GitHubOrganization"/>. </summary>
-        /// <param name="uri"> The GitHub organization URL in which the pool should be created. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public GitHubOrganization(Uri uri)
+        /// <param name="gitHubOrganizatioi"> The GitHub organization URL in which the pool should be created. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubOrganizatioi"/> is null. </exception>
+        public GitHubOrganization(string gitHubOrganizatioi)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(gitHubOrganizatioi, nameof(gitHubOrganizatioi));
 
-            Uri = uri;
+            GitHubOrganizatioi = gitHubOrganizatioi;
             Repositories = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GitHubOrganization"/>. </summary>
-        /// <param name="uri"> The GitHub organization URL in which the pool should be created. </param>
+        /// <param name="gitHubOrganizatioi"> The GitHub organization URL in which the pool should be created. </param>
         /// <param name="repositories"> Optional list of repositories in which the pool should be created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GitHubOrganization(Uri uri, IList<string> repositories, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GitHubOrganization(string gitHubOrganizatioi, IList<string> repositories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Uri = uri;
+            GitHubOrganizatioi = gitHubOrganizatioi;
             Repositories = repositories;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The GitHub organization URL in which the pool should be created. </summary>
-        public Uri Uri { get; set; }
+        public string GitHubOrganizatioi { get; set; }
         /// <summary> Optional list of repositories in which the pool should be created. </summary>
         public IList<string> Repositories { get; }
     }

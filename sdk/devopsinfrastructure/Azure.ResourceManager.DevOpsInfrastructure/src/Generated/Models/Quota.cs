@@ -64,15 +64,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Quota"/>. </summary>
-        /// <param name="name"> The name of the quota. </param>
         /// <param name="id"> Fully qualified ARM resource id. </param>
         /// <param name="unit"> The unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Quota(QuotaName name, ResourceIdentifier id, string unit, long currentValue, long limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Quota(ResourceIdentifier id, string unit, long currentValue, long limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
@@ -85,8 +83,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
         }
 
-        /// <summary> The name of the quota. </summary>
-        public QuotaName Name { get; }
         /// <summary> Fully qualified ARM resource id. </summary>
         public ResourceIdentifier Id { get; }
         /// <summary> The unit of usage measurement. </summary>

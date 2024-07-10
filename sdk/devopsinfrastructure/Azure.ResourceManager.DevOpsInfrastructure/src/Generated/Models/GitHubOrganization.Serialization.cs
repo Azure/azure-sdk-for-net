@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WriteStringValue(GitHubOrganizatioi);
             if (Optional.IsCollectionDefined(Repositories))
             {
                 writer.WritePropertyName("repositories"u8);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 return null;
             }
-            Uri url = default;
+            string url = default;
             IList<string> repositories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("repositories"u8))
