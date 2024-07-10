@@ -26,36 +26,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Details))
-            {
-                writer.WritePropertyName("details"u8);
-                writer.WriteStartArray();
-                foreach (var item in Details)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Innererror))
-            {
-                writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
-            }
-            if (Optional.IsDefined(Code))
-            {
-                writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code);
-            }
-            if (Optional.IsDefined(Target))
-            {
-                writer.WritePropertyName("target"u8);
-                writer.WriteStringValue(Target);
-            }
-            if (Optional.IsDefined(Message))
-            {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,66 +64,17 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiErrorBase> details = default;
-            InnerError innererror = default;
-            string code = default;
-            string target = default;
-            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("details"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ApiErrorBase> array = new List<ApiErrorBase>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ApiErrorBase.DeserializeApiErrorBase(item, options));
-                    }
-                    details = array;
-                    continue;
-                }
-                if (property.NameEquals("innererror"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    innererror = InnerError.DeserializeInnerError(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("code"u8))
-                {
-                    code = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("target"u8))
-                {
-                    target = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("message"u8))
-                {
-                    message = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiError(
-                details ?? new ChangeTrackingList<ApiErrorBase>(),
-                innererror,
-                code,
-                target,
-                message,
-                serializedAdditionalRawData);
+            return new ApiError(serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiError>.Write(ModelReaderWriterOptions options)

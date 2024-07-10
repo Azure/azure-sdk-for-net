@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> Api error. </summary>
+    /// <summary> ApiError for Fleet. </summary>
     public partial class ApiError
     {
         /// <summary>
@@ -48,35 +48,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="ApiError"/>. </summary>
         internal ApiError()
         {
-            Details = new ChangeTrackingList<ApiErrorBase>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiError"/>. </summary>
-        /// <param name="details"> The Api error details. </param>
-        /// <param name="innererror"> The Api inner error. </param>
-        /// <param name="code"> The error code. </param>
-        /// <param name="target"> The target of the particular error. </param>
-        /// <param name="message"> The error message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiError(IReadOnlyList<ApiErrorBase> details, InnerError innererror, string code, string target, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiError(IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Details = details;
-            Innererror = innererror;
-            Code = code;
-            Target = target;
-            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> The Api error details. </summary>
-        public IReadOnlyList<ApiErrorBase> Details { get; }
-        /// <summary> The Api inner error. </summary>
-        public InnerError Innererror { get; }
-        /// <summary> The error code. </summary>
-        public string Code { get; }
-        /// <summary> The target of the particular error. </summary>
-        public string Target { get; }
-        /// <summary> The error message. </summary>
-        public string Message { get; }
     }
 }

@@ -46,8 +46,7 @@ namespace Azure.ResourceManager.ComputeFleet
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.ComputeFleet
             }
             FleetProperties properties = default;
             IList<string> zones = default;
-            ManagedServiceIdentity identity = default;
+            Models.ManagedServiceIdentity identity = default;
             ArmPlan plan = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -168,8 +167,7 @@ namespace Azure.ResourceManager.ComputeFleet
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
