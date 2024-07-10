@@ -105,6 +105,20 @@ function Get-PkgProperties
     return $null
 }
 
+function Get-PrPkgProperties([string]$InputDiffJson) {
+    $pkgPropsResult = @()
+
+    Write-Host "In Get-PRPkgProperties function"
+
+    if ($GetPRPackageInfoFromRepoFn -and (Test-Path "Function:$GetPRPackageInfoFromRepoFn"))
+    {
+        Write-Host "Attempting to invoke the language one"
+        $pkgPropsResult = &$GetPRPackageInfoFromRepoFn -InputDiffJson $InputDiffJson
+    }
+
+    return $pkgPropsResult
+}
+
 # Takes ServiceName and Repo Root Directory
 # Returns important properties for each package in the specified service, or entire repo if the serviceName is not specified
 # Returns a Table of service key to array values of PS Object with properties @ { pkgName, pkgVersion, pkgDirectoryPath, pkgReadMePath, pkgChangeLogPath }

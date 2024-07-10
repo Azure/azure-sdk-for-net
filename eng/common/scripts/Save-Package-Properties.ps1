@@ -14,8 +14,8 @@ In cases of collisions where track 2 packages (IsNewSdk = true) have the same
 filename as track 1 packages (e.g. same artifact name or package name), the
 track 2 package properties will be written.
 
-.PARAMETER serviceDirectory
-Service directory in which to search for packages
+.PARAMETER serviceInput
+Service directory in which to search for packages, or file path ending in diff.json.
 
 .PARAMETER outDirectory
 Output location (generally a package artifact directory in DevOps) for JSON 
@@ -33,7 +33,7 @@ Verison property in that file.
 [CmdletBinding()]
 Param (
   [Parameter(Mandatory=$True)]
-  [string] $serviceDirectory,
+  [string] $serviceInput,
   [Parameter(Mandatory=$True)]
   [string] $outDirectory,
   [switch] $addDevVersion
@@ -92,7 +92,18 @@ function GetRelativePath($path) {
 }
 
 $exportedPaths = @{}
-$allPackageProperties = Get-AllPkgProperties $serviceDirectory
+
+$allPackageProperties = @()
+
+if ($serviceInput.endswith("diff.json")) {
+  $allPackageProperties = Get-PrPkgProperties $serviceInput
+}
+else {
+  $allPackageProperties = Get-AllPkgProperties $serviceInput
+}
+
+Write-Host $allPackageProperties
+
 if ($allPackageProperties)
 {
     if (-not (Test-Path -Path $outDirectory))
@@ -137,6 +148,6 @@ if ($allPackageProperties)
 }
 else
 {
-    Write-Error "Package properties are not available for service directory $($serviceDirectory)"
+    Write-Error "Package properties are not available for service directory $($serviceInput)"
     exit 1
 }
