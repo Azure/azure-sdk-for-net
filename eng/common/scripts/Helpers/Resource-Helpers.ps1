@@ -319,7 +319,14 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
   if ($storageAccounts) {
     $appliedRule = $false
     foreach ($account in $storageAccounts) {
+      $properties = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $account.Name
       $rules = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -AccountName $account.Name
+
+      if ($properties.AllowBlobPublicAccess) {
+        Write-Host "Restricting public blob access in storage account '$($account.Name)'"
+        Set-AzStorageAccount -ResourceGroupName $ResourceGroupName -StorageAccountName $account.Name -AllowBlobPublicAccess $false
+      }
+
       if ($rules -and ($Override -or $rules.DefaultAction -eq "Allow")) {
         Write-Host "Restricting network rules in storage account '$($account.Name)' to deny access by default"
         Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -DefaultAction Deny }
