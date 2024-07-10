@@ -306,28 +306,18 @@ DeleteOption = DiskDeleteOptionType.Delete,
 {
 new VirtualMachineScaleSetNetworkConfiguration("i")
 {
-Primary = true,
-EnableAcceleratedNetworking = true,
-DisableTcpStateTracking = true,
-EnableFpga = true,
-NetworkSecurityGroupId = new ResourceIdentifier("groxwd"),
-DnsServers =
-{
-"nxmmfolhclsesu"
-},
-IPConfigurations =
+Properties = new VirtualMachineScaleSetNetworkConfigurationProperties(new VirtualMachineScaleSetIPConfiguration[]
 {
 new VirtualMachineScaleSetIPConfiguration("oezqhkidfhyywlfzwuotilrpbqnjg")
+{
+Properties = new VirtualMachineScaleSetIPConfigurationProperties()
 {
 SubnetId = new ResourceIdentifier("cmkfcjhmrwxwqtac"),
 Primary = true,
 PublicIPAddressConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration("fvpqf")
 {
-Sku = new PublicIPAddressSku()
+Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties()
 {
-Name = PublicIPAddressSkuName.Basic,
-Tier = PublicIPAddressSkuTier.Regional,
-},
 IdleTimeoutInMinutes = 9,
 DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings("ukrddzvmorpmfsczjwtbvp")
 {
@@ -344,6 +334,12 @@ Tag = "wufmhrjsakbiaetyara",
 PublicIPPrefixId = new ResourceIdentifier("groxwd"),
 PublicIPAddressVersion = IPVersion.IPv4,
 DeleteOption = DeleteOption.Delete,
+},
+Sku = new PublicIPAddressSku()
+{
+Name = PublicIPAddressSkuName.Basic,
+Tier = PublicIPAddressSkuTier.Regional,
+},
 },
 PrivateIPAddressVersion = IPVersion.IPv4,
 ApplicationGatewayBackendAddressPools =
@@ -374,12 +370,24 @@ new WritableSubResource()
 Id = new ResourceIdentifier("groxwd"),
 }
 },
+},
 }
+})
+{
+Primary = true,
+EnableAcceleratedNetworking = true,
+DisableTcpStateTracking = true,
+EnableFpga = true,
+NetworkSecurityGroupId = new ResourceIdentifier("groxwd"),
+DnsServers =
+{
+"nxmmfolhclsesu"
 },
 EnableIPForwarding = true,
 DeleteOption = DeleteOption.Delete,
 AuxiliaryMode = NetworkInterfaceAuxiliaryMode.None,
 AuxiliarySku = NetworkInterfaceAuxiliarySku.None,
+},
 }
 },
                                 NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
@@ -413,9 +421,11 @@ AuxiliarySku = NetworkInterfaceAuxiliarySku.None,
 new VirtualMachineScaleSetExtension()
 {
 Name = "bndxuxx",
+Properties = new VirtualMachineScaleSetExtensionProperties()
+{
 ForceUpdateTag = "yhgxw",
 Publisher = "kpxtirxjfprhs",
-TypePropertiesType = "pgjilctjjwaa",
+VirtualMachineScaleSetExtensionPropertiesType = "pgjilctjjwaa",
 TypeHandlerVersion = "zevivcoilxmbwlrihhhibq",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
@@ -434,6 +444,7 @@ ProtectedSettingsFromKeyVault = new KeyVaultSecretReference(new Uri("vyhzfkqsqan
 {
 Id = new ResourceIdentifier("groxwd"),
 }),
+},
 }
 },
                                 ExtensionsTimeBudget = "mbhjahtdygwgyszdwjtvlvtgchdwil",
@@ -478,9 +489,11 @@ EnableAutomaticUpgrade = true,
 {
 new VirtualMachineExtension(new AzureLocation("wrqxhbqaebwkzmcdmngyqmhogc"))
 {
+Properties = new VirtualMachineExtensionProperties()
+{
 ForceUpdateTag = "oriasdwawveilgusfrn",
 Publisher = "rxoajzb",
-TypePropertiesType = "vhrtgbaqdkbrrqxsdiiaqxksmqukl",
+VirtualMachineExtensionPropertiesType = "vhrtgbaqdkbrrqxsdiiaqxksmqukl",
 TypeHandlerVersion = "bvzbiibps",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
@@ -526,6 +539,7 @@ Id = new ResourceIdentifier("groxwd"),
 ProvisionAfterExtensions =
 {
 "lwsfavklrgzuwmyxscskt"
+},
 },
 Tags =
 {

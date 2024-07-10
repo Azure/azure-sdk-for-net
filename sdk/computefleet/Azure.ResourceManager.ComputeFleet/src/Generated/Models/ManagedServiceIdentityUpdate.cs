@@ -53,18 +53,18 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        /// <param name="identityType"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServiceIdentityUpdate(ManagedServiceIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServiceIdentityUpdate(ManagedServiceIdentityType? identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of managed identity assigned to this resource. </summary>
-        public ManagedServiceIdentityType? Type { get; set; }
+        public ManagedServiceIdentityType? IdentityType { get; set; }
         /// <summary> The identities assigned to this resource by the user. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }
     }

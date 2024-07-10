@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_ListBySubscription</description>
+        /// <description>Fleets_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_ListBySubscription</description>
+        /// <description>Fleets_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

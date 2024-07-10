@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             IDictionary<string, string> tags = default;
             ManagedServiceIdentityUpdate identity = default;
             ArmPlan plan = default;
-            FleetProperties properties = default;
+            FleetPropertiesUpdate properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    properties = FleetProperties.DeserializeFleetProperties(property.Value, options);
+                    properties = FleetPropertiesUpdate.DeserializeFleetPropertiesUpdate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -67,31 +67,246 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedServiceIdentity"/>. </summary>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
-        public static ManagedServiceIdentity ManagedServiceIdentity(Guid? principalId = null, Guid? tenantId = null, ManagedServiceIdentityType type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetVmProfile"/>. </summary>
+        /// <param name="osProfile"> Specifies the operating system settings for the virtual machines in the scale set. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="networkProfile"> Specifies properties of the network interfaces of the virtual machines in the scale set. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machines in the scale set. </param>
+        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </param>
+        /// <param name="extensionProfile"> Specifies a collection of settings for extensions installed on virtual machines in the scale set. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="priority"> Specifies the priority for the virtual machines in the scale set. Minimum api-version: 2017-10-30-preview. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
+        /// <param name="billingMaxPrice"> Specifies the billing related details of a Azure Spot VMSS. Minimum api-version: 2019-03-01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
+        /// <param name="capacityReservationGroupId"> Specifies the capacity reservation related details of a scale set. Minimum api-version: 2021-04-01. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
+        /// <param name="hardwareVmSizeProperties"> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </param>
+        /// <param name="serviceArtifactReferenceId"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. Minimum api-version: 2022-11-01. </param>
+        /// <param name="securityPostureReference"> Specifies the security posture to be used for all virtual machines in the scale set. Minimum api-version: 2023-03-01. </param>
+        /// <param name="timeCreated"> Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. Minimum API version for this property is 2023-09-01. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile with minimum api-version 2023-09-01. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProfile"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile = null, VirtualMachineScaleSetStorageProfile storageProfile = null, VirtualMachineScaleSetNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, VirtualMachineScaleSetExtensionProfile extensionProfile = null, string licenseType = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VmGalleryApplication> galleryApplications = null, VmSizeProperties hardwareVmSizeProperties = null, ResourceIdentifier serviceArtifactReferenceId = null, SecurityPostureReference securityPostureReference = null, DateTimeOffset? timeCreated = null)
         {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+            galleryApplications ??= new List<VmGalleryApplication>();
 
-            return new ManagedServiceIdentity(principalId, tenantId, type, userAssignedIdentities, serializedAdditionalRawData: null);
+            return new VirtualMachineScaleSetVmProfile(
+                osProfile,
+                storageProfile,
+                networkProfile,
+                securityProfile,
+                bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics, serializedAdditionalRawData: null) : null,
+                extensionProfile,
+                licenseType,
+                priority,
+                evictionPolicy,
+                billingMaxPrice != null ? new BillingProfile(billingMaxPrice, serializedAdditionalRawData: null) : null,
+                scheduledEventsProfile,
+                userData,
+                capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId), serializedAdditionalRawData: null) : null,
+                galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList(), serializedAdditionalRawData: null) : null,
+                hardwareVmSizeProperties != null ? new VirtualMachineScaleSetHardwareProfile(hardwareVmSizeProperties, serializedAdditionalRawData: null) : null,
+                serviceArtifactReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(serviceArtifactReferenceId) : null,
+                securityPostureReference,
+                timeCreated,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ImageReference"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="publisher"> The image publisher. </param>
+        /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
+        /// <param name="sku"> The image SKU. </param>
+        /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or 'latest'. Major, Minor, and Build are decimal numbers. Specify 'latest' to use the latest version of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update after deploy time even if a new version becomes available. Please do not use field 'version' for gallery image deployment, gallery image should always use 'id' field for deployment, to use 'latest' version of gallery image, just set '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageName}' in the 'id' field without version input. </param>
+        /// <param name="exactVersion"> Specifies in decimal numbers, the version of platform image or marketplace image used to create the virtual machine. This readonly field differs from 'version', only if the value specified in 'version' field is 'latest'. </param>
+        /// <param name="sharedGalleryImageId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
+        /// <param name="communityGalleryImageId"> Specified the community gallery image unique id for vm deployment. This can be fetched from community gallery image GET call. </param>
+        /// <returns> A new <see cref="Models.ImageReference"/> instance for mocking. </returns>
+        public static ImageReference ImageReference(string id = null, string publisher = null, string offer = null, string sku = null, string version = null, string exactVersion = null, string sharedGalleryImageId = null, string communityGalleryImageId = null)
+        {
+            return new ImageReference(
+                id,
+                serializedAdditionalRawData: null,
+                publisher,
+                offer,
+                sku,
+                version,
+                exactVersion,
+                sharedGalleryImageId,
+                communityGalleryImageId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetExtension"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> The name of the extension. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set Extension. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetExtension"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetExtension VirtualMachineScaleSetExtension(string id = null, string name = null, string resourceType = null, VirtualMachineScaleSetExtensionProperties properties = null)
+        {
+            return new VirtualMachineScaleSetExtension(id, serializedAdditionalRawData: null, name, resourceType, properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetExtensionProperties"/>. </summary>
+        /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="virtualMachineScaleSetExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetExtensionProperties"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetExtensionProperties VirtualMachineScaleSetExtensionProperties(string forceUpdateTag = null, string publisher = null, string virtualMachineScaleSetExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, bool? enableAutomaticUpgrade = null, BinaryData settings = null, BinaryData protectedSettings = null, string provisioningState = null, IEnumerable<string> provisionAfterExtensions = null, bool? suppressFailures = null, KeyVaultSecretReference protectedSettingsFromKeyVault = null)
+        {
+            provisionAfterExtensions ??= new List<string>();
+
+            return new VirtualMachineScaleSetExtensionProperties(
+                forceUpdateTag,
+                publisher,
+                virtualMachineScaleSetExtensionPropertiesType,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                provisioningState,
+                provisionAfterExtensions?.ToList(),
+                suppressFailures,
+                protectedSettingsFromKeyVault,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SubResourceReadOnly"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <returns> A new <see cref="Models.SubResourceReadOnly"/> instance for mocking. </returns>
+        public static SubResourceReadOnly SubResourceReadOnly(string id = null)
+        {
+            return new SubResourceReadOnly(id, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineExtension"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Describes the properties of a Virtual Machine Extension. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineExtension"/> instance for mocking. </returns>
+        public static VirtualMachineExtension VirtualMachineExtension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VirtualMachineExtensionProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new VirtualMachineExtension(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineExtensionProperties"/>. </summary>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="virtualMachineExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The virtual machine extension instance view. </param>
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineExtensionProperties"/> instance for mocking. </returns>
+        public static VirtualMachineExtensionProperties VirtualMachineExtensionProperties(string forceUpdateTag = null, string publisher = null, string virtualMachineExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, bool? enableAutomaticUpgrade = null, BinaryData settings = null, BinaryData protectedSettings = null, string provisioningState = null, VirtualMachineExtensionInstanceView instanceView = null, bool? suppressFailures = null, KeyVaultSecretReference protectedSettingsFromKeyVault = null, IEnumerable<string> provisionAfterExtensions = null)
+        {
+            provisionAfterExtensions ??= new List<string>();
+
+            return new VirtualMachineExtensionProperties(
+                forceUpdateTag,
+                publisher,
+                virtualMachineExtensionPropertiesType,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                provisioningState,
+                instanceView,
+                suppressFailures,
+                protectedSettingsFromKeyVault,
+                provisionAfterExtensions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSet"/>. </summary>
-        /// <param name="id">
-        /// The compute RP resource id of the virtualMachineScaleSet
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}"
-        /// </param>
-        /// <param name="type"> Type of the virtualMachineScaleSet. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSet"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSet VirtualMachineScaleSet(string id = null, string type = null, ProvisioningState operationStatus = default, ApiError error = null)
+        public static VirtualMachineScaleSet VirtualMachineScaleSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState operationStatus = default, ApiError error = null)
         {
-            return new VirtualMachineScaleSet(id, type, operationStatus, error, serializedAdditionalRawData: null);
+            return new VirtualMachineScaleSet(
+                id,
+                name,
+                resourceType,
+                systemData,
+                operationStatus,
+                error,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiError"/>. </summary>
+        /// <param name="details"> The Api error details. </param>
+        /// <param name="innererror"> The Api inner error. </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="target"> The target of the particular error. </param>
+        /// <param name="message"> The error message. </param>
+        /// <returns> A new <see cref="Models.ApiError"/> instance for mocking. </returns>
+        public static ApiError ApiError(IEnumerable<ApiErrorBase> details = null, InnerError innererror = null, string code = null, string target = null, string message = null)
+        {
+            details ??= new List<ApiErrorBase>();
+
+            return new ApiError(
+                details?.ToList(),
+                innererror,
+                code,
+                target,
+                message,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiErrorBase"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="target"> The target of the particular error. </param>
+        /// <param name="message"> The error message. </param>
+        /// <returns> A new <see cref="Models.ApiErrorBase"/> instance for mocking. </returns>
+        public static ApiErrorBase ApiErrorBase(string code = null, string target = null, string message = null)
+        {
+            return new ApiErrorBase(code, target, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InnerError"/>. </summary>
+        /// <param name="exceptiontype"> The exception type. </param>
+        /// <param name="errordetail"> The internal error message or exception dump. </param>
+        /// <returns> A new <see cref="Models.InnerError"/> instance for mocking. </returns>
+        public static InnerError InnerError(string exceptiontype = null, string errordetail = null)
+        {
+            return new InnerError(exceptiontype, errordetail, serializedAdditionalRawData: null);
         }
     }
 }
