@@ -3,7 +3,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace System.ClientModel.TestFramework.Mocks;
+namespace OpenAI.TestFramework.Mocks;
 
 /// <summary>
 /// Mock implementation of response headers.

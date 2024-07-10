@@ -3,7 +3,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace System.ClientModel.TestFramework.Mocks;
+namespace OpenAI.TestFramework.Mocks;
 
 /// <summary>
 /// A mock implementation of a pipeline response

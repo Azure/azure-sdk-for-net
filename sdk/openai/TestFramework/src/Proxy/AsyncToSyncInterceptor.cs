@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.TestFramework.Adapters;
+using System.ClientModel;
 using System.Collections.Concurrent;
 using System.Reflection;
 using Castle.DynamicProxy;
+using OpenAI.TestFramework.Adapters;
 
-namespace System.ClientModel.TestFramework.Proxy;
+namespace OpenAI.TestFramework.Proxy;
 
 /// <summary>
 /// An interceptor for Castle dynamic proxies that allows you to call the synchronous version of a method when the asynchronous one
@@ -91,7 +92,7 @@ public class AsyncToSyncInterceptor : IInterceptor
                 methodName, _flags, binder: null, expectedArgs, modifiers: null)!;
 
             // this should never happen since we've already checked for the existence of the expected method
-            Diagnostics.Debug.Assert(syncMethod != null);
+            System.Diagnostics.Debug.Assert(syncMethod != null);
             if (syncMethod == null)
             {
                 throw CreateEx("Could not find the synchronous version of the method", invocation.Method);

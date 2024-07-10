@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.TestFramework.Proxy;
+using OpenAI.TestFramework.Proxy;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 
-namespace System.ClientModel.TestFramework;
+namespace OpenAI.TestFramework;
 
 /// <summary>
 /// Base class for test cases. This provides support for writing only a test that uses the Async version of methods,

@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using System.Runtime.ExceptionServices;
 
-namespace System.ClientModel.TestFramework.Adapters;
+namespace OpenAI.TestFramework.Adapters;
 
 /// <summary>
 /// An adapter to make a <see cref="PageableCollection{T}"/> look and work like a <see cref="AsyncPageableCollection{T}"/>. This

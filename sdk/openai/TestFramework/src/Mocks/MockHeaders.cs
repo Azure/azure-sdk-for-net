@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.ClientModel.TestFramework.Mocks;
+namespace OpenAI.TestFramework.Mocks;
 
 /// <summary>
 /// Basic implementation of headers.

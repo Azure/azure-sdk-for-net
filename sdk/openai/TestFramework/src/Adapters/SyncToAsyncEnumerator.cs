@@ -3,7 +3,7 @@
 
 using System.Runtime.ExceptionServices;
 
-namespace System.ClientModel.TestFramework.Adapters;
+namespace OpenAI.TestFramework.Adapters;
 
 /// <summary>
 /// Wraps an <see cref="IEnumerable{T}"/> as an <see cref="IAsyncEnumerable{T}"/>
