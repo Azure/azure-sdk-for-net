@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictionInfo"/>. </summary>
-        internal ResourceSkuRestrictionInfo()
+        public ResourceSkuRestrictionInfo()
         {
             Locations = new ChangeTrackingList<string>();
             Zones = new ChangeTrackingList<string>();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuRestrictionInfo(IReadOnlyList<string> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceSkuRestrictionInfo(IList<string> locations, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Locations = locations;
             Zones = zones;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Locations where the SKU is restricted. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IList<string> Locations { get; }
         /// <summary> List of availability zones where the SKU is restricted. </summary>
-        public IReadOnlyList<string> Zones { get; }
+        public IList<string> Zones { get; }
     }
 }

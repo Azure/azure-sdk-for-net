@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="name"> The name of the SKU capability. </param>
         /// <param name="value"> The value of the SKU capability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
-        internal ResourceSkuCapabilities(string name, string value)
+        public ResourceSkuCapabilities(string name, string value)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(value, nameof(value));
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The name of the SKU capability. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The value of the SKU capability. </summary>
-        public string Value { get; }
+        public string Value { get; set; }
     }
 }

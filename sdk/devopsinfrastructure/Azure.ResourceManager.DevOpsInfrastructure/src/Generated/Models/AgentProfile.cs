@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// The available derived classes include <see cref="AutomaticResourcePredictionsProfile"/> and <see cref="ManualResourcePredictionsProfile"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentProfile(string kind, ResourcePredictions resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentProfile(string kind, BinaryData resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             ResourcePredictions = resourcePredictions;
@@ -73,8 +73,37 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> Discriminator property for AgentProfile. </summary>
         internal string Kind { get; set; }
-        /// <summary> Defines pool buffer/stand-by agents. </summary>
-        public ResourcePredictions ResourcePredictions { get; set; }
+        /// <summary>
+        /// Defines pool buffer/stand-by agents.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData ResourcePredictions { get; set; }
         /// <summary>
         /// Defines how the pool buffer/stand-by agents is provided.
         /// Please note <see cref="Models.ResourcePredictionsProfile"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

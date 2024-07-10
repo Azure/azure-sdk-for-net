@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -50,10 +51,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="zones"/> or <paramref name="zoneDetails"/> is null. </exception>
-        internal ResourceSkuLocationInfo(string location, IEnumerable<string> zones, IEnumerable<ResourceSkuZoneDetails> zoneDetails)
+        /// <exception cref="ArgumentNullException"> <paramref name="zones"/> or <paramref name="zoneDetails"/> is null. </exception>
+        public ResourceSkuLocationInfo(AzureLocation location, IEnumerable<string> zones, IEnumerable<ResourceSkuZoneDetails> zoneDetails)
         {
-            Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(zones, nameof(zones));
             Argument.AssertNotNull(zoneDetails, nameof(zoneDetails));
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Location of the SKU. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; set; }
         /// <summary> List of availability zones where the SKU is supported. </summary>
-        public IReadOnlyList<string> Zones { get; }
+        public IList<string> Zones { get; }
         /// <summary> Gets details of capabilities available to a SKU in specific zones. </summary>
-        public IReadOnlyList<ResourceSkuZoneDetails> ZoneDetails { get; }
+        public IList<ResourceSkuZoneDetails> ZoneDetails { get; }
     }
 }

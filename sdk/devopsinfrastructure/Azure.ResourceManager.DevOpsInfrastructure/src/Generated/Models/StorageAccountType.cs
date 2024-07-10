@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         private const string StandardLRSValue = "Standard_LRS";
         private const string PremiumLRSValue = "Premium_LRS";
-        private const string StandardSSDLRSValue = "StandardSSD_LRS";
+        private const string StandardSsdlrsValue = "StandardSSD_LRS";
         private const string PremiumZRSValue = "Premium_ZRS";
-        private const string StandardSSDZRSValue = "StandardSSD_ZRS";
+        private const string StandardSsdzrsValue = "StandardSSD_ZRS";
 
         /// <summary> The data disk should use standard locally redundant storage. </summary>
         public static StorageAccountType StandardLRS { get; } = new StorageAccountType(StandardLRSValue);
         /// <summary> The data disk should use premium locally redundant storage. </summary>
         public static StorageAccountType PremiumLRS { get; } = new StorageAccountType(PremiumLRSValue);
         /// <summary> The data disk should use standard SSD locally redundant storage. </summary>
-        public static StorageAccountType StandardSSDLRS { get; } = new StorageAccountType(StandardSSDLRSValue);
+        public static StorageAccountType StandardSsdlrs { get; } = new StorageAccountType(StandardSsdlrsValue);
         /// <summary> The data disk should use premium SSD zonal redundant storage. </summary>
         public static StorageAccountType PremiumZRS { get; } = new StorageAccountType(PremiumZRSValue);
         /// <summary> The data disk should use standard SSD zonal redundant storage. </summary>
-        public static StorageAccountType StandardSSDZRS { get; } = new StorageAccountType(StandardSSDZRSValue);
+        public static StorageAccountType StandardSsdzrs { get; } = new StorageAccountType(StandardSsdzrsValue);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountType left, StorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are not the same. </summary>

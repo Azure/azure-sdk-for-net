@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxAgentLifetime"> How long should stateful machines be kept around. The maximum is one week. </param>
         /// <param name="gracePeriodTimeSpan"> How long should the machine be kept around after it ran a workload when there are no stand-by agents. The maximum is one week. </param>
-        internal Stateful(string kind, ResourcePredictions resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, string maxAgentLifetime, string gracePeriodTimeSpan) : base(kind, resourcePredictions, resourcePredictionsProfile, serializedAdditionalRawData)
+        internal Stateful(string kind, BinaryData resourcePredictions, ResourcePredictionsProfile resourcePredictionsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, string maxAgentLifetime, string gracePeriodTimeSpan) : base(kind, resourcePredictions, resourcePredictionsProfile, serializedAdditionalRawData)
         {
             MaxAgentLifetime = maxAgentLifetime;
             GracePeriodTimeSpan = gracePeriodTimeSpan;

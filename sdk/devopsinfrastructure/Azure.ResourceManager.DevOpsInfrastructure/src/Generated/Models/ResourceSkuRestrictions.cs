@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> or <paramref name="restrictionInfo"/> is null. </exception>
-        internal ResourceSkuRestrictions(IEnumerable<string> values, ResourceSkuRestrictionInfo restrictionInfo)
+        public ResourceSkuRestrictions(IEnumerable<string> values, ResourceSkuRestrictionInfo restrictionInfo)
         {
             Argument.AssertNotNull(values, nameof(values));
             Argument.AssertNotNull(restrictionInfo, nameof(restrictionInfo));
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictions"/>. </summary>
-        /// <param name="type"> the type of restrictions. </param>
+        /// <param name="restrictionsType"> the type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> the reason for restriction. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuRestrictions(ResourceSkuRestrictionsType? type, IReadOnlyList<string> values, ResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType, IList<string> values, ResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            RestrictionsType = restrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> the type of restrictions. </summary>
-        public ResourceSkuRestrictionsType? Type { get; }
+        public ResourceSkuRestrictionsType? RestrictionsType { get; set; }
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
-        public IReadOnlyList<string> Values { get; }
+        public IList<string> Values { get; }
         /// <summary> The information about the restriction where the SKU cannot be used. </summary>
-        public ResourceSkuRestrictionInfo RestrictionInfo { get; }
+        public ResourceSkuRestrictionInfo RestrictionInfo { get; set; }
         /// <summary> the reason for restriction. </summary>
-        public ResourceSkuRestrictionsReasonCode? ReasonCode { get; }
+        public ResourceSkuRestrictionsReasonCode? ReasonCode { get; set; }
     }
 }

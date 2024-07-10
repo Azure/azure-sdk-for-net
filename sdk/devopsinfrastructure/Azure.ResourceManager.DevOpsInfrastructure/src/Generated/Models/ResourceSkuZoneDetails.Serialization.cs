@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 return null;
             }
-            IReadOnlyList<string> name = default;
-            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
+            IList<string> name = default;
+            IList<ResourceSkuCapabilities> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 return null;
             }
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<string> zones = default;
+            IList<string> locations = default;
+            IList<string> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

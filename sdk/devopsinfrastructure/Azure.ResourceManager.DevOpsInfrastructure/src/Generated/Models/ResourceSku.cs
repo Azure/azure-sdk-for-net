@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
-        internal ResourceSku()
+        public ResourceSku()
         {
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ResourceSkuProperties Properties { get; }
+        public ResourceSkuProperties Properties { get; set; }
     }
 }

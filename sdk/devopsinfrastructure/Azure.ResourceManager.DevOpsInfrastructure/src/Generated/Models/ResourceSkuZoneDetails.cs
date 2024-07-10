@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="name"> Gets the set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="capabilities"/> is null. </exception>
-        internal ResourceSkuZoneDetails(IEnumerable<string> name, IEnumerable<ResourceSkuCapabilities> capabilities)
+        public ResourceSkuZoneDetails(IEnumerable<string> name, IEnumerable<ResourceSkuCapabilities> capabilities)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(capabilities, nameof(capabilities));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="name"> Gets the set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ResourceSkuCapabilities> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceSkuZoneDetails(IList<string> name, IList<ResourceSkuCapabilities> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capabilities = capabilities;
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Gets the set of zones that the SKU is available in with the specified capabilities. </summary>
-        public IReadOnlyList<string> Name { get; }
+        public IList<string> Name { get; }
         /// <summary> A list of capabilities that are available for the SKU in the specified list of zones. </summary>
-        public IReadOnlyList<ResourceSkuCapabilities> Capabilities { get; }
+        public IList<ResourceSkuCapabilities> Capabilities { get; }
     }
 }

@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             string tier = default;
             string size = default;
             string family = default;
-            IReadOnlyList<string> locations = default;
-            IReadOnlyList<ResourceSkuLocationInfo> locationInfo = default;
-            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
-            IReadOnlyList<ResourceSkuRestrictions> restrictions = default;
+            IList<string> locations = default;
+            IList<ResourceSkuLocationInfo> locationInfo = default;
+            IList<ResourceSkuCapabilities> capabilities = default;
+            IList<ResourceSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

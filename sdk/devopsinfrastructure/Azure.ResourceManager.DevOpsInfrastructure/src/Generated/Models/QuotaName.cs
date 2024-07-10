@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> Defines pool buffer. </summary>
-    public partial class ResourcePredictions
+    /// <summary> The Quota Names. </summary>
+    public partial class QuotaName
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,25 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourcePredictions"/>. </summary>
-        public ResourcePredictions()
+        /// <summary> Initializes a new instance of <see cref="QuotaName"/>. </summary>
+        internal QuotaName()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourcePredictions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaName"/>. </summary>
+        /// <param name="value"> The name of the resource. </param>
+        /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourcePredictions(IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Value = value;
+            LocalizedValue = localizedValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The name of the resource. </summary>
+        public string Value { get; }
+        /// <summary> The localized name of the resource. </summary>
+        public string LocalizedValue { get; }
     }
 }

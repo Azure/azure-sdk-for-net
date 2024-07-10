@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteObjectValue(Name, options);
+            }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("unit"u8);
@@ -72,6 +77,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 return null;
             }
+            QuotaName name = default;
             ResourceIdentifier id = default;
             string unit = default;
             long currentValue = default;
@@ -80,6 +86,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    name = QuotaName.DeserializeQuotaName(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -106,7 +121,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Quota(id, unit, currentValue, limit, serializedAdditionalRawData);
+            return new Quota(
+                name,
+                id,
+                unit,
+                currentValue,
+                limit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Quota>.Write(ModelReaderWriterOptions options)
