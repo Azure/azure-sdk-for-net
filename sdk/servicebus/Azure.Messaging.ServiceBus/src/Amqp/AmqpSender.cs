@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The maximum number of messages to allow in a single batch.
         /// </summary>
         ///
-        internal int MaxMessageCount { get; set; }
+        private int MaxMessageCount { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpSender"/> class.
