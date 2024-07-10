@@ -188,9 +188,10 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class OperationResult : System.ClientModel.ClientResult
     {
-        protected OperationResult() { }
-        protected OperationResult(System.ClientModel.Primitives.PipelineResponse response) { }
+        protected OperationResult(System.ClientModel.Primitives.ClientPipeline pipeline) { }
+        protected OperationResult(System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineResponse response) { }
         public bool HasCompleted { get { throw null; } protected set { } }
+        protected System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public abstract void WaitForCompletion();
         public abstract System.Threading.Tasks.Task WaitForCompletionAsync();
     }

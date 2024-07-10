@@ -14,15 +14,18 @@ public abstract class OperationResult : ClientResult
     // return types don't have to implement IDiposable. Given this, provide
     // both constructors.
 
-    protected OperationResult() : base()
+    protected OperationResult(ClientPipeline pipeline) : base()
     {
+        Pipeline = pipeline;
     }
 
-    protected OperationResult(PipelineResponse response)
+    protected OperationResult(ClientPipeline pipeline, PipelineResponse response)
         : base(response)
     {
-        //RehydrationToken = rehydrationToken;
+        Pipeline = pipeline;
     }
+
+    protected ClientPipeline Pipeline { get; }
 
     // Note: Don't provide this on the base type per not being able to support
     // it from SSE, since the client isn't able to stop the stream, I don't think.
