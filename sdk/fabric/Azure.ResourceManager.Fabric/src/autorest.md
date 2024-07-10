@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: Fabric
 namespace: Azure.ResourceManager.Fabric
-require: https://github.com/Azure/azure-rest-api-specs/blob/81a4ee5a83ae38620c0e1404793caffe005d26e4/specification/fabric/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/df3cd3e3d50eec1d1da593750e1ea3a4db3f541d/specification/fabric/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

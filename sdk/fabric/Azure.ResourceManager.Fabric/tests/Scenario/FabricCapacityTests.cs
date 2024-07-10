@@ -205,13 +205,13 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             };
 
             // Act
-            var result = await fabricCapacity.UpdateAsync(fabricCapacityPatch);
+            var result = await fabricCapacity.UpdateAsync(WaitUntil.Completed, fabricCapacityPatch);
 
             // Assert
             Assert.AreEqual(result.Value.Data.Sku.Name, "F8");
 
             // Revert
-            await fabricCapacity.UpdateAsync(new FabricCapacityPatch()
+            await fabricCapacity.UpdateAsync(WaitUntil.Completed, new FabricCapacityPatch()
             {
                 Sku = new RpSkuUpdate()
                 {

@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FabricCapacityData>> UpdateAsync(string subscriptionId, string resourceGroupName, string capacityName, FabricCapacityPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string capacityName, FabricCapacityPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -617,12 +617,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 case 200:
                 case 202:
-                    {
-                        FabricCapacityData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FabricCapacityData.DeserializeFabricCapacityData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -636,7 +631,7 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FabricCapacityData> Update(string subscriptionId, string resourceGroupName, string capacityName, FabricCapacityPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string capacityName, FabricCapacityPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -649,12 +644,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 case 200:
                 case 202:
-                    {
-                        FabricCapacityData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FabricCapacityData.DeserializeFabricCapacityData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -711,7 +701,6 @@ namespace Azure.ResourceManager.Fabric
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -737,7 +726,6 @@ namespace Azure.ResourceManager.Fabric
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;

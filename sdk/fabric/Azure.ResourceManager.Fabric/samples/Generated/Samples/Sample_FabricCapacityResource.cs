@@ -176,7 +176,8 @@ namespace Azure.ResourceManager.Fabric.Samples
 "azsdktest2@microsoft.com"
 },
             };
-            FabricCapacityResource result = await fabricCapacity.UpdateAsync(patch);
+            ArmOperation<FabricCapacityResource> lro = await fabricCapacity.UpdateAsync(WaitUntil.Completed, patch);
+            FabricCapacityResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
