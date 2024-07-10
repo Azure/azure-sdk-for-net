@@ -25,8 +25,8 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
-    [CollectionDefinition("Instrumentation.AspNetCore", DisableParallelization = true)]
-    [Collection("Instrumentation.AspNetCore")]
+    [CollectionDefinition("InstrumentationLibraries", DisableParallelization = true)]
+    [Collection("InstrumentationLibraries")]
     public partial class AspNetCoreInstrumentationTests
         : IClassFixture<WebApplicationFactory<AspNetCoreTestApp.Program>>, IDisposable
     {
@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         [InlineData("/custom-endpoint", null, 200)]
         [InlineData("/custom-endpoint", "?key=value", 200)]
         [InlineData("/custom-endpoint", null, 500)]
-        //[InlineData("/exception-endpoint", null, 500, true)]
+        [InlineData("/exception-endpoint", null, 500, true)]
         [InlineData("/unknown-endpoint", null, 404)]
         public async void AspNetCoreRequestsAreCapturedCorrectly(string path, string? queryString, int statusCode, bool shouldThrow = false)
         {

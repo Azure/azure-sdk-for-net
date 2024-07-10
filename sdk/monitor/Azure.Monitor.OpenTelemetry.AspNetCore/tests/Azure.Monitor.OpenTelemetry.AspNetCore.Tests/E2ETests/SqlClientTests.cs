@@ -21,8 +21,8 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
-    //[CollectionDefinition("SqlClient", DisableParallelization = true)]
-    //[Collection("SqlClient")]
+    //[CollectionDefinition("InstrumentationLibraries", DisableParallelization = true)]
+    //[Collection("InstrumentationLibraries")]
     public partial class AspNetCoreInstrumentationTests
     {
         private const string SqlClientDiagnosticListenerName = "SqlClientDiagnosticListener";
