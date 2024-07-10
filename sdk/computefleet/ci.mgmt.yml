@@ -10,14 +10,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/oracle/ci.mgmt.yml
-    - sdk/oracle/Azure.ResourceManager.OracleDatabase/
+    - sdk/computefleet/ci.mgmt.yml
+    - sdk/computefleet/Azure.ResourceManager.ComputeFleet/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: oracle
+    ServiceDirectory: computefleet
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.OracleDatabase
-      safeName: AzureResourceManagerOracleDatabase
+    - name: Azure.ResourceManager.ComputeFleet
+      safeName: AzureResourceManagerComputeFleet
