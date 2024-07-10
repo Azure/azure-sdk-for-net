@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Azure Firewall Packet Capture Parameters resource. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This type will be removed in future versions. Please use 'FirewallPacketCaptureRequestContent' instead.", false)]
     public partial class FirewallPacketCaptureContent : NetworkSubResource
     {
         /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureContent"/>. </summary>

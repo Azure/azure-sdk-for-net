@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceInstanceIds"> Specifies a list of virtual machine instance IDs from the Network Virtual Appliance VM instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use 'ArmOperation<NetworkVirtualApplianceInstanceIds> Restart()' instead", false)]
         public virtual Response Restart(NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, CancellationToken cancellationToken = default)
             => Restart(WaitUntil.Completed, networkVirtualApplianceInstanceIds, cancellationToken).GetRawResponse();
 
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceInstanceIds"> Specifies a list of virtual machine instance IDs from the Network Virtual Appliance VM instances. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use 'async Task<ArmOperation<NetworkVirtualApplianceInstanceIds>> RestartAsync()' instead", false)]
         public virtual async Task<Response> RestartAsync(NetworkVirtualApplianceInstanceIds networkVirtualApplianceInstanceIds = null, CancellationToken cancellationToken = default)
             => (await RestartAsync(WaitUntil.Completed, networkVirtualApplianceInstanceIds, cancellationToken).ConfigureAwait(false)).GetRawResponse();
 
@@ -108,7 +106,6 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="inboundSecurityRule"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use 'InboundSecurityRuleCollection.CreateOrUpdateAsync' instead", false)]
         public virtual async Task<ArmOperation<InboundSecurityRule>> CreateOrUpdateInboundSecurityRuleAsync(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRule inboundSecurityRule, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
@@ -155,7 +152,6 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="inboundSecurityRule"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use 'InboundSecurityRuleCollection.CreateOrUpdateAsync' instead", false)]
         public virtual ArmOperation<InboundSecurityRule> CreateOrUpdateInboundSecurityRule(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRule inboundSecurityRule, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
@@ -181,7 +177,6 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// This is a copy of old InboundSecurityRuleOperationSource class.
         /// </summary>
-        [Obsolete]
         private class ObsoleteInboundSecurityRuleOperationSource : IOperationSource<InboundSecurityRule>
         {
             InboundSecurityRule IOperationSource<InboundSecurityRule>.CreateResult(Response response, CancellationToken cancellationToken)

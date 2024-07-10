@@ -285,7 +285,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.InboundSecurityRule"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This type will be removed in future versions. Please use 'InboundSecurityRuleData' instead.", false)]
         public static InboundSecurityRule InboundSecurityRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, InboundSecurityRuleType? ruleType = null, IEnumerable<InboundSecurityRules> rules = null, NetworkProvisioningState? provisioningState = null)
         {
             rules ??= new List<InboundSecurityRules>();
@@ -310,7 +309,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.InboundSecurityRule" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This type will be removed in future versions. Please use 'InboundSecurityRuleData' instead.", false)]
         public static InboundSecurityRule InboundSecurityRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IEnumerable<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState)
         {
             return InboundSecurityRule(id: id, name: name, resourceType: resourceType, etag: etag, ruleType: default, rules: rules, provisioningState: provisioningState);

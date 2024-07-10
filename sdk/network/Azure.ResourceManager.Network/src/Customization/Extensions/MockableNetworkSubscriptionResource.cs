@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use the overload version with more parameters instead", false)]
         public virtual AsyncPageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(CancellationToken cancellationToken = default)
             => GetExpressRouteCrossConnectionsAsync(null, cancellationToken);
 
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use the overload version with more parameters instead", false)]
         public virtual Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(CancellationToken cancellationToken = default)
             => GetExpressRouteCrossConnections(null, cancellationToken);
     }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
             return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAppGatewayAvailableWafRuleSets(cancellationToken);
         }
 
-         /// <summary>
+        /// <summary>
         /// Retrieves all the ExpressRouteCrossConnections in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -90,9 +90,12 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use the overload version with more parameters instead", false)]
         public static Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetExpressRouteCrossConnections(subscriptionResource, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteCrossConnections(cancellationToken);
+        }
 
         /// <summary>
         /// Retrieves all the ExpressRouteCrossConnections in a subscription.
@@ -124,8 +127,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use the overload version with more parameters instead", false)]
         public static AsyncPageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetExpressRouteCrossConnectionsAsync(subscriptionResource, null, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteCrossConnectionsAsync(cancellationToken);
+        }
     }
 }

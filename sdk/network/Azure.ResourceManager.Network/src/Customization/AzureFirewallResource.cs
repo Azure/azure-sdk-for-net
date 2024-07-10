@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use the overload version of 'PacketCaptureAsync' instead", false)]
         public virtual async Task<ArmOperation> PacketCaptureAsync(WaitUntil waitUntil, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
         {
             return await PacketCaptureAsync(waitUntil, content.ToNewRequestContent(), cancellationToken).ConfigureAwait(false);
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is obsoleted and will be removed in a future release, please use the overload version of 'PacketCapture' instead", false)]
         public virtual ArmOperation PacketCapture(WaitUntil waitUntil, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
         {
             return PacketCapture(waitUntil, content.ToNewRequestContent(), cancellationToken);

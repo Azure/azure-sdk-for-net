@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NVA Inbound Security Rule resource. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This type will be removed in future versions. Please use 'InboundSecurityRuleData' instead.", false)]
     public partial class InboundSecurityRule : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRule"/>. </summary>
