@@ -23,6 +23,8 @@ using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests.Shared;
+using BenchmarkDotNet.Toolchains;
+using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -102,6 +104,37 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_EscapeBlobName()
+        {
+            // Arrange
+            string blobName = "!*'();[]:@&%=+$,/#äÄöÖüÜß";
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(blobName));
+            ETag originalEtag;
+            using (var stream = new MemoryStream(data))
+            {
+                BlobContentInfo info = await blob.UploadAsync(stream);
+                originalEtag = info.ETag;
+            }
+
+            // Act
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = blob.BlobContainerName,
+                BlobName = blobName
+            };
+            BlobBaseClient freshBlobClient = InstrumentClient(new BlobBaseClient(
+                uriBuilder.ToUri(),
+                Tenants.GetNewSharedKeyCredentials()));
+
+            // Assert
+            Assert.AreEqual(blobName, freshBlobClient.Name);
+            BlobProperties propertiesResponse = await freshBlobClient.GetPropertiesAsync();
+            Assert.AreEqual(originalEtag, propertiesResponse.ETag);
         }
 
         [RecordedTest]
