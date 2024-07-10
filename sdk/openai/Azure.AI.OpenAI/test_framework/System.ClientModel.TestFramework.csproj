@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Since the project naming and folder structure doesn't follow convention,
+         explicitly set some properties to import all the things we need -->
+    <IsClientLibrary>false</IsClientLibrary>
+    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>true</IsTestSupportProject>
+    <ImportDefaultReferences>false</ImportDefaultReferences>
+    <IsShippingLibrary>false</IsShippingLibrary>
+    <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
+    <RequiredTargetFrameworks>net7.0;net6.0;net462</RequiredTargetFrameworks>
+
+    <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="NewtonSoft.Json" VersionOverride="13.0.1" />
+    <PackageReference Include="System.ValueTuple" />
+    <PackageReference Include="System.ClientModel" VersionOverride="1.1.0-beta.4" />
+  </ItemGroup>
+
+</Project>
