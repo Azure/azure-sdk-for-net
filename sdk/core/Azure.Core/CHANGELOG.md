@@ -1,17 +1,11 @@
 # Release History
 
-## 1.41.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.41.0 (2024-07-11)
 
 ### Bugs Fixed
-- Fixed an issue that could result in `BearerTokenAuthenticationPolicy` fails to refresh a token, resulting in a `OperationCanceledException`.
 
-- Fixed case where a GeoJSON string could not be deserialized when the BoundingBox JSON value ("bbox") was set explicitly to null ([#44835](https://github.com/Azure/azure-sdk-for-net/pull/44835))
-
-### Other Changes
+- Fixed an issue that could result in `BearerTokenAuthenticationPolicy` fails to refresh a token, resulting in a `OperationCanceledException` ([#44882](https://github.com/Azure/azure-sdk-for-net/pull/44882)).
+- Fixed case where a GeoJSON string could not be deserialized when the BoundingBox JSON value ("bbox") was set explicitly to null ([#44835](https://github.com/Azure/azure-sdk-for-net/pull/44835)).
 
 ## 1.40.0 (2024-06-06)
 
