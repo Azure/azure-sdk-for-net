@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

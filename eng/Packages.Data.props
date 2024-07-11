@@ -48,7 +48,7 @@
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
     <PackageReference Update="System.Text.Encodings.Web" Version="4.5.1" />
-    <PackageReference Update="System.Text.Json" Version="4.7.2" />
+    <PackageReference Update="System.Text.Json" Version="8.0.4" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
 
     <PackageReference Update="WindowsAzure.Storage" Version="9.3.3" />
@@ -99,7 +99,7 @@
     <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageReference Update="System.Threading.Channels" Version="4.7.1" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Update="System.Text.Json" Version="4.7.2" />
+    <PackageReference Update="System.Text.Json" Version="8.0.4" />
     <PackageReference Update="System.Text.Encodings.Web" Version="4.7.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />

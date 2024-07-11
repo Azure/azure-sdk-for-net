@@ -20,7 +20,7 @@ modelerfour:
 use-model-reader-writer: true
 
 #mgmt-debug:
-#  show-serialized-names: true
+  #show-serialized-names: true
 
  
 
@@ -57,4 +57,6 @@ rename-mapping:
   CheckNameAvailabilityResponse: CheckNameAvailabilityResult
   MongoClusterRestoreParameters: MongoClusterRestoreContent
   PrivateLinkResource: MongoClusterPrviateLinkResourceData
+  ConnectionString.connectionString: uri
+  PrivateEndpointConnectionProperties.privateLinkServiceConnectionState: privateLinkServiceConnectionState
 ```

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            string connectionString = default;
+            Uri connectionString = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 if (property.NameEquals("connectionString"u8))
                 {
-                    connectionString = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectionString = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))
