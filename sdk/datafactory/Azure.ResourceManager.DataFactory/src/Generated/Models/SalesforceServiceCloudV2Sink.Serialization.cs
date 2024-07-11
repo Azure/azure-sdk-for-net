@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SalesforceServiceCloudV2Sink : IUtf8JsonSerializable, IJsonModel<SalesforceServiceCloudV2Sink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceServiceCloudV2Sink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceServiceCloudV2Sink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SalesforceServiceCloudV2Sink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SalesforceServiceCloudV2Sink DeserializeSalesforceServiceCloudV2Sink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

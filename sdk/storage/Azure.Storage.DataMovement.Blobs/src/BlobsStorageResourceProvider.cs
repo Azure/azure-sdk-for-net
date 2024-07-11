@@ -238,16 +238,18 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             BlobCheckpointData checkpointData = properties.GetCheckpointData(getSource);
 
-            ResourceType type = GetType(checkpointData.BlobType, properties.IsContainer);
+            ResourceType type = GetType(checkpointData, properties.IsContainer);
             Uri uri = getSource ? properties.SourceUri : properties.DestinationUri;
-            IBlobResourceRehydrator rehydrator = type switch
-            {
-                ResourceType.BlockBlob => new BlockBlobResourceRehydrator(),
-                ResourceType.PageBlob => new PageBlobResourceRehydrator(),
-                ResourceType.AppendBlob => new AppendBlobResourceRehydrator(),
-                ResourceType.BlobContainer => new BlobContainerResourceRehydrator(),
-                _ => throw BadResourceTypeException(type)
-            };
+            IBlobResourceRehydrator rehydrator = getSource ?
+                type == ResourceType.BlobContainer ? new BlobContainerResourceRehydrator() : new BlockBlobResourceRehydrator()
+                : type switch
+                {
+                    ResourceType.BlockBlob => new BlockBlobResourceRehydrator(),
+                    ResourceType.PageBlob => new PageBlobResourceRehydrator(),
+                    ResourceType.AppendBlob => new AppendBlobResourceRehydrator(),
+                    ResourceType.BlobContainer => new BlobContainerResourceRehydrator(),
+                    _ => throw BadResourceTypeException(type)
+                };
             return _credentialType switch
             {
                 CredentialType.None => rehydrator.Rehydrate(
@@ -715,20 +717,26 @@ namespace Azure.Storage.DataMovement.Blobs
         }
         #endregion
 
-        private static ResourceType GetType(BlobType blobType, bool isContainer)
+        private static ResourceType GetType(BlobCheckpointData checkpointData, bool isContainer)
         {
             if (isContainer)
             {
                 return ResourceType.BlobContainer;
             }
 
-            return blobType switch
+            BlobDestinationCheckpointData destinationCheckpointData = checkpointData as BlobDestinationCheckpointData;
+
+            if (null != destinationCheckpointData && destinationCheckpointData.BlobType?.Value != default)
             {
-                BlobType.Block => ResourceType.BlockBlob,
-                BlobType.Page => ResourceType.PageBlob,
-                BlobType.Append => ResourceType.AppendBlob,
-                _ => ResourceType.Unknown
-            };
+                return destinationCheckpointData.BlobType.Value switch
+                {
+                    BlobType.Block => ResourceType.BlockBlob,
+                    BlobType.Page => ResourceType.PageBlob,
+                    BlobType.Append => ResourceType.AppendBlob,
+                    _ => ResourceType.Unknown
+                };
+            }
+            return ResourceType.Unknown;
         }
 
         private static ArgumentException BadResourceTypeException(ResourceType resourceType)

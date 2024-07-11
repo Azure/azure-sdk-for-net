@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class QueryApprovedPlansDetails : IUtf8JsonSerializable, IJsonModel<QueryApprovedPlansDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryApprovedPlansDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryApprovedPlansDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryApprovedPlansDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static QueryApprovedPlansDetails DeserializeQueryApprovedPlansDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             IReadOnlyList<string> subscriptionIds = default;
             bool? allSubscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("planId"u8))
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QueryApprovedPlansDetails(planId, subscriptionIds ?? new ChangeTrackingList<string>(), allSubscriptions, serializedAdditionalRawData);
         }
 

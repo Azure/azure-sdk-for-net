@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -20,7 +21,7 @@ namespace Azure.Communication.JobRouter
         public IDictionary<int, TimeSpan> EstimatedWaitTimes { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteEstimatedWaitTimes(Utf8JsonWriter writer)
+        internal void WriteEstimatedWaitTimes(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             foreach (var item in EstimatedWaitTimes)

@@ -73,9 +73,6 @@ namespace Azure.Communication.Messages.Models.Channels
         internal WhatsAppMessageTemplateBindingsButton()
         {
         }
-
-        /// <summary> The WhatsApp button sub type. </summary>
-        public string SubType { get; }
         /// <summary> The name of the referenced item in the template values. </summary>
         public string RefValue { get; }
     }

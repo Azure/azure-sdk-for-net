@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DataFlowReference : IUtf8JsonSerializable, IJsonModel<DataFlowReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFlowReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowReference DeserializeDataFlowReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

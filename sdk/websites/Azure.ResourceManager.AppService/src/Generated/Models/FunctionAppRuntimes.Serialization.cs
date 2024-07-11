@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class FunctionAppRuntimes : IUtf8JsonSerializable, IJsonModel<FunctionAppRuntimes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppRuntimes>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppRuntimes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FunctionAppRuntimes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
-                writer.WriteObjectValue<FunctionAppRuntimeSettings>(LinuxRuntimeSettings, options);
+                writer.WriteObjectValue(LinuxRuntimeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
-                writer.WriteObjectValue<FunctionAppRuntimeSettings>(WindowsRuntimeSettings, options);
+                writer.WriteObjectValue(WindowsRuntimeSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FunctionAppRuntimes DeserializeFunctionAppRuntimes(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             FunctionAppRuntimeSettings linuxRuntimeSettings = default;
             FunctionAppRuntimeSettings windowsRuntimeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxRuntimeSettings"u8))
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FunctionAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, serializedAdditionalRawData);
         }
 
@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxRuntimeSettings), out propertyOverride);
-            if (Optional.IsDefined(LinuxRuntimeSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  linuxRuntimeSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinuxRuntimeSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  linuxRuntimeSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false, "  linuxRuntimeSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsRuntimeSettings), out propertyOverride);
-            if (Optional.IsDefined(WindowsRuntimeSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  windowsRuntimeSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WindowsRuntimeSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  windowsRuntimeSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false, "  windowsRuntimeSettings: ");
                 }
             }

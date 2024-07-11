@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchAccountPoolPoolRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation<BatchAccountPoolResource>(Response.FromValue(new BatchAccountPoolResource(Client, response), response.GetRawResponse()));
+                var uri = _batchAccountPoolPoolRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation<BatchAccountPoolResource>(Response.FromValue(new BatchAccountPoolResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +143,9 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchAccountPoolPoolRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new BatchArmOperation<BatchAccountPoolResource>(Response.FromValue(new BatchAccountPoolResource(Client, response), response.GetRawResponse()));
+                var uri = _batchAccountPoolPoolRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation<BatchAccountPoolResource>(Response.FromValue(new BatchAccountPoolResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

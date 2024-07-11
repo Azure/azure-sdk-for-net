@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class EdgeOrderProduct : IUtf8JsonSerializable, IJsonModel<EdgeOrderProduct>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderProduct>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderProduct>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderProduct>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
-                writer.WriteObjectValue<ProductDescription>(Description, options);
+                writer.WriteObjectValue(Description, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
             {
@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in ImageInformation)
                 {
-                    writer.WriteObjectValue<EdgeOrderProductImageInformation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CostInformation))
             {
                 writer.WritePropertyName("costInformation"u8);
-                writer.WriteObjectValue<EdgeOrderProductCostInformation>(CostInformation, options);
+                writer.WriteObjectValue(CostInformation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AvailabilityInformation))
             {
                 writer.WritePropertyName("availabilityInformation"u8);
-                writer.WriteObjectValue<ProductAvailabilityInformation>(AvailabilityInformation, options);
+                writer.WriteObjectValue(AvailabilityInformation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HierarchyInformation))
             {
                 writer.WritePropertyName("hierarchyInformation"u8);
-                writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
+                writer.WriteObjectValue(HierarchyInformation, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in FilterableProperties)
                 {
-                    writer.WriteObjectValue<FilterableProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
-                    writer.WriteObjectValue<ProductConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderProduct DeserializeEdgeOrderProduct(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             IReadOnlyList<FilterableProperty> filterableProperties = default;
             IReadOnlyList<ProductConfiguration> configurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeOrderProduct(
                 displayName,
                 description,

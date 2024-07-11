@@ -197,7 +197,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _notificationRegistrationRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation(response);
+                var uri = _notificationRegistrationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -239,7 +241,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _notificationRegistrationRestClient.Delete(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ProviderHubArmOperation(response);
+                var uri = _notificationRegistrationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -285,7 +289,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _notificationRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response), response.GetRawResponse()));
+                var uri = _notificationRegistrationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -331,7 +337,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _notificationRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response), response.GetRawResponse()));
+                var uri = _notificationRegistrationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<NotificationRegistrationResource>(Response.FromValue(new NotificationRegistrationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

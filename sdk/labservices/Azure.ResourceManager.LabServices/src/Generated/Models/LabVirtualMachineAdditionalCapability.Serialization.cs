@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     internal partial class LabVirtualMachineAdditionalCapability : IUtf8JsonSerializable, IJsonModel<LabVirtualMachineAdditionalCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineAdditionalCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineAdditionalCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabVirtualMachineAdditionalCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabVirtualMachineAdditionalCapability DeserializeLabVirtualMachineAdditionalCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             LabServicesEnableState? installGpuDrivers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("installGpuDrivers"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LabVirtualMachineAdditionalCapability(installGpuDrivers, serializedAdditionalRawData);
         }
 

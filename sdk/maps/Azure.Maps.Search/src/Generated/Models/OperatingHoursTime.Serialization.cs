@@ -48,5 +48,13 @@ namespace Azure.Maps.Search.Models
             }
             return new OperatingHoursTime(date, hour, minute);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OperatingHoursTime FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOperatingHoursTime(document.RootElement);
+        }
     }
 }

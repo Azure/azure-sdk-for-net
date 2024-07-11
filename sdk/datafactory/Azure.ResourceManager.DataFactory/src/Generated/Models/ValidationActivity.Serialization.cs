@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ValidationActivity : IUtf8JsonSerializable, IJsonModel<ValidationActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidationActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidationActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ValidationActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, ChildItems);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue<DatasetReference>(Dataset, options);
+            writer.WriteObjectValue(Dataset, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ValidationActivity DeserializeValidationActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

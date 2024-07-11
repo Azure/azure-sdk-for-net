@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class RestoreFilesTargetInfo : IUtf8JsonSerializable, IJsonModel<RestoreFilesTargetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreFilesTargetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreFilesTargetInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestoreFilesTargetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue<RestoreFilesTargetDetails>(TargetDetails, options);
+            writer.WriteObjectValue(TargetDetails, options);
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static RestoreFilesTargetInfo DeserializeRestoreFilesTargetInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RecoverySetting recoveryOption = default;
             AzureLocation? restoreLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetDetails"u8))
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RestoreFilesTargetInfo(objectType, recoveryOption, restoreLocation, serializedAdditionalRawData, targetDetails);
         }
 

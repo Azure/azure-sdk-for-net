@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class KubeEnvironmentData : IUtf8JsonSerializable, IJsonModel<KubeEnvironmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubeEnvironmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubeEnvironmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubeEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ArcConfiguration))
             {
                 writer.WritePropertyName("arcConfiguration"u8);
-                writer.WriteObjectValue<ArcConfiguration>(ArcConfiguration, options);
+                writer.WriteObjectValue(ArcConfiguration, options);
             }
             if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue<AppLogsConfiguration>(AppLogsConfiguration, options);
+                writer.WriteObjectValue(AppLogsConfiguration, options);
             }
             if (Optional.IsDefined(AksResourceId))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static KubeEnvironmentData DeserializeKubeEnvironmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
             AppLogsConfiguration appLogsConfiguration = default;
             ResourceIdentifier aksResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubeEnvironmentData(
                 id,
                 name,
@@ -342,15 +342,16 @@ namespace Azure.ResourceManager.AppService
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -364,28 +365,30 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  location: ");
                 builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tags.Any() || hasPropertyOverride)
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
                 {
-                    builder.Append("  tags: ");
-                    if (hasPropertyOverride)
+                    if (Tags.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tags: ");
                         builder.AppendLine("{");
                         foreach (var item in Tags)
                         {
@@ -411,29 +414,31 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedLocation), out propertyOverride);
-            if (Optional.IsDefined(ExtendedLocation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  extendedLocation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtendedLocation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  extendedLocation: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kind: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kind: ");
                     if (Kind.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -447,29 +452,31 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -477,29 +484,31 @@ namespace Azure.ResourceManager.AppService
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentErrors), out propertyOverride);
-            if (Optional.IsDefined(DeploymentErrors) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    deploymentErrors: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentErrors))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    deploymentErrors: ");
                     if (DeploymentErrors.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -513,30 +522,32 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInternalLoadBalancerEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsInternalLoadBalancerEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    internalLoadBalancerEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsInternalLoadBalancerEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    internalLoadBalancerEnabled: ");
                     var boolValue = IsInternalLoadBalancerEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultDomain), out propertyOverride);
-            if (Optional.IsDefined(DefaultDomain) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    defaultDomain: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultDomain))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    defaultDomain: ");
                     if (DefaultDomain.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -550,15 +561,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StaticIP), out propertyOverride);
-            if (Optional.IsDefined(StaticIP) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    staticIp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StaticIP))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    staticIp: ");
                     if (StaticIP.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -572,43 +584,46 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcConfiguration), out propertyOverride);
-            if (Optional.IsDefined(ArcConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    arcConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    arcConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ArcConfiguration, options, 4, false, "    arcConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppLogsConfiguration), out propertyOverride);
-            if (Optional.IsDefined(AppLogsConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    appLogsConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppLogsConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    appLogsConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AppLogsConfiguration, options, 4, false, "    appLogsConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AksResourceId), out propertyOverride);
-            if (Optional.IsDefined(AksResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    aksResourceID: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AksResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    aksResourceID: ");
                     builder.AppendLine($"'{AksResourceId.ToString()}'");
                 }
             }

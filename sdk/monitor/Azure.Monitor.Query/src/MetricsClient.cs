@@ -39,11 +39,14 @@ namespace Azure.Monitor.Query
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            var scope = "https://metrics.monitor.azure.com/.default";
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? MetricsClientAudience.AzurePublicCloud : options.Audience)}";
+            authorizationScope += "/.default";
+            var scopes = new List<string> { authorizationScope };
+
             Endpoint = endpoint;
 
             var pipeline = HttpPipelineBuilder.Build(options,
-                new BearerTokenAuthenticationPolicy(credential, scope));
+                new BearerTokenAuthenticationPolicy(credential, scopes));
 
             _metricBatchClient = new MetricsBatchRestClient(_clientDiagnostics, pipeline, endpoint);
         }
@@ -69,9 +72,9 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsQueryResourcesOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time series metrics result for the requested metric names.</returns>
-        public virtual Response<MetricsQueryResourcesResult> QueryResources(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<MetricsQueryResourcesResult> QueryResources(IEnumerable<ResourceIdentifier> resourceIds, IEnumerable<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (resourceIds.Count() == 0 || metricNames.Count == 0)
+            if (resourceIds.Count() == 0 || metricNames.Count() == 0)
             {
                 throw new ArgumentException($"{nameof(resourceIds)} or {nameof(metricNames)} cannot be empty");
             }
@@ -103,9 +106,9 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="MetricsQueryResourcesOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>A time series metrics result for the requested metric names.</returns>
-        public virtual async Task<Response<MetricsQueryResourcesResult>> QueryResourcesAsync(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricsQueryResourcesResult>> QueryResourcesAsync(IEnumerable<ResourceIdentifier> resourceIds, IEnumerable<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (resourceIds.Count() == 0 || metricNames.Count == 0)
+            if (resourceIds.Count() == 0 || metricNames.Count() == 0)
             {
                 throw new ArgumentException($"{nameof(resourceIds)} or {nameof(metricNames)} cannot be empty");
             }
@@ -128,7 +131,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        private async Task<Response<MetricsQueryResourcesResult>> ExecuteBatchAsync(IEnumerable<ResourceIdentifier> resourceIds, List<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, bool isAsync = default, CancellationToken cancellationToken = default)
+        private async Task<Response<MetricsQueryResourcesResult>> ExecuteBatchAsync(IEnumerable<ResourceIdentifier> resourceIds, IEnumerable<string> metricNames, string metricNamespace, MetricsQueryResourcesOptions options = null, bool isAsync = default, CancellationToken cancellationToken = default)
         {
             var subscriptionId = GetSubscriptionId(resourceIds.FirstOrDefault());
 

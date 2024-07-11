@@ -36,6 +36,32 @@ namespace Azure.ResourceManager.FrontDoor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetLatencyScorecardsRequestUri(string subscriptionId, string resourceGroupName, string profileName, string experimentName, LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn, string country)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/NetworkExperimentProfiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/Experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendPath("/LatencyScorecard", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (endOn != null)
+            {
+                uri.AppendQuery("endDateTimeUTC", endOn.Value, "O", true);
+            }
+            if (country != null)
+            {
+                uri.AppendQuery("country", country, true);
+            }
+            uri.AppendQuery("aggregationInterval", aggregationInterval.ToString(), true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLatencyScorecardsRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn, string country)
         {
             var message = _pipeline.CreateMessage();
@@ -134,6 +160,35 @@ namespace Azure.ResourceManager.FrontDoor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetTimeSeriesRequestUri(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint, string country)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/NetworkExperimentProfiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/Experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendPath("/Timeseries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("startDateTimeUTC", startOn, "O", true);
+            uri.AppendQuery("endDateTimeUTC", endOn, "O", true);
+            uri.AppendQuery("aggregationInterval", aggregationInterval.ToString(), true);
+            uri.AppendQuery("timeseriesType", timeSeriesType.ToString(), true);
+            if (endpoint != null)
+            {
+                uri.AppendQuery("endpoint", endpoint, true);
+            }
+            if (country != null)
+            {
+                uri.AppendQuery("country", country, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetTimeSeriesRequest(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint, string country)

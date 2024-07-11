@@ -72,12 +72,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 sequenceNumber);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareDicomImageUpdatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareDicomImageUpdatedEventData(document.RootElement);
+        }
+
         internal partial class HealthcareDicomImageUpdatedEventDataConverter : JsonConverter<HealthcareDicomImageUpdatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, HealthcareDicomImageUpdatedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override HealthcareDicomImageUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

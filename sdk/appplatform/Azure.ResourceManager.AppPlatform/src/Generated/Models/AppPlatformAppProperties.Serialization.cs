@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformAppProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformAppProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformAppProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformAppProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformAppProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(TemporaryDisk))
             {
                 writer.WritePropertyName("temporaryDisk"u8);
-                writer.WriteObjectValue<AppTemporaryDisk>(TemporaryDisk, options);
+                writer.WriteObjectValue(TemporaryDisk, options);
             }
             if (Optional.IsDefined(PersistentDisk))
             {
                 writer.WritePropertyName("persistentDisk"u8);
-                writer.WriteObjectValue<AppPersistentDisk>(PersistentDisk, options);
+                writer.WriteObjectValue(PersistentDisk, options);
             }
             if (Optional.IsCollectionDefined(CustomPersistentDisks))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomPersistentDisks)
                 {
-                    writer.WriteObjectValue<AppCustomPersistentDisk>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,19 +116,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadedCertificates)
                 {
-                    writer.WriteObjectValue<AppLoadedCertificate>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
-                writer.WriteObjectValue<AppVnetAddons>(VnetAddons, options);
+                writer.WriteObjectValue(VnetAddons, options);
             }
             if (Optional.IsDefined(IngressSettings))
             {
                 writer.WritePropertyName("ingressSettings"u8);
-                writer.WriteObjectValue<AppIngressSettings>(IngressSettings, options);
+                writer.WriteObjectValue(IngressSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             AppVnetAddons vnetAddons = default;
             AppIngressSettings ingressSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("public"u8))
@@ -330,10 +330,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppPlatformAppProperties(
                 @public,
                 uri,

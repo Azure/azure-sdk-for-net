@@ -4,9 +4,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Azure.Provisioning.Authorization;
-using Azure.Provisioning.ResourceManager;
-using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning
 {

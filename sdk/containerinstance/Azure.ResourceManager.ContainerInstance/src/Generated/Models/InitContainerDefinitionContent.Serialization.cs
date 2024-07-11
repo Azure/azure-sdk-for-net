@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class InitContainerDefinitionContent : IUtf8JsonSerializable, IJsonModel<InitContainerDefinitionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InitContainerDefinitionContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InitContainerDefinitionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InitContainerDefinitionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
-                    writer.WriteObjectValue<ContainerEnvironmentVariable>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue<InitContainerPropertiesDefinitionInstanceView>(InstanceView, options);
+                writer.WriteObjectValue(InstanceView, options);
             }
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
-                    writer.WriteObjectValue<ContainerVolumeMount>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SecurityContext))
             {
                 writer.WritePropertyName("securityContext"u8);
-                writer.WriteObjectValue<ContainerSecurityContextDefinition>(SecurityContext, options);
+                writer.WriteObjectValue(SecurityContext, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static InitContainerDefinitionContent DeserializeInitContainerDefinitionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             IList<ContainerVolumeMount> volumeMounts = default;
             ContainerSecurityContextDefinition securityContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InitContainerDefinitionContent(
                 name,
                 image,

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SalesforceV2Source : IUtf8JsonSerializable, IJsonModel<SalesforceV2Source>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceV2Source>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceV2Source>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SalesforceV2Source>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("SOQLQuery"u8);
                 JsonSerializer.Serialize(writer, SoqlQuery);
+            }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                JsonSerializer.Serialize(writer, Query);
             }
             if (Optional.IsDefined(IncludeDeletedObjects))
             {
@@ -105,13 +110,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SalesforceV2Source DeserializeSalesforceV2Source(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFactoryElement<string> soqlQuery = default;
+            DataFactoryElement<string> query = default;
             DataFactoryElement<bool> includeDeletedObjects = default;
             DataFactoryElement<string> queryTimeout = default;
             BinaryData additionalColumns = default;
@@ -131,6 +137,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     soqlQuery = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("query"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    query = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("includeDeletedObjects"u8))
@@ -214,6 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 queryTimeout,
                 additionalColumns,
                 soqlQuery,
+                query,
                 includeDeletedObjects);
         }
 

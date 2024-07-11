@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageRcmApplianceDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmApplianceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmApplianceDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmApplianceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InMageRcmApplianceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,37 +44,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(ProcessServer))
             {
                 writer.WritePropertyName("processServer"u8);
-                writer.WriteObjectValue<SiteRecoveryProcessServerDetails>(ProcessServer, options);
+                writer.WriteObjectValue(ProcessServer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RcmProxy))
             {
                 writer.WritePropertyName("rcmProxy"u8);
-                writer.WriteObjectValue<RcmProxyDetails>(RcmProxy, options);
+                writer.WriteObjectValue(RcmProxy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PushInstaller))
             {
                 writer.WritePropertyName("pushInstaller"u8);
-                writer.WriteObjectValue<PushInstallerDetails>(PushInstaller, options);
+                writer.WriteObjectValue(PushInstaller, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationAgent))
             {
                 writer.WritePropertyName("replicationAgent"u8);
-                writer.WriteObjectValue<ReplicationAgentDetails>(ReplicationAgent, options);
+                writer.WriteObjectValue(ReplicationAgent, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReprotectAgent))
             {
                 writer.WritePropertyName("reprotectAgent"u8);
-                writer.WriteObjectValue<ReprotectAgentDetails>(ReprotectAgent, options);
+                writer.WriteObjectValue(ReprotectAgent, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MarsAgent))
             {
                 writer.WritePropertyName("marsAgent"u8);
-                writer.WriteObjectValue<MarsAgentDetails>(MarsAgent, options);
+                writer.WriteObjectValue(MarsAgent, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Dra))
             {
                 writer.WritePropertyName("dra"u8);
-                writer.WriteObjectValue<SiteRecoveryDraDetails>(Dra, options);
+                writer.WriteObjectValue(Dra, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SwitchProviderBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue<InMageRcmFabricSwitchProviderBlockingErrorDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static InMageRcmApplianceDetails DeserializeInMageRcmApplianceDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SiteRecoveryDraDetails dra = default;
             IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -237,10 +237,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmApplianceDetails(
                 id,
                 name,

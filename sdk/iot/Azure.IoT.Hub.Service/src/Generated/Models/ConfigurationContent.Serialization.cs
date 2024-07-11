@@ -167,5 +167,21 @@ namespace Azure.IoT.Hub.Service.Models
             }
             return new ConfigurationContent(deviceContent ?? new ChangeTrackingDictionary<string, object>(), modulesContent ?? new ChangeTrackingDictionary<string, IDictionary<string, object>>(), moduleContent ?? new ChangeTrackingDictionary<string, object>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ConfigurationContent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeConfigurationContent(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

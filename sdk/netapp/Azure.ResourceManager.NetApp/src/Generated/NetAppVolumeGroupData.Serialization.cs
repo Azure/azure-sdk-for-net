@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppVolumeGroupData : IUtf8JsonSerializable, IJsonModel<NetAppVolumeGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppVolumeGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(GroupMetaData))
             {
                 writer.WritePropertyName("groupMetaData"u8);
-                writer.WriteObjectValue<NetAppVolumeGroupMetadata>(GroupMetaData, options);
+                writer.WriteObjectValue(GroupMetaData, options);
             }
             if (Optional.IsCollectionDefined(Volumes))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue<NetAppVolumeGroupVolume>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppVolumeGroupData DeserializeNetAppVolumeGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetApp
             NetAppVolumeGroupMetadata groupMetaData = default;
             IList<NetAppVolumeGroupVolume> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppVolumeGroupData(
                 id,
                 name,

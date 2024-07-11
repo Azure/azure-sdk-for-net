@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaServicesAccountFilterAccountFiltersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaServicesAccountFilterResource>(Response.FromValue(new MediaServicesAccountFilterResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaServicesAccountFilterAccountFiltersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filterName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaServicesAccountFilterResource>(Response.FromValue(new MediaServicesAccountFilterResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaServicesAccountFilterAccountFiltersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filterName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaServicesAccountFilterResource>(Response.FromValue(new MediaServicesAccountFilterResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaServicesAccountFilterAccountFiltersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filterName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaServicesAccountFilterResource>(Response.FromValue(new MediaServicesAccountFilterResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationScheduleData : IUtf8JsonSerializable, IJsonModel<AutomationScheduleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationScheduleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationScheduleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
-                writer.WriteObjectValue<AutomationAdvancedSchedule>(AdvancedSchedule, options);
+                writer.WriteObjectValue(AdvancedSchedule, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationScheduleData DeserializeAutomationScheduleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Automation
             DateTimeOffset? lastModifiedTime = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -360,10 +360,10 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomationScheduleData(
                 id,
                 name,

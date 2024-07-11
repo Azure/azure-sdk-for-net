@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupJobExtendedInfo : IUtf8JsonSerializable, IJsonModel<BackupJobExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupJobExtendedInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupJobExtendedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupJobExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(SourceRecoverPoint))
             {
                 writer.WritePropertyName("sourceRecoverPoint"u8);
-                writer.WriteObjectValue<RestoreJobRecoveryPointDetails>(SourceRecoverPoint, options);
+                writer.WriteObjectValue(SourceRecoverPoint, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SubTasks))
             {
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SubTasks)
                 {
-                    writer.WriteObjectValue<BackupJobSubTask>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TargetRecoverPoint))
             {
                 writer.WritePropertyName("targetRecoverPoint"u8);
-                writer.WriteObjectValue<RestoreJobRecoveryPointDetails>(TargetRecoverPoint, options);
+                writer.WriteObjectValue(TargetRecoverPoint, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WarningDetails))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in WarningDetails)
                 {
-                    writer.WriteObjectValue<UserFacingWarningDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupJobExtendedInfo DeserializeBackupJobExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RestoreJobRecoveryPointDetails targetRecoverPoint = default;
             IReadOnlyList<UserFacingWarningDetail> warningDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalDetails"u8))
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupJobExtendedInfo(
                 additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
                 backupInstanceState,

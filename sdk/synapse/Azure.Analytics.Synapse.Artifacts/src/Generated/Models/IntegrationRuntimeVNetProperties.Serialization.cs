@@ -90,12 +90,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new IntegrationRuntimeVNetProperties(vNetId, subnet, publicIPs ?? new ChangeTrackingList<string>(), additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeVNetProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeVNetProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class IntegrationRuntimeVNetPropertiesConverter : JsonConverter<IntegrationRuntimeVNetProperties>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeVNetProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IntegrationRuntimeVNetProperties>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override IntegrationRuntimeVNetProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ApplicationInsightsComponentBillingFeatures : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentBillingFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentBillingFeatures>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentBillingFeatures>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentBillingFeatures>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(DataVolumeCap))
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
-                writer.WriteObjectValue<ApplicationInsightsComponentDataVolumeCap>(DataVolumeCap, options);
+                writer.WriteObjectValue(DataVolumeCap, options);
             }
             if (Optional.IsCollectionDefined(CurrentBillingFeatures))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ApplicationInsightsComponentBillingFeatures DeserializeApplicationInsightsComponentBillingFeatures(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             ApplicationInsightsComponentDataVolumeCap dataVolumeCap = default;
             IList<string> currentBillingFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("DataVolumeCap"u8))
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap, currentBillingFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -131,31 +131,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataVolumeCap), out propertyOverride);
-            if (Optional.IsDefined(DataVolumeCap) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  DataVolumeCap: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataVolumeCap))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  DataVolumeCap: ");
                     BicepSerializationHelpers.AppendChildObject(builder, DataVolumeCap, options, 2, false, "  DataVolumeCap: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentBillingFeatures), out propertyOverride);
-            if (Optional.IsCollectionDefined(CurrentBillingFeatures) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (CurrentBillingFeatures.Any() || hasPropertyOverride)
+                builder.Append("  CurrentBillingFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CurrentBillingFeatures))
                 {
-                    builder.Append("  CurrentBillingFeatures: ");
-                    if (hasPropertyOverride)
+                    if (CurrentBillingFeatures.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  CurrentBillingFeatures: ");
                         builder.AppendLine("[");
                         foreach (var item in CurrentBillingFeatures)
                         {

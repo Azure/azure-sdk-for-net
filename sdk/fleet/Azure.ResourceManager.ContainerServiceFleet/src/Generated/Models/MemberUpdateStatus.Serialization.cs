@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     public partial class MemberUpdateStatus : IUtf8JsonSerializable, IJsonModel<MemberUpdateStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MemberUpdateStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MemberUpdateStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MemberUpdateStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<ContainerServiceFleetUpdateStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         internal static MemberUpdateStatus DeserializeMemberUpdateStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             string operationId = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MemberUpdateStatus(
                 status,
                 name,

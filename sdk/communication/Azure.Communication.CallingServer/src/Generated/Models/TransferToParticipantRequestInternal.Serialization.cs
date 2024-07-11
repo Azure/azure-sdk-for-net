@@ -16,11 +16,11 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
+            writer.WriteObjectValue(TargetParticipant);
             if (Optional.IsDefined(TransfereeCallerId))
             {
                 writer.WritePropertyName("transfereeCallerId"u8);
-                writer.WriteObjectValue<PhoneNumberIdentifierModel>(TransfereeCallerId);
+                writer.WriteObjectValue(TransfereeCallerId);
             }
             if (Optional.IsDefined(UserToUserInformation))
             {
@@ -33,6 +33,14 @@ namespace Azure.Communication.CallingServer
                 writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

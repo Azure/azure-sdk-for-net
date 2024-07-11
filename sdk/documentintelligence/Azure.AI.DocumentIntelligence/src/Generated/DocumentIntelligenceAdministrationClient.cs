@@ -102,8 +102,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(authorizeCopyRequest, nameof(authorizeCopyRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = authorizeCopyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AuthorizeModelCopyAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(CopyAuthorization.FromResponse(response), response);
         }
@@ -120,8 +120,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(authorizeCopyRequest, nameof(authorizeCopyRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = authorizeCopyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AuthorizeModelCopy(content, context);
             return Response.FromValue(CopyAuthorization.FromResponse(response), response);
         }
@@ -1002,8 +1002,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await BuildDocumentModelAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
         }
@@ -1018,8 +1018,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = BuildDocumentModel(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
         }
@@ -1034,8 +1034,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(composeRequest, nameof(composeRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = composeRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await ComposeModelAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
         }
@@ -1050,8 +1050,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(composeRequest, nameof(composeRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = composeRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = ComposeModel(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
         }
@@ -1069,8 +1069,8 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(copyToRequest, nameof(copyToRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = copyToRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await CopyModelToAsync(waitUntil, modelId, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
         }
@@ -1088,8 +1088,8 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(copyToRequest, nameof(copyToRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = copyToRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = CopyModelTo(waitUntil, modelId, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
         }
@@ -1104,8 +1104,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await BuildClassifierAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
         }
@@ -1120,8 +1120,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = BuildClassifier(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
         }

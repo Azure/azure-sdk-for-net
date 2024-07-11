@@ -383,7 +383,14 @@ namespace Azure.Storage.DataMovement
                 ex is not TaskCanceledException &&
                 !ex.Message.Contains("The request was canceled."))
             {
-                SetFailureType(ex.Message);
+                if (ex is RequestFailedException requestFailedException)
+                {
+                    SetFailureType(requestFailedException.ErrorCode);
+                }
+                else
+                {
+                    SetFailureType(ex.Message);
+                }
                 if (TransferFailedEventHandler != null)
                 {
                     await TransferFailedEventHandler.RaiseAsync(

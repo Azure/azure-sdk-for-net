@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ScheduleTriggerRecurrence : IUtf8JsonSerializable, IJsonModel<ScheduleTriggerRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleTriggerRecurrence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleTriggerRecurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduleTriggerRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<DataFactoryRecurrenceSchedule>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ScheduleTriggerRecurrence DeserializeScheduleTriggerRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

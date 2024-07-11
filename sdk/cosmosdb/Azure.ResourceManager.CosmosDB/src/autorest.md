@@ -9,8 +9,8 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/b4506c0467cf68eeb9b0e966a3db1c9bedcd84c7/specification/cosmos-db/resource-manager/readme.md
-#tag: package-preview-2024-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/86b70ce378f0005c26b58ba0bcf96907bfa3a966/specification/cosmos-db/resource-manager/readme.md
+#tag: package-preview-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -23,8 +23,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
@@ -233,6 +233,7 @@ rename-mapping:
   ClusterResourceProperties.cassandraAuditLoggingEnabled: IsCassandraAuditLoggingEnabled
   ClusterResourceProperties.deallocated : IsDeallocated
   ClusterResourceProperties.repairEnabled: IsRepairEnabled
+  ClusterResourceProperties.privateLinkResourceId: -|arm-id
   CommandPostBody.readWrite: AllowWrite
   IndexingPolicy.automatic: IsAutomatic
   ManagedCassandraReaperStatus.healthy: IsHealthy
@@ -311,6 +312,14 @@ rename-mapping:
   NodeGroupProperties.diskSizeGB: DiskSizeInGB
   IpAddressOrRange: CosmosDBIPAddressOrRange
   CommandPublicResource: CassandraClusterCommand
+  CommandStatus: CassandraClusterCommandStatus
+  ThroughputPoolAccountResource: CosmosDBThroughputPoolAccount
+  ThroughputPoolAccountResource.properties.accountLocation: -|azure-location
+  ThroughputPoolAccountResource.properties.accountResourceIdentifier: -|arm-id
+  ThroughputPoolResource: CosmosDBThroughputPool
+  AutoReplicate: CassandraAutoReplicateForm
+  AzureConnectionType: ServiceConnectionType
+  RestoreParametersBase.restoreWithTtlDisabled: IsRestoreWithTtlDisabled
 
 prepend-rp-prefix:
 - UniqueKey
@@ -427,6 +436,10 @@ directive:
   transform: >
     $.restoreLocationParameter['x-ms-format'] = 'azure-location';
     $.instanceIdParameter['format'] = 'uuid';
+- from: cosmos-db.json
+  where: $.definitions
+  transform: >
+    $.ErrorResponse['x-ms-client-name'] = 'CosmosDBErrorResult';
 # Managed Cassandra
 - from: managedCassandra.json
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync']

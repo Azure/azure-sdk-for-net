@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class FrontDoorOriginGroupPatch : IUtf8JsonSerializable, IJsonModel<FrontDoorOriginGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginGroupPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginGroupPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorOriginGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                writer.WriteObjectValue<LoadBalancingSettings>(LoadBalancingSettings, options);
+                writer.WriteObjectValue(LoadBalancingSettings, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                writer.WriteObjectValue<HealthProbeSettings>(HealthProbeSettings, options);
+                writer.WriteObjectValue(HealthProbeSettings, options);
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorOriginGroupPatch DeserializeFrontDoorOriginGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             EnabledState? sessionAffinityState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorOriginGroupPatch(
                 profileName,
                 loadBalancingSettings,

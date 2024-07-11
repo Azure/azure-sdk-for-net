@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [PersistableModelProxy(typeof(UnknownCompute))]
     public partial class MachineLearningComputeProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in ProvisioningErrors)
                     {
-                        writer.WriteObjectValue<MachineLearningError>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningComputeProperties DeserializeMachineLearningComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

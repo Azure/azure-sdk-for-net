@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     [PersistableModelProxy(typeof(UnknownCertificateProperties))]
     public partial class AppPlatformCertificateProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCertificateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformCertificateProperties DeserializeAppPlatformCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

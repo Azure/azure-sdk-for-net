@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="VerifyWithoutCodeAsync(string,NumberVerificationWithoutCodeContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyWithoutCodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"));
+Response response = await client.VerifyWithoutCodeAsync("<apcGatewayId>", body);
+]]></code>
+This sample shows how to call VerifyWithoutCodeAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"))
+{
+    PhoneNumber = "<phoneNumber>",
+    HashedPhoneNumber = "<hashedPhoneNumber>",
+};
+Response response = await client.VerifyWithoutCodeAsync("<apcGatewayId>", body);
+]]></code></example>
+    </member>
+    <member name="VerifyWithoutCode(string,NumberVerificationWithoutCodeContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyWithoutCode.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"));
+Response response = client.VerifyWithoutCode("<apcGatewayId>", body);
+]]></code>
+This sample shows how to call VerifyWithoutCode with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithoutCodeContent body = new NumberVerificationWithoutCodeContent(new NetworkIdentifier("<identifierType>", "<identifier>"), new Uri("http://localhost:3000"))
+{
+    PhoneNumber = "<phoneNumber>",
+    HashedPhoneNumber = "<hashedPhoneNumber>",
+};
+Response response = client.VerifyWithoutCode("<apcGatewayId>", body);
+]]></code></example>
+    </member>
+    <member name="VerifyWithoutCodeAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyWithoutCodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    networkIdentifier = new
+    {
+        identifierType = "<identifierType>",
+        identifier = "<identifier>",
+    },
+    redirectUri = "http://localhost:3000",
+});
+Response response = await client.VerifyWithoutCodeAsync("<apcGatewayId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call VerifyWithoutCodeAsync with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    networkIdentifier = new
+    {
+        identifierType = "<identifierType>",
+        identifier = "<identifier>",
+    },
+    phoneNumber = "<phoneNumber>",
+    hashedPhoneNumber = "<hashedPhoneNumber>",
+    redirectUri = "http://localhost:3000",
+});
+Response response = await client.VerifyWithoutCodeAsync("<apcGatewayId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="VerifyWithoutCode(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyWithoutCode.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    networkIdentifier = new
+    {
+        identifierType = "<identifierType>",
+        identifier = "<identifier>",
+    },
+    redirectUri = "http://localhost:3000",
+});
+Response response = client.VerifyWithoutCode("<apcGatewayId>", content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call VerifyWithoutCode with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    networkIdentifier = new
+    {
+        identifierType = "<identifierType>",
+        identifier = "<identifier>",
+    },
+    phoneNumber = "<phoneNumber>",
+    hashedPhoneNumber = "<hashedPhoneNumber>",
+    redirectUri = "http://localhost:3000",
+});
+Response response = client.VerifyWithoutCode("<apcGatewayId>", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="VerifyWithCodeAsync(string,NumberVerificationWithCodeContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyWithCodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("<apcCode>");
+Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync("<apcGatewayId>", body);
+]]></code>
+This sample shows how to call VerifyWithCodeAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("<apcCode>");
+Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync("<apcGatewayId>", body);
+]]></code></example>
+    </member>
+    <member name="VerifyWithCode(string,NumberVerificationWithCodeContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyWithCode.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("<apcCode>");
+Response<NumberVerificationResult> response = client.VerifyWithCode("<apcGatewayId>", body);
+]]></code>
+This sample shows how to call VerifyWithCode with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+NumberVerificationWithCodeContent body = new NumberVerificationWithCodeContent("<apcCode>");
+Response<NumberVerificationResult> response = client.VerifyWithCode("<apcGatewayId>", body);
+]]></code></example>
+    </member>
+    <member name="VerifyWithCodeAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyWithCodeAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    apcCode = "<apcCode>",
+});
+Response response = await client.VerifyWithCodeAsync("<apcGatewayId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code>
+This sample shows how to call VerifyWithCodeAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    apcCode = "<apcCode>",
+});
+Response response = await client.VerifyWithCodeAsync("<apcGatewayId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code></example>
+    </member>
+    <member name="VerifyWithCode(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyWithCode and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    apcCode = "<apcCode>",
+});
+Response response = client.VerifyWithCode("<apcGatewayId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code>
+This sample shows how to call VerifyWithCode with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    apcCode = "<apcCode>",
+});
+Response response = client.VerifyWithCode("<apcGatewayId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

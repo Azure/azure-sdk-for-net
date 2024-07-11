@@ -38,5 +38,13 @@ namespace Azure.Monitor.Query.Models
             }
             return new MetadataValue(name, value);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetadataValue FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetadataValue(document.RootElement);
+        }
     }
 }

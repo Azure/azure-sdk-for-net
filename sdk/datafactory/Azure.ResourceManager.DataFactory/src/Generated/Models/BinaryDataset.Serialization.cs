@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class BinaryDataset : IUtf8JsonSerializable, IJsonModel<BinaryDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BinaryDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BinaryDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BinaryDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -82,19 +82,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue<DatasetFolder>(Folder, options);
+                writer.WriteObjectValue(Folder, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteObjectValue<DatasetLocation>(DataLocation, options);
+                writer.WriteObjectValue(DataLocation, options);
             }
             if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue<DatasetCompression>(Compression, options);
+                writer.WriteObjectValue(Compression, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static BinaryDataset DeserializeBinaryDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

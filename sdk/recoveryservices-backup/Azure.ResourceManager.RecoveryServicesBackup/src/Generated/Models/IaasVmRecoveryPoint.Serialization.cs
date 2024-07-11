@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class IaasVmRecoveryPoint : IUtf8JsonSerializable, IJsonModel<IaasVmRecoveryPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmRecoveryPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmRecoveryPoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IaasVmRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(KeyAndSecret))
             {
                 writer.WritePropertyName("keyAndSecret"u8);
-                writer.WriteObjectValue<KeyAndSecretDetails>(KeyAndSecret, options);
+                writer.WriteObjectValue(KeyAndSecret, options);
             }
             if (Optional.IsDefined(IsInstantIlrSessionActive))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointTierDetails)
                 {
-                    writer.WriteObjectValue<RecoveryPointTierInformationV2>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointDiskConfiguration))
             {
                 writer.WritePropertyName("recoveryPointDiskConfiguration"u8);
-                writer.WriteObjectValue<RecoveryPointDiskConfiguration>(RecoveryPointDiskConfiguration, options);
+                writer.WriteObjectValue(RecoveryPointDiskConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in RecoveryPointMoveReadinessInfo)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<RecoveryPointMoveReadinessInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue<RecoveryPointProperties>(RecoveryPointProperties, options);
+                writer.WriteObjectValue(RecoveryPointProperties, options);
             }
             if (Optional.IsDefined(IsPrivateAccessEnabledOnAnyDisk))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmRecoveryPoint DeserializeIaasVmRecoveryPoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ExtendedLocation extendedLocation = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointType"u8))
@@ -371,10 +371,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IaasVmRecoveryPoint(
                 objectType,
                 serializedAdditionalRawData,

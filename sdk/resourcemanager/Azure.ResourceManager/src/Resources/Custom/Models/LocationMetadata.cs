@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
         public double? Latitude { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteLongitude(Utf8JsonWriter writer)
+        internal void WriteLongitude(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if (Longitude != null)
                 writer.WriteStringValue(Longitude.ToString());
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteLatitude(Utf8JsonWriter writer)
+        internal void WriteLatitude(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if (Latitude != null)
                 writer.WriteStringValue(Latitude.ToString());

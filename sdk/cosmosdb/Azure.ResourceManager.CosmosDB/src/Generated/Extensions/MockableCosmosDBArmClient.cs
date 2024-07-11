@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CosmosDBAccountResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBAccountResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -443,30 +455,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MongoClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MongoClusterResource.CreateResourceIdentifier" /> to create a <see cref="MongoClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoClusterResource"/> object. </returns>
-        public virtual MongoClusterResource GetMongoClusterResource(ResourceIdentifier id)
-        {
-            MongoClusterResource.ValidateResourceId(id);
-            return new MongoClusterResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBFirewallRuleResource"/> object. </returns>
-        public virtual CosmosDBFirewallRuleResource GetCosmosDBFirewallRuleResource(ResourceIdentifier id)
-        {
-            CosmosDBFirewallRuleResource.ValidateResourceId(id);
-            return new CosmosDBFirewallRuleResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="CosmosDBPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -515,27 +503,27 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ThroughputPoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ThroughputPoolResource.CreateResourceIdentifier" /> to create a <see cref="ThroughputPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CosmosDBThroughputPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBThroughputPoolResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBThroughputPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ThroughputPoolResource"/> object. </returns>
-        public virtual ThroughputPoolResource GetThroughputPoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBThroughputPoolResource"/> object. </returns>
+        public virtual CosmosDBThroughputPoolResource GetCosmosDBThroughputPoolResource(ResourceIdentifier id)
         {
-            ThroughputPoolResource.ValidateResourceId(id);
-            return new ThroughputPoolResource(Client, id);
+            CosmosDBThroughputPoolResource.ValidateResourceId(id);
+            return new CosmosDBThroughputPoolResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ThroughputPoolAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ThroughputPoolAccountResource.CreateResourceIdentifier" /> to create a <see cref="ThroughputPoolAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CosmosDBThroughputPoolAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBThroughputPoolAccountResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBThroughputPoolAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ThroughputPoolAccountResource"/> object. </returns>
-        public virtual ThroughputPoolAccountResource GetThroughputPoolAccountResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBThroughputPoolAccountResource"/> object. </returns>
+        public virtual CosmosDBThroughputPoolAccountResource GetCosmosDBThroughputPoolAccountResource(ResourceIdentifier id)
         {
-            ThroughputPoolAccountResource.ValidateResourceId(id);
-            return new ThroughputPoolAccountResource(Client, id);
+            CosmosDBThroughputPoolAccountResource.ValidateResourceId(id);
+            return new CosmosDBThroughputPoolAccountResource(Client, id);
         }
     }
 }

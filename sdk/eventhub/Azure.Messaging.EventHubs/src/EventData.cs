@@ -243,6 +243,7 @@ namespace Azure.Messaging.EventHubs
         ///     <item><description>Stream</description></item>
         ///     <item><description>Uri</description></item>
         ///     <item><description>TimeSpan</description></item>
+        ///     <item><description>byte[]</description></item>
         ///   </list>
         /// </remarks>
         ///

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceCorsSettings : IUtf8JsonSerializable, IJsonModel<AppServiceCorsSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceCorsSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceCorsSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceCorsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceCorsSettings DeserializeAppServiceCorsSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             IList<string> allowedOrigins = default;
             bool? supportCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServiceCorsSettings(allowedOrigins ?? new ChangeTrackingList<string>(), supportCredentials, serializedAdditionalRawData);
         }
 
@@ -131,17 +131,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedOrigins), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedOrigins) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedOrigins.Any() || hasPropertyOverride)
+                builder.Append("  allowedOrigins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedOrigins))
                 {
-                    builder.Append("  allowedOrigins: ");
-                    if (hasPropertyOverride)
+                    if (AllowedOrigins.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedOrigins: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedOrigins)
                         {
@@ -166,15 +167,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCredentialsSupported), out propertyOverride);
-            if (Optional.IsDefined(IsCredentialsSupported) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  supportCredentials: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsCredentialsSupported))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  supportCredentials: ");
                     var boolValue = IsCredentialsSupported.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

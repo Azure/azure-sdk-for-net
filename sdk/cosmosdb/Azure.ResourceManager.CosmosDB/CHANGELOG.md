@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.8 (Unreleased)
+## 1.4.0-beta.11 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.10 (2024-06-25)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-02' to 'package-preview-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/86b70ce378f0005c26b58ba0bcf96907bfa3a966/specification/cosmos-db/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.39.0 to 1.40.0
+
+## 1.4.0-beta.9 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.4.0-beta.8 (2024-04-29)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.4.0-beta.7 (2024-03-26)
 

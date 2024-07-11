@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             string dicomServiceName = "blue";
             DicomServiceData data = new DicomServiceData(new AzureLocation("westus"))
             {
-                StorageConfiguration = new StorageConfiguration()
+                StorageConfiguration = new HealthcareApisServiceStorageConfiguration()
                 {
-                    StorageResourceId = "/subscriptions/ab309d4e-4c2e-4241-be2e-08e1c8dd4246/resourceGroups/rgname/providers/Microsoft.Storage/storageAccounts/accountname",
+                    StorageResourceId = new ResourceIdentifier("/subscriptions/ab309d4e-4c2e-4241-be2e-08e1c8dd4246/resourceGroups/rgname/providers/Microsoft.Storage/storageAccounts/accountname"),
                     FileSystemName = "fileSystemName",
                 },
-                EnableDataPartitions = false,
+                IsDataPartitionsEnabled = false,
             };
             ArmOperation<DicomServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dicomServiceName, data);
             DicomServiceResource result = lro.Value;

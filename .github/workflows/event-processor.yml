@@ -33,7 +33,7 @@ jobs:
     if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
     steps:
       - name: 'Az CLI login'
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
             client-id: ${{ secrets.AZURE_CLIENT_ID }}
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -58,7 +58,7 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20240311.2
+          --version 1.0.0-dev.20240708.1
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
@@ -114,7 +114,7 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20240311.2
+          --version 1.0.0-dev.20240708.1
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash

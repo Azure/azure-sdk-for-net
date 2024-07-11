@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class MongoDBV2Source : IUtf8JsonSerializable, IJsonModel<MongoDBV2Source>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBV2Source>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBV2Source>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoDBV2Source>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue<MongoDBCursorMethodsProperties>(CursorMethods, options);
+                writer.WriteObjectValue(CursorMethods, options);
             }
             if (Optional.IsDefined(BatchSize))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MongoDBV2Source DeserializeMongoDBV2Source(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

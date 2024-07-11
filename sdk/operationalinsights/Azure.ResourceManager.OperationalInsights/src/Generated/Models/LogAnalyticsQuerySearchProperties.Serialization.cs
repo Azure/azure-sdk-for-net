@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class LogAnalyticsQuerySearchProperties : IUtf8JsonSerializable, IJsonModel<LogAnalyticsQuerySearchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQuerySearchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQuerySearchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogAnalyticsQuerySearchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
-                writer.WriteObjectValue<LogAnalyticsQuerySearchRelatedMetadata>(Related, options);
+                writer.WriteObjectValue(Related, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static LogAnalyticsQuerySearchProperties DeserializeLogAnalyticsQuerySearchProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             LogAnalyticsQuerySearchRelatedMetadata related = default;
             IDictionary<string, IList<string>> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("related"u8))
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogAnalyticsQuerySearchProperties(related, tags ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
         }
 

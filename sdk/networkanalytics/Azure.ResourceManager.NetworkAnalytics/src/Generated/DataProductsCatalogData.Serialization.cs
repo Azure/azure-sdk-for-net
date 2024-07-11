@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
 {
     public partial class DataProductsCatalogData : IUtf8JsonSerializable, IJsonModel<DataProductsCatalogData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductsCatalogData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductsCatalogData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProductsCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Publishers)
                 {
-                    writer.WriteObjectValue<PublisherInformation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
 
         internal static DataProductsCatalogData DeserializeDataProductsCatalogData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             NetworkAnalyticsProvisioningState? provisioningState = default;
             IList<PublisherInformation> publishers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataProductsCatalogData(
                 id,
                 name,

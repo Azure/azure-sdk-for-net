@@ -116,7 +116,7 @@ namespace Azure.IoT.TimeSeriesInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UpdateModelSettingsRequest>(parameters);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }

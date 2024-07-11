@@ -57,7 +57,7 @@ var credential = new InteractiveBrowserCredential(
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
-To bypass the account selection dialog and use the account currently signed in to the operating system, set the [InteractiveBrowserCredentialBrokerOptions.UseDefaultBrokerAccount](https://learn.microsoft.com/dotnet/api/azure.identity.broker.interactivebrowsercredentialbrokeroptions) property:
+To bypass the account selection dialog and use the default broker account, set the [InteractiveBrowserCredentialBrokerOptions.UseDefaultBrokerAccount](https://learn.microsoft.com/dotnet/api/azure.identity.broker.interactivebrowsercredentialbrokeroptions) property:
 
 ```C# Snippet:ConfigureInteractiveBrowserToUseDefaultOsAccount
 var credential = new InteractiveBrowserCredential(

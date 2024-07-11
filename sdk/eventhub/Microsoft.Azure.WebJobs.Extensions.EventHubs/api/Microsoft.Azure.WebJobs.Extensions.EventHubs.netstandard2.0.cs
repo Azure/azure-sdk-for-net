@@ -30,6 +30,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public int BatchCheckpointFrequency { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions ClientRetryOptions { get { throw null; } set { } }
         public System.Uri CustomEndpointAddress { get { throw null; } set { } }
+        public bool EnableCheckpointing { get { throw null; } set { } }
         public Microsoft.Azure.WebJobs.EventHubs.InitialOffsetOptions InitialOffsetOptions { get { throw null; } }
         public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public int MaxEventBatchSize { get { throw null; } set { } }

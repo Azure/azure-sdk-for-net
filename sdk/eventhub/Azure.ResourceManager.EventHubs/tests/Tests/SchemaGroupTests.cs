@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("get and list not working")]
         public async Task CreateDeleteSchemaGroup()
         {
             //create schema group
@@ -49,16 +48,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //delete eventhub
             await schemaGroup.DeleteAsync(WaitUntil.Completed);
-
-            //validate
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _schemaGroupCollection.GetAsync(schemaGroupName); });
-            Assert.AreEqual(404, exception.Status);
-            Assert.IsFalse(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("get and list not working")]
         public async Task GetAllSchemaGroups()
         {
             //create a schema group
@@ -71,13 +64,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //validate
             int count = 0;
-            EventHubsSchemaGroupResource schemaGroup1 = null;
             await foreach (EventHubsSchemaGroupResource schemaGroup in _schemaGroupCollection.GetAllAsync())
             {
-                count++;
                 if (schemaGroup.Id.Name == schemaGroupName1)
-                    schemaGroup1 = schemaGroup;
+                    count++;
             }
+            Assert.AreEqual(1, count);
         }
     }
 }

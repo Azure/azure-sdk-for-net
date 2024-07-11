@@ -149,5 +149,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 currentState,
                 jobCreationRequest);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkSessionState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkSessionState(document.RootElement);
+        }
     }
 }

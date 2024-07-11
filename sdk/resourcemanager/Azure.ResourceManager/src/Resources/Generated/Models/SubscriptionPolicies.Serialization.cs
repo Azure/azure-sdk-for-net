@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class SubscriptionPolicies : IUtf8JsonSerializable, IJsonModel<SubscriptionPolicies>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionPolicies>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionPolicies>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SubscriptionPolicies>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static SubscriptionPolicies DeserializeSubscriptionPolicies(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources.Models
             string quotaId = default;
             SpendingLimit? spendingLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationPlacementId"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SubscriptionPolicies(locationPlacementId, quotaId, spendingLimit, serializedAdditionalRawData);
         }
 
@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationPlacementId), out propertyOverride);
-            if (Optional.IsDefined(LocationPlacementId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  locationPlacementId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocationPlacementId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  locationPlacementId: ");
                     if (LocationPlacementId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,15 +150,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaId), out propertyOverride);
-            if (Optional.IsDefined(QuotaId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  quotaId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QuotaId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  quotaId: ");
                     if (QuotaId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -171,15 +173,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpendingLimit), out propertyOverride);
-            if (Optional.IsDefined(SpendingLimit) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  spendingLimit: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SpendingLimit))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  spendingLimit: ");
                     builder.AppendLine($"'{SpendingLimit.Value.ToSerialString()}'");
                 }
             }

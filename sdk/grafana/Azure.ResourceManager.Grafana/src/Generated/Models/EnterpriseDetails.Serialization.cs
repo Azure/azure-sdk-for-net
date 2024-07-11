@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Grafana.Models
 {
     public partial class EnterpriseDetails : IUtf8JsonSerializable, IJsonModel<EnterpriseDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnterpriseDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnterpriseDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EnterpriseDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(SaasSubscriptionDetails))
             {
                 writer.WritePropertyName("saasSubscriptionDetails"u8);
-                writer.WriteObjectValue<SaasSubscriptionDetails>(SaasSubscriptionDetails, options);
+                writer.WriteObjectValue(SaasSubscriptionDetails, options);
             }
             if (Optional.IsDefined(MarketplaceTrialQuota))
             {
                 writer.WritePropertyName("marketplaceTrialQuota"u8);
-                writer.WriteObjectValue<MarketplaceTrialQuota>(MarketplaceTrialQuota, options);
+                writer.WriteObjectValue(MarketplaceTrialQuota, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static EnterpriseDetails DeserializeEnterpriseDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Grafana.Models
             SaasSubscriptionDetails saasSubscriptionDetails = default;
             MarketplaceTrialQuota marketplaceTrialQuota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("saasSubscriptionDetails"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EnterpriseDetails(saasSubscriptionDetails, marketplaceTrialQuota, serializedAdditionalRawData);
         }
 

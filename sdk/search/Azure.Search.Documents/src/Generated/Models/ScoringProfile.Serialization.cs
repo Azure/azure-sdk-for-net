@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (TextWeights != null)
                 {
                     writer.WritePropertyName("text"u8);
-                    writer.WriteObjectValue<TextWeights>(TextWeights);
+                    writer.WriteObjectValue(TextWeights);
                 }
                 else
                 {
@@ -108,6 +108,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new ScoringProfile(name, text, functions ?? new ChangeTrackingList<ScoringFunction>(), functionAggregation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScoringProfile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScoringProfile(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

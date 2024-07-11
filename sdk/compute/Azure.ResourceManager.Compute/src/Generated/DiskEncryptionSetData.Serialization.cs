@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class DiskEncryptionSetData : IUtf8JsonSerializable, IJsonModel<DiskEncryptionSetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskEncryptionSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue<KeyForDiskEncryptionSet>(ActiveKey, options);
+                writer.WriteObjectValue(ActiveKey, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PreviousKeys))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in PreviousKeys)
                 {
-                    writer.WriteObjectValue<KeyForDiskEncryptionSet>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(AutoKeyRotationError))
             {
                 writer.WritePropertyName("autoKeyRotationError"u8);
-                writer.WriteObjectValue<ComputeApiError>(AutoKeyRotationError, options);
+                writer.WriteObjectValue(AutoKeyRotationError, options);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static DiskEncryptionSetData DeserializeDiskEncryptionSetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
             ComputeApiError autoKeyRotationError = default;
             string federatedClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiskEncryptionSetData(
                 id,
                 name,

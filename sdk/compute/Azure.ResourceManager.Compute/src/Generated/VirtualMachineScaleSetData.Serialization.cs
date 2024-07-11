@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class VirtualMachineScaleSetData : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<ComputeSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue<ComputePlan>(Plan, options);
+                writer.WriteObjectValue(Plan, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -102,17 +102,22 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue<VirtualMachineScaleSetUpgradePolicy>(UpgradePolicy, options);
+                writer.WriteObjectValue(UpgradePolicy, options);
+            }
+            if (Optional.IsDefined(ScheduledEventsPolicy))
+            {
+                writer.WritePropertyName("scheduledEventsPolicy"u8);
+                writer.WriteObjectValue(ScheduledEventsPolicy, options);
             }
             if (Optional.IsDefined(AutomaticRepairsPolicy))
             {
                 writer.WritePropertyName("automaticRepairsPolicy"u8);
-                writer.WriteObjectValue<AutomaticRepairsPolicy>(AutomaticRepairsPolicy, options);
+                writer.WriteObjectValue(AutomaticRepairsPolicy, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue<VirtualMachineScaleSetVmProfile>(VirtualMachineProfile, options);
+                writer.WriteObjectValue(VirtualMachineProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -162,12 +167,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue<AdditionalCapabilities>(AdditionalCapabilities, options);
+                writer.WriteObjectValue(AdditionalCapabilities, options);
             }
             if (Optional.IsDefined(ScaleInPolicy))
             {
                 writer.WritePropertyName("scaleInPolicy"u8);
-                writer.WriteObjectValue<ScaleInPolicy>(ScaleInPolicy, options);
+                writer.WriteObjectValue(ScaleInPolicy, options);
             }
             if (Optional.IsDefined(OrchestrationMode))
             {
@@ -177,12 +182,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SpotRestorePolicy))
             {
                 writer.WritePropertyName("spotRestorePolicy"u8);
-                writer.WriteObjectValue<SpotRestorePolicy>(SpotRestorePolicy, options);
+                writer.WriteObjectValue(SpotRestorePolicy, options);
             }
             if (Optional.IsDefined(PriorityMixPolicy))
             {
                 writer.WritePropertyName("priorityMixPolicy"u8);
-                writer.WriteObjectValue<VirtualMachineScaleSetPriorityMixPolicy>(PriorityMixPolicy, options);
+                writer.WriteObjectValue(PriorityMixPolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
@@ -197,7 +202,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ResiliencyPolicy))
             {
                 writer.WritePropertyName("resiliencyPolicy"u8);
-                writer.WriteObjectValue<ResiliencyPolicy>(ResiliencyPolicy, options);
+                writer.WriteObjectValue(ResiliencyPolicy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -232,7 +237,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static VirtualMachineScaleSetData DeserializeVirtualMachineScaleSetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -251,6 +256,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
+            ScheduledEventsPolicy scheduledEventsPolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
             VirtualMachineScaleSetVmProfile virtualMachineProfile = default;
             string provisioningState = default;
@@ -271,7 +277,7 @@ namespace Azure.ResourceManager.Compute
             bool? constrainedMaximumCapacity = default;
             ResiliencyPolicy resiliencyPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -388,6 +394,15 @@ namespace Azure.ResourceManager.Compute
                                 continue;
                             }
                             upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("scheduledEventsPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("automaticRepairsPolicy"u8))
@@ -558,10 +573,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineScaleSetData(
                 id,
                 name,
@@ -576,6 +591,7 @@ namespace Azure.ResourceManager.Compute
                 extendedLocation,
                 etag,
                 upgradePolicy,
+                scheduledEventsPolicy,
                 automaticRepairsPolicy,
                 virtualMachineProfile,
                 provisioningState,

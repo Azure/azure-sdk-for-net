@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [PersistableModelProxy(typeof(UnknownBaseEnvironmentSource))]
     public partial class BaseEnvironmentSource : IUtf8JsonSerializable, IJsonModel<BaseEnvironmentSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseEnvironmentSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseEnvironmentSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BaseEnvironmentSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static BaseEnvironmentSource DeserializeBaseEnvironmentSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

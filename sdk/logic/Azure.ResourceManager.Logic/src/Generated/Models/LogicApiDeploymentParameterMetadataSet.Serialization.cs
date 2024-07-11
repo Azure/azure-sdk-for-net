@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicApiDeploymentParameterMetadataSet : IUtf8JsonSerializable, IJsonModel<LogicApiDeploymentParameterMetadataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiDeploymentParameterMetadataSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiDeploymentParameterMetadataSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicApiDeploymentParameterMetadataSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(PackageContentLink))
             {
                 writer.WritePropertyName("packageContentLink"u8);
-                writer.WriteObjectValue<LogicApiDeploymentParameterMetadata>(PackageContentLink, options);
+                writer.WriteObjectValue(PackageContentLink, options);
             }
             if (Optional.IsDefined(RedisCacheConnectionString))
             {
                 writer.WritePropertyName("redisCacheConnectionString"u8);
-                writer.WriteObjectValue<LogicApiDeploymentParameterMetadata>(RedisCacheConnectionString, options);
+                writer.WriteObjectValue(RedisCacheConnectionString, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiDeploymentParameterMetadataSet DeserializeLogicApiDeploymentParameterMetadataSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
             LogicApiDeploymentParameterMetadata packageContentLink = default;
             LogicApiDeploymentParameterMetadata redisCacheConnectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packageContentLink"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicApiDeploymentParameterMetadataSet(packageContentLink, redisCacheConnectionString, serializedAdditionalRawData);
         }
 

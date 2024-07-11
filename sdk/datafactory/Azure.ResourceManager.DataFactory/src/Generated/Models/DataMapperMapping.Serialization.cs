@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DataMapperMapping : IUtf8JsonSerializable, IJsonModel<DataMapperMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMapperMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMapperMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataMapperMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
-                writer.WriteObjectValue<MapperConnectionReference>(SourceConnectionReference, options);
+                writer.WriteObjectValue(SourceConnectionReference, options);
             }
             if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
-                writer.WriteObjectValue<MapperAttributeMappings>(AttributeMappingInfo, options);
+                writer.WriteObjectValue(AttributeMappingInfo, options);
             }
             if (Optional.IsDefined(SourceDenormalizeInfo))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataMapperMapping DeserializeDataMapperMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             MapperAttributeMappings attributeMappingInfo = default;
             BinaryData sourceDenormalizeInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetEntityName"u8))
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataMapperMapping(
                 targetEntityName,
                 sourceEntityName,

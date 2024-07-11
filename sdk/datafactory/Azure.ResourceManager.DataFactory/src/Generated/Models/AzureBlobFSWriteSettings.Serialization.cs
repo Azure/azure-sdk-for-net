@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureBlobFSWriteSettings : IUtf8JsonSerializable, IJsonModel<AzureBlobFSWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobFSWriteSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobFSWriteSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureBlobFSWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue<DataFactoryMetadataItemInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobFSWriteSettings DeserializeAzureBlobFSWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

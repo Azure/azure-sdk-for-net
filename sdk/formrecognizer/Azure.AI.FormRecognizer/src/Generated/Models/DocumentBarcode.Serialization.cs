@@ -62,5 +62,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             return new DocumentBarcode(kind, value, polygon ?? new ChangeTrackingList<float>(), span, confidence);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentBarcode FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentBarcode(document.RootElement);
+        }
     }
 }

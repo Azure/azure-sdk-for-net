@@ -83,12 +83,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 engagementType);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsEmailEngagementTrackingReportReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement);
+        }
+
         internal partial class AcsEmailEngagementTrackingReportReceivedEventDataConverter : JsonConverter<AcsEmailEngagementTrackingReportReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsEmailEngagementTrackingReportReceivedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsEmailEngagementTrackingReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

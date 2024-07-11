@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     public partial class SqlServerConfigurationsManagementSettings : IUtf8JsonSerializable, IJsonModel<SqlServerConfigurationsManagementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerConfigurationsManagementSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerConfigurationsManagementSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlServerConfigurationsManagementSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(SqlConnectivityUpdateSettings))
             {
                 writer.WritePropertyName("sqlConnectivityUpdateSettings"u8);
-                writer.WriteObjectValue<SqlConnectivityUpdateSettings>(SqlConnectivityUpdateSettings, options);
+                writer.WriteObjectValue(SqlConnectivityUpdateSettings, options);
             }
             if (Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
             {
                 writer.WritePropertyName("sqlWorkloadTypeUpdateSettings"u8);
-                writer.WriteObjectValue<SqlWorkloadTypeUpdateSettings>(SqlWorkloadTypeUpdateSettings, options);
+                writer.WriteObjectValue(SqlWorkloadTypeUpdateSettings, options);
             }
             if (Optional.IsDefined(SqlStorageUpdateSettings))
             {
                 writer.WritePropertyName("sqlStorageUpdateSettings"u8);
-                writer.WriteObjectValue<SqlStorageUpdateSettings>(SqlStorageUpdateSettings, options);
+                writer.WriteObjectValue(SqlStorageUpdateSettings, options);
             }
             if (Optional.IsDefined(AdditionalFeaturesServerConfigurations))
             {
                 writer.WritePropertyName("additionalFeaturesServerConfigurations"u8);
-                writer.WriteObjectValue<AdditionalFeaturesServerConfigurations>(AdditionalFeaturesServerConfigurations, options);
+                writer.WriteObjectValue(AdditionalFeaturesServerConfigurations, options);
             }
             if (Optional.IsDefined(SqlInstanceSettings))
             {
                 writer.WritePropertyName("sqlInstanceSettings"u8);
-                writer.WriteObjectValue<SqlInstanceSettings>(SqlInstanceSettings, options);
+                writer.WriteObjectValue(SqlInstanceSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations = default;
             SqlInstanceSettings sqlInstanceSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlConnectivityUpdateSettings"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlServerConfigurationsManagementSettings(
                 sqlConnectivityUpdateSettings,
                 sqlWorkloadTypeUpdateSettings,

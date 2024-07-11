@@ -112,5 +112,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                 statistics,
                 nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AnalyzeJobState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzeJobState(document.RootElement);
+        }
     }
 }

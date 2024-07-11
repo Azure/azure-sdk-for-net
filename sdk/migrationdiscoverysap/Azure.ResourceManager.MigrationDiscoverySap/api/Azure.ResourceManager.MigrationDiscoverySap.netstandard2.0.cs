@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapDiscoveryServerInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapDiscoveryServerInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapDiscoveryServerInstanceResource() { }
@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource> Update(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapDiscoverySiteResource : Azure.ResourceManager.ArmResource
+    public partial class SapDiscoverySiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapDiscoverySiteResource() { }
@@ -114,6 +119,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource> Update(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -149,7 +159,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SapInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SapInstanceResource() { }
@@ -169,6 +179,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource> Update(Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource>> UpdateAsync(Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

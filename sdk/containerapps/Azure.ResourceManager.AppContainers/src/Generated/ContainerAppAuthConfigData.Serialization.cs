@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppAuthConfigData : IUtf8JsonSerializable, IJsonModel<ContainerAppAuthConfigData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAuthConfigData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAuthConfigData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppAuthConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,27 +53,32 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue<ContainerAppAuthPlatform>(Platform, options);
+                writer.WriteObjectValue(Platform, options);
             }
             if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
-                writer.WriteObjectValue<ContainerAppGlobalValidation>(GlobalValidation, options);
+                writer.WriteObjectValue(GlobalValidation, options);
             }
             if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
-                writer.WriteObjectValue<ContainerAppIdentityProvidersConfiguration>(IdentityProviders, options);
+                writer.WriteObjectValue(IdentityProviders, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue<ContainerAppLogin>(Login, options);
+                writer.WriteObjectValue(Login, options);
             }
             if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
-                writer.WriteObjectValue<ContainerAppHttpSettings>(HttpSettings, options);
+                writer.WriteObjectValue(HttpSettings, options);
+            }
+            if (Optional.IsDefined(EncryptionSettings))
+            {
+                writer.WritePropertyName("encryptionSettings"u8);
+                writer.WriteObjectValue(EncryptionSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -108,7 +113,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppAuthConfigData DeserializeContainerAppAuthConfigData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,8 +128,9 @@ namespace Azure.ResourceManager.AppContainers
             ContainerAppIdentityProvidersConfiguration identityProviders = default;
             ContainerAppLogin login = default;
             ContainerAppHttpSettings httpSettings = default;
+            EncryptionSettings encryptionSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -205,15 +211,24 @@ namespace Azure.ResourceManager.AppContainers
                             httpSettings = ContainerAppHttpSettings.DeserializeContainerAppHttpSettings(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("encryptionSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionSettings = EncryptionSettings.DeserializeEncryptionSettings(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppAuthConfigData(
                 id,
                 name,
@@ -224,6 +239,7 @@ namespace Azure.ResourceManager.AppContainers
                 identityProviders,
                 login,
                 httpSettings,
+                encryptionSettings,
                 serializedAdditionalRawData);
         }
 

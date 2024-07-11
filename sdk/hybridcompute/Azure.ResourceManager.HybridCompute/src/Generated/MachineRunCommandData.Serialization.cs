@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class MachineRunCommandData : IUtf8JsonSerializable, IJsonModel<MachineRunCommandData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineRunCommandData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineRunCommandData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineRunCommandData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue<MachineRunCommandScriptSource>(Source, options);
+                writer.WriteObjectValue(Source, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
-                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue<RunCommandManagedIdentity>(OutputBlobManagedIdentity, options);
+                writer.WriteObjectValue(OutputBlobManagedIdentity, options);
             }
             if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue<RunCommandManagedIdentity>(ErrorBlobManagedIdentity, options);
+                writer.WriteObjectValue(ErrorBlobManagedIdentity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue<MachineRunCommandInstanceView>(InstanceView, options);
+                writer.WriteObjectValue(InstanceView, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static MachineRunCommandData DeserializeMachineRunCommandData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridCompute
             string provisioningState = default;
             MachineRunCommandInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -372,10 +372,10 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineRunCommandData(
                 id,
                 name,

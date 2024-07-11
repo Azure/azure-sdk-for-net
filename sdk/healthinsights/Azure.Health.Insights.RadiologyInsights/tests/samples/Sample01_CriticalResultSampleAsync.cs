@@ -154,7 +154,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             FhirR4CodeableConcept codeableConcept = new();
             codeableConcept.Coding.Add(coding);
 
-            FhirR4Extendible orderedProcedure = new()
+            OrderedProcedure orderedProcedure = new()
             {
                 Description = "US PELVIS COMPLETE",
                 Code = codeableConcept

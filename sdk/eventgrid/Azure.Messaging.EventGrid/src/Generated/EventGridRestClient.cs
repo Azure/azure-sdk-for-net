@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                content.JsonWriter.WriteObjectValue<EventGridEventInternal>(item);
+                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                content.JsonWriter.WriteObjectValue<CloudEventInternal>(item);
+                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

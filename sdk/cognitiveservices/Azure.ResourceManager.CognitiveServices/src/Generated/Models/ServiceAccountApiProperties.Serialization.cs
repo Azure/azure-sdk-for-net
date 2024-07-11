@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class ServiceAccountApiProperties : IUtf8JsonSerializable, IJsonModel<ServiceAccountApiProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountApiProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountApiProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceAccountApiProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static ServiceAccountApiProperties DeserializeServiceAccountApiProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -221,15 +221,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QnaRuntimeEndpoint), out propertyOverride);
-            if (Optional.IsDefined(QnaRuntimeEndpoint) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  qnaRuntimeEndpoint: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QnaRuntimeEndpoint))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  qnaRuntimeEndpoint: ");
                     if (QnaRuntimeEndpoint.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -243,15 +244,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QnaAzureSearchEndpointKey), out propertyOverride);
-            if (Optional.IsDefined(QnaAzureSearchEndpointKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  qnaAzureSearchEndpointKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QnaAzureSearchEndpointKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  qnaAzureSearchEndpointKey: ");
                     if (QnaAzureSearchEndpointKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -265,44 +267,47 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QnaAzureSearchEndpointId), out propertyOverride);
-            if (Optional.IsDefined(QnaAzureSearchEndpointId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  qnaAzureSearchEndpointId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QnaAzureSearchEndpointId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  qnaAzureSearchEndpointId: ");
                     builder.AppendLine($"'{QnaAzureSearchEndpointId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableStatistics), out propertyOverride);
-            if (Optional.IsDefined(EnableStatistics) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  statisticsEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableStatistics))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  statisticsEnabled: ");
                     var boolValue = EnableStatistics.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventHubConnectionString), out propertyOverride);
-            if (Optional.IsDefined(EventHubConnectionString) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  eventHubConnectionString: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EventHubConnectionString))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  eventHubConnectionString: ");
                     if (EventHubConnectionString.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -316,15 +321,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountConnectionString), out propertyOverride);
-            if (Optional.IsDefined(StorageAccountConnectionString) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  storageAccountConnectionString: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountConnectionString))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  storageAccountConnectionString: ");
                     if (StorageAccountConnectionString.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -338,43 +344,46 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadClientId), out propertyOverride);
-            if (Optional.IsDefined(AadClientId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aadClientId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AadClientId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aadClientId: ");
                     builder.AppendLine($"'{AadClientId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadTenantId), out propertyOverride);
-            if (Optional.IsDefined(AadTenantId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aadTenantId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AadTenantId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aadTenantId: ");
                     builder.AppendLine($"'{AadTenantId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuperUser), out propertyOverride);
-            if (Optional.IsDefined(SuperUser) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  superUser: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuperUser))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  superUser: ");
                     if (SuperUser.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -388,15 +397,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebsiteName), out propertyOverride);
-            if (Optional.IsDefined(WebsiteName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  websiteName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WebsiteName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  websiteName: ");
                     if (WebsiteName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

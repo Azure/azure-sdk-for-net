@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ParameterDefinitionsValueMetadata : IUtf8JsonSerializable, IJsonModel<ParameterDefinitionsValueMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParameterDefinitionsValueMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParameterDefinitionsValueMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ParameterDefinitionsValueMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ParameterDefinitionsValueMetadata DeserializeParameterDefinitionsValueMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,15 +132,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  displayName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  displayName: ");
                     if (DisplayName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -154,15 +155,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (Optional.IsDefined(Description) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  description: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  description: ");
                     if (Description.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -176,15 +178,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StrongType), out propertyOverride);
-            if (Optional.IsDefined(StrongType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  strongType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StrongType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  strongType: ");
                     if (StrongType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -198,15 +201,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignPermissions), out propertyOverride);
-            if (Optional.IsDefined(AssignPermissions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  assignPermissions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssignPermissions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  assignPermissions: ");
                     var boolValue = AssignPermissions.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

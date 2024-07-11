@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class StaticSiteTemplate : IUtf8JsonSerializable, IJsonModel<StaticSiteTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteTemplate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StaticSiteTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSiteTemplate DeserializeStaticSiteTemplate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
             string description = default;
             bool? isPrivate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateRepositoryUrl"u8))
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StaticSiteTemplate(
                 templateRepositoryUrl,
                 owner,
@@ -159,29 +159,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateRepositoryUri), out propertyOverride);
-            if (Optional.IsDefined(TemplateRepositoryUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  templateRepositoryUrl: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TemplateRepositoryUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  templateRepositoryUrl: ");
                     builder.AppendLine($"'{TemplateRepositoryUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Owner), out propertyOverride);
-            if (Optional.IsDefined(Owner) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  owner: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Owner))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  owner: ");
                     if (Owner.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -195,15 +197,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryName), out propertyOverride);
-            if (Optional.IsDefined(RepositoryName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  repositoryName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RepositoryName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  repositoryName: ");
                     if (RepositoryName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -217,15 +220,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (Optional.IsDefined(Description) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  description: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  description: ");
                     if (Description.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -239,15 +243,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPrivate), out propertyOverride);
-            if (Optional.IsDefined(IsPrivate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isPrivate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsPrivate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isPrivate: ");
                     var boolValue = IsPrivate.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

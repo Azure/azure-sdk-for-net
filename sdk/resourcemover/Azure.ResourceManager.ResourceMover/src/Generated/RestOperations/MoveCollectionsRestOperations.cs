@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +36,20 @@ namespace Azure.ResourceManager.ResourceMover
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetData data)
         {
             var message = _pipeline.CreateMessage();
@@ -55,7 +68,7 @@ namespace Azure.ResourceManager.ResourceMover
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MoverResourceSetData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -125,6 +138,20 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceSetPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -143,7 +170,7 @@ namespace Azure.ResourceManager.ResourceMover
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MoverResourceSetPatch>(patch, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -209,6 +236,20 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName)
@@ -281,6 +322,20 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName)
@@ -365,6 +420,21 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreatePrepareRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverPrepareContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/prepare", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePrepareRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverPrepareContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -386,7 +456,7 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue<MoverPrepareContent>(content, new ModelReaderWriterOptions("W"));
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -445,6 +515,21 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateInitiateMoveRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceMoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/initiateMove", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateInitiateMoveRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverResourceMoveContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -466,7 +551,7 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue<MoverResourceMoveContent>(content, new ModelReaderWriterOptions("W"));
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -525,6 +610,21 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateCommitRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverCommitContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/commit", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCommitRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverCommitContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -546,7 +646,7 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue<MoverCommitContent>(content, new ModelReaderWriterOptions("W"));
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -605,6 +705,21 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateDiscardRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDiscardContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/discard", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDiscardRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDiscardContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -626,7 +741,7 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue<MoverDiscardContent>(content, new ModelReaderWriterOptions("W"));
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -683,6 +798,21 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResolveDependenciesRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/resolveDependencies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResolveDependenciesRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName)
@@ -756,6 +886,21 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateBulkRemoveRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverBulkRemoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/bulkRemove", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateBulkRemoveRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverBulkRemoveContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -777,7 +922,7 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue<MoverBulkRemoveContent>(content, new ModelReaderWriterOptions("W"));
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -834,6 +979,17 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMoveCollectionsBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMoveCollectionsBySubscriptionRequest(string subscriptionId)
@@ -901,6 +1057,19 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMoveCollectionsByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMoveCollectionsByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -974,6 +1143,22 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequiredForRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, ResourceIdentifier sourceId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/requiredFor", false);
+            uri.AppendQuery("sourceId", sourceId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequiredForRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, ResourceIdentifier sourceId)
@@ -1060,6 +1245,14 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        internal RequestUriBuilder CreateListMoveCollectionsBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListMoveCollectionsBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1126,6 +1319,14 @@ namespace Azure.ResourceManager.ResourceMover
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMoveCollectionsByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMoveCollectionsByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)

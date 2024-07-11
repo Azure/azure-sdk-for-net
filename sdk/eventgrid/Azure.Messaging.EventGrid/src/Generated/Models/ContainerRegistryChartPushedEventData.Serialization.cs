@@ -80,12 +80,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 connectedRegistry);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ContainerRegistryChartPushedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerRegistryChartPushedEventData(document.RootElement);
+        }
+
         internal partial class ContainerRegistryChartPushedEventDataConverter : JsonConverter<ContainerRegistryChartPushedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerRegistryChartPushedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ContainerRegistryChartPushedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

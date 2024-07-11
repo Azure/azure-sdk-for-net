@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [PersistableModelProxy(typeof(UnknownExportSummary))]
     public partial class ExportSummary : IUtf8JsonSerializable, IJsonModel<ExportSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExportSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ExportSummary DeserializeExportSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

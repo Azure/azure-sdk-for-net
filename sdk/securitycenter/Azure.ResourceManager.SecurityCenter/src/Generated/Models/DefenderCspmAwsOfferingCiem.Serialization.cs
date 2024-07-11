@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderCspmAwsOfferingCiem : IUtf8JsonSerializable, IJsonModel<DefenderCspmAwsOfferingCiem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmAwsOfferingCiem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmAwsOfferingCiem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderCspmAwsOfferingCiem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(CiemDiscovery))
             {
                 writer.WritePropertyName("ciemDiscovery"u8);
-                writer.WriteObjectValue<DefenderCspmAwsOfferingCiemDiscovery>(CiemDiscovery, options);
+                writer.WriteObjectValue(CiemDiscovery, options);
             }
             if (Optional.IsDefined(CiemOidc))
             {
                 writer.WritePropertyName("ciemOidc"u8);
-                writer.WriteObjectValue<DefenderCspmAwsOfferingCiemOidc>(CiemOidc, options);
+                writer.WriteObjectValue(CiemOidc, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderCspmAwsOfferingCiem DeserializeDefenderCspmAwsOfferingCiem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             DefenderCspmAwsOfferingCiemDiscovery ciemDiscovery = default;
             DefenderCspmAwsOfferingCiemOidc ciemOidc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ciemDiscovery"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DefenderCspmAwsOfferingCiem(ciemDiscovery, ciemOidc, serializedAdditionalRawData);
         }
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class ChaosTargetListSelector : IUtf8JsonSerializable, IJsonModel<ChaosTargetListSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetListSelector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetListSelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChaosTargetListSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue<ChaosTargetReference>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<ChaosTargetFilter>(Filter, options);
+                writer.WriteObjectValue(Filter, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ChaosTargetListSelector DeserializeChaosTargetListSelector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

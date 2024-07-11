@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Properties of a hub. </summary>
+        [WirePath("properties")]
         public WebPubSubHubProperties Properties { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [PersistableModelProxy(typeof(UnknownPackageInputPathBase))]
     public partial class PackageInputPathBase : IUtf8JsonSerializable, IJsonModel<PackageInputPathBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PackageInputPathBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PackageInputPathBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PackageInputPathBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static PackageInputPathBase DeserializePackageInputPathBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

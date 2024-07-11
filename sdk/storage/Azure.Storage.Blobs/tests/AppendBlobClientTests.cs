@@ -448,6 +448,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task CreateAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -849,6 +850,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task AppendBlockAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1315,6 +1317,28 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task AppendBlockFromUriAsync_SourceErrorAndStatusCode()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+
+            AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.AppendBlockFromUriAsync(sourceBlob.Uri),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 409"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: PublicAccessNotPermitted"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Public access is not permitted on this storage account."));
+                });
+        }
+
         [RecordedTest]
         [TestCase(nameof(AppendBlobRequestConditions.LeaseId))]
         [TestCase(nameof(AppendBlobRequestConditions.TagConditions))]
@@ -1362,6 +1386,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task AppendBlockFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

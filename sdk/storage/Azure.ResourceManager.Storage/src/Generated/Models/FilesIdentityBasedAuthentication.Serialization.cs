@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class FilesIdentityBasedAuthentication : IUtf8JsonSerializable, IJsonModel<FilesIdentityBasedAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilesIdentityBasedAuthentication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilesIdentityBasedAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FilesIdentityBasedAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
-                writer.WriteObjectValue<StorageActiveDirectoryProperties>(ActiveDirectoryProperties, options);
+                writer.WriteObjectValue(ActiveDirectoryProperties, options);
             }
             if (Optional.IsDefined(DefaultSharePermission))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static FilesIdentityBasedAuthentication DeserializeFilesIdentityBasedAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageActiveDirectoryProperties activeDirectoryProperties = default;
             DefaultSharePermission? defaultSharePermission = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoryServiceOptions"u8))
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties, defaultSharePermission, serializedAdditionalRawData);
         }
 
@@ -128,40 +128,43 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DirectoryServiceOptions), out propertyOverride);
-            builder.Append("  directoryServiceOptions: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  directoryServiceOptions: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  directoryServiceOptions: ");
                 builder.AppendLine($"'{DirectoryServiceOptions.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveDirectoryProperties), out propertyOverride);
-            if (Optional.IsDefined(ActiveDirectoryProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  activeDirectoryProperties: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActiveDirectoryProperties))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  activeDirectoryProperties: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ActiveDirectoryProperties, options, 2, false, "  activeDirectoryProperties: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSharePermission), out propertyOverride);
-            if (Optional.IsDefined(DefaultSharePermission) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  defaultSharePermission: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultSharePermission))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  defaultSharePermission: ");
                     builder.AppendLine($"'{DefaultSharePermission.Value.ToString()}'");
                 }
             }

@@ -80,12 +80,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 deliveryAttemptTimeStamp);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsEmailDeliveryReportReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsEmailDeliveryReportReceivedEventData(document.RootElement);
+        }
+
         internal partial class AcsEmailDeliveryReportReceivedEventDataConverter : JsonConverter<AcsEmailDeliveryReportReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsEmailDeliveryReportReceivedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsEmailDeliveryReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

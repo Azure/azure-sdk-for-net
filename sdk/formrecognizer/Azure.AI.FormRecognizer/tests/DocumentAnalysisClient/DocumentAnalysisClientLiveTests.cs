@@ -850,8 +850,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("123 Ship St", shippingAddress.StreetAddress);
 
             Assert.AreEqual("Microsoft Delivery", document.Fields["ShippingAddressRecipient"].Value.AsString());
-            ValidateCurrencyValue(document.Fields["SubTotal"].Value.AsCurrency(), 100.00, "$", "CAD");
-            ValidateCurrencyValue(document.Fields["TotalTax"].Value.AsCurrency(), 10.00, "$", "CAD");
+            ValidateCurrencyValue(document.Fields["SubTotal"].Value.AsCurrency(), 100.00, "$", "USD");
+            ValidateCurrencyValue(document.Fields["TotalTax"].Value.AsCurrency(), 10.00, "$", "USD");
 
             AddressValue vendorAddress = document.Fields["VendorAddress"].Value.AsAddress();
             Assert.AreEqual("New York", vendorAddress.City);
@@ -868,9 +868,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var expectedItems = new List<(double Amount, DateTimeOffset Date, string Description, string ProductCode, double Quantity, string Unit, double UnitPrice, string UnitPriceCode)>()
             {
-                (60f, DateTimeOffset.Parse("2021-03-04 00:00:00+00:00"), "Consulting Services", "A123", 2, "hours", 30, "USD"),
-                (30f, DateTimeOffset.Parse("2021-03-05 00:00:00+00:00"), "Document Fee", "B456", 3, null, 10, "CAD"),
-                (10f, DateTimeOffset.Parse("2021-03-06 00:00:00+00:00"), "Printing Fee", "C789", 10, "pages", 1, "USD")
+                (60f, DateTimeOffset.Parse("2021-04-03 00:00:00+00:00"), "Consulting Services", "A123", 2, "hours", 30, "USD"),
+                (30f, DateTimeOffset.Parse("2021-05-03 00:00:00+00:00"), "Document Fee", "B456", 3, null, 10, "USD"),
+                (10f, DateTimeOffset.Parse("2021-06-03 00:00:00+00:00"), "Printing Fee", "C789", 10, "pages", 1, "USD")
             };
 
             // Include a bit of tolerance when comparing double types.

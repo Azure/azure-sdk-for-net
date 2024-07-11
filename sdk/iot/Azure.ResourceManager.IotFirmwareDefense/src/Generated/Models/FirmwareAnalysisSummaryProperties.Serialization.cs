@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     [PersistableModelProxy(typeof(UnknownSummaryResourceProperties))]
     public partial class FirmwareAnalysisSummaryProperties : IUtf8JsonSerializable, IJsonModel<FirmwareAnalysisSummaryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareAnalysisSummaryProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareAnalysisSummaryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirmwareAnalysisSummaryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static FirmwareAnalysisSummaryProperties DeserializeFirmwareAnalysisSummaryProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

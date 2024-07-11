@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class PerfCounterDataSource : IUtf8JsonSerializable, IJsonModel<PerfCounterDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerfCounterDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerfCounterDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PerfCounterDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static PerfCounterDataSource DeserializePerfCounterDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<string> counterSpecifiers = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PerfCounterDataSource(streams ?? new ChangeTrackingList<PerfCounterDataSourceStream>(), samplingFrequencyInSeconds, counterSpecifiers ?? new ChangeTrackingList<string>(), name, serializedAdditionalRawData);
         }
 

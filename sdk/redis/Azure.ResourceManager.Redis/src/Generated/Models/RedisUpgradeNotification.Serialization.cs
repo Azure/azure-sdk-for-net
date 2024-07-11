@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisUpgradeNotification : IUtf8JsonSerializable, IJsonModel<RedisUpgradeNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisUpgradeNotification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisUpgradeNotification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisUpgradeNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisUpgradeNotification DeserializeRedisUpgradeNotification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Redis.Models
             DateTimeOffset? timestamp = default;
             IReadOnlyDictionary<string, string> upsellNotification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RedisUpgradeNotification(name, timestamp, upsellNotification ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
@@ -143,15 +143,16 @@ namespace Azure.ResourceManager.Redis.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -165,32 +166,34 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  timestamp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  timestamp: ");
                     var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpsellNotification), out propertyOverride);
-            if (Optional.IsCollectionDefined(UpsellNotification) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (UpsellNotification.Any() || hasPropertyOverride)
+                builder.Append("  upsellNotification: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UpsellNotification))
                 {
-                    builder.Append("  upsellNotification: ");
-                    if (hasPropertyOverride)
+                    if (UpsellNotification.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  upsellNotification: ");
                         builder.AppendLine("{");
                         foreach (var item in UpsellNotification)
                         {

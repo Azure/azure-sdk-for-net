@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRPrivateEndpointAcl : IUtf8JsonSerializable, IJsonModel<SignalRPrivateEndpointAcl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRPrivateEndpointAcl>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRPrivateEndpointAcl>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRPrivateEndpointAcl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRPrivateEndpointAcl DeserializeSignalRPrivateEndpointAcl(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SignalR.Models
             IList<SignalRRequestType> allow = default;
             IList<SignalRRequestType> deny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SignalRPrivateEndpointAcl(allow ?? new ChangeTrackingList<SignalRRequestType>(), deny ?? new ChangeTrackingList<SignalRRequestType>(), serializedAdditionalRawData, name);
         }
 
@@ -149,15 +149,16 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -171,17 +172,18 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Allow), out propertyOverride);
-            if (Optional.IsCollectionDefined(Allow) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Allow.Any() || hasPropertyOverride)
+                builder.Append("  allow: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Allow))
                 {
-                    builder.Append("  allow: ");
-                    if (hasPropertyOverride)
+                    if (Allow.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allow: ");
                         builder.AppendLine("[");
                         foreach (var item in Allow)
                         {
@@ -193,17 +195,18 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deny), out propertyOverride);
-            if (Optional.IsCollectionDefined(Deny) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Deny.Any() || hasPropertyOverride)
+                builder.Append("  deny: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Deny))
                 {
-                    builder.Append("  deny: ");
-                    if (hasPropertyOverride)
+                    if (Deny.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  deny: ");
                         builder.AppendLine("[");
                         foreach (var item in Deny)
                         {

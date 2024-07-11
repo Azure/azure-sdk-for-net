@@ -60,5 +60,13 @@ namespace Azure.Security.KeyVault.Storage.Models
             }
             return new StorageAccountItem(id, resourceId, attributes, tags ?? new ChangeTrackingDictionary<string, string>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageAccountItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageAccountItem(document.RootElement);
+        }
     }
 }

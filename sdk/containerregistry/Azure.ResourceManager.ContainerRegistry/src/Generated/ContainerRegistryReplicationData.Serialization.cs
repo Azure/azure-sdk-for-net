@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryReplicationData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryReplicationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryReplicationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryReplicationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryReplicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<ContainerRegistryResourceStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (Optional.IsDefined(IsRegionEndpointEnabled))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryReplicationData DeserializeContainerRegistryReplicationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             bool? regionEndpointEnabled = default;
             ContainerRegistryZoneRedundancy? zoneRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryReplicationData(
                 id,
                 name,

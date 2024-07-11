@@ -56,12 +56,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MediaLiveEventConnectionRejectedEventData(ingestUrl, streamId, encoderIp, encoderPort, resultCode);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventConnectionRejectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventConnectionRejectedEventData(document.RootElement);
+        }
+
         internal partial class MediaLiveEventConnectionRejectedEventDataConverter : JsonConverter<MediaLiveEventConnectionRejectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventConnectionRejectedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventConnectionRejectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

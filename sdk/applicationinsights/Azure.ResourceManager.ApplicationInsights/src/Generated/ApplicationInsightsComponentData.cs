@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
-            PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResourceContent>();
+            PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResourceReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/>. </summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
         /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? etag, string applicationId, string appId, string namePropertiesName, ApplicationType? applicationType, FlowType? flowType, RequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, string workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceContent> privateLinkScopedResources, PublicNetworkAccessType? publicNetworkAccessForIngestion, PublicNetworkAccessType? publicNetworkAccessForQuery, IngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? etag, string applicationId, string appId, string namePropertiesName, ApplicationInsightsApplicationType? applicationType, ComponentFlowType? flowType, ComponentRequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, ResourceIdentifier workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, ComponentIngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ETag = etag;
@@ -152,13 +152,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string NamePropertiesName { get; }
         /// <summary> Type of application being monitored. </summary>
         [WirePath("properties.Application_Type")]
-        public ApplicationType? ApplicationType { get; set; }
+        public ApplicationInsightsApplicationType? ApplicationType { get; set; }
         /// <summary> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </summary>
         [WirePath("properties.Flow_Type")]
-        public FlowType? FlowType { get; set; }
+        public ComponentFlowType? FlowType { get; set; }
         /// <summary> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </summary>
         [WirePath("properties.Request_Source")]
-        public RequestSource? RequestSource { get; set; }
+        public ComponentRequestSource? RequestSource { get; set; }
         /// <summary> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </summary>
         [WirePath("properties.InstrumentationKey")]
         public string InstrumentationKey { get; }
@@ -194,22 +194,22 @@ namespace Azure.ResourceManager.ApplicationInsights
         public bool? IsImmediatePurgeDataOn30Days { get; set; }
         /// <summary> Resource Id of the log analytics workspace which the data will be ingested to. This property is required to create an application with this API version. Applications from older versions will not have this property. </summary>
         [WirePath("properties.WorkspaceResourceId")]
-        public string WorkspaceResourceId { get; set; }
+        public ResourceIdentifier WorkspaceResourceId { get; set; }
         /// <summary> The date which the component got migrated to LA, in ISO 8601 format. </summary>
         [WirePath("properties.LaMigrationDate")]
         public DateTimeOffset? LaMigrationOn { get; }
         /// <summary> List of linked private link scope resources. </summary>
         [WirePath("properties.PrivateLinkScopedResources")]
-        public IReadOnlyList<PrivateLinkScopedResourceContent> PrivateLinkScopedResources { get; }
+        public IReadOnlyList<PrivateLinkScopedResourceReference> PrivateLinkScopedResources { get; }
         /// <summary> The network access type for accessing Application Insights ingestion. </summary>
         [WirePath("properties.publicNetworkAccessForIngestion")]
-        public PublicNetworkAccessType? PublicNetworkAccessForIngestion { get; set; }
+        public ApplicationInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion { get; set; }
         /// <summary> The network access type for accessing Application Insights query. </summary>
         [WirePath("properties.publicNetworkAccessForQuery")]
-        public PublicNetworkAccessType? PublicNetworkAccessForQuery { get; set; }
+        public ApplicationInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery { get; set; }
         /// <summary> Indicates the flow of the ingestion. </summary>
         [WirePath("properties.IngestionMode")]
-        public IngestionMode? IngestionMode { get; set; }
+        public ComponentIngestionMode? IngestionMode { get; set; }
         /// <summary> Disable Non-AAD based Auth. </summary>
         [WirePath("properties.DisableLocalAuth")]
         public bool? IsDisableLocalAuth { get; set; }

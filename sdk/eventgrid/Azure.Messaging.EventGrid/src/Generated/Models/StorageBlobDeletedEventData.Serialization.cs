@@ -93,12 +93,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 storageDiagnostics);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageBlobDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageBlobDeletedEventData(document.RootElement);
+        }
+
         internal partial class StorageBlobDeletedEventDataConverter : JsonConverter<StorageBlobDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageBlobDeletedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override StorageBlobDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

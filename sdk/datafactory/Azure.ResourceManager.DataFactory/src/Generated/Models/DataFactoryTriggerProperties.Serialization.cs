@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownTrigger))]
     public partial class DataFactoryTriggerProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryTriggerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryTriggerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryTriggerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryTriggerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryTriggerProperties DeserializeDataFactoryTriggerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

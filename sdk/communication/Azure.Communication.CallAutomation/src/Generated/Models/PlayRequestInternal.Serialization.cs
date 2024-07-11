@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in PlaySources)
             {
-                writer.WriteObjectValue<PlaySourceInternal>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(PlayTo))
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions"u8);
-                writer.WriteObjectValue<PlayOptionsInternal>(PlayOptions);
+                writer.WriteObjectValue(PlayOptions);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -48,6 +48,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(OperationCallbackUri);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

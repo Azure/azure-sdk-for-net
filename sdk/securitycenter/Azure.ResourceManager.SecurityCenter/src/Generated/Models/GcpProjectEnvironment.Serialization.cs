@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class GcpProjectEnvironment : IUtf8JsonSerializable, IJsonModel<GcpProjectEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpProjectEnvironment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpProjectEnvironment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GcpProjectEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
-                writer.WriteObjectValue<GcpOrganizationalInfo>(OrganizationalData, options);
+                writer.WriteObjectValue(OrganizationalData, options);
             }
             if (Optional.IsDefined(ProjectDetails))
             {
                 writer.WritePropertyName("projectDetails"u8);
-                writer.WriteObjectValue<GcpProjectDetails>(ProjectDetails, options);
+                writer.WriteObjectValue(ProjectDetails, options);
             }
             if (Optional.IsDefined(ScanInterval))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpProjectEnvironment DeserializeGcpProjectEnvironment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             long? scanInterval = default;
             EnvironmentType environmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("organizationalData"u8))
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GcpProjectEnvironment(environmentType, serializedAdditionalRawData, organizationalData, projectDetails, scanInterval);
         }
 

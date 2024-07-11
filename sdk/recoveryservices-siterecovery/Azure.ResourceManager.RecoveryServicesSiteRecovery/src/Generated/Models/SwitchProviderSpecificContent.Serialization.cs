@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     [PersistableModelProxy(typeof(UnknownSwitchProviderSpecificContent))]
     public partial class SwitchProviderSpecificContent : IUtf8JsonSerializable, IJsonModel<SwitchProviderSpecificContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwitchProviderSpecificContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwitchProviderSpecificContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SwitchProviderSpecificContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static SwitchProviderSpecificContent DeserializeSwitchProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

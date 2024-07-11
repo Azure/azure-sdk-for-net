@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private const string BlockValue = "Block";
         private const string LogValue = "Log";
         private const string RedirectValue = "Redirect";
+        private const string AnomalyScoringValue = "AnomalyScoring";
+        private const string JSChallengeValue = "JSChallenge";
 
         /// <summary> Allow. </summary>
         public static RuleMatchActionType Allow { get; } = new RuleMatchActionType(AllowValue);
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RuleMatchActionType Log { get; } = new RuleMatchActionType(LogValue);
         /// <summary> Redirect. </summary>
         public static RuleMatchActionType Redirect { get; } = new RuleMatchActionType(RedirectValue);
+        /// <summary> AnomalyScoring. </summary>
+        public static RuleMatchActionType AnomalyScoring { get; } = new RuleMatchActionType(AnomalyScoringValue);
+        /// <summary> JSChallenge. </summary>
+        public static RuleMatchActionType JSChallenge { get; } = new RuleMatchActionType(JSChallengeValue);
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are the same. </summary>
         public static bool operator ==(RuleMatchActionType left, RuleMatchActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are not the same. </summary>
@@ -50,7 +56,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

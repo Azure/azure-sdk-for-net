@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesMultiRegionSettings : IUtf8JsonSerializable, IJsonModel<CognitiveServicesMultiRegionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesMultiRegionSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesMultiRegionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CognitiveServicesMultiRegionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue<CognitiveServicesRegionSetting>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesMultiRegionSettings DeserializeCognitiveServicesMultiRegionSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesRoutingMethod? routingMethod = default;
             IList<CognitiveServicesRegionSetting> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingMethod"u8))
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesMultiRegionSettings(routingMethod, regions ?? new ChangeTrackingList<CognitiveServicesRegionSetting>(), serializedAdditionalRawData);
         }
 
@@ -131,31 +131,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingMethod), out propertyOverride);
-            if (Optional.IsDefined(RoutingMethod) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  routingMethod: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingMethod))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  routingMethod: ");
                     builder.AppendLine($"'{RoutingMethod.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Regions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Regions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Regions.Any() || hasPropertyOverride)
+                builder.Append("  regions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Regions))
                 {
-                    builder.Append("  regions: ");
-                    if (hasPropertyOverride)
+                    if (Regions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  regions: ");
                         builder.AppendLine("[");
                         foreach (var item in Regions)
                         {

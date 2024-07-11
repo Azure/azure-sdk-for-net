@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.Provisioning
@@ -17,27 +18,47 @@ namespace Azure.Provisioning
         /// Gets the name of the parameter.
         /// </summary>
         public string Name { get; }
+
         /// <summary>
         /// Gets the description of the parameter.
         /// </summary>
         public string? Description { get; }
+
         /// <summary>
         /// Gets the default value of the parameter.
         /// </summary>
         public object? DefaultValue { get; }
+
         /// <summary>
         /// Gets a value indicating whether the parameter is secure.
         /// </summary>
         public bool IsSecure { get; }
+
+        /// <summary>
+        /// Gets the type of the parameter.
+        /// </summary>
+        public BicepType ParameterType { get; }
+
         /// <summary>
         /// Gets a value indicating whether the parameter is an expression.
         /// </summary>
         internal bool IsExpression { get; }
 
-        internal bool IsFromOutput => Output != null;
+        /// <summary>
+        /// Whether the parameter was constructed from an Output.
+        /// </summary>
+        public bool IsFromOutput => Output != null;
         internal bool IsLiteral => Output?.IsLiteral ?? false;
-        internal string? Value { get; }
-        internal IConstruct? Source { get; }
+
+        /// <summary>
+        /// The value of the parameter.
+        /// </summary>
+        public string? Value { get; }
+
+        /// <summary>
+        /// The source of the parameter.
+        /// </summary>
+        public IConstruct? Source { get; }
         internal Output? Output { get; }
 
         /// <summary>
@@ -50,6 +71,7 @@ namespace Azure.Provisioning
             IsSecure = output.IsSecure;
             Value = output.Value;
             Source = output.Source;
+            ParameterType = output.OutputType;
             Output = output;
         }
 
@@ -71,13 +93,29 @@ namespace Azure.Provisioning
         /// <param name="description">The parameter description.</param>
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
-        public Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Parameter(string name, string? description, object? defaultValue, bool isSecure)
+            : this(name, BicepType.String, description, defaultValue, isSecure)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Parameter"/>.
+        /// </summary>
+        /// <param name="name">The parameter name.</param>
+        /// <param name="parameterType">The parameter type.</param>
+        /// <param name="description">The parameter description.</param>
+        /// <param name="defaultValue">The parameter defaultValue.</param>
+        /// <param name="isSecure">Is the parameter secure.</param>
+        public Parameter(string name, BicepType parameterType = BicepType.String, string? description = default, object? defaultValue = default, bool isSecure = false)
         {
             Name = name;
+            ParameterType = parameterType;
             Description = description;
             DefaultValue = defaultValue;
             IsSecure = isSecure;
         }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Parameter"/>.
         /// </summary>
@@ -87,7 +125,7 @@ namespace Azure.Provisioning
         /// <param name="isSecure">Is the parameter secure.</param>
         /// <param name="isExpression">Is the parameter an expression.</param>
         internal Parameter(string name, string? description, object? defaultValue = default, bool isSecure = false, bool isExpression = false)
-        : this (name, description, defaultValue, isSecure)
+        : this(name, BicepType.String, description, defaultValue, isSecure)
         {
             IsExpression = isExpression;
         }

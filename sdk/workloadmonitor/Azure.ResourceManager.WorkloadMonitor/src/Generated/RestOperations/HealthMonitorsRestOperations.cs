@@ -36,6 +36,33 @@ namespace Azure.ResourceManager.WorkloadMonitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string filter, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceCollectionName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.WorkloadMonitor/monitors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string filter, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -137,6 +164,30 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceCollectionName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.WorkloadMonitor/monitors/", false);
+            uri.AppendPath(monitorId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand)
@@ -243,6 +294,43 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStateChangesRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string filter, string expand, DateTimeOffset? startTimestampUtc, DateTimeOffset? endTimestampUtc)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceCollectionName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.WorkloadMonitor/monitors/", false);
+            uri.AppendPath(monitorId, true);
+            uri.AppendPath("/history", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (startTimestampUtc != null)
+            {
+                uri.AppendQuery("startTimestampUtc", startTimestampUtc.Value, "O", true);
+            }
+            if (endTimestampUtc != null)
+            {
+                uri.AppendQuery("endTimestampUtc", endTimestampUtc.Value, "O", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListStateChangesRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string filter, string expand, DateTimeOffset? startTimestampUtc, DateTimeOffset? endTimestampUtc)
@@ -366,6 +454,32 @@ namespace Azure.ResourceManager.WorkloadMonitor
             }
         }
 
+        internal RequestUriBuilder CreateGetStateChangeRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string timestampUnix, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceCollectionName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.WorkloadMonitor/monitors/", false);
+            uri.AppendPath(monitorId, true);
+            uri.AppendPath("/history/", false);
+            uri.AppendPath(timestampUnix, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetStateChangeRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string timestampUnix, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -478,6 +592,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string filter, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string filter, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -564,6 +686,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStateChangesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string filter, string expand, DateTimeOffset? startTimestampUtc, DateTimeOffset? endTimestampUtc)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStateChangesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string filter, string expand, DateTimeOffset? startTimestampUtc, DateTimeOffset? endTimestampUtc)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyEvaluationDetails : IUtf8JsonSerializable, IJsonModel<PolicyEvaluationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyEvaluationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyEvaluationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyEvaluationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EvaluatedExpressions)
                 {
-                    writer.WriteObjectValue<ExpressionEvaluationDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IfNotExistsDetails))
             {
                 writer.WritePropertyName("ifNotExistsDetails"u8);
-                writer.WriteObjectValue<IfNotExistsEvaluationDetails>(IfNotExistsDetails, options);
+                writer.WriteObjectValue(IfNotExistsDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static PolicyEvaluationDetails DeserializePolicyEvaluationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             IReadOnlyList<ExpressionEvaluationDetails> evaluatedExpressions = default;
             IfNotExistsEvaluationDetails ifNotExistsDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("evaluatedExpressions"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PolicyEvaluationDetails(evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>(), ifNotExistsDetails, serializedAdditionalRawData);
         }
 

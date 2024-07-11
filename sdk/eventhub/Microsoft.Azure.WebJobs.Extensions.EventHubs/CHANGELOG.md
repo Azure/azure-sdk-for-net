@@ -1,6 +1,6 @@
 # Release History
 
-## 6.3.0-beta.1 (Unreleased)
+## 6.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,13 +10,37 @@
 
 ### Other Changes
 
+## 6.3.3 (2024-06-13)
+
+### Other Changes
+
+- To mitigate a vulnerability, updating the transitive dependency for `Azure.Identity` to v1.11.4 via version bump to `Microsoft.Extensions.Azure`. 
+
+## 6.3.2 (2024-04-29)
+
+### Bugs Fixed
+
+- Fixed an issue with scale metrics computation, potentially causing unnecessary scale-up.
+
+## 6.3.1 (2024-04-17)
+
+### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-wvxc-855f-jvrv), updating the transitive dependency for `Azure.Identity` to v1.11.1 via version bump to `Microsoft.Extensions.Azure`. 
+
+## 6.3.0 (2024-04-10)
+
+### Features Added
+
+- Added a new setting to `EventHubOptions` to allow checkpointing to be disabled for applications that always want to use their `initialOffsetOptions` when starting to process a new partition.
+
 ## 6.2.0 (2024-03-05)
 
 ### Other Changes
 
 - Adjusted checkpointing logic to no longer write a checkpoint when the listener is shutting down.  This was necessary to prevent potential data loss from occurring when shutting down Function retries.  Because the trigger cannot know if the Function host would have retried a failure if it were not shutting down, we cannot assume that it is safe to checkpoint. This change ensures that the batch of events being processed when shut down was requested will be retried by another instance or the next time the Function app is run.
 
-- Updated the `Azure.Messaging.EventHubs`, which includes a new build of the AMQP transport library.  The notable bug fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+- Updated the `Azure.Messaging.EventHubs`, which includes a new build of the AMQP transport library. The notable bug fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
 
 ## 6.1.0 (2024-02-13)
 

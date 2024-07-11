@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceSelectorExpression : IUtf8JsonSerializable, IJsonModel<ResourceSelectorExpression>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSelectorExpression>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSelectorExpression>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceSelectorExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ResourceSelectorExpression DeserializeResourceSelectorExpression(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
             IList<string> @in = default;
             IList<string> notIn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceSelectorExpression(kind, @in ?? new ChangeTrackingList<string>(), notIn ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -156,31 +156,33 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kind: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kind: ");
                     builder.AppendLine($"'{Kind.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(In), out propertyOverride);
-            if (Optional.IsCollectionDefined(In) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (In.Any() || hasPropertyOverride)
+                builder.Append("  in: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(In))
                 {
-                    builder.Append("  in: ");
-                    if (hasPropertyOverride)
+                    if (In.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  in: ");
                         builder.AppendLine("[");
                         foreach (var item in In)
                         {
@@ -205,17 +207,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotIn), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotIn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotIn.Any() || hasPropertyOverride)
+                builder.Append("  notIn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotIn))
                 {
-                    builder.Append("  notIn: ");
-                    if (hasPropertyOverride)
+                    if (NotIn.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notIn: ");
                         builder.AppendLine("[");
                         foreach (var item in NotIn)
                         {

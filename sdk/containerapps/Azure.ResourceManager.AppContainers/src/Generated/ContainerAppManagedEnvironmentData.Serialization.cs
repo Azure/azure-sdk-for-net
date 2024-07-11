@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppManagedEnvironmentData : IUtf8JsonSerializable, IJsonModel<ContainerAppManagedEnvironmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppManagedEnvironmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppManagedEnvironmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppManagedEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
-                writer.WriteObjectValue<ContainerAppVnetConfiguration>(VnetConfiguration, options);
+                writer.WriteObjectValue(VnetConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue<ContainerAppLogsConfiguration>(AppLogsConfiguration, options);
+                writer.WriteObjectValue(AppLogsConfiguration, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
-                writer.WriteObjectValue<ContainerAppCustomDomainConfiguration>(CustomDomainConfiguration, options);
+                writer.WriteObjectValue(CustomDomainConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
             {
@@ -130,19 +130,19 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in WorkloadProfiles)
                 {
-                    writer.WriteObjectValue<ContainerAppWorkloadProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(KedaConfiguration))
             {
                 writer.WritePropertyName("kedaConfiguration"u8);
-                writer.WriteObjectValue<KedaConfiguration>(KedaConfiguration, options);
+                writer.WriteObjectValue(KedaConfiguration, options);
             }
             if (Optional.IsDefined(DaprConfiguration))
             {
                 writer.WritePropertyName("daprConfiguration"u8);
-                writer.WriteObjectValue<DaprConfiguration>(DaprConfiguration, options);
+                writer.WriteObjectValue(DaprConfiguration, options);
             }
             if (Optional.IsDefined(InfrastructureResourceGroup))
             {
@@ -152,7 +152,12 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(PeerAuthentication))
             {
                 writer.WritePropertyName("peerAuthentication"u8);
-                writer.WriteObjectValue<ManagedEnvironmentPropertiesPeerAuthentication>(PeerAuthentication, options);
+                writer.WriteObjectValue(PeerAuthentication, options);
+            }
+            if (Optional.IsDefined(PeerTrafficConfiguration))
+            {
+                writer.WritePropertyName("peerTrafficConfiguration"u8);
+                writer.WriteObjectValue(PeerTrafficConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -187,7 +192,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppManagedEnvironmentData DeserializeContainerAppManagedEnvironmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -216,8 +221,9 @@ namespace Azure.ResourceManager.AppContainers
             DaprConfiguration daprConfiguration = default;
             string infrastructureResourceGroup = default;
             ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
+            ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -402,15 +408,24 @@ namespace Azure.ResourceManager.AppContainers
                             peerAuthentication = ManagedEnvironmentPropertiesPeerAuthentication.DeserializeManagedEnvironmentPropertiesPeerAuthentication(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("peerTrafficConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peerTrafficConfiguration = ManagedEnvironmentPropertiesPeerTrafficConfiguration.DeserializeManagedEnvironmentPropertiesPeerTrafficConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppManagedEnvironmentData(
                 id,
                 name,
@@ -435,6 +450,7 @@ namespace Azure.ResourceManager.AppContainers
                 daprConfiguration,
                 infrastructureResourceGroup,
                 peerAuthentication,
+                peerTrafficConfiguration,
                 serializedAdditionalRawData);
         }
 

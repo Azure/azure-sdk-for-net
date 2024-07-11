@@ -200,7 +200,9 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = await _tenantPolicySubscriptionPolicyRestClient.AddUpdatePolicyForTenantAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantPolicySubscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequestUri(content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -246,7 +248,9 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = _tenantPolicySubscriptionPolicyRestClient.AddUpdatePolicyForTenant(content, cancellationToken);
-                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantPolicySubscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequestUri(content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

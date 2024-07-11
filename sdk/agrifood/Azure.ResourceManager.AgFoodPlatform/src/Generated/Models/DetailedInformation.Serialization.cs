@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     public partial class DetailedInformation : IUtf8JsonSerializable, IJsonModel<DetailedInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetailedInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetailedInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DetailedInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(UnitsSupported))
             {
                 writer.WritePropertyName("unitsSupported"u8);
-                writer.WriteObjectValue<UnitSystemsInfo>(UnitsSupported, options);
+                writer.WriteObjectValue(UnitsSupported, options);
             }
             if (Optional.IsCollectionDefined(ApiInputParameters))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static DetailedInformation DeserializeDetailedInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             UnitSystemsInfo unitsSupported = default;
             IReadOnlyList<string> apiInputParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiName"u8))
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DetailedInformation(
                 apiName,
                 customParameters ?? new ChangeTrackingList<string>(),

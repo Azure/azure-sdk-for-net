@@ -30,7 +30,7 @@ namespace Azure.Communication.Rooms
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RoomsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-10-30-preview")
+        public RoomsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-04-15")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -67,7 +67,7 @@ namespace Azure.Communication.Rooms
             }
             var model = createRoomRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CreateRoomRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -263,7 +263,7 @@ namespace Azure.Communication.Rooms
                 PstnDialOutEnabled = pstnDialOutEnabled
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UpdateRoomRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }

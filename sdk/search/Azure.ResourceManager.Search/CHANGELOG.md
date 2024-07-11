@@ -1,14 +1,28 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.4 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version tag from 'package-preview-2024-03' to 'package-preview-2024-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c3cc9abe085093ba880ee3eeb792edb4fa789553/specification/search/resource-manager/readme.md
+
+## 1.3.0-beta.3 (2024-05-16)
 
 ### Bugs Fixed
 
-### Other Changes
+- Correct casing of SkuName when using the ArmSearchModelFactory.
+
+## 1.3.0-beta.2 (2024-04-29)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+## 1.3.0-beta.1 (2024-04-17)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-11' to 'package-preview-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/3fb73ef5a3af2c138b53e3cced182095b671a679/specification/search/resource-manager/readme.md
 
 ## 1.2.2 (2024-03-23)
 
@@ -106,4 +120,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

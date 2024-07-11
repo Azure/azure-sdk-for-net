@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class FhirR4Resource : IUtf8JsonSerializable, IJsonModel<FhirR4Resource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Resource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Resource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FhirR4Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue<FhirR4Meta>(Meta, options);
+                writer.WriteObjectValue(Meta, options);
             }
             if (Optional.IsDefined(ImplicitRules))
             {
@@ -77,7 +77,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static FhirR4Resource DeserializeFhirR4Resource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,11 +172,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeFhirR4Resource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FhirR4Resource>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

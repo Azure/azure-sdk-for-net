@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchOSDisk : IUtf8JsonSerializable, IJsonModel<BatchOSDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchOSDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchOSDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchOSDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(EphemeralOSDiskSettings))
             {
                 writer.WritePropertyName("ephemeralOSDiskSettings"u8);
-                writer.WriteObjectValue<DiffDiskSettings>(EphemeralOSDiskSettings, options);
+                writer.WriteObjectValue(EphemeralOSDiskSettings, options);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue<ManagedDisk>(ManagedDisk, options);
+                writer.WriteObjectValue(ManagedDisk, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchOSDisk DeserializeBatchOSDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
             int? diskSizeGB = default;
             bool? writeAcceleratorEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ephemeralOSDiskSettings"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchOSDisk(
                 ephemeralOSDiskSettings,
                 caching,

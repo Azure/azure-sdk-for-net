@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 {
     public partial class DnsForwardingRulePatch : IUtf8JsonSerializable, IJsonModel<DnsForwardingRulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsForwardingRulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsForwardingRulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DnsForwardingRulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetDnsServers)
                 {
-                    writer.WriteObjectValue<TargetDnsServer>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         internal static DnsForwardingRulePatch DeserializeDnsForwardingRulePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             IDictionary<string, string> metadata = default;
             DnsForwardingRuleState? forwardingRuleState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DnsForwardingRulePatch(targetDnsServers ?? new ChangeTrackingList<TargetDnsServer>(), metadata ?? new ChangeTrackingDictionary<string, string>(), forwardingRuleState, serializedAdditionalRawData);
         }
 

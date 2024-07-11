@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     [PersistableModelProxy(typeof(UnknownFunctionBinding))]
     public partial class StreamingJobFunctionBinding : IUtf8JsonSerializable, IJsonModel<StreamingJobFunctionBinding>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobFunctionBinding>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobFunctionBinding>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingJobFunctionBinding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobFunctionBinding DeserializeStreamingJobFunctionBinding(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

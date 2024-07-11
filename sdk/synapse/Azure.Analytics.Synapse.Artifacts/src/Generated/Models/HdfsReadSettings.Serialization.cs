@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DistcpSettings))
             {
                 writer.WritePropertyName("distcpSettings"u8);
-                writer.WriteObjectValue<DistcpSettings>(DistcpSettings);
+                writer.WriteObjectValue(DistcpSettings);
             }
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
@@ -229,12 +229,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 deleteFilesAfterCompletion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HdfsReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHdfsReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class HdfsReadSettingsConverter : JsonConverter<HdfsReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, HdfsReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<HdfsReadSettings>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override HdfsReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

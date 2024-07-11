@@ -149,12 +149,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 query);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PostgreSqlSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePostgreSqlSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class PostgreSqlSourceConverter : JsonConverter<PostgreSqlSource>
         {
             public override void Write(Utf8JsonWriter writer, PostgreSqlSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<PostgreSqlSource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override PostgreSqlSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

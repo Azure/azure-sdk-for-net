@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRUpstreamTemplate : IUtf8JsonSerializable, IJsonModel<SignalRUpstreamTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRUpstreamTemplate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRUpstreamTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRUpstreamTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue<SignalRUpstreamAuthSettings>(Auth, options);
+                writer.WriteObjectValue(Auth, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRUpstreamTemplate DeserializeSignalRUpstreamTemplate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SignalR.Models
             string urlTemplate = default;
             SignalRUpstreamAuthSettings auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hubPattern"u8))
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SignalRUpstreamTemplate(
                 hubPattern,
                 eventPattern,
@@ -152,15 +152,16 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HubPattern), out propertyOverride);
-            if (Optional.IsDefined(HubPattern) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  hubPattern: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HubPattern))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  hubPattern: ");
                     if (HubPattern.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -174,15 +175,16 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventPattern), out propertyOverride);
-            if (Optional.IsDefined(EventPattern) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  eventPattern: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EventPattern))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  eventPattern: ");
                     if (EventPattern.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -196,15 +198,16 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CategoryPattern), out propertyOverride);
-            if (Optional.IsDefined(CategoryPattern) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  categoryPattern: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CategoryPattern))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  categoryPattern: ");
                     if (CategoryPattern.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -218,15 +221,16 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UrlTemplate), out propertyOverride);
-            if (Optional.IsDefined(UrlTemplate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  urlTemplate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UrlTemplate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  urlTemplate: ");
                     if (UrlTemplate.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -240,15 +244,16 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
-            if (Optional.IsDefined(Auth) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  auth: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Auth))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  auth: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
                 }
             }

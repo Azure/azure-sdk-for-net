@@ -88,12 +88,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new IntegrationRuntimeReference(type, referenceName, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class IntegrationRuntimeReferenceConverter : JsonConverter<IntegrationRuntimeReference>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IntegrationRuntimeReference>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override IntegrationRuntimeReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -33,11 +33,29 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "aiServicesVision": return AIServicesVisionVectorizer.DeserializeAIServicesVisionVectorizer(element);
+                    case "aml": return AzureMachineLearningVectorizer.DeserializeAzureMachineLearningVectorizer(element);
                     case "azureOpenAI": return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element);
                     case "customWebApi": return CustomVectorizer.DeserializeCustomVectorizer(element);
                 }
             }
             return UnknownVectorSearchVectorizer.DeserializeUnknownVectorSearchVectorizer(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorSearchVectorizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorSearchVectorizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

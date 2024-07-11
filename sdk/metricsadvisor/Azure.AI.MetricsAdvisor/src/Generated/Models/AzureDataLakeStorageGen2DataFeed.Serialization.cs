@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceParameter"u8);
-            writer.WriteObjectValue<AzureDataLakeStorageGen2Parameter>(DataSourceParameter);
+            writer.WriteObjectValue(DataSourceParameter);
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName"u8);
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue<DataFeedMetric>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
@@ -489,6 +489,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 authenticationType,
                 credentialId,
                 dataSourceParameter);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureDataLakeStorageGen2DataFeed FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureDataLakeStorageGen2DataFeed(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

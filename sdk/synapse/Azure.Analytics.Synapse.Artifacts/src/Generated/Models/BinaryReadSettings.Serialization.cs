@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue<CompressionReadSettings>(CompressionProperties);
+                writer.WriteObjectValue(CompressionProperties);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -66,12 +66,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new BinaryReadSettings(type, additionalProperties, compressionProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new BinaryReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBinaryReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class BinaryReadSettingsConverter : JsonConverter<BinaryReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, BinaryReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<BinaryReadSettings>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override BinaryReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

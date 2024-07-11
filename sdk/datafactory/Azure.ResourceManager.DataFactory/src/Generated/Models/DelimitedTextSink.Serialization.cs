@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DelimitedTextSink : IUtf8JsonSerializable, IJsonModel<DelimitedTextSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DelimitedTextSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DelimitedTextSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DelimitedTextSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue<StoreWriteSettings>(StoreSettings, options);
+                writer.WriteObjectValue(StoreSettings, options);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue<DelimitedTextWriteSettings>(FormatSettings, options);
+                writer.WriteObjectValue(FormatSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DelimitedTextSink DeserializeDelimitedTextSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

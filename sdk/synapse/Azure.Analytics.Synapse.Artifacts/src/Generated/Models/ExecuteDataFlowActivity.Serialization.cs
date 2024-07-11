@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
+                writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<ActivityPolicy>(Policy);
+                writer.WriteObjectValue(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<ActivityDependency>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,28 +64,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<UserProperty>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataflow"u8);
-            writer.WriteObjectValue<DataFlowReference>(Dataflow);
+            writer.WriteObjectValue(Dataflow);
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue<DataFlowStagingInfo>(Staging);
+                writer.WriteObjectValue(Staging);
             }
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(IntegrationRuntime);
+                writer.WriteObjectValue(IntegrationRuntime);
             }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue<ExecuteDataFlowActivityTypePropertiesCompute>(Compute);
+                writer.WriteObjectValue(Compute);
             }
             if (Optional.IsDefined(TraceLevel))
             {
@@ -326,12 +326,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sourceStagingConcurrency);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExecuteDataFlowActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExecuteDataFlowActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>
         {
             public override void Write(Utf8JsonWriter writer, ExecuteDataFlowActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ExecuteDataFlowActivity>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override ExecuteDataFlowActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -45,5 +45,13 @@ namespace Azure.AI.FormRecognizer.Models
             }
             return new CopyResult(modelId, errors ?? new ChangeTrackingList<FormRecognizerError>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CopyResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopyResult(document.RootElement);
+        }
     }
 }

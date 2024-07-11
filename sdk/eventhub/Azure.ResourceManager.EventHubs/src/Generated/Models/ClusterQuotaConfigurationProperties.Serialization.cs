@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class ClusterQuotaConfigurationProperties : IUtf8JsonSerializable, IJsonModel<ClusterQuotaConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterQuotaConfigurationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterQuotaConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterQuotaConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static ClusterQuotaConfigurationProperties DeserializeClusterQuotaConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             IDictionary<string, string> settings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterQuotaConfigurationProperties(settings ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
@@ -117,17 +117,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Settings), out propertyOverride);
-            if (Optional.IsCollectionDefined(Settings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Settings.Any() || hasPropertyOverride)
+                builder.Append("  settings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Settings))
                 {
-                    builder.Append("  settings: ");
-                    if (hasPropertyOverride)
+                    if (Settings.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  settings: ");
                         builder.AppendLine("{");
                         foreach (var item in Settings)
                         {

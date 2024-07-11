@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SnowflakeExportCopyCommand : IUtf8JsonSerializable, IJsonModel<SnowflakeExportCopyCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeExportCopyCommand>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeExportCopyCommand>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnowflakeExportCopyCommand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SnowflakeExportCopyCommand DeserializeSnowflakeExportCopyCommand(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

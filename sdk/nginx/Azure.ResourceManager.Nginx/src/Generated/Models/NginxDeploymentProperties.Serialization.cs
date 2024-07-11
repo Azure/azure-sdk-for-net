@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Nginx.Models
 {
     public partial class NginxDeploymentProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<NginxNetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
@@ -59,17 +59,22 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
-                writer.WriteObjectValue<NginxLogging>(Logging, options);
+                writer.WriteObjectValue(Logging, options);
             }
             if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
-                writer.WriteObjectValue<NginxDeploymentScalingProperties>(ScalingProperties, options);
+                writer.WriteObjectValue(ScalingProperties, options);
+            }
+            if (Optional.IsDefined(AutoUpgradeProfile))
+            {
+                writer.WritePropertyName("autoUpgradeProfile"u8);
+                writer.WriteObjectValue(AutoUpgradeProfile, options);
             }
             if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
-                writer.WriteObjectValue<NginxDeploymentUserProfile>(UserProfile, options);
+                writer.WriteObjectValue(UserProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxDeploymentProperties DeserializeNginxDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,9 +122,10 @@ namespace Azure.ResourceManager.Nginx.Models
             bool? enableDiagnosticsSupport = default;
             NginxLogging logging = default;
             NginxDeploymentScalingProperties scalingProperties = default;
+            AutoUpgradeProfile autoUpgradeProfile = default;
             NginxDeploymentUserProfile userProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -182,6 +188,15 @@ namespace Azure.ResourceManager.Nginx.Models
                     scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("autoUpgradeProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeProfile = AutoUpgradeProfile.DeserializeAutoUpgradeProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("userProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -193,10 +208,10 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NginxDeploymentProperties(
                 provisioningState,
                 nginxVersion,
@@ -206,6 +221,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 enableDiagnosticsSupport,
                 logging,
                 scalingProperties,
+                autoUpgradeProfile,
                 userProfile,
                 serializedAdditionalRawData);
         }

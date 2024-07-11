@@ -33,18 +33,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             SanitizedHeaders.Add("ServiceBusSupplementaryAuthorization");
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E",
-                    $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"));
+                    "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E")
+                    {
+                        Value = $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"
+                    });
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E",
-                    $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"));
+                    "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E")
+                    {
+                        Value = $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"
+                    });
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    "[^\\r](?<break>\\n)",
-                    "\r\n")
+                    "[^\\r](?<break>\\n)")
                 {
-                    GroupForReplace = "break"
+                    GroupForReplace = "break",
+                    Value = "\r\n"
                 });
             _serviceVersion = serviceVersion;
         }
@@ -223,9 +227,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [RecordedTest]
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task BasicTopicCrudOperations(bool premium)
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public async Task BasicTopicCrudOperations(bool premium, bool supportOrdering)
         {
             var topicName = nameof(BasicTopicCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var client = CreateClient(premium);
@@ -240,6 +246,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 MaxSizeInMegabytes = 1024,
                 RequiresDuplicateDetection = true,
                 UserMetadata = nameof(BasicTopicCrudOperations),
+                SupportOrdering = supportOrdering
             };
 
             if (CanSetMaxMessageSize(premium))

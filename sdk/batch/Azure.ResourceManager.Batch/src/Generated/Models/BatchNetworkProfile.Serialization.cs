@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchNetworkProfile : IUtf8JsonSerializable, IJsonModel<BatchNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AccountAccess))
             {
                 writer.WritePropertyName("accountAccess"u8);
-                writer.WriteObjectValue<BatchEndpointAccessProfile>(AccountAccess, options);
+                writer.WriteObjectValue(AccountAccess, options);
             }
             if (Optional.IsDefined(NodeManagementAccess))
             {
                 writer.WritePropertyName("nodeManagementAccess"u8);
-                writer.WriteObjectValue<BatchEndpointAccessProfile>(NodeManagementAccess, options);
+                writer.WriteObjectValue(NodeManagementAccess, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNetworkProfile DeserializeBatchNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchEndpointAccessProfile accountAccess = default;
             BatchEndpointAccessProfile nodeManagementAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountAccess"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchNetworkProfile(accountAccess, nodeManagementAccess, serializedAdditionalRawData);
         }
 

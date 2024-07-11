@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DeleteActivity : IUtf8JsonSerializable, IJsonModel<DeleteActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeleteActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeleteActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeleteActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
-                writer.WriteObjectValue<LogStorageSettings>(LogStorageSettings, options);
+                writer.WriteObjectValue(LogStorageSettings, options);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue<DatasetReference>(Dataset, options);
+            writer.WriteObjectValue(Dataset, options);
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue<StoreReadSettings>(StoreSettings, options);
+                writer.WriteObjectValue(StoreSettings, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DeleteActivity DeserializeDeleteActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

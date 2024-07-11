@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
+                writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -62,9 +62,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("userName"u8);
             writer.WriteObjectValue<object>(UserName);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue<SecretBase>(Password);
+            writer.WriteObjectValue(Password);
             writer.WritePropertyName("clientKey"u8);
-            writer.WriteObjectValue<SecretBase>(ClientKey);
+            writer.WriteObjectValue(ClientKey);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -188,12 +188,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 clientKey);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AppFiguresLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAppFiguresLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class AppFiguresLinkedServiceConverter : JsonConverter<AppFiguresLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AppFiguresLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AppFiguresLinkedService>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override AppFiguresLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

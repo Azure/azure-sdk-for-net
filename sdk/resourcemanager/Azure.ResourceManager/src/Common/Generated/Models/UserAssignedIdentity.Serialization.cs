@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(UserAssignedIdentityConverter))]
     public partial class UserAssignedIdentity : IUtf8JsonSerializable, IJsonModel<UserAssignedIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserAssignedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Models
 
         internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,29 +100,31 @@ namespace Azure.ResourceManager.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
-            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  principalId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  principalId: ");
                     builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
-            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientId: ");
                     builder.AppendLine($"'{ClientId.Value.ToString()}'");
                 }
             }
@@ -168,8 +170,9 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, UserAssignedIdentity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<UserAssignedIdentity>(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
+
             public override UserAssignedIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CreateCallRequestInternal>(createCallRequest);
+            content.JsonWriter.WriteObjectValue(createCallRequest);
             request.Content = content;
             return message;
         }
@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnswerCallRequestInternal>(answerCallRequest);
+            content.JsonWriter.WriteObjectValue(answerCallRequest);
             request.Content = content;
             return message;
         }
@@ -202,7 +202,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RedirectCallRequestInternal>(redirectCallRequest);
+            content.JsonWriter.WriteObjectValue(redirectCallRequest);
             request.Content = content;
             return message;
         }
@@ -266,7 +266,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RejectCallRequestInternal>(rejectCallRequest);
+            content.JsonWriter.WriteObjectValue(rejectCallRequest);
             request.Content = content;
             return message;
         }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [PersistableModelProxy(typeof(UnknownMonitoringInputDataBase))]
     public partial class MonitoringInputDataBase : IUtf8JsonSerializable, IJsonModel<MonitoringInputDataBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringInputDataBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringInputDataBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitoringInputDataBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MonitoringInputDataBase DeserializeMonitoringInputDataBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

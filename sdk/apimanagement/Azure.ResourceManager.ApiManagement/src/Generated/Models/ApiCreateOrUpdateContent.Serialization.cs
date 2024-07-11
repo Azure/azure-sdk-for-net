@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ApiCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue<AuthenticationSettingsContract>(AuthenticationSettings, options);
+                writer.WriteObjectValue(AuthenticationSettings, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue<SubscriptionKeyParameterNamesContract>(SubscriptionKeyParameterNames, options);
+                writer.WriteObjectValue(SubscriptionKeyParameterNames, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -88,20 +88,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(TermsOfServiceUri))
+            if (Optional.IsDefined(TermsOfServiceLink))
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
-                writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
+                writer.WriteStringValue(TermsOfServiceLink);
             }
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue<ApiContactInformation>(Contact, options);
+                writer.WriteObjectValue(Contact, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue<ApiLicenseInformation>(License, options);
+                writer.WriteObjectValue(License, options);
             }
             if (Optional.IsDefined(SourceApiId))
             {
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ServiceUri))
+            if (Optional.IsDefined(ServiceLink))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+                writer.WriteStringValue(ServiceLink);
             }
             if (Optional.IsDefined(Path))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
-                writer.WriteObjectValue<ApiVersionSetContractDetails>(ApiVersionSet, options);
+                writer.WriteObjectValue(ApiVersionSet, options);
             }
             if (Optional.IsDefined(Value))
             {
@@ -151,12 +151,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(WsdlSelector))
             {
                 writer.WritePropertyName("wsdlSelector"u8);
-                writer.WriteObjectValue<ApiCreateOrUpdatePropertiesWsdlSelector>(WsdlSelector, options);
+                writer.WriteObjectValue(WsdlSelector, options);
             }
             if (Optional.IsDefined(SoapApiType))
             {
                 writer.WritePropertyName("apiType"u8);
                 writer.WriteStringValue(SoapApiType.Value.ToString());
+            }
+            if (Optional.IsDefined(TranslateRequiredQueryParametersConduct))
+            {
+                writer.WritePropertyName("translateRequiredQueryParameters"u8);
+                writer.WriteStringValue(TranslateRequiredQueryParametersConduct.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -191,7 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiCreateOrUpdateContent DeserializeApiCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -209,12 +214,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string apiVersionDescription = default;
             ResourceIdentifier apiVersionSetId = default;
             bool? subscriptionRequired = default;
-            Uri termsOfServiceUri = default;
+            string termsOfServiceUri = default;
             ApiContactInformation contact = default;
             ApiLicenseInformation license = default;
             ResourceIdentifier sourceApiId = default;
             string displayName = default;
-            Uri serviceUri = default;
+            string serviceUri = default;
             string path = default;
             IList<ApiOperationInvokableProtocol> protocols = default;
             ApiVersionSetContractDetails apiVersionSet = default;
@@ -222,8 +227,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ContentFormat? format = default;
             ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default;
             SoapApiType? apiType = default;
+            TranslateRequiredQueryParametersConduct? translateRequiredQueryParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -325,11 +331,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         }
                         if (property0.NameEquals("termsOfServiceUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            termsOfServiceUri = new Uri(property0.Value.GetString());
+                            termsOfServiceUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("contact"u8))
@@ -366,11 +368,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         }
                         if (property0.NameEquals("serviceUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceUri = new Uri(property0.Value.GetString());
+                            serviceUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("path"u8))
@@ -433,15 +431,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             apiType = new SoapApiType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("translateRequiredQueryParameters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            translateRequiredQueryParameters = new TranslateRequiredQueryParametersConduct(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiCreateOrUpdateContent(
                 description,
                 authenticationSettings,
@@ -468,6 +475,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 format,
                 wsdlSelector,
                 apiType,
+                translateRequiredQueryParameters,
                 serializedAdditionalRawData);
         }
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabConnectionProfile : IUtf8JsonSerializable, IJsonModel<LabConnectionProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabConnectionProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabConnectionProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabConnectionProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabConnectionProfile DeserializeLabConnectionProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LabServices.Models
             LabVirtualMachineConnectionType? clientSshAccess = default;
             LabVirtualMachineConnectionType? clientRdpAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webSshAccess"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LabConnectionProfile(webSshAccess, webRdpAccess, clientSshAccess, clientRdpAccess, serializedAdditionalRawData);
         }
 

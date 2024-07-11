@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Purview.Models
 {
     public partial class PurviewBatchFeatureContent : IUtf8JsonSerializable, IJsonModel<PurviewBatchFeatureContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewBatchFeatureContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewBatchFeatureContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PurviewBatchFeatureContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static PurviewBatchFeatureContent DeserializePurviewBatchFeatureContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
             IList<string> features = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("features"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Purview.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PurviewBatchFeatureContent(features ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 

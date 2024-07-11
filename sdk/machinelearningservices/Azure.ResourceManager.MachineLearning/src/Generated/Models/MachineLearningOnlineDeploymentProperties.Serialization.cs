@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningOnlineDeploymentProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningOnlineDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOnlineDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOnlineDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningOnlineDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataCollector != null)
                 {
                     writer.WritePropertyName("dataCollector"u8);
-                    writer.WriteObjectValue<DataCollector>(DataCollector, options);
+                    writer.WriteObjectValue(DataCollector, options);
                 }
                 else
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LivenessProbe != null)
                 {
                     writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue<MachineLearningProbeSettings>(LivenessProbe, options);
+                    writer.WriteObjectValue(LivenessProbe, options);
                 }
                 else
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ReadinessProbe != null)
                 {
                     writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue<MachineLearningProbeSettings>(ReadinessProbe, options);
+                    writer.WriteObjectValue(ReadinessProbe, options);
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestSettings != null)
                 {
                     writer.WritePropertyName("requestSettings"u8);
-                    writer.WriteObjectValue<MachineLearningOnlineRequestSettings>(RequestSettings, options);
+                    writer.WriteObjectValue(RequestSettings, options);
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ScaleSettings != null)
                 {
                     writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue<MachineLearningOnlineScaleSettings>(ScaleSettings, options);
+                    writer.WriteObjectValue(ScaleSettings, options);
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue<MachineLearningCodeConfiguration>(CodeConfiguration, options);
+                    writer.WriteObjectValue(CodeConfiguration, options);
                 }
                 else
                 {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningOnlineDeploymentProperties DeserializeMachineLearningOnlineDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

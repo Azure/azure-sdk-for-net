@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync
 {
     public partial class StorageSyncServerEndpointData : IUtf8JsonSerializable, IJsonModel<StorageSyncServerEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncServerEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncServerEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageSyncServerEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StorageSync
             if (options.Format != "W" && Optional.IsDefined(SyncStatus))
             {
                 writer.WritePropertyName("syncStatus"u8);
-                writer.WriteObjectValue<ServerEndpointSyncStatus>(SyncStatus, options);
+                writer.WriteObjectValue(SyncStatus, options);
             }
             if (Optional.IsDefined(OfflineDataTransfer))
             {
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.StorageSync
             if (options.Format != "W" && Optional.IsDefined(CloudTieringStatus))
             {
                 writer.WritePropertyName("cloudTieringStatus"u8);
-                writer.WriteObjectValue<ServerEndpointCloudTieringStatus>(CloudTieringStatus, options);
+                writer.WriteObjectValue(CloudTieringStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RecallStatus))
             {
                 writer.WritePropertyName("recallStatus"u8);
-                writer.WriteObjectValue<ServerEndpointRecallStatus>(RecallStatus, options);
+                writer.WriteObjectValue(RecallStatus, options);
             }
             if (Optional.IsDefined(InitialDownloadPolicy))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static StorageSyncServerEndpointData DeserializeStorageSyncServerEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.StorageSync
             InitialUploadPolicy? initialUploadPolicy = default;
             string serverName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -407,10 +407,10 @@ namespace Azure.ResourceManager.StorageSync
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageSyncServerEndpointData(
                 id,
                 name,

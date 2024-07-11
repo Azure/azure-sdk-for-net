@@ -48,12 +48,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ApiCenterApiDefinitionAddedEventData(title, description, specification);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ApiCenterApiDefinitionAddedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeApiCenterApiDefinitionAddedEventData(document.RootElement);
+        }
+
         internal partial class ApiCenterApiDefinitionAddedEventDataConverter : JsonConverter<ApiCenterApiDefinitionAddedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ApiCenterApiDefinitionAddedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ApiCenterApiDefinitionAddedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

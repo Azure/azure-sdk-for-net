@@ -19,9 +19,17 @@ namespace Azure.Maps.Search.Models
             if (Common.Optional.IsDefined(Route))
             {
                 writer.WritePropertyName("route"u8);
-                writer.WriteObjectValue<GeoJsonLineString>(Route);
+                writer.WriteObjectValue(Route);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     public partial class SqlVmStorageConfigurationSettings : IUtf8JsonSerializable, IJsonModel<SqlVmStorageConfigurationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmStorageConfigurationSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmStorageConfigurationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlVmStorageConfigurationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(SqlDataSettings))
             {
                 writer.WritePropertyName("sqlDataSettings"u8);
-                writer.WriteObjectValue<SqlStorageSettings>(SqlDataSettings, options);
+                writer.WriteObjectValue(SqlDataSettings, options);
             }
             if (Optional.IsDefined(SqlLogSettings))
             {
                 writer.WritePropertyName("sqlLogSettings"u8);
-                writer.WriteObjectValue<SqlStorageSettings>(SqlLogSettings, options);
+                writer.WriteObjectValue(SqlLogSettings, options);
             }
             if (Optional.IsDefined(SqlTempDBSettings))
             {
                 writer.WritePropertyName("sqlTempDbSettings"u8);
-                writer.WriteObjectValue<SqlTempDBSettings>(SqlTempDBSettings, options);
+                writer.WriteObjectValue(SqlTempDBSettings, options);
             }
             if (Optional.IsDefined(IsSqlSystemDBOnDataDisk))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmStorageConfigurationSettings DeserializeSqlVmStorageConfigurationSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             SqlVmDiskConfigurationType? diskConfigurationType = default;
             SqlVmStorageWorkloadType? storageWorkloadType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlDataSettings"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlVmStorageConfigurationSettings(
                 sqlDataSettings,
                 sqlLogSettings,

@@ -783,6 +783,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task CreateAsync_CPK()
         {
             // Arrange
@@ -1437,6 +1438,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task RenameAsync_CPK()
         {
             // Arrange
@@ -4488,6 +4490,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task GetSetPropertiesAsync_CPK()
         {
             // Arrange
@@ -4519,6 +4522,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task GetPropertiesAsync_OwnerGroupPermissions()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

@@ -184,6 +184,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void LogRecordAndAttributesContainEventIdAndEventName()
+        {
+            var logRecords = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+
+            EventId id = new EventId(1, "TestEvent");
+
+            string log = "Log Information {EventId} {EventName}.";
+            logger.LogInformation(id, log, 100, "TestAttributeEventName");
+
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
+
+            Assert.True(properties.TryGetValue("EventId", out string eventId));
+            Assert.Equal("100", eventId);
+            Assert.True(properties.TryGetValue("EventName", out string eventName));
+            Assert.Equal("TestAttributeEventName", eventName);
+            Assert.Equal(2, properties.Count);
+        }
+
+        [Fact]
         public void ValidateSeverityLevels()
         {
             Assert.Equal(SeverityLevel.Critical, LogsHelper.GetSeverityLevel(LogLevel.Critical));
@@ -220,11 +250,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 logger.LogWarning(new Exception("Test Exception"), "Test Exception");
             }
 
-            var logResource = new AzureMonitorResource()
-            {
-                RoleName = "roleName",
-                RoleInstance = "roleInstance"
-            };
+            var logResource = new AzureMonitorResource(
+                roleName: "testRoleName",
+                roleInstance: "testRoleInstance",
+                serviceVersion: null,
+                monitorBaseData: null);
             var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), logResource, "Ikey");
 
             Assert.Equal(type, telemetryItem[0].Data.BaseType);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SynapseSparkJobDefinitionActivity : IUtf8JsonSerializable, IJsonModel<SynapseSparkJobDefinitionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSparkJobDefinitionActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSparkJobDefinitionActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseSparkJobDefinitionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
-            writer.WriteObjectValue<SynapseSparkJobReference>(SparkJob, options);
+            writer.WriteObjectValue(SparkJob, options);
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TargetBigDataPool))
             {
                 writer.WritePropertyName("targetBigDataPool"u8);
-                writer.WriteObjectValue<BigDataPoolParametrizationReference>(TargetBigDataPool, options);
+                writer.WriteObjectValue(TargetBigDataPool, options);
             }
             if (Optional.IsDefined(ExecutorSize))
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue<SparkConfigurationParametrizationReference>(TargetSparkConfiguration, options);
+                writer.WriteObjectValue(TargetSparkConfiguration, options);
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SynapseSparkJobDefinitionActivity DeserializeSynapseSparkJobDefinitionActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraClusterPublicStatusDataCentersItem : IUtf8JsonSerializable, IJsonModel<CassandraClusterPublicStatusDataCentersItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterPublicStatusDataCentersItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterPublicStatusDataCentersItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraClusterPublicStatusDataCentersItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue<CassandraClusterDataCenterNodeItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraClusterPublicStatusDataCentersItem DeserializeCassandraClusterPublicStatusDataCentersItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IReadOnlyList<string> seedNodes = default;
             IReadOnlyList<CassandraClusterDataCenterNodeItem> nodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CassandraClusterPublicStatusDataCentersItem(name, seedNodes ?? new ChangeTrackingList<string>(), nodes ?? new ChangeTrackingList<CassandraClusterDataCenterNodeItem>(), serializedAdditionalRawData);
         }
 
@@ -152,15 +152,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -174,17 +175,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SeedNodes), out propertyOverride);
-            if (Optional.IsCollectionDefined(SeedNodes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SeedNodes.Any() || hasPropertyOverride)
+                builder.Append("  seedNodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SeedNodes))
                 {
-                    builder.Append("  seedNodes: ");
-                    if (hasPropertyOverride)
+                    if (SeedNodes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  seedNodes: ");
                         builder.AppendLine("[");
                         foreach (var item in SeedNodes)
                         {
@@ -209,17 +211,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nodes), out propertyOverride);
-            if (Optional.IsCollectionDefined(Nodes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Nodes.Any() || hasPropertyOverride)
+                builder.Append("  nodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Nodes))
                 {
-                    builder.Append("  nodes: ");
-                    if (hasPropertyOverride)
+                    if (Nodes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  nodes: ");
                         builder.AppendLine("[");
                         foreach (var item in Nodes)
                         {

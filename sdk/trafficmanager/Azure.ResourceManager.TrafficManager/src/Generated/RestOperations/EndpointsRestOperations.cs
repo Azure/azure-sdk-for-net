@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +35,24 @@ namespace Azure.ResourceManager.TrafficManager
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(endpointType, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(endpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data)
         {
             var message = _pipeline.CreateMessage();
@@ -58,7 +75,7 @@ namespace Azure.ResourceManager.TrafficManager
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TrafficManagerEndpointData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -132,6 +149,24 @@ namespace Azure.ResourceManager.TrafficManager
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(endpointType, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(endpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName)
@@ -228,6 +263,24 @@ namespace Azure.ResourceManager.TrafficManager
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(endpointType, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(endpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, TrafficManagerEndpointData data)
         {
             var message = _pipeline.CreateMessage();
@@ -250,7 +303,7 @@ namespace Azure.ResourceManager.TrafficManager
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TrafficManagerEndpointData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -326,6 +379,24 @@ namespace Azure.ResourceManager.TrafficManager
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(endpointType, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(endpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName)

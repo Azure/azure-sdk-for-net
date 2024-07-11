@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue<Activity>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -70,12 +70,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SwitchCase(value, activities ?? new ChangeTrackingList<Activity>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SwitchCase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSwitchCase(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SwitchCaseConverter : JsonConverter<SwitchCase>
         {
             public override void Write(Utf8JsonWriter writer, SwitchCase model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SwitchCase>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override SwitchCase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

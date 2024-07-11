@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class SearchFacetResultValue : IUtf8JsonSerializable, IJsonModel<SearchFacetResultValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchFacetResultValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchFacetResultValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchFacetResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in EntityType)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in AssetType)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classification)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Term)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ContactId)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ContactType)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Label)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in GlossaryType)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TermStatus)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in TermTemplate)
                 {
-                    writer.WriteObjectValue<SearchFacetItemValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static SearchFacetResultValue DeserializeSearchFacetResultValue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Purview.DataMap
             IReadOnlyList<SearchFacetItemValue> termStatus = default;
             IReadOnlyList<SearchFacetItemValue> termTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entityType"u8))
@@ -320,10 +320,10 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchFacetResultValue(
                 entityType ?? new ChangeTrackingList<SearchFacetItemValue>(),
                 assetType ?? new ChangeTrackingList<SearchFacetItemValue>(),
@@ -377,11 +377,11 @@ namespace Azure.Analytics.Purview.DataMap
             return DeserializeSearchFacetResultValue(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchFacetResultValue>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

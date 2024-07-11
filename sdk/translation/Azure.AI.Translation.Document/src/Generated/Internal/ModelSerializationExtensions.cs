@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -17,6 +18,8 @@ namespace Azure.AI.Translation.Document
 {
     internal static class ModelSerializationExtensions
     {
+        internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
+
         public static object GetObject(this JsonElement element)
         {
             switch (element.ValueKind)
@@ -164,12 +167,15 @@ namespace Azure.AI.Translation.Document
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = null)
         {
             switch (value)
             {
                 case null:
                     writer.WriteNullValue();
+                    break;
+                case IJsonModel<T> jsonModel:
+                    jsonModel.Write(writer, options ?? WireOptions);
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);
@@ -225,7 +231,7 @@ namespace Azure.AI.Translation.Document
                     foreach (var pair in enumerable)
                     {
                         writer.WritePropertyName(pair.Key);
-                        writer.WriteObjectValue<object>(pair.Value);
+                        writer.WriteObjectValue<object>(pair.Value, options);
                     }
                     writer.WriteEndObject();
                     break;
@@ -233,7 +239,7 @@ namespace Azure.AI.Translation.Document
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {
-                        writer.WriteObjectValue<object>(item);
+                        writer.WriteObjectValue<object>(item, options);
                     }
                     writer.WriteEndArray();
                     break;
@@ -245,9 +251,9 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
         {
-            writer.WriteObjectValue<object>(value);
+            writer.WriteObjectValue<object>(value, options);
         }
 
         internal static class TypeFormatters

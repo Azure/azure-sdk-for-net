@@ -45,5 +45,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new ResourceNotificationsResourceDeletedDetails(id, name, type);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceNotificationsResourceDeletedDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceNotificationsResourceDeletedDetails(document.RootElement);
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class DataCollectionEndpointData : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCollectionEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -91,22 +92,22 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(ConfigurationAccess))
             {
                 writer.WritePropertyName("configurationAccess"u8);
-                writer.WriteObjectValue<DataCollectionEndpointConfigurationAccess>(ConfigurationAccess, options);
+                writer.WriteObjectValue(ConfigurationAccess, options);
             }
             if (Optional.IsDefined(LogsIngestion))
             {
                 writer.WritePropertyName("logsIngestion"u8);
-                writer.WriteObjectValue<DataCollectionEndpointLogsIngestion>(LogsIngestion, options);
+                writer.WriteObjectValue(LogsIngestion, options);
             }
             if (Optional.IsDefined(MetricsIngestion))
             {
                 writer.WritePropertyName("metricsIngestion"u8);
-                writer.WriteObjectValue<DataCollectionEndpointMetricsIngestion>(MetricsIngestion, options);
+                writer.WriteObjectValue(MetricsIngestion, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue<DataCollectionEndpointNetworkAcls>(NetworkAcls, options);
+                writer.WriteObjectValue(NetworkAcls, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -119,19 +120,19 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue<DataCollectionRulePrivateLinkScopedResourceInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(FailoverConfiguration))
             {
                 writer.WritePropertyName("failoverConfiguration"u8);
-                writer.WriteObjectValue<DataCollectionEndpointFailoverConfiguration>(FailoverConfiguration, options);
+                writer.WriteObjectValue(FailoverConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<DataCollectionEndpointMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionEndpointData DeserializeDataCollectionEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.Monitor
             DataCollectionEndpointFailoverConfiguration failoverConfiguration = default;
             DataCollectionEndpointMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -210,7 +211,8 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -366,10 +368,10 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataCollectionEndpointData(
                 id,
                 name,

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     [PersistableModelProxy(typeof(UnknownResourceCertificateDetails))]
     public partial class ResourceCertificateDetails : IUtf8JsonSerializable, IJsonModel<ResourceCertificateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceCertificateDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceCertificateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceCertificateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static ResourceCertificateDetails DeserializeResourceCertificateDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

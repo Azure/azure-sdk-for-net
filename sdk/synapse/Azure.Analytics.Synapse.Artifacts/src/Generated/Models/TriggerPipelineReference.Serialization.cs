@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
-                writer.WriteObjectValue<PipelineReference>(PipelineReference);
+                writer.WriteObjectValue(PipelineReference);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -87,12 +87,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new TriggerPipelineReference(pipelineReference, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TriggerPipelineReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTriggerPipelineReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class TriggerPipelineReferenceConverter : JsonConverter<TriggerPipelineReference>
         {
             public override void Write(Utf8JsonWriter writer, TriggerPipelineReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<TriggerPipelineReference>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override TriggerPipelineReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

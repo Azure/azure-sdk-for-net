@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.StandbyPool
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByStandbyVirtualMachinePoolResourceRequestUri(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/", false);
+            uri.AppendPath(standbyVirtualMachinePoolName, true);
+            uri.AppendPath("/standbyVirtualMachines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByStandbyVirtualMachinePoolResourceRequest(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +128,22 @@ namespace Azure.ResourceManager.StandbyPool
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, string standbyVirtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/", false);
+            uri.AppendPath(standbyVirtualMachinePoolName, true);
+            uri.AppendPath("/standbyVirtualMachines/", false);
+            uri.AppendPath(standbyVirtualMachineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, string standbyVirtualMachineName)
@@ -201,6 +232,14 @@ namespace Azure.ResourceManager.StandbyPool
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByStandbyVirtualMachinePoolResourceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByStandbyVirtualMachinePoolResourceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName)

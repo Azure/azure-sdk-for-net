@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maps.Models
 {
     public partial class MapsAccountProperties : IUtf8JsonSerializable, IJsonModel<MapsAccountProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAccountProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAccountProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapsAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedResources)
                 {
-                    writer.WriteObjectValue<MapsLinkedResource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue<CorsRules>(Cors, options);
+                writer.WriteObjectValue(Cors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsAccountProperties DeserializeMapsAccountProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Maps.Models
             IList<MapsLinkedResource> linkedResources = default;
             CorsRules cors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueId"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Maps.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MapsAccountProperties(
                 uniqueId,
                 disableLocalAuth,

@@ -73,12 +73,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new RecurrenceScheduleOccurrence(day, occurrence, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RecurrenceScheduleOccurrence FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRecurrenceScheduleOccurrence(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class RecurrenceScheduleOccurrenceConverter : JsonConverter<RecurrenceScheduleOccurrence>
         {
             public override void Write(Utf8JsonWriter writer, RecurrenceScheduleOccurrence model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<RecurrenceScheduleOccurrence>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override RecurrenceScheduleOccurrence Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

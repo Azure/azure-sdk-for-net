@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureFunctionActivity : IUtf8JsonSerializable, IJsonModel<AzureFunctionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFunctionActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFunctionActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureFunctionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("functionName"u8);
             JsonSerializer.Serialize(writer, FunctionName);
-            if (Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
-                foreach (var item in Headers)
+                foreach (var item in RequestHeaders)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -94,7 +94,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    JsonSerializer.Serialize(writer, item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -133,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureFunctionActivity DeserializeAzureFunctionActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<PipelineActivityUserProperty> userProperties = default;
             AzureFunctionActivityMethod method = default;
             DataFactoryElement<string> functionName = default;
-            IDictionary<string, DataFactoryElement<string>> headers = default;
+            IDictionary<string, BinaryData> headers = default;
             DataFactoryElement<string> body = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -260,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            Dictionary<string, DataFactoryElement<string>> dictionary = new Dictionary<string, DataFactoryElement<string>>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
                                 if (property1.Value.ValueKind == JsonValueKind.Null)
@@ -269,7 +276,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 }
                                 else
                                 {
-                                    dictionary.Add(property1.Name, JsonSerializer.Deserialize<DataFactoryElement<string>>(property1.Value.GetRawText()));
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                                 }
                             }
                             headers = dictionary;
@@ -303,7 +310,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 policy,
                 method,
                 functionName,
-                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                headers ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 body);
         }
 

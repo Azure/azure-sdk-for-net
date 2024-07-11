@@ -44,5 +44,13 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
             return new RoleAssignmentListResult(value ?? new ChangeTrackingList<KeyVaultRoleAssignment>(), nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RoleAssignmentListResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRoleAssignmentListResult(document.RootElement);
+        }
     }
 }

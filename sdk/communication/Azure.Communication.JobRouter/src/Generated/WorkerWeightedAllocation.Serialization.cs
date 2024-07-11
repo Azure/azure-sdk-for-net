@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
 {
     public partial class WorkerWeightedAllocation : IUtf8JsonSerializable, IJsonModel<WorkerWeightedAllocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkerWeightedAllocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkerWeightedAllocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkerWeightedAllocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartArray();
             foreach (var item in WorkerSelectors)
             {
-                writer.WriteObjectValue<RouterWorkerSelector>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter
 
         internal static WorkerWeightedAllocation DeserializeWorkerWeightedAllocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.Communication.JobRouter
             double weight = default;
             IReadOnlyList<RouterWorkerSelector> workerSelectors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("weight"u8))
@@ -96,10 +96,10 @@ namespace Azure.Communication.JobRouter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WorkerWeightedAllocation(weight, workerSelectors, serializedAdditionalRawData);
         }
 
@@ -142,11 +142,11 @@ namespace Azure.Communication.JobRouter
             return DeserializeWorkerWeightedAllocation(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WorkerWeightedAllocation>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

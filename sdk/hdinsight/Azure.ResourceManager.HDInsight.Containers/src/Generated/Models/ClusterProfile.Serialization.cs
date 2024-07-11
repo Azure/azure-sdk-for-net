@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class ClusterProfile : IUtf8JsonSerializable, IJsonModel<ClusterProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,21 +36,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue<ClusterComponentItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IdentityProfile))
             {
                 writer.WritePropertyName("identityProfile"u8);
-                writer.WriteObjectValue<HDInsightIdentityProfile>(IdentityProfile, options);
+                writer.WriteObjectValue(IdentityProfile, options);
             }
             writer.WritePropertyName("authorizationProfile"u8);
-            writer.WriteObjectValue<AuthorizationProfile>(AuthorizationProfile, options);
+            writer.WriteObjectValue(AuthorizationProfile, options);
             if (Optional.IsDefined(SecretsProfile))
             {
                 writer.WritePropertyName("secretsProfile"u8);
-                writer.WriteObjectValue<ClusterSecretsProfile>(SecretsProfile, options);
+                writer.WriteObjectValue(SecretsProfile, options);
             }
             if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
             {
@@ -58,54 +58,54 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceConfigsProfiles)
                 {
-                    writer.WriteObjectValue<ClusterServiceConfigsProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ConnectivityProfile))
             {
                 writer.WritePropertyName("connectivityProfile"u8);
-                writer.WriteObjectValue<ClusterConnectivityProfile>(ConnectivityProfile, options);
+                writer.WriteObjectValue(ConnectivityProfile, options);
             }
             if (Optional.IsDefined(ClusterAccessProfile))
             {
                 writer.WritePropertyName("clusterAccessProfile"u8);
-                writer.WriteObjectValue<ClusterAccessProfile>(ClusterAccessProfile, options);
+                writer.WriteObjectValue(ClusterAccessProfile, options);
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue<ClusterLogAnalyticsProfile>(LogAnalyticsProfile, options);
+                writer.WriteObjectValue(LogAnalyticsProfile, options);
             }
             if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
-                writer.WriteObjectValue<ClusterPrometheusProfile>(PrometheusProfile, options);
+                writer.WriteObjectValue(PrometheusProfile, options);
             }
             if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue<ClusterSshProfile>(SshProfile, options);
+                writer.WriteObjectValue(SshProfile, options);
             }
             if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
-                writer.WriteObjectValue<ClusterAutoscaleProfile>(AutoscaleProfile, options);
+                writer.WriteObjectValue(AutoscaleProfile, options);
             }
             if (Optional.IsDefined(RangerPluginProfile))
             {
                 writer.WritePropertyName("rangerPluginProfile"u8);
-                writer.WriteObjectValue<ClusterRangerPluginProfile>(RangerPluginProfile, options);
+                writer.WriteObjectValue(RangerPluginProfile, options);
             }
             if (Optional.IsDefined(KafkaProfile))
             {
                 writer.WritePropertyName("kafkaProfile"u8);
-                writer.WriteObjectValue<KafkaProfile>(KafkaProfile, options);
+                writer.WriteObjectValue(KafkaProfile, options);
             }
             if (Optional.IsDefined(TrinoProfile))
             {
                 writer.WritePropertyName("trinoProfile"u8);
-                writer.WriteObjectValue<TrinoProfile>(TrinoProfile, options);
+                writer.WriteObjectValue(TrinoProfile, options);
             }
             if (Optional.IsCollectionDefined(LlapProfile))
             {
@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(FlinkProfile))
             {
                 writer.WritePropertyName("flinkProfile"u8);
-                writer.WriteObjectValue<FlinkProfile>(FlinkProfile, options);
+                writer.WriteObjectValue(FlinkProfile, options);
             }
             if (Optional.IsDefined(SparkProfile))
             {
                 writer.WritePropertyName("sparkProfile"u8);
-                writer.WriteObjectValue<SparkProfile>(SparkProfile, options);
+                writer.WriteObjectValue(SparkProfile, options);
             }
             if (Optional.IsDefined(RangerProfile))
             {
                 writer.WritePropertyName("rangerProfile"u8);
-                writer.WriteObjectValue<RangerProfile>(RangerProfile, options);
+                writer.WriteObjectValue(RangerProfile, options);
             }
             if (Optional.IsCollectionDefined(StubProfile))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActionProfiles)
                 {
-                    writer.WriteObjectValue<ScriptActionProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterProfile DeserializeClusterProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             IDictionary<string, BinaryData> stubProfile = default;
             IList<ScriptActionProfile> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterVersion"u8))
@@ -469,10 +469,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterProfile(
                 clusterVersion,
                 ossVersion,

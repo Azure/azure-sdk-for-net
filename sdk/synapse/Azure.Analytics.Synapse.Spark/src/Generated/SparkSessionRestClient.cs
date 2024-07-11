@@ -142,7 +142,7 @@ namespace Azure.Analytics.Synapse.Spark
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SparkSessionOptions>(sparkSessionOptions);
+            content.JsonWriter.WriteObjectValue(sparkSessionOptions);
             request.Content = content;
             return message;
         }
@@ -447,7 +447,7 @@ namespace Azure.Analytics.Synapse.Spark
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SparkStatementOptions>(sparkStatementOptions);
+            content.JsonWriter.WriteObjectValue(sparkStatementOptions);
             request.Content = content;
             return message;
         }

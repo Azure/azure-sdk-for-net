@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in DelegatedSubnetsUsage)
                 {
-                    writer.WriteObjectValue<PostgreSqlFlexibleServerDelegatedSubnetUsage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             AzureLocation? location = default;
             string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delegatedSubnetsUsage"u8))
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(delegatedSubnetsUsage ?? new ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage>(), location, subscriptionId, serializedAdditionalRawData);
         }
 
@@ -142,17 +142,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DelegatedSubnetsUsage), out propertyOverride);
-            if (Optional.IsCollectionDefined(DelegatedSubnetsUsage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DelegatedSubnetsUsage.Any() || hasPropertyOverride)
+                builder.Append("  delegatedSubnetsUsage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DelegatedSubnetsUsage))
                 {
-                    builder.Append("  delegatedSubnetsUsage: ");
-                    if (hasPropertyOverride)
+                    if (DelegatedSubnetsUsage.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  delegatedSubnetsUsage: ");
                         builder.AppendLine("[");
                         foreach (var item in DelegatedSubnetsUsage)
                         {
@@ -164,29 +165,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  location: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  location: ");
                     builder.AppendLine($"'{Location.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
-            if (Optional.IsDefined(SubscriptionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  subscriptionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubscriptionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  subscriptionId: ");
                     if (SubscriptionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

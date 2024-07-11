@@ -89,7 +89,9 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

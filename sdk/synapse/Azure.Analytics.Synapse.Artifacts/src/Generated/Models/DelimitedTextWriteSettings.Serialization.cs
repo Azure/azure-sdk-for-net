@@ -110,12 +110,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 fileNamePrefix);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DelimitedTextWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDelimitedTextWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class DelimitedTextWriteSettingsConverter : JsonConverter<DelimitedTextWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, DelimitedTextWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DelimitedTextWriteSettings>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override DelimitedTextWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

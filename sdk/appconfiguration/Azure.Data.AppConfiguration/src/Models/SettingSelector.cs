@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Threading;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -37,6 +36,13 @@ namespace Azure.Data.AppConfiguration
         public string LabelFilter { get; set; }
 
         /// <summary>
+        /// Tag filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
+        /// Each tag in the list should be expressed as a string in the format `tag=value`.
+        /// </summary>
+        /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
+        public IList<string> TagsFilter { get; }
+
+        /// <summary>
         /// The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.
         /// </summary>
         public SettingFields Fields { get; set; } = SettingFields.All;
@@ -49,15 +55,12 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? AcceptDateTime { get; set; }
 
         /// <summary>
-        /// The match conditions of <see cref="ConfigurationClient.GetConfigurationSettings(SettingSelector, CancellationToken)"/>
-        /// requests. Conditions are applied to pages one by one in the order specified.
-        /// </summary>
-        public IList<MatchConditions> MatchConditions { get; } = new ChangeTrackingList<MatchConditions>();
-
-        /// <summary>
         /// Creates a default <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the configuration store.
         /// </summary>
-        public SettingSelector() { }
+        public SettingSelector()
+        {
+            TagsFilter = new List<string>();
+        }
 
         #region nobody wants to see these
         /// <summary>

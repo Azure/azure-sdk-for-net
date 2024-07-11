@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningVmSize : IUtf8JsonSerializable, IJsonModel<MachineLearningVmSize>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningVmSize>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningVmSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(EstimatedVmPrices))
             {
                 writer.WritePropertyName("estimatedVMPrices"u8);
-                writer.WriteObjectValue<MachineLearningEstimatedVmPrices>(EstimatedVmPrices, options);
+                writer.WriteObjectValue(EstimatedVmPrices, options);
             }
             if (Optional.IsCollectionDefined(SupportedComputeTypes))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningVmSize DeserializeMachineLearningVmSize(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningEstimatedVmPrices estimatedVmPrices = default;
             IReadOnlyList<string> supportedComputeTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -237,10 +237,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningVmSize(
                 name,
                 family,

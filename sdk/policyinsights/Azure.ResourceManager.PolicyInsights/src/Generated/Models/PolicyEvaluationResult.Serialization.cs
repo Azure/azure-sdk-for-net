@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyEvaluationResult : IUtf8JsonSerializable, IJsonModel<PolicyEvaluationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyEvaluationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyEvaluationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyEvaluationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyInfo))
             {
                 writer.WritePropertyName("policyInfo"u8);
-                writer.WriteObjectValue<PolicyReference>(PolicyInfo, options);
+                writer.WriteObjectValue(PolicyInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EvaluationResult))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
             {
                 writer.WritePropertyName("evaluationDetails"u8);
-                writer.WriteObjectValue<PolicyEvaluationDetails>(EvaluationDetails, options);
+                writer.WriteObjectValue(EvaluationDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static PolicyEvaluationResult DeserializePolicyEvaluationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             string evaluationResult = default;
             PolicyEvaluationDetails evaluationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyInfo"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, serializedAdditionalRawData);
         }
 

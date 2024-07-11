@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class ThresholdRuleCondition : IUtf8JsonSerializable, IJsonModel<ThresholdRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThresholdRuleCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThresholdRuleCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThresholdRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue<RuleDataSource>(DataSource, options);
+                writer.WriteObjectValue(DataSource, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ThresholdRuleCondition DeserializeThresholdRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string odataType = default;
             RuleDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operator"u8))
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ThresholdRuleCondition(
                 odataType,
                 dataSource,

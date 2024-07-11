@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsNetworkRuleSetIPRules : IUtf8JsonSerializable, IJsonModel<EventHubsNetworkRuleSetIPRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNetworkRuleSetIPRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNetworkRuleSetIPRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsNetworkRuleSetIPRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsNetworkRuleSetIPRules DeserializeEventHubsNetworkRuleSetIPRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             string ipMask = default;
             EventHubsNetworkRuleIPAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipMask"u8))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EventHubsNetworkRuleSetIPRules(ipMask, action, serializedAdditionalRawData);
         }
 
@@ -116,15 +116,16 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPMask), out propertyOverride);
-            if (Optional.IsDefined(IPMask) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ipMask: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPMask))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ipMask: ");
                     if (IPMask.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -138,15 +139,16 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
-            if (Optional.IsDefined(Action) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  action: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Action))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  action: ");
                     builder.AppendLine($"'{Action.Value.ToString()}'");
                 }
             }

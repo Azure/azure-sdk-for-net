@@ -41,7 +41,13 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
-        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options) : this(string.IsNullOrEmpty(options.Audience?.ToString()) ? _defaultEndpoint : new Uri(options.Audience.ToString()), credential, options)
+        public LogsQueryClient(TokenCredential credential, LogsQueryClientOptions options)
+            : this(
+                  string.IsNullOrEmpty(options?.Audience?.ToString())
+                    ? _defaultEndpoint
+                    : new Uri(options.Audience.ToString()),
+                  credential,
+                  options)
         {
         }
 

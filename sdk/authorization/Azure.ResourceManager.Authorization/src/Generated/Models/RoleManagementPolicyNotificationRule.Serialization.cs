@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleManagementPolicyNotificationRule : IUtf8JsonSerializable, IJsonModel<RoleManagementPolicyNotificationRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPolicyNotificationRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPolicyNotificationRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleManagementPolicyNotificationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue<RoleManagementPolicyRuleTarget>(Target, options);
+                writer.WriteObjectValue(Target, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyNotificationRule DeserializeRoleManagementPolicyNotificationRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Authorization.Models
             RoleManagementPolicyRuleType ruleType = default;
             RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationType"u8))
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoleManagementPolicyNotificationRule(
                 id,
                 ruleType,
@@ -219,59 +219,63 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationDeliveryType), out propertyOverride);
-            if (Optional.IsDefined(NotificationDeliveryType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  notificationType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotificationDeliveryType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  notificationType: ");
                     builder.AppendLine($"'{NotificationDeliveryType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationLevel), out propertyOverride);
-            if (Optional.IsDefined(NotificationLevel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  notificationLevel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotificationLevel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  notificationLevel: ");
                     builder.AppendLine($"'{NotificationLevel.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecipientType), out propertyOverride);
-            if (Optional.IsDefined(RecipientType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  recipientType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecipientType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  recipientType: ");
                     builder.AppendLine($"'{RecipientType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationRecipients), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotificationRecipients) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotificationRecipients.Any() || hasPropertyOverride)
+                builder.Append("  notificationRecipients: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotificationRecipients))
                 {
-                    builder.Append("  notificationRecipients: ");
-                    if (hasPropertyOverride)
+                    if (NotificationRecipients.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notificationRecipients: ");
                         builder.AppendLine("[");
                         foreach (var item in NotificationRecipients)
                         {
@@ -296,30 +300,32 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AreDefaultRecipientsEnabled), out propertyOverride);
-            if (Optional.IsDefined(AreDefaultRecipientsEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isDefaultRecipientsEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AreDefaultRecipientsEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isDefaultRecipientsEnabled: ");
                     var boolValue = AreDefaultRecipientsEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (Id.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -333,26 +339,28 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleType), out propertyOverride);
-            builder.Append("  ruleType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  ruleType: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  ruleType: ");
                 builder.AppendLine($"'{RuleType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
-            if (Optional.IsDefined(Target) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  target: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Target))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  target: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Target, options, 2, false, "  target: ");
                 }
             }

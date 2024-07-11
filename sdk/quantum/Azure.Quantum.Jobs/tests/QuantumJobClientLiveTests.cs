@@ -42,24 +42,30 @@ namespace Azure.Quantum.Jobs.Tests
             JsonPathSanitizers.Add("$..AZURE_QUANTUM_WORKSPACE_RG");
 
             var testEnvironment = new QuantumJobClientTestEnvironment();
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/resourceGroups/[a-z0-9-]+/", $"/resourceGroups/{RESOURCE_GROUP}/"
-            ));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/workspaces/[a-z0-9-]+/", $"/workspaces/{WORKSPACE}/"
-            ));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"https://[^\.]+.blob.core.windows.net/", $"https://{STORAGE}.blob.core.windows.net/"
-            ));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"https://[^\.]+.quantum.azure.com/", $"https://{LOCATION}.quantum.azure.com/"
-            ));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/workspaces/[a-z0-9-]+/", $"/workspaces/{WORKSPACE}/"
-            ));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/subscriptions/[a-z0-9-]+/", $"/subscriptions/{ZERO_UID}/"
-            ));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/resourceGroups/[a-z0-9-]+/")
+            {
+                Value = $"/resourceGroups/{RESOURCE_GROUP}/"
+            });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/workspaces/[a-z0-9-]+/")
+            {
+                Value = $"/workspaces/{WORKSPACE}/"
+            });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"https://[^\.]+.blob.core.windows.net/")
+            {
+                Value = $"https://{STORAGE}.blob.core.windows.net/"
+            });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"https://[^\.]+.quantum.azure.com/")
+            {
+                Value = $"https://{LOCATION}.quantum.azure.com/"
+            });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/workspaces/[a-z0-9-]+/")
+            {
+                Value = $"/workspaces/{WORKSPACE}/"
+            });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/subscriptions/[a-z0-9-]+/")
+            {
+                Value = $"/subscriptions/{ZERO_UID}/"
+            });
 
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;

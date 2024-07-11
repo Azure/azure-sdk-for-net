@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBSqlRoleDefinitionData : IUtf8JsonSerializable, IJsonModel<CosmosDBSqlRoleDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlRoleDefinitionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlRoleDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBSqlRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue<CosmosDBSqlRolePermission>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CosmosDBSqlRoleDefinitionData DeserializeCosmosDBSqlRoleDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB
             IList<string> assignableScopes = default;
             IList<CosmosDBSqlRolePermission> permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBSqlRoleDefinitionData(
                 id,
                 name,
@@ -241,15 +241,16 @@ namespace Azure.ResourceManager.CosmosDB
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -263,29 +264,31 @@ namespace Azure.ResourceManager.CosmosDB
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -293,15 +296,16 @@ namespace Azure.ResourceManager.CosmosDB
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleName), out propertyOverride);
-            if (Optional.IsDefined(RoleName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    roleName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    roleName: ");
                     if (RoleName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -315,31 +319,33 @@ namespace Azure.ResourceManager.CosmosDB
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionType), out propertyOverride);
-            if (Optional.IsDefined(RoleDefinitionType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleDefinitionType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    type: ");
                     builder.AppendLine($"'{RoleDefinitionType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignableScopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(AssignableScopes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AssignableScopes.Any() || hasPropertyOverride)
+                builder.Append("    assignableScopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AssignableScopes))
                 {
-                    builder.Append("    assignableScopes: ");
-                    if (hasPropertyOverride)
+                    if (AssignableScopes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    assignableScopes: ");
                         builder.AppendLine("[");
                         foreach (var item in AssignableScopes)
                         {
@@ -364,17 +370,18 @@ namespace Azure.ResourceManager.CosmosDB
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Permissions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Permissions.Any() || hasPropertyOverride)
+                builder.Append("    permissions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Permissions))
                 {
-                    builder.Append("    permissions: ");
-                    if (hasPropertyOverride)
+                    if (Permissions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    permissions: ");
                         builder.AppendLine("[");
                         foreach (var item in Permissions)
                         {

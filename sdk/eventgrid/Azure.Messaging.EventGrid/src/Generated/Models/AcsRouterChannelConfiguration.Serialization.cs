@@ -48,5 +48,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AcsRouterChannelConfiguration(channelId, capacityCostPerJob, maxNumberOfJobs);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRouterChannelConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterChannelConfiguration(document.RootElement);
+        }
     }
 }

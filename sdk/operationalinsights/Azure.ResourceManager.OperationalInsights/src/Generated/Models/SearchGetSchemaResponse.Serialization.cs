@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal partial class SearchGetSchemaResponse : IUtf8JsonSerializable, IJsonModel<SearchGetSchemaResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchGetSchemaResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchGetSchemaResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchGetSchemaResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<SearchMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<OperationalInsightsSearchSchemaValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static SearchGetSchemaResponse DeserializeSearchGetSchemaResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             SearchMetadata metadata = default;
             IReadOnlyList<OperationalInsightsSearchSchemaValue> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadata"u8))
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchGetSchemaResponse(metadata, value ?? new ChangeTrackingList<OperationalInsightsSearchSchemaValue>(), serializedAdditionalRawData);
         }
 
@@ -131,31 +131,33 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
-            if (Optional.IsDefined(Metadata) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  metadata: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Metadata))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  metadata: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Metadata, options, 2, false, "  metadata: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Value.Any() || hasPropertyOverride)
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
                 {
-                    builder.Append("  value: ");
-                    if (hasPropertyOverride)
+                    if (Value.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  value: ");
                         builder.AppendLine("[");
                         foreach (var item in Value)
                         {

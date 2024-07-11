@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.NewRelicObservability
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string userEmail, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/NewRelic.Observability/accounts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("userEmail", userEmail, true);
+            uri.AppendQuery("location", location, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string userEmail, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
@@ -109,6 +122,14 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string userEmail, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string userEmail, AzureLocation location)

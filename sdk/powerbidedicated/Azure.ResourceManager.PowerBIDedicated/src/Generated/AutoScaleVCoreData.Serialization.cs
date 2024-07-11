@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
 {
     public partial class AutoScaleVCoreData : IUtf8JsonSerializable, IJsonModel<AutoScaleVCoreData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoScaleVCoreData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoScaleVCoreData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoScaleVCoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<AutoScaleVCoreSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue<SystemData>(SystemData, options);
+                writer.WriteObjectValue(SystemData, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         internal static AutoScaleVCoreData DeserializeAutoScaleVCoreData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             string capacityObjectId = default;
             VCoreProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutoScaleVCoreData(
                 id,
                 name,

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownSchedulePolicy))]
     public partial class BackupSchedulePolicy : IUtf8JsonSerializable, IJsonModel<BackupSchedulePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupSchedulePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupSchedulePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupSchedulePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupSchedulePolicy DeserializeBackupSchedulePolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

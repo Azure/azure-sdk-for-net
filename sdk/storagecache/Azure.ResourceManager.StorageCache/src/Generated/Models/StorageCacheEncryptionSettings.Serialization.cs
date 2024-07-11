@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class StorageCacheEncryptionSettings : IUtf8JsonSerializable, IJsonModel<StorageCacheEncryptionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheEncryptionSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheEncryptionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageCacheEncryptionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue<StorageCacheEncryptionKeyVaultKeyReference>(KeyEncryptionKey, options);
+                writer.WriteObjectValue(KeyEncryptionKey, options);
             }
             if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheEncryptionSettings DeserializeStorageCacheEncryptionSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default;
             bool? rotationToLatestKeyVersionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyEncryptionKey"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageCacheEncryptionSettings(keyEncryptionKey, rotationToLatestKeyVersionEnabled, serializedAdditionalRawData);
         }
 

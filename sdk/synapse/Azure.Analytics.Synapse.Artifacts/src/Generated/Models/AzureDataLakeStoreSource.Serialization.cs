@@ -117,12 +117,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 recursive);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureDataLakeStoreSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureDataLakeStoreSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class AzureDataLakeStoreSourceConverter : JsonConverter<AzureDataLakeStoreSource>
         {
             public override void Write(Utf8JsonWriter writer, AzureDataLakeStoreSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureDataLakeStoreSource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override AzureDataLakeStoreSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

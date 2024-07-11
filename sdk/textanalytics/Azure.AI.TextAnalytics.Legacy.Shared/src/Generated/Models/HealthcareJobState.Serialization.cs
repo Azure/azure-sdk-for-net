@@ -98,5 +98,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                 errors ?? new ChangeTrackingList<TextAnalyticsError>(),
                 nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HealthcareJobState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareJobState(document.RootElement);
+        }
     }
 }

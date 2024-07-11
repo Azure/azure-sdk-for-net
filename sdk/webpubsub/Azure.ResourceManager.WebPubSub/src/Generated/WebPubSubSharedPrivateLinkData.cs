@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId { get; set; }
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
+        [WirePath("properties.privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public WebPubSubProvisioningState? ProvisioningState { get; }
         /// <summary> The request message for requesting approval of the shared private link resource. </summary>
+        [WirePath("properties.requestMessage")]
         public string RequestMessage { get; set; }
         /// <summary> Status of the shared private link resource. </summary>
+        [WirePath("properties.status")]
         public WebPubSubSharedPrivateLinkStatus? Status { get; }
     }
 }

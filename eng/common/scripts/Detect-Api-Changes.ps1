@@ -15,7 +15,8 @@ Param (
   [string] $APIViewUri,
   [string] $RepoFullName = "",
   [string] $ArtifactName = "packages",
-  [string] $TargetBranch = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
+  [string] $TargetBranch = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/"),
+  [string] $DevopsProject = "internal"
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -37,6 +38,7 @@ function Submit-Request($filePath, $packageName)
     $query.Add('pullRequestNumber', $PullRequestNumber)
     $query.Add('packageName', $packageName)
     $query.Add('language', $LanguageShort)
+    $query.Add('project', $DevopsProject)
     $reviewFileFullName = Join-Path -Path $ArtifactPath $packageName $reviewFileName
     if (Test-Path $reviewFileFullName)
     {
@@ -87,6 +89,7 @@ function Log-Input-Params()
     Write-Host "Language: $($Language)"
     Write-Host "Commit SHA: $($CommitSha)"
     Write-Host "Repo Name: $($RepoFullName)"
+    Write-Host "Project: $($DevopsProject)"
 }
 
 Log-Input-Params

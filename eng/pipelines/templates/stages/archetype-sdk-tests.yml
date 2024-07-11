@@ -1,10 +1,3 @@
-resources:
-  repositories:
-    - repository: 1ESPipelineTemplates
-      type: git
-      name: 1ESPipelineTemplates/1ESPipelineTemplates
-      ref: refs/tags/release
-
 parameters:
   - name: AdditionalPlatforms
     type: object
@@ -62,15 +55,22 @@ parameters:
     default:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json
       Preview:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        ServiceConnection: azure-sdk-tests
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'eastus2euap'
+        ServiceConnection: azure-sdk-tests
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ServiceConnection: usgov_azure-sdk-tests
       China:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        ServiceConnection: china_azure-sdk-tests
   - name: MatrixConfigs
     type: object
     default:
@@ -109,37 +109,18 @@ parameters:
           ArtifactPath: '$(Build.ArtifactStagingDirectory)/SessionRecords'
           ArtifactName: 'packages'
           SbomEnabled: false
+  - name: oneESTemplateTag
+    type: string
+    default: true
+  - name: UseFederatedAuth
+    type: boolean
+    default: false
 
 extends:
-  ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-    template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
-  ${{ else }}:
-    template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
-    settings:
-      skipBuildTagsForGitHubPullRequests: true
-    sdl:
-      sourceAnalysisPool:
-        name: azsdk-pool-mms-win-2022-general
-        image: azsdk-pool-mms-win-2022-1espt
-        os: windows
-      eslint:
-        enabled: false
-        justificationForDisabling: 'ESLint injected task has failures because it uses an old version of mkdirp. We should not fail for tools not controlled by the repo. See: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=3499746'
-      codeql:
-        compiled:
-          enabled: false
-          justificationForDisabling: CodeQL times our pipelines out by running for 2+ hours before being force canceled.
-      psscriptanalyzer:
-        compiled: true
-        break: true
-      policy: M365
-      credscan:
-        suppressionsFile: $(Build.SourcesDirectory)/eng/CredScanSuppression.json
-        scanFolder: $(Build.SourcesDirectory)/credscan.tsv
-        toolVersion: 2.3.12.23
-        baselineFiles: $(Build.SourcesDirectory)/eng/dotnet.gdnbaselines
-
+    UseOfficial: false
+    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     stages:
       - ${{ each cloud in parameters.CloudConfig }}:
         - ${{ if or(contains(parameters.Clouds, cloud.key), and(contains(variables['Build.DefinitionName'], 'tests-weekly'), contains(parameters.SupportedClouds, cloud.key))) }}:
@@ -174,6 +155,7 @@ extends:
                       Project: ${{ parameters.Project }}
                       TestSetupSteps: ${{ parameters.TestSetupSteps }}
                       DeployTestResources: ${{ parameters.DeployTestResources }}
+                      UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                     MatrixConfigs:
                       # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
                       - ${{ each config in parameters.MatrixConfigs }}:
@@ -190,7 +172,8 @@ extends:
                       - ${{ parameters.MatrixReplace }}
                     CloudConfig:
                       SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
+                      ServiceConnection: ${{ cloud.value.ServiceConnection }}
+                      SubscriptionConfigurationFilePaths: ${{ cloud.value.SubscriptionConfigurationFilePaths }}
                       SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
                       Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
                       Cloud: ${{ cloud.key }}
-

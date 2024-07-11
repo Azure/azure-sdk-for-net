@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class HciClusterData : IUtf8JsonSerializable, IJsonModel<HciClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HciClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(SoftwareAssuranceProperties))
             {
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
-                writer.WriteObjectValue<SoftwareAssuranceProperties>(SoftwareAssuranceProperties, options);
+                writer.WriteObjectValue(SoftwareAssuranceProperties, options);
             }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue<HciClusterDesiredProperties>(DesiredProperties, options);
+                writer.WriteObjectValue(DesiredProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
             {
                 writer.WritePropertyName("reportedProperties"u8);
-                writer.WriteObjectValue<HciClusterReportedProperties>(ReportedProperties, options);
+                writer.WriteObjectValue(ReportedProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrialDaysRemaining))
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Hci
 
         internal static HciClusterData DeserializeHciClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Hci
             HciManagedServiceIdentityType? type0 = default;
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -509,10 +509,10 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HciClusterData(
                 id,
                 name,

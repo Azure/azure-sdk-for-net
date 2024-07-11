@@ -126,28 +126,39 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> The billing information of the resource. </summary>
+        [WirePath("sku")]
         public BillingInfoSku Sku { get; set; }
         /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public WebPubSubProvisioningState? ProvisioningState { get; }
         /// <summary> The publicly accessible IP of the resource. </summary>
+        [WirePath("properties.externalIP")]
         public string ExternalIP { get; }
         /// <summary> FQDN of the service instance. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; }
         /// <summary> The publicly accessible port of the resource which is designed for browser/client side usage. </summary>
+        [WirePath("properties.publicPort")]
         public int? PublicPort { get; }
         /// <summary> The publicly accessible port of the resource which is designed for customer server side usage. </summary>
+        [WirePath("properties.serverPort")]
         public int? ServerPort { get; }
         /// <summary> Version of the resource. Probably you need the same or higher version of client SDKs. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
         /// <summary> Private endpoint connections to the resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources. </summary>
+        [WirePath("properties.sharedPrivateLinkResources")]
         public IReadOnlyList<WebPubSubSharedPrivateLinkData> SharedPrivateLinkResources { get; }
         /// <summary> TLS settings for the resource. </summary>
         internal WebPubSubTlsSettings Tls { get; set; }
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>
+        [WirePath("properties.tls.clientCertEnabled")]
         public bool? IsClientCertEnabled
         {
             get => Tls is null ? default : Tls.IsClientCertEnabled;
@@ -160,12 +171,15 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Deprecated. </summary>
+        [WirePath("properties.hostNamePrefix")]
         public string HostNamePrefix { get; }
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
+        [WirePath("properties.liveTraceConfiguration")]
         public LiveTraceConfiguration LiveTraceConfiguration { get; set; }
         /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
         internal ResourceLogConfiguration ResourceLogConfiguration { get; set; }
         /// <summary> Gets or sets the list of category configurations. </summary>
+        [WirePath("properties.resourceLogConfiguration.categories")]
         public IList<ResourceLogCategory> ResourceLogCategories
         {
             get
@@ -177,24 +191,28 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary> Network ACLs for the resource. </summary>
+        [WirePath("properties.networkACLs")]
         public WebPubSubNetworkAcls NetworkAcls { get; set; }
         /// <summary>
         /// Enable or disable public network access. Default to "Enabled".
         /// When it's Enabled, network ACLs still apply.
         /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
         /// When set as true, connection with AccessKey=xxx won't work.
         /// </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? IsLocalAuthDisabled { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </summary>
+        [WirePath("properties.disableAadAuth")]
         public bool? IsAadAuthDisabled { get; set; }
     }
 }

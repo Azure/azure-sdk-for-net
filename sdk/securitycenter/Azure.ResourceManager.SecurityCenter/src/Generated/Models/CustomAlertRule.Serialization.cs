@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [PersistableModelProxy(typeof(UnknownCustomAlertRule))]
     public partial class CustomAlertRule : IUtf8JsonSerializable, IJsonModel<CustomAlertRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomAlertRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomAlertRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomAlertRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CustomAlertRule DeserializeCustomAlertRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

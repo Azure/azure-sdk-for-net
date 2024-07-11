@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits
 {
     public partial class BillingBenefitsSavingsPlanData : IUtf8JsonSerializable, IJsonModel<BillingBenefitsSavingsPlanData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsSavingsPlanData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsSavingsPlanData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingBenefitsSavingsPlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<BillingBenefitsSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue<BillingBenefitsAppliedScopeProperties>(AppliedScopeProperties, options);
+                writer.WriteObjectValue(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue<BillingBenefitsCommitment>(Commitment, options);
+                writer.WriteObjectValue(Commitment, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EffectOn))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue<BillingBenefitsExtendedStatusInfo>(ExtendedStatusInfo, options);
+                writer.WriteObjectValue(ExtendedStatusInfo, options);
             }
             if (Optional.IsDefined(IsRenewed))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (options.Format != "W" && Optional.IsDefined(Utilization))
             {
                 writer.WritePropertyName("utilization"u8);
-                writer.WriteObjectValue<BillingBenefitsSavingsPlanUtilization>(Utilization, options);
+                writer.WriteObjectValue(Utilization, options);
             }
             if (Optional.IsDefined(RenewSource))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue<RenewProperties>(RenewProperties, options);
+                writer.WriteObjectValue(RenewProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
         internal static BillingBenefitsSavingsPlanData DeserializeBillingBenefitsSavingsPlanData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.BillingBenefits
             string renewDestination = default;
             RenewProperties renewProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -464,10 +464,10 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BillingBenefitsSavingsPlanData(
                 id,
                 name,

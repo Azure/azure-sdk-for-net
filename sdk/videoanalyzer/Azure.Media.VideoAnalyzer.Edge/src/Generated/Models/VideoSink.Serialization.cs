@@ -21,12 +21,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(VideoCreationProperties))
             {
                 writer.WritePropertyName("videoCreationProperties"u8);
-                writer.WriteObjectValue<VideoCreationProperties>(VideoCreationProperties);
+                writer.WriteObjectValue(VideoCreationProperties);
             }
             if (Optional.IsDefined(VideoPublishingOptions))
             {
                 writer.WritePropertyName("videoPublishingOptions"u8);
-                writer.WriteObjectValue<VideoPublishingOptions>(VideoPublishingOptions);
+                writer.WriteObjectValue(VideoPublishingOptions);
             }
             writer.WritePropertyName("localMediaCachePath"u8);
             writer.WriteStringValue(LocalMediaCachePath);
@@ -40,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue<NodeInput>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -125,6 +125,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 videoPublishingOptions,
                 localMediaCachePath,
                 localMediaCacheMaximumSizeMiB);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new VideoSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVideoSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ValidateSyncMigrationInputSqlServerTaskInput : IUtf8JsonSerializable, IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue<SqlConnectionInfo>(SourceConnectionInfo, options);
+            writer.WriteObjectValue(SourceConnectionInfo, options);
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue<SqlConnectionInfo>(TargetConnectionInfo, options);
+            writer.WriteObjectValue(TargetConnectionInfo, options);
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue<MigrateSqlServerSqlDBSyncDatabaseInput>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ValidateSyncMigrationInputSqlServerTaskInput DeserializeValidateSyncMigrationInputSqlServerTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ValidateSyncMigrationInputSqlServerTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, serializedAdditionalRawData);
         }
 

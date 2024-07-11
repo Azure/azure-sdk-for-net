@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class AzureBlobDataTransferDataSourceSink : IUtf8JsonSerializable, IJsonModel<AzureBlobDataTransferDataSourceSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobDataTransferDataSourceSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobDataTransferDataSourceSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureBlobDataTransferDataSourceSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static AzureBlobDataTransferDataSourceSink DeserializeAzureBlobDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Uri endpointUrl = default;
             DataTransferComponent component = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerName"u8))
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureBlobDataTransferDataSourceSink(component, serializedAdditionalRawData, containerName, endpointUrl);
         }
 
@@ -121,15 +121,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerName), out propertyOverride);
-            if (Optional.IsDefined(ContainerName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  containerName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  containerName: ");
                     if (ContainerName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -143,27 +144,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointUri), out propertyOverride);
-            if (Optional.IsDefined(EndpointUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  endpointUrl: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndpointUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  endpointUrl: ");
                     builder.AppendLine($"'{EndpointUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
-            builder.Append("  component: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  component: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  component: ");
                 builder.AppendLine($"'{Component.ToString()}'");
             }
 

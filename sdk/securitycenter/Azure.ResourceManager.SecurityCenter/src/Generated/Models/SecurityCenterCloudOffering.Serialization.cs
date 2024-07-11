@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [PersistableModelProxy(typeof(UnknownCloudOffering))]
     public partial class SecurityCenterCloudOffering : IUtf8JsonSerializable, IJsonModel<SecurityCenterCloudOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterCloudOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterCloudOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityCenterCloudOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityCenterCloudOffering DeserializeSecurityCenterCloudOffering(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

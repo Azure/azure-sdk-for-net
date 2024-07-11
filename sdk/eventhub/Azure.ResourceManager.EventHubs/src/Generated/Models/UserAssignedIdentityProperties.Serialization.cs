@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     internal partial class UserAssignedIdentityProperties : IUtf8JsonSerializable, IJsonModel<UserAssignedIdentityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentityProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentityProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserAssignedIdentityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static UserAssignedIdentityProperties DeserializeUserAssignedIdentityProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             string userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UserAssignedIdentityProperties(userAssignedIdentity, serializedAdditionalRawData);
         }
 
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentity), out propertyOverride);
-            if (Optional.IsDefined(UserAssignedIdentity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  userAssignedIdentity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserAssignedIdentity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  userAssignedIdentity: ");
                     if (UserAssignedIdentity.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

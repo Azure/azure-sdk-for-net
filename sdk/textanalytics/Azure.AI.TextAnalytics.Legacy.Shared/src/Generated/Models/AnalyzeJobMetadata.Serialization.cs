@@ -70,5 +70,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                 status,
                 displayName);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AnalyzeJobMetadata FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzeJobMetadata(document.RootElement);
+        }
     }
 }

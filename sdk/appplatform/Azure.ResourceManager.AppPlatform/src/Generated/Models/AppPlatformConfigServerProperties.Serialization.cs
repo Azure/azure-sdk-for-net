@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformConfigServerProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformConfigServerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformConfigServerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformConfigServerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformConfigServerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<AppPlatformErrorInfo>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (Optional.IsDefined(ConfigServer))
             {
                 writer.WritePropertyName("configServer"u8);
-                writer.WriteObjectValue<ConfigServerSettings>(ConfigServer, options);
+                writer.WriteObjectValue(ConfigServer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformConfigServerProperties DeserializeAppPlatformConfigServerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             AppPlatformErrorInfo error = default;
             ConfigServerSettings configServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppPlatformConfigServerProperties(provisioningState, error, configServer, serializedAdditionalRawData);
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DatabaseMigrationSqlDBResource : Azure.ResourceManager.ArmResource
+    public partial class DatabaseMigrationSqlDBResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DatabaseMigrationSqlDBResource() { }
@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.DataMigration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? force = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource> Get(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource>> GetAsync(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -60,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DatabaseMigrationSqlMIResource : Azure.ResourceManager.ArmResource
+    public partial class DatabaseMigrationSqlMIResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DatabaseMigrationSqlMIResource() { }
@@ -73,6 +78,11 @@ namespace Azure.ResourceManager.DataMigration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CutoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource> Get(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource>> GetAsync(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -98,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DatabaseMigrationSqlVmResource : Azure.ResourceManager.ArmResource
+    public partial class DatabaseMigrationSqlVmResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DatabaseMigrationSqlVmResource() { }
@@ -111,6 +121,11 @@ namespace Azure.ResourceManager.DataMigration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CutoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource> Get(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource>> GetAsync(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -186,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DataMigrationServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DataMigrationServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataMigrationServiceResource : Azure.ResourceManager.ArmResource
+    public partial class DataMigrationServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DataMigrationServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DataMigrationServiceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataMigrationServiceResource() { }
@@ -219,6 +234,11 @@ namespace Azure.ResourceManager.DataMigration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataMigration.DataMigrationServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DataMigrationServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.DataMigrationServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.DataMigrationServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DataMigrationServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DataMigrationServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.DataMigrationServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DataMigrationServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DataMigrationServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DataMigrationServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DataMigrationServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -285,7 +305,7 @@ namespace Azure.ResourceManager.DataMigration
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectFileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectFileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProjectFileResource : Azure.ResourceManager.ArmResource
+    public partial class ProjectFileResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectFileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectFileData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ProjectFileResource() { }
@@ -300,10 +320,15 @@ namespace Azure.ResourceManager.DataMigration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.Models.FileStorageInfo>> ReadAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.Models.FileStorageInfo> ReadWrite(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.Models.FileStorageInfo>> ReadWriteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataMigration.ProjectFileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectFileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectFileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.ProjectFileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectFileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectFileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectFileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.ProjectFileResource> Update(Azure.ResourceManager.DataMigration.ProjectFileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectFileResource>> UpdateAsync(Azure.ResourceManager.DataMigration.ProjectFileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ProjectResource : Azure.ResourceManager.ArmResource
+    public partial class ProjectResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ProjectResource() { }
@@ -326,6 +351,11 @@ namespace Azure.ResourceManager.DataMigration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.ProjectResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataMigration.ProjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.ProjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.ProjectResource> Update(Azure.ResourceManager.DataMigration.ProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectResource>> UpdateAsync(Azure.ResourceManager.DataMigration.ProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -357,7 +387,7 @@ namespace Azure.ResourceManager.DataMigration
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceProjectTaskResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceProjectTaskResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectTaskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectTaskData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceProjectTaskResource() { }
@@ -372,6 +402,11 @@ namespace Azure.ResourceManager.DataMigration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataMigration.ProjectTaskData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.ProjectTaskData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> Update(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>> UpdateAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -392,7 +427,7 @@ namespace Azure.ResourceManager.DataMigration
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceServiceTaskResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceServiceTaskResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectTaskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectTaskData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceServiceTaskResource() { }
@@ -405,6 +440,11 @@ namespace Azure.ResourceManager.DataMigration
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataMigration.ProjectTaskData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.ProjectTaskData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.ProjectTaskData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> Update(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>> UpdateAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -436,7 +476,7 @@ namespace Azure.ResourceManager.DataMigration
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.SqlMigrationServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.SqlMigrationServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SqlMigrationServiceResource : Azure.ResourceManager.ArmResource
+    public partial class SqlMigrationServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.SqlMigrationServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.SqlMigrationServiceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SqlMigrationServiceResource() { }
@@ -463,6 +503,11 @@ namespace Azure.ResourceManager.DataMigration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.SqlMigrationServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.SqlMigrationServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.SqlMigrationServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataMigration.SqlMigrationServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.SqlMigrationServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.SqlMigrationServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.SqlMigrationServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.SqlMigrationServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.SqlMigrationServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.SqlMigrationServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.SqlMigrationServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.SqlMigrationServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.SqlMigrationServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.SqlMigrationServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

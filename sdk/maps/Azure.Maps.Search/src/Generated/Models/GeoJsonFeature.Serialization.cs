@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue<GeoJsonGeometry>(Geometry);
+            writer.WriteObjectValue(Geometry);
             if (Common.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -82,6 +82,22 @@ namespace Azure.Maps.Search.Models
                 }
             }
             return new GeoJsonFeature(type, geometry, properties, id, featureType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GeoJsonFeature FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonFeature(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

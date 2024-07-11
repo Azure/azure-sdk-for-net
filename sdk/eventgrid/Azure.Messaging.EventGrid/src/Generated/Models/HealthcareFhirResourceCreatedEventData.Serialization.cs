@@ -58,12 +58,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new HealthcareFhirResourceCreatedEventData(resourceType, resourceFhirAccount, resourceFhirId, resourceVersionId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareFhirResourceCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareFhirResourceCreatedEventData(document.RootElement);
+        }
+
         internal partial class HealthcareFhirResourceCreatedEventDataConverter : JsonConverter<HealthcareFhirResourceCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, HealthcareFhirResourceCreatedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override HealthcareFhirResourceCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -21,7 +21,7 @@ namespace Azure.Monitor.Query
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue<T>(item);
+                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -55,6 +55,20 @@ namespace Azure.Monitor.Query
             return content;
         }
 
+        public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
+        where T : notnull
+        {
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteStartArray();
+            for (int i = 0; i < span.Length; i++)
+            {
+                content.JsonWriter.WriteObjectValue(span[i]);
+            }
+            content.JsonWriter.WriteEndArray();
+
+            return content;
+        }
+
         public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
         where TValue : notnull
         {
@@ -63,7 +77,7 @@ namespace Azure.Monitor.Query
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue<TValue>(item.Value);
+                content.JsonWriter.WriteObjectValue(item.Value);
             }
             content.JsonWriter.WriteEndObject();
 

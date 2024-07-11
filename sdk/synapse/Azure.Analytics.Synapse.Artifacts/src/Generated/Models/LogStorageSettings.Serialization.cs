@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
+            writer.WriteObjectValue(LinkedServiceName);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
@@ -96,12 +96,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LogStorageSettings(linkedServiceName, path, logLevel, enableReliableLogging, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LogStorageSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLogStorageSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class LogStorageSettingsConverter : JsonConverter<LogStorageSettings>
         {
             public override void Write(Utf8JsonWriter writer, LogStorageSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LogStorageSettings>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override LogStorageSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

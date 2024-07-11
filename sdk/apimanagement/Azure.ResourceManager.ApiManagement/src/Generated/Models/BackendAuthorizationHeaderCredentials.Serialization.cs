@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class BackendAuthorizationHeaderCredentials : IUtf8JsonSerializable, IJsonModel<BackendAuthorizationHeaderCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendAuthorizationHeaderCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendAuthorizationHeaderCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackendAuthorizationHeaderCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendAuthorizationHeaderCredentials DeserializeBackendAuthorizationHeaderCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string scheme = default;
             string parameter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheme"u8))
@@ -86,11 +87,72 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackendAuthorizationHeaderCredentials(scheme, parameter, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scheme), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scheme: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scheme))
+                {
+                    builder.Append("  scheme: ");
+                    if (Scheme.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Scheme}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Scheme}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameter), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  parameter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Parameter))
+                {
+                    builder.Append("  parameter: ");
+                    if (Parameter.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Parameter}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Parameter}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<BackendAuthorizationHeaderCredentials>.Write(ModelReaderWriterOptions options)
@@ -101,6 +163,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackendAuthorizationHeaderCredentials)} does not support writing '{options.Format}' format.");
             }

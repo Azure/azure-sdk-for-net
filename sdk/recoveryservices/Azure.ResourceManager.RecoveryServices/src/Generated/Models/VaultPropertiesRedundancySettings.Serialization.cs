@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class VaultPropertiesRedundancySettings : IUtf8JsonSerializable, IJsonModel<VaultPropertiesRedundancySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultPropertiesRedundancySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultPropertiesRedundancySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VaultPropertiesRedundancySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultPropertiesRedundancySettings DeserializeVaultPropertiesRedundancySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             StandardTierStorageRedundancy? standardTierStorageRedundancy = default;
             CrossRegionRestore? crossRegionRestore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("standardTierStorageRedundancy"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore, serializedAdditionalRawData);
         }
 

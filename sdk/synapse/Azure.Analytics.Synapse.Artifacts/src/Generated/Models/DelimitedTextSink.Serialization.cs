@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue<StoreWriteSettings>(StoreSettings);
+                writer.WriteObjectValue(StoreSettings);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue<DelimitedTextWriteSettings>(FormatSettings);
+                writer.WriteObjectValue(FormatSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -165,12 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 formatSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DelimitedTextSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDelimitedTextSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class DelimitedTextSinkConverter : JsonConverter<DelimitedTextSink>
         {
             public override void Write(Utf8JsonWriter writer, DelimitedTextSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DelimitedTextSink>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override DelimitedTextSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

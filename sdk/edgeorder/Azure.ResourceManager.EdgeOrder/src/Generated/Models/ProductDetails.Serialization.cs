@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class ProductDetails : IUtf8JsonSerializable, IJsonModel<ProductDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProductDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(DisplayInfo))
             {
                 writer.WritePropertyName("displayInfo"u8);
-                writer.WriteObjectValue<ProductDisplayInfo>(DisplayInfo, options);
+                writer.WriteObjectValue(DisplayInfo, options);
             }
             writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
+            writer.WriteObjectValue(HierarchyInformation, options);
             if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in DeviceDetails)
                 {
-                    writer.WriteObjectValue<EdgeOrderProductDeviceDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ProductDetails DeserializeProductDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             DoubleEncryptionStatus? productDoubleEncryptionStatus = default;
             IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayInfo"u8))
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProductDetails(
                 displayInfo,
                 hierarchyInformation,

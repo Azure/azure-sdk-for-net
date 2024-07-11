@@ -30,6 +30,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>
         ///  The set of test cases for known described type properties.
         /// </summary>
+        ///
         public static IEnumerable<object[]> DescribedTypePropertyTestCases()
         {
             Func<object, object> TranslateValue = value =>
@@ -61,6 +62,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
             yield return new object[] { new MemoryStream(contents, false), contents };
             yield return new object[] { new BufferedStream(new MemoryStream(contents, false), 512), contents };
+        }
+
+        /// <summary>
+        ///  The set of test cases for known described type properties.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> BinaryPropertyTestCases()
+        {
+            var contents = new byte[] { 0x55, 0x66, 0x99, 0xAA };
+
+            yield return new object[] { contents, contents };
+            yield return new object[] { new ArraySegment<byte>(contents), contents };
         }
 
         /// <summary>
@@ -323,6 +336,34 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [TestCaseSource(nameof(BinaryPropertyTestCases))]
+        public void CreateMessageFromEventTranslatesBinaryApplicationProperties(object property,
+                                                                                object contents)
+        {
+            var eventData = new EventData(
+                eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
+                properties: new Dictionary<string, object> { { "TestProp", property } });
+
+            using AmqpMessage message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
+
+            Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
+            Assert.That(message.DataBody, Is.Not.Null, "The AMQP message should a body.");
+            Assert.That(message.ApplicationProperties, Is.Not.Null, "The AMQP message should have a set of application properties.");
+
+            var propertyKey = eventData.Properties.Keys.First();
+            var containsValue = message.ApplicationProperties.Map.TryGetValue(propertyKey, out object streamValue);
+
+            Assert.That(containsValue, Is.True, "The message properties did not contain the property.");
+            Assert.That(streamValue, Is.InstanceOf<ArraySegment<byte>>(), "The message property stream was not read correctly.");
+            Assert.That(((ArraySegment<byte>)streamValue).ToArray(), Is.EqualTo(contents), "The property value did not match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public void CreateMessageFromEventFailsForUnknownApplicationPropertyType()
         {
             var eventData = new EventData(
@@ -376,7 +417,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateMessageFromEventDoesNotTriggerPropertiesInstantation()
+        public void CreateMessageFromEventDoesNotTriggerPropertiesInstantiation()
         {
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
             using var message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);

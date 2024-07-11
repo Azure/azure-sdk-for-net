@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseSelfHostedIntegrationRuntimeStatus : IUtf8JsonSerializable, IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue<SynapseSelfHostedIntegrationRuntimeNode>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue<SynapseLinkedIntegrationRuntime>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseSelfHostedIntegrationRuntimeStatus DeserializeSynapseSelfHostedIntegrationRuntimeStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

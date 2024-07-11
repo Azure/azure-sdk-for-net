@@ -213,12 +213,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalColumns);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RestSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRestSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class RestSourceConverter : JsonConverter<RestSource>
         {
             public override void Write(Utf8JsonWriter writer, RestSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<RestSource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override RestSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

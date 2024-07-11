@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class KafkaProfile : IUtf8JsonSerializable, IJsonModel<KafkaProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KafkaProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KafkaProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KafkaProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStringValue(RemoteStorageUri.AbsoluteUri);
             }
             writer.WritePropertyName("diskStorage"u8);
-            writer.WriteObjectValue<DiskStorageProfile>(DiskStorage, options);
+            writer.WriteObjectValue(DiskStorage, options);
             if (options.Format != "W" && Optional.IsDefined(ClusterIdentity))
             {
                 writer.WritePropertyName("clusterIdentity"u8);
-                writer.WriteObjectValue<HDInsightIdentityProfile>(ClusterIdentity, options);
+                writer.WriteObjectValue(ClusterIdentity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
-                writer.WriteObjectValue<KafkaConnectivityEndpoints>(ConnectivityEndpoints, options);
+                writer.WriteObjectValue(ConnectivityEndpoints, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static KafkaProfile DeserializeKafkaProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             HDInsightIdentityProfile clusterIdentity = default;
             KafkaConnectivityEndpoints connectivityEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableKRaft"u8))
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KafkaProfile(
                 enableKRaft,
                 enablePublicEndpoints,

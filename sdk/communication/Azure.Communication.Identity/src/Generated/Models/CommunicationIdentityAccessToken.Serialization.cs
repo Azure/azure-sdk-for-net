@@ -35,5 +35,13 @@ namespace Azure.Communication.Identity
             }
             return new CommunicationIdentityAccessToken(token, expiresOn);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationIdentityAccessToken FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationIdentityAccessToken(document.RootElement);
+        }
     }
 }

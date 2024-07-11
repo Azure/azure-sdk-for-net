@@ -1,8 +1,19 @@
 # Release History
 
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.1 (2024-04-01)
 
 ### Features Added
+
 Initial release for Import of SAP systems' inventory using the [Discovery template](https://go.microsoft.com/fwlink/?linkid=2249111) into SAP Migration discovery site resource and it's child resources, the SAP instances and Server instances.
 
 ### General New Features

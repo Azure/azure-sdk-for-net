@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileAttachedDataNetworkData : IUtf8JsonSerializable, IJsonModel<MobileAttachedDataNetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileAttachedDataNetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileAttachedDataNetworkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MobileAttachedDataNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneDataInterface"u8);
-            writer.WriteObjectValue<MobileNetworkInterfaceProperties>(UserPlaneDataInterface, options);
+            writer.WriteObjectValue(UserPlaneDataInterface, options);
             writer.WritePropertyName("dnsAddresses"u8);
             writer.WriteStartArray();
             foreach (var item in DnsAddresses)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(NaptConfiguration))
             {
                 writer.WritePropertyName("naptConfiguration"u8);
-                writer.WriteObjectValue<NaptConfiguration>(NaptConfiguration, options);
+                writer.WriteObjectValue(NaptConfiguration, options);
             }
             if (Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static MobileAttachedDataNetworkData DeserializeMobileAttachedDataNetworkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MobileNetwork
             IList<string> userEquipmentAddressPoolPrefix = default;
             IList<string> userEquipmentStaticAddressPoolPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MobileAttachedDataNetworkData(
                 id,
                 name,

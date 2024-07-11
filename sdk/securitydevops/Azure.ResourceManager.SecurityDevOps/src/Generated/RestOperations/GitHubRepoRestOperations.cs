@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.SecurityDevOps
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByConnectorRequestUri(string subscriptionId, string resourceGroupName, string gitHubConnectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/gitHubConnectors/", false);
+            uri.AppendPath(gitHubConnectorName, true);
+            uri.AppendPath("/repos", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByConnectorRequest(string subscriptionId, string resourceGroupName, string gitHubConnectorName)
@@ -114,6 +128,23 @@ namespace Azure.ResourceManager.SecurityDevOps
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/gitHubConnectors/", false);
+            uri.AppendPath(gitHubConnectorName, true);
+            uri.AppendPath("/owners/", false);
+            uri.AppendPath(gitHubOwnerName, true);
+            uri.AppendPath("/repos", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName)
@@ -199,6 +230,24 @@ namespace Azure.ResourceManager.SecurityDevOps
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/gitHubConnectors/", false);
+            uri.AppendPath(gitHubConnectorName, true);
+            uri.AppendPath("/owners/", false);
+            uri.AppendPath(gitHubOwnerName, true);
+            uri.AppendPath("/repos/", false);
+            uri.AppendPath(gitHubRepoName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName)
@@ -295,6 +344,24 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, GitHubRepoData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/gitHubConnectors/", false);
+            uri.AppendPath(gitHubConnectorName, true);
+            uri.AppendPath("/owners/", false);
+            uri.AppendPath(gitHubOwnerName, true);
+            uri.AppendPath("/repos/", false);
+            uri.AppendPath(gitHubRepoName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, GitHubRepoData data)
         {
             var message = _pipeline.CreateMessage();
@@ -317,7 +384,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GitHubRepoData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -385,6 +452,24 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, GitHubRepoData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/gitHubConnectors/", false);
+            uri.AppendPath(gitHubConnectorName, true);
+            uri.AppendPath("/owners/", false);
+            uri.AppendPath(gitHubOwnerName, true);
+            uri.AppendPath("/repos/", false);
+            uri.AppendPath(gitHubRepoName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, GitHubRepoData data)
         {
             var message = _pipeline.CreateMessage();
@@ -407,7 +492,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GitHubRepoData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -471,6 +556,14 @@ namespace Azure.ResourceManager.SecurityDevOps
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByConnectorNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string gitHubConnectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByConnectorNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string gitHubConnectorName)
@@ -547,6 +640,14 @@ namespace Azure.ResourceManager.SecurityDevOps
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName)

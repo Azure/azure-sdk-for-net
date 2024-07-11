@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.ContainerService.Tests
         {
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task CreateListGetDelete()
         {
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.ContainerService.Tests
             await clusterFromGet.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task Update()
         {
@@ -61,7 +59,6 @@ namespace Azure.ResourceManager.ContainerService.Tests
             await clusterFromUpdate.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task GetCredentials()
         {

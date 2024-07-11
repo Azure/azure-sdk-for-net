@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class RankingsResponse : IUtf8JsonSerializable, IJsonModel<RankingsResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RankingsResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RankingsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RankingsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue<RankingsResponseTablesItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RankingsResponse DeserializeRankingsResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
             DateTimeOffset? dateTimeEnd = default;
             IReadOnlyList<RankingsResponseTablesItem> tables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeBegin"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RankingsResponse(dateTimeBegin, dateTimeEnd, tables ?? new ChangeTrackingList<RankingsResponseTablesItem>(), serializedAdditionalRawData);
         }
 

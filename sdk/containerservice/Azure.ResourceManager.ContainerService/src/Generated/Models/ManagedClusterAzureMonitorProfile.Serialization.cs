@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     internal partial class ManagedClusterAzureMonitorProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAzureMonitorProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAzureMonitorProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAzureMonitorProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterAzureMonitorProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue<ManagedClusterMonitorProfileMetrics>(Metrics, options);
+                writer.WriteObjectValue(Metrics, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAzureMonitorProfile DeserializeManagedClusterAzureMonitorProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ManagedClusterMonitorProfileMetrics metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metrics"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterAzureMonitorProfile(metrics, serializedAdditionalRawData);
         }
 

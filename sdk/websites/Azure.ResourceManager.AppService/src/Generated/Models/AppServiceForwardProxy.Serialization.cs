@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceForwardProxy : IUtf8JsonSerializable, IJsonModel<AppServiceForwardProxy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceForwardProxy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceForwardProxy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceForwardProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceForwardProxy DeserializeAppServiceForwardProxy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             string customHostHeaderName = default;
             string customProtoHeaderName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("convention"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServiceForwardProxy(convention, customHostHeaderName, customProtoHeaderName, serializedAdditionalRawData);
         }
 
@@ -127,29 +127,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Convention), out propertyOverride);
-            if (Optional.IsDefined(Convention) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  convention: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Convention))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  convention: ");
                     builder.AppendLine($"'{Convention.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHostHeaderName), out propertyOverride);
-            if (Optional.IsDefined(CustomHostHeaderName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  customHostHeaderName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomHostHeaderName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  customHostHeaderName: ");
                     if (CustomHostHeaderName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -163,15 +165,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomProtoHeaderName), out propertyOverride);
-            if (Optional.IsDefined(CustomProtoHeaderName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  customProtoHeaderName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomProtoHeaderName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  customProtoHeaderName: ");
                     if (CustomProtoHeaderName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

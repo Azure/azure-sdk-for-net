@@ -107,5 +107,13 @@ namespace Azure.Containers.ContainerRegistry
                 listEnabled,
                 readEnabled);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TagAttributesBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTagAttributesBase(document.RootElement);
+        }
     }
 }

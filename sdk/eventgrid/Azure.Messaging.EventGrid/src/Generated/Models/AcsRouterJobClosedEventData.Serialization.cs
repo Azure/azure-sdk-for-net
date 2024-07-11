@@ -108,12 +108,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 dispositionCode);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterJobClosedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterJobClosedEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterJobClosedEventDataConverter : JsonConverter<AcsRouterJobClosedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterJobClosedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRouterJobClosedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

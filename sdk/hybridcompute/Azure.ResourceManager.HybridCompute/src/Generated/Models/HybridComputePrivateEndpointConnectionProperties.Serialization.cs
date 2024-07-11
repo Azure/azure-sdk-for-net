@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class HybridComputePrivateEndpointConnectionProperties : IUtf8JsonSerializable, IJsonModel<HybridComputePrivateEndpointConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateEndpointConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateEndpointConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridComputePrivateEndpointConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<HybridComputePrivateLinkServiceConnectionStateProperty>(ConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputePrivateEndpointConnectionProperties DeserializeHybridComputePrivateEndpointConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string provisioningState = default;
             IReadOnlyList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpoint"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HybridComputePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, groupIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 

@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Class)
             {
-                writer.WriteObjectValue<ClassificationResult>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("id"u8);
@@ -29,13 +29,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue<DocumentWarning>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue<TextDocumentStatistics?>(Statistics);
+                writer.WriteObjectValue(Statistics);
             }
             writer.WriteEndObject();
         }
@@ -88,6 +88,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new ClassificationDocumentResult(id, warnings, statistics, @class);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ClassificationDocumentResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeClassificationDocumentResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

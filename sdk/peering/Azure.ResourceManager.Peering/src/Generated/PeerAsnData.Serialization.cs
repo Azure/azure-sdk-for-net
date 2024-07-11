@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering
 {
     public partial class PeerAsnData : IUtf8JsonSerializable, IJsonModel<PeerAsnData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeerAsnData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeerAsnData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeerAsnData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Peering
                 writer.WriteStartArray();
                 foreach (var item in PeerContactDetail)
                 {
-                    writer.WriteObjectValue<PeerAsnContactDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Peering
 
         internal static PeerAsnData DeserializePeerAsnData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Peering
             PeerAsnValidationState? validationState = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.Peering
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PeerAsnData(
                 id,
                 name,

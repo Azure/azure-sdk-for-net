@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class MySqlFlexibleServerCapabilityProperties : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerCapabilityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerCapabilityProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerCapabilityProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlFlexibleServerCapabilityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedFlexibleServerEditions)
                 {
-                    writer.WriteObjectValue<MySqlFlexibleServerEditionCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerCapabilityProperties DeserializeMySqlFlexibleServerCapabilityProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             IReadOnlyList<string> supportedGeoBackupRegions = default;
             IReadOnlyList<MySqlFlexibleServerEditionCapability> supportedFlexibleServerEditions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zone"u8))
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerCapabilityProperties(zone, supportedHAMode ?? new ChangeTrackingList<string>(), supportedGeoBackupRegions ?? new ChangeTrackingList<string>(), supportedFlexibleServerEditions ?? new ChangeTrackingList<MySqlFlexibleServerEditionCapability>(), serializedAdditionalRawData);
         }
 

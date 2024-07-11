@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningEncryptionSetting : IUtf8JsonSerializable, IJsonModel<MachineLearningEncryptionSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEncryptionSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEncryptionSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningEncryptionSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<MachineLearningCmkIdentity>(Identity, options);
+                writer.WriteObjectValue(Identity, options);
             }
             writer.WritePropertyName("keyVaultProperties"u8);
-            writer.WriteObjectValue<MachineLearningEncryptionKeyVaultProperties>(KeyVaultProperties, options);
+            writer.WriteObjectValue(KeyVaultProperties, options);
             if (Optional.IsDefined(SearchAccountResourceId))
             {
                 writer.WritePropertyName("searchAccountResourceId"u8);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEncryptionSetting DeserializeMachineLearningEncryptionSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningEncryptionStatus status = default;
             ResourceIdentifier storageAccountResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cosmosDbResourceId"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningEncryptionSetting(
                 cosmosDbResourceId,
                 identity,

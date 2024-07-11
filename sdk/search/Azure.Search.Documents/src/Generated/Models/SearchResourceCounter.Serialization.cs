@@ -39,5 +39,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SearchResourceCounter(usage, quota);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchResourceCounter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchResourceCounter(document.RootElement);
+        }
     }
 }

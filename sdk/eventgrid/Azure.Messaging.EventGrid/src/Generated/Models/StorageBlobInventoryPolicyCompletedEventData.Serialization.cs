@@ -79,12 +79,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 manifestBlobUrl);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageBlobInventoryPolicyCompletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageBlobInventoryPolicyCompletedEventData(document.RootElement);
+        }
+
         internal partial class StorageBlobInventoryPolicyCompletedEventDataConverter : JsonConverter<StorageBlobInventoryPolicyCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageBlobInventoryPolicyCompletedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override StorageBlobInventoryPolicyCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

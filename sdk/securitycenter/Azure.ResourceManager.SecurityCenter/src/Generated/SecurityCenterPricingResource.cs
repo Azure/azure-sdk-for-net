@@ -270,7 +270,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityCenterPricingPricingsRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()));
+                var uri = _securityCenterPricingPricingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -316,7 +318,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityCenterPricingPricingsRestClient.Update(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()));
+                var uri = _securityCenterPricingPricingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityCenterPricingResource>(Response.FromValue(new SecurityCenterPricingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

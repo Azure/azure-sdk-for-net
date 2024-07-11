@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     [PersistableModelProxy(typeof(UnknownPartnerUpdateDestinationInfo))]
     public partial class PartnerUpdateDestinationInfo : IUtf8JsonSerializable, IJsonModel<PartnerUpdateDestinationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerUpdateDestinationInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerUpdateDestinationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PartnerUpdateDestinationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerUpdateDestinationInfo DeserializePartnerUpdateDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

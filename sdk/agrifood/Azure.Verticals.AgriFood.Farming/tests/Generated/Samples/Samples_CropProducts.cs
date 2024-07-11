@@ -23,7 +23,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             Response response = client.GetCropProduct("<cropProductId>", null);
 
@@ -37,7 +37,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             Response response = await client.GetCropProductAsync("<cropProductId>", null);
 
@@ -51,7 +51,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             Response response = client.GetCropProduct("<cropProductId>", null);
 
@@ -82,7 +82,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             Response response = await client.GetCropProductAsync("<cropProductId>", null);
 
@@ -113,7 +113,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<cropProductId>", content);
@@ -128,7 +128,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<cropProductId>", content);
@@ -143,7 +143,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -201,7 +201,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -259,7 +259,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             Response response = client.Delete("<cropProductId>");
 
@@ -272,7 +272,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             Response response = await client.DeleteAsync("<cropProductId>");
 
@@ -285,7 +285,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             Response response = client.Delete("<cropProductId>");
 
@@ -298,7 +298,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             Response response = await client.DeleteAsync("<cropProductId>");
 
@@ -311,7 +311,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             foreach (BinaryData item in client.GetCropProducts(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -326,7 +326,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             await foreach (BinaryData item in client.GetCropProductsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -341,7 +341,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             foreach (BinaryData item in client.GetCropProducts(new string[] { "<cropIds>" }, new string[] { "<brands>" }, new string[] { "<products>" }, new string[] { "<traits>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -373,7 +373,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+            CropProducts client = new FarmBeatsClient(endpoint, credential).GetCropProductsClient();
 
             await foreach (BinaryData item in client.GetCropProductsAsync(new string[] { "<cropIds>" }, new string[] { "<brands>" }, new string[] { "<products>" }, new string[] { "<traits>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {

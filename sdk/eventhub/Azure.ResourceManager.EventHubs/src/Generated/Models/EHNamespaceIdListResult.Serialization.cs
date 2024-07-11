@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     internal partial class EHNamespaceIdListResult : IUtf8JsonSerializable, IJsonModel<EHNamespaceIdListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EHNamespaceIdListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EHNamespaceIdListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EHNamespaceIdListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EHNamespaceIdListResult DeserializeEHNamespaceIdListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             IReadOnlyList<SubResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EHNamespaceIdListResult(value ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
@@ -117,17 +117,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Value.Any() || hasPropertyOverride)
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
                 {
-                    builder.Append("  value: ");
-                    if (hasPropertyOverride)
+                    if (Value.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  value: ");
                         builder.AppendLine("[");
                         foreach (var item in Value)
                         {

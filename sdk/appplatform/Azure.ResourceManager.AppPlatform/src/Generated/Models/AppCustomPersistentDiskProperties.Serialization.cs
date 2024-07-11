@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     [PersistableModelProxy(typeof(UnknownCustomPersistentDiskProperties))]
     public partial class AppCustomPersistentDiskProperties : IUtf8JsonSerializable, IJsonModel<AppCustomPersistentDiskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCustomPersistentDiskProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCustomPersistentDiskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppCustomPersistentDiskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppCustomPersistentDiskProperties DeserializeAppCustomPersistentDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

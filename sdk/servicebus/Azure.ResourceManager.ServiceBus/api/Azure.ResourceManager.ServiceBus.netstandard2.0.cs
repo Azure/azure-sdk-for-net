@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MigrationConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class MigrationConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MigrationConfigurationResource() { }
@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Revert(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RevertAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceBus.MigrationConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.MigrationConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.MigrationConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.MigrationConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusDisasterRecoveryAuthorizationRuleResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusDisasterRecoveryAuthorizationRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusDisasterRecoveryAuthorizationRuleResource() { }
@@ -87,6 +92,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryAuthorizationRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusDisasterRecoveryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryResource>, System.Collections.IEnumerable
     {
@@ -120,7 +130,7 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusDisasterRecoveryResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusDisasterRecoveryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusDisasterRecoveryResource() { }
@@ -138,6 +148,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryAuthorizationRuleResource> GetServiceBusDisasterRecoveryAuthorizationRule(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryAuthorizationRuleResource>> GetServiceBusDisasterRecoveryAuthorizationRuleAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryAuthorizationRuleCollection GetServiceBusDisasterRecoveryAuthorizationRules() { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -181,7 +196,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusNamespaceAuthorizationRuleResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusNamespaceAuthorizationRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusNamespaceAuthorizationRuleResource() { }
@@ -196,6 +211,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys> RegenerateKeys(Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -241,7 +261,7 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusNamespaceResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusNamespaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusNamespaceResource() { }
@@ -281,6 +301,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> Update(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> UpdateAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -299,7 +324,7 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusNetworkRuleSetResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusNetworkRuleSetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusNetworkRuleSetResource() { }
@@ -310,6 +335,11 @@ namespace Azure.ResourceManager.ServiceBus
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -341,7 +371,7 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusPrivateEndpointConnectionResource() { }
@@ -352,6 +382,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -372,7 +407,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusQueueAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusQueueAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusQueueAuthorizationRuleResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusQueueAuthorizationRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusQueueAuthorizationRuleResource() { }
@@ -387,6 +422,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys> RegenerateKeys(Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusQueueAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusQueueAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -439,7 +479,7 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusQueueResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusQueueResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusQueueResource() { }
@@ -453,6 +493,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusQueueAuthorizationRuleResource> GetServiceBusQueueAuthorizationRule(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusQueueAuthorizationRuleResource>> GetServiceBusQueueAuthorizationRuleAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceBus.ServiceBusQueueAuthorizationRuleCollection GetServiceBusQueueAuthorizationRules() { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusQueueData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusQueueData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusQueueResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusQueueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusQueueResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusQueueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -487,7 +532,7 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusRuleResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusRuleResource() { }
@@ -498,6 +543,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -547,7 +597,7 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusSubscriptionResource() { }
@@ -561,6 +611,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource> GetServiceBusRule(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource>> GetServiceBusRuleAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceBus.ServiceBusRuleCollection GetServiceBusRules() { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -581,7 +636,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusTopicAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusTopicAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusTopicAuthorizationRuleResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusTopicAuthorizationRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusTopicAuthorizationRuleResource() { }
@@ -596,6 +651,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys> RegenerateKeys(Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>> RegenerateKeysAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusTopicAuthorizationRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusTopicAuthorizationRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -643,7 +703,7 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusTopicResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceBusTopicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceBusTopicResource() { }
@@ -660,6 +720,11 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusTopicAuthorizationRuleResource> GetServiceBusTopicAuthorizationRule(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusTopicAuthorizationRuleResource>> GetServiceBusTopicAuthorizationRuleAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceBus.ServiceBusTopicAuthorizationRuleCollection GetServiceBusTopicAuthorizationRules() { throw null; }
+        Azure.ResourceManager.ServiceBus.ServiceBusTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusTopicResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusTopicData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusTopicResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusTopicData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

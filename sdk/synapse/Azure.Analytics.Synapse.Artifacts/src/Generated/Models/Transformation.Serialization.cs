@@ -28,17 +28,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue<DatasetReference>(Dataset);
+                writer.WriteObjectValue(Dataset);
             }
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue<LinkedServiceReference>(LinkedService);
+                writer.WriteObjectValue(LinkedService);
             }
             if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue<DataFlowReference>(Flowlet);
+                writer.WriteObjectValue(Flowlet);
             }
             writer.WriteEndObject();
         }
@@ -97,12 +97,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new Transformation(name, description, dataset, linkedService, flowlet);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Transformation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTransformation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class TransformationConverter : JsonConverter<Transformation>
         {
             public override void Write(Utf8JsonWriter writer, Transformation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<Transformation>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override Transformation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

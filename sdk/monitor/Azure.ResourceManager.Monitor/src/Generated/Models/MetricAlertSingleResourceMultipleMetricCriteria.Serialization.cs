@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MetricAlertSingleResourceMultipleMetricCriteria : IUtf8JsonSerializable, IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetricAlertSingleResourceMultipleMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue<MetricCriteria>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricAlertSingleResourceMultipleMetricCriteria DeserializeMetricAlertSingleResourceMultipleMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

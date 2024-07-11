@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsIncidentData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsIncidentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (options.Format != "W" && Optional.IsDefined(AdditionalInfo))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue<SecurityInsightsIncidentAdditionalInfo>(AdditionalInfo, options);
+                writer.WriteObjectValue(AdditionalInfo, options);
             }
             if (Optional.IsDefined(Classification))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue<SecurityInsightsIncidentLabel>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue<SecurityInsightsIncidentOwnerInfo>(Owner, options);
+                writer.WriteObjectValue(Owner, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsIncidentData DeserializeSecurityInsightsIncidentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityInsights
             SecurityInsightsIncidentStatus? status = default;
             string title = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -425,10 +425,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsIncidentData(
                 id,
                 name,

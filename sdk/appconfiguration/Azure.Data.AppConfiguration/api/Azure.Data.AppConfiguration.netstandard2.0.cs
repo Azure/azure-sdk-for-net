@@ -64,13 +64,19 @@ namespace Azure.Data.AppConfiguration
         public override string ToString() { throw null; }
         public virtual void UpdateSyncToken(string token) { }
     }
+    public static partial class ConfigurationClientExtensions
+    {
+        public static System.Collections.Generic.IAsyncEnumerable<Azure.Page<Azure.Data.AppConfiguration.ConfigurationSetting>> AsPages(this Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> pageable, System.Collections.Generic.IEnumerable<Azure.MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = default(int?)) { throw null; }
+        public static System.Collections.Generic.IEnumerable<Azure.Page<Azure.Data.AppConfiguration.ConfigurationSetting>> AsPages(this Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> pageable, System.Collections.Generic.IEnumerable<Azure.MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = default(int?)) { throw null; }
+    }
     public partial class ConfigurationClientOptions : Azure.Core.ClientOptions
     {
-        public ConfigurationClientOptions(Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion.V2023_10_01) { }
+        public ConfigurationClientOptions(Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion.V2023_11_01) { }
         public enum ServiceVersion
         {
             V1_0 = 0,
             V2023_10_01 = 1,
+            V2023_11_01 = 2,
         }
     }
     public static partial class ConfigurationModelFactory
@@ -103,6 +109,7 @@ namespace Azure.Data.AppConfiguration
         public ConfigurationSettingsFilter(string key) { }
         public string Key { get { throw null; } set { } }
         public string Label { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Tags { get { throw null; } }
     }
     public partial class ConfigurationSnapshot
     {
@@ -197,7 +204,7 @@ namespace Azure.Data.AppConfiguration
         public Azure.Data.AppConfiguration.SettingFields Fields { get { throw null; } set { } }
         public string KeyFilter { get { throw null; } set { } }
         public string LabelFilter { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.MatchConditions> MatchConditions { get { throw null; } }
+        public System.Collections.Generic.IList<string> TagsFilter { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

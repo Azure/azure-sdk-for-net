@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     [PersistableModelProxy(typeof(UnknownFhirR4DomainResource))]
     public partial class FhirR4DomainResource : IUtf8JsonSerializable, IJsonModel<FhirR4DomainResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4DomainResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4DomainResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FhirR4DomainResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue<FhirR4Narrative>(Text, options);
+                writer.WriteObjectValue(Text, options);
             }
             if (Optional.IsCollectionDefined(Contained))
             {
@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Contained)
                 {
-                    writer.WriteObjectValue<FhirR4Resource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue<FhirR4Extension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ModifierExtension)
                 {
-                    writer.WriteObjectValue<FhirR4Extension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue<FhirR4Meta>(Meta, options);
+                writer.WriteObjectValue(Meta, options);
             }
             if (Optional.IsDefined(ImplicitRules))
             {
@@ -112,7 +112,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static FhirR4DomainResource DeserializeFhirR4DomainResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,7 +122,9 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 switch (discriminator.GetString())
                 {
+                    case "Condition": return FhirR4Condition.DeserializeFhirR4Condition(element, options);
                     case "Observation": return FhirR4Observation.DeserializeFhirR4Observation(element, options);
+                    case "ResearchStudy": return FhirR4ResearchStudy.DeserializeFhirR4ResearchStudy(element, options);
                 }
             }
             return UnknownFhirR4DomainResource.DeserializeUnknownFhirR4DomainResource(element, options);
@@ -167,11 +169,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeFhirR4DomainResource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FhirR4DomainResource>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

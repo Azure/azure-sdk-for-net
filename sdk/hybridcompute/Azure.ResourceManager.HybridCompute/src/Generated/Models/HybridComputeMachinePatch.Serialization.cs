@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class HybridComputeMachinePatch : IUtf8JsonSerializable, IJsonModel<HybridComputeMachinePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeMachinePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeMachinePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridComputeMachinePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue<HybridComputeLocation>(LocationData, options);
+                writer.WriteObjectValue(LocationData, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue<HybridComputeOSProfile>(OSProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
-                writer.WriteObjectValue<HybridComputeCloudMetadata>(CloudMetadata, options);
+                writer.WriteObjectValue(CloudMetadata, options);
             }
             if (Optional.IsDefined(AgentUpgrade))
             {
                 writer.WritePropertyName("agentUpgrade"u8);
-                writer.WriteObjectValue<AgentUpgrade>(AgentUpgrade, options);
+                writer.WriteObjectValue(AgentUpgrade, options);
             }
             if (Optional.IsDefined(ParentClusterResourceId))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputeMachinePatch DeserializeHybridComputeMachinePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ResourceIdentifier parentClusterResourceId = default;
             ResourceIdentifier privateLinkScopeResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HybridComputeMachinePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,

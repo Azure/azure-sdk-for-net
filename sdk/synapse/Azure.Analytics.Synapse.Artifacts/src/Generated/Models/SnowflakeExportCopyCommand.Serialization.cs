@@ -127,12 +127,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SnowflakeExportCopyCommand(type, additionalProperties, additionalCopyOptions ?? new ChangeTrackingDictionary<string, object>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, object>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SnowflakeExportCopyCommand FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSnowflakeExportCopyCommand(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SnowflakeExportCopyCommandConverter : JsonConverter<SnowflakeExportCopyCommand>
         {
             public override void Write(Utf8JsonWriter writer, SnowflakeExportCopyCommand model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SnowflakeExportCopyCommand>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override SnowflakeExportCopyCommand Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

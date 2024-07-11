@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningEnvironmentVersionProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningEnvironmentVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEnvironmentVersionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEnvironmentVersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningEnvironmentVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Build))
             {
                 writer.WritePropertyName("build"u8);
-                writer.WriteObjectValue<MachineLearningBuildContext>(Build, options);
+                writer.WriteObjectValue(Build, options);
             }
             if (Optional.IsDefined(CondaFile))
             {
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(InferenceConfig))
             {
                 writer.WritePropertyName("inferenceConfig"u8);
-                writer.WriteObjectValue<MachineLearningInferenceContainerProperties>(InferenceConfig, options);
+                writer.WriteObjectValue(InferenceConfig, options);
             }
             if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue<IntellectualProperty>(IntellectualProperty, options);
+                    writer.WriteObjectValue(IntellectualProperty, options);
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue<AutoDeleteSetting>(AutoDeleteSetting, options);
+                    writer.WriteObjectValue(AutoDeleteSetting, options);
                 }
                 else
                 {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEnvironmentVersionProperties DeserializeMachineLearningEnvironmentVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoRebuild"u8))
@@ -372,10 +372,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningEnvironmentVersionProperties(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),

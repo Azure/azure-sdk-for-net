@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class LabelingJobProperties : IUtf8JsonSerializable, IJsonModel<LabelingJobProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabelingJobProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabelingJobProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabelingJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataConfiguration != null)
                 {
                     writer.WritePropertyName("dataConfiguration"u8);
-                    writer.WriteObjectValue<LabelingDataConfiguration>(DataConfiguration, options);
+                    writer.WriteObjectValue(DataConfiguration, options);
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (JobInstructions != null)
                 {
                     writer.WritePropertyName("jobInstructions"u8);
-                    writer.WriteObjectValue<LabelingJobInstructions>(JobInstructions, options);
+                    writer.WriteObjectValue(JobInstructions, options);
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in LabelCategories)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<LabelCategory>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LabelingJobMediaProperties != null)
                 {
                     writer.WritePropertyName("labelingJobMediaProperties"u8);
-                    writer.WriteObjectValue<LabelingJobMediaProperties>(LabelingJobMediaProperties, options);
+                    writer.WriteObjectValue(LabelingJobMediaProperties, options);
                 }
                 else
                 {
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(MlAssistConfiguration))
             {
                 writer.WritePropertyName("mlAssistConfiguration"u8);
-                writer.WriteObjectValue<MachineLearningAssistConfiguration>(MlAssistConfiguration, options);
+                writer.WriteObjectValue(MlAssistConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProgressMetrics))
             {
                 if (ProgressMetrics != null)
                 {
                     writer.WritePropertyName("progressMetrics"u8);
-                    writer.WriteObjectValue<ProgressMetrics>(ProgressMetrics, options);
+                    writer.WriteObjectValue(ProgressMetrics, options);
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in StatusMessages)
                     {
-                        writer.WriteObjectValue<JobStatusMessage>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue<MachineLearningIdentityConfiguration>(Identity, options);
+                    writer.WriteObjectValue(Identity, options);
                 }
                 else
                 {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NotificationSetting != null)
                 {
                     writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue<NotificationSetting>(NotificationSetting, options);
+                    writer.WriteObjectValue(NotificationSetting, options);
                 }
                 else
                 {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in SecretsConfiguration)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<SecretConfiguration>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Services)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<MachineLearningJobService>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static LabelingJobProperties DeserializeLabelingJobProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDateTime"u8))
@@ -620,10 +620,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LabelingJobProperties(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),

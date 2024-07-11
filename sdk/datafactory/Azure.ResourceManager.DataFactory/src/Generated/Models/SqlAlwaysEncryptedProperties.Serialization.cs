@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SqlAlwaysEncryptedProperties : IUtf8JsonSerializable, IJsonModel<SqlAlwaysEncryptedProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlAlwaysEncryptedProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlAlwaysEncryptedProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlAlwaysEncryptedProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue<DataFactoryCredentialReference>(Credential, options);
+                writer.WriteObjectValue(Credential, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlAlwaysEncryptedProperties DeserializeSqlAlwaysEncryptedProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecret servicePrincipalKey = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alwaysEncryptedAkvAuthType"u8))
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlAlwaysEncryptedProperties(alwaysEncryptedAkvAuthType, servicePrincipalId, servicePrincipalKey, credential, serializedAdditionalRawData);
         }
 

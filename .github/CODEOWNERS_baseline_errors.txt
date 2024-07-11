@@ -30,7 +30,7 @@ aishu is an invalid user. Ensure the user exists, is public member of Azure and 
 ilayrn is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 orhasban is not a public member of Azure.
 zoharHenMicrosoft is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-sagivf is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
+sagivf is not a public member of Azure.
 Aviv-Yaniv is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 sijuman is not a public member of Azure.
 sarathys is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -279,3 +279,6 @@ JieZhou000 is not a public member of Azure.
 ethanann-ms is not a public member of Azure.
 tmahmood-microsoft is not a public member of Azure.
 Aviv-Yaniv is not a public member of Azure.
+sakash279 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
+sivethe is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
+ThomasWeiss is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.

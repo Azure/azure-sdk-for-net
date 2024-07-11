@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class ClinicalTrials : IUtf8JsonSerializable, IJsonModel<ClinicalTrials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClinicalTrials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClinicalTrials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClinicalTrials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in CustomTrials)
                 {
-                    writer.WriteObjectValue<ClinicalTrialDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in RegistryFilters)
                 {
-                    writer.WriteObjectValue<ClinicalTrialRegistryFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static ClinicalTrials DeserializeClinicalTrials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +87,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             IList<ClinicalTrialDetails> customTrials = default;
             IList<ClinicalTrialRegistryFilter> registryFilters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customTrials"u8))
@@ -120,10 +120,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClinicalTrials(customTrials ?? new ChangeTrackingList<ClinicalTrialDetails>(), registryFilters ?? new ChangeTrackingList<ClinicalTrialRegistryFilter>(), serializedAdditionalRawData);
         }
 
@@ -166,11 +166,11 @@ namespace Azure.Health.Insights.ClinicalMatching
             return DeserializeClinicalTrials(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ClinicalTrials>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

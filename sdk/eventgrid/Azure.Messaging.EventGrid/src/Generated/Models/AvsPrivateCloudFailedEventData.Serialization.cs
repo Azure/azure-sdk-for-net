@@ -38,12 +38,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AvsPrivateCloudFailedEventData(operationId, failureMessage);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AvsPrivateCloudFailedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvsPrivateCloudFailedEventData(document.RootElement);
+        }
+
         internal partial class AvsPrivateCloudFailedEventDataConverter : JsonConverter<AvsPrivateCloudFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AvsPrivateCloudFailedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AvsPrivateCloudFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class ParticipantPropertyReference : IUtf8JsonSerializable, IJsonModel<ParticipantPropertyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParticipantPropertyReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParticipantPropertyReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ParticipantPropertyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ParticipantPropertyReference DeserializeParticipantPropertyReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string sourcePropertyName = default;
             string targetPropertyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourcePropertyName"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ParticipantPropertyReference(sourcePropertyName, targetPropertyName, serializedAdditionalRawData);
         }
 

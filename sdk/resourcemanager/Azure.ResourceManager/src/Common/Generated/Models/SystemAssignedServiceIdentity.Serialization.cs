@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(SystemAssignedServiceIdentityConverter))]
     public partial class SystemAssignedServiceIdentity : IUtf8JsonSerializable, IJsonModel<SystemAssignedServiceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemAssignedServiceIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemAssignedServiceIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SystemAssignedServiceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Models
 
         internal static SystemAssignedServiceIdentity DeserializeSystemAssignedServiceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,41 +108,44 @@ namespace Azure.ResourceManager.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
-            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  principalId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  principalId: ");
                     builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tenantId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tenantId: ");
                     builder.AppendLine($"'{TenantId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemAssignedServiceIdentityType), out propertyOverride);
-            builder.Append("  type: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  type: ");
                 builder.AppendLine($"'{SystemAssignedServiceIdentityType.ToString()}'");
             }
 
@@ -187,8 +190,9 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, SystemAssignedServiceIdentity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SystemAssignedServiceIdentity>(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
+
             public override SystemAssignedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

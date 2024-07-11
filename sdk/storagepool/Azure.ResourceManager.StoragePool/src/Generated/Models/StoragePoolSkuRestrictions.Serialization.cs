@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 {
     public partial class StoragePoolSkuRestrictions : IUtf8JsonSerializable, IJsonModel<StoragePoolSkuRestrictions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoragePoolSkuRestrictions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoragePoolSkuRestrictions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StoragePoolSkuRestrictions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             if (options.Format != "W" && Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue<StoragePoolSkuRestrictionInfo>(RestrictionInfo, options);
+                writer.WriteObjectValue(RestrictionInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static StoragePoolSkuRestrictions DeserializeStoragePoolSkuRestrictions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             StoragePoolSkuRestrictionInfo restrictionInfo = default;
             StoragePoolSkuRestrictionsReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StoragePoolSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, serializedAdditionalRawData);
         }
 

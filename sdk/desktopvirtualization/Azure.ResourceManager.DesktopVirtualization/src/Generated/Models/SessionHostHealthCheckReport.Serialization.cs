@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class SessionHostHealthCheckReport : IUtf8JsonSerializable, IJsonModel<SessionHostHealthCheckReport>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostHealthCheckReport>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostHealthCheckReport>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SessionHostHealthCheckReport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (options.Format != "W" && Optional.IsDefined(AdditionalFailureDetails))
             {
                 writer.WritePropertyName("additionalFailureDetails"u8);
-                writer.WriteObjectValue<SessionHostHealthCheckFailureDetails>(AdditionalFailureDetails, options);
+                writer.WriteObjectValue(AdditionalFailureDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static SessionHostHealthCheckReport DeserializeSessionHostHealthCheckReport(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             SessionHostHealthCheckResult? healthCheckResult = default;
             SessionHostHealthCheckFailureDetails additionalFailureDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthCheckName"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SessionHostHealthCheckReport(healthCheckName, healthCheckResult, additionalFailureDetails, serializedAdditionalRawData);
         }
 

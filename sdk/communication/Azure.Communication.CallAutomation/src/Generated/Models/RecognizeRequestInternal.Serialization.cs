@@ -20,7 +20,17 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(PlayPrompt))
             {
                 writer.WritePropertyName("playPrompt"u8);
-                writer.WriteObjectValue<PlaySourceInternal>(PlayPrompt);
+                writer.WriteObjectValue(PlayPrompt);
+            }
+            if (Optional.IsCollectionDefined(PlayPrompts))
+            {
+                writer.WritePropertyName("playPrompts"u8);
+                writer.WriteStartArray();
+                foreach (var item in PlayPrompts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(InterruptCallMediaOperation))
             {
@@ -28,7 +38,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             writer.WritePropertyName("recognizeOptions"u8);
-            writer.WriteObjectValue<RecognizeOptionsInternal>(RecognizeOptions);
+            writer.WriteObjectValue(RecognizeOptions);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -40,6 +50,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(OperationCallbackUri);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

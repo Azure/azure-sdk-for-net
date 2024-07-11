@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SqlMISink : IUtf8JsonSerializable, IJsonModel<SqlMISink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMISink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMISink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlMISink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UpsertSettings))
             {
                 writer.WritePropertyName("upsertSettings"u8);
-                writer.WriteObjectValue<SqlUpsertSettings>(UpsertSettings, options);
+                writer.WriteObjectValue(UpsertSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlMISink DeserializeSqlMISink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class SoftwareUpdateConfigurationRun : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationRun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationRun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationRun>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SoftwareUpdateConfigurationRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SoftwareUpdateConfiguration))
             {
                 writer.WritePropertyName("softwareUpdateConfiguration"u8);
-                writer.WriteObjectValue<SoftwareUpdateConfigurationNavigation>(SoftwareUpdateConfiguration, options);
+                writer.WriteObjectValue(SoftwareUpdateConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue<SoftwareUpdateConfigurationRunTasks>(Tasks, options);
+                writer.WriteObjectValue(Tasks, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SoftwareUpdateConfigurationRun DeserializeSoftwareUpdateConfigurationRun(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Automation.Models
             string lastModifiedBy = default;
             SoftwareUpdateConfigurationRunTasks tasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -298,10 +298,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SoftwareUpdateConfigurationRun(
                 name,
                 id,

@@ -3,11 +3,12 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
+
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/2f74f79b243484837a6d7b6dfa78b3e16274d006/specification/network/resource-manager/readme.md
-# tag: package-2023-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/220ad9c6554fc7d6d10a89bdb441c1e3b36e3285/specification/network/resource-manager/readme.md
+# tag: package-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,8 +18,8 @@ sample-gen:
     # Not support generate samples from customized operations
     - VirtualMachineScaleSets_ListPublicIPAddresses
     - VirtualMachineScaleSets_ListNetworkInterfaces
-    - VirtualMachineScaleSets_ListIpConfigurations
-    - VirtualMachineScaleSets_GetIpConfiguration
+    - VirtualMachineScaleSets_ListIPConfigurations
+    - VirtualMachineScaleSets_GetIPConfiguration
     - VirtualMachineScaleSets_GetPublicIPAddress
     - VirtualMachineScaleSetVMs_ListPublicIPAddresses
     - VirtualMachineScaleSetVMs_ListNetworkInterfaces
@@ -32,14 +33,17 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
+  ConnectionMonitorEndpoint.subscriptionId: -|uuid
   ConnectionMonitor: ConnectionMonitorInput
   ConnectionMonitorResult: ConnectionMonitor
   PacketCapture: PacketCaptureInput
+  PacketCapture.properties.continuousCapture: IsContinuousCapture
   PacketCaptureResult: PacketCapture
+  PacketCaptureResult.properties.continuousCapture: IsContinuousCapture
   IPConfigurationBgpPeeringAddress.ipconfigurationId: IPConfigurationId
   VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType
   SubResource: NetworkSubResource
@@ -148,7 +152,9 @@ rename-mapping:
   SignatureOverridesFilterValuesResponse: SignatureOverridesFilterValuesResult
   SlotType: SwapSlotType
   UseHubGateway: HubGatewayUsageFlag
+  VirtualApplianceIPConfigurationProperties.primary: IsPrimary
   VirtualNetworkEncryption.enabled: IsEnabled
+  VirtualNetworkPeering.properties.peerCompleteVnets: AreCompleteVnetsPeered
   VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
   CustomIpPrefix.properties.customIpPrefixParent: ParentCustomIpPrefix
   CustomIpPrefix.properties.childCustomIpPrefixes: ChildCustomIpPrefixList
@@ -190,6 +196,8 @@ rename-mapping:
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   IPRule: BastionHostIPRule
   NetworkVirtualApplianceConnection.properties.routingConfiguration: ConnectionRoutingConfiguration
+  # to workaround breaking change in FirewallPacketCaptureParameters, we have to keep the old codes and rename it
+  FirewallPacketCaptureParameters: FirewallPacketCaptureRequestParameters
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -298,15 +306,14 @@ override-operation-name:
   VirtualHubs_GetEffectiveVirtualHubRoutes: GetVirtualHubEffectiveRoutes
   VirtualHubs_GetOutboundRoutes: GetVirtualHubOutboundRoutes
   VirtualHubs_GetInboundRoutes: GetVirtualHubInboundRoutes
-  generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
   VirtualMachineScaleSets_ListNetworkInterfaces: GetNetworkInterfaces
   VirtualMachineScaleSets_ListPublicIPAddresses: GetPublicIPAddresses
   VirtualMachineScaleSets_GetPublicIPAddress: GetPublicIPAddress
   VirtualMachineScaleSets_GetNetworkInterface: GetNetworkInterface
   VirtualMachineScaleSets_ListIpConfigurations: GetIPConfigurations
-  VirtualMachineScaleSets_GetIpConfiguration: GetIPConfiguration
   VirtualMachineScaleSetVMs_ListNetworkInterfaces: GetNetworkInterfaces
   VirtualMachineScaleSetVMs_ListPublicIPAddresses: GetPublicIPAddresses
+  Generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
 
 suppress-abstract-base-class:
 - BaseAdminRuleData
@@ -603,4 +610,5 @@ directive:
   #     {
   #         delete $[param];
   #     }
+
 ```

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DynamicsCrmLinkedService : IUtf8JsonSerializable, IJsonModel<DynamicsCrmLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicsCrmLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicsCrmLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynamicsCrmLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -123,6 +123,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("servicePrincipalCredential"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalCredential);
             }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -158,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DynamicsCrmLinkedService DeserializeDynamicsCrmLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,6 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
             DataFactorySecret servicePrincipalCredential = default;
+            DataFactoryCredentialReference credential = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -339,6 +345,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
                             encryptedCredential = property0.Value.GetString();
@@ -368,6 +383,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 servicePrincipalId,
                 servicePrincipalCredentialType,
                 servicePrincipalCredential,
+                credential,
                 encryptedCredential);
         }
 

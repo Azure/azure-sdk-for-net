@@ -52,5 +52,13 @@ namespace Azure.Monitor.Query.Models
             }
             return new LogsQueryResult(tables, statistics, render, error);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LogsQueryResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLogsQueryResult(document.RootElement);
+        }
     }
 }

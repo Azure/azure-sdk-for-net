@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
@@ -44,6 +45,22 @@ namespace Azure.Search.Documents.Models
                 }
             }
             return new UnknownLexicalTokenizer(odataType, name);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownLexicalTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownLexicalTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LexicalTokenizer>(this);
+            return content;
         }
     }
 }

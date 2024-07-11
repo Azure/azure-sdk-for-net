@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class DataReplicationDraProperties : IUtf8JsonSerializable, IJsonModel<DataReplicationDraProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationDraProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationDraProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataReplicationDraProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
             writer.WritePropertyName("authenticationIdentity"u8);
-            writer.WriteObjectValue<DataReplicationIdentity>(AuthenticationIdentity, options);
+            writer.WriteObjectValue(AuthenticationIdentity, options);
             writer.WritePropertyName("resourceAccessIdentity"u8);
-            writer.WriteObjectValue<DataReplicationIdentity>(ResourceAccessIdentity, options);
+            writer.WriteObjectValue(ResourceAccessIdentity, options);
             if (options.Format != "W" && Optional.IsDefined(IsResponsive))
             {
                 writer.WritePropertyName("isResponsive"u8);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue<DataReplicationHealthErrorInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue<DraModelCustomProperties>(CustomProperties, options);
+            writer.WriteObjectValue(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static DataReplicationDraProperties DeserializeDataReplicationDraProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             DraModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("correlationId"u8))
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataReplicationDraProperties(
                 correlationId,
                 machineId,

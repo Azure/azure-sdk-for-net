@@ -32,12 +32,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ApiManagementGatewayHostnameConfigurationDeletedEventData(resourceUri);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ApiManagementGatewayHostnameConfigurationDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeApiManagementGatewayHostnameConfigurationDeletedEventData(document.RootElement);
+        }
+
         internal partial class ApiManagementGatewayHostnameConfigurationDeletedEventDataConverter : JsonConverter<ApiManagementGatewayHostnameConfigurationDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ApiManagementGatewayHostnameConfigurationDeletedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ApiManagementGatewayHostnameConfigurationDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

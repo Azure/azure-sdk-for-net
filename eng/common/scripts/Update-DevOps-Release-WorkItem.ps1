@@ -15,7 +15,6 @@ param(
   [string]$packageNewLibrary = "true",
   [string]$relatedWorkItemId = $null,
   [string]$tag = $null,
-  [string]$devops_pat = $env:DEVOPS_PAT,
   [bool]$inRelease = $true
 )
 #Requires -Version 6.0
@@ -29,16 +28,10 @@ if (!(Get-Command az -ErrorAction SilentlyContinue)) {
 . (Join-Path $PSScriptRoot SemVer.ps1)
 . (Join-Path $PSScriptRoot Helpers DevOps-WorkItem-Helpers.ps1)
 
-if (!$devops_pat) {
-  az account show *> $null
-  if (!$?) {
-    Write-Host 'Running az login...'
-    az login *> $null
-  }
-}
-else {
-  # Login using PAT
-  LoginToAzureDevops $devops_pat
+az account show *> $null
+if (!$?) {
+  Write-Host 'Running az login...'
+  az login *> $null
 }
 
 az extension show -n azure-devops *> $null
@@ -93,7 +86,12 @@ Write-Host "Updated or created a release work item for a package release with th
 Write-Host "  Lanuage: $($workItem.fields['Custom.Language'])"
 Write-Host "  Version: $($workItem.fields['Custom.PackageVersionMajorMinor'])"
 Write-Host "  Package: $($workItem.fields['Custom.Package'])"
-Write-Host "  AssignedTo: $($workItem.fields['System.AssignedTo']["uniqueName"])"
+if ($workItem.fields['System.AssignedTo']) {
+  Write-Host "  AssignedTo: $($workItem.fields['System.AssignedTo']["uniqueName"])"
+}
+else {
+  Write-Host "  AssignedTo: unassigned"
+}
 Write-Host "  PackageDisplayName: $($workItem.fields['Custom.PackageDisplayName'])"
 Write-Host "  ServiceName: $($workItem.fields['Custom.ServiceName'])"
 Write-Host "  PackageType: $($workItem.fields['Custom.PackageType'])"

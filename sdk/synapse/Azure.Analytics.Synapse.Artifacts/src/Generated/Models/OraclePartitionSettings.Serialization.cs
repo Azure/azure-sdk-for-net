@@ -93,12 +93,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new OraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OraclePartitionSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOraclePartitionSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class OraclePartitionSettingsConverter : JsonConverter<OraclePartitionSettings>
         {
             public override void Write(Utf8JsonWriter writer, OraclePartitionSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<OraclePartitionSettings>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override OraclePartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

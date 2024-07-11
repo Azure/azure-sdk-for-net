@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     [PersistableModelProxy(typeof(UnknownAutomationRuleAction))]
     public partial class SecurityInsightsAutomationRuleAction : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAutomationRuleAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAutomationRuleAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAutomationRuleAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsAutomationRuleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAutomationRuleAction DeserializeSecurityInsightsAutomationRuleAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

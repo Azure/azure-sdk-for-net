@@ -53,12 +53,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool IsSuccess(Activity activity, string? responseCode, OperationType operationType)
         {
-            if (operationType.HasFlag(OperationType.Http)
+            if (activity.Status == ActivityStatusCode.Unset
+                && operationType.HasFlag(OperationType.Http)
                 && responseCode != null
                 && int.TryParse(responseCode, out int statusCode))
             {
-                bool isSuccessStatusCode = statusCode != 0 && statusCode < 400;
-                return activity.Status != ActivityStatusCode.Error && isSuccessStatusCode;
+                return statusCode != 0 && statusCode < 400;
             }
             else
             {

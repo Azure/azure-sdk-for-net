@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue<TriggerPipelineReference>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
             writer.WritePropertyName("linkedService"u8);
-            writer.WriteObjectValue<LinkedServiceReference>(LinkedService);
+            writer.WriteObjectValue(LinkedService);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -182,12 +182,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 linkedService);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new BlobTrigger FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBlobTrigger(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class BlobTriggerConverter : JsonConverter<BlobTrigger>
         {
             public override void Write(Utf8JsonWriter writer, BlobTrigger model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<BlobTrigger>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override BlobTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

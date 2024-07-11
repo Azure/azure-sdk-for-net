@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleManagementPolicyAuthenticationContextRule : IUtf8JsonSerializable, IJsonModel<RoleManagementPolicyAuthenticationContextRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPolicyAuthenticationContextRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPolicyAuthenticationContextRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleManagementPolicyAuthenticationContextRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue<RoleManagementPolicyRuleTarget>(Target, options);
+                writer.WriteObjectValue(Target, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyAuthenticationContextRule DeserializeRoleManagementPolicyAuthenticationContextRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Authorization.Models
             RoleManagementPolicyRuleType ruleType = default;
             RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isEnabled"u8))
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoleManagementPolicyAuthenticationContextRule(
                 id,
                 ruleType,
@@ -156,30 +156,32 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isEnabled: ");
                     var boolValue = IsEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClaimValue), out propertyOverride);
-            if (Optional.IsDefined(ClaimValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  claimValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClaimValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  claimValue: ");
                     if (ClaimValue.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -193,15 +195,16 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (Id.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -215,26 +218,28 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleType), out propertyOverride);
-            builder.Append("  ruleType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  ruleType: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  ruleType: ");
                 builder.AppendLine($"'{RuleType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
-            if (Optional.IsDefined(Target) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  target: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Target))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  target: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Target, options, 2, false, "  target: ");
                 }
             }

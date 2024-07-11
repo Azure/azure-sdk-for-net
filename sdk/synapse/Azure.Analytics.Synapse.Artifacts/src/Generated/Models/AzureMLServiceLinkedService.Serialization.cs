@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
+                writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue<SecretBase>(ServicePrincipalKey);
+                writer.WriteObjectValue(ServicePrincipalKey);
             }
             if (Optional.IsDefined(Tenant))
             {
@@ -268,12 +268,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureMLServiceLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureMLServiceLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class AzureMLServiceLinkedServiceConverter : JsonConverter<AzureMLServiceLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AzureMLServiceLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureMLServiceLinkedService>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override AzureMLServiceLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

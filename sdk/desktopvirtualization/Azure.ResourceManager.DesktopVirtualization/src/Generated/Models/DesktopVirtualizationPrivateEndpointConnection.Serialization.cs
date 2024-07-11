@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class DesktopVirtualizationPrivateEndpointConnection : IUtf8JsonSerializable, IJsonModel<DesktopVirtualizationPrivateEndpointConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DesktopVirtualizationPrivateEndpointConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DesktopVirtualizationPrivateEndpointConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DesktopVirtualizationPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<DesktopVirtualizationPrivateLinkServiceConnectionState>(ConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static DesktopVirtualizationPrivateEndpointConnection DeserializeDesktopVirtualizationPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             DesktopVirtualizationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DesktopVirtualizationPrivateEndpointConnection(
                 id,
                 name,

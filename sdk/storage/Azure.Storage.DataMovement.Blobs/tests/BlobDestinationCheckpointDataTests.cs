@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 extern alias DMBlobs;
+extern alias BaseBlobs;
 
 using Azure.Storage.Test;
-using Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 using System.IO;
@@ -34,7 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private BlobDestinationCheckpointData CreatePreserveValues()
         {
             return new BlobDestinationCheckpointData(
-                DefaultBlobType,
+                default,
                 default,
                 default,
                 default,
@@ -48,13 +49,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private BlobDestinationCheckpointData CreateSetSampleValues()
         {
             return new BlobDestinationCheckpointData(
-                blobType: DefaultBlobType,
+                blobType: new(DefaultBlobType),
                 contentType: new(DefaultContentType),
                 contentEncoding: new(DefaultContentEncoding),
                 contentLanguage: new(DefaultContentLanguage),
                 contentDisposition: new(DefaultContentDisposition),
                 cacheControl: new(DefaultCacheControl),
-                accessTier: new(DefaultAccessTier),
+                accessTier: DefaultAccessTier,
                 metadata: DefaultMetadata,
                 tags: DefaultTags);
         }
@@ -81,7 +82,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobDestinationCheckpointData data = CreatePreserveValues();
 
             Assert.AreEqual(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, data.Version);
-            Assert.AreEqual(DefaultBlobType, data.BlobType);
+            Assert.AreEqual(true, data.PreserveBlobType);
+            Assert.IsNull(data.BlobType);
             Assert.AreEqual(true, data.PreserveContentType);
             Assert.IsEmpty(data.ContentTypeBytes);
             Assert.AreEqual(true, data.PreserveContentEncoding);
@@ -92,8 +94,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.IsEmpty(data.ContentDispositionBytes);
             Assert.AreEqual(true, data.PreserveCacheControl);
             Assert.IsEmpty(data.CacheControlBytes);
-            Assert.AreEqual(true, data.PreserveAccessTier);
-            Assert.IsNull(data.AccessTier);
+            Assert.IsNull(data.AccessTierValue);
             Assert.AreEqual(true, data.PreserveMetadata);
             Assert.IsNull(data.Metadata);
             Assert.AreEqual(false, data.PreserveTags);
@@ -156,12 +157,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public void Serialize_PreserveAccessTier()
+        public void Serialize_SetAccessTier()
         {
             // Arrange
             BlobDestinationCheckpointData data = CreateSetSampleValues();
-            data.PreserveAccessTier = true;
-            data.AccessTier = default;
+            data.AccessTierValue = AccessTier.Cold;
 
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
@@ -172,9 +172,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 BinaryReader reader = new(fileStream);
                 List<byte> expected = reader.ReadBytes((int)fileStream.Length).ToList();
-                // Change to expected AccessTier value - true
-                expected[DataMovementBlobConstants.DestinationCheckpointData.PreserveAccessTierIndex] = 1;
-                expected[DataMovementBlobConstants.DestinationCheckpointData.AccessTierValueIndex] = 0;
+                // Change to expected AccessTier value
+                expected[DataMovementBlobConstants.DestinationCheckpointData.AccessTierValueIndex] = 3;
 
                 // Get serialized data
                 byte[] actual = dataStream.ToArray();
@@ -213,7 +212,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private void VerifySampleValues(BlobDestinationCheckpointData data, int version)
         {
             Assert.AreEqual(version, data.Version);
-            Assert.AreEqual(DefaultBlobType, data.BlobType);
+            Assert.IsFalse(data.PreserveBlobType);
+            Assert.AreEqual(DefaultBlobType, data.BlobTypeValue);
             Assert.AreEqual(false, data.PreserveContentType);
             Assert.AreEqual(StringToByteArray(DefaultContentType), data.ContentTypeBytes);
             Assert.AreEqual(false, data.PreserveContentEncoding);
@@ -224,8 +224,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(StringToByteArray(DefaultContentDisposition), data.ContentDispositionBytes);
             Assert.AreEqual(false, data.PreserveCacheControl);
             Assert.AreEqual(StringToByteArray(DefaultCacheControl), data.CacheControlBytes);
-            Assert.AreEqual(false, data.PreserveAccessTier);
-            Assert.AreEqual(DefaultAccessTier, data.AccessTier.Value);
+            Assert.AreEqual(DefaultAccessTier, data.AccessTierValue);
             Assert.AreEqual(false, data.PreserveMetadata);
             CollectionAssert.AreEquivalent(DefaultMetadata.Value, data.Metadata.Value);
             Assert.AreEqual(false, data.PreserveTags);

@@ -149,12 +149,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 query);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ShopifySource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeShopifySource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ShopifySourceConverter : JsonConverter<ShopifySource>
         {
             public override void Write(Utf8JsonWriter writer, ShopifySource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ShopifySource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override ShopifySource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

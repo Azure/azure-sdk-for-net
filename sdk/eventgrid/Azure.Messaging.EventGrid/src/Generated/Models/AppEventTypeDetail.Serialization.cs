@@ -32,5 +32,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AppEventTypeDetail(action);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AppEventTypeDetail FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAppEventTypeDetail(document.RootElement);
+        }
     }
 }

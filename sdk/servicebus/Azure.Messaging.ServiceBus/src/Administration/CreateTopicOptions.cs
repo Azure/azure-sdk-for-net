@@ -45,6 +45,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Status = topic.Status;
             EnablePartitioning = topic.EnablePartitioning;
             MaxMessageSizeInKilobytes = topic.MaxMessageSizeInKilobytes;
+            SupportOrdering = topic.SupportOrdering;
             if (topic.UserMetadata != null)
             {
                 UserMetadata = topic.UserMetadata;
@@ -233,7 +234,8 @@ namespace Azure.Messaging.ServiceBus.Administration
                 && (AuthorizationRules != null && otherOptions.AuthorizationRules != null
                     || AuthorizationRules == null && otherOptions.AuthorizationRules == null)
                 && (AuthorizationRules == null || AuthorizationRules.Equals(otherOptions.AuthorizationRules))
-                && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes))
+                && MaxMessageSizeInKilobytes.Equals(other.MaxMessageSizeInKilobytes)
+                && SupportOrdering == otherOptions.SupportOrdering)
             {
                 return true;
             }

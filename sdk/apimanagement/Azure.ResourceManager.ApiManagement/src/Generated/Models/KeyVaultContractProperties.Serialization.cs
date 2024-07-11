@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class KeyVaultContractProperties : IUtf8JsonSerializable, IJsonModel<KeyVaultContractProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultContractProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultContractProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KeyVaultContractProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(LastStatus))
             {
                 writer.WritePropertyName("lastStatus"u8);
-                writer.WriteObjectValue<KeyVaultLastAccessStatusContractProperties>(LastStatus, options);
+                writer.WriteObjectValue(LastStatus, options);
             }
             if (Optional.IsDefined(SecretIdentifier))
             {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static KeyVaultContractProperties DeserializeKeyVaultContractProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string secretIdentifier = default;
             string identityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastStatus"u8))
@@ -107,11 +108,87 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KeyVaultContractProperties(secretIdentifier, identityClientId, serializedAdditionalRawData, lastStatus);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastStatus))
+                {
+                    builder.Append("  lastStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LastStatus, options, 2, false, "  lastStatus: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretIdentifier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secretIdentifier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecretIdentifier))
+                {
+                    builder.Append("  secretIdentifier: ");
+                    if (SecretIdentifier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecretIdentifier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecretIdentifier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identityClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityClientId))
+                {
+                    builder.Append("  identityClientId: ");
+                    if (IdentityClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IdentityClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IdentityClientId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<KeyVaultContractProperties>.Write(ModelReaderWriterOptions options)
@@ -122,6 +199,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultContractProperties)} does not support writing '{options.Format}' format.");
             }

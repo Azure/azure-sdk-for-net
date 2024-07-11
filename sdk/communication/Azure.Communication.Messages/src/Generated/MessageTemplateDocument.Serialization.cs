@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
 {
     public partial class MessageTemplateDocument : IUtf8JsonSerializable, IJsonModel<MessageTemplateDocument>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateDocument>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateDocument>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MessageTemplateDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -74,7 +74,7 @@ namespace Azure.Communication.Messages
 
         internal static MessageTemplateDocument DeserializeMessageTemplateDocument(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,9 +84,9 @@ namespace Azure.Communication.Messages
             string caption = default;
             string fileName = default;
             string name = default;
-            string kind = default;
+            MessageTemplateValueKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -111,15 +111,15 @@ namespace Azure.Communication.Messages
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new MessageTemplateValueKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MessageTemplateDocument(
                 name,
                 kind,
@@ -168,11 +168,11 @@ namespace Azure.Communication.Messages
             return DeserializeMessageTemplateDocument(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MessageTemplateDocument>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

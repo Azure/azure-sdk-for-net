@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ThroughputPoolAccountsListResult"/>. </summary>
         internal ThroughputPoolAccountsListResult()
         {
-            Value = new ChangeTrackingList<ThroughputPoolAccountResourceData>();
+            Value = new ChangeTrackingList<CosmosDBThroughputPoolAccountData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ThroughputPoolAccountsListResult"/>. </summary>
         /// <param name="value"> List of global database accounts in a throughput pool and their properties. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThroughputPoolAccountsListResult(IReadOnlyList<ThroughputPoolAccountResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThroughputPoolAccountsListResult(IReadOnlyList<CosmosDBThroughputPoolAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of global database accounts in a throughput pool and their properties. </summary>
-        public IReadOnlyList<ThroughputPoolAccountResourceData> Value { get; }
+        public IReadOnlyList<CosmosDBThroughputPoolAccountData> Value { get; }
         /// <summary> The link used to get the next page of results. </summary>
         public string NextLink { get; }
     }

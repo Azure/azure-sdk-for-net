@@ -15,7 +15,7 @@ namespace Azure.AI.ContentSafety
 {
     public partial class AnalyzeImageOptions : IUtf8JsonSerializable, IJsonModel<AnalyzeImageOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeImageOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeImageOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AnalyzeImageOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.AI.ContentSafety
 
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue<ContentSafetyImageData>(Image, options);
+            writer.WriteObjectValue(Image, options);
             if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
@@ -75,7 +75,7 @@ namespace Azure.AI.ContentSafety
 
         internal static AnalyzeImageOptions DeserializeAnalyzeImageOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ namespace Azure.AI.ContentSafety
             IList<ImageCategory> categories = default;
             AnalyzeImageOutputType? outputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("image"u8))
@@ -118,10 +118,10 @@ namespace Azure.AI.ContentSafety
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AnalyzeImageOptions(image, categories ?? new ChangeTrackingList<ImageCategory>(), outputType, serializedAdditionalRawData);
         }
 
@@ -164,11 +164,11 @@ namespace Azure.AI.ContentSafety
             return DeserializeAnalyzeImageOptions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeImageOptions>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

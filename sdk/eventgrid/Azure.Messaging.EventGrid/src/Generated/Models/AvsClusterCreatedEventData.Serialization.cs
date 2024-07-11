@@ -78,12 +78,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AvsClusterCreatedEventData(operationId, addedHostNames ?? new ChangeTrackingList<string>(), removedHostNames ?? new ChangeTrackingList<string>(), inMaintenanceHostNames ?? new ChangeTrackingList<string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AvsClusterCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvsClusterCreatedEventData(document.RootElement);
+        }
+
         internal partial class AvsClusterCreatedEventDataConverter : JsonConverter<AvsClusterCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AvsClusterCreatedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AvsClusterCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

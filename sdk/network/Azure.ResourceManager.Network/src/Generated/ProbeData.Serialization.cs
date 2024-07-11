@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ProbeData : IUtf8JsonSerializable, IJsonModel<ProbeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProbeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProbeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProbeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
+            if (Optional.IsDefined(NoHealthyBackendsBehavior))
+            {
+                writer.WritePropertyName("NoHealthyBackendsBehavior"u8);
+                writer.WriteStringValue(NoHealthyBackendsBehavior.Value.ToString());
+            }
             if (Optional.IsDefined(NumberOfProbes))
             {
                 writer.WritePropertyName("numberOfProbes"u8);
@@ -128,7 +133,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ProbeData DeserializeProbeData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,12 +147,13 @@ namespace Azure.ResourceManager.Network
             ProbeProtocol? protocol = default;
             int? port = default;
             int? intervalInSeconds = default;
+            ProbeNoHealthyBackendsBehavior? noHealthyBackendsBehavior = default;
             int? numberOfProbes = default;
             int? probeThreshold = default;
             string requestPath = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -232,6 +238,15 @@ namespace Azure.ResourceManager.Network
                             intervalInSeconds = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("NoHealthyBackendsBehavior"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            noHealthyBackendsBehavior = new ProbeNoHealthyBackendsBehavior(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("numberOfProbes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -269,10 +284,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProbeData(
                 id,
                 name,
@@ -283,6 +298,7 @@ namespace Azure.ResourceManager.Network
                 protocol,
                 port,
                 intervalInSeconds,
+                noHealthyBackendsBehavior,
                 numberOfProbes,
                 probeThreshold,
                 requestPath,

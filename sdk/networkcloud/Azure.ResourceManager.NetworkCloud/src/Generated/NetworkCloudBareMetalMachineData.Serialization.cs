@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudBareMetalMachineData : IUtf8JsonSerializable, IJsonModel<NetworkCloudBareMetalMachineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudBareMetalMachineData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudBareMetalMachineData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudBareMetalMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
+            writer.WriteObjectValue(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("bmcConnectionString"u8);
             writer.WriteStringValue(BmcConnectionString);
             writer.WritePropertyName("bmcCredentials"u8);
-            writer.WriteObjectValue<AdministrativeCredentials>(BmcCredentials, options);
+            writer.WriteObjectValue(BmcCredentials, options);
             writer.WritePropertyName("bmcMacAddress"u8);
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(HardwareInventory))
             {
                 writer.WritePropertyName("hardwareInventory"u8);
-                writer.WriteObjectValue<HardwareInventory>(HardwareInventory, options);
+                writer.WriteObjectValue(HardwareInventory, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HardwareValidationStatus))
             {
                 writer.WritePropertyName("hardwareValidationStatus"u8);
-                writer.WriteObjectValue<HardwareValidationStatus>(HardwareValidationStatus, options);
+                writer.WriteObjectValue(HardwareValidationStatus, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         internal static NetworkCloudBareMetalMachineData DeserializeNetworkCloudBareMetalMachineData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NetworkCloud
             string serviceTag = default;
             IReadOnlyList<string> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -546,10 +546,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudBareMetalMachineData(
                 id,
                 name,

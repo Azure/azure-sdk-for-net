@@ -120,7 +120,7 @@ namespace Azure.Communication.ShortCodes
             {
                 request.Headers.Add("Content-Type", "application/merge-patch+json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<USProgramBrief>(body);
+                content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;
             }
             return message;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Nginx.Models
 {
     public partial class NginxNetworkProfile : IUtf8JsonSerializable, IJsonModel<NginxNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIPConfiguration"u8);
-                writer.WriteObjectValue<NginxFrontendIPConfiguration>(FrontEndIPConfiguration, options);
+                writer.WriteObjectValue(FrontEndIPConfiguration, options);
             }
             if (Optional.IsDefined(NetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceConfiguration"u8);
-                writer.WriteObjectValue<NginxNetworkInterfaceConfiguration>(NetworkInterfaceConfiguration, options);
+                writer.WriteObjectValue(NetworkInterfaceConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxNetworkProfile DeserializeNginxNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Nginx.Models
             NginxFrontendIPConfiguration frontEndIPConfiguration = default;
             NginxNetworkInterfaceConfiguration networkInterfaceConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frontEndIPConfiguration"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NginxNetworkProfile(frontEndIPConfiguration, networkInterfaceConfiguration, serializedAdditionalRawData);
         }
 

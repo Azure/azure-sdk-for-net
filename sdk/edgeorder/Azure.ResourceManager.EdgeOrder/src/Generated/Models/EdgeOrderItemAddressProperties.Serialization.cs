@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class EdgeOrderItemAddressProperties : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemAddressProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemAddressProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemAddressProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderItemAddressProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue<EdgeOrderShippingAddress>(ShippingAddress, options);
+                writer.WriteObjectValue(ShippingAddress, options);
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue<EdgeOrderAddressContactDetails>(ContactDetails, options);
+            writer.WriteObjectValue(ContactDetails, options);
             if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderItemAddressProperties DeserializeEdgeOrderItemAddressProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EdgeOrderAddressContactDetails contactDetails = default;
             EdgeOrderAddressValidationStatus? addressValidationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shippingAddress"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeOrderItemAddressProperties(shippingAddress, contactDetails, addressValidationStatus, serializedAdditionalRawData);
         }
 

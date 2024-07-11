@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppAccountPatch : IUtf8JsonSerializable, IJsonModel<NetAppAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in ActiveDirectories)
                 {
-                    writer.WriteObjectValue<NetAppAccountActiveDirectory>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<NetAppAccountEncryption>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppAccountPatch DeserializeNetAppAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppAccountEncryption encryption = default;
             bool? disableShowmount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -259,10 +259,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppAccountPatch(
                 id,
                 name,

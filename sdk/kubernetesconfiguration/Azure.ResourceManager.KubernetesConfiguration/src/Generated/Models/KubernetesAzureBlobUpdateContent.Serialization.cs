@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     public partial class KubernetesAzureBlobUpdateContent : IUtf8JsonSerializable, IJsonModel<KubernetesAzureBlobUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesAzureBlobUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesAzureBlobUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesAzureBlobUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ServicePrincipal != null)
                 {
                     writer.WritePropertyName("servicePrincipal"u8);
-                    writer.WriteObjectValue<KubernetesServicePrincipalUpdateContent>(ServicePrincipal, options);
+                    writer.WriteObjectValue(ServicePrincipal, options);
                 }
                 else
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ManagedIdentity != null)
                 {
                     writer.WritePropertyName("managedIdentity"u8);
-                    writer.WriteObjectValue<KubernetesAzureBlobManagedIdentityUpdateContent>(ManagedIdentity, options);
+                    writer.WriteObjectValue(ManagedIdentity, options);
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesAzureBlobUpdateContent DeserializeKubernetesAzureBlobUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             KubernetesAzureBlobManagedIdentityUpdateContent managedIdentity = default;
             string localAuthRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -277,10 +277,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesAzureBlobUpdateContent(
                 url,
                 containerName,

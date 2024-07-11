@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class VideoOverlay : IUtf8JsonSerializable, IJsonModel<VideoOverlay>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VideoOverlay>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VideoOverlay>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VideoOverlay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue<RectangularWindow>(Position, options);
+                writer.WriteObjectValue(Position, options);
             }
             if (Optional.IsDefined(Opacity))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(CropRectangle))
             {
                 writer.WritePropertyName("cropRectangle"u8);
-                writer.WriteObjectValue<RectangularWindow>(CropRectangle, options);
+                writer.WriteObjectValue(CropRectangle, options);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static VideoOverlay DeserializeVideoOverlay(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
             TimeSpan? fadeOutDuration = default;
             double? audioGainLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("position"u8))
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VideoOverlay(
                 odataType,
                 inputLabel,

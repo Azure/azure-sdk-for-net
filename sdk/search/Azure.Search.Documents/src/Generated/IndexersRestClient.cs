@@ -33,7 +33,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2024-03-01-Preview")
+        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2024-05-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -123,7 +123,7 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<ResetDocumentOptions>(keysOrIds);
+                content.JsonWriter.WriteObjectValue(keysOrIds);
                 request.Content = content;
             }
             return message;
@@ -269,7 +269,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexer>(indexer);
+            content.JsonWriter.WriteObjectValue(indexer);
             request.Content = content;
             return message;
         }
@@ -565,7 +565,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexer>(indexer);
+            content.JsonWriter.WriteObjectValue(indexer);
             request.Content = content;
             return message;
         }

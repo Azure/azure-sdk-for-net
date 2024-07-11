@@ -196,7 +196,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DeviceIdentity>(device);
+            content.JsonWriter.WriteObjectValue(device);
             request.Content = content;
             return message;
         }
@@ -418,7 +418,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TwinData>(deviceTwinInfo);
+            content.JsonWriter.WriteObjectValue(deviceTwinInfo);
             request.Content = content;
             return message;
         }
@@ -507,7 +507,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TwinData>(deviceTwinInfo);
+            content.JsonWriter.WriteObjectValue(deviceTwinInfo);
             request.Content = content;
             return message;
         }
@@ -593,7 +593,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CloudToDeviceMethodRequest>(directMethodRequest);
+            content.JsonWriter.WriteObjectValue(directMethodRequest);
             request.Content = content;
             return message;
         }

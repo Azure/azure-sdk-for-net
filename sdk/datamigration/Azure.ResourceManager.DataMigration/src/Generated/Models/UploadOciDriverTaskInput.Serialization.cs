@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     internal partial class UploadOciDriverTaskInput : IUtf8JsonSerializable, IJsonModel<UploadOciDriverTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadOciDriverTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadOciDriverTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UploadOciDriverTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(DriverShare))
             {
                 writer.WritePropertyName("driverShare"u8);
-                writer.WriteObjectValue<FileShare>(DriverShare, options);
+                writer.WriteObjectValue(DriverShare, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static UploadOciDriverTaskInput DeserializeUploadOciDriverTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             FileShare driverShare = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("driverShare"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UploadOciDriverTaskInput(driverShare, serializedAdditionalRawData);
         }
 

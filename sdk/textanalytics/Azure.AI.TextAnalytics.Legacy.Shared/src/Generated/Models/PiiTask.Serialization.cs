@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue<PiiTaskParameters>(Parameters);
+                writer.WriteObjectValue(Parameters);
             }
             if (Optional.IsDefined(TaskName))
             {
@@ -26,6 +26,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStringValue(TaskName);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

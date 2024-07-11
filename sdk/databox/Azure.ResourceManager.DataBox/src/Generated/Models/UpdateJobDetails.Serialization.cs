@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class UpdateJobDetails : IUtf8JsonSerializable, IJsonModel<UpdateJobDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateJobDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateJobDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue<DataBoxContactDetails>(ContactDetails, options);
+                writer.WriteObjectValue(ContactDetails, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
+                writer.WriteObjectValue(ShippingAddress, options);
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue<ReverseShippingDetails>(ReverseShippingDetails, options);
+                writer.WriteObjectValue(ReverseShippingDetails, options);
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue<DataBoxOrderPreferences>(Preferences, options);
+                writer.WriteObjectValue(Preferences, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue<DataBoxKeyEncryptionKey>(KeyEncryptionKey, options);
+                writer.WriteObjectValue(KeyEncryptionKey, options);
             }
             if (Optional.IsDefined(ReturnToCustomerPackageDetails))
             {
                 writer.WritePropertyName("returnToCustomerPackageDetails"u8);
-                writer.WriteObjectValue<PackageCarrierDetails>(ReturnToCustomerPackageDetails, options);
+                writer.WriteObjectValue(ReturnToCustomerPackageDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UpdateJobDetails DeserializeUpdateJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxKeyEncryptionKey keyEncryptionKey = default;
             PackageCarrierDetails returnToCustomerPackageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactDetails"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UpdateJobDetails(
                 contactDetails,
                 shippingAddress,

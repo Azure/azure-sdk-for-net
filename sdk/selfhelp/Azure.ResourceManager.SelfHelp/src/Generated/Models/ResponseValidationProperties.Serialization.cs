@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class ResponseValidationProperties : IUtf8JsonSerializable, IJsonModel<ResponseValidationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResponseValidationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResponseValidationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResponseValidationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("regex"u8);
                 writer.WriteStringValue(Regex);
+            }
+            if (Optional.IsDefined(ValidationScope))
+            {
+                writer.WritePropertyName("validationScope"u8);
+                writer.WriteStringValue(ValidationScope.Value.ToString());
             }
             if (Optional.IsDefined(IsRequired))
             {
@@ -78,23 +83,33 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static ResponseValidationProperties DeserializeResponseValidationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string regex = default;
+            TroubleshooterValidationScope? validationScope = default;
             bool? isRequired = default;
             string validationErrorMessage = default;
             long? maxLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("regex"u8))
                 {
                     regex = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("validationScope"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validationScope = new TroubleshooterValidationScope(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isRequired"u8))
@@ -122,11 +137,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseValidationProperties(regex, isRequired, validationErrorMessage, maxLength, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResponseValidationProperties(
+                regex,
+                validationScope,
+                isRequired,
+                validationErrorMessage,
+                maxLength,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseValidationProperties>.Write(ModelReaderWriterOptions options)

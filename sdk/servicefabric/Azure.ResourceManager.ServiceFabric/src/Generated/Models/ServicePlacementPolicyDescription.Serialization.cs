@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     [PersistableModelProxy(typeof(UnknownServicePlacementPolicyDescription))]
     public partial class ServicePlacementPolicyDescription : IUtf8JsonSerializable, IJsonModel<ServicePlacementPolicyDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePlacementPolicyDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePlacementPolicyDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServicePlacementPolicyDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServicePlacementPolicyDescription DeserializeServicePlacementPolicyDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

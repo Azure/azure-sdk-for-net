@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionBudgetFilter : IUtf8JsonSerializable, IJsonModel<ConsumptionBudgetFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBudgetFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBudgetFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionBudgetFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue<BudgetFilterProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue<BudgetComparisonExpression>(Dimensions, options);
+                writer.WriteObjectValue(Dimensions, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue<BudgetComparisonExpression>(Tags, options);
+                writer.WriteObjectValue(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionBudgetFilter DeserializeConsumptionBudgetFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Consumption.Models
             BudgetComparisonExpression dimensions = default;
             BudgetComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("and"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionBudgetFilter(and ?? new ChangeTrackingList<BudgetFilterProperties>(), dimensions, tags, serializedAdditionalRawData);
         }
 

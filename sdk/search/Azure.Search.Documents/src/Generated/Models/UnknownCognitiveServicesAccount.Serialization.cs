@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
@@ -47,6 +48,22 @@ namespace Azure.Search.Documents.Models
                 }
             }
             return new UnknownCognitiveServicesAccount(odataType, description);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownCognitiveServicesAccount FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownCognitiveServicesAccount(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CognitiveServicesAccount>(this);
+            return content;
         }
     }
 }

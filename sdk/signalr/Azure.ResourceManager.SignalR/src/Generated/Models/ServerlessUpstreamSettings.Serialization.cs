@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     internal partial class ServerlessUpstreamSettings : IUtf8JsonSerializable, IJsonModel<ServerlessUpstreamSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerlessUpstreamSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerlessUpstreamSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerlessUpstreamSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Templates)
                 {
-                    writer.WriteObjectValue<SignalRUpstreamTemplate>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static ServerlessUpstreamSettings DeserializeServerlessUpstreamSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
             IList<SignalRUpstreamTemplate> templates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templates"u8))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServerlessUpstreamSettings(templates ?? new ChangeTrackingList<SignalRUpstreamTemplate>(), serializedAdditionalRawData);
         }
 
@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Templates), out propertyOverride);
-            if (Optional.IsCollectionDefined(Templates) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Templates.Any() || hasPropertyOverride)
+                builder.Append("  templates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Templates))
                 {
-                    builder.Append("  templates: ");
-                    if (hasPropertyOverride)
+                    if (Templates.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  templates: ");
                         builder.AppendLine("[");
                         foreach (var item in Templates)
                         {

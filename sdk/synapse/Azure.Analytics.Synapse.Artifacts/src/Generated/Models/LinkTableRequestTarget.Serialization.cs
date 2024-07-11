@@ -31,12 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DistributionOptions))
             {
                 writer.WritePropertyName("distributionOptions"u8);
-                writer.WriteObjectValue<LinkTableRequestTargetDistributionOptions>(DistributionOptions);
+                writer.WriteObjectValue(DistributionOptions);
             }
             if (Optional.IsDefined(StructureOptions))
             {
                 writer.WritePropertyName("structureOptions"u8);
-                writer.WriteObjectValue<LinkTableRequestTargetStructureOptions>(StructureOptions);
+                writer.WriteObjectValue(StructureOptions);
             }
             writer.WriteEndObject();
         }
@@ -85,12 +85,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkTableRequestTarget(tableName, schemaName, distributionOptions, structureOptions);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkTableRequestTarget FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkTableRequestTarget(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class LinkTableRequestTargetConverter : JsonConverter<LinkTableRequestTarget>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableRequestTarget model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LinkTableRequestTarget>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override LinkTableRequestTarget Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     public partial class ResourcesHistoryRequestOptions : IUtf8JsonSerializable, IJsonModel<ResourcesHistoryRequestOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesHistoryRequestOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesHistoryRequestOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourcesHistoryRequestOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
-                writer.WriteObjectValue<DateTimeInterval>(Interval, options);
+                writer.WriteObjectValue(Interval, options);
             }
             if (Optional.IsDefined(Top))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         internal static ResourcesHistoryRequestOptions DeserializeResourcesHistoryRequestOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             string skipToken = default;
             ResultFormat? resultFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"u8))
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourcesHistoryRequestOptions(
                 interval,
                 top,

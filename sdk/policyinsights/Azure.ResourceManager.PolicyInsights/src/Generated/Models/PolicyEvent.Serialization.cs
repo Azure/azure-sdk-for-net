@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyEvent : IUtf8JsonSerializable, IJsonModel<PolicyEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyEvent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue<ComponentEventDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static PolicyEvent DeserializePolicyEvent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

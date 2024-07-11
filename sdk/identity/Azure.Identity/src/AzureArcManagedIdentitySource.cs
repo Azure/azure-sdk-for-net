@@ -40,7 +40,7 @@ namespace Azure.Identity
             return new AzureArcManagedIdentitySource(endpointUri, options);
         }
 
-        private AzureArcManagedIdentitySource(Uri endpoint, ManagedIdentityClientOptions options) : base(options.Pipeline)
+        internal AzureArcManagedIdentitySource(Uri endpoint, ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
             _endpoint = endpoint;
             _clientId = options.ClientId;
@@ -72,8 +72,9 @@ namespace Azure.Identity
             return request;
         }
 
-        protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
+        protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, HttpMessage message, CancellationToken cancellationToken)
         {
+            Response response = message.Response;
             if (response.Status == 401)
             {
                 if (!response.Headers.TryGetValue("WWW-Authenticate", out string challenge))
@@ -87,21 +88,66 @@ namespace Azure.Identity
                 {
                     throw new AuthenticationFailedException(InvalidChallangeErrorMessage);
                 }
+                string filePath = splitChallenge[1];
 
+                ValidatePath(filePath);
                 var authHeaderValue = "Basic " + File.ReadAllText(splitChallenge[1]);
 
                 using Request request = CreateRequest(context.Scopes);
 
                 request.Headers.Add("Authorization", authHeaderValue);
 
-                response = async
+                var challengeResponseMessage = Pipeline.HttpPipeline.CreateMessage();
+                challengeResponseMessage.Request.Method = request.Method;
+                challengeResponseMessage.Request.Uri.Reset(request.Uri.ToUri());
+                foreach (var header in request.Headers)
+                {
+                    challengeResponseMessage.Request.Headers.Add(header.Name, header.Value);
+                }
+
+                challengeResponseMessage.Response = async
                     ? await Pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
                     : Pipeline.HttpPipeline.SendRequest(request, cancellationToken);
 
-                return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+                return await base.HandleResponseAsync(async, context, challengeResponseMessage, cancellationToken).ConfigureAwait(false);
             }
 
-            return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+            return await base.HandleResponseAsync(async, context, message, cancellationToken).ConfigureAwait(false);
+        }
+
+        private void ValidatePath(string filePath)
+        {
+            // check that the file ends with '.key'
+            if (!filePath.EndsWith(".key"))
+            {
+                throw new AuthenticationFailedException("The secret key file failed validation. File name is invalid.");
+            }
+            // if the current platform is windows check that the file is in the path %ProgramData%\AzureConnectedMachineAgent\Tokens
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                var programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                var expectedPath = Path.Combine(programData, "AzureConnectedMachineAgent", "Tokens");
+                if (!filePath.StartsWith(expectedPath))
+                {
+                    throw new AuthenticationFailedException("The secret key file failed validation. File path is invalid.");
+                }
+            }
+
+            // if the current platform is linux check that the file is in the path /var/opt/azcmagent/tokens
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                var expectedPath = Path.Combine("/", "var", "opt", "azcmagent", "tokens");
+                if (!filePath.StartsWith(expectedPath))
+                {
+                    throw new AuthenticationFailedException("The secret key file failed validation. File path is invalid.");
+                }
+            }
+
+            // Check that the file length is no larger than 4096 bytes
+            if (new FileInfo(filePath).Length > 4096)
+            {
+                throw new AuthenticationFailedException("The secret key file failed validation. File is too large.");
+            }
         }
     }
 }

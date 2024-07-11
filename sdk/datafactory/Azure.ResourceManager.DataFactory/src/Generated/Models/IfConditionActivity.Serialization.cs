@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class IfConditionActivity : IUtf8JsonSerializable, IJsonModel<IfConditionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IfConditionActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IfConditionActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IfConditionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
-            writer.WriteObjectValue<DataFactoryExpression>(Expression, options);
+            writer.WriteObjectValue(Expression, options);
             if (Optional.IsCollectionDefined(IfTrueActivities))
             {
                 writer.WritePropertyName("ifTrueActivities"u8);
                 writer.WriteStartArray();
                 foreach (var item in IfTrueActivities)
                 {
-                    writer.WriteObjectValue<PipelineActivity>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in IfFalseActivities)
                 {
-                    writer.WriteObjectValue<PipelineActivity>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IfConditionActivity DeserializeIfConditionActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

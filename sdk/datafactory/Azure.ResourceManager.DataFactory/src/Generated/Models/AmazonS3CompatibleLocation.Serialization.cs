@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AmazonS3CompatibleLocation : IUtf8JsonSerializable, IJsonModel<AmazonS3CompatibleLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonS3CompatibleLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonS3CompatibleLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmazonS3CompatibleLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AmazonS3CompatibleLocation DeserializeAmazonS3CompatibleLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

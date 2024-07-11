@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchAccountPoolData : IUtf8JsonSerializable, IJsonModel<BatchAccountPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountPoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchAccountPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(DeploymentConfiguration))
             {
                 writer.WritePropertyName("deploymentConfiguration"u8);
-                writer.WriteObjectValue<BatchDeploymentConfiguration>(DeploymentConfiguration, options);
+                writer.WriteObjectValue(DeploymentConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentDedicatedNodes))
             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue<BatchAccountPoolScaleSettings>(ScaleSettings, options);
+                writer.WriteObjectValue(ScaleSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AutoScaleRun))
             {
                 writer.WritePropertyName("autoScaleRun"u8);
-                writer.WriteObjectValue<BatchAccountPoolAutoScaleRun>(AutoScaleRun, options);
+                writer.WriteObjectValue(AutoScaleRun, options);
             }
             if (Optional.IsDefined(InterNodeCommunication))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue<BatchNetworkConfiguration>(NetworkConfiguration, options);
+                writer.WriteObjectValue(NetworkConfiguration, options);
             }
             if (Optional.IsDefined(TaskSlotsPerNode))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(TaskSchedulingPolicy))
             {
                 writer.WritePropertyName("taskSchedulingPolicy"u8);
-                writer.WriteObjectValue<TaskSchedulingPolicy>(TaskSchedulingPolicy, options);
+                writer.WriteObjectValue(TaskSchedulingPolicy, options);
             }
             if (Optional.IsCollectionDefined(UserAccounts))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in UserAccounts)
                 {
-                    writer.WriteObjectValue<BatchUserAccount>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue<BatchAccountPoolMetadataItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue<BatchAccountPoolStartTask>(StartTask, options);
+                writer.WriteObjectValue(StartTask, options);
             }
             if (Optional.IsCollectionDefined(Certificates))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteObjectValue<BatchCertificateReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in ApplicationPackages)
                 {
-                    writer.WriteObjectValue<BatchApplicationPackageReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ResizeOperationStatus))
             {
                 writer.WritePropertyName("resizeOperationStatus"u8);
-                writer.WriteObjectValue<BatchResizeOperationStatus>(ResizeOperationStatus, options);
+                writer.WriteObjectValue(ResizeOperationStatus, options);
             }
             if (Optional.IsCollectionDefined(MountConfiguration))
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in MountConfiguration)
                 {
-                    writer.WriteObjectValue<BatchMountConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue<UpgradePolicy>(UpgradePolicy, options);
+                writer.WriteObjectValue(UpgradePolicy, options);
             }
             if (Optional.IsCollectionDefined(ResourceTags))
             {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchAccountPoolData DeserializeBatchAccountPoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Batch
             UpgradePolicy upgradePolicy = default;
             IDictionary<string, string> resourceTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -671,10 +671,10 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchAccountPoolData(
                 id,
                 name,

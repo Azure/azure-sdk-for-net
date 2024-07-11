@@ -112,5 +112,13 @@ namespace Azure.Storage.Files.DataLake.Models
                 isDirectory,
                 etag);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Path FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePath(document.RootElement);
+        }
     }
 }

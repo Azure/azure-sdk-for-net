@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     internal static class ModelSerializationExtensions
     {
+        internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
+
         public static object GetObject(this JsonElement element)
         {
             switch (element.ValueKind)
@@ -165,7 +167,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = null)
         {
             switch (value)
             {
@@ -173,7 +175,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     writer.WriteNullValue();
                     break;
                 case IJsonModel<T> jsonModel:
-                    jsonModel.Write(writer, options ?? new ModelReaderWriterOptions("W"));
+                    jsonModel.Write(writer, options ?? WireOptions);
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);

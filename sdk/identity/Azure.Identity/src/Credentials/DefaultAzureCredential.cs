@@ -12,8 +12,8 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Provides a default <see cref="TokenCredential"/> authentication flow for applications that will be deployed to Azure.  The following credential
-    /// types if enabled will be tried, in order:
+    /// Provides a default <see cref="TokenCredential"/> authentication flow for applications that will be deployed to Azure. The following credential
+    /// types, if enabled, will be tried, in order:
     /// <list type="bullet">
     /// <item><description><see cref="EnvironmentCredential"/></description></item>
     /// <item><description><see cref="WorkloadIdentityCredential"/></description></item>
@@ -36,15 +36,21 @@ namespace Azure.Identity
     /// <example>
     /// <para>
     /// This example demonstrates authenticating the BlobClient from the Azure.Storage.Blobs client library using the DefaultAzureCredential,
-    /// deployed to an Azure resource with a user assigned managed identity configured.
+    /// deployed to an Azure resource with a user-assigned managed identity configured.
     /// </para>
-    /// <code snippet="Snippet:UserAssignedManagedIdentity" language="csharp">
-    /// // When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
+    /// <code snippet="Snippet:UserAssignedManagedIdentityWithClientId" language="csharp">
+    /// // When deployed to an Azure host, DefaultAzureCredential will authenticate the specified user-assigned managed identity.
     ///
-    /// string userAssignedClientId = &quot;&lt;your managed identity client Id&gt;&quot;;
-    /// var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+    /// string userAssignedClientId = &quot;&lt;your managed identity client ID&gt;&quot;;
+    /// var credential = new DefaultAzureCredential(
+    ///     new DefaultAzureCredentialOptions
+    ///     {
+    ///         ManagedIdentityClientId = userAssignedClientId
+    ///     });
     ///
-    /// var blobClient = new BlobClient(new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;), credential);
+    /// var blobClient = new BlobClient(
+    ///     new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;),
+    ///     credential);
     /// </code>
     /// </example>
     public class DefaultAzureCredential : TokenCredential
@@ -58,7 +64,10 @@ namespace Azure.Identity
 
         internal TokenCredential[] _sources;
 
-        internal DefaultAzureCredential() : this(false) { }
+        /// <summary>
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
+        protected DefaultAzureCredential() : this(false) { }
 
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.

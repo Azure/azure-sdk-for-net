@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleDefinitionPermission : IUtf8JsonSerializable, IJsonModel<RoleDefinitionPermission>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleDefinitionPermission>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleDefinitionPermission>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleDefinitionPermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleDefinitionPermission DeserializeRoleDefinitionPermission(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
             IList<string> dataActions = default;
             IList<string> notDataActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoleDefinitionPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<string>(), notDataActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -191,17 +191,18 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Actions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Actions.Any() || hasPropertyOverride)
+                builder.Append("  actions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Actions))
                 {
-                    builder.Append("  actions: ");
-                    if (hasPropertyOverride)
+                    if (Actions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  actions: ");
                         builder.AppendLine("[");
                         foreach (var item in Actions)
                         {
@@ -226,17 +227,18 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotActions.Any() || hasPropertyOverride)
+                builder.Append("  notActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotActions))
                 {
-                    builder.Append("  notActions: ");
-                    if (hasPropertyOverride)
+                    if (NotActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notActions: ");
                         builder.AppendLine("[");
                         foreach (var item in NotActions)
                         {
@@ -261,17 +263,18 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(DataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DataActions.Any() || hasPropertyOverride)
+                builder.Append("  dataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataActions))
                 {
-                    builder.Append("  dataActions: ");
-                    if (hasPropertyOverride)
+                    if (DataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  dataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in DataActions)
                         {
@@ -296,17 +299,18 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotDataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotDataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotDataActions.Any() || hasPropertyOverride)
+                builder.Append("  notDataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotDataActions))
                 {
-                    builder.Append("  notDataActions: ");
-                    if (hasPropertyOverride)
+                    if (NotDataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notDataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in NotDataActions)
                         {

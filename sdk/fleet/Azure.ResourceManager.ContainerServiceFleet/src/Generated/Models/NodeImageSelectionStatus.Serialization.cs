@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     internal partial class NodeImageSelectionStatus : IUtf8JsonSerializable, IJsonModel<NodeImageSelectionStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeImageSelectionStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeImageSelectionStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NodeImageSelectionStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in SelectedNodeImageVersions)
                 {
-                    writer.WriteObjectValue<NodeImageVersion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         internal static NodeImageSelectionStatus DeserializeNodeImageSelectionStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             IReadOnlyList<NodeImageVersion> selectedNodeImageVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("selectedNodeImageVersions"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NodeImageSelectionStatus(selectedNodeImageVersions ?? new ChangeTrackingList<NodeImageVersion>(), serializedAdditionalRawData);
         }
 

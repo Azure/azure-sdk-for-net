@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchAccountAutoStorageConfiguration : IUtf8JsonSerializable, IJsonModel<BatchAccountAutoStorageConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountAutoStorageConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountAutoStorageConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchAccountAutoStorageConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NodeIdentity))
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
-                writer.WriteObjectValue<ComputeNodeIdentityReference>(NodeIdentity, options);
+                writer.WriteObjectValue(NodeIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountAutoStorageConfiguration DeserializeBatchAccountAutoStorageConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchAutoStorageAuthenticationMode? authenticationMode = default;
             ComputeNodeIdentityReference nodeIdentityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastKeySync"u8))
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchAccountAutoStorageConfiguration(storageAccountId, authenticationMode, nodeIdentityReference, serializedAdditionalRawData, lastKeySync);
         }
 

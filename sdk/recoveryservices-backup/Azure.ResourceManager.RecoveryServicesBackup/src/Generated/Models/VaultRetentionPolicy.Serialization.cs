@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class VaultRetentionPolicy : IUtf8JsonSerializable, IJsonModel<VaultRetentionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultRetentionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultRetentionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VaultRetentionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vaultRetention"u8);
-            writer.WriteObjectValue<BackupRetentionPolicy>(VaultRetention, options);
+            writer.WriteObjectValue(VaultRetention, options);
             writer.WritePropertyName("snapshotRetentionInDays"u8);
             writer.WriteNumberValue(SnapshotRetentionInDays);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VaultRetentionPolicy DeserializeVaultRetentionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupRetentionPolicy vaultRetention = default;
             int snapshotRetentionInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultRetention"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VaultRetentionPolicy(vaultRetention, snapshotRetentionInDays, serializedAdditionalRawData);
         }
 

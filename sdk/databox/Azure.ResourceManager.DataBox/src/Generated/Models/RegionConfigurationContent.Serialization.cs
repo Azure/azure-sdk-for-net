@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class RegionConfigurationContent : IUtf8JsonSerializable, IJsonModel<RegionConfigurationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegionConfigurationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegionConfigurationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RegionConfigurationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ScheduleAvailabilityRequest))
             {
                 writer.WritePropertyName("scheduleAvailabilityRequest"u8);
-                writer.WriteObjectValue<ScheduleAvailabilityContent>(ScheduleAvailabilityRequest, options);
+                writer.WriteObjectValue(ScheduleAvailabilityRequest, options);
             }
             if (Optional.IsDefined(TransportAvailabilityRequest))
             {
                 writer.WritePropertyName("transportAvailabilityRequest"u8);
-                writer.WriteObjectValue<TransportAvailabilityRequest>(TransportAvailabilityRequest, options);
+                writer.WriteObjectValue(TransportAvailabilityRequest, options);
             }
             if (Optional.IsDefined(DataCenterAddressRequest))
             {
                 writer.WritePropertyName("datacenterAddressRequest"u8);
-                writer.WriteObjectValue<DataCenterAddressContent>(DataCenterAddressRequest, options);
+                writer.WriteObjectValue(DataCenterAddressRequest, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static RegionConfigurationContent DeserializeRegionConfigurationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBox.Models
             TransportAvailabilityRequest transportAvailabilityRequest = default;
             DataCenterAddressContent dataCenterAddressRequest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleAvailabilityRequest"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RegionConfigurationContent(scheduleAvailabilityRequest, transportAvailabilityRequest, dataCenterAddressRequest, serializedAdditionalRawData);
         }
 

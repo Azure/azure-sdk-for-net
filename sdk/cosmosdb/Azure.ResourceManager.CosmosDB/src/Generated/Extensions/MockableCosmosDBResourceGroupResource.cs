@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -171,80 +171,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return GetCassandraClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MongoClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MongoClusterResources and their operations over a MongoClusterResource. </returns>
-        public virtual MongoClusterCollection GetMongoClusters()
+        /// <summary> Gets a collection of CosmosDBThroughputPoolResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CosmosDBThroughputPoolResources and their operations over a CosmosDBThroughputPoolResource. </returns>
+        public virtual CosmosDBThroughputPoolCollection GetCosmosDBThroughputPools()
         {
-            return GetCachedClient(client => new MongoClusterCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about a mongo cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MongoClusterResource>> GetMongoClusterAsync(string mongoClusterName, CancellationToken cancellationToken = default)
-        {
-            return await GetMongoClusters().GetAsync(mongoClusterName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about a mongo cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoClusters_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MongoClusterResource> GetMongoCluster(string mongoClusterName, CancellationToken cancellationToken = default)
-        {
-            return GetMongoClusters().Get(mongoClusterName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ThroughputPoolResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ThroughputPoolResources and their operations over a ThroughputPoolResource. </returns>
-        public virtual ThroughputPoolResourceCollection GetThroughputPoolResources()
-        {
-            return GetCachedClient(client => new ThroughputPoolResourceCollection(client, Id));
+            return GetCachedClient(client => new CosmosDBThroughputPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -260,11 +191,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ThroughputPoolResource"/></description>
+        /// <description><see cref="CosmosDBThroughputPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,9 +204,9 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ThroughputPoolResource>> GetThroughputPoolResourceAsync(string throughputPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBThroughputPoolResource>> GetCosmosDBThroughputPoolAsync(string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            return await GetThroughputPoolResources().GetAsync(throughputPoolName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBThroughputPools().GetAsync(throughputPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -291,11 +222,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-15-preview</description>
+        /// <description>2024-05-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ThroughputPoolResource"/></description>
+        /// <description><see cref="CosmosDBThroughputPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,9 +235,9 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ThroughputPoolResource> GetThroughputPoolResource(string throughputPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPool(string throughputPoolName, CancellationToken cancellationToken = default)
         {
-            return GetThroughputPoolResources().Get(throughputPoolName, cancellationToken);
+            return GetCosmosDBThroughputPools().Get(throughputPoolName, cancellationToken);
         }
     }
 }

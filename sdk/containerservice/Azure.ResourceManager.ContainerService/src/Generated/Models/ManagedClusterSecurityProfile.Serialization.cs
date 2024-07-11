@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterSecurityProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterSecurityProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterSecurityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Defender))
             {
                 writer.WritePropertyName("defender"u8);
-                writer.WriteObjectValue<ManagedClusterSecurityProfileDefender>(Defender, options);
+                writer.WriteObjectValue(Defender, options);
             }
             if (Optional.IsDefined(AzureKeyVaultKms))
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
-                writer.WriteObjectValue<ManagedClusterSecurityProfileKeyVaultKms>(AzureKeyVaultKms, options);
+                writer.WriteObjectValue(AzureKeyVaultKms, options);
             }
             if (Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
-                writer.WriteObjectValue<ManagedClusterSecurityProfileWorkloadIdentity>(WorkloadIdentity, options);
+                writer.WriteObjectValue(WorkloadIdentity, options);
             }
             if (Optional.IsDefined(ImageCleaner))
             {
                 writer.WritePropertyName("imageCleaner"u8);
-                writer.WriteObjectValue<ManagedClusterSecurityProfileImageCleaner>(ImageCleaner, options);
+                writer.WriteObjectValue(ImageCleaner, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterSecurityProfile DeserializeManagedClusterSecurityProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity = default;
             ManagedClusterSecurityProfileImageCleaner imageCleaner = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defender"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterSecurityProfile(defender, azureKeyVaultKms, workloadIdentity, imageCleaner, serializedAdditionalRawData);
         }
 

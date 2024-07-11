@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SapOdpSource : IUtf8JsonSerializable, IJsonModel<SapOdpSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOdpSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOdpSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapOdpSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapOdpSource DeserializeSapOdpSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

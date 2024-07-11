@@ -126,5 +126,13 @@ namespace Azure.Communication.Chat
                 editedOn,
                 metadata ?? new ChangeTrackingDictionary<string, string>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatMessageInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatMessageInternal(document.RootElement);
+        }
     }
 }

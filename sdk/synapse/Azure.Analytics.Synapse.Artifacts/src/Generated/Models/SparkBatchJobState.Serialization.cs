@@ -128,12 +128,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 jobCreationRequest);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkBatchJobState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkBatchJobState(document.RootElement);
+        }
+
         internal partial class SparkBatchJobStateConverter : JsonConverter<SparkBatchJobState>
         {
             public override void Write(Utf8JsonWriter writer, SparkBatchJobState model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override SparkBatchJobState Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

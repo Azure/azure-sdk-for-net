@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetByManagementGroupRequestUri(string managementGroupId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/aggregatedcost", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetByManagementGroupRequest(string managementGroupId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -107,6 +122,19 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetForBillingPeriodByManagementGroupRequestUri(string managementGroupId, string billingPeriodName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Billing/billingPeriods/", false);
+            uri.AppendPath(billingPeriodName, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/aggregatedCost", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetForBillingPeriodByManagementGroupRequest(string managementGroupId, string billingPeriodName)

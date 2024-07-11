@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class MachineInstallPatchesContent : IUtf8JsonSerializable, IJsonModel<MachineInstallPatchesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineInstallPatchesContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineInstallPatchesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineInstallPatchesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue<HybridComputeWindowsParameters>(WindowsParameters, options);
+                writer.WriteObjectValue(WindowsParameters, options);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue<HybridComputeLinuxParameters>(LinuxParameters, options);
+                writer.WriteObjectValue(LinuxParameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineInstallPatchesContent DeserializeMachineInstallPatchesContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             HybridComputeWindowsParameters windowsParameters = default;
             HybridComputeLinuxParameters linuxParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maximumDuration"u8))
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, serializedAdditionalRawData);
         }
 

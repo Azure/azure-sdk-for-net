@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.CancerProfiling
 {
     public partial class OncoPhenotypeResults : IUtf8JsonSerializable, IJsonModel<OncoPhenotypeResults>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OncoPhenotypeResults>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OncoPhenotypeResults>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OncoPhenotypeResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue<OncoPhenotypePatientResult>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);
@@ -67,7 +67,7 @@ namespace Azure.Health.Insights.CancerProfiling
 
         internal static OncoPhenotypeResults DeserializeOncoPhenotypeResults(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.Health.Insights.CancerProfiling
             IReadOnlyList<OncoPhenotypePatientResult> patients = default;
             string modelVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patients"u8))
@@ -96,10 +96,10 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OncoPhenotypeResults(patients, modelVersion, serializedAdditionalRawData);
         }
 
@@ -142,11 +142,11 @@ namespace Azure.Health.Insights.CancerProfiling
             return DeserializeOncoPhenotypeResults(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<OncoPhenotypeResults>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

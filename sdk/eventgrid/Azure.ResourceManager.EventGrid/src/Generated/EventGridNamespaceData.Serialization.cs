@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class EventGridNamespaceData : IUtf8JsonSerializable, IJsonModel<EventGridNamespaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridNamespaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridNamespaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventGridNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<NamespaceSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<EventGridPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(TopicsConfiguration))
             {
                 writer.WritePropertyName("topicsConfiguration"u8);
-                writer.WriteObjectValue<TopicsConfiguration>(TopicsConfiguration, options);
+                writer.WriteObjectValue(TopicsConfiguration, options);
             }
             if (Optional.IsDefined(TopicSpacesConfiguration))
             {
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
-                writer.WriteObjectValue<TopicSpacesConfiguration>(TopicSpacesConfiguration, options);
+                writer.WriteObjectValue(TopicSpacesConfiguration, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue<EventGridInboundIPRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static EventGridNamespaceData DeserializeEventGridNamespaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EventGrid
             IList<EventGridInboundIPRule> inboundIPRules = default;
             TlsVersion? minimumTlsVersionAllowed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -339,10 +339,10 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EventGridNamespaceData(
                 id,
                 name,

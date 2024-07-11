@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class FunctionAppHostKeys : IUtf8JsonSerializable, IJsonModel<FunctionAppHostKeys>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppHostKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppHostKeys>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FunctionAppHostKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FunctionAppHostKeys DeserializeFunctionAppHostKeys(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
             IReadOnlyDictionary<string, string> functionKeys = default;
             IReadOnlyDictionary<string, string> systemKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("masterKey"u8))
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FunctionAppHostKeys(masterKey, functionKeys ?? new ChangeTrackingDictionary<string, string>(), systemKeys ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
@@ -154,15 +154,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterKey), out propertyOverride);
-            if (Optional.IsDefined(MasterKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  masterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  masterKey: ");
                     if (MasterKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -176,17 +177,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(FunctionKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (FunctionKeys.Any() || hasPropertyOverride)
+                builder.Append("  functionKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FunctionKeys))
                 {
-                    builder.Append("  functionKeys: ");
-                    if (hasPropertyOverride)
+                    if (FunctionKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  functionKeys: ");
                         builder.AppendLine("{");
                         foreach (var item in FunctionKeys)
                         {
@@ -212,17 +214,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(SystemKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SystemKeys.Any() || hasPropertyOverride)
+                builder.Append("  systemKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SystemKeys))
                 {
-                    builder.Append("  systemKeys: ");
-                    if (hasPropertyOverride)
+                    if (SystemKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  systemKeys: ");
                         builder.AppendLine("{");
                         foreach (var item in SystemKeys)
                         {

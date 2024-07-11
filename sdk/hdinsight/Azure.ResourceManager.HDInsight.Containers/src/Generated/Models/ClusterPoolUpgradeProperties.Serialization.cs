@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     [PersistableModelProxy(typeof(UnknownClusterPoolUpgradeProperties))]
     public partial class ClusterPoolUpgradeProperties : IUtf8JsonSerializable, IJsonModel<ClusterPoolUpgradeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPoolUpgradeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPoolUpgradeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterPoolUpgradeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterPoolUpgradeProperties DeserializeClusterPoolUpgradeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

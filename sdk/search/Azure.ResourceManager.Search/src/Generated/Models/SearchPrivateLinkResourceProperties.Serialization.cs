@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchPrivateLinkResourceProperties : IUtf8JsonSerializable, IJsonModel<SearchPrivateLinkResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchPrivateLinkResourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchPrivateLinkResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchPrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareablePrivateLinkResourceTypes)
                 {
-                    writer.WriteObjectValue<ShareableSearchServicePrivateLinkResourceType>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchPrivateLinkResourceProperties DeserializeSearchPrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Search.Models
             IReadOnlyList<string> requiredZoneNames = default;
             IReadOnlyList<ShareableSearchServicePrivateLinkResourceType> shareablePrivateLinkResourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType>(), serializedAdditionalRawData);
         }
 
@@ -177,15 +177,16 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
-            if (Optional.IsDefined(GroupId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  groupId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GroupId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  groupId: ");
                     if (GroupId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -199,17 +200,18 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredMembers), out propertyOverride);
-            if (Optional.IsCollectionDefined(RequiredMembers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (RequiredMembers.Any() || hasPropertyOverride)
+                builder.Append("  requiredMembers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RequiredMembers))
                 {
-                    builder.Append("  requiredMembers: ");
-                    if (hasPropertyOverride)
+                    if (RequiredMembers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  requiredMembers: ");
                         builder.AppendLine("[");
                         foreach (var item in RequiredMembers)
                         {
@@ -234,17 +236,18 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredZoneNames), out propertyOverride);
-            if (Optional.IsCollectionDefined(RequiredZoneNames) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (RequiredZoneNames.Any() || hasPropertyOverride)
+                builder.Append("  requiredZoneNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RequiredZoneNames))
                 {
-                    builder.Append("  requiredZoneNames: ");
-                    if (hasPropertyOverride)
+                    if (RequiredZoneNames.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  requiredZoneNames: ");
                         builder.AppendLine("[");
                         foreach (var item in RequiredZoneNames)
                         {
@@ -269,17 +272,18 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShareablePrivateLinkResourceTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ShareablePrivateLinkResourceTypes.Any() || hasPropertyOverride)
+                builder.Append("  shareablePrivateLinkResourceTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes))
                 {
-                    builder.Append("  shareablePrivateLinkResourceTypes: ");
-                    if (hasPropertyOverride)
+                    if (ShareablePrivateLinkResourceTypes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  shareablePrivateLinkResourceTypes: ");
                         builder.AppendLine("[");
                         foreach (var item in ShareablePrivateLinkResourceTypes)
                         {

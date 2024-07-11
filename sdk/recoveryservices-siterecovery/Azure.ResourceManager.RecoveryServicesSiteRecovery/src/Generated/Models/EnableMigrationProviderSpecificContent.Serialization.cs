@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     [PersistableModelProxy(typeof(UnknownEnableMigrationProviderSpecificContent))]
     public partial class EnableMigrationProviderSpecificContent : IUtf8JsonSerializable, IJsonModel<EnableMigrationProviderSpecificContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnableMigrationProviderSpecificContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnableMigrationProviderSpecificContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EnableMigrationProviderSpecificContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static EnableMigrationProviderSpecificContent DeserializeEnableMigrationProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2024-04-15)
+
+### Features Added
+- Expanded `ChatAttachment` to include a new enum `file`. This would allow the communication user to recieve files shared by Teams user in a Teams Interoperbility Chat.
+- Added support for a new communication identifier `MicrosoftTeamsAppIdentifierModel`.
 
 ## 1.2.0 (2023-12-04)
 
@@ -35,9 +41,9 @@ Updated `Azure.Communication.Chat` version.
 ## 1.1.0-beta.1 (2021-07-22)
 ### Added
 - Added support for metadata in messages.
-- Added new overloads for sendmessage and updatemessage operations with options : SendChatMessageOptions and UpdateChatMessageOptions. 
+- Added new overloads for sendmessage and updatemessage operations with options : SendChatMessageOptions and UpdateChatMessageOptions.
 - Added support for user display name in typing notifications.
-- Added new overloads for sendtypingnotification operation with options : TypingNotificationOptions. 
+- Added new overloads for sendtypingnotification operation with options : TypingNotificationOptions.
 
 ## 1.0.1 (2021-05-11)
 

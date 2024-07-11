@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SapHanaSource : IUtf8JsonSerializable, IJsonModel<SapHanaSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapHanaSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapHanaSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapHanaSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue<SapHanaPartitionSettings>(PartitionSettings, options);
+                writer.WriteObjectValue(PartitionSettings, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapHanaSource DeserializeSapHanaSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

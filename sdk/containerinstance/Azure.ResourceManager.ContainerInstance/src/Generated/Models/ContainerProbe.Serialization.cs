@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerProbe : IUtf8JsonSerializable, IJsonModel<ContainerProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerProbe>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerProbe>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Exec))
             {
                 writer.WritePropertyName("exec"u8);
-                writer.WriteObjectValue<ContainerExec>(Exec, options);
+                writer.WriteObjectValue(Exec, options);
             }
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue<ContainerHttpGet>(HttpGet, options);
+                writer.WriteObjectValue(HttpGet, options);
             }
             if (Optional.IsDefined(InitialDelayInSeconds))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerProbe DeserializeContainerProbe(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             int? successThreshold = default;
             int? timeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exec"u8))
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerProbe(
                 exec,
                 httpGet,

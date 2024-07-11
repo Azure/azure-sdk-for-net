@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<LinkedService>(Properties);
+            writer.WriteObjectValue(Properties);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -52,12 +52,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkedServiceDebugResource(name, properties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new LinkedServiceDebugResource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkedServiceDebugResource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class LinkedServiceDebugResourceConverter : JsonConverter<LinkedServiceDebugResource>
         {
             public override void Write(Utf8JsonWriter writer, LinkedServiceDebugResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LinkedServiceDebugResource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override LinkedServiceDebugResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -54,12 +54,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new RunNotebookError(ename, evalue, traceback ?? new ChangeTrackingList<string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RunNotebookError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRunNotebookError(document.RootElement);
+        }
+
         internal partial class RunNotebookErrorConverter : JsonConverter<RunNotebookError>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookError model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override RunNotebookError Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

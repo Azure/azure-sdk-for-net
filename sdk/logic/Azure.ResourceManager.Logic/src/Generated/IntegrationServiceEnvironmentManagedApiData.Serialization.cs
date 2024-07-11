@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class IntegrationServiceEnvironmentManagedApiData : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentManagedApiData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationServiceEnvironmentManagedApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<LogicApiResourceMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RuntimeUris))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(GeneralInformation))
             {
                 writer.WritePropertyName("generalInformation"u8);
-                writer.WriteObjectValue<LogicApiResourceGeneralInformation>(GeneralInformation, options);
+                writer.WriteObjectValue(GeneralInformation, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(BackendService))
             {
                 writer.WritePropertyName("backendService"u8);
-                writer.WriteObjectValue<LogicApiResourceBackendService>(BackendService, options);
+                writer.WriteObjectValue(BackendService, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue<LogicApiResourcePolicies>(Policies, options);
+                writer.WriteObjectValue(Policies, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ApiDefinitionUri))
             {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(ApiDefinitions))
             {
                 writer.WritePropertyName("apiDefinitions"u8);
-                writer.WriteObjectValue<LogicApiResourceDefinitions>(ApiDefinitions, options);
+                writer.WriteObjectValue(ApiDefinitions, options);
             }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue<LogicResourceReference>(IntegrationServiceEnvironment, options);
+                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
-                writer.WriteObjectValue<IntegrationServiceEnvironmentManagedApiDeploymentParameters>(DeploymentParameters, options);
+                writer.WriteObjectValue(DeploymentParameters, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationServiceEnvironmentManagedApiData DeserializeIntegrationServiceEnvironmentManagedApiData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Logic
             LogicApiTier? category = default;
             IntegrationServiceEnvironmentManagedApiDeploymentParameters deploymentParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -437,10 +437,10 @@ namespace Azure.ResourceManager.Logic
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IntegrationServiceEnvironmentManagedApiData(
                 id,
                 name,

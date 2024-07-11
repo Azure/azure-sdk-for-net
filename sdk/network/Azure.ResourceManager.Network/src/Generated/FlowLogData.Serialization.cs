@@ -10,13 +10,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     public partial class FlowLogData : IUtf8JsonSerializable, IJsonModel<FlowLogData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowLogData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowLogData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FlowLogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,6 +32,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Id))
             {
@@ -88,17 +94,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue<RetentionPolicyParameters>(RetentionPolicy, options);
+                writer.WriteObjectValue(RetentionPolicy, options);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue<FlowLogProperties>(Format, options);
+                writer.WriteObjectValue(Format, options);
             }
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue<TrafficAnalyticsProperties>(FlowAnalyticsConfiguration, options);
+                writer.WriteObjectValue(FlowAnalyticsConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -138,13 +144,14 @@ namespace Azure.ResourceManager.Network
 
         internal static FlowLogData DeserializeFlowLogData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ETag? etag = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType? type = default;
@@ -159,7 +166,7 @@ namespace Azure.ResourceManager.Network
             TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -169,6 +176,15 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -303,10 +319,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FlowLogData(
                 id,
                 name,
@@ -315,6 +331,7 @@ namespace Azure.ResourceManager.Network
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 etag,
+                identity,
                 targetResourceId,
                 targetResourceGuid,
                 storageId,

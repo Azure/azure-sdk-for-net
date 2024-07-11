@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<RecurrenceSchedule>(Schedule);
+                writer.WriteObjectValue(Schedule);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -136,12 +136,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScheduleTriggerRecurrence FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScheduleTriggerRecurrence(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ScheduleTriggerRecurrenceConverter : JsonConverter<ScheduleTriggerRecurrence>
         {
             public override void Write(Utf8JsonWriter writer, ScheduleTriggerRecurrence model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ScheduleTriggerRecurrence>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override ScheduleTriggerRecurrence Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue<SqlPartitionSettings>(PartitionSettings);
+                writer.WriteObjectValue(PartitionSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -229,12 +229,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 partitionSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SqlSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SqlSourceConverter : JsonConverter<SqlSource>
         {
             public override void Write(Utf8JsonWriter writer, SqlSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SqlSource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override SqlSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

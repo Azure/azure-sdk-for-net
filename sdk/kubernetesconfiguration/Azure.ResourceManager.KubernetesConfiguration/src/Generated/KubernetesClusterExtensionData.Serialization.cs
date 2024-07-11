@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 {
     public partial class KubernetesClusterExtensionData : IUtf8JsonSerializable, IJsonModel<KubernetesClusterExtensionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterExtensionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterExtensionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesClusterExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue<KubernetesClusterExtensionScope>(Scope, options);
+                writer.WriteObjectValue(Scope, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteStartArray();
                     foreach (var item in Statuses)
                     {
-                        writer.WriteObjectValue<KubernetesClusterExtensionStatus>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         internal static KubernetesClusterExtensionData DeserializeKubernetesClusterExtensionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ManagedServiceIdentity aksAssignedIdentity = default;
             bool? isSystemExtension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -489,10 +489,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesClusterExtensionData(
                 id,
                 name,

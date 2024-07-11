@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class DefaultRolloutStatus : IUtf8JsonSerializable, IJsonModel<DefaultRolloutStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultRolloutStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultRolloutStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefaultRolloutStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in FailedOrSkippedRegions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ExtendedErrorInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutStatus DeserializeDefaultRolloutStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<AzureLocation> completedRegions = default;
             IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextTrafficRegion"u8))
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DefaultRolloutStatus(
                 completedRegions ?? new ChangeTrackingList<AzureLocation>(),
                 failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(),

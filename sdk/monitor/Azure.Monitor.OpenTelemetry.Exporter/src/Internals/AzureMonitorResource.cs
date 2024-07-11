@@ -7,12 +7,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal sealed class AzureMonitorResource
     {
-        internal string? RoleName { get; set; }
+        public AzureMonitorResource()
+        {
+        }
 
-        internal string? RoleInstance { get; set; }
+        public AzureMonitorResource(
+            string? roleName,
+            string? roleInstance,
+            string? serviceVersion,
+            MonitorBase? monitorBaseData)
+        {
+            RoleName = roleName;
+            RoleName_Truncated = roleName.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
+            RoleInstance = roleInstance;
+            RoleInstance_Truncated = roleInstance.Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);
+            ServiceVersion_Truncated = serviceVersion.Truncate(SchemaConstants.Tags_AiApplicationVer_MaxLength);
+            MonitorBaseData = monitorBaseData;
+        }
 
-        internal string? ServiceVersion { get; set; }
+        internal string? RoleName { get; }
+        internal string? RoleName_Truncated { get; }
 
-        internal MonitorBase? MonitorBaseData { get; set; }
+        internal string? RoleInstance { get; }
+        internal string? RoleInstance_Truncated { get; }
+
+        internal string? ServiceVersion_Truncated { get; }
+
+        internal MonitorBase? MonitorBaseData { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class YearlyRetentionSchedule : IUtf8JsonSerializable, IJsonModel<YearlyRetentionSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<YearlyRetentionSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<YearlyRetentionSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<YearlyRetentionSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionScheduleDaily))
             {
                 writer.WritePropertyName("retentionScheduleDaily"u8);
-                writer.WriteObjectValue<DailyRetentionFormat>(RetentionScheduleDaily, options);
+                writer.WriteObjectValue(RetentionScheduleDaily, options);
             }
             if (Optional.IsDefined(RetentionScheduleWeekly))
             {
                 writer.WritePropertyName("retentionScheduleWeekly"u8);
-                writer.WriteObjectValue<WeeklyRetentionFormat>(RetentionScheduleWeekly, options);
+                writer.WriteObjectValue(RetentionScheduleWeekly, options);
             }
             if (Optional.IsCollectionDefined(RetentionTimes))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
-                writer.WriteObjectValue<RetentionDuration>(RetentionDuration, options);
+                writer.WriteObjectValue(RetentionDuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static YearlyRetentionSchedule DeserializeYearlyRetentionSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IList<DateTimeOffset> retentionTimes = default;
             RetentionDuration retentionDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionScheduleFormatType"u8))
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new YearlyRetentionSchedule(
                 retentionScheduleFormatType,
                 monthsOfYear ?? new ChangeTrackingList<BackupMonthOfYear>(),

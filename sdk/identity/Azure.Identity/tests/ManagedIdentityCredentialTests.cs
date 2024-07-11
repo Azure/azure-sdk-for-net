@@ -19,6 +19,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
+    [NonParallelizable]
     public class ManagedIdentityCredentialTests : ClientTestBase
     {
         private string _expectedResourceId = $"/subscriptions/{Guid.NewGuid().ToString()}/locations/MyLocation";
@@ -682,13 +683,13 @@ namespace Azure.Identity.Tests
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "http://169.254.169.001/" } });
 
-            var options = new TokenCredentialOptions() { Retry = { MaxRetries = 0, NetworkTimeout = TimeSpan.FromMilliseconds(100) } };
+            var options = new TokenCredentialOptions() { Retry = { MaxRetries = 0, NetworkTimeout = TimeSpan.FromMilliseconds(100), MaxDelay = TimeSpan.Zero } };
 
             var credential = InstrumentClient(new ManagedIdentityCredential(options: options));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.NoResponseError));
+            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.AggregateError));
 
             await Task.CompletedTask;
         }
@@ -714,79 +715,6 @@ namespace Azure.Identity.Tests
             Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.GatewayError));
 
             await Task.CompletedTask;
-        }
-
-        [NonParallelizable]
-        [Test]
-        public async Task VerifyInitialImdsConnectionTimeoutHonored()
-        {
-            using var server = new TestServer(async context =>
-            {
-                await Task.Delay(1000);
-
-                context.Response.StatusCode = 418;
-            });
-
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", server.Address.AbsoluteUri } });
-
-            // setting the delay to 1ms and retry mode to fixed to speed up test
-            var options = new TokenCredentialOptions() { Retry = { Delay = TimeSpan.FromMilliseconds(0), Mode = RetryMode.Fixed } };
-
-            var pipeline = CredentialPipeline.GetInstance(options);
-
-            var miClientOptions = new ManagedIdentityClientOptions { InitialImdsConnectionTimeout = TimeSpan.FromMilliseconds(100), Pipeline = pipeline };
-
-            var credential = InstrumentClient(new ManagedIdentityCredential(new ManagedIdentityClient(miClientOptions)));
-
-            var startTime = DateTimeOffset.UtcNow;
-
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            var endTime = DateTimeOffset.UtcNow;
-
-            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.AggregateError));
-
-            Assert.Less(endTime - startTime, TimeSpan.FromSeconds(2));
-
-            await Task.CompletedTask;
-        }
-
-        [NonParallelizable]
-        [Test]
-        public async Task VerifyInitialImdsConnectionTimeoutRelaxed()
-        {
-            string token = Guid.NewGuid().ToString();
-            int callCount = 0;
-
-            using var server = new TestServer(async context =>
-            {
-                if (Interlocked.Increment(ref callCount) > 1)
-                {
-                    await Task.Delay(2000);
-                }
-
-                await context.Response.WriteAsync($"{{ \"access_token\": \"{token}\", \"expires_on\": \"3600\" }}");
-            });
-
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", server.Address.AbsoluteUri } });
-
-            // setting the delay to 1ms and retry mode to fixed to speed up test
-            var options = new TokenCredentialOptions() { Retry = { Delay = TimeSpan.FromMilliseconds(0), Mode = RetryMode.Fixed } };
-
-            var pipeline = CredentialPipeline.GetInstance(options);
-
-            var miClientOptions = new ManagedIdentityClientOptions { InitialImdsConnectionTimeout = TimeSpan.FromMilliseconds(1000), Pipeline = pipeline };
-
-            var credential = InstrumentClient(new ManagedIdentityCredential(new ManagedIdentityClient(miClientOptions)));
-
-            var at = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
-
-            Assert.AreEqual(token, at.Token);
-
-            var at2 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
-
-            Assert.AreEqual(token, at.Token);
-
-            Assert.AreEqual(2, callCount);
         }
 
         [Test]
@@ -923,6 +851,80 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             await Task.CompletedTask;
+        }
+
+        [Test]
+        public void VerifyArcIdentitySourceFilePathValidation_DoesNotEndInDotKey()
+        {
+            using var environment = new TestEnvVar(
+                new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", "https://identity.constoso.com" },
+                    { "IMDS_ENDPOINT", "https://imds.constoso.com" },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+                });
+
+            var mockTransport = new MockTransport(request =>
+            {
+                var response = new MockResponse(401);
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                {
+                    response.AddHeader("WWW-Authenticate", "file=c:\\ProgramData\\AzureConnectedMachineAgent\\Tokens\\secret.foo");
+                }
+                else
+                {
+                    response.AddHeader("WWW-Authenticate", "file=/var/opt/azcmagent/tokens/secret.foo");
+                }
+                return response;
+            });
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(null, pipeline));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(ex.Message, Does.Contain("File name is invalid."));
+        }
+
+        [Test]
+        public void VerifyArcIdentitySourceFilePathValidation_FilePathInvalid()
+        {
+            using var environment = new TestEnvVar(
+                new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", "https://identity.constoso.com" },
+                    { "IMDS_ENDPOINT", "https://imds.constoso.com" },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+                });
+
+            var mockTransport = new MockTransport(request =>
+            {
+                var response = new MockResponse(401);
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                {
+                    response.AddHeader("WWW-Authenticate", "file=c:\\ProgramData\\bugus\\AzureConnectedMachineAgent\\Tokens\\secret.key");
+                }
+                else
+                {
+                    response.AddHeader("WWW-Authenticate", "file=/var/opt/bogus/azcmagent/tokens/secret.key");
+                }
+                return response;
+            });
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(null, pipeline));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(ex.Message, Does.Contain("File path is invalid."));
         }
 
         private static IEnumerable<TestCaseData> ResourceAndClientIds()

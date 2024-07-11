@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class FirewallPolicyTransportSecurity : IUtf8JsonSerializable, IJsonModel<FirewallPolicyTransportSecurity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyTransportSecurity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyTransportSecurity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallPolicyTransportSecurity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
-                writer.WriteObjectValue<FirewallPolicyCertificateAuthority>(CertificateAuthority, options);
+                writer.WriteObjectValue(CertificateAuthority, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyTransportSecurity DeserializeFirewallPolicyTransportSecurity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             FirewallPolicyCertificateAuthority certificateAuthority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateAuthority"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallPolicyTransportSecurity(certificateAuthority, serializedAdditionalRawData);
         }
 

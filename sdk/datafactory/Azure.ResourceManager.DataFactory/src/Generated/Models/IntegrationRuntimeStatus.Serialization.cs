@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownIntegrationRuntimeStatus))]
     public partial class IntegrationRuntimeStatus : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationRuntimeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeStatus DeserializeIntegrationRuntimeStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

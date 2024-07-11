@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     internal partial class WebTestListResult : IUtf8JsonSerializable, IJsonModel<WebTestListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebTestListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<WebTestData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -72,24 +72,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static WebTestListResult DeserializeWebTestListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<WebTestData> value = default;
+            IReadOnlyList<ApplicationInsightsWebTestData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<WebTestData> array = new List<WebTestData>();
+                    List<ApplicationInsightsWebTestData> array = new List<ApplicationInsightsWebTestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebTestData.DeserializeWebTestData(item, options));
+                        array.Add(ApplicationInsightsWebTestData.DeserializeApplicationInsightsWebTestData(item, options));
                     }
                     value = array;
                     continue;
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebTestListResult(value, nextLink, serializedAdditionalRawData);
         }
 
@@ -120,17 +120,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Value.Any() || hasPropertyOverride)
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
                 {
-                    builder.Append("  value: ");
-                    if (hasPropertyOverride)
+                    if (Value.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  value: ");
                         builder.AppendLine("[");
                         foreach (var item in Value)
                         {
@@ -142,15 +143,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
-            if (Optional.IsDefined(NextLink) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nextLink: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextLink))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nextLink: ");
                     if (NextLink.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

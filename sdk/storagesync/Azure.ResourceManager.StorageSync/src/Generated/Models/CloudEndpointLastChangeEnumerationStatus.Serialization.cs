@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class CloudEndpointLastChangeEnumerationStatus : IUtf8JsonSerializable, IJsonModel<CloudEndpointLastChangeEnumerationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointLastChangeEnumerationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointLastChangeEnumerationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CloudEndpointLastChangeEnumerationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static CloudEndpointLastChangeEnumerationStatus DeserializeCloudEndpointLastChangeEnumerationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             long? namespaceSizeBytes = default;
             DateTimeOffset? nextRunTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startedTimestamp"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CloudEndpointLastChangeEnumerationStatus(
                 startedTimestamp,
                 completedTimestamp,

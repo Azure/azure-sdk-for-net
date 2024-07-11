@@ -133,12 +133,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 httpRequestTimeout);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SharePointOnlineListSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSharePointOnlineListSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SharePointOnlineListSourceConverter : JsonConverter<SharePointOnlineListSource>
         {
             public override void Write(Utf8JsonWriter writer, SharePointOnlineListSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SharePointOnlineListSource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override SharePointOnlineListSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

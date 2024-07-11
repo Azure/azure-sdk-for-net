@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     [PersistableModelProxy(typeof(UnknownNetworkFunctionPropertiesFormat))]
     public partial class NetworkFunctionPropertiesFormat : IUtf8JsonSerializable, IJsonModel<NetworkFunctionPropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionPropertiesFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionPropertiesFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFunctionPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersionResourceReference"u8);
-                writer.WriteObjectValue<DeploymentResourceIdReference>(NetworkFunctionDefinitionVersionResourceReference, options);
+                writer.WriteObjectValue(NetworkFunctionDefinitionVersionResourceReference, options);
             }
             if (Optional.IsDefined(NfviType))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static NetworkFunctionPropertiesFormat DeserializeNetworkFunctionPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

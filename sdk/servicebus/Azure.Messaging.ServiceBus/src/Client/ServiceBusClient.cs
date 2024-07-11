@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -121,7 +120,7 @@ namespace Azure.Messaging.ServiceBus
         /// Other values will be ignored; to configure the processor, please use the <see cref="ServiceBusClientOptions" />.
         /// </remarks>
         public ServiceBusClient(string connectionString) :
-            this(connectionString, new ServiceBusClientOptions())
+            this(connectionString, null as ServiceBusClientOptions)
         {
         }
 
@@ -193,7 +192,7 @@ namespace Azure.Messaging.ServiceBus
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential) :
-            this(fullyQualifiedNamespace, (object)credential, new ServiceBusClientOptions())
+            this(fullyQualifiedNamespace, (object)credential, null)
         {
         }
 
@@ -256,7 +255,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueOrTopicName"/> value specified here.
         /// </exception>
-        public virtual ServiceBusSender CreateSender(string queueOrTopicName) => CreateSender(queueOrTopicName, new ServiceBusSenderOptions());
+        public virtual ServiceBusSender CreateSender(string queueOrTopicName) => CreateSender(queueOrTopicName, null);
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
@@ -563,7 +562,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
-                options: new ServiceBusProcessorOptions());
+                options: null);
         }
 
         /// <summary>
@@ -620,7 +619,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
-                options: new ServiceBusProcessorOptions());
+                options: null);
         }
 
         /// <summary>

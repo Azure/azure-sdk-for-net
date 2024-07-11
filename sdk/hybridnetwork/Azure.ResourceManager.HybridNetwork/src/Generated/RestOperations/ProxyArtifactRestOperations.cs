@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.HybridNetwork
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifacts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
@@ -120,6 +136,24 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifactVersions", false);
+            uri.AppendQuery("artifactName", artifactName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
@@ -212,6 +246,25 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        internal RequestUriBuilder CreateUpdateStateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifactVersions/", false);
+            uri.AppendPath(artifactVersionName, true);
+            uri.AppendQuery("artifactName", artifactName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateStateRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState)
         {
             var message = _pipeline.CreateMessage();
@@ -235,7 +288,7 @@ namespace Azure.ResourceManager.HybridNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ArtifactChangeState>(artifactChangeState, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(artifactChangeState, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -305,6 +358,14 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
@@ -385,6 +446,14 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)

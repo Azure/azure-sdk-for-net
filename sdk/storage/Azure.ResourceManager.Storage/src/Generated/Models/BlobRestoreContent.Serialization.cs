@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class BlobRestoreContent : IUtf8JsonSerializable, IJsonModel<BlobRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BlobRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartArray();
             foreach (var item in BlobRanges)
             {
-                writer.WriteObjectValue<BlobRestoreRange>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobRestoreContent DeserializeBlobRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
             DateTimeOffset timetoRestore = default;
             IList<BlobRestoreRange> blobRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timetoRestore"u8))
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BlobRestoreContent(timetoRestore, blobRanges, serializedAdditionalRawData);
         }
 
@@ -117,29 +117,31 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeToRestore), out propertyOverride);
-            builder.Append("  timetoRestore: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  timetoRestore: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  timetoRestore: ");
                 var formattedDateTimeString = TypeFormatters.ToString(TimeToRestore, "o");
                 builder.AppendLine($"'{formattedDateTimeString}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobRanges), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlobRanges) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlobRanges.Any() || hasPropertyOverride)
+                builder.Append("  blobRanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlobRanges))
                 {
-                    builder.Append("  blobRanges: ");
-                    if (hasPropertyOverride)
+                    if (BlobRanges.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blobRanges: ");
                         builder.AppendLine("[");
                         foreach (var item in BlobRanges)
                         {

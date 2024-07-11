@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     public partial class DeviceRegistryAssetEndpointProfilePatch : IUtf8JsonSerializable, IJsonModel<DeviceRegistryAssetEndpointProfilePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryAssetEndpointProfilePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryAssetEndpointProfilePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceRegistryAssetEndpointProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(UserAuthentication))
             {
                 writer.WritePropertyName("userAuthentication"u8);
-                writer.WriteObjectValue<UserAuthenticationUpdate>(UserAuthentication, options);
+                writer.WriteObjectValue(UserAuthentication, options);
             }
             if (Optional.IsDefined(TransportAuthentication))
             {
                 writer.WritePropertyName("transportAuthentication"u8);
-                writer.WriteObjectValue<TransportAuthenticationUpdate>(TransportAuthentication, options);
+                writer.WriteObjectValue(TransportAuthentication, options);
             }
             if (Optional.IsDefined(AdditionalConfiguration))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         internal static DeviceRegistryAssetEndpointProfilePatch DeserializeDeviceRegistryAssetEndpointProfilePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             TransportAuthenticationUpdate transportAuthentication = default;
             string additionalConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceRegistryAssetEndpointProfilePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 targetAddress,

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ConnectivityIssue : IUtf8JsonSerializable, IJsonModel<ConnectivityIssue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityIssue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityIssue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectivityIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ConnectivityIssue DeserializeConnectivityIssue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IssueType? type = default;
             IReadOnlyList<IDictionary<string, string>> context = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origin"u8))
@@ -163,11 +165,118 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectivityIssue(origin, severity, type, context ?? new ChangeTrackingList<IDictionary<string, string>>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Origin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  origin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Origin))
+                {
+                    builder.Append("  origin: ");
+                    builder.AppendLine($"'{Origin.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Severity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  severity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Severity))
+                {
+                    builder.Append("  severity: ");
+                    builder.AppendLine($"'{Severity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssueType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IssueType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{IssueType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Context), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  context: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Context))
+                {
+                    if (Context.Any())
+                    {
+                        builder.Append("  context: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Context)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("{");
+                            foreach (var item0 in item)
+                            {
+                                builder.Append($"    '{item0.Key}': ");
+                                if (item0.Value == null)
+                                {
+                                    builder.Append("null");
+                                    continue;
+                                }
+                                if (item0.Value.Contains(Environment.NewLine))
+                                {
+                                    builder.AppendLine("'''");
+                                    builder.AppendLine($"{item0.Value}'''");
+                                }
+                                else
+                                {
+                                    builder.AppendLine($"'{item0.Value}'");
+                                }
+                            }
+                            builder.AppendLine("  }");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ConnectivityIssue>.Write(ModelReaderWriterOptions options)
@@ -178,6 +287,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectivityIssue)} does not support writing '{options.Format}' format.");
             }

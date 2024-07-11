@@ -122,6 +122,12 @@ function DeployStressTests(
         }
         $clusterGroup = 'rg-stress-cluster-prod'
         $subscription = 'Azure SDK Test Resources'
+    } elseif ($environment -eq 'storage') {
+        if ($clusterGroup -or $subscription) {
+            Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."
+        }
+        $clusterGroup = 'rg-stress-cluster-storage'
+        $subscription = 'XClient'
     } elseif (!$clusterGroup -or !$subscription) {
         throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
     }
@@ -213,9 +219,17 @@ function DeployStressPackage(
     $imageTagBase += "/$($pkg.Namespace)/$($pkg.ReleaseName)"
 
     if (!$Template) {
-        Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
-        kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
-        if ($LASTEXITCODE) {exit $LASTEXITCODE}
+        Write-Host "Checking for namespace $($pkg.Namespace)"
+        kubectl get namespace $pkg.Namespace
+        if ($LASTEXITCODE) {
+            Write-Host "Creating namespace $($pkg.Namespace) ..."
+            kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
+            if ($LASTEXITCODE) {exit $LASTEXITCODE}
+            # Give a few seconds for stress watcher to initialize the federated identity credential
+            # and create the service account before we reference it
+            Write-Host "Waiting 15 seconds for namespace federated credentials to be created and synced"
+            Start-Sleep 15
+        }
         Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
         $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
         if ($LASTEXITCODE) {exit $LASTEXITCODE}
@@ -277,7 +291,10 @@ function DeployStressPackage(
             Write-Host "Setting DOCKER_BUILDKIT=1"
             $env:DOCKER_BUILDKIT = 1
 
-            $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
+            # Force amd64 since that's what our AKS cluster is running. Without this you
+            # end up inheriting the default for our platform, which is bad when using ARM
+            # platforms.
+            $dockerBuildCmd = "docker", "build", "--platform", "linux/amd64", "-t", $imageTag, "-f", $dockerFile
             foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
                 $dockerBuildCmd += "--build-arg"
                 $dockerBuildCmd += "'$($buildArg.Key)'='$($buildArg.Value)'"

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SuppressionAlertsScopeElement : IUtf8JsonSerializable, IJsonModel<SuppressionAlertsScopeElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuppressionAlertsScopeElement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuppressionAlertsScopeElement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SuppressionAlertsScopeElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SuppressionAlertsScopeElement DeserializeSuppressionAlertsScopeElement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Blueprint
 {
     public partial class PublishedBlueprintData : IUtf8JsonSerializable, IJsonModel<PublishedBlueprintData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublishedBlueprintData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublishedBlueprintData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PublishedBlueprintData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Blueprint
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<BlueprintStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (Optional.IsDefined(TargetScope))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Blueprint
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParameterDefinition>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Blueprint
                 foreach (var item in ResourceGroups)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ResourceGroupDefinition>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Blueprint
 
         internal static PublishedBlueprintData DeserializePublishedBlueprintData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Blueprint
             string blueprintName = default;
             string changeNotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.Blueprint
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PublishedBlueprintData(
                 id,
                 name,

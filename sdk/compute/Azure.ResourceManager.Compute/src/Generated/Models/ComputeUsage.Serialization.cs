@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeUsage : IUtf8JsonSerializable, IJsonModel<ComputeUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComputeUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue<ComputeUsageName>(Name, options);
+            writer.WriteObjectValue(Name, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputeUsage DeserializeComputeUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             long limit = default;
             ComputeUsageName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeUsage(unit, currentValue, limit, name, serializedAdditionalRawData);
         }
 

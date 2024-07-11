@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningWorkspaceData : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<MachineLearningSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<MachineLearningEncryptionSetting>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsCollectionDefined(ExistingWorkspaces))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(FeatureStoreSettings))
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue<FeatureStoreSettings>(FeatureStoreSettings, options);
+                writer.WriteObjectValue(FeatureStoreSettings, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(ManagedNetwork))
             {
                 writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue<ManagedNetworkSettings>(ManagedNetwork, options);
+                writer.WriteObjectValue(ManagedNetwork, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MlFlowTrackingUri))
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (options.Format != "W" && Optional.IsDefined(NotebookInfo))
             {
                 writer.WritePropertyName("notebookInfo"u8);
-                writer.WriteObjectValue<MachineLearningNotebookResourceInfo>(NotebookInfo, options);
+                writer.WriteObjectValue(NotebookInfo, options);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<MachineLearningPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue<ServiceManagedResourcesSettings>(ServiceManagedResourcesSettings, options);
+                writer.WriteObjectValue(ServiceManagedResourcesSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceProvisionedResourceGroup))
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue<MachineLearningSharedPrivateLinkResource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(WorkspaceHubConfig))
             {
                 writer.WritePropertyName("workspaceHubConfig"u8);
-                writer.WriteObjectValue<WorkspaceHubConfig>(WorkspaceHubConfig, options);
+                writer.WriteObjectValue(WorkspaceHubConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningWorkspaceData DeserializeMachineLearningWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.MachineLearning
             WorkspaceHubConfig workspaceHubConfig = default;
             string workspaceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -793,10 +793,10 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningWorkspaceData(
                 id,
                 name,

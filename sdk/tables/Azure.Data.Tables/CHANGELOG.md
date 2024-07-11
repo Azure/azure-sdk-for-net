@@ -7,8 +7,10 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where custom models decorated with the `DataMemberAttribute` that didn't explicitly set a name caused the query filter to be malformed.
 
 ### Other Changes
+- Reduce List allocations when uploading batches to table storage
 
 ## 12.8.3 (2024-02-06)
 

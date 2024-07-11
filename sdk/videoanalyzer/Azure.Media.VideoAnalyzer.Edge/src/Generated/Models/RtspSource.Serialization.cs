@@ -21,7 +21,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Transport.Value.ToString());
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue<EndpointBase>(Endpoint);
+            writer.WriteObjectValue(Endpoint);
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
@@ -67,6 +67,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new RtspSource(type, name, transport, endpoint);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RtspSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRtspSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

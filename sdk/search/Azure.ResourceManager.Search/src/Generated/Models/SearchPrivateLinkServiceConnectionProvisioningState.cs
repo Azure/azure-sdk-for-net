@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The provisioning state of the private link service connection. Valid values are Updating, Deleting, Failed, Succeeded, or Incomplete. </summary>
+    /// <summary> The provisioning state of the private link service connection. Valid values are Updating, Deleting, Failed, Succeeded, Incomplete, or Canceled. </summary>
     public readonly partial struct SearchPrivateLinkServiceConnectionProvisioningState : IEquatable<SearchPrivateLinkServiceConnectionProvisioningState>
     {
         private readonly string _value;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

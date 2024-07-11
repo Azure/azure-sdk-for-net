@@ -58,18 +58,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element);
                     case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element);
                     case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element);
+                    case "LakeHouseLocation": return LakeHouseLocation.DeserializeLakeHouseLocation(element);
                     case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
                 }
             }
             return UnknownDatasetLocation.DeserializeUnknownDatasetLocation(element);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DatasetLocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDatasetLocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class DatasetLocationConverter : JsonConverter<DatasetLocation>
         {
             public override void Write(Utf8JsonWriter writer, DatasetLocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DatasetLocation>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override DatasetLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

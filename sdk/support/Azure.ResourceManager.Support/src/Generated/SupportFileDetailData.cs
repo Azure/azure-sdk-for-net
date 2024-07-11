@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Support
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when file workspace was created. </param>
-        /// <param name="chunkSize"> Size of each chunk. </param>
-        /// <param name="fileSize"> Size of the file to be uploaded. </param>
-        /// <param name="numberOfChunks"> Number of chunks to be uploaded. </param>
+        /// <param name="chunkSize"> Size of each chunk. The size of each chunk should be provided in bytes and must not exceed 2.5 megabytes (MB). </param>
+        /// <param name="fileSize"> Size of the file to be uploaded. The file size must not exceed 5 MB and should be provided in bytes. </param>
+        /// <param name="numberOfChunks"> Number of chunks to be uploaded. The maximum number of allowed chunks is 2. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SupportFileDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, int? chunkSize, int? fileSize, int? numberOfChunks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Time in UTC (ISO 8601 format) when file workspace was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Size of each chunk. </summary>
+        /// <summary> Size of each chunk. The size of each chunk should be provided in bytes and must not exceed 2.5 megabytes (MB). </summary>
         public int? ChunkSize { get; set; }
-        /// <summary> Size of the file to be uploaded. </summary>
+        /// <summary> Size of the file to be uploaded. The file size must not exceed 5 MB and should be provided in bytes. </summary>
         public int? FileSize { get; set; }
-        /// <summary> Number of chunks to be uploaded. </summary>
+        /// <summary> Number of chunks to be uploaded. The maximum number of allowed chunks is 2. </summary>
         public int? NumberOfChunks { get; set; }
     }
 }

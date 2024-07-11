@@ -82,5 +82,13 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             return new InstanceHit(timeSeriesId ?? new ChangeTrackingList<object>(), name, typeId, hierarchyIds ?? new ChangeTrackingList<string>(), highlights);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InstanceHit FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInstanceHit(document.RootElement);
+        }
     }
 }

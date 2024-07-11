@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AmazonRdsForOracleSource : IUtf8JsonSerializable, IJsonModel<AmazonRdsForOracleSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonRdsForOracleSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonRdsForOracleSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmazonRdsForOracleSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue<AmazonRdsForOraclePartitionSettings>(PartitionSettings, options);
+                writer.WriteObjectValue(PartitionSettings, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AmazonRdsForOracleSource DeserializeAmazonRdsForOracleSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -50,31 +50,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get data using search. </summary>
-        /// <param name="queryConfig"> The search query of advanced search request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='QueryAsync(QueryConfig,CancellationToken)']/*" />
-        public virtual async Task<Response<QueryResult>> QueryAsync(QueryConfig queryConfig, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueryResult>> QueryAsync(QueryConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(queryConfig, nameof(queryConfig));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = queryConfig.ToRequestContent();
             Response response = await QueryAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(QueryResult.FromResponse(response), response);
         }
 
         /// <summary> Get data using search. </summary>
-        /// <param name="queryConfig"> The search query of advanced search request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Query(QueryConfig,CancellationToken)']/*" />
-        public virtual Response<QueryResult> Query(QueryConfig queryConfig, CancellationToken cancellationToken = default)
+        public virtual Response<QueryResult> Query(QueryConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(queryConfig, nameof(queryConfig));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = queryConfig.ToRequestContent();
             Response response = Query(content, context);
             return Response.FromValue(QueryResult.FromResponse(response), response);
         }
@@ -158,31 +158,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="suggestConfig"> The payload of suggest request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suggestConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='SuggestAsync(SuggestConfig,CancellationToken)']/*" />
-        public virtual async Task<Response<SuggestResult>> SuggestAsync(SuggestConfig suggestConfig, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SuggestResult>> SuggestAsync(SuggestConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(suggestConfig, nameof(suggestConfig));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = suggestConfig.ToRequestContent();
             Response response = await SuggestAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(SuggestResult.FromResponse(response), response);
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="suggestConfig"> The payload of suggest request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suggestConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Suggest(SuggestConfig,CancellationToken)']/*" />
-        public virtual Response<SuggestResult> Suggest(SuggestConfig suggestConfig, CancellationToken cancellationToken = default)
+        public virtual Response<SuggestResult> Suggest(SuggestConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(suggestConfig, nameof(suggestConfig));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = suggestConfig.ToRequestContent();
             Response response = Suggest(content, context);
             return Response.FromValue(SuggestResult.FromResponse(response), response);
         }
@@ -266,31 +266,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="autoCompleteConfig"> The payload of autocomplete request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoCompleteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoCompleteAsync(AutoCompleteConfig,CancellationToken)']/*" />
-        public virtual async Task<Response<AutoCompleteResult>> AutoCompleteAsync(AutoCompleteConfig autoCompleteConfig, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutoCompleteResult>> AutoCompleteAsync(AutoCompleteConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(autoCompleteConfig, nameof(autoCompleteConfig));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = autoCompleteConfig.ToRequestContent();
             Response response = await AutoCompleteAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AutoCompleteResult.FromResponse(response), response);
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="autoCompleteConfig"> The payload of autocomplete request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoCompleteConfig"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoComplete(AutoCompleteConfig,CancellationToken)']/*" />
-        public virtual Response<AutoCompleteResult> AutoComplete(AutoCompleteConfig autoCompleteConfig, CancellationToken cancellationToken = default)
+        public virtual Response<AutoCompleteResult> AutoComplete(AutoCompleteConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(autoCompleteConfig, nameof(autoCompleteConfig));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = autoCompleteConfig.ToRequestContent();
             Response response = AutoComplete(content, context);
             return Response.FromValue(AutoCompleteResult.FromResponse(response), response);
         }

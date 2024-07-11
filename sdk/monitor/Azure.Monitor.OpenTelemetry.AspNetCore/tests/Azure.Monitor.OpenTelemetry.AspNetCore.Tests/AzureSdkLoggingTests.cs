@@ -16,19 +16,24 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Xunit;
+using static Xunit.CustomXunitAttributes;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
     public class AzureSdkLoggingTests
     {
+#if NET6_0
+        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+#else
         [Theory]
+#endif
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
         public async Task DistroLogForwarderIsAdded(LogLevel eventLevel, string expectedMessage)
         {
             var builder = WebApplication.CreateBuilder();
-            var transport = new MockTransport(new MockResponse(200).SetContent("ok"));
+            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
             SetUpOTelAndLogging(builder, transport, LogLevel.Information);
 
             using var app = builder.Build();
@@ -49,14 +54,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
+#if NET6_0
+        [ConditionallySkipOSTheory(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+#else
         [Theory]
+#endif
         [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
         [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
         [InlineData(LogLevel.Debug, null)]
         public async Task PublicLogForwarderIsAdded(LogLevel eventLevel, string expectedMessage)
         {
             var builder = WebApplication.CreateBuilder();
-            var transport = new MockTransport(new MockResponse(200).SetContent("ok"));
+            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
             SetUpOTelAndLogging(builder, transport, LogLevel.Information);
 
             builder.Services.TryAddSingleton<Microsoft.Extensions.Azure.AzureEventSourceLogForwarder>();
@@ -86,18 +95,66 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 
-        private void WaitForRequest(MockTransport transport)
+#if NET6_0
+        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+#else
+        [Fact]
+#endif
+        public async Task SelfDiagnosticsIsDisabled()
         {
+            var enableLevel = LogLevel.Debug;
+
+            var builder = WebApplication.CreateBuilder();
+            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
+            builder.Logging.ClearProviders();
+            bool logAzureFilterCalled = false;
+            builder.Logging.AddFilter((name, level) =>
+            {
+                if (name != null && name.StartsWith("Azure"))
+                {
+                    logAzureFilterCalled = true;
+                    return level >= enableLevel;
+                }
+                return false;
+            });
+            builder.Services.AddOpenTelemetry().UseAzureMonitor(config =>
+            {
+                config.Transport = transport;
+                config.ConnectionString = $"InstrumentationKey={Guid.NewGuid()}";
+                config.EnableLiveMetrics = true;
+                Assert.False(config.Diagnostics.IsLoggingEnabled);
+                Assert.False(config.Diagnostics.IsDistributedTracingEnabled);
+            });
+
+            using var app = builder.Build();
+            await app.StartAsync();
+
+            // let's get some live metric requests first to check that no logs were recorded for them
+            WaitForRequest(transport, r => r.Uri.Host == "rt.services.visualstudio.com");
+
+            // now let's wait for track requests
+            var trackRequests = WaitForRequest(transport, r => r.Uri.Host == "dc.services.visualstudio.com");
+            Assert.Empty(trackRequests);
+
+            // since LiveMetrics logging is disabled, we shouldn't even have logging policy trying to log anything.
+            Assert.False(logAzureFilterCalled);
+        }
+
+        private IEnumerable<MockRequest> WaitForRequest(MockTransport transport, Func<MockRequest, bool>? filter = null)
+        {
+            filter = filter ?? (_ => true);
             SpinWait.SpinUntil(
                 condition: () =>
                 {
                     Thread.Sleep(10);
-                    return transport.Requests.Count > 0;
+                    return transport.Requests.Where(filter).Any();
                 },
                 timeout: TimeSpan.FromSeconds(10));
+
+            return transport.Requests.Where(filter);
         }
 
-        private static async Task AssertContentContains(MockRequest request, string expectedMessage, LogLevel expectedLevel)
+        private static async Task<string> AssertContentContains(MockRequest request, string expectedMessage, LogLevel expectedLevel)
         {
             using var contentStream = new MemoryStream();
             await request.Content.WriteToAsync(contentStream, default);
@@ -110,6 +167,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             // also check that message appears just once
             Assert.Equal(content.IndexOf(jsonMessage), content.LastIndexOf(jsonMessage));
+            return content;
         }
 
         private static async Task AssertContentDoesNotContain(List<MockRequest> requests, string expectedMessage)
@@ -143,8 +201,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 config.Transport = transport;
                 config.ConnectionString = $"InstrumentationKey={Guid.NewGuid()}";
                 config.EnableLiveMetrics = false;
-                config.Diagnostics.IsDistributedTracingEnabled = false;
-                config.Diagnostics.IsLoggingEnabled = false;
             });
         }
 

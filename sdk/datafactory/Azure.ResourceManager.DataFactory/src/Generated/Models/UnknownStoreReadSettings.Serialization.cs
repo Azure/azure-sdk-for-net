@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     internal partial class UnknownStoreReadSettings : IUtf8JsonSerializable, IJsonModel<StoreReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoreReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoreReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StoreReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UnknownStoreReadSettings DeserializeUnknownStoreReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

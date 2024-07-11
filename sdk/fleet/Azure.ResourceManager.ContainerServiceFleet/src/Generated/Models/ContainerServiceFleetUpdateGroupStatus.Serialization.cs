@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     public partial class ContainerServiceFleetUpdateGroupStatus : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetUpdateGroupStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetUpdateGroupStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetUpdateGroupStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceFleetUpdateGroupStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<ContainerServiceFleetUpdateStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Members)
                 {
-                    writer.WriteObjectValue<MemberUpdateStatus>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         internal static ContainerServiceFleetUpdateGroupStatus DeserializeContainerServiceFleetUpdateGroupStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             string name = default;
             IReadOnlyList<MemberUpdateStatus> members = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceFleetUpdateGroupStatus(status, name, members ?? new ChangeTrackingList<MemberUpdateStatus>(), serializedAdditionalRawData);
         }
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     public partial class UserAuthenticationUpdate : IUtf8JsonSerializable, IJsonModel<UserAuthenticationUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAuthenticationUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAuthenticationUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserAuthenticationUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(UsernamePasswordCredentials))
             {
                 writer.WritePropertyName("usernamePasswordCredentials"u8);
-                writer.WriteObjectValue<UsernamePasswordCredentialsUpdate>(UsernamePasswordCredentials, options);
+                writer.WriteObjectValue(UsernamePasswordCredentials, options);
             }
             if (Optional.IsDefined(X509Credentials))
             {
                 writer.WritePropertyName("x509Credentials"u8);
-                writer.WriteObjectValue<X509CredentialsUpdate>(X509Credentials, options);
+                writer.WriteObjectValue(X509Credentials, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         internal static UserAuthenticationUpdate DeserializeUserAuthenticationUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             UsernamePasswordCredentialsUpdate usernamePasswordCredentials = default;
             X509CredentialsUpdate x509Credentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UserAuthenticationUpdate(mode, usernamePasswordCredentials, x509Credentials, serializedAdditionalRawData);
         }
 

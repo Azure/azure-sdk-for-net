@@ -48,7 +48,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue<AuthenticationMechanism>(Authentication);
+                writer.WriteObjectValue(Authentication);
             }
             if (Optional.IsDefined(TwinETag))
             {
@@ -74,12 +74,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<PropertyContainer>(Properties);
+                writer.WriteObjectValue(Properties);
             }
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue<DeviceCapabilities>(Capabilities);
+                writer.WriteObjectValue(Capabilities);
             }
             if (Optional.IsDefined(DeviceScope))
             {
@@ -87,6 +87,14 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WriteStringValue(DeviceScope);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

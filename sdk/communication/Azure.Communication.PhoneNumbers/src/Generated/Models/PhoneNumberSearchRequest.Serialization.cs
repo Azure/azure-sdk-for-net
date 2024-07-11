@@ -20,7 +20,7 @@ namespace Azure.Communication.PhoneNumbers
             writer.WritePropertyName("assignmentType"u8);
             writer.WriteStringValue(AssignmentType.ToString());
             writer.WritePropertyName("capabilities"u8);
-            writer.WriteObjectValue<PhoneNumberCapabilities>(Capabilities);
+            writer.WriteObjectValue(Capabilities);
             if (Optional.IsDefined(AreaCode))
             {
                 writer.WritePropertyName("areaCode"u8);
@@ -32,6 +32,14 @@ namespace Azure.Communication.PhoneNumbers
                 writer.WriteNumberValue(Quantity.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

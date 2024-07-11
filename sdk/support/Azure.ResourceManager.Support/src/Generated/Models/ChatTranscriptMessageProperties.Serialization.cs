@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Support.Models
 {
     public partial class ChatTranscriptMessageProperties : IUtf8JsonSerializable, IJsonModel<ChatTranscriptMessageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatTranscriptMessageProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatTranscriptMessageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChatTranscriptMessageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,8 +41,11 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
-            writer.WritePropertyName("body"u8);
-            writer.WriteStringValue(Body);
+            if (Optional.IsDefined(Body))
+            {
+                writer.WritePropertyName("body"u8);
+                writer.WriteStringValue(Body);
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static ChatTranscriptMessageProperties DeserializeChatTranscriptMessageProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.Support.Models
             string body = default;
             DateTimeOffset? createdDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentType"u8))
@@ -134,10 +137,10 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ChatTranscriptMessageProperties(
                 contentType,
                 communicationDirection,

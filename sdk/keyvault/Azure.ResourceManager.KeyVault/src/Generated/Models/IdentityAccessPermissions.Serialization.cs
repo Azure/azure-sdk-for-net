@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class IdentityAccessPermissions : IUtf8JsonSerializable, IJsonModel<IdentityAccessPermissions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentityAccessPermissions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentityAccessPermissions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IdentityAccessPermissions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static IdentityAccessPermissions DeserializeIdentityAccessPermissions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             IList<IdentityAccessCertificatePermission> certificates = default;
             IList<IdentityAccessStoragePermission> storage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"u8))
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IdentityAccessPermissions(keys ?? new ChangeTrackingList<IdentityAccessKeyPermission>(), secrets ?? new ChangeTrackingList<IdentityAccessSecretPermission>(), certificates ?? new ChangeTrackingList<IdentityAccessCertificatePermission>(), storage ?? new ChangeTrackingList<IdentityAccessStoragePermission>(), serializedAdditionalRawData);
         }
 
@@ -191,17 +191,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Keys), out propertyOverride);
-            if (Optional.IsCollectionDefined(Keys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Keys.Any() || hasPropertyOverride)
+                builder.Append("  keys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Keys))
                 {
-                    builder.Append("  keys: ");
-                    if (hasPropertyOverride)
+                    if (Keys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  keys: ");
                         builder.AppendLine("[");
                         foreach (var item in Keys)
                         {
@@ -213,17 +214,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
-            if (Optional.IsCollectionDefined(Secrets) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Secrets.Any() || hasPropertyOverride)
+                builder.Append("  secrets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Secrets))
                 {
-                    builder.Append("  secrets: ");
-                    if (hasPropertyOverride)
+                    if (Secrets.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  secrets: ");
                         builder.AppendLine("[");
                         foreach (var item in Secrets)
                         {
@@ -235,17 +237,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Certificates), out propertyOverride);
-            if (Optional.IsCollectionDefined(Certificates) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Certificates.Any() || hasPropertyOverride)
+                builder.Append("  certificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Certificates))
                 {
-                    builder.Append("  certificates: ");
-                    if (hasPropertyOverride)
+                    if (Certificates.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  certificates: ");
                         builder.AppendLine("[");
                         foreach (var item in Certificates)
                         {
@@ -257,17 +260,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Storage), out propertyOverride);
-            if (Optional.IsCollectionDefined(Storage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Storage.Any() || hasPropertyOverride)
+                builder.Append("  storage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Storage))
                 {
-                    builder.Append("  storage: ");
-                    if (hasPropertyOverride)
+                    if (Storage.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  storage: ");
                         builder.AppendLine("[");
                         foreach (var item in Storage)
                         {

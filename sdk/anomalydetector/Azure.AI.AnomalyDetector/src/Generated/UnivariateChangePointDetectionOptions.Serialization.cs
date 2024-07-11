@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector
 {
     public partial class UnivariateChangePointDetectionOptions : IUtf8JsonSerializable, IJsonModel<UnivariateChangePointDetectionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UnivariateChangePointDetectionOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UnivariateChangePointDetectionOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UnivariateChangePointDetectionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartArray();
             foreach (var item in Series)
             {
-                writer.WriteObjectValue<TimeSeriesPoint>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("granularity"u8);
@@ -87,7 +87,7 @@ namespace Azure.AI.AnomalyDetector
 
         internal static UnivariateChangePointDetectionOptions DeserializeUnivariateChangePointDetectionOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +100,7 @@ namespace Azure.AI.AnomalyDetector
             int? stableTrendWindow = default;
             float? threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("series"u8))
@@ -156,10 +156,10 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UnivariateChangePointDetectionOptions(
                 series,
                 granularity,
@@ -209,11 +209,11 @@ namespace Azure.AI.AnomalyDetector
             return DeserializeUnivariateChangePointDetectionOptions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnivariateChangePointDetectionOptions>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

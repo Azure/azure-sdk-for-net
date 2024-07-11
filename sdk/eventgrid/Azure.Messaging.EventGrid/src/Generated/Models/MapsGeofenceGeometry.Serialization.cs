@@ -76,5 +76,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 nearestLon,
                 udId);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MapsGeofenceGeometry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMapsGeofenceGeometry(document.RootElement);
+        }
     }
 }

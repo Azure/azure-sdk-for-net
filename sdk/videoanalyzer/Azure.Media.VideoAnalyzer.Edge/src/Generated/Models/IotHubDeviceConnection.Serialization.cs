@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<CredentialsBase>(Credentials);
+                writer.WriteObjectValue(Credentials);
             }
             writer.WriteEndObject();
         }
@@ -51,6 +51,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new IotHubDeviceConnection(deviceId, credentials);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IotHubDeviceConnection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIotHubDeviceConnection(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

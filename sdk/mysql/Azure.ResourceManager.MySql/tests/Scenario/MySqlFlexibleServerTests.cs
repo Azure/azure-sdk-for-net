@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.MySql.Tests
     public class MySqlFlexibleServerTests: MySqlManagementTestBase
     {
         public MySqlFlexibleServerTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//,RecordedTestMode.Record)
         {
-            BodyKeySanitizers.Add(new BodyKeySanitizer("https://fakeaccout.blob.windows.core.net/fakecontainer") { JsonPath = "properties.importSourceProperties.storageUrl" });
-            BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue) { JsonPath = "properties.importSourceProperties.sasToken" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("properties.importSourceProperties.storageUrl") { Value = "https://fakeaccout.blob.windows.core.net/fakecontainer" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("properties.importSourceProperties.sasToken"));
         }
 
         [TestCase]

@@ -1199,8 +1199,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.Identifier,
                     processorClient.EventHubName,
                     processorClient.ConsumerGroup,
-                    It.IsAny<string>(),
-                    expectedException.Message),
+                    expectedException.Message,
+                    It.IsAny<string>()),
                 Times.Exactly(eventBatch.Length));
 
             cancellationSource.Cancel();
@@ -1730,6 +1730,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public Task InvokeUpdateCheckpointAsync(string partitionId, CheckpointPosition checkpointStartingPosition, CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken);
             protected override EventHubConnection CreateConnection() => InjectedConnection;
             protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
+            public bool? IsBaseBatchTracingEnabled => EnableBatchTracing;
         }
 
         /// <summary>

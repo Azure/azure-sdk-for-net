@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AProtectionIntentManagedDiskDetails : IUtf8JsonSerializable, IJsonModel<A2AProtectionIntentManagedDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AProtectionIntentManagedDiskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AProtectionIntentManagedDiskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<A2AProtectionIntentManagedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
-                writer.WriteObjectValue<StorageAccountCustomDetails>(PrimaryStagingStorageAccountCustomContent, options);
+                writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent, options);
             }
             if (Optional.IsDefined(RecoveryResourceGroupCustomContent))
             {
                 writer.WritePropertyName("recoveryResourceGroupCustomInput"u8);
-                writer.WriteObjectValue<RecoveryResourceGroupCustomDetails>(RecoveryResourceGroupCustomContent, options);
+                writer.WriteObjectValue(RecoveryResourceGroupCustomContent, options);
             }
             if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue<SiteRecoveryDiskEncryptionInfo>(DiskEncryptionInfo, options);
+                writer.WriteObjectValue(DiskEncryptionInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static A2AProtectionIntentManagedDiskDetails DeserializeA2AProtectionIntentManagedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier recoveryDiskEncryptionSetId = default;
             SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new A2AProtectionIntentManagedDiskDetails(
                 diskId,
                 primaryStagingStorageAccountCustomContent,

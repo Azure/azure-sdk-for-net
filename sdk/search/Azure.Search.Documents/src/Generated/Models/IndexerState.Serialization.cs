@@ -94,5 +94,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 resetDocumentKeys ?? new ChangeTrackingList<string>(),
                 resetDatasourceDocumentIds ?? new ChangeTrackingList<string>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexerState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexerState(document.RootElement);
+        }
     }
 }

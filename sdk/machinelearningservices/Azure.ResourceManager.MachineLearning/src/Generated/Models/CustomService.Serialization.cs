@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class CustomService : IUtf8JsonSerializable, IJsonModel<CustomService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue<ImageSetting>(Image, options);
+                writer.WriteObjectValue(Image, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 foreach (var item in EnvironmentVariables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<EnvironmentVariable>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Docker != null)
                 {
                     writer.WritePropertyName("docker"u8);
-                    writer.WriteObjectValue<DockerSetting>(Docker, options);
+                    writer.WriteObjectValue(Docker, options);
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue<ContainerEndpoint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue<VolumeDefinition>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CustomService DeserializeCustomService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

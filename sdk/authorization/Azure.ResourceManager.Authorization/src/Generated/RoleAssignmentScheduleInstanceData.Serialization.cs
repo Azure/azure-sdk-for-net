@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class RoleAssignmentScheduleInstanceData : IUtf8JsonSerializable, IJsonModel<RoleAssignmentScheduleInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentScheduleInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentScheduleInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleAssignmentScheduleInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue<RoleManagementExpandedProperties>(ExpandedProperties, options);
+                writer.WriteObjectValue(ExpandedProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Authorization
 
         internal static RoleAssignmentScheduleInstanceData DeserializeRoleAssignmentScheduleInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Authorization
             DateTimeOffset? createdOn = default;
             RoleManagementExpandedProperties expandedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -379,10 +379,10 @@ namespace Azure.ResourceManager.Authorization
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoleAssignmentScheduleInstanceData(
                 id,
                 name,
@@ -420,15 +420,16 @@ namespace Azure.ResourceManager.Authorization
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -442,29 +443,31 @@ namespace Azure.ResourceManager.Authorization
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -472,15 +475,16 @@ namespace Azure.ResourceManager.Authorization
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
-            if (Optional.IsDefined(Scope) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    scope: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scope))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    scope: ");
                     if (Scope.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -494,185 +498,198 @@ namespace Azure.ResourceManager.Authorization
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionId), out propertyOverride);
-            if (Optional.IsDefined(RoleDefinitionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    roleDefinitionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleDefinitionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    roleDefinitionId: ");
                     builder.AppendLine($"'{RoleDefinitionId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
-            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    principalId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    principalId: ");
                     builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalType), out propertyOverride);
-            if (Optional.IsDefined(PrincipalType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    principalType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    principalType: ");
                     builder.AppendLine($"'{PrincipalType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleAssignmentScheduleId), out propertyOverride);
-            if (Optional.IsDefined(RoleAssignmentScheduleId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    roleAssignmentScheduleId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleAssignmentScheduleId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    roleAssignmentScheduleId: ");
                     builder.AppendLine($"'{RoleAssignmentScheduleId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OriginRoleAssignmentId), out propertyOverride);
-            if (Optional.IsDefined(OriginRoleAssignmentId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    originRoleAssignmentId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OriginRoleAssignmentId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    originRoleAssignmentId: ");
                     builder.AppendLine($"'{OriginRoleAssignmentId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    status: ");
                     builder.AppendLine($"'{Status.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    startDateTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    startDateTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
-            if (Optional.IsDefined(EndOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    endDateTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    endDateTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRoleEligibilityScheduleId), out propertyOverride);
-            if (Optional.IsDefined(LinkedRoleEligibilityScheduleId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    linkedRoleEligibilityScheduleId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedRoleEligibilityScheduleId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    linkedRoleEligibilityScheduleId: ");
                     builder.AppendLine($"'{LinkedRoleEligibilityScheduleId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRoleEligibilityScheduleInstanceId), out propertyOverride);
-            if (Optional.IsDefined(LinkedRoleEligibilityScheduleInstanceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    linkedRoleEligibilityScheduleInstanceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedRoleEligibilityScheduleInstanceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    linkedRoleEligibilityScheduleInstanceId: ");
                     builder.AppendLine($"'{LinkedRoleEligibilityScheduleInstanceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignmentType), out propertyOverride);
-            if (Optional.IsDefined(AssignmentType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    assignmentType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssignmentType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    assignmentType: ");
                     builder.AppendLine($"'{AssignmentType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemberType), out propertyOverride);
-            if (Optional.IsDefined(MemberType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    memberType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemberType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    memberType: ");
                     builder.AppendLine($"'{MemberType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Condition), out propertyOverride);
-            if (Optional.IsDefined(Condition) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    condition: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Condition))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    condition: ");
                     if (Condition.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -686,15 +703,16 @@ namespace Azure.ResourceManager.Authorization
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConditionVersion), out propertyOverride);
-            if (Optional.IsDefined(ConditionVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    conditionVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConditionVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    conditionVersion: ");
                     if (ConditionVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -708,30 +726,32 @@ namespace Azure.ResourceManager.Authorization
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    createdOn: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    createdOn: ");
                     var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpandedProperties), out propertyOverride);
-            if (Optional.IsDefined(ExpandedProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    expandedProperties: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpandedProperties))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    expandedProperties: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ExpandedProperties, options, 4, false, "    expandedProperties: ");
                 }
             }

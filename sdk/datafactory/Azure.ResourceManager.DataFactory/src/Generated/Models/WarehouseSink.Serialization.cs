@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class WarehouseSink : IUtf8JsonSerializable, IJsonModel<WarehouseSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WarehouseSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WarehouseSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WarehouseSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
-                writer.WriteObjectValue<DWCopyCommandSettings>(CopyCommandSettings, options);
+                writer.WriteObjectValue(CopyCommandSettings, options);
             }
             if (Optional.IsDefined(TableOption))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WarehouseSink DeserializeWarehouseSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

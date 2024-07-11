@@ -45,21 +45,24 @@ Documentation is available to help you learn how to use this package:
 ### Get the intermediate status of the ImportEntities method
 
 ```C# Snippet:Readme_GetIntermediateStatusOfImportEntitiesMethod
-// First, initialize the ArmClient
 ArmClient client = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+
+string resourceGroupName = "myRgName";
+ResourceGroupResource rg = await resourceGroups.GetAsync(resourceGroupName);
 // Create Resource group, create a discovery site.
 // Get Discovery site resource with the created name.
-SAPDiscoverySiteResource sapDiscoverySiteResource = await rg.GetSAPDiscoverySiteAsync(discoverySiteName);
+string discoverySiteName = "siteName";
+SapDiscoverySiteResource sapDiscoverySiteResource = await rg.GetSapDiscoverySiteAsync(discoverySiteName);
 // Post import entities operation.
-ArmOperation<OperationStatusResult> importEntitiesOp =
-    await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
+ArmOperation<OperationStatusResult> importEntitiesOp = await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
 // Get operation status.
-Response<GenericResource> operationStatus = await client.GetGenericResources()
-    .GetAsync(ResourceIdentifier.Parse(importEntitiesOp.Value.Id));
-JObject operationStatusObj = JObject.Parse(operationStatus?.GetRawResponse()?.Content?.ToString());
-JToken opProperties = operationStatusObj?["properties"];
-// Status of import entities method.
-string status = opProperties?["status"].ToString();
+Response<GenericResource> operationStatus = await client.GetGenericResources().GetAsync(ResourceIdentifier.Parse(importEntitiesOp.Value.Id));
+JsonDocument doc = JsonDocument.Parse(operationStatus?.GetRawResponse()?.Content?.ToString());
+JsonElement root = doc.RootElement;
+JsonElement p = root.GetProperty("properties");
+string status = p.GetProperty("status").GetString();
 ```
 
 Code samples for using the management library for .NET can be found in the following locations

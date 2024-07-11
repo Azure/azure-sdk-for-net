@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.ContainerRegistry
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetBuildSourceUploadUrlRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/listBuildSourceUploadUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBuildSourceUploadUrlRequest(string subscriptionId, string resourceGroupName, string registryName)
         {
             var message = _pipeline.CreateMessage();
