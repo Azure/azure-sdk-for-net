@@ -308,8 +308,8 @@ function Remove-WormStorageAccounts() {
   }
 }
 
-function SetResourceNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI) {
-  SetStorageNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -CI:$CI
+function SetResourceNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI, [switch]$Override) {
+  SetStorageNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -CI:$CI -Override:$Override
 }
 
 function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI, [switch]$Override) {
@@ -325,6 +325,16 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
       if ($properties.AllowBlobPublicAccess) {
         Write-Host "Restricting public blob access in storage account '$($account.Name)'"
         Set-AzStorageAccount -ResourceGroupName $ResourceGroupName -StorageAccountName $account.Name -AllowBlobPublicAccess $false
+      }
+
+      # In override mode, we only want to capture storage accounts that have had incomplete network rules applied,
+      # otherwise it's not worth updating due to timing and throttling issues.
+      # If the network rules are deny only without any vnet/ip allowances, then we can't ever purge the storage account
+      # when immutable blobs need to be removed.
+      if ($Override -and $rules.DefaultAction -eq "Deny") {
+        if ($rules.VirtualNetworkRules.Length -gt 0 -or $rules.IpRules.Length -gt 0) {
+          return
+        }
       }
 
       if ($rules -and ($Override -or $rules.DefaultAction -eq "Allow")) {
