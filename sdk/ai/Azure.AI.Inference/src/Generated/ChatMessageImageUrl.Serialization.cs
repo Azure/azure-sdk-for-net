@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Inference
 {
-    public partial class ChatMessageImageUrl : IUtf8JsonSerializable, IJsonModel<ChatMessageImageUrl>
+    internal partial class ChatMessageImageUrl : IUtf8JsonSerializable, IJsonModel<ChatMessageImageUrl>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatMessageImageUrl>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -27,7 +27,7 @@ namespace Azure.AI.Inference
 
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url.AbsoluteUri);
+            writer.WriteStringValue(Url);
             if (Optional.IsDefined(Detail))
             {
                 writer.WritePropertyName("detail"u8);
@@ -71,7 +71,7 @@ namespace Azure.AI.Inference
             {
                 return null;
             }
-            Uri url = default;
+            string url = default;
             ChatMessageImageDetailLevel? detail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -79,7 +79,7 @@ namespace Azure.AI.Inference
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("detail"u8))

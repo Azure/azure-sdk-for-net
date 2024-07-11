@@ -27,7 +27,7 @@ namespace Azure.AI.Inference
 
             writer.WriteStartObject();
             writer.WritePropertyName("image_url"u8);
-            writer.WriteObjectValue(ImageUrl, options);
+            writer.WriteObjectValue<ChatMessageImageUrl>(ImageUrl, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

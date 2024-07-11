@@ -14,17 +14,6 @@ namespace Azure.AI.Inference
     public partial class ChatMessageImageContentItem : ChatMessageContentItem
     {
         /// <summary> Initializes a new instance of <see cref="ChatMessageImageContentItem"/>. </summary>
-        /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
-        public ChatMessageImageContentItem(ChatMessageImageUrl imageUrl)
-        {
-            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
-
-            Type = "image_url";
-            ImageUrl = imageUrl;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ChatMessageImageContentItem"/>. </summary>
         /// <param name="type"> The discriminated object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
@@ -37,8 +26,5 @@ namespace Azure.AI.Inference
         internal ChatMessageImageContentItem()
         {
         }
-
-        /// <summary> An internet location, which must be accessible to the model,from which the image may be retrieved. </summary>
-        public ChatMessageImageUrl ImageUrl { get; }
     }
 }

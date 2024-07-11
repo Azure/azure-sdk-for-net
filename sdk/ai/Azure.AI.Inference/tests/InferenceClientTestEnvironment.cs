@@ -11,6 +11,7 @@ namespace Azure.AI.Inference.Tests
         public string MistralSmallApiKey => GetRecordedVariable("AZUREAI_MISTRAL_SMALL_KEY", options => options.IsSecret());
         public string GithubEndpoint => GetRecordedVariable("AZUREAI_GITHUB_URL");
         public string GithubToken => GetRecordedVariable("AZUREAI_GITHUB_TOKEN", options => options.IsSecret());
+        public string TestImageJpgInputPath => GetRecordedVariable("AZUREAI_TEST_IMAGE_JPG_INPUT_PATH");
 
         // Add other client paramters here as above.
     }

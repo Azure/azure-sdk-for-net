@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Inference
 {
     /// <summary> An internet location from which the model may retrieve an image. </summary>
-    public partial class ChatMessageImageUrl
+    internal partial class ChatMessageImageUrl
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,7 +48,7 @@ namespace Azure.AI.Inference
         /// <summary> Initializes a new instance of <see cref="ChatMessageImageUrl"/>. </summary>
         /// <param name="url"> The URL of the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ChatMessageImageUrl(Uri url)
+        public ChatMessageImageUrl(string url)
         {
             Argument.AssertNotNull(url, nameof(url));
 
@@ -62,7 +62,7 @@ namespace Azure.AI.Inference
         /// accuracy.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatMessageImageUrl(Uri url, ChatMessageImageDetailLevel? detail, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatMessageImageUrl(string url, ChatMessageImageDetailLevel? detail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Url = url;
             Detail = detail;
@@ -73,9 +73,6 @@ namespace Azure.AI.Inference
         internal ChatMessageImageUrl()
         {
         }
-
-        /// <summary> The URL of the image. </summary>
-        public Uri Url { get; }
         /// <summary>
         /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
         /// accuracy.

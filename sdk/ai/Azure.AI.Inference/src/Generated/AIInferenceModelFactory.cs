@@ -14,6 +14,47 @@ namespace Azure.AI.Inference
     /// <summary> Model factory for models. </summary>
     public static partial class AIInferenceModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestSystemMessage"/>. </summary>
+        /// <param name="content"> The contents of the system message. </param>
+        /// <returns> A new <see cref="Inference.ChatRequestSystemMessage"/> instance for mocking. </returns>
+        public static ChatRequestSystemMessage ChatRequestSystemMessage(string content = null)
+        {
+            return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageTextContentItem"/>. </summary>
+        /// <param name="text"> The content of the message. </param>
+        /// <returns> A new <see cref="Inference.ChatMessageTextContentItem"/> instance for mocking. </returns>
+        public static ChatMessageTextContentItem ChatMessageTextContentItem(string text = null)
+        {
+            return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestToolMessage"/>. </summary>
+        /// <param name="content"> The content of the message. </param>
+        /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
+        /// <returns> A new <see cref="Inference.ChatRequestToolMessage"/> instance for mocking. </returns>
+        public static ChatRequestToolMessage ChatRequestToolMessage(string content = null, string toolCallId = null)
+        {
+            return new ChatRequestToolMessage(ChatRole.Tool, serializedAdditionalRawData: null, content, toolCallId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsFunctionToolDefinition"/>. </summary>
+        /// <param name="function"> The function definition details for the function tool. </param>
+        /// <returns> A new <see cref="Inference.ChatCompletionsFunctionToolDefinition"/> instance for mocking. </returns>
+        public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
+        {
+            return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/>. </summary>
+        /// <param name="function"> The function that should be called. </param>
+        /// <returns> A new <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/> instance for mocking. </returns>
+        public static ChatCompletionsNamedFunctionToolSelection ChatCompletionsNamedFunctionToolSelection(ChatCompletionsFunctionToolSelection function = null)
+        {
+            return new ChatCompletionsNamedFunctionToolSelection("function", serializedAdditionalRawData: null, function);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
@@ -86,67 +127,6 @@ namespace Azure.AI.Inference
         public static ModelInfo ModelInfo(string modelName = null, ModelType modelType = default, string modelProviderName = null)
         {
             return new ModelInfo(modelName, modelType, modelProviderName, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestSystemMessage"/>. </summary>
-        /// <param name="content"> The contents of the system message. </param>
-        /// <returns> A new <see cref="Inference.ChatRequestSystemMessage"/> instance for mocking. </returns>
-        public static ChatRequestSystemMessage ChatRequestSystemMessage(string content = null)
-        {
-            return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageTextContentItem"/>. </summary>
-        /// <param name="text"> The content of the message. </param>
-        /// <returns> A new <see cref="Inference.ChatMessageTextContentItem"/> instance for mocking. </returns>
-        public static ChatMessageTextContentItem ChatMessageTextContentItem(string text = null)
-        {
-            return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageImageContentItem"/>. </summary>
-        /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
-        /// <returns> A new <see cref="Inference.ChatMessageImageContentItem"/> instance for mocking. </returns>
-        public static ChatMessageImageContentItem ChatMessageImageContentItem(ChatMessageImageUrl imageUrl = null)
-        {
-            return new ChatMessageImageContentItem("image_url", serializedAdditionalRawData: null, imageUrl);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageImageUrl"/>. </summary>
-        /// <param name="url"> The URL of the image. </param>
-        /// <param name="detail">
-        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
-        /// accuracy.
-        /// </param>
-        /// <returns> A new <see cref="Inference.ChatMessageImageUrl"/> instance for mocking. </returns>
-        public static ChatMessageImageUrl ChatMessageImageUrl(Uri url = null, ChatMessageImageDetailLevel? detail = null)
-        {
-            return new ChatMessageImageUrl(url, detail, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestToolMessage"/>. </summary>
-        /// <param name="content"> The content of the message. </param>
-        /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
-        /// <returns> A new <see cref="Inference.ChatRequestToolMessage"/> instance for mocking. </returns>
-        public static ChatRequestToolMessage ChatRequestToolMessage(string content = null, string toolCallId = null)
-        {
-            return new ChatRequestToolMessage(ChatRole.Tool, serializedAdditionalRawData: null, content, toolCallId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsFunctionToolDefinition"/>. </summary>
-        /// <param name="function"> The function definition details for the function tool. </param>
-        /// <returns> A new <see cref="Inference.ChatCompletionsFunctionToolDefinition"/> instance for mocking. </returns>
-        public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
-        {
-            return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/>. </summary>
-        /// <param name="function"> The function that should be called. </param>
-        /// <returns> A new <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/> instance for mocking. </returns>
-        public static ChatCompletionsNamedFunctionToolSelection ChatCompletionsNamedFunctionToolSelection(ChatCompletionsFunctionToolSelection function = null)
-        {
-            return new ChatCompletionsNamedFunctionToolSelection("function", serializedAdditionalRawData: null, function);
         }
     }
 }

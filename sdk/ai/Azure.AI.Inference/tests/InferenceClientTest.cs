@@ -19,6 +19,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -32,6 +33,13 @@ namespace Azure.AI.Inference.Tests
             UseRequiredPresetToolChoice,
             UseFunctionByExplicitToolDefinitionForToolChoice,
             UseFunctionByImplicitToolDefinitionForToolChoice,
+        }
+
+        public enum ImageTestSourceKind
+        {
+            UsingInternetLocation,
+            UsingStream,
+            UsingBinaryData,
         }
 
         public InferenceClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
@@ -180,14 +188,14 @@ namespace Azure.AI.Inference.Tests
                 Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
                 Assert.IsTrue(captureRequestPayloadPolicy._requestContent.Contains("foo"));
                 Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders.ContainsKey("extra-parameters"));
-                Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders["extra-parameters"] == ExtraParams.PassThrough);
+                Assert.IsTrue(captureRequestPayloadPolicy._requestHeaders["extra-parameters"] == ExtraParameters.PassThrough);
             }
             Assert.IsTrue(exceptionThrown);
 
             exceptionThrown = false;
             try
             {
-                 await client.CompleteAsync(requestOptions, ExtraParams.PassThrough);
+                 await client.CompleteAsync(requestOptions, ExtraParameters.PassThrough);
             }
             catch (Exception e)
             {
@@ -198,8 +206,8 @@ namespace Azure.AI.Inference.Tests
             Assert.IsTrue(exceptionThrown);
 
             /*
-            // To be enabled once ExtraParams is implemented in the service
-            var response = await client.CompleteAsync(requestOptions, ExtraParams.Drop);
+            // To be enabled once ExtraParameters is implemented in the service
+            var response = await client.CompleteAsync(requestOptions, ExtraParameters.Drop);
 
             Assert.IsTrue(captureRequestPayloadPolicy._requestContent.Contains("foo"));
 
@@ -386,6 +394,75 @@ namespace Azure.AI.Inference.Tests
             Assert.That(followupResponse.Value.Choices[0].Message.Content, Is.Not.Null.Or.Empty);
         }
 
+        [RecordedTest]
+        [TestCase(ImageTestSourceKind.UsingInternetLocation)]
+        [TestCase(ImageTestSourceKind.UsingStream, IgnoreReason="Not ready yet")]
+        [TestCase(ImageTestSourceKind.UsingBinaryData, IgnoreReason = "Not ready yet")]
+        public async Task TestChatCompletionsWithImages(ImageTestSourceKind imageSourceKind)
+        {
+            // var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
+            // var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+
+            var githubEndpoint = new Uri(TestEnvironment.GithubEndpoint);
+            var githubModelName = "gpt-4o";
+            var githubCredential = new AzureKeyCredential(TestEnvironment.GithubToken);
+
+            // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+
+            // var client = CreateClient(endpoint, credential);
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
+            // var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
+            var client = new ChatCompletionsClient(githubEndpoint, githubCredential, clientOptions);
+
+            ChatMessageImageContentItem imageContentItem = imageSourceKind switch
+            {
+                ImageTestSourceKind.UsingInternetLocation => new(GetTestImageInternetUri(), ChatMessageImageDetailLevel.Low),
+                ImageTestSourceKind.UsingStream => new(GetTestImageStream("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
+                ImageTestSourceKind.UsingBinaryData => new(GetTestImageData("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
+                _ => throw new ArgumentException(nameof(imageSourceKind)),
+            };
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant that helps describe images."),
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("describe this image"),
+                        imageContentItem),
+                },
+                MaxTokens = 2048,
+            };
+
+            Response<ChatCompletions> response = null;
+            try
+            {
+                response = await client.CompleteAsync(requestOptions);
+            }
+            catch (Exception ex)
+            {
+                var requestPayload = captureRequestPayloadPolicy._requestContent;
+                var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+            }
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            ChatChoice choice = response.Value.Choices[0];
+            Assert.That(choice.Index, Is.EqualTo(0));
+
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+        }
+
         #region Helpers
         private class CaptureRequestPayloadPolicy : HttpPipelinePolicy
         {
@@ -429,6 +506,31 @@ namespace Azure.AI.Inference.Tests
             r.ContentStream.CopyTo(ms);
             return new BinaryData(ms.ToArray());
         }
+
+        private Uri GetTestImageInternetUri()
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new Uri("https://sanitized");
+            }
+            return new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg");
+        }
+
+        private Stream GetTestImageStream(string mimeType)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new MemoryStream();
+            }
+            return File.OpenRead(mimeType switch
+            {
+                "image/jpg" => TestEnvironment.TestImageJpgInputPath,
+                _ => throw new ArgumentException(nameof(mimeType)),
+            });
+        }
+
+        private BinaryData GetTestImageData(string mimeType)
+            => BinaryData.FromStream(GetTestImageStream(mimeType));
         #endregion
     }
 }

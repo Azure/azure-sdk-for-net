@@ -37,7 +37,7 @@ namespace Azure.AI.Inference
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
-        public virtual async Task<Response<ChatCompletions>> CompleteAsync(ChatCompletionsOptions chatCompletionsOptions, ExtraParams? extraParams = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChatCompletions>> CompleteAsync(ChatCompletionsOptions chatCompletionsOptions, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
@@ -45,7 +45,7 @@ namespace Azure.AI.Inference
             //   If AdditionalProperties are provided, the decision has been made to default extraParams to "PassThrough"
             if (chatCompletionsOptions.AdditionalProperties != null && chatCompletionsOptions.AdditionalProperties.Count > 0)
             {
-                extraParams ??= ExtraParams.PassThrough;
+                extraParams ??= ExtraParameters.PassThrough;
             }
 
             using RequestContent content = chatCompletionsOptions.ToRequestContent();
@@ -71,7 +71,7 @@ namespace Azure.AI.Inference
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionsOptions"/> is null. </exception>
-        public virtual Response<ChatCompletions> Complete(ChatCompletionsOptions chatCompletionsOptions, ExtraParams? extraParams = null, CancellationToken cancellationToken = default)
+        public virtual Response<ChatCompletions> Complete(ChatCompletionsOptions chatCompletionsOptions, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
@@ -79,7 +79,7 @@ namespace Azure.AI.Inference
             //   If AdditionalProperties are provided, the decision has been made to default extraParams to "PassThrough"
             if (chatCompletionsOptions.AdditionalProperties != null && chatCompletionsOptions.AdditionalProperties.Count > 0)
             {
-                extraParams ??= ExtraParams.PassThrough;
+                extraParams ??= ExtraParameters.PassThrough;
             }
 
             using RequestContent content = chatCompletionsOptions.ToRequestContent();

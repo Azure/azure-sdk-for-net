@@ -17,9 +17,8 @@ namespace Azure.AI.Inference
     /// <summary> The ChatCompletions service client. </summary>
     public partial class ChatCompletionsClient
     {
-        private const string AuthorizationHeader = "Authorization";
+        private const string AuthorizationHeader = "api-key";
         private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationApiKeyPrefix = "Bearer";
         private static readonly string[] AuthorizationScopes = new string[] { "https://ml.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
@@ -66,7 +65,7 @@ namespace Azure.AI.Inference
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -104,7 +103,8 @@ namespace Azure.AI.Inference
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="extraParams">
-        /// Controls what happens if extra parameters are passed in the JSON request payload.
+        /// Controls what happens if extra parameters, undefined by the REST API,
+        /// are passed in the JSON request payload.
         /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass_through"
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -144,7 +144,8 @@ namespace Azure.AI.Inference
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="extraParams">
-        /// Controls what happens if extra parameters are passed in the JSON request payload.
+        /// Controls what happens if extra parameters, undefined by the REST API,
+        /// are passed in the JSON request payload.
         /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass_through"
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
