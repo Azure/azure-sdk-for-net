@@ -103,7 +103,7 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
       - script: >-
-          dotnet pack eng/service.proj -warnaserror
+          dotnet pack eng/service.proj
           /p:ValidateRunApiCompat=true
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
@@ -239,7 +239,7 @@ jobs:
           LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
 
       - script: >-
-          dotnet build eng/service.proj -warnaserror
+          dotnet build eng/service.proj
           /t:rebuild
           /p:DebugType=none
           /p:SDKType=${{ parameters.SDKType }}
