@@ -127,7 +127,8 @@ namespace Azure.Storage.Blobs.Test
             };
             BlobBaseClient freshBlobClient = InstrumentClient(new BlobBaseClient(
                 uriBuilder.ToUri(),
-                Tenants.GetNewSharedKeyCredentials()));
+                Tenants.GetNewSharedKeyCredentials(),
+                GetOptions()));
 
             // Assert
             Assert.AreEqual(blobName, freshBlobClient.Name);
