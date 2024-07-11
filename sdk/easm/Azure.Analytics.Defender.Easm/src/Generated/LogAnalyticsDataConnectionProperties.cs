@@ -14,7 +14,7 @@ namespace Azure.Analytics.Defender.Easm
     public partial class LogAnalyticsDataConnectionProperties : DataConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnectionProperties"/>. </summary>
-        public LogAnalyticsDataConnectionProperties()
+        internal LogAnalyticsDataConnectionProperties()
         {
         }
 
@@ -29,8 +29,8 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> log analytics api key. </summary>
-        public string ApiKey { get; set; }
+        public string ApiKey { get; }
         /// <summary> log analytics workspace id. </summary>
-        public string WorkspaceId { get; set; }
+        public string WorkspaceId { get; }
     }
 }
