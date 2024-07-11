@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westcentralus");
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
+            FabricCheckNameAvailabilityContent content = new FabricCheckNameAvailabilityContent()
             {
                 Name = "azsdktest",
                 ResourceType = "Microsoft.Fabric/capacities",

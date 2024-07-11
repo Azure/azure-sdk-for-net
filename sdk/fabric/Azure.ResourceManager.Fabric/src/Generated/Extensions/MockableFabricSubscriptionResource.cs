@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<FabricCheckNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FabricCheckNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(AzureLocation location, FabricCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<FabricCheckNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<FabricCheckNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(AzureLocation location, FabricCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

@@ -18,11 +18,6 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-#mgmt-debug:
-#  show-serialized-names: true
-
- 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -55,9 +50,9 @@ acronym-mapping:
 
 rename-mapping:
   CheckNameAvailabilityResponse: FabricCheckNameAvailabilityResult
-  CheckNameAvailabilityContent: FabricCheckNameAvailabilityContent
+  CheckNameAvailabilityRequest: FabricCheckNameAvailabilityContent
   CheckNameAvailabilityReason: FabricNameUnavailableReason
-  CheckNameAvailabilityResult:FabricCheckNameAvailabilityResult
+  CheckNameAvailabilityResult: FabricCheckNameAvailabilityResult
   ProvisioningState: FabricProvisioningState
   ResourceState: FabricResourceState
   RpSkuDetailsForNewResource: RpSkuDetailsForNewCapacity

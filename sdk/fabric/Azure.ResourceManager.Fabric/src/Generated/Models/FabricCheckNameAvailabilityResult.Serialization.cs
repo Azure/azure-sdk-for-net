@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 return null;
             }
             bool? nameAvailable = default;
-            CheckNameAvailabilityReason? reason = default;
+            FabricNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     {
                         continue;
                     }
-                    reason = new CheckNameAvailabilityReason(property.Value.GetString());
+                    reason = new FabricNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))

@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Fabric
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ProvisioningState? provisioningState = default;
-            ResourceState? state = default;
+            FabricProvisioningState? provisioningState = default;
+            FabricResourceState? state = default;
             CapacityAdministration administration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Fabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new FabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("state"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Fabric
                             {
                                 continue;
                             }
-                            state = new ResourceState(property0.Value.GetString());
+                            state = new FabricResourceState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administration"u8))

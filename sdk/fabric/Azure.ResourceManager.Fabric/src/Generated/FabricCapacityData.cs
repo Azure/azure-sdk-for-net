@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="administration"> The capacity administration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RpSku sku, ProvisioningState? provisioningState, ResourceState? state, CapacityAdministration administration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal FabricCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RpSku sku, FabricProvisioningState? provisioningState, FabricResourceState? state, CapacityAdministration administration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Fabric
         /// <summary> The SKU details. </summary>
         public RpSku Sku { get; set; }
         /// <summary> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public FabricProvisioningState? ProvisioningState { get; }
         /// <summary> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </summary>
-        public ResourceState? State { get; }
+        public FabricResourceState? State { get; }
         /// <summary> The capacity administration. </summary>
         internal CapacityAdministration Administration { get; set; }
         /// <summary> An array of administrator user identities. </summary>
