@@ -170,7 +170,7 @@
     <ManagedDiskConfiguration>
       <Name>DefaultManagedDisk</Name>
       <DiskNamePrefix>DISK NAME PREFIX</DiskNamePrefix>
-      <ResourceGroupName>RESOURECE GROUP NAME</ResourceGroupName>
+      <ResourceGroupName>RESOURCE GROUP NAME</ResourceGroupName>
       <SubsriptionId>SubscriptionId</SubsriptionId>
       <Location>Location</Location>
     </ManagedDiskConfiguration>
