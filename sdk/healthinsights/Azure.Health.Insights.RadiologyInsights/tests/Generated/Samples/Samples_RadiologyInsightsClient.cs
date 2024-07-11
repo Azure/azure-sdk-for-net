@@ -79,11 +79,11 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -95,11 +95,11 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -767,7 +767,7 @@ value = "<value>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -929,7 +929,7 @@ EncounterId = "<encounterId>",
                     Locale = "<locale>",
                 },
             };
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -941,7 +941,7 @@ EncounterId = "<encounterId>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -1103,7 +1103,7 @@ EncounterId = "<encounterId>",
                     Locale = "<locale>",
                 },
             };
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
     }

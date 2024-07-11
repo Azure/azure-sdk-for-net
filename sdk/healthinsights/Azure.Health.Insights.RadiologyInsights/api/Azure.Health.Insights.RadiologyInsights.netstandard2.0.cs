@@ -924,9 +924,9 @@ namespace Azure.Health.Insights.RadiologyInsights
         public RadiologyInsightsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> InferRadiologyInsights(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceResult> InferRadiologyInsights(Azure.WaitUntil waitUntil, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsData radiologyInsightsData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceResult> InferRadiologyInsights(Azure.WaitUntil waitUntil, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> InferRadiologyInsightsAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsData radiologyInsightsData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RadiologyInsightsClientOptions : Azure.Core.ClientOptions
     {

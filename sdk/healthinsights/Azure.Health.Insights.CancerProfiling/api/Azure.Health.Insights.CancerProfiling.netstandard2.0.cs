@@ -7,9 +7,9 @@ namespace Azure.Health.Insights.CancerProfiling
         public CancerProfilingClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Health.Insights.CancerProfiling.CancerProfilingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> InferCancerProfile(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults> InferCancerProfile(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData oncoPhenotypeData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults> InferCancerProfile(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> InferCancerProfileAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults>> InferCancerProfileAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData oncoPhenotypeData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults>> InferCancerProfileAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CancerProfilingClientOptions : Azure.Core.ClientOptions
     {

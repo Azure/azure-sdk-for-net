@@ -54,8 +54,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = client.Create(atlasRelationship);
+            AtlasRelationship body = new AtlasRelationship();
+            Response<AtlasRelationship> response = client.Create(body);
         }
 
         [Test]
@@ -66,8 +66,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
+            AtlasRelationship body = new AtlasRelationship();
+            Response<AtlasRelationship> response = await client.CreateAsync(body);
         }
 
         [Test]
@@ -198,7 +198,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasRelationship body = new AtlasRelationship
             {
                 Attributes =
 {
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 UpdatedBy = "<updatedBy>",
                 Version = 1234L,
             };
-            Response<AtlasRelationship> response = client.Create(atlasRelationship);
+            Response<AtlasRelationship> response = client.Create(body);
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasRelationship body = new AtlasRelationship
             {
                 Attributes =
 {
@@ -267,7 +267,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 UpdatedBy = "<updatedBy>",
                 Version = 1234L,
             };
-            Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
+            Response<AtlasRelationship> response = await client.CreateAsync(body);
         }
 
         [Test]
@@ -308,8 +308,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = client.Update(atlasRelationship);
+            AtlasRelationship body = new AtlasRelationship();
+            Response<AtlasRelationship> response = client.Update(body);
         }
 
         [Test]
@@ -320,8 +320,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
+            AtlasRelationship body = new AtlasRelationship();
+            Response<AtlasRelationship> response = await client.UpdateAsync(body);
         }
 
         [Test]
@@ -452,7 +452,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasRelationship body = new AtlasRelationship
             {
                 Attributes =
 {
@@ -481,7 +481,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 UpdatedBy = "<updatedBy>",
                 Version = 1234L,
             };
-            Response<AtlasRelationship> response = client.Update(atlasRelationship);
+            Response<AtlasRelationship> response = client.Update(body);
         }
 
         [Test]
@@ -492,7 +492,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasRelationship body = new AtlasRelationship
             {
                 Attributes =
 {
@@ -521,7 +521,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 UpdatedBy = "<updatedBy>",
                 Version = 1234L,
             };
-            Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
+            Response<AtlasRelationship> response = await client.UpdateAsync(body);
         }
 
         [Test]

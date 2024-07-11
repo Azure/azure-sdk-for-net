@@ -219,8 +219,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossary atlasGlossary = new AtlasGlossary();
-            Response<AtlasGlossary> response = client.Create(atlasGlossary);
+            AtlasGlossary body = new AtlasGlossary();
+            Response<AtlasGlossary> response = client.Create(body);
         }
 
         [Test]
@@ -231,8 +231,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossary atlasGlossary = new AtlasGlossary();
-            Response<AtlasGlossary> response = await client.CreateAsync(atlasGlossary);
+            AtlasGlossary body = new AtlasGlossary();
+            Response<AtlasGlossary> response = await client.CreateAsync(body);
         }
 
         [Test]
@@ -461,7 +461,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossary atlasGlossary = new AtlasGlossary
+            AtlasGlossary body = new AtlasGlossary
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -512,7 +512,7 @@ TermGuid = "<termGuid>",
 }},
                 Usage = "<usage>",
             };
-            Response<AtlasGlossary> response = client.Create(atlasGlossary);
+            Response<AtlasGlossary> response = client.Create(body);
         }
 
         [Test]
@@ -523,7 +523,7 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossary atlasGlossary = new AtlasGlossary
+            AtlasGlossary body = new AtlasGlossary
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -574,7 +574,7 @@ TermGuid = "<termGuid>",
 }},
                 Usage = "<usage>",
             };
-            Response<AtlasGlossary> response = await client.CreateAsync(atlasGlossary);
+            Response<AtlasGlossary> response = await client.CreateAsync(body);
         }
 
         [Test]
@@ -1061,8 +1061,8 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory();
-            Response<AtlasGlossaryCategory> response = client.CreateCategory(atlasGlossaryCategory);
+            AtlasGlossaryCategory body = new AtlasGlossaryCategory();
+            Response<AtlasGlossaryCategory> response = client.CreateCategory(body);
         }
 
         [Test]
@@ -1073,8 +1073,8 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory();
-            Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(atlasGlossaryCategory);
+            AtlasGlossaryCategory body = new AtlasGlossaryCategory();
+            Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(body);
         }
 
         [Test]
@@ -1323,7 +1323,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory
+            AtlasGlossaryCategory body = new AtlasGlossaryCategory
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -1379,7 +1379,7 @@ Steward = "<steward>",
 TermGuid = "<termGuid>",
 }},
             };
-            Response<AtlasGlossaryCategory> response = client.CreateCategory(atlasGlossaryCategory);
+            Response<AtlasGlossaryCategory> response = client.CreateCategory(body);
         }
 
         [Test]
@@ -1390,7 +1390,7 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory
+            AtlasGlossaryCategory body = new AtlasGlossaryCategory
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -1446,7 +1446,7 @@ Steward = "<steward>",
 TermGuid = "<termGuid>",
 }},
             };
-            Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(atlasGlossaryCategory);
+            Response<AtlasGlossaryCategory> response = await client.CreateCategoryAsync(body);
         }
 
         [Test]
@@ -1663,8 +1663,8 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory();
-            Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", atlasGlossaryCategory);
+            AtlasGlossaryCategory body = new AtlasGlossaryCategory();
+            Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", body);
         }
 
         [Test]
@@ -1675,8 +1675,8 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory();
-            Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", atlasGlossaryCategory);
+            AtlasGlossaryCategory body = new AtlasGlossaryCategory();
+            Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", body);
         }
 
         [Test]
@@ -1925,7 +1925,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory
+            AtlasGlossaryCategory body = new AtlasGlossaryCategory
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -1981,7 +1981,7 @@ Steward = "<steward>",
 TermGuid = "<termGuid>",
 }},
             };
-            Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", atlasGlossaryCategory);
+            Response<AtlasGlossaryCategory> response = client.UpdateCategory("<categoryId>", body);
         }
 
         [Test]
@@ -1992,7 +1992,7 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory
+            AtlasGlossaryCategory body = new AtlasGlossaryCategory
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -2048,7 +2048,7 @@ Steward = "<steward>",
 TermGuid = "<termGuid>",
 }},
             };
-            Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", atlasGlossaryCategory);
+            Response<AtlasGlossaryCategory> response = await client.UpdateCategoryAsync("<categoryId>", body);
         }
 
         [Test]
@@ -2565,8 +2565,8 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm();
-            Response<AtlasGlossaryTerm> response = client.CreateTerm(atlasGlossaryTerm);
+            AtlasGlossaryTerm body = new AtlasGlossaryTerm();
+            Response<AtlasGlossaryTerm> response = client.CreateTerm(body);
         }
 
         [Test]
@@ -2577,8 +2577,8 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm();
-            Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(atlasGlossaryTerm);
+            AtlasGlossaryTerm body = new AtlasGlossaryTerm();
+            Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(body);
         }
 
         [Test]
@@ -3309,7 +3309,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm
+            AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -3442,7 +3442,7 @@ Status = AtlasTermRelationshipStatus.Draft,
                 ValidValues = { default },
                 ValidValuesFor = { default },
             };
-            Response<AtlasGlossaryTerm> response = client.CreateTerm(atlasGlossaryTerm, includeTermHierarchy: true);
+            Response<AtlasGlossaryTerm> response = client.CreateTerm(body, includeTermHierarchy: true);
         }
 
         [Test]
@@ -3453,7 +3453,7 @@ Status = AtlasTermRelationshipStatus.Draft,
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm
+            AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -3586,7 +3586,7 @@ Status = AtlasTermRelationshipStatus.Draft,
                 ValidValues = { default },
                 ValidValuesFor = { default },
             };
-            Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(atlasGlossaryTerm, includeTermHierarchy: true);
+            Response<AtlasGlossaryTerm> response = await client.CreateTermAsync(body, includeTermHierarchy: true);
         }
 
         [Test]
@@ -4021,8 +4021,8 @@ Status = AtlasTermRelationshipStatus.Draft,
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm();
-            Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", atlasGlossaryTerm);
+            AtlasGlossaryTerm body = new AtlasGlossaryTerm();
+            Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", body);
         }
 
         [Test]
@@ -4033,8 +4033,8 @@ Status = AtlasTermRelationshipStatus.Draft,
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm();
-            Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", atlasGlossaryTerm);
+            AtlasGlossaryTerm body = new AtlasGlossaryTerm();
+            Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", body);
         }
 
         [Test]
@@ -4765,7 +4765,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm
+            AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -4898,7 +4898,7 @@ Status = AtlasTermRelationshipStatus.Draft,
                 ValidValues = { default },
                 ValidValuesFor = { default },
             };
-            Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", atlasGlossaryTerm, includeTermHierarchy: true);
+            Response<AtlasGlossaryTerm> response = client.UpdateTerm("<termId>", body, includeTermHierarchy: true);
         }
 
         [Test]
@@ -4909,7 +4909,7 @@ Status = AtlasTermRelationshipStatus.Draft,
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm
+            AtlasGlossaryTerm body = new AtlasGlossaryTerm
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -5042,7 +5042,7 @@ Status = AtlasTermRelationshipStatus.Draft,
                 ValidValues = { default },
                 ValidValuesFor = { default },
             };
-            Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", atlasGlossaryTerm, includeTermHierarchy: true);
+            Response<AtlasGlossaryTerm> response = await client.UpdateTermAsync("<termId>", body, includeTermHierarchy: true);
         }
 
         [Test]
@@ -7459,8 +7459,8 @@ RelationshipStatus = StatusAtlasRelationship.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossary atlasGlossary = new AtlasGlossary();
-            Response<AtlasGlossary> response = client.Update("<glossaryId>", atlasGlossary);
+            AtlasGlossary body = new AtlasGlossary();
+            Response<AtlasGlossary> response = client.Update("<glossaryId>", body);
         }
 
         [Test]
@@ -7471,8 +7471,8 @@ RelationshipStatus = StatusAtlasRelationship.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            AtlasGlossary atlasGlossary = new AtlasGlossary();
-            Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", atlasGlossary);
+            AtlasGlossary body = new AtlasGlossary();
+            Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", body);
         }
 
         [Test]
@@ -7701,7 +7701,7 @@ termGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-            AtlasGlossary atlasGlossary = new AtlasGlossary
+            AtlasGlossary body = new AtlasGlossary
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -7752,7 +7752,7 @@ TermGuid = "<termGuid>",
 }},
                 Usage = "<usage>",
             };
-            Response<AtlasGlossary> response = client.Update("<glossaryId>", atlasGlossary, ignoreTermsAndCategories: true);
+            Response<AtlasGlossary> response = client.Update("<glossaryId>", body, ignoreTermsAndCategories: true);
         }
 
         [Test]
@@ -7763,7 +7763,7 @@ TermGuid = "<termGuid>",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient(apiVersion: "2023-09-01");
 
-            AtlasGlossary atlasGlossary = new AtlasGlossary
+            AtlasGlossary body = new AtlasGlossary
             {
                 Guid = "<guid>",
                 Classifications = {new AtlasClassification
@@ -7814,7 +7814,7 @@ TermGuid = "<termGuid>",
 }},
                 Usage = "<usage>",
             };
-            Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", atlasGlossary, ignoreTermsAndCategories: true);
+            Response<AtlasGlossary> response = await client.UpdateAsync("<glossaryId>", body, ignoreTermsAndCategories: true);
         }
 
         [Test]

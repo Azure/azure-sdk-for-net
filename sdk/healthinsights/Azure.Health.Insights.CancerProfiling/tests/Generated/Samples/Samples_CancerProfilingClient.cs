@@ -80,11 +80,11 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+            OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, body);
             OncoPhenotypeResults responseData = operation.Value;
         }
 
@@ -96,11 +96,11 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+            OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, body);
             OncoPhenotypeResults responseData = operation.Value;
         }
 
@@ -274,7 +274,7 @@ value = "<value>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+            OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -305,7 +305,7 @@ CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                     CheckForCancerCase = true,
                 },
             };
-            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+            Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, body);
             OncoPhenotypeResults responseData = operation.Value;
         }
 
@@ -317,7 +317,7 @@ CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-            OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+            OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -348,7 +348,7 @@ CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                     CheckForCancerCase = true,
                 },
             };
-            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+            Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, body);
             OncoPhenotypeResults responseData = operation.Value;
         }
     }

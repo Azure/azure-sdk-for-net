@@ -54,12 +54,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Get all glossaries. Recommend using limit/offset to get pagination result.
         /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
-        /// separately using
-        ///
-        ///  'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
-        /// and
-        ///
-        ///  'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
+        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
+        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
         /// </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -85,12 +81,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Get all glossaries. Recommend using limit/offset to get pagination result.
         /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
-        /// separately using
-        ///
-        ///  'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
-        /// and
-        ///
-        ///  'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
+        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
+        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
         /// </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -116,12 +108,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Get all glossaries. Recommend using limit/offset to get pagination result.
         /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
-        /// separately using
-        ///
-        ///  'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
-        /// and
-        ///
-        ///  'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
+        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
+        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -162,12 +150,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// [Protocol Method] Get all glossaries. Recommend using limit/offset to get pagination result.
         /// Recommend using 'ignoreTermsAndCategories=true' and fetch terms/categories
-        /// separately using
-        ///
-        ///  'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
-        /// and
-        ///
-        ///  'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
+        /// separately using 'GET /datamap/api/atlas/v2/glossary/{glossaryId}/terms'
+        /// and 'GET '/datamap/api/atlas/v2/glossary/{glossaryId}/categories'.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -206,30 +190,30 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary. </summary>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossary"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateAsync(AtlasGlossary,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossary>> CreateAsync(AtlasGlossary atlasGlossary, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasGlossary>> CreateAsync(AtlasGlossary body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossary.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
 
         /// <summary> Create a glossary. </summary>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossary"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Create(AtlasGlossary,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossary> Create(AtlasGlossary atlasGlossary, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasGlossary> Create(AtlasGlossary body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossary.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Create(content, context);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
@@ -438,30 +422,30 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary category. </summary>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryCategory"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoryAsync(AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryCategory>> CreateCategoryAsync(AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasGlossaryCategory>> CreateCategoryAsync(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateCategoryAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
 
         /// <summary> Create a glossary category. </summary>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryCategory"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategory(AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryCategory> CreateCategory(AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasGlossaryCategory> CreateCategory(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateCategory(content, context);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
@@ -657,17 +641,17 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="atlasGlossaryCategory"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategoryAsync(string,AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateCategoryAsync(categoryId, content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
@@ -675,17 +659,17 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="atlasGlossaryCategory"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategory(string,AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryCategory> UpdateCategory(string categoryId, AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasGlossaryCategory> UpdateCategory(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateCategory(categoryId, content, context);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
@@ -1290,32 +1274,32 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary term. </summary>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryTerm"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermAsync(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryTerm>> CreateTermAsync(AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasGlossaryTerm>> CreateTermAsync(AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateTermAsync(content, includeTermHierarchy, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
 
         /// <summary> Create a glossary term. </summary>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryTerm"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerm(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryTerm> CreateTerm(AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasGlossaryTerm> CreateTerm(AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateTerm(content, includeTermHierarchy, context);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
@@ -1513,18 +1497,18 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="atlasGlossaryTerm"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTermAsync(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryTerm>> UpdateTermAsync(string termId, AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasGlossaryTerm>> UpdateTermAsync(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateTermAsync(termId, content, includeTermHierarchy, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
@@ -1532,18 +1516,18 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="atlasGlossaryTerm"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTerm(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryTerm> UpdateTerm(string termId, AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasGlossaryTerm> UpdateTerm(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateTerm(termId, content, includeTermHierarchy, context);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
@@ -2665,18 +2649,18 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="atlasGlossary"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateAsync(string,AtlasGlossary,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossary>> UpdateAsync(string glossaryId, AtlasGlossary atlasGlossary, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasGlossary>> UpdateAsync(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossary.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateAsync(glossaryId, content, ignoreTermsAndCategories, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
@@ -2684,18 +2668,18 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="atlasGlossary"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Update(string,AtlasGlossary,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossary> Update(string glossaryId, AtlasGlossary atlasGlossary, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasGlossary> Update(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = atlasGlossary.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Update(glossaryId, content, ignoreTermsAndCategories, context);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);

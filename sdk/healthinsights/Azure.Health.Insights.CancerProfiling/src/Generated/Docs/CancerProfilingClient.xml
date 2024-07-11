@@ -9,11 +9,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
-Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, body);
 OncoPhenotypeResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferCancerProfileAsync with all parameters.
@@ -22,7 +22,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -53,7 +53,7 @@ OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
         CheckForCancerCase = true,
     },
 };
-Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, body);
 OncoPhenotypeResults responseData = operation.Value;
 ]]></code></example>
     </member>
@@ -65,11 +65,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
-Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, body);
 OncoPhenotypeResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferCancerProfile with all parameters.
@@ -78,7 +78,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+OncoPhenotypeData body = new OncoPhenotypeData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -109,7 +109,7 @@ OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
         CheckForCancerCase = true,
     },
 };
-Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, body);
 OncoPhenotypeResults responseData = operation.Value;
 ]]></code></example>
     </member>

@@ -9,11 +9,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
-Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferRadiologyInsightsAsync with all parameters.
@@ -22,7 +22,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -184,7 +184,7 @@ RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new Pati
         Locale = "<locale>",
     },
 };
-Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, body);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code></example>
     </member>
@@ -196,11 +196,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
-Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferRadiologyInsights with all parameters.
@@ -209,7 +209,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+RadiologyInsightsData body = new RadiologyInsightsData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -371,7 +371,7 @@ RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new Pati
         Locale = "<locale>",
     },
 };
-Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, body);
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code></example>
     </member>

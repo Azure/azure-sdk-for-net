@@ -51,16 +51,16 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies whether a device is within a specified location area, defined as an accuracy (radius) around a point, specified by longitude and latitude. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="deviceLocationVerificationContent"> Request to verify Location. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="deviceLocationVerificationContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
         /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='VerifyAsync(string,DeviceLocationVerificationContent,CancellationToken)']/*" />
-        public virtual async Task<Response<DeviceLocationVerificationResult>> VerifyAsync(string apcGatewayId, DeviceLocationVerificationContent deviceLocationVerificationContent, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceLocationVerificationResult>> VerifyAsync(string apcGatewayId, DeviceLocationVerificationContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(deviceLocationVerificationContent, nameof(deviceLocationVerificationContent));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = deviceLocationVerificationContent.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await VerifyAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(DeviceLocationVerificationResult.FromResponse(response), response);
@@ -68,16 +68,16 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies whether a device is within a specified location area, defined as an accuracy (radius) around a point, specified by longitude and latitude. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="deviceLocationVerificationContent"> Request to verify Location. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="deviceLocationVerificationContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
         /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='Verify(string,DeviceLocationVerificationContent,CancellationToken)']/*" />
-        public virtual Response<DeviceLocationVerificationResult> Verify(string apcGatewayId, DeviceLocationVerificationContent deviceLocationVerificationContent, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceLocationVerificationResult> Verify(string apcGatewayId, DeviceLocationVerificationContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(deviceLocationVerificationContent, nameof(deviceLocationVerificationContent));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = deviceLocationVerificationContent.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Verify(apcGatewayId, content, context);
             return Response.FromValue(DeviceLocationVerificationResult.FromResponse(response), response);

@@ -1483,8 +1483,8 @@
       },
       {
        "$id": "198",
-       "Name": "NotificationContent",
-       "NameInRequest": "NotificationContent",
+       "Name": "notificationContent",
+       "NameInRequest": "body",
        "Description": "Details of the message to send.",
        "Type": {
         "$ref": "38"
