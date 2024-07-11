@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The request details to use when creating a new assistant. </summary>
-    public partial class AssistantCreationOptions
+    internal partial class AssistantCreationOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
