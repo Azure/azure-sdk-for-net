@@ -54,8 +54,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            QueryConfig queryConfig = new QueryConfig();
-            Response<QueryResult> response = client.Query(queryConfig);
+            Response<QueryResult> response = client.Query();
         }
 
         [Test]
@@ -66,8 +65,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            QueryConfig queryConfig = new QueryConfig();
-            Response<QueryResult> response = await client.QueryAsync(queryConfig);
+            Response<QueryResult> response = await client.QueryAsync();
         }
 
         [Test]
@@ -272,14 +270,17 @@ value = "asc",
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            QueryConfig queryConfig = new QueryConfig
+            SearchTaxonomySetting taxonomySetting = new SearchTaxonomySetting
             {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                ContinuationToken = "<continuationToken>",
-                Orderby = { BinaryData.FromObjectAsJson(new object()) },
-                Filter = BinaryData.FromObjectAsJson(new object()),
-                Facets = {new SearchFacetItem
+                AssetTypes = { "<assetTypes>" },
+                Facet = default,
+            };
+            Response<QueryResult> response = client.Query(keywords: "<keywords>", limit: 1234, continuationToken: "<continuationToken>", orderby: new BinaryData[]
+            {
+BinaryData.FromObjectAsJson(new object())
+            }, filter: BinaryData.FromObjectAsJson(new object()), facets: new SearchFacetItem[]
+            {
+new SearchFacetItem
 {
 Count = 1234,
 Facet = "<facet>",
@@ -288,14 +289,8 @@ Sort = new SearchFacetSort
 Count = SearchSortOrder.Ascend,
 Value = SearchSortOrder.Ascend,
 },
-}},
-                TaxonomySetting = new SearchTaxonomySetting
-                {
-                    AssetTypes = { "<assetTypes>" },
-                    Facet = default,
-                },
-            };
-            Response<QueryResult> response = client.Query(queryConfig);
+}
+            }, taxonomySetting: taxonomySetting);
         }
 
         [Test]
@@ -306,14 +301,17 @@ Value = SearchSortOrder.Ascend,
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            QueryConfig queryConfig = new QueryConfig
+            SearchTaxonomySetting taxonomySetting = new SearchTaxonomySetting
             {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                ContinuationToken = "<continuationToken>",
-                Orderby = { BinaryData.FromObjectAsJson(new object()) },
-                Filter = BinaryData.FromObjectAsJson(new object()),
-                Facets = {new SearchFacetItem
+                AssetTypes = { "<assetTypes>" },
+                Facet = default,
+            };
+            Response<QueryResult> response = await client.QueryAsync(keywords: "<keywords>", limit: 1234, continuationToken: "<continuationToken>", orderby: new BinaryData[]
+            {
+BinaryData.FromObjectAsJson(new object())
+            }, filter: BinaryData.FromObjectAsJson(new object()), facets: new SearchFacetItem[]
+            {
+new SearchFacetItem
 {
 Count = 1234,
 Facet = "<facet>",
@@ -322,14 +320,8 @@ Sort = new SearchFacetSort
 Count = SearchSortOrder.Ascend,
 Value = SearchSortOrder.Ascend,
 },
-}},
-                TaxonomySetting = new SearchTaxonomySetting
-                {
-                    AssetTypes = { "<assetTypes>" },
-                    Facet = default,
-                },
-            };
-            Response<QueryResult> response = await client.QueryAsync(queryConfig);
+}
+            }, taxonomySetting: taxonomySetting);
         }
 
         [Test]
@@ -370,8 +362,7 @@ Value = SearchSortOrder.Ascend,
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            SuggestConfig suggestConfig = new SuggestConfig();
-            Response<SuggestResult> response = client.Suggest(suggestConfig);
+            Response<SuggestResult> response = client.Suggest();
         }
 
         [Test]
@@ -382,8 +373,7 @@ Value = SearchSortOrder.Ascend,
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            SuggestConfig suggestConfig = new SuggestConfig();
-            Response<SuggestResult> response = await client.SuggestAsync(suggestConfig);
+            Response<SuggestResult> response = await client.SuggestAsync();
         }
 
         [Test]
@@ -484,13 +474,7 @@ Value = SearchSortOrder.Ascend,
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            SuggestConfig suggestConfig = new SuggestConfig
-            {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                Filter = BinaryData.FromObjectAsJson(new object()),
-            };
-            Response<SuggestResult> response = client.Suggest(suggestConfig);
+            Response<SuggestResult> response = client.Suggest(keywords: "<keywords>", limit: 1234, filter: BinaryData.FromObjectAsJson(new object()));
         }
 
         [Test]
@@ -501,13 +485,7 @@ Value = SearchSortOrder.Ascend,
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            SuggestConfig suggestConfig = new SuggestConfig
-            {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                Filter = BinaryData.FromObjectAsJson(new object()),
-            };
-            Response<SuggestResult> response = await client.SuggestAsync(suggestConfig);
+            Response<SuggestResult> response = await client.SuggestAsync(keywords: "<keywords>", limit: 1234, filter: BinaryData.FromObjectAsJson(new object()));
         }
 
         [Test]
@@ -548,8 +526,7 @@ Value = SearchSortOrder.Ascend,
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            AutoCompleteConfig autoCompleteConfig = new AutoCompleteConfig();
-            Response<AutoCompleteResult> response = client.AutoComplete(autoCompleteConfig);
+            Response<AutoCompleteResult> response = client.AutoComplete();
         }
 
         [Test]
@@ -560,8 +537,7 @@ Value = SearchSortOrder.Ascend,
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            AutoCompleteConfig autoCompleteConfig = new AutoCompleteConfig();
-            Response<AutoCompleteResult> response = await client.AutoCompleteAsync(autoCompleteConfig);
+            Response<AutoCompleteResult> response = await client.AutoCompleteAsync();
         }
 
         [Test]
@@ -614,13 +590,7 @@ Value = SearchSortOrder.Ascend,
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            AutoCompleteConfig autoCompleteConfig = new AutoCompleteConfig
-            {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                Filter = BinaryData.FromObjectAsJson(new object()),
-            };
-            Response<AutoCompleteResult> response = client.AutoComplete(autoCompleteConfig);
+            Response<AutoCompleteResult> response = client.AutoComplete(keywords: "<keywords>", limit: 1234, filter: BinaryData.FromObjectAsJson(new object()));
         }
 
         [Test]
@@ -631,13 +601,7 @@ Value = SearchSortOrder.Ascend,
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
-            AutoCompleteConfig autoCompleteConfig = new AutoCompleteConfig
-            {
-                Keywords = "<keywords>",
-                Limit = 1234,
-                Filter = BinaryData.FromObjectAsJson(new object()),
-            };
-            Response<AutoCompleteResult> response = await client.AutoCompleteAsync(autoCompleteConfig);
+            Response<AutoCompleteResult> response = await client.AutoCompleteAsync(keywords: "<keywords>", limit: 1234, filter: BinaryData.FromObjectAsJson(new object()));
         }
     }
 }

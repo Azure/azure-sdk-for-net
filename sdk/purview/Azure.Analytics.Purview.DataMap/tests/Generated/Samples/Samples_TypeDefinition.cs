@@ -3723,8 +3723,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+            Response<AtlasTypesDef> response = client.BatchCreate();
         }
 
         [Test]
@@ -3735,8 +3734,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+            Response<AtlasTypesDef> response = await client.BatchCreateAsync();
         }
 
         [Test]
@@ -5065,9 +5063,9 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            Response<AtlasTypesDef> response = client.BatchCreate(businessMetadataDefs: new AtlasBusinessMetadataDef[]
             {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5147,8 +5145,10 @@ TypeName = "<typeName>",
 ValuesMaxCount = 1234,
 ValuesMinCount = 1234,
 }},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
+}
+            }, classificationDefs: new AtlasClassificationDef[]
+            {
+new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5171,8 +5171,10 @@ AttributeDefs = {default},
 EntityTypes = {"<entityTypes>"},
 SubTypes = {"<subTypes>"},
 SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
+}
+            }, entityDefs: new AtlasEntityDef[]
+            {
+new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5215,8 +5217,10 @@ ValuesMinCount = 1234,
 IsLegacyAttribute = true,
 RelationshipTypeName = "<relationshipTypeName>",
 }},
-}},
-                EnumDefs = {new AtlasEnumDef
+}
+            }, enumDefs: new AtlasEnumDef[]
+            {
+new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5242,8 +5246,10 @@ Description = "<description>",
 Ordinal = 1234,
 Value = "<value>",
 }},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
+}
+            }, relationshipDefs: new AtlasRelationshipDef[]
+            {
+new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5275,8 +5281,10 @@ Type = "<type>",
 EndDef2 = default,
 RelationshipCategory = RelationshipCategory.Association,
 RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
+}
+            }, structDefs: new AtlasStructDef[]
+            {
+new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5296,8 +5304,10 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
+}
+            }, termTemplateDefs: new TermTemplateDef[]
+            {
+new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5317,9 +5327,8 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-            };
-            Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+}
+            });
         }
 
         [Test]
@@ -5330,9 +5339,9 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            Response<AtlasTypesDef> response = await client.BatchCreateAsync(businessMetadataDefs: new AtlasBusinessMetadataDef[]
             {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5412,8 +5421,10 @@ TypeName = "<typeName>",
 ValuesMaxCount = 1234,
 ValuesMinCount = 1234,
 }},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
+}
+            }, classificationDefs: new AtlasClassificationDef[]
+            {
+new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5436,8 +5447,10 @@ AttributeDefs = {default},
 EntityTypes = {"<entityTypes>"},
 SubTypes = {"<subTypes>"},
 SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
+}
+            }, entityDefs: new AtlasEntityDef[]
+            {
+new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5480,8 +5493,10 @@ ValuesMinCount = 1234,
 IsLegacyAttribute = true,
 RelationshipTypeName = "<relationshipTypeName>",
 }},
-}},
-                EnumDefs = {new AtlasEnumDef
+}
+            }, enumDefs: new AtlasEnumDef[]
+            {
+new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5507,8 +5522,10 @@ Description = "<description>",
 Ordinal = 1234,
 Value = "<value>",
 }},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
+}
+            }, relationshipDefs: new AtlasRelationshipDef[]
+            {
+new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5540,8 +5557,10 @@ Type = "<type>",
 EndDef2 = default,
 RelationshipCategory = RelationshipCategory.Association,
 RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
+}
+            }, structDefs: new AtlasStructDef[]
+            {
+new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5561,8 +5580,10 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
+}
+            }, termTemplateDefs: new TermTemplateDef[]
+            {
+new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -5582,9 +5603,8 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-            };
-            Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+}
+            });
         }
 
         [Test]
@@ -5625,8 +5645,7 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
+            Response<AtlasTypesDef> response = client.BatchUpdate();
         }
 
         [Test]
@@ -5637,8 +5656,7 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
+            Response<AtlasTypesDef> response = await client.BatchUpdateAsync();
         }
 
         [Test]
@@ -6967,9 +6985,9 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            Response<AtlasTypesDef> response = client.BatchUpdate(businessMetadataDefs: new AtlasBusinessMetadataDef[]
             {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7049,8 +7067,10 @@ TypeName = "<typeName>",
 ValuesMaxCount = 1234,
 ValuesMinCount = 1234,
 }},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
+}
+            }, classificationDefs: new AtlasClassificationDef[]
+            {
+new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7073,8 +7093,10 @@ AttributeDefs = {default},
 EntityTypes = {"<entityTypes>"},
 SubTypes = {"<subTypes>"},
 SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
+}
+            }, entityDefs: new AtlasEntityDef[]
+            {
+new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7117,8 +7139,10 @@ ValuesMinCount = 1234,
 IsLegacyAttribute = true,
 RelationshipTypeName = "<relationshipTypeName>",
 }},
-}},
-                EnumDefs = {new AtlasEnumDef
+}
+            }, enumDefs: new AtlasEnumDef[]
+            {
+new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7144,8 +7168,10 @@ Description = "<description>",
 Ordinal = 1234,
 Value = "<value>",
 }},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
+}
+            }, relationshipDefs: new AtlasRelationshipDef[]
+            {
+new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7177,8 +7203,10 @@ Type = "<type>",
 EndDef2 = default,
 RelationshipCategory = RelationshipCategory.Association,
 RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
+}
+            }, structDefs: new AtlasStructDef[]
+            {
+new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7198,8 +7226,10 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
+}
+            }, termTemplateDefs: new TermTemplateDef[]
+            {
+new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7219,9 +7249,8 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-            };
-            Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
+}
+            });
         }
 
         [Test]
@@ -7232,9 +7261,9 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(businessMetadataDefs: new AtlasBusinessMetadataDef[]
             {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7314,8 +7343,10 @@ TypeName = "<typeName>",
 ValuesMaxCount = 1234,
 ValuesMinCount = 1234,
 }},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
+}
+            }, classificationDefs: new AtlasClassificationDef[]
+            {
+new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7338,8 +7369,10 @@ AttributeDefs = {default},
 EntityTypes = {"<entityTypes>"},
 SubTypes = {"<subTypes>"},
 SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
+}
+            }, entityDefs: new AtlasEntityDef[]
+            {
+new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7382,8 +7415,10 @@ ValuesMinCount = 1234,
 IsLegacyAttribute = true,
 RelationshipTypeName = "<relationshipTypeName>",
 }},
-}},
-                EnumDefs = {new AtlasEnumDef
+}
+            }, enumDefs: new AtlasEnumDef[]
+            {
+new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7409,8 +7444,10 @@ Description = "<description>",
 Ordinal = 1234,
 Value = "<value>",
 }},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
+}
+            }, relationshipDefs: new AtlasRelationshipDef[]
+            {
+new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7442,8 +7479,10 @@ Type = "<type>",
 EndDef2 = default,
 RelationshipCategory = RelationshipCategory.Association,
 RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
+}
+            }, structDefs: new AtlasStructDef[]
+            {
+new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7463,8 +7502,10 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
+}
+            }, termTemplateDefs: new TermTemplateDef[]
+            {
+new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -7484,9 +7525,8 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-            };
-            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
+}
+            });
         }
 
         [Test]
@@ -7525,8 +7565,7 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response response = client.BatchDelete(atlasTypesDef);
+            Response response = client.BatchDelete();
         }
 
         [Test]
@@ -7537,8 +7576,7 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response response = await client.BatchDeleteAsync(atlasTypesDef);
+            Response response = await client.BatchDeleteAsync();
         }
 
         [Test]
@@ -8201,9 +8239,9 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            Response response = client.BatchDelete(businessMetadataDefs: new AtlasBusinessMetadataDef[]
             {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8283,8 +8321,10 @@ TypeName = "<typeName>",
 ValuesMaxCount = 1234,
 ValuesMinCount = 1234,
 }},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
+}
+            }, classificationDefs: new AtlasClassificationDef[]
+            {
+new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8307,8 +8347,10 @@ AttributeDefs = {default},
 EntityTypes = {"<entityTypes>"},
 SubTypes = {"<subTypes>"},
 SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
+}
+            }, entityDefs: new AtlasEntityDef[]
+            {
+new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8351,8 +8393,10 @@ ValuesMinCount = 1234,
 IsLegacyAttribute = true,
 RelationshipTypeName = "<relationshipTypeName>",
 }},
-}},
-                EnumDefs = {new AtlasEnumDef
+}
+            }, enumDefs: new AtlasEnumDef[]
+            {
+new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8378,8 +8422,10 @@ Description = "<description>",
 Ordinal = 1234,
 Value = "<value>",
 }},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
+}
+            }, relationshipDefs: new AtlasRelationshipDef[]
+            {
+new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8411,8 +8457,10 @@ Type = "<type>",
 EndDef2 = default,
 RelationshipCategory = RelationshipCategory.Association,
 RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
+}
+            }, structDefs: new AtlasStructDef[]
+            {
+new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8432,8 +8480,10 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
+}
+            }, termTemplateDefs: new TermTemplateDef[]
+            {
+new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8453,9 +8503,8 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-            };
-            Response response = client.BatchDelete(atlasTypesDef);
+}
+            });
         }
 
         [Test]
@@ -8466,9 +8515,9 @@ AttributeDefs = {default},
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            Response response = await client.BatchDeleteAsync(businessMetadataDefs: new AtlasBusinessMetadataDef[]
             {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+new AtlasBusinessMetadataDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8548,8 +8597,10 @@ TypeName = "<typeName>",
 ValuesMaxCount = 1234,
 ValuesMinCount = 1234,
 }},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
+}
+            }, classificationDefs: new AtlasClassificationDef[]
+            {
+new AtlasClassificationDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8572,8 +8623,10 @@ AttributeDefs = {default},
 EntityTypes = {"<entityTypes>"},
 SubTypes = {"<subTypes>"},
 SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
+}
+            }, entityDefs: new AtlasEntityDef[]
+            {
+new AtlasEntityDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8616,8 +8669,10 @@ ValuesMinCount = 1234,
 IsLegacyAttribute = true,
 RelationshipTypeName = "<relationshipTypeName>",
 }},
-}},
-                EnumDefs = {new AtlasEnumDef
+}
+            }, enumDefs: new AtlasEnumDef[]
+            {
+new AtlasEnumDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8643,8 +8698,10 @@ Description = "<description>",
 Ordinal = 1234,
 Value = "<value>",
 }},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
+}
+            }, relationshipDefs: new AtlasRelationshipDef[]
+            {
+new AtlasRelationshipDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8676,8 +8733,10 @@ Type = "<type>",
 EndDef2 = default,
 RelationshipCategory = RelationshipCategory.Association,
 RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
+}
+            }, structDefs: new AtlasStructDef[]
+            {
+new AtlasStructDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8697,8 +8756,10 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
+}
+            }, termTemplateDefs: new TermTemplateDef[]
+            {
+new TermTemplateDef
 {
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
@@ -8718,9 +8779,8 @@ UpdatedBy = "<updatedBy>",
 Version = 1234L,
 LastModifiedTS = "<lastModifiedTS>",
 AttributeDefs = {default},
-}},
-            };
-            Response response = await client.BatchDeleteAsync(atlasTypesDef);
+}
+            });
         }
 
         [Test]

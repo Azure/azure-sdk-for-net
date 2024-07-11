@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -206,32 +207,86 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary. </summary>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="categories"> An array of categories. </param>
+        /// <param name="language"> The language of the glossary. </param>
+        /// <param name="terms"> An array of related term headers. </param>
+        /// <param name="usage"> The usage of the glossary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossary"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateAsync(AtlasGlossary,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossary>> CreateAsync(AtlasGlossary atlasGlossary, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateAsync(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasGlossary>> CreateAsync(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, IEnumerable<AtlasRelatedCategoryHeader> categories = null, string language = null, IEnumerable<AtlasRelatedTermHeader> terms = null, string usage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
-
-            using RequestContent content = atlasGlossary.ToRequestContent();
+            AtlasGlossary atlasGlossary = new AtlasGlossary(
+                guid,
+                classifications?.ToList() as IReadOnlyList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                categories?.ToList() as IReadOnlyList<AtlasRelatedCategoryHeader> ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                language,
+                terms?.ToList() as IReadOnlyList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(content, context).ConfigureAwait(false);
+            Response response = await CreateAsync(atlasGlossary.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
 
         /// <summary> Create a glossary. </summary>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="categories"> An array of categories. </param>
+        /// <param name="language"> The language of the glossary. </param>
+        /// <param name="terms"> An array of related term headers. </param>
+        /// <param name="usage"> The usage of the glossary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossary"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Create(AtlasGlossary,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossary> Create(AtlasGlossary atlasGlossary, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Create(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,CancellationToken)']/*" />
+        public virtual Response<AtlasGlossary> Create(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, IEnumerable<AtlasRelatedCategoryHeader> categories = null, string language = null, IEnumerable<AtlasRelatedTermHeader> terms = null, string usage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
-
-            using RequestContent content = atlasGlossary.ToRequestContent();
+            AtlasGlossary atlasGlossary = new AtlasGlossary(
+                guid,
+                classifications?.ToList() as IReadOnlyList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                categories?.ToList() as IReadOnlyList<AtlasRelatedCategoryHeader> ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                language,
+                terms?.ToList() as IReadOnlyList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(content, context);
+            Response response = Create(atlasGlossary.ToRequestContent(), context);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
 
@@ -245,7 +300,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAsync(AtlasGlossary,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAsync(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -284,7 +339,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Create(AtlasGlossary,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Create(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -438,32 +493,86 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary category. </summary>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="childrenCategories"> An array of children categories. </param>
+        /// <param name="parentCategory"> The header of the related category. </param>
+        /// <param name="terms"> An array of related term headers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryCategory"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoryAsync(AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryCategory>> CreateCategoryAsync(AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoryAsync(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasGlossaryCategory>> CreateCategoryAsync(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, AtlasGlossaryHeader anchor = null, IEnumerable<AtlasRelatedCategoryHeader> childrenCategories = null, AtlasRelatedCategoryHeader parentCategory = null, IEnumerable<AtlasRelatedTermHeader> terms = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
-
-            using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory(
+                guid,
+                classifications?.ToList() as IList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                anchor,
+                childrenCategories?.ToList() as IList<AtlasRelatedCategoryHeader> ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                parentCategory,
+                terms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateCategoryAsync(content, context).ConfigureAwait(false);
+            Response response = await CreateCategoryAsync(atlasGlossaryCategory.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
 
         /// <summary> Create a glossary category. </summary>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="childrenCategories"> An array of children categories. </param>
+        /// <param name="parentCategory"> The header of the related category. </param>
+        /// <param name="terms"> An array of related term headers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryCategory"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategory(AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryCategory> CreateCategory(AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategory(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)']/*" />
+        public virtual Response<AtlasGlossaryCategory> CreateCategory(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, AtlasGlossaryHeader anchor = null, IEnumerable<AtlasRelatedCategoryHeader> childrenCategories = null, AtlasRelatedCategoryHeader parentCategory = null, IEnumerable<AtlasRelatedTermHeader> terms = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
-
-            using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory(
+                guid,
+                classifications?.ToList() as IList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                anchor,
+                childrenCategories?.ToList() as IList<AtlasRelatedCategoryHeader> ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                parentCategory,
+                terms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateCategory(content, context);
+            Response response = CreateCategory(atlasGlossaryCategory.ToRequestContent(), context);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
 
@@ -477,7 +586,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateCategoryAsync(AtlasGlossaryCategory,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateCategoryAsync(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -516,7 +625,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateCategory(AtlasGlossaryCategory,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateCategory(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -657,37 +766,95 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="childrenCategories"> An array of children categories. </param>
+        /// <param name="parentCategory"> The header of the related category. </param>
+        /// <param name="terms"> An array of related term headers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="atlasGlossaryCategory"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategoryAsync(string,AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategoryAsync(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, AtlasGlossaryHeader anchor = null, IEnumerable<AtlasRelatedCategoryHeader> childrenCategories = null, AtlasRelatedCategoryHeader parentCategory = null, IEnumerable<AtlasRelatedTermHeader> terms = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
 
-            using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory(
+                guid,
+                classifications?.ToList() as IList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                anchor,
+                childrenCategories?.ToList() as IList<AtlasRelatedCategoryHeader> ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                parentCategory,
+                terms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateCategoryAsync(categoryId, content, context).ConfigureAwait(false);
+            Response response = await UpdateCategoryAsync(categoryId, atlasGlossaryCategory.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
 
         /// <summary> Update the given glossary category by its GUID. </summary>
         /// <param name="categoryId"> The globally unique identifier of the category. </param>
-        /// <param name="atlasGlossaryCategory"> The glossary category. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="childrenCategories"> An array of children categories. </param>
+        /// <param name="parentCategory"> The header of the related category. </param>
+        /// <param name="terms"> An array of related term headers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="atlasGlossaryCategory"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategory(string,AtlasGlossaryCategory,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryCategory> UpdateCategory(string categoryId, AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategory(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)']/*" />
+        public virtual Response<AtlasGlossaryCategory> UpdateCategory(string categoryId, string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, AtlasGlossaryHeader anchor = null, IEnumerable<AtlasRelatedCategoryHeader> childrenCategories = null, AtlasRelatedCategoryHeader parentCategory = null, IEnumerable<AtlasRelatedTermHeader> terms = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
 
-            using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            AtlasGlossaryCategory atlasGlossaryCategory = new AtlasGlossaryCategory(
+                guid,
+                classifications?.ToList() as IList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                anchor,
+                childrenCategories?.ToList() as IList<AtlasRelatedCategoryHeader> ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                parentCategory,
+                terms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateCategory(categoryId, content, context);
+            Response response = UpdateCategory(categoryId, atlasGlossaryCategory.ToRequestContent(), context);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
 
@@ -701,7 +868,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateCategoryAsync(string,AtlasGlossaryCategory,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateCategoryAsync(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -743,7 +910,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateCategory(string,AtlasGlossaryCategory,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateCategory(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,AtlasGlossaryHeader,IEnumerable{AtlasRelatedCategoryHeader},AtlasRelatedCategoryHeader,IEnumerable{AtlasRelatedTermHeader},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1290,34 +1457,184 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a glossary term. </summary>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="abbreviation"> The abbreviation of the term. </param>
+        /// <param name="templateName"> The name of the template. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="antonyms"> An array of related term headers as antonyms. </param>
+        /// <param name="status"> Status of the AtlasGlossaryTerm. </param>
+        /// <param name="nickName"> The nick name of the term. </param>
+        /// <param name="hierarchyInfo"> The hierarchy information of the term. </param>
+        /// <param name="resources"> An array of resource link for term. </param>
+        /// <param name="contacts"> The dictionary of contacts for terms. Key could be Expert or Steward. </param>
+        /// <param name="attributes">
+        /// The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The
+        /// key of the first layer map is term template name.
+        /// </param>
+        /// <param name="assignedEntities"> An array of related object IDs. </param>
+        /// <param name="categories"> An array of term categorization headers. </param>
+        /// <param name="classifies"> An array of related term headers. </param>
+        /// <param name="examples"> An array of examples. </param>
+        /// <param name="isA"> An array of related term headers indicating the is-a relationship. </param>
+        /// <param name="preferredTerms"> An array of preferred related term headers. </param>
+        /// <param name="preferredToTerms"> An array of related term headers that are preferred to. </param>
+        /// <param name="replacedBy"> An array of related term headers that are replaced by. </param>
+        /// <param name="replacementTerms"> An array of related term headers for replacement. </param>
+        /// <param name="seeAlso"> An array of related term headers for see also. </param>
+        /// <param name="synonyms"> An array of related term headers as synonyms. </param>
+        /// <param name="translatedTerms"> An array of translated related term headers. </param>
+        /// <param name="translationTerms"> An array of related term headers for translation. </param>
+        /// <param name="usage"> The usage of the term. </param>
+        /// <param name="validValues"> An array of related term headers as valid values. </param>
+        /// <param name="validValuesFor"> An array of related term headers as valid values for other records. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryTerm"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermAsync(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryTerm>> CreateTermAsync(AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermAsync(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasGlossaryTerm>> CreateTermAsync(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, string abbreviation = null, IEnumerable<BinaryData> templateName = null, AtlasGlossaryHeader anchor = null, IEnumerable<AtlasRelatedTermHeader> antonyms = null, TermStatus? status = null, string nickName = null, IEnumerable<PurviewObjectId> hierarchyInfo = null, IEnumerable<ResourceLink> resources = null, IDictionary<string, IList<ContactInfo>> contacts = null, IDictionary<string, IDictionary<string, BinaryData>> attributes = null, IEnumerable<AtlasRelatedObjectId> assignedEntities = null, IEnumerable<AtlasTermCategorizationHeader> categories = null, IEnumerable<AtlasRelatedTermHeader> classifies = null, IEnumerable<string> examples = null, IEnumerable<AtlasRelatedTermHeader> isA = null, IEnumerable<AtlasRelatedTermHeader> preferredTerms = null, IEnumerable<AtlasRelatedTermHeader> preferredToTerms = null, IEnumerable<AtlasRelatedTermHeader> replacedBy = null, IEnumerable<AtlasRelatedTermHeader> replacementTerms = null, IEnumerable<AtlasRelatedTermHeader> seeAlso = null, IEnumerable<AtlasRelatedTermHeader> synonyms = null, IEnumerable<AtlasRelatedTermHeader> translatedTerms = null, IEnumerable<AtlasRelatedTermHeader> translationTerms = null, string usage = null, IEnumerable<AtlasRelatedTermHeader> validValues = null, IEnumerable<AtlasRelatedTermHeader> validValuesFor = null, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
-
-            using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm(
+                guid,
+                classifications?.ToList() as IList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                abbreviation,
+                templateName?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(),
+                anchor,
+                antonyms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                status,
+                nickName,
+                hierarchyInfo?.ToList() as IList<PurviewObjectId> ?? new ChangeTrackingList<PurviewObjectId>(),
+                resources?.ToList() as IList<ResourceLink> ?? new ChangeTrackingList<ResourceLink>(),
+                contacts ?? new ChangeTrackingDictionary<string, IList<ContactInfo>>(),
+                attributes ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                assignedEntities?.ToList() as IList<AtlasRelatedObjectId> ?? new ChangeTrackingList<AtlasRelatedObjectId>(),
+                categories?.ToList() as IList<AtlasTermCategorizationHeader> ?? new ChangeTrackingList<AtlasTermCategorizationHeader>(),
+                classifies?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                examples?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                isA?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredToTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacedBy?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacementTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                seeAlso?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                synonyms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translatedTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translationTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                validValues?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                validValuesFor?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateTermAsync(content, includeTermHierarchy, context).ConfigureAwait(false);
+            Response response = await CreateTermAsync(atlasGlossaryTerm.ToRequestContent(), includeTermHierarchy, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
 
         /// <summary> Create a glossary term. </summary>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="abbreviation"> The abbreviation of the term. </param>
+        /// <param name="templateName"> The name of the template. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="antonyms"> An array of related term headers as antonyms. </param>
+        /// <param name="status"> Status of the AtlasGlossaryTerm. </param>
+        /// <param name="nickName"> The nick name of the term. </param>
+        /// <param name="hierarchyInfo"> The hierarchy information of the term. </param>
+        /// <param name="resources"> An array of resource link for term. </param>
+        /// <param name="contacts"> The dictionary of contacts for terms. Key could be Expert or Steward. </param>
+        /// <param name="attributes">
+        /// The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The
+        /// key of the first layer map is term template name.
+        /// </param>
+        /// <param name="assignedEntities"> An array of related object IDs. </param>
+        /// <param name="categories"> An array of term categorization headers. </param>
+        /// <param name="classifies"> An array of related term headers. </param>
+        /// <param name="examples"> An array of examples. </param>
+        /// <param name="isA"> An array of related term headers indicating the is-a relationship. </param>
+        /// <param name="preferredTerms"> An array of preferred related term headers. </param>
+        /// <param name="preferredToTerms"> An array of related term headers that are preferred to. </param>
+        /// <param name="replacedBy"> An array of related term headers that are replaced by. </param>
+        /// <param name="replacementTerms"> An array of related term headers for replacement. </param>
+        /// <param name="seeAlso"> An array of related term headers for see also. </param>
+        /// <param name="synonyms"> An array of related term headers as synonyms. </param>
+        /// <param name="translatedTerms"> An array of translated related term headers. </param>
+        /// <param name="translationTerms"> An array of related term headers for translation. </param>
+        /// <param name="usage"> The usage of the term. </param>
+        /// <param name="validValues"> An array of related term headers as valid values. </param>
+        /// <param name="validValuesFor"> An array of related term headers as valid values for other records. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasGlossaryTerm"/> is null. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerm(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryTerm> CreateTerm(AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerm(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)']/*" />
+        public virtual Response<AtlasGlossaryTerm> CreateTerm(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, string abbreviation = null, IEnumerable<BinaryData> templateName = null, AtlasGlossaryHeader anchor = null, IEnumerable<AtlasRelatedTermHeader> antonyms = null, TermStatus? status = null, string nickName = null, IEnumerable<PurviewObjectId> hierarchyInfo = null, IEnumerable<ResourceLink> resources = null, IDictionary<string, IList<ContactInfo>> contacts = null, IDictionary<string, IDictionary<string, BinaryData>> attributes = null, IEnumerable<AtlasRelatedObjectId> assignedEntities = null, IEnumerable<AtlasTermCategorizationHeader> categories = null, IEnumerable<AtlasRelatedTermHeader> classifies = null, IEnumerable<string> examples = null, IEnumerable<AtlasRelatedTermHeader> isA = null, IEnumerable<AtlasRelatedTermHeader> preferredTerms = null, IEnumerable<AtlasRelatedTermHeader> preferredToTerms = null, IEnumerable<AtlasRelatedTermHeader> replacedBy = null, IEnumerable<AtlasRelatedTermHeader> replacementTerms = null, IEnumerable<AtlasRelatedTermHeader> seeAlso = null, IEnumerable<AtlasRelatedTermHeader> synonyms = null, IEnumerable<AtlasRelatedTermHeader> translatedTerms = null, IEnumerable<AtlasRelatedTermHeader> translationTerms = null, string usage = null, IEnumerable<AtlasRelatedTermHeader> validValues = null, IEnumerable<AtlasRelatedTermHeader> validValuesFor = null, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
-
-            using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm(
+                guid,
+                classifications?.ToList() as IList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                abbreviation,
+                templateName?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(),
+                anchor,
+                antonyms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                status,
+                nickName,
+                hierarchyInfo?.ToList() as IList<PurviewObjectId> ?? new ChangeTrackingList<PurviewObjectId>(),
+                resources?.ToList() as IList<ResourceLink> ?? new ChangeTrackingList<ResourceLink>(),
+                contacts ?? new ChangeTrackingDictionary<string, IList<ContactInfo>>(),
+                attributes ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                assignedEntities?.ToList() as IList<AtlasRelatedObjectId> ?? new ChangeTrackingList<AtlasRelatedObjectId>(),
+                categories?.ToList() as IList<AtlasTermCategorizationHeader> ?? new ChangeTrackingList<AtlasTermCategorizationHeader>(),
+                classifies?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                examples?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                isA?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredToTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacedBy?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacementTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                seeAlso?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                synonyms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translatedTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translationTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                validValues?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                validValuesFor?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateTerm(content, includeTermHierarchy, context);
+            Response response = CreateTerm(atlasGlossaryTerm.ToRequestContent(), includeTermHierarchy, context);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
 
@@ -1331,7 +1648,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateTermAsync(AtlasGlossaryTerm,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateTermAsync(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1371,7 +1688,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateTerm(AtlasGlossaryTerm,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateTerm(string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1513,39 +1830,193 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="abbreviation"> The abbreviation of the term. </param>
+        /// <param name="templateName"> The name of the template. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="antonyms"> An array of related term headers as antonyms. </param>
+        /// <param name="status"> Status of the AtlasGlossaryTerm. </param>
+        /// <param name="nickName"> The nick name of the term. </param>
+        /// <param name="hierarchyInfo"> The hierarchy information of the term. </param>
+        /// <param name="resources"> An array of resource link for term. </param>
+        /// <param name="contacts"> The dictionary of contacts for terms. Key could be Expert or Steward. </param>
+        /// <param name="attributes">
+        /// The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The
+        /// key of the first layer map is term template name.
+        /// </param>
+        /// <param name="assignedEntities"> An array of related object IDs. </param>
+        /// <param name="categories"> An array of term categorization headers. </param>
+        /// <param name="classifies"> An array of related term headers. </param>
+        /// <param name="examples"> An array of examples. </param>
+        /// <param name="isA"> An array of related term headers indicating the is-a relationship. </param>
+        /// <param name="preferredTerms"> An array of preferred related term headers. </param>
+        /// <param name="preferredToTerms"> An array of related term headers that are preferred to. </param>
+        /// <param name="replacedBy"> An array of related term headers that are replaced by. </param>
+        /// <param name="replacementTerms"> An array of related term headers for replacement. </param>
+        /// <param name="seeAlso"> An array of related term headers for see also. </param>
+        /// <param name="synonyms"> An array of related term headers as synonyms. </param>
+        /// <param name="translatedTerms"> An array of translated related term headers. </param>
+        /// <param name="translationTerms"> An array of related term headers for translation. </param>
+        /// <param name="usage"> The usage of the term. </param>
+        /// <param name="validValues"> An array of related term headers as valid values. </param>
+        /// <param name="validValuesFor"> An array of related term headers as valid values for other records. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="atlasGlossaryTerm"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTermAsync(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossaryTerm>> UpdateTermAsync(string termId, AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTermAsync(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasGlossaryTerm>> UpdateTermAsync(string termId, string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, string abbreviation = null, IEnumerable<BinaryData> templateName = null, AtlasGlossaryHeader anchor = null, IEnumerable<AtlasRelatedTermHeader> antonyms = null, TermStatus? status = null, string nickName = null, IEnumerable<PurviewObjectId> hierarchyInfo = null, IEnumerable<ResourceLink> resources = null, IDictionary<string, IList<ContactInfo>> contacts = null, IDictionary<string, IDictionary<string, BinaryData>> attributes = null, IEnumerable<AtlasRelatedObjectId> assignedEntities = null, IEnumerable<AtlasTermCategorizationHeader> categories = null, IEnumerable<AtlasRelatedTermHeader> classifies = null, IEnumerable<string> examples = null, IEnumerable<AtlasRelatedTermHeader> isA = null, IEnumerable<AtlasRelatedTermHeader> preferredTerms = null, IEnumerable<AtlasRelatedTermHeader> preferredToTerms = null, IEnumerable<AtlasRelatedTermHeader> replacedBy = null, IEnumerable<AtlasRelatedTermHeader> replacementTerms = null, IEnumerable<AtlasRelatedTermHeader> seeAlso = null, IEnumerable<AtlasRelatedTermHeader> synonyms = null, IEnumerable<AtlasRelatedTermHeader> translatedTerms = null, IEnumerable<AtlasRelatedTermHeader> translationTerms = null, string usage = null, IEnumerable<AtlasRelatedTermHeader> validValues = null, IEnumerable<AtlasRelatedTermHeader> validValuesFor = null, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
 
-            using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm(
+                guid,
+                classifications?.ToList() as IList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                abbreviation,
+                templateName?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(),
+                anchor,
+                antonyms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                status,
+                nickName,
+                hierarchyInfo?.ToList() as IList<PurviewObjectId> ?? new ChangeTrackingList<PurviewObjectId>(),
+                resources?.ToList() as IList<ResourceLink> ?? new ChangeTrackingList<ResourceLink>(),
+                contacts ?? new ChangeTrackingDictionary<string, IList<ContactInfo>>(),
+                attributes ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                assignedEntities?.ToList() as IList<AtlasRelatedObjectId> ?? new ChangeTrackingList<AtlasRelatedObjectId>(),
+                categories?.ToList() as IList<AtlasTermCategorizationHeader> ?? new ChangeTrackingList<AtlasTermCategorizationHeader>(),
+                classifies?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                examples?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                isA?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredToTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacedBy?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacementTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                seeAlso?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                synonyms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translatedTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translationTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                validValues?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                validValuesFor?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateTermAsync(termId, content, includeTermHierarchy, context).ConfigureAwait(false);
+            Response response = await UpdateTermAsync(termId, atlasGlossaryTerm.ToRequestContent(), includeTermHierarchy, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
 
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termId"> The globally unique identifier for glossary term. </param>
-        /// <param name="atlasGlossaryTerm"> The glossary term. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="abbreviation"> The abbreviation of the term. </param>
+        /// <param name="templateName"> The name of the template. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="antonyms"> An array of related term headers as antonyms. </param>
+        /// <param name="status"> Status of the AtlasGlossaryTerm. </param>
+        /// <param name="nickName"> The nick name of the term. </param>
+        /// <param name="hierarchyInfo"> The hierarchy information of the term. </param>
+        /// <param name="resources"> An array of resource link for term. </param>
+        /// <param name="contacts"> The dictionary of contacts for terms. Key could be Expert or Steward. </param>
+        /// <param name="attributes">
+        /// The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The
+        /// key of the first layer map is term template name.
+        /// </param>
+        /// <param name="assignedEntities"> An array of related object IDs. </param>
+        /// <param name="categories"> An array of term categorization headers. </param>
+        /// <param name="classifies"> An array of related term headers. </param>
+        /// <param name="examples"> An array of examples. </param>
+        /// <param name="isA"> An array of related term headers indicating the is-a relationship. </param>
+        /// <param name="preferredTerms"> An array of preferred related term headers. </param>
+        /// <param name="preferredToTerms"> An array of related term headers that are preferred to. </param>
+        /// <param name="replacedBy"> An array of related term headers that are replaced by. </param>
+        /// <param name="replacementTerms"> An array of related term headers for replacement. </param>
+        /// <param name="seeAlso"> An array of related term headers for see also. </param>
+        /// <param name="synonyms"> An array of related term headers as synonyms. </param>
+        /// <param name="translatedTerms"> An array of translated related term headers. </param>
+        /// <param name="translationTerms"> An array of related term headers for translation. </param>
+        /// <param name="usage"> The usage of the term. </param>
+        /// <param name="validValues"> An array of related term headers as valid values. </param>
+        /// <param name="validValuesFor"> An array of related term headers as valid values for other records. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="atlasGlossaryTerm"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTerm(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossaryTerm> UpdateTerm(string termId, AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTerm(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)']/*" />
+        public virtual Response<AtlasGlossaryTerm> UpdateTerm(string termId, string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, string abbreviation = null, IEnumerable<BinaryData> templateName = null, AtlasGlossaryHeader anchor = null, IEnumerable<AtlasRelatedTermHeader> antonyms = null, TermStatus? status = null, string nickName = null, IEnumerable<PurviewObjectId> hierarchyInfo = null, IEnumerable<ResourceLink> resources = null, IDictionary<string, IList<ContactInfo>> contacts = null, IDictionary<string, IDictionary<string, BinaryData>> attributes = null, IEnumerable<AtlasRelatedObjectId> assignedEntities = null, IEnumerable<AtlasTermCategorizationHeader> categories = null, IEnumerable<AtlasRelatedTermHeader> classifies = null, IEnumerable<string> examples = null, IEnumerable<AtlasRelatedTermHeader> isA = null, IEnumerable<AtlasRelatedTermHeader> preferredTerms = null, IEnumerable<AtlasRelatedTermHeader> preferredToTerms = null, IEnumerable<AtlasRelatedTermHeader> replacedBy = null, IEnumerable<AtlasRelatedTermHeader> replacementTerms = null, IEnumerable<AtlasRelatedTermHeader> seeAlso = null, IEnumerable<AtlasRelatedTermHeader> synonyms = null, IEnumerable<AtlasRelatedTermHeader> translatedTerms = null, IEnumerable<AtlasRelatedTermHeader> translationTerms = null, string usage = null, IEnumerable<AtlasRelatedTermHeader> validValues = null, IEnumerable<AtlasRelatedTermHeader> validValuesFor = null, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
 
-            using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            AtlasGlossaryTerm atlasGlossaryTerm = new AtlasGlossaryTerm(
+                guid,
+                classifications?.ToList() as IList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                abbreviation,
+                templateName?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(),
+                anchor,
+                antonyms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                status,
+                nickName,
+                hierarchyInfo?.ToList() as IList<PurviewObjectId> ?? new ChangeTrackingList<PurviewObjectId>(),
+                resources?.ToList() as IList<ResourceLink> ?? new ChangeTrackingList<ResourceLink>(),
+                contacts ?? new ChangeTrackingDictionary<string, IList<ContactInfo>>(),
+                attributes ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                assignedEntities?.ToList() as IList<AtlasRelatedObjectId> ?? new ChangeTrackingList<AtlasRelatedObjectId>(),
+                categories?.ToList() as IList<AtlasTermCategorizationHeader> ?? new ChangeTrackingList<AtlasTermCategorizationHeader>(),
+                classifies?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                examples?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                isA?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredToTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacedBy?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacementTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                seeAlso?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                synonyms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translatedTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translationTerms?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                validValues?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                validValuesFor?.ToList() as IList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateTerm(termId, content, includeTermHierarchy, context);
+            Response response = UpdateTerm(termId, atlasGlossaryTerm.ToRequestContent(), includeTermHierarchy, context);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
 
@@ -1559,7 +2030,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateTermAsync(string,AtlasGlossaryTerm,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateTermAsync(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1602,7 +2073,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateTerm(string,AtlasGlossaryTerm,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateTerm(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,string,IEnumerable{BinaryData},AtlasGlossaryHeader,IEnumerable{AtlasRelatedTermHeader},TermStatus?,string,IEnumerable{PurviewObjectId},IEnumerable{ResourceLink},IDictionary{string,IList{ContactInfo}},IDictionary{string,IDictionary{string,BinaryData}},IEnumerable{AtlasRelatedObjectId},IEnumerable{AtlasTermCategorizationHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{string},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},string,IEnumerable{AtlasRelatedTermHeader},IEnumerable{AtlasRelatedTermHeader},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2665,39 +3136,97 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Update the given glossary. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="categories"> An array of categories. </param>
+        /// <param name="language"> The language of the glossary. </param>
+        /// <param name="terms"> An array of related term headers. </param>
+        /// <param name="usage"> The usage of the glossary. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="atlasGlossary"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateAsync(string,AtlasGlossary,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasGlossary>> UpdateAsync(string glossaryId, AtlasGlossary atlasGlossary, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateAsync(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasGlossary>> UpdateAsync(string glossaryId, string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, IEnumerable<AtlasRelatedCategoryHeader> categories = null, string language = null, IEnumerable<AtlasRelatedTermHeader> terms = null, string usage = null, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
 
-            using RequestContent content = atlasGlossary.ToRequestContent();
+            AtlasGlossary atlasGlossary = new AtlasGlossary(
+                guid,
+                classifications?.ToList() as IReadOnlyList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                categories?.ToList() as IReadOnlyList<AtlasRelatedCategoryHeader> ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                language,
+                terms?.ToList() as IReadOnlyList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateAsync(glossaryId, content, ignoreTermsAndCategories, context).ConfigureAwait(false);
+            Response response = await UpdateAsync(glossaryId, atlasGlossary.ToRequestContent(), ignoreTermsAndCategories, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
 
         /// <summary> Update the given glossary. </summary>
         /// <param name="glossaryId"> The globally unique identifier for glossary. </param>
-        /// <param name="atlasGlossary"> The glossary object. </param>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="categories"> An array of categories. </param>
+        /// <param name="language"> The language of the glossary. </param>
+        /// <param name="terms"> An array of related term headers. </param>
+        /// <param name="usage"> The usage of the glossary. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="atlasGlossary"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Update(string,AtlasGlossary,bool?,CancellationToken)']/*" />
-        public virtual Response<AtlasGlossary> Update(string glossaryId, AtlasGlossary atlasGlossary, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Update(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,bool?,CancellationToken)']/*" />
+        public virtual Response<AtlasGlossary> Update(string glossaryId, string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, IEnumerable<AtlasRelatedCategoryHeader> categories = null, string language = null, IEnumerable<AtlasRelatedTermHeader> terms = null, string usage = null, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
 
-            using RequestContent content = atlasGlossary.ToRequestContent();
+            AtlasGlossary atlasGlossary = new AtlasGlossary(
+                guid,
+                classifications?.ToList() as IReadOnlyList<AtlasClassification> ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                categories?.ToList() as IReadOnlyList<AtlasRelatedCategoryHeader> ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                language,
+                terms?.ToList() as IReadOnlyList<AtlasRelatedTermHeader> ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Update(glossaryId, content, ignoreTermsAndCategories, context);
+            Response response = Update(glossaryId, atlasGlossary.ToRequestContent(), ignoreTermsAndCategories, context);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
 
@@ -2711,7 +3240,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateAsync(string,AtlasGlossary,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateAsync(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2754,7 +3283,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Update(string,AtlasGlossary,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Update(string,string,IEnumerable{AtlasClassification},string,string,string,string,string,long?,string,long?,string,IEnumerable{AtlasRelatedCategoryHeader},string,IEnumerable{AtlasRelatedTermHeader},string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
