@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> The body of the Trial Matcher request. </summary>
-    public partial class TrialMatcherData
+    internal partial class TrialMatcherData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
