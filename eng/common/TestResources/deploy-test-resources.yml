@@ -46,6 +46,7 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        PoolSubnet: $(PoolSubnet)
         ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
@@ -68,6 +69,7 @@ steps:
             -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
             @subscriptionConfiguration `
             -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+            -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
             -CI `
             -Force `
             -Verbose | Out-Null
@@ -89,6 +91,7 @@ steps:
           -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
           @subscriptionConfiguration `
           -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+          -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
           -CI `
           -ServicePrincipalAuth `
           -Force `
@@ -96,4 +99,5 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        PoolSubnet: $(PoolSubnet)
         ${{ insert }}: ${{ parameters.EnvVars }}

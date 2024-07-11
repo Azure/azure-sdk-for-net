@@ -55,7 +55,7 @@ namespace Azure.Storage.DataMovement
             ResourceLength = resourceLength;
             ETag = eTag;
             LastModifiedTime = lastModifiedTime;
-            RawProperties = properties;
+            RawProperties = properties != default ? properties : new();
         }
     }
 }
