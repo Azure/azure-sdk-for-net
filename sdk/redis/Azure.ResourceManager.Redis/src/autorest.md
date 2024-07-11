@@ -48,6 +48,9 @@ rename-mapping:
   RedisForceRebootResponse: RedisForceRebootResult
   RedisCacheAccessPolicyAssignment.properties.objectId: -|uuid
   RedisCommonPropertiesRedisConfiguration.aad-enabled: IsAadEnabled
+  Redis.properties.disableAccessKeyAuthentication: IsAccessKeyAuthenticationDisabled
+  RedisCreateParameters.properties.disableAccessKeyAuthentication: IsAccessKeyAuthenticationDisabled
+  RedisUpdateParameters.properties.disableAccessKeyAuthentication: IsAccessKeyAuthenticationDisabled
 
 prepend-rp-prefix:
   - OperationStatus
