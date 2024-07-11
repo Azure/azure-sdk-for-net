@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -47,32 +48,86 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="attributes"> The attributes of the struct. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="end1"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="end2"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="guid"> The GUID of the relationship. </param>
+        /// <param name="homeId"> The home ID of the relationship. </param>
+        /// <param name="label"> The label of the relationship. </param>
+        /// <param name="provenanceType"> Used to record the provenance of an instance of an entity or relationship. </param>
+        /// <param name="status"> The enum of relationship status. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(AtlasRelationship,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(IReadOnlyDictionary{string,BinaryData},string,string,long?,string,AtlasObjectId,AtlasObjectId,string,string,string,int?,StatusAtlasRelationship?,long?,string,long?,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasRelationship>> CreateAsync(IReadOnlyDictionary<string, BinaryData> attributes = null, string typeName = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, AtlasObjectId end1 = null, AtlasObjectId end2 = null, string guid = null, string homeId = null, string label = null, int? provenanceType = null, StatusAtlasRelationship? status = null, long? updateTime = null, string updatedBy = null, long? version = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
-
-            using RequestContent content = atlasRelationship.ToRequestContent();
+            AtlasRelationship atlasRelationship = new AtlasRelationship(
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                typeName,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                end1,
+                end2,
+                guid,
+                homeId,
+                label,
+                provenanceType,
+                status,
+                updateTime,
+                updatedBy,
+                version,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(content, context).ConfigureAwait(false);
+            Response response = await CreateAsync(atlasRelationship.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="attributes"> The attributes of the struct. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="end1"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="end2"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="guid"> The GUID of the relationship. </param>
+        /// <param name="homeId"> The home ID of the relationship. </param>
+        /// <param name="label"> The label of the relationship. </param>
+        /// <param name="provenanceType"> Used to record the provenance of an instance of an entity or relationship. </param>
+        /// <param name="status"> The enum of relationship status. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(AtlasRelationship,CancellationToken)']/*" />
-        public virtual Response<AtlasRelationship> Create(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(IReadOnlyDictionary{string,BinaryData},string,string,long?,string,AtlasObjectId,AtlasObjectId,string,string,string,int?,StatusAtlasRelationship?,long?,string,long?,CancellationToken)']/*" />
+        public virtual Response<AtlasRelationship> Create(IReadOnlyDictionary<string, BinaryData> attributes = null, string typeName = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, AtlasObjectId end1 = null, AtlasObjectId end2 = null, string guid = null, string homeId = null, string label = null, int? provenanceType = null, StatusAtlasRelationship? status = null, long? updateTime = null, string updatedBy = null, long? version = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
-
-            using RequestContent content = atlasRelationship.ToRequestContent();
+            AtlasRelationship atlasRelationship = new AtlasRelationship(
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                typeName,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                end1,
+                end2,
+                guid,
+                homeId,
+                label,
+                provenanceType,
+                status,
+                updateTime,
+                updatedBy,
+                version,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(content, context);
+            Response response = Create(atlasRelationship.ToRequestContent(), context);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
 
@@ -86,7 +141,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAsync(AtlasRelationship,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAsync(IReadOnlyDictionary{string,BinaryData},string,string,long?,string,AtlasObjectId,AtlasObjectId,string,string,string,int?,StatusAtlasRelationship?,long?,string,long?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -125,7 +180,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Create(AtlasRelationship,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Create(IReadOnlyDictionary{string,BinaryData},string,string,long?,string,AtlasObjectId,AtlasObjectId,string,string,string,int?,StatusAtlasRelationship?,long?,string,long?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -155,32 +210,86 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="attributes"> The attributes of the struct. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="end1"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="end2"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="guid"> The GUID of the relationship. </param>
+        /// <param name="homeId"> The home ID of the relationship. </param>
+        /// <param name="label"> The label of the relationship. </param>
+        /// <param name="provenanceType"> Used to record the provenance of an instance of an entity or relationship. </param>
+        /// <param name="status"> The enum of relationship status. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(AtlasRelationship,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(IReadOnlyDictionary{string,BinaryData},string,string,long?,string,AtlasObjectId,AtlasObjectId,string,string,string,int?,StatusAtlasRelationship?,long?,string,long?,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasRelationship>> UpdateAsync(IReadOnlyDictionary<string, BinaryData> attributes = null, string typeName = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, AtlasObjectId end1 = null, AtlasObjectId end2 = null, string guid = null, string homeId = null, string label = null, int? provenanceType = null, StatusAtlasRelationship? status = null, long? updateTime = null, string updatedBy = null, long? version = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
-
-            using RequestContent content = atlasRelationship.ToRequestContent();
+            AtlasRelationship atlasRelationship = new AtlasRelationship(
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                typeName,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                end1,
+                end2,
+                guid,
+                homeId,
+                label,
+                provenanceType,
+                status,
+                updateTime,
+                updatedBy,
+                version,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateAsync(content, context).ConfigureAwait(false);
+            Response response = await UpdateAsync(atlasRelationship.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="attributes"> The attributes of the struct. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="end1"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="end2"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="guid"> The GUID of the relationship. </param>
+        /// <param name="homeId"> The home ID of the relationship. </param>
+        /// <param name="label"> The label of the relationship. </param>
+        /// <param name="provenanceType"> Used to record the provenance of an instance of an entity or relationship. </param>
+        /// <param name="status"> The enum of relationship status. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
-        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(AtlasRelationship,CancellationToken)']/*" />
-        public virtual Response<AtlasRelationship> Update(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(IReadOnlyDictionary{string,BinaryData},string,string,long?,string,AtlasObjectId,AtlasObjectId,string,string,string,int?,StatusAtlasRelationship?,long?,string,long?,CancellationToken)']/*" />
+        public virtual Response<AtlasRelationship> Update(IReadOnlyDictionary<string, BinaryData> attributes = null, string typeName = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, AtlasObjectId end1 = null, AtlasObjectId end2 = null, string guid = null, string homeId = null, string label = null, int? provenanceType = null, StatusAtlasRelationship? status = null, long? updateTime = null, string updatedBy = null, long? version = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
-
-            using RequestContent content = atlasRelationship.ToRequestContent();
+            AtlasRelationship atlasRelationship = new AtlasRelationship(
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                typeName,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                end1,
+                end2,
+                guid,
+                homeId,
+                label,
+                provenanceType,
+                status,
+                updateTime,
+                updatedBy,
+                version,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Update(content, context);
+            Response response = Update(atlasRelationship.ToRequestContent(), context);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
 
@@ -194,7 +303,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateAsync(AtlasRelationship,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateAsync(IReadOnlyDictionary{string,BinaryData},string,string,long?,string,AtlasObjectId,AtlasObjectId,string,string,string,int?,StatusAtlasRelationship?,long?,string,long?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -233,7 +342,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Update(AtlasRelationship,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Update(IReadOnlyDictionary{string,BinaryData},string,string,long?,string,AtlasObjectId,AtlasObjectId,string,string,string,int?,StatusAtlasRelationship?,long?,string,long?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

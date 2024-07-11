@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The search query of advanced search request. </summary>
-    public partial class QueryConfig
+    internal partial class QueryConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
