@@ -17,7 +17,7 @@
 
 		<!-- Disables auto recording when using [RecordedTest] attribute -->
 		<!-- <Parameter name="DisableAutoRecording" value="true" /> -->
-	
+
 		<!-- Change the test mode -->
 		<!-- <Parameter name="TestMode" value="Record" />  -->
 
