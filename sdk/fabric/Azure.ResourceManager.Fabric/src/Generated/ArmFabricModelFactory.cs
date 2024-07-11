@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="administrationMembers"> The capacity administration. </param>
         /// <returns> A new <see cref="Fabric.FabricCapacityData"/> instance for mocking. </returns>
-        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RpSku sku = null, ProvisioningState? provisioningState = null, ResourceState? state = null, IEnumerable<string> administrationMembers = null)
+        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RpSku sku = null, FabricProvisioningState? provisioningState = null, FabricResourceState? state = null, IEnumerable<string> administrationMembers = null)
         {
             tags ??= new Dictionary<string, string>();
             administrationMembers ??= new List<string>();
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Fabric.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FabricCheckNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.FabricCheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static FabricCheckNameAvailabilityResult FabricCheckNameAvailabilityResult(bool? nameAvailable = null, FabricNameUnavailableReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new FabricCheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RpSkuDetailsForNewCapacity"/>. </summary>

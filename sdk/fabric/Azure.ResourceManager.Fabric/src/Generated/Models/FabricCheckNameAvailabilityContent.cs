@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> The check availability request body. </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class FabricCheckNameAvailabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Fabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
-        public CheckNameAvailabilityContent()
+        /// <summary> Initializes a new instance of <see cref="FabricCheckNameAvailabilityContent"/>. </summary>
+        public FabricCheckNameAvailabilityContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricCheckNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricCheckNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceType = resourceType;

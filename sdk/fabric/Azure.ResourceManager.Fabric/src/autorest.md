@@ -54,7 +54,7 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  CheckNameAvailabilityResponse: CheckNameAvailabilityResult
+  CheckNameAvailabilityResponse: FabricCheckNameAvailabilityResult
   RpSkuDetailsForNewResource: RpSkuDetailsForNewCapacity
   RpSkuDetailsForExistingResource: RpSkuDetailsForExistingCapacity
 ```

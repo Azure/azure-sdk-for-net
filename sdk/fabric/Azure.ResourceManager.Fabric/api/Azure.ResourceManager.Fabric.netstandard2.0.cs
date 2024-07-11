@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Fabric
     {
         public FabricCapacityData(Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.RpSku sku) { }
         public System.Collections.Generic.IList<string> AdministrationMembers { get { throw null; } set { } }
-        public Azure.ResourceManager.Fabric.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Fabric.Models.FabricProvisioningState? FabricProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Fabric.Models.RpSku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Fabric.Models.ResourceState? State { get { throw null; } }
+        public Azure.ResourceManager.Fabric.Models.FabricResourceState? State { get { throw null; } }
         Azure.ResourceManager.Fabric.FabricCapacityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.FabricCapacityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.FabricCapacityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Fabric.FabricCapacityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.FabricCapacityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Fabric
     }
     public static partial class FabricExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Fabric.FabricCapacityCollection GetFabricCapacities(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Fabric.FabricCapacityResource> GetFabricCapacities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Fabric.FabricCapacityResource> GetFabricCapacitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Fabric.Mocking
     public partial class MockableFabricSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableFabricSubscriptionResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Fabric.FabricCapacityResource> GetFabricCapacities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Fabric.FabricCapacityResource> GetFabricCapacitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Fabric.Models.RpSkuDetailsForNewCapacity> GetSkusFabricCapacities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -104,51 +104,51 @@ namespace Azure.ResourceManager.Fabric.Models
 {
     public static partial class ArmFabricModelFactory
     {
-        public static Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason? reason = default(Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason?), string message = null) { throw null; }
-        public static Azure.ResourceManager.Fabric.FabricCapacityData FabricCapacityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Fabric.Models.RpSku sku = null, Azure.ResourceManager.Fabric.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Fabric.Models.ProvisioningState?), Azure.ResourceManager.Fabric.Models.ResourceState? state = default(Azure.ResourceManager.Fabric.Models.ResourceState?), System.Collections.Generic.IEnumerable<string> administrationMembers = null) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult FabricCheckNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason? reason = default(Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.Fabric.FabricCapacityData FabricCapacityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Fabric.Models.RpSku sku = null, Azure.ResourceManager.Fabric.Models.FabricProvisioningState? provisioningState = default(Azure.ResourceManager.Fabric.Models.FabricProvisioningState?), Azure.ResourceManager.Fabric.Models.FabricResourceState? state = default(Azure.ResourceManager.Fabric.Models.FabricResourceState?), System.Collections.Generic.IEnumerable<string> administrationMembers = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.RpSkuDetailsForExistingCapacity RpSkuDetailsForExistingCapacity(string resourceType = null, Azure.ResourceManager.Fabric.Models.RpSku sku = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.RpSkuDetailsForNewCapacity RpSkuDetailsForNewCapacity(string resourceType = null, string name = null, System.Collections.Generic.IEnumerable<string> locations = null) { throw null; }
     }
-    public partial class CheckNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent>
+    public partial class FabricCheckNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent>
     {
-        public CheckNameAvailabilityContent() { }
+        public FabricCheckNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
-        Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason>
+    public readonly partial struct FabricNameUnavailableReason : System.IEquatable<Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CheckNameAvailabilityReason(string value) { throw null; }
-        public static Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason AlreadyExists { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason other) { throw null; }
+        public FabricNameUnavailableReason(string value) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason left, Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason left, Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CheckNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult>
+    public partial class FabricCheckNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult>
     {
-        internal CheckNameAvailabilityResult() { }
+        internal FabricCheckNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityReason? Reason { get { throw null; } }
-        Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.CheckNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCheckNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FabricCapacityPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacityPatch>
     {
@@ -163,53 +163,53 @@ namespace Azure.ResourceManager.Fabric.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacityPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Fabric.Models.ProvisioningState>
+    public readonly partial struct FabricProvisioningState : System.IEquatable<Azure.ResourceManager.Fabric.Models.FabricProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Fabric.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Fabric.Models.ProvisioningState other) { throw null; }
+        public FabricProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Fabric.Models.FabricProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Fabric.Models.ProvisioningState left, Azure.ResourceManager.Fabric.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Fabric.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Fabric.Models.ProvisioningState left, Azure.ResourceManager.Fabric.Models.ProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Fabric.Models.FabricProvisioningState left, Azure.ResourceManager.Fabric.Models.FabricProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Fabric.Models.FabricProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Fabric.Models.FabricProvisioningState left, Azure.ResourceManager.Fabric.Models.FabricProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceState : System.IEquatable<Azure.ResourceManager.Fabric.Models.ResourceState>
+    public readonly partial struct FabricResourceState : System.IEquatable<Azure.ResourceManager.Fabric.Models.FabricResourceState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ResourceState(string value) { throw null; }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Active { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Paused { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Pausing { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Preparing { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Resuming { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Scaling { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Suspended { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Suspending { get { throw null; } }
-        public static Azure.ResourceManager.Fabric.Models.ResourceState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Fabric.Models.ResourceState other) { throw null; }
+        public FabricResourceState(string value) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Active { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Paused { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Pausing { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Preparing { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Resuming { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Scaling { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Suspended { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Suspending { get { throw null; } }
+        public static Azure.ResourceManager.Fabric.Models.FabricResourceState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Fabric.Models.FabricResourceState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Fabric.Models.ResourceState left, Azure.ResourceManager.Fabric.Models.ResourceState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Fabric.Models.ResourceState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Fabric.Models.ResourceState left, Azure.ResourceManager.Fabric.Models.ResourceState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Fabric.Models.FabricResourceState left, Azure.ResourceManager.Fabric.Models.FabricResourceState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Fabric.Models.FabricResourceState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Fabric.Models.FabricResourceState left, Azure.ResourceManager.Fabric.Models.FabricResourceState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RpSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.RpSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.RpSku>
