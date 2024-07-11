@@ -373,7 +373,8 @@ options.AddDataSource(new AzureSearchChatDataSource()
 ChatCompletion completion = chatClient.CompleteChat(
     [
         new UserChatMessage("What are the best-selling Contoso products this month?"),
-    ],options);
+    ],
+    options);
 
 AzureChatMessageContext onYourDataContext = completion.GetAzureMessageContext();
 
