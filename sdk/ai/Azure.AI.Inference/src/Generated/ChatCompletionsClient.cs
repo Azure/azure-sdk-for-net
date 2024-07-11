@@ -17,8 +17,9 @@ namespace Azure.AI.Inference
     /// <summary> The ChatCompletions service client. </summary>
     public partial class ChatCompletionsClient
     {
-        private const string AuthorizationHeader = "api-key";
+        private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationApiKeyPrefix = "Bearer";
         private static readonly string[] AuthorizationScopes = new string[] { "https://ml.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
@@ -65,7 +66,7 @@ namespace Azure.AI.Inference
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }

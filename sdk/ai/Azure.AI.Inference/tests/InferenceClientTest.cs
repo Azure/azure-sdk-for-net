@@ -3,22 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using static System.Net.WebRequestMethods;
 using File = System.IO.File;
 
 namespace Azure.AI.Inference.Tests
@@ -396,8 +390,8 @@ namespace Azure.AI.Inference.Tests
 
         [RecordedTest]
         [TestCase(ImageTestSourceKind.UsingInternetLocation)]
-        [TestCase(ImageTestSourceKind.UsingStream, IgnoreReason="Not ready yet")]
-        [TestCase(ImageTestSourceKind.UsingBinaryData, IgnoreReason = "Not ready yet")]
+        [TestCase(ImageTestSourceKind.UsingStream)]
+        [TestCase(ImageTestSourceKind.UsingBinaryData)]
         public async Task TestChatCompletionsWithImages(ImageTestSourceKind imageSourceKind)
         {
             // var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
@@ -407,6 +401,8 @@ namespace Azure.AI.Inference.Tests
             var githubModelName = "gpt-4o";
             var githubCredential = new AzureKeyCredential(TestEnvironment.GithubToken);
 
+            var aoaiEndpoint = new Uri(TestEnvironment.AoaiEndpoint);
+
             // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
 
             // var client = CreateClient(endpoint, credential);
@@ -415,7 +411,9 @@ namespace Azure.AI.Inference.Tests
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
             // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
             // var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
-            var client = new ChatCompletionsClient(githubEndpoint, githubCredential, clientOptions);
+            // var client = new ChatCompletionsClient(githubEndpoint, githubCredential, clientOptions);\
+            clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(TestEnvironment), HttpPipelinePosition.PerCall);
+            var client = new ChatCompletionsClient(aoaiEndpoint, new AzureKeyCredential(TestEnvironment.AoaiKey), clientOptions);
 
             ChatMessageImageContentItem imageContentItem = imageSourceKind switch
             {
@@ -435,6 +433,7 @@ namespace Azure.AI.Inference.Tests
                         imageContentItem),
                 },
                 MaxTokens = 2048,
+                Model = githubModelName,
             };
 
             Response<ChatCompletions> response = null;
@@ -492,6 +491,32 @@ namespace Azure.AI.Inference.Tests
             }
         }
 
+        private class AddAoaiAuthHeaderPolicy : HttpPipelinePolicy
+        {
+            public InferenceClientTestEnvironment TestEnvironment { get; }
+
+            public AddAoaiAuthHeaderPolicy(InferenceClientTestEnvironment testEnvironment)
+            {
+                TestEnvironment = testEnvironment;
+            }
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                // Add your desired header name and value
+                message.Request.Headers.Add("api-key", TestEnvironment.AoaiKey);
+
+                ProcessNext(message, pipeline);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                // Add your desired header name and value
+                message.Request.Headers.Add("api-key", TestEnvironment.AoaiKey);
+
+                return ProcessNextAsync(message, pipeline);
+            }
+        }
+
         private ChatCompletionsClient CreateClient(Uri endpoint, AzureKeyCredential credential)
         {
             return InstrumentClient(new ChatCompletionsClient(endpoint, credential, InstrumentClientOptions(new ChatCompletionsClientOptions())));
@@ -513,7 +538,7 @@ namespace Azure.AI.Inference.Tests
             {
                 return new Uri("https://sanitized");
             }
-            return new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg");
+            return new Uri("https://aka.ms/azsdk/azure-ai-inference/csharp/tests/juggling_balls.png");
         }
 
         private Stream GetTestImageStream(string mimeType)
