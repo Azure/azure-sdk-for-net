@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             RedisCreateOrUpdateContent redisCreationParameters = new RedisCreateOrUpdateContent(DefaultLocation,
             new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1))
             {
-                DisableAccessKeyAuthentication = true,
+                IsAccessKeyAuthenticationDisabled = true,
                 RedisConfiguration = new RedisCommonConfiguration()
                 {
                     IsAadEnabled = "true"
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
 
             // Verify cache is aad enabled and access keys authentication disabled
             Assert.IsTrue(string.Equals(redisResource.Data.RedisConfiguration.IsAadEnabled, "true", StringComparison.OrdinalIgnoreCase));
-            Assert.IsTrue(redisResource.Data.DisableAccessKeyAuthentication);
+            Assert.IsTrue(redisResource.Data.IsAccessKeyAuthenticationDisabled);
 
             // List access polices
             RedisCacheAccessPolicyCollection accessPolicyCollection = redisResource.GetRedisCacheAccessPolicies();
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             // Enable access keys authentication on cache
             redisCreationParameters = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1))
             {
-                DisableAccessKeyAuthentication = false
+                IsAccessKeyAuthenticationDisabled = false
             };
             redisResource = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, redisCreationParameters)).Value;
 
             // Verify access keys authentication is enabled
-            Assert.IsFalse(redisResource.Data.DisableAccessKeyAuthentication);
+            Assert.IsFalse(redisResource.Data.IsAccessKeyAuthenticationDisabled);
 
             // Disable aad on cache
             redisCreationParameters = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1))
