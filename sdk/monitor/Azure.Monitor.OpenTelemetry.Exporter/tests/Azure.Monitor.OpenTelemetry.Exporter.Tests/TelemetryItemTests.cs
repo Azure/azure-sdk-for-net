@@ -9,6 +9,7 @@ using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
 using Xunit;
@@ -48,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource();
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(new MockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
@@ -75,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(new MockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
@@ -101,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource();
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(new MockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal("RemoteDependency", telemetryItem.Name);
@@ -306,7 +307,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource();
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(new MockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal(Dns.GetHostName(), telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
@@ -326,7 +327,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = CreateTestResource(null, null, "serviceinstance");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
-            var traceResource = resource.CreateAzureMonitorResource();
+            var traceResource = resource.CreateAzureMonitorResource(new MockPlatform());
             var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
 
             Assert.Equal("serviceinstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
@@ -437,7 +438,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Assert.NotNull(activity);
 
                 var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-                var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey);
+                var azMonResource = resource.CreateAzureMonitorResource(new MockPlatform(), instrumentationKey);
 
                 var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, instrumentationKey, 1.0f);
                 var telemetryItem = telemetryItems.FirstOrDefault();
@@ -489,7 +490,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Assert.NotNull(activity1);
 
                 var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-                var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey);
+                var azMonResource = resource.CreateAzureMonitorResource(new MockPlatform(), instrumentationKey);
 
                 var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity1 }, 1), null, instrumentationKey, 1.0f);
                 var telemetryItem1 = telemetryItems.FirstOrDefault();

@@ -27,31 +27,67 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 #endif
     {
         private readonly IDictionary _environmentVariables;
+        private readonly bool _preCacheEnvironmentVariables;
 
+        /// <remarks>
+        /// When this class is used to initialize the entire SDK, it is recommended to set <paramref name="preCacheEnvironmentVariables"/> to true.
+        /// This will avoid reading environment variables multiple times and simplifies the exception handling.
+        /// An instance with this caching enabled should not be saved to allow GC to reclaim the memory.
+        /// Some secenarios require reading a single environment variable after initialization, in which case you should set <paramref name="preCacheEnvironmentVariables"/> to false.
+        /// </remarks>
 #if ASP_NET_CORE_DISTRO
-        public DefaultPlatformDistro()
+        public DefaultPlatformDistro(bool preCacheEnvironmentVariables = false)
 #else
-        public DefaultPlatform()
+        public DefaultPlatform(bool preCacheEnvironmentVariables = false)
 #endif
         {
-            try
+            _preCacheEnvironmentVariables = preCacheEnvironmentVariables;
+
+            if (preCacheEnvironmentVariables)
             {
-                _environmentVariables = Environment.GetEnvironmentVariables();
-            }
-            catch (Exception ex)
-            {
+                try
+                {
+                    _environmentVariables = Environment.GetEnvironmentVariables();
+                }
+                catch (Exception ex)
+                {
 #if AZURE_MONITOR_EXPORTER
-                AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
-#elif LIVE_METRICS_EXPORTER
-                LiveMetricsExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
+                    AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
 #elif ASP_NET_CORE_DISTRO
-                AzureMonitorAspNetCoreEventSource.Log.FailedToReadEnvironmentVariables(ex);
+                    AzureMonitorAspNetCoreEventSource.Log.FailedToReadEnvironmentVariables(ex);
 #endif
+                    _environmentVariables = new Dictionary<string, object>();
+                }
+            }
+            else
+            {
                 _environmentVariables = new Dictionary<string, object>();
             }
         }
 
-        public string? GetEnvironmentVariable(string name) => _environmentVariables[name]?.ToString();
+        public string? GetEnvironmentVariable(string name)
+        {
+            if (_preCacheEnvironmentVariables)
+            {
+                return _environmentVariables[name]?.ToString();
+            }
+            else
+            {
+                try
+                {
+                    return Environment.GetEnvironmentVariable(name);
+                }
+                catch (Exception ex)
+                {
+#if AZURE_MONITOR_EXPORTER
+                    AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
+#elif ASP_NET_CORE_DISTRO
+                    AzureMonitorAspNetCoreEventSource.Log.FailedToReadEnvironmentVariables(ex);
+#endif
+                    return null;
+                }
+            }
+        }
 
         public string GetOSPlatformName()
         {
