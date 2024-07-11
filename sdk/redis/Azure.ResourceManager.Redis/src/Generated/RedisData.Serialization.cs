@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
-            if (Optional.IsDefined(DisableAccessKeyAuthentication))
+            if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
             {
                 writer.WritePropertyName("disableAccessKeyAuthentication"u8);
-                writer.WriteBooleanValue(DisableAccessKeyAuthentication.Value);
+                writer.WriteBooleanValue(IsAccessKeyAuthenticationDisabled.Value);
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.Redis
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableAccessKeyAuthentication), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAccessKeyAuthenticationDisabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    disableAccessKeyAuthentication: ");
@@ -970,10 +970,10 @@ namespace Azure.ResourceManager.Redis
             }
             else
             {
-                if (Optional.IsDefined(DisableAccessKeyAuthentication))
+                if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
                 {
                     builder.Append("    disableAccessKeyAuthentication: ");
-                    var boolValue = DisableAccessKeyAuthentication.Value == true ? "true" : "false";
+                    var boolValue = IsAccessKeyAuthenticationDisabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

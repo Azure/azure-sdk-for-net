@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
-            if (Optional.IsDefined(DisableAccessKeyAuthentication))
+            if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
             {
                 writer.WritePropertyName("disableAccessKeyAuthentication"u8);
-                writer.WriteBooleanValue(DisableAccessKeyAuthentication.Value);
+                writer.WriteBooleanValue(IsAccessKeyAuthenticationDisabled.Value);
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
