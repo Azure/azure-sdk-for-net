@@ -33,7 +33,13 @@ public abstract class OperationResult : ClientResult
     //public ContinuationToken RehydrationToken { get; protected set; }
 
     // Note: OAI LROs can stop before completing, and user needs to resume them somehow.
-    public bool IsCompleted { get; protected set; }
+    public abstract bool IsCompleted { get; protected set; }
+
+    // Idea to make this abstract so that streaming implementations can decide
+    // whether to query data in the reponse or keep a boolean backing field.
+    // Issue: the stream being empty doesn't always indicate the operation has
+    // completed.
+    //public abstract bool IsCompleted { get; protected set; }
 
     // Idea to provide these on the base type is to support having a collection
     // of heterogenous operations and wait for all of them to complete in a

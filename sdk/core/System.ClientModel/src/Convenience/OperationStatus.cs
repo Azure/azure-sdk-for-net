@@ -1,14 +1,14 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+﻿//// Copyright (c) Microsoft Corporation. All rights reserved.
+//// Licensed under the MIT License.
 
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives;
+//namespace System.ClientModel.Primitives;
 
-#pragma warning disable CS1591 // public XML comments
+//#pragma warning disable CS1591 // public XML comments
 
-public class OperationStatus
-{
-}
+//public class OperationStatus
+//{
+//}
 
-#pragma warning restore CS1591 // public XML comments
+//#pragma warning restore CS1591 // public XML comments

@@ -190,10 +190,10 @@ namespace System.ClientModel.Primitives
     {
         protected OperationResult(System.ClientModel.Primitives.ClientPipeline pipeline) { }
         protected OperationResult(System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineResponse response) { }
-        public bool HasCompleted { get { throw null; } protected set { } }
+        public abstract bool IsCompleted { get; protected set; }
         protected System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public abstract void WaitForCompletion();
-        public abstract System.Threading.Tasks.Task WaitForCompletionAsync();
+        public abstract void Wait(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task WaitAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
