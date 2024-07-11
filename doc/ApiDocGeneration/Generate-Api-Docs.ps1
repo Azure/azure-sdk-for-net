@@ -86,26 +86,35 @@ if ($LibType -eq 'management') {
 Write-Verbose "Package Location ${PackageLocation}"
 
 Write-Verbose "Create Directories Required for Doc Generation"
+Write-Verbose "Creating ApiDir '$ApiDir'"
 mkdir $ApiDir
+Write-Verbose "Creating ApiDependenciesDir '$ApiDependenciesDir'"
 mkdir $ApiDependenciesDir
+Write-Verbose "Creating XmlOutDir '$XmlOutDir'"
 mkdir $XmlOutDir
+Write-Verbose "Creating YamlOutDir '$YamlOutDir'"
 mkdir $YamlOutDir
+Write-Verbose "Creating DocOutDir '$DocOutDir'"
 mkdir $DocOutDir
 
 if ($LibType -eq 'client') { 
     Write-Verbose "Build Packages for Doc Generation - Client"
+    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0"
     dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0
 
     Write-Verbose "Include client Dependencies"
+    Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true"
     dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
 }
 
 if ($LibType -eq 'management') {
     # Management Package
     Write-Verbose "Build Packages for Doc Generation - Management"
+    Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false"
     dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false
 
     Write-Verbose "Include Management Dependencies"
+    Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false"
     dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
 }
 
