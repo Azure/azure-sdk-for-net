@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
         public async Task TestCheckNameAvailability_NotAvailable()
         {
             // Act
-            var content = new FabricCheckNameAvailabilityContent()
+            var content = new CheckNameAvailabilityContent()
             {
                 Name = TestEnvironment.CapacityName,
                 ResourceType = ResourceType
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
         public async Task TestCheckNameAvailability_Available()
         {
             // Act
-            var content = new FabricCheckNameAvailabilityContent()
+            var content = new CheckNameAvailabilityContent()
             {
                 Name = TestEnvironment.CapacityName + "1",
                 ResourceType = ResourceType
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             // Act
             var suspendResult = await fabricCapacity.SuspendAsync(WaitUntil.Completed);
             fabricCapacity = (await fabricCapacities.GetAsync(TestEnvironment.CapacityName)).Value;
-            Assert.AreEqual(fabricCapacity.Data.State, FabricResourceState.Paused);
+            Assert.AreEqual(fabricCapacity.Data.State, ResourceState.Paused);
 
             var resumeResult = await fabricCapacity.ResumeAsync(WaitUntil.Completed);
             fabricCapacity = (await fabricCapacities.GetAsync(TestEnvironment.CapacityName)).Value;
-            Assert.AreEqual(fabricCapacity.Data.State, FabricResourceState.Active);
+            Assert.AreEqual(fabricCapacity.Data.State, ResourceState.Active);
         }
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)

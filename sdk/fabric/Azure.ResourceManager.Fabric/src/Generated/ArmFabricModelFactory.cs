@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="administrationMembers"> The capacity administration. </param>
         /// <returns> A new <see cref="Fabric.FabricCapacityData"/> instance for mocking. </returns>
-        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RpSku sku = null, FabricProvisioningState? provisioningState = null, FabricResourceState? state = null, IEnumerable<string> administrationMembers = null)
+        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RpSku sku = null, ProvisioningState? provisioningState = null, ResourceState? state = null, IEnumerable<string> administrationMembers = null)
         {
             tags ??= new Dictionary<string, string>();
             administrationMembers ??= new List<string>();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
         /// <returns> A new <see cref="Models.FabricCheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static FabricCheckNameAvailabilityResult FabricCheckNameAvailabilityResult(bool? nameAvailable = null, FabricNameUnavailableReason? reason = null, string message = null)
+        public static FabricCheckNameAvailabilityResult FabricCheckNameAvailabilityResult(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
         {
             return new FabricCheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }

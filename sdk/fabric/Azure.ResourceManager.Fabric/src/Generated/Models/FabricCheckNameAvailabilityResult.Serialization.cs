@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Fabric.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCheckNameAvailabilityResult(document.RootElement, options);
+            return DeserializeFabricCheckNameAvailabilityResult(document.RootElement, options);
         }
 
-        internal static FabricCheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FabricCheckNameAvailabilityResult DeserializeFabricCheckNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 return null;
             }
             bool? nameAvailable = default;
-            FabricNameUnavailableReason? reason = default;
+            CheckNameAvailabilityReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     {
                         continue;
                     }
-                    reason = new FabricNameUnavailableReason(property.Value.GetString());
+                    reason = new CheckNameAvailabilityReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCheckNameAvailabilityResult(document.RootElement, options);
+                        return DeserializeFabricCheckNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FabricCheckNameAvailabilityResult)} does not support reading '{options.Format}' format.");

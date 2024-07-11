@@ -55,6 +55,11 @@ acronym-mapping:
 
 rename-mapping:
   CheckNameAvailabilityResponse: FabricCheckNameAvailabilityResult
+  CheckNameAvailabilityContent: FabricCheckNameAvailabilityContent
+  CheckNameAvailabilityReason: FabricNameUnavailableReason
+  CheckNameAvailabilityResult:FabricCheckNameAvailabilityResult
+  ProvisioningState: FabricProvisioningState
+  ResourceState: FabricResourceState
   RpSkuDetailsForNewResource: RpSkuDetailsForNewCapacity
   RpSkuDetailsForExistingResource: RpSkuDetailsForExistingCapacity
 ```
