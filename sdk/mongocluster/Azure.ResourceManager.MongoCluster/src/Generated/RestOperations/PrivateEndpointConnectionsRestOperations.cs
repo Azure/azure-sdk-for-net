@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.MongoCluster
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Azure Resource Manager url. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public PrivateEndpointConnectionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -297,9 +297,9 @@ namespace Azure.ResourceManager.MongoCluster
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 202:
                 case 200:
                 case 201:
-                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -327,9 +327,9 @@ namespace Azure.ResourceManager.MongoCluster
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 202:
                 case 200:
                 case 201:
-                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

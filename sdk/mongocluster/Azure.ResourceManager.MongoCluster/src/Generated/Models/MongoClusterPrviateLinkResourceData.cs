@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterPrviateLinkResourceData"/>. </summary>
-        public MongoClusterPrviateLinkResourceData()
+        internal MongoClusterPrviateLinkResourceData()
         {
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public MongoClusterPrivateLinkResourceProperties Properties { get; set; }
+        public MongoClusterPrivateLinkResourceProperties Properties { get; }
     }
 }

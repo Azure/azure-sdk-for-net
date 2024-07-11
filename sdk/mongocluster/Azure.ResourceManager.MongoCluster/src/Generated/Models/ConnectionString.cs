@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="uri"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionString(Uri uri, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionString(string uri, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             Description = description;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> Value of the connection string. </summary>
-        public Uri Uri { get; }
+        public string Uri { get; }
         /// <summary> Description of the connection string. </summary>
         public string Description { get; }
     }
