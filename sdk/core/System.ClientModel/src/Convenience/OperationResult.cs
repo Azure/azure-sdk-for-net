@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -32,7 +33,7 @@ public abstract class OperationResult : ClientResult
     //public ContinuationToken RehydrationToken { get; protected set; }
 
     // Note: OAI LROs can stop before completing, and user needs to resume them somehow.
-    public bool HasCompleted { get; protected set; }
+    public bool IsCompleted { get; protected set; }
 
     // Idea to provide these on the base type is to support having a collection
     // of heterogenous operations and wait for all of them to complete in a
@@ -40,7 +41,10 @@ public abstract class OperationResult : ClientResult
     // each.  It would require subtype constructors to take any relevant
     // information about polling intervals, cancellation tokens, etc, or just
     // say if you want to configure that you need to call the subtype directly.
-    public abstract Task WaitForCompletionAsync();
-    public abstract void WaitForCompletion();
+    public abstract Task WaitAsync(CancellationToken cancellationToken = default);
+    public abstract void Wait(CancellationToken cancellationToken = default);
+
+    //public abstract Task StartAsync();
+    //public abstract void Start();
 }
 #pragma warning restore CS1591 // public XML comments
