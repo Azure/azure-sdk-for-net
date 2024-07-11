@@ -10,11 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
 {
-    public class AadFunctionalTests : RedisManagementTestBase
+    public class AuthenticationFunctionalTests : RedisManagementTestBase
     {
         private ResourceGroupResource ResourceGroup { get; set; }
         private RedisCollection Collection { get; set; }
-        public AadFunctionalTests(bool isAsync)
+        public AuthenticationFunctionalTests(bool isAsync)
                     : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -27,11 +27,13 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
         [Test]
         public async Task AadTests()
         {
-            // Create aad enabled cache
+            // Create aad enabled cache with access keys authentication disabled
             await SetCollectionsAsync();
-            string redisCacheName = Recording.GenerateAssetName("AadTestCache");
-            RedisCreateOrUpdateContent redisCreationParameters = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1))
+            string redisCacheName = Recording.GenerateAssetName("AuthenticationTestCache");
+            RedisCreateOrUpdateContent redisCreationParameters = new RedisCreateOrUpdateContent(DefaultLocation,
+            new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1))
             {
+                DisableAccessKeyAuthentication = true,
                 RedisConfiguration = new RedisCommonConfiguration()
                 {
                     IsAadEnabled = "true"
@@ -39,8 +41,9 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             };
             RedisResource redisResource = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, redisCreationParameters)).Value;
 
-            // Verify cache is aad enabled
+            // Verify cache is aad enabled and access keys authentication disabled
             Assert.IsTrue(string.Equals(redisResource.Data.RedisConfiguration.IsAadEnabled, "true", StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(redisResource.Data.DisableAccessKeyAuthentication);
 
             // List access polices
             RedisCacheAccessPolicyCollection accessPolicyCollection = redisResource.GetRedisCacheAccessPolicies();
@@ -128,6 +131,16 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             // List access polices
             accessPolicyList = await accessPolicyCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(3, accessPolicyList.Count);
+
+            // Enable access keys authentication on cache
+            redisCreationParameters = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1))
+            {
+                DisableAccessKeyAuthentication = false
+            };
+            redisResource = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, redisCreationParameters)).Value;
+
+            // Verify access keys authentication is enabled
+            Assert.IsFalse(redisResource.Data.DisableAccessKeyAuthentication);
 
             // Disable aad on cache
             redisCreationParameters = new RedisCreateOrUpdateContent(DefaultLocation, new RedisSku(RedisSkuName.Premium, RedisSkuFamily.Premium, 1))
