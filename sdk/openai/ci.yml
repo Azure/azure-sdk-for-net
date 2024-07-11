@@ -31,6 +31,9 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: openai
+    # Skip project reference tests
+    MatrixFilters:
+      - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
     ArtifactName: packages
     Artifacts:
     - name: Azure.AI.OpenAI

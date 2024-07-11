@@ -8,39 +8,79 @@ parameters:
   # EnvVars is used to help diagnose variable conflict issues early
   - name: EnvVars
     type: object
+    default: {}
+  - name: SubscriptionConfigurationFilePaths
+    type: object
     default: null
 
 steps:
-  - ${{ if parameters.SubscriptionConfiguration }}:
-    - pwsh: |
-        $config = @'
-          ${{ parameters.SubscriptionConfiguration }}
-        '@ | ConvertFrom-Json -AsHashtable
+  - task: AzurePowerShell@5
+    displayName: Set Pipeline Subnet Info
+    condition: ne(variables['Pool'], '')
+    env: ${{ parameters.EnvVars }}
+    inputs:
+      azureSubscription: azure-sdk-tests
+      azurePowerShellVersion: LatestVersion
+      pwsh: true
+      ScriptType: InlineScript
+      Inline: |
+        Set-AzContext 'Azure SDK Engineering System'
+        if ($env:Pool -eq 'Azure Pipelines') {
+          Write-Host "Skipping pool subnet lookup when running on an Azure Pipelines hosted pool"
+          Write-Host "##vso[task.setvariable variable=PoolSubnet;]"
+          exit 0
+        }
+        $poolSubnet = (Get-AzResource -ResourceGroupName azsdk-pools -Name $env:Pool -ExpandProperties).Properties.networkProfile.subnetId
+        Write-Host "Setting pipeline subnet env variable PoolSubnet to '$poolSubnet'"
+        Write-Host "##vso[task.setvariable variable=PoolSubnet;]$poolSubnet"
 
-        . ./eng/common/TestResources/SubConfig-Helpers.ps1
-        SetSubscriptionConfiguration $config
-      displayName: Initialize SubscriptionConfiguration variable
-      ${{ if parameters.EnvVars }}:
-        env: ${{ parameters.EnvVars }}
+  - pwsh: |
+      . ./eng/common/TestResources/SubConfig-Helpers.ps1
 
-  - ${{ if parameters.SubscriptionConfigurations }}:
-    - pwsh: |
-        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]{}"
-      displayName: Initialize SubscriptionConfiguration variable for merging
-      condition: eq(variables['SubscriptionConfiguration'], '')
+      $finalConfig = @{}
+      $baseSubConfigRaw = @'
+        ${{ parameters.SubscriptionConfiguration }}
+      '@.Trim()
+      if ($baseSubConfigRaw) {
+        $baseSubConfig = $baseSubConfigRaw | ConvertFrom-Json -AsHashtable
 
-    - ${{ each config in parameters.SubscriptionConfigurations }}:
-      - pwsh: |
-          $configBase = @'
-            $(SubscriptionConfiguration)
-          '@ | ConvertFrom-Json -AsHashtable
-          $config = @'
-            ${{ config }}
-          '@ | ConvertFrom-Json -AsHashtable
+        Write-Host "Setting base sub config"
+        $finalConfig = SetSubscriptionConfiguration $baseSubConfig
+      }
 
-          . ./eng/common/TestResources/SubConfig-Helpers.ps1
-          UpdateSubscriptionConfiguration $configBase $config
+      $subConfigJsonsRaw = @'
+        ${{ convertToJson(parameters.SubscriptionConfigurations) }}
+      '@.Trim() -replace '"{', '{' -replace '}"', '}'
 
-        displayName: Merge Test Resource Configurations
-        ${{ if parameters.EnvVars }}:
-          env: ${{ parameters.EnvVars }}
+      if ($subConfigJsonsRaw) {
+        $subConfigs = $subConfigJsonsRaw | ConvertFrom-Json -AsHashtable
+
+        foreach ($subConfig in $subConfigs) {
+          Write-Host "Merging sub config from list"
+          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
+        }
+      }
+
+      $subConfigFilesRaw = @'
+        ${{ convertToJson(parameters.SubscriptionConfigurationFilePaths) }}
+      '@.Trim()
+
+      if ($subConfigFilesRaw) {
+        $subConfigFiles = $subConfigFilesRaw | ConvertFrom-Json -AsHashtable
+        foreach ($file in $subConfigFiles) {
+          # In some cases, $file could be an empty string. Get-Content will fail
+          # if $file is an empty string, so skip those cases.
+          if (!$file) {
+            continue
+          }
+
+          Write-Host "Merging sub config from file: $file"
+          $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
+          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
+        }
+      }
+
+      Write-Host ($finalConfig | ConvertTo-Json)
+      $serialized = $finalConfig | ConvertTo-Json -Compress
+      Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+    displayName: Merge subscription configurations

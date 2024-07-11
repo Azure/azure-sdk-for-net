@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareRootSquash? RootSquash { get; set; }
 
         /// <summary>
-        /// Optional. Supported in version 2023-08-03 and above.
+        /// Optional. Supported in version 2023-08-03 and above.  Only applicable for premium file storage accounts.
         /// Specifies whether the snapshot virtual directory should be accessible at the root of share mount point when NFS is enabled.
         /// If not specified, the default is true.
         /// </summary>

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Primary gateway key. </summary>
+        [WirePath("primary")]
         public string Primary { get; }
         /// <summary> Secondary gateway key. </summary>
+        [WirePath("secondary")]
         public string Secondary { get; }
     }
 }

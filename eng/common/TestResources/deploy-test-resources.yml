@@ -3,11 +3,11 @@ parameters:
   ArmTemplateParameters: '@{}'
   DeleteAfterHours: 8
   Location: ''
+  EnvVars: {}
   SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
   ServiceConnection: not-specified
   ResourceType: test
   UseFederatedAuth: false
-
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -46,6 +46,8 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        PoolSubnet: $(PoolSubnet)
+        ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
         azurePowerShellVersion: LatestVersion
@@ -53,7 +55,6 @@ steps:
         ScriptType: InlineScript
         Inline: |
           eng/common/scripts/Import-AzModules.ps1
-
           $subscriptionConfiguration = @'
             ${{ parameters.SubscriptionConfiguration }}
           '@ | ConvertFrom-Json -AsHashtable;
@@ -68,6 +69,7 @@ steps:
             -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
             @subscriptionConfiguration `
             -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+            -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
             -CI `
             -Force `
             -Verbose | Out-Null
@@ -75,7 +77,6 @@ steps:
   - ${{ else }}:
     - pwsh: |
         eng/common/scripts/Import-AzModules.ps1
-
         $subscriptionConfiguration = @'
           ${{ parameters.SubscriptionConfiguration }}
         '@ | ConvertFrom-Json -AsHashtable;
@@ -90,6 +91,7 @@ steps:
           -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
           @subscriptionConfiguration `
           -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+          -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
           -CI `
           -ServicePrincipalAuth `
           -Force `
@@ -97,3 +99,5 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        PoolSubnet: $(PoolSubnet)
+        ${{ insert }}: ${{ parameters.EnvVars }}

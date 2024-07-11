@@ -96,7 +96,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RadiologyInsightsInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for RadiologyInsightsInference. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <returns> A new <see cref="RadiologyInsights.RadiologyInsightsInference"/> instance for mocking. </returns>
         public static RadiologyInsightsInference RadiologyInsightsInference(string kind = null, IEnumerable<FhirR4Extension> extension = null)
@@ -291,51 +291,6 @@ namespace Azure.Health.Insights.RadiologyInsights
                 component?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4DomainResource"/>. </summary>
-        /// <param name="resourceType"> The type of resource. </param>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="meta"> Metadata about the resource. </param>
-        /// <param name="implicitRules"> A set of rules under which this content was created. </param>
-        /// <param name="language"> Language of the resource content. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="text"> Text summary of the resource, for human interpretation. </param>
-        /// <param name="contained"> Contained, inline Resources. </param>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="modifierExtension"> Extensions that cannot be ignored. </param>
-        /// <returns> A new <see cref="RadiologyInsights.FhirR4DomainResource"/> instance for mocking. </returns>
-        public static FhirR4DomainResource FhirR4DomainResource(string resourceType = null, string id = null, FhirR4Meta meta = null, string implicitRules = null, string language = null, IDictionary<string, BinaryData> additionalProperties = null, FhirR4Narrative text = null, IEnumerable<FhirR4Resource> contained = null, IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4Extension> modifierExtension = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-            contained ??= new List<FhirR4Resource>();
-            extension ??= new List<FhirR4Extension>();
-            modifierExtension ??= new List<FhirR4Extension>();
-
-            return new UnknownFhirR4DomainResource(
-                resourceType,
-                id,
-                meta,
-                implicitRules,
-                language,
-                additionalProperties,
-                text,
-                contained?.ToList(),
-                extension?.ToList(),
-                modifierExtension?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Narrative"/>. </summary>
-        /// <param name="id"> Unique id for inter-element referencing. </param>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="status"> generated, extensions, additional, empty. </param>
-        /// <param name="div"> xhtml. </param>
-        /// <returns> A new <see cref="RadiologyInsights.FhirR4Narrative"/> instance for mocking. </returns>
-        public static FhirR4Narrative FhirR4Narrative(string id = null, IEnumerable<FhirR4Extension> extension = null, string status = null, string div = null)
-        {
-            extension ??= new List<FhirR4Extension>();
-
-            return new FhirR4Narrative(id, extension?.ToList(), serializedAdditionalRawData: null, status, div);
-        }
-
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Annotation"/>. </summary>
         /// <param name="id"> Unique id for inter-element referencing. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
@@ -424,6 +379,220 @@ namespace Azure.Health.Insights.RadiologyInsights
                 dataAbsentReason,
                 interpretation?.ToList(),
                 referenceRange?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4DomainResource"/>. </summary>
+        /// <param name="resourceType"> The type of resource. </param>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="meta"> Metadata about the resource. </param>
+        /// <param name="implicitRules"> A set of rules under which this content was created. </param>
+        /// <param name="language"> Language of the resource content. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="text"> Text summary of the resource, for human interpretation. </param>
+        /// <param name="contained"> Contained, inline Resources. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="modifierExtension"> Extensions that cannot be ignored. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4DomainResource"/> instance for mocking. </returns>
+        public static FhirR4DomainResource FhirR4DomainResource(string resourceType = null, string id = null, FhirR4Meta meta = null, string implicitRules = null, string language = null, IDictionary<string, BinaryData> additionalProperties = null, FhirR4Narrative text = null, IEnumerable<FhirR4Resource> contained = null, IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4Extension> modifierExtension = null)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+            contained ??= new List<FhirR4Resource>();
+            extension ??= new List<FhirR4Extension>();
+            modifierExtension ??= new List<FhirR4Extension>();
+
+            return new UnknownFhirR4DomainResource(
+                resourceType,
+                id,
+                meta,
+                implicitRules,
+                language,
+                additionalProperties,
+                text,
+                contained?.ToList(),
+                extension?.ToList(),
+                modifierExtension?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Narrative"/>. </summary>
+        /// <param name="id"> Unique id for inter-element referencing. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="status"> generated, extensions, additional, empty. </param>
+        /// <param name="div"> xhtml. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Narrative"/> instance for mocking. </returns>
+        public static FhirR4Narrative FhirR4Narrative(string id = null, IEnumerable<FhirR4Extension> extension = null, string status = null, string div = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new FhirR4Narrative(id, extension?.ToList(), serializedAdditionalRawData: null, status, div);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4Condition"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="meta"> Metadata about the resource. </param>
+        /// <param name="implicitRules"> A set of rules under which this content was created. </param>
+        /// <param name="language"> Language of the resource content. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="text"> Text summary of the resource, for human interpretation. </param>
+        /// <param name="contained"> Contained, inline Resources. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="modifierExtension"> Extensions that cannot be ignored. </param>
+        /// <param name="identifier"> External Ids for this condition. </param>
+        /// <param name="clinicalStatus"> active | recurrence | relapse | inactive | remission | resolved. </param>
+        /// <param name="verificationStatus"> unconfirmed | provisional | differential | confirmed | refuted | entered-in-error. </param>
+        /// <param name="category"> problem-list-item | encounter-diagnosis. </param>
+        /// <param name="severity"> Subjective severity of condition. </param>
+        /// <param name="code"> Identification of the condition, problem or diagnosis. </param>
+        /// <param name="bodySite"> Anatomical location, if relevant. </param>
+        /// <param name="encounter"> Encounter created as part of. </param>
+        /// <param name="onsetDateTime"> Estimated or actual date,  date-time, or age. </param>
+        /// <param name="onsetAge"> Estimated or actual date,  date-time, or age. </param>
+        /// <param name="onsetPeriod"> Estimated or actual date,  date-time, or age. </param>
+        /// <param name="onsetRange"> Estimated or actual date,  date-time, or age. </param>
+        /// <param name="onsetString"> Estimated or actual date,  date-time, or age. </param>
+        /// <param name="abatementDateTime"> When in resolution/remission. </param>
+        /// <param name="abatementAge"> When in resolution/remission. </param>
+        /// <param name="abatementPeriod"> When in resolution/remission. </param>
+        /// <param name="abatementRange"> When in resolution/remission. </param>
+        /// <param name="abatementString"> When in resolution/remission. </param>
+        /// <param name="recordedDate"> Date record was first recorded. </param>
+        /// <param name="stage"> stge/grade, usually assessed formally. </param>
+        /// <param name="note"> Additional information about the Condition. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4Condition"/> instance for mocking. </returns>
+        public static FhirR4Condition FhirR4Condition(string id = null, FhirR4Meta meta = null, string implicitRules = null, string language = null, IDictionary<string, BinaryData> additionalProperties = null, FhirR4Narrative text = null, IEnumerable<FhirR4Resource> contained = null, IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4Extension> modifierExtension = null, IEnumerable<FhirR4Identifier> identifier = null, FhirR4CodeableConcept clinicalStatus = null, FhirR4CodeableConcept verificationStatus = null, IEnumerable<FhirR4CodeableConcept> category = null, FhirR4CodeableConcept severity = null, FhirR4CodeableConcept code = null, IEnumerable<FhirR4CodeableConcept> bodySite = null, FhirR4Reference encounter = null, string onsetDateTime = null, FhirR4Quantity onsetAge = null, FhirR4Period onsetPeriod = null, FhirR4Range onsetRange = null, string onsetString = null, string abatementDateTime = null, FhirR4Quantity abatementAge = null, FhirR4Period abatementPeriod = null, FhirR4Range abatementRange = null, string abatementString = null, string recordedDate = null, IEnumerable<FhirR4ConditionStage> stage = null, IEnumerable<FhirR4Annotation> note = null)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+            contained ??= new List<FhirR4Resource>();
+            extension ??= new List<FhirR4Extension>();
+            modifierExtension ??= new List<FhirR4Extension>();
+            identifier ??= new List<FhirR4Identifier>();
+            category ??= new List<FhirR4CodeableConcept>();
+            bodySite ??= new List<FhirR4CodeableConcept>();
+            stage ??= new List<FhirR4ConditionStage>();
+            note ??= new List<FhirR4Annotation>();
+
+            return new FhirR4Condition(
+                "Condition",
+                id,
+                meta,
+                implicitRules,
+                language,
+                additionalProperties,
+                text,
+                contained?.ToList(),
+                extension?.ToList(),
+                modifierExtension?.ToList(),
+                identifier?.ToList(),
+                clinicalStatus,
+                verificationStatus,
+                category?.ToList(),
+                severity,
+                code,
+                bodySite?.ToList(),
+                encounter,
+                onsetDateTime,
+                onsetAge,
+                onsetPeriod,
+                onsetRange,
+                onsetString,
+                abatementDateTime,
+                abatementAge,
+                abatementPeriod,
+                abatementRange,
+                abatementString,
+                recordedDate,
+                stage?.ToList(),
+                note?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.FhirR4ResearchStudy"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="meta"> Metadata about the resource. </param>
+        /// <param name="implicitRules"> A set of rules under which this content was created. </param>
+        /// <param name="language"> Language of the resource content. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="text"> Text summary of the resource, for human interpretation. </param>
+        /// <param name="contained"> Contained, inline Resources. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="modifierExtension"> Extensions that cannot be ignored. </param>
+        /// <param name="identifier"> Business Identifier for study. </param>
+        /// <param name="title"> Name for this study. </param>
+        /// <param name="protocol"> Steps followed in executing study. </param>
+        /// <param name="partOf"> Part of larger study. </param>
+        /// <param name="status"> active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn. </param>
+        /// <param name="primaryPurposeType"> treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility. </param>
+        /// <param name="phase"> n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4. </param>
+        /// <param name="category"> Classifications for the study. </param>
+        /// <param name="focus"> Drugs, devices, etc. under study. </param>
+        /// <param name="condition"> Condition being studied. </param>
+        /// <param name="contact"> Contact details for the study. </param>
+        /// <param name="keyword"> Used to search for the study. </param>
+        /// <param name="location"> Geographic region(s) for study. </param>
+        /// <param name="description"> What this is study doing. </param>
+        /// <param name="enrollment"> Inclusion &amp; exclusion criteria. </param>
+        /// <param name="period"> When the study began and ended. </param>
+        /// <param name="sponsor"> Organization that initiates and is legally responsible for the study. </param>
+        /// <param name="principalInvestigator"> Researcher who oversees multiple aspects of the study. </param>
+        /// <param name="site"> Facility where study activities are conducted. </param>
+        /// <param name="reasonStopped"> accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design. </param>
+        /// <param name="note"> Comments made about the study. </param>
+        /// <param name="arm"> Defined path through the study for a subject. </param>
+        /// <param name="objective"> A goal for the study. </param>
+        /// <returns> A new <see cref="RadiologyInsights.FhirR4ResearchStudy"/> instance for mocking. </returns>
+        public static FhirR4ResearchStudy FhirR4ResearchStudy(string id = null, FhirR4Meta meta = null, string implicitRules = null, string language = null, IDictionary<string, BinaryData> additionalProperties = null, FhirR4Narrative text = null, IEnumerable<FhirR4Resource> contained = null, IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4Extension> modifierExtension = null, IEnumerable<FhirR4Identifier> identifier = null, string title = null, IEnumerable<FhirR4Reference> protocol = null, IEnumerable<FhirR4Reference> partOf = null, ResearchStudyStatusCodeType status = default, FhirR4CodeableConcept primaryPurposeType = null, FhirR4CodeableConcept phase = null, IEnumerable<FhirR4CodeableConcept> category = null, IEnumerable<FhirR4CodeableConcept> focus = null, IEnumerable<FhirR4CodeableConcept> condition = null, IEnumerable<FhirR4ContactDetail> contact = null, IEnumerable<FhirR4CodeableConcept> keyword = null, IEnumerable<FhirR4CodeableConcept> location = null, string description = null, IEnumerable<FhirR4Reference> enrollment = null, FhirR4Period period = null, FhirR4Reference sponsor = null, FhirR4Reference principalInvestigator = null, IEnumerable<FhirR4Reference> site = null, FhirR4CodeableConcept reasonStopped = null, IEnumerable<FhirR4Annotation> note = null, IEnumerable<ResearchStudyArm> arm = null, IEnumerable<ResearchStudyObjective> objective = null)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+            contained ??= new List<FhirR4Resource>();
+            extension ??= new List<FhirR4Extension>();
+            modifierExtension ??= new List<FhirR4Extension>();
+            identifier ??= new List<FhirR4Identifier>();
+            protocol ??= new List<FhirR4Reference>();
+            partOf ??= new List<FhirR4Reference>();
+            category ??= new List<FhirR4CodeableConcept>();
+            focus ??= new List<FhirR4CodeableConcept>();
+            condition ??= new List<FhirR4CodeableConcept>();
+            contact ??= new List<FhirR4ContactDetail>();
+            keyword ??= new List<FhirR4CodeableConcept>();
+            location ??= new List<FhirR4CodeableConcept>();
+            enrollment ??= new List<FhirR4Reference>();
+            site ??= new List<FhirR4Reference>();
+            note ??= new List<FhirR4Annotation>();
+            arm ??= new List<ResearchStudyArm>();
+            objective ??= new List<ResearchStudyObjective>();
+
+            return new FhirR4ResearchStudy(
+                "ResearchStudy",
+                id,
+                meta,
+                implicitRules,
+                language,
+                additionalProperties,
+                text,
+                contained?.ToList(),
+                extension?.ToList(),
+                modifierExtension?.ToList(),
+                identifier?.ToList(),
+                title,
+                protocol?.ToList(),
+                partOf?.ToList(),
+                status,
+                primaryPurposeType,
+                phase,
+                category?.ToList(),
+                focus?.ToList(),
+                condition?.ToList(),
+                contact?.ToList(),
+                keyword?.ToList(),
+                location?.ToList(),
+                description,
+                enrollment?.ToList(),
+                period,
+                sponsor,
+                principalInvestigator,
+                site?.ToList(),
+                reasonStopped,
+                note?.ToList(),
+                arm?.ToList(),
+                objective?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.CriticalResultInference"/>. </summary>

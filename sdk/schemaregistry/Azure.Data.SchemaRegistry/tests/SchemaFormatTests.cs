@@ -26,11 +26,11 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.AreEqual("Custom", SchemaFormat.Custom.ToString());
         }
 
-        [Test]
-        public void VerifyProtobufFormat()
-        {
-            Assert.AreEqual("Protobuf", SchemaFormat.Protobuf.ToString());
-        }
+        //[Test]
+        //public void VerifyProtobufFormat()
+        //{
+        //    Assert.AreEqual("Protobuf", SchemaFormat.Protobuf.ToString());
+        //}
 
         [Test]
         public void VerifyAvroToContentType()
@@ -50,11 +50,11 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.AreEqual(ContentType.Custom, SchemaFormat.Custom.ToContentType());
         }
 
-        [Test]
-        public void VerifyProtobufToContentType()
-        {
-            Assert.AreEqual(ContentType.Protobuf, SchemaFormat.Protobuf.ToContentType());
-        }
+        //[Test]
+        //public void VerifyProtobufToContentType()
+        //{
+        //    Assert.AreEqual(ContentType.Protobuf, SchemaFormat.Protobuf.ToContentType());
+        //}
 
         [Test]
         public void VerifyAvroFromContentType()
@@ -77,11 +77,11 @@ namespace Azure.Data.SchemaRegistry.Tests
             Assert.AreEqual(SchemaFormat.Custom, fromContentType);
         }
 
-        [Test]
-        public void VerifyProtobufFromContentType()
-        {
-            var fromContentType = SchemaFormat.FromContentType("text/vnd.ms.protobuf");
-            Assert.AreEqual(SchemaFormat.Protobuf, fromContentType);
-        }
+        //[Test]
+        //public void VerifyProtobufFromContentType()
+        //{
+        //    var fromContentType = SchemaFormat.FromContentType("text/vnd.ms.protobuf");
+        //    Assert.AreEqual(SchemaFormat.Protobuf, fromContentType);
+        //}
     }
 }

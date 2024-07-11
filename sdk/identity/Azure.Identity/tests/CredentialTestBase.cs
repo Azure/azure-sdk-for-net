@@ -110,6 +110,55 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [TestCase(EventLevel.Informational)]
+        [TestCase(EventLevel.Verbose)]
+        public async Task ListenerEventLevelControlsMsalLogLevel(EventLevel eventLevel)
+        {
+            using var _listener = new TestEventListener();
+            _listener.EnableEvents(AzureIdentityEventSource.Singleton, eventLevel);
+
+            var token = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+                IsUnsafeSupportLoggingEnabled = true
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore($"{credential.GetType().Name} is not an MSAL credential.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+
+            Assert.AreEqual(token, actualToken.Token);
+
+            Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Informational && d.EventName == "LogMsalInformational"));
+
+            switch (eventLevel)
+            {
+                case EventLevel.Informational:
+                    Assert.False(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
+                    break;
+                case EventLevel.Verbose:
+                    Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
+                    break;
+                default:
+                    Assert.Fail("Unexpected event level");
+                    break;
+            }
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task DisableInstanceMetadataDiscovery([Values(true, false)] bool disable)
         {
@@ -333,6 +382,47 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
+        public async Task TokenContainsRefreshOn()
+        {
+            // Skip test if the credential does not support disabling instance discovery
+            if (!typeof(ISupportsDisableInstanceDiscovery).IsAssignableFrom(typeof(TCredOptions)))
+            {
+                // Assert.Ignore($"{typeof(TCredOptions).Name} does not implement {nameof(ISupportsDisableInstanceDiscovery)}");
+            }
+
+            // Clear instance discovery cache
+            StaticCachesUtilities.ClearStaticMetadataProviderCache();
+
+            var token = Guid.NewGuid().ToString();
+            // Configure the transport
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token
+            };
+            transportConfig.RequestValidator = req => transportConfig.CalledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+
+            Assert.AreEqual(token, actualToken.Token);
+            Assert.IsNotNull(actualToken.RefreshOn);
+        }
+
+        [Test]
         public async Task CachingOptionsAreRespected()
         {
             // Skip test if the credential does not support caching options
@@ -532,7 +622,7 @@ namespace Azure.Identity.Tests
                     }
                     else
                     {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{transportConfig.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString()}\" }}");
+                        response.SetContent($$"""{"token_type": "Bearer","expires_in": 9999,"ext_expires_in": 9999, "refresh_in": 9999,"access_token": "{{transportConfig.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString()}}" }""");
                     }
                 }
                 else if (transportConfig.ResponseHandler != null)

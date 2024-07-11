@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CosmosDBGremlinDatabaseGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBGremlinDatabaseGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-05-15-preview/examples/CosmosDBGremlinDatabaseGet.json
             // this example is just showing the usage of "GremlinResources_GetGremlinDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CosmosDBGremlinDatabaseCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBGremlinDatabaseCreateUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-05-15-preview/examples/CosmosDBGremlinDatabaseCreateUpdate.json
             // this example is just showing the usage of "GremlinResources_CreateUpdateGremlinDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CosmosDBGremlinDatabaseDelete()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBGremlinDatabaseDelete.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-05-15-preview/examples/CosmosDBGremlinDatabaseDelete.json
             // this example is just showing the usage of "GremlinResources_DeleteGremlinDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

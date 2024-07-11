@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Description of the Tag. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Absolute URL of external resources describing the tag. </summary>
+        [WirePath("properties.externalDocsUrl")]
         public Uri ExternalDocsUri { get; set; }
         /// <summary> Description of the external resources describing the tag. </summary>
+        [WirePath("properties.externalDocsDescription")]
         public string ExternalDocsDescription { get; set; }
     }
 }

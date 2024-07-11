@@ -217,7 +217,12 @@
     {
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
-        "cifs"
+        "cifs",
+        "ocpdate",
+        "Reimage",
+        "Reimaging",
+        "reimaging",
+        "SSDLRS"
       ]
     },
     {
@@ -408,6 +413,7 @@
     {
       "filename": "**/sdk/dataprotection/**/*.cs",
       "words": [
+        "Bcdr",
         "Undelete"
       ]
     },
@@ -600,16 +606,24 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "filename": "**/sdk/informaticadatamanagement/**/*.cs",
       "words": [
-        "kustomization",
-        "kustomizations"
+        "cdie",
+        "infa",
+        "informatica"
       ]
     },
     {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization",
+        "kustomizations"
       ]
     },
     {
@@ -846,7 +860,8 @@
       "filename": "**/sdk/notificationhubs/**/*.cs",
       "words": [
         "availiable",
-        "mpns"
+        "mpns",
+        "xiaomi"
       ]
     },
     {
@@ -859,6 +874,35 @@
       "filename": "**/sdk/operationalinsights/**/*.cs",
       "words": [
         "itsm"
+      ]
+    },
+    {
+      "filename": "**/sdk/oracle/**/*.cs",
+      "words": [
+        "adbbackupid",
+        "adbscharsetname",
+        "adbsncharsetname",
+        "autonomousdbversionsname",
+        "Exadata",
+        "cloudexadatainfrastructurename",
+        "dbserverocid",
+        "cloudvmclustername",
+        "dbnodeocid",
+        "dbsystemshapename",
+        "dnsprivateviewocid",
+        "Ords",
+        "Ocid",
+        "ncharacter",
+        "ocpu",
+        "Iorm",
+        "Vnic",
+        "Ecpu",
+        "Tpurgent",
+        "Vmdb",
+        "Tcps",
+        "Ezconnect",
+        "Ezconnectplus",
+        "Oltp"
       ]
     },
     {
@@ -1009,7 +1053,9 @@
     {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": [
-        "Puid"
+        "Puid",
+        "Decompile",
+        "Decompiled"
       ]
     },
     {
@@ -1172,7 +1218,8 @@
         "Ragzrs",
         "Rehydrated",
         "Undelete",
-        "Aadkerb"
+        "Aadkerb",
+        "Nfsv"
       ]
     },
     {
@@ -1190,7 +1237,8 @@
     {
       "filename": "**/sdk/storagemover/**/*.cs",
       "words": [
-        "Unregistering"
+        "Unregistering",
+        "Mbps"
       ]
     },
     {
@@ -1232,7 +1280,8 @@
         "Asana",
         "Ename",
         "Evalue",
-        "Twilio"
+        "Twilio",
+        "Soql"
       ]
     },
     {
@@ -1395,6 +1444,13 @@
       "filename": "**/sdk/confluent/**/*.cs",
       "words": [
         "Byok"
+      ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "AOAI",
+        "Rerank"
       ]
     }
   ],
