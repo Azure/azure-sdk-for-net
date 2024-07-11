@@ -55,7 +55,7 @@ namespace Azure.Core.Expressions.DataFactory
                     {
                         continue;
                     }
-                    secretVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    secretVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText() ?? string.Empty);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
