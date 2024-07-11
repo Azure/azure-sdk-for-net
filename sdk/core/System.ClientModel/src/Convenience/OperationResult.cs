@@ -50,6 +50,11 @@ public abstract class OperationResult : ClientResult
     public abstract Task WaitAsync(CancellationToken cancellationToken = default);
     public abstract void Wait(CancellationToken cancellationToken = default);
 
+    // TODO: Consider providing an abstract UpdateStatus and UpdateStatusAsync
+    // operation.  This would formalize the idea of having a stream of updates
+    // as a universal OperationResult concept, and that they can be applied to
+    // create public properties of the subtype such as Value and Status.
+
     //public abstract Task StartAsync();
     //public abstract void Start();
 }
