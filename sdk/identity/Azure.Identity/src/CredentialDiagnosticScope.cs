@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.ExceptionServices;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -79,7 +80,17 @@ namespace Azure.Identity
                     return true;
                 }
             }
-            string exceptionMessage = $"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: {exception.Message}";
+
+            string exceptionMessage = $"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: ";
+
+            if (exception is MsalServiceException and { ErrorCode: "user_assigned_managed_identity_not_supported" })
+            {
+                exceptionMessage += Constants.CloudShellNoUserAssignedIdentityMessage;
+            }
+            else
+            {
+                exceptionMessage += exception.Message;
+            }
             if (additionalMessageText != null)
             {
                 exceptionMessage = exceptionMessage + $"\n{additionalMessageText}";

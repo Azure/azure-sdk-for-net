@@ -46,5 +46,6 @@ namespace Azure.Identity
 
         public const string ManagedIdentityClientId = "client_id";
         public const string ManagedIdentityResourceId = "mi_res_id";
+        public const string CloudShellNoUserAssignedIdentityMessage = "User assigned identity is not supported by the Cloud Shell Managed Identity.";
     }
 }

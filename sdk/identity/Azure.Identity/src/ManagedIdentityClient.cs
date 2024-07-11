@@ -3,12 +3,12 @@
 
 using System;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensibility;
+using MSAL = Microsoft.Identity.Client.ManagedIdentity;
 
 namespace Azure.Identity
 {
@@ -19,18 +19,20 @@ namespace Azure.Identity
 
         internal Lazy<ManagedIdentitySource> _identitySource;
         private MsalConfidentialClient _msal;
+        private MsalManagedIdentityClient _miMsal;
+        private bool _enableLegacyMI;
 
         protected ManagedIdentityClient()
         {
         }
 
         public ManagedIdentityClient(CredentialPipeline pipeline, string clientId = null)
-            : this(new ManagedIdentityClientOptions {Pipeline = pipeline, ClientId = clientId})
+            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId })
         {
         }
 
         public ManagedIdentityClient(CredentialPipeline pipeline, ResourceIdentifier resourceId)
-            : this(new ManagedIdentityClientOptions {Pipeline = pipeline, ResourceIdentifier = resourceId})
+            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ResourceIdentifier = resourceId })
         {
         }
 
@@ -45,7 +47,9 @@ namespace Azure.Identity
             ClientId = string.IsNullOrEmpty(options.ClientId) ? null : options.ClientId;
             ResourceIdentifier = string.IsNullOrEmpty(options.ResourceIdentifier) ? null : options.ResourceIdentifier;
             Pipeline = options.Pipeline;
-            _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options));
+            _enableLegacyMI = options.EnableManagedIdentityLegacyBehavior;
+            _miMsal = new MsalManagedIdentityClient(options);
+            _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options, _enableLegacyMI, _miMsal));
             _msal = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options);
         }
 
@@ -57,8 +61,30 @@ namespace Azure.Identity
 
         public async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await _msal.AcquireTokenForClientAsync(context.Scopes, context.TenantId, context.Claims, context.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
-
+            AuthenticationResult result;
+            if (_enableLegacyMI)
+            {
+                result = await _msal.AcquireTokenForClientAsync(context.Scopes, context.TenantId, context.Claims, context.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                /*
+                                MSAL flow:
+                                1. call new SelectManagedIdentitySource which calls ManagedIdentityApplication.GetManagedIdentitySource()
+                                2. If result is anything other than DefaultToImds, call AcquireTokenForManagedIdentityAsync
+                                3. If result is DefaultToImds, probe the IMDS endpoint to check for a response.
+                                4. If there is a response, call AcquireTokenForManagedIdentityAsync
+                                5. If there is no response, throw CredentialUnavailableException
+                */
+                var availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+                if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds)
+                {
+                    return await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
+                }
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                result = await _miMsal.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            }
             return result.ToAccessToken();
         }
 
@@ -74,19 +100,38 @@ namespace Azure.Identity
 
             AccessToken token = await AuthenticateCoreAsync(true, requestContext, parameters.CancellationToken).ConfigureAwait(false);
 
-            return new AppTokenProviderResult() { AccessToken = token.Token, ExpiresInSeconds = Math.Max(Convert.ToInt64((token.ExpiresOn - DateTimeOffset.UtcNow).TotalSeconds), 1) };
+            var resfreshOn = ManagedIdentitySource.InferManagedIdentityRefreshInValue(token.ExpiresOn);
+            long? refreshInSeconds = resfreshOn switch
+            {
+                not null => Math.Max(Convert.ToInt64((resfreshOn.Value - DateTimeOffset.UtcNow).TotalSeconds), 1),
+                _ => null
+            };
+
+            return new AppTokenProviderResult()
+            {
+                AccessToken = token.Token,
+                ExpiresInSeconds = Math.Max(Convert.ToInt64((token.ExpiresOn - DateTimeOffset.UtcNow).TotalSeconds), 1),
+                RefreshInSeconds = refreshInSeconds
+            };
         }
 
-        private static ManagedIdentitySource SelectManagedIdentitySource(ManagedIdentityClientOptions options)
+        private static ManagedIdentitySource SelectManagedIdentitySource(ManagedIdentityClientOptions options, bool _enableLegacyMI = true, MsalManagedIdentityClient client = null)
         {
-            return
-                ServiceFabricManagedIdentitySource.TryCreate(options) ??
-                AppServiceV2019ManagedIdentitySource.TryCreate(options) ??
-                AppServiceV2017ManagedIdentitySource.TryCreate(options) ??
-                CloudShellManagedIdentitySource.TryCreate(options) ??
-                AzureArcManagedIdentitySource.TryCreate(options) ??
-                TokenExchangeManagedIdentitySource.TryCreate(options) ??
-                new ImdsManagedIdentitySource(options);
+            if (_enableLegacyMI)
+            {
+                return
+                    ServiceFabricManagedIdentitySource.TryCreate(options) ??
+                    AppServiceV2019ManagedIdentitySource.TryCreate(options) ??
+                    AppServiceV2017ManagedIdentitySource.TryCreate(options) ??
+                    CloudShellManagedIdentitySource.TryCreate(options) ??
+                    AzureArcManagedIdentitySource.TryCreate(options) ??
+                    TokenExchangeManagedIdentitySource.TryCreate(options) ??
+                    new ImdsManagedIdentitySource(options);
+            }
+            else
+            {
+                return new ImdsManagedIdentityProbeSource(options, client);
+            }
         }
     }
 }

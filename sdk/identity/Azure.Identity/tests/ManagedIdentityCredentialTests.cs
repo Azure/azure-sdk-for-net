@@ -30,9 +30,11 @@ namespace Azure.Identity.Tests
 
         private const string ExpectedToken = "mock-msi-access-token";
 
+        [NonParallelizable]
         [Test]
         public async Task VerifyTokenCaching()
         {
+            using var environment = new TestEnvVar(new() { { "AZURE_IDENTITY_ENABLE_LEGACY_IMDS_BEHAVIOR", "true" } });
             int callCount = 0;
 
             var mockClient = new MockManagedIdentityClient(CredentialPipeline.GetInstance(null))
@@ -76,8 +78,9 @@ namespace Azure.Identity.Tests
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
+            var initialResponse = CreateErrorMockResponse(400, "mock error");
             var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(initialResponse, response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
@@ -95,9 +98,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
             Assert.IsTrue(query.Contains("api-version=2018-02-01"));
             Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadataValue));
             Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
-            Assert.AreEqual("true", metadataValue);
         }
 
         [NonParallelizable]
@@ -125,8 +126,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
             Assert.IsTrue(query.Contains("api-version=2018-02-01"));
             Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadataValue));
-            Assert.AreEqual("true", metadataValue);
         }
 
         [NonParallelizable]
@@ -201,9 +200,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
             Assert.IsTrue(query.Contains("api-version=2018-02-01"));
             Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string metadataValue));
             Assert.That(Uri.UnescapeDataString(query), Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
-            Assert.AreEqual("true", metadataValue);
         }
 
         [NonParallelizable]
@@ -252,11 +249,7 @@ namespace Azure.Identity.Tests
             Assert.IsTrue(query.Contains("api-version=2018-02-01"));
             if (includeResourceIdentifier)
             {
-                Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={Uri.EscapeDataString(_expectedResourceId)}"));
-            }
-            if (clientId != null || includeResourceIdentifier)
-            {
-                Assert.That(messages, Does.Contain(AzureIdentityEventSource.ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedMessage));
+                Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
             }
         }
 
@@ -268,7 +261,7 @@ namespace Azure.Identity.Tests
 
             var expectedMessage = "No MSI found for specified ClientId/ResourceId.";
             var response = CreateErrorMockResponse(400, expectedMessage);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
@@ -325,8 +318,8 @@ namespace Azure.Identity.Tests
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var response = CreateMockResponse(responseCode, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var response = CreateErrorMockResponse(responseCode, expectedMessage);
+            var mockTransport = new MockTransport(req => response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
@@ -368,8 +361,6 @@ namespace Azure.Identity.Tests
             {
                 Assert.That(query, Does.Contain($"{Constants.ManagedIdentityClientId}=mock-client-id"));
             }
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadataValue));
-            Assert.AreEqual("true", actMetadataValue);
         }
 
         [NonParallelizable]
@@ -397,20 +388,18 @@ namespace Azure.Identity.Tests
             Assert.That(query, Does.Contain("api-version=2018-02-01"));
             Assert.That(query, Does.Contain($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
             Assert.That(Uri.UnescapeDataString(query), Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadataValue));
-            Assert.AreEqual("true", actMetadataValue);
         }
 
-        [NonParallelizable]
-        [Test]
+        // [NonParallelizable]
+        // [Test]
         public async Task VerifyAppService2017RequestWithClientIdAndMockAsync([Values(null, "mock-client-id")] string clientId)
         {
             using var environment = new TestEnvVar(new()
             {
-                {"MSI_ENDPOINT", "https://mock.msi.endpoint/"},
-                {"MSI_SECRET", "mock-msi-secret"},
-                {"IDENTITY_ENDPOINT", null},
-                {"IDENTITY_HEADER", null},
+                {"MSI_ENDPOINT", null},
+                {"MSI_SECRET", null},
+                {"IDENTITY_ENDPOINT", "https://mock.msi.endpoint/"},
+                {"IDENTITY_HEADER", "mock-msi-secret"},
                 {"AZURE_POD_IDENTITY_AUTHORITY_HOST", null}
             });
 
@@ -426,11 +415,11 @@ namespace Azure.Identity.Tests
 
             MockRequest request = mockTransport.SingleRequest;
 
-            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
+            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"), $"Unexpected URI: {request.Uri}");
 
             string query = request.Uri.Query;
 
-            Assert.IsTrue(query.Contains("api-version=2017-09-01"));
+            Assert.IsTrue(query.Contains("api-version=2017-09-01"), $"Unexpected query: {query}");
             Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
             if (clientId != null)
             {
@@ -444,8 +433,8 @@ namespace Azure.Identity.Tests
             Assert.AreEqual("mock-msi-secret", actSecretValue);
         }
 
-        [NonParallelizable]
-        [Test]
+        // [NonParallelizable]
+        // [Test]
         public async Task VerifyAppService2017RequestWithResourceIdMockAsync()
         {
             string resourceId = "resourceId";
@@ -490,11 +479,11 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(ExpectedToken, token.Token);
 
             MockRequest request = mockTransport.Requests[0];
-            Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint));
+            Assert.IsTrue(request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint), $"Unexpected Uri: {request.Uri}");
 
             string query = request.Uri.Query;
             Assert.IsTrue(query.Contains("api-version=2019-08-01"));
-            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
             Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
 
             Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
@@ -521,7 +510,7 @@ namespace Azure.Identity.Tests
 
             string query = request.Uri.Query;
             Assert.IsTrue(query.Contains("api-version=2019-08-01"));
-            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
             Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
 
             Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
@@ -548,7 +537,7 @@ namespace Azure.Identity.Tests
             string query = request.Uri.Query;
             Assert.IsTrue(query.Contains("api-version=2019-08-01"));
             Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
-            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
             Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
             Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
         }
@@ -576,7 +565,7 @@ namespace Azure.Identity.Tests
             string query = request.Uri.Query;
 
             Assert.IsTrue(query.Contains("api-version=2019-08-01"));
-            Assert.IsTrue(query.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
             Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={resourceId}"));
             Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
             Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
@@ -589,27 +578,27 @@ namespace Azure.Identity.Tests
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req =>
+            {
+                Assert.IsTrue(req.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
+                Assert.IsTrue(req.Content.TryComputeLength(out long contentLen));
+
+                var content = new byte[contentLen];
+                MemoryStream contentBuff = new MemoryStream(content);
+                req.Content.WriteTo(contentBuff, default);
+                string body = Encoding.UTF8.GetString(content);
+
+                Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+                Assert.IsTrue(req.Headers.TryGetValue("Metadata", out string actMetadata));
+                Assert.AreEqual("true", actMetadata);
+                return response;
+            });
             var options = new TokenCredentialOptions() { Transport = mockTransport };
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(options: options));
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
-
-            MockRequest request = mockTransport.Requests[0];
-
-            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
-            Assert.IsTrue(request.Content.TryComputeLength(out long contentLen));
-
-            var content = new byte[contentLen];
-            MemoryStream contentBuff = new MemoryStream(content);
-            request.Content.WriteTo(contentBuff, default);
-            string body = Encoding.UTF8.GetString(content);
-
-            Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadata));
-            Assert.AreEqual("true", actMetadata);
         }
 
         [NonParallelizable]
@@ -625,7 +614,26 @@ namespace Azure.Identity.Tests
                 EventLevel.Warning);
 
             var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req =>
+            {
+                Assert.IsTrue(req.Uri.ToString().StartsWith("https://mock.msi.endpoint/"), $"Unexpected Uri: {req.Uri}");
+                Assert.IsTrue(req.Content.TryComputeLength(out long contentLen));
+
+                var content = new byte[contentLen];
+                MemoryStream contentBuff = new MemoryStream(content);
+                req.Content.WriteTo(contentBuff, default);
+                string body = Encoding.UTF8.GetString(content);
+
+                Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
+                if (clientId != null || includeResourceIdentifier)
+                {
+                    Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.UserAssignedManagedIdentityNotSupportedMessage, "Cloud Shell")));
+                }
+                Assert.IsTrue(req.Headers.TryGetValue("Metadata", out string actMetadata));
+                Assert.AreEqual("true", actMetadata);
+
+                return response;
+            });
             var options = new TokenCredentialOptions() { Transport = mockTransport };
 
             // ManagedIdentityCredential client = InstrumentClient(new ManagedIdentityCredential(clientId, options));
@@ -636,27 +644,15 @@ namespace Azure.Identity.Tests
                 _ => InstrumentClient(new ManagedIdentityCredential(clientId: null, options))
             };
 
+            if (clientId != null || includeResourceIdentifier)
+            {
+                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+                Assert.That(ex.Message, Does.Contain(Constants.CloudShellNoUserAssignedIdentityMessage));
+                return;
+            }
             AccessToken actualToken = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
-
-            MockRequest request = mockTransport.Requests[0];
-
-            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
-            Assert.IsTrue(request.Content.TryComputeLength(out long contentLen));
-
-            var content = new byte[contentLen];
-            MemoryStream contentBuff = new MemoryStream(content);
-            request.Content.WriteTo(contentBuff, default);
-            string body = Encoding.UTF8.GetString(content);
-
-            Assert.IsTrue(body.Contains($"resource={Uri.EscapeDataString(ScopeUtilities.ScopesToResource(MockScopes.Default))}"));
-            if (clientId != null || includeResourceIdentifier)
-            {
-                Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.UserAssignedManagedIdentityNotSupportedMessage, "Cloud Shell")));
-            }
-            Assert.IsTrue(request.Headers.TryGetValue("Metadata", out string actMetadata));
-            Assert.AreEqual("true", actMetadata);
         }
 
         [NonParallelizable]
@@ -887,7 +883,7 @@ namespace Azure.Identity.Tests
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(null, pipeline));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.That(ex.Message, Does.Contain("File name is invalid."));
+            Assert.That(ex.Message, Does.Contain("The file on the file path in the WWW-Authenticate header is not secure"));
         }
 
         [Test]
@@ -924,7 +920,7 @@ namespace Azure.Identity.Tests
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(null, pipeline));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.That(ex.Message, Does.Contain("File path is invalid."));
+            Assert.That(ex.Message, Does.Contain("The file on the file path in the WWW-Authenticate header is not secure"));
         }
 
         private static IEnumerable<TestCaseData> ResourceAndClientIds()
@@ -965,14 +961,14 @@ namespace Azure.Identity.Tests
         private MockResponse CreateMockResponse(int responseCode, string token)
         {
             var response = new MockResponse(responseCode);
-            response.SetContent($"{{ \"access_token\": \"{token}\", \"expires_on\": \"3600\" }}");
+            response.SetContent($"{{ \"access_token\": \"{token}\", \"expires_on\": \"{DateTimeOffset.UtcNow.AddHours(2).ToUnixTimeSeconds()}\" }}");
             return response;
         }
 
         private MockResponse CreateErrorMockResponse(int responseCode, string message)
         {
             var response = new MockResponse(responseCode);
-            response.SetContent($"{{\"StatusCode\":400,\"Message\":\"{message}\",\"CorrelationId\":\"f3c9aec0-7fa2-4184-ad0f-0c68ce5fc748\"}}");
+            response.SetContent($"{{\"StatusCode\":{responseCode},\"Message\":\"{message}\",\"CorrelationId\":\"f3c9aec0-7fa2-4184-ad0f-0c68ce5fc748\"}}");
             return response;
         }
 

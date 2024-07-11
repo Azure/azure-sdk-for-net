@@ -182,7 +182,7 @@ namespace Azure.Identity
         }
 
         // Compute refresh_in as 1/2 expiresOn, but only if expiresOn > 2h.
-        private static DateTimeOffset? InferManagedIdentityRefreshInValue(DateTimeOffset expiresOn)
+        internal static DateTimeOffset? InferManagedIdentityRefreshInValue(DateTimeOffset expiresOn)
         {
             if (expiresOn > DateTimeOffset.UtcNow.AddHours(2) && expiresOn < DateTimeOffset.MaxValue)
             {
