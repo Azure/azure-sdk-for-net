@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.ProgrammableConnectivity
 {
     /// <summary> Request to verify SimSwap in period. </summary>
-    public partial class SimSwapVerificationContent
+    internal partial class SimSwapVerificationContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

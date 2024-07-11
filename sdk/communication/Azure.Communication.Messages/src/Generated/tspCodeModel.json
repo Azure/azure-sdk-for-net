@@ -87,7 +87,7 @@
    ],
    "Description": "The type of the template parameter.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "None"
   },
   {
    "$id": "15",
@@ -108,7 +108,7 @@
    ],
    "Description": "The type of the message template.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "None"
   },
   {
    "$id": "18",
@@ -135,7 +135,7 @@
    ],
    "Description": "The WhatsApp button sub type.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "None"
   },
   {
    "$id": "22",
@@ -1357,28 +1357,79 @@
   },
   {
    "$ref": "175"
+  },
+  {
+   "$id": "183",
+   "Kind": "model",
+   "Name": "SendRequest",
+   "CrossLanguageDefinitionId": "send.Request.anonymous",
+   "Usage": "Input",
+   "Properties": [
+    {
+     "$id": "184",
+     "Name": "channelRegistrationId",
+     "SerializedName": "channelRegistrationId",
+     "Description": "The Channel Registration ID for the Business Identifier.",
+     "Type": {
+      "$id": "185",
+      "Kind": "uuid",
+      "Encode": "string"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "186",
+     "Name": "to",
+     "SerializedName": "to",
+     "Description": "The native external platform user identifiers of the recipient.",
+     "Type": {
+      "$id": "187",
+      "Kind": "array",
+      "Name": "Array",
+      "ValueType": {
+       "$id": "188",
+       "Kind": "string"
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "189",
+     "Name": "kind",
+     "SerializedName": "kind",
+     "Description": "The type discriminator describing a notification type.",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
   }
  ],
  "Clients": [
   {
-   "$id": "183",
+   "$id": "190",
    "Name": "NotificationMessagesClient",
    "Description": "",
    "Operations": [
     {
-     "$id": "184",
+     "$id": "191",
      "Name": "send",
      "ResourceName": "NotificationMessagesClient",
      "Description": "Sends a notification message from Business to User.",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "185",
+       "$id": "192",
        "Name": "endpoint",
        "NameInRequest": "endpoint",
        "Description": "The communication resource, for example https://my-resource.communication.azure.com",
        "Type": {
-        "$id": "186",
+        "$id": "193",
         "Kind": "url"
        },
        "Location": "Uri",
@@ -1392,19 +1443,19 @@
        "Kind": "Client"
       },
       {
-       "$id": "187",
+       "$id": "194",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "188",
+        "$id": "195",
         "Kind": "string"
        },
        "Location": "Query",
        "DefaultValue": {
-        "$id": "189",
+        "$id": "196",
         "Type": {
-         "$id": "190",
+         "$id": "197",
          "Kind": "string"
         },
         "Value": "2024-02-01"
@@ -1419,12 +1470,12 @@
        "Kind": "Client"
       },
       {
-       "$id": "191",
+       "$id": "198",
        "Name": "repeatabilityRequestId",
        "NameInRequest": "Repeatability-Request-ID",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "192",
+        "$id": "199",
         "Kind": "string"
        },
        "Location": "Header",
@@ -1438,16 +1489,16 @@
        "Kind": "Method"
       },
       {
-       "$id": "193",
+       "$id": "200",
        "Name": "repeatabilityFirstSent",
        "NameInRequest": "Repeatability-First-Sent",
        "Description": "Specifies the date and time at which the request was first created.",
        "Type": {
-        "$id": "194",
+        "$id": "201",
         "Kind": "utcDateTime",
         "Encode": "rfc7231",
         "WireType": {
-         "$id": "195",
+         "$id": "202",
          "Kind": "string"
         }
        },
@@ -1462,12 +1513,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "196",
+       "$id": "203",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "197",
+        "$id": "204",
         "Kind": "uuid",
         "Encode": "string"
        },
@@ -1482,7 +1533,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "198",
+       "$id": "205",
        "Name": "NotificationContent",
        "NameInRequest": "NotificationContent",
        "Description": "Details of the message to send.",
@@ -1497,14 +1548,14 @@
        "IsEndpoint": false,
        "SkipUrlEncoding": false,
        "Explode": false,
-       "Kind": "Method"
+       "Kind": "Spread"
       },
       {
-       "$id": "199",
+       "$id": "206",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "200",
+        "$id": "207",
         "Kind": "string"
        },
        "Location": "Header",
@@ -1517,19 +1568,19 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "201",
+        "$id": "208",
         "Type": {
-         "$ref": "200"
+         "$ref": "207"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "202",
+       "$id": "209",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "203",
+        "$id": "210",
         "Kind": "string"
        },
        "Location": "Header",
@@ -1542,9 +1593,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "204",
+        "$id": "211",
         "Type": {
-         "$ref": "203"
+         "$ref": "210"
         },
         "Value": "application/json"
        }
@@ -1552,7 +1603,7 @@
      ],
      "Responses": [
       {
-       "$id": "205",
+       "$id": "212",
        "StatusCodes": [
         202
        ],
@@ -1562,7 +1613,7 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "206",
+         "$id": "213",
          "Name": "Repeatability-Result",
          "NameInResponse": "repeatabilityResult",
          "Description": "Indicates whether the repeatable request was accepted or rejected.",
@@ -1571,12 +1622,12 @@
          }
         },
         {
-         "$id": "207",
+         "$id": "214",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "208",
+          "$id": "215",
           "Kind": "uuid",
           "Encode": "string"
          }
@@ -1600,27 +1651,27 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "209",
+     "$id": "216",
      "Name": "downloadMediaInternal",
      "ResourceName": "MessageDataStream",
      "Description": "Download the Media payload from a User to Business message.",
      "Accessibility": "internal",
      "Parameters": [
       {
-       "$ref": "185"
+       "$ref": "192"
       },
       {
-       "$id": "210",
+       "$id": "217",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "211",
+        "$id": "218",
         "Kind": "string"
        },
        "Location": "Query",
        "DefaultValue": {
-        "$ref": "189"
+        "$ref": "196"
        },
        "IsRequired": true,
        "IsApiVersion": true,
@@ -1632,12 +1683,12 @@
        "Kind": "Client"
       },
       {
-       "$id": "212",
+       "$id": "219",
        "Name": "id",
        "NameInRequest": "id",
        "Description": "The stream ID.",
        "Type": {
-        "$id": "213",
+        "$id": "220",
         "Kind": "string"
        },
        "Location": "Path",
@@ -1651,12 +1702,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "214",
+       "$id": "221",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "215",
+        "$id": "222",
         "Kind": "uuid",
         "Encode": "string"
        },
@@ -1671,11 +1722,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "216",
+       "$id": "223",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "217",
+        "$id": "224",
         "Kind": "string"
        },
        "Location": "Header",
@@ -1688,9 +1739,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "218",
+        "$id": "225",
         "Type": {
-         "$ref": "217"
+         "$ref": "224"
         },
         "Value": "application/octet-stream"
        }
@@ -1698,24 +1749,24 @@
      ],
      "Responses": [
       {
-       "$id": "219",
+       "$id": "226",
        "StatusCodes": [
         200
        ],
        "BodyType": {
-        "$id": "220",
+        "$id": "227",
         "Kind": "bytes",
         "Encode": "base64"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "221",
+         "$id": "228",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "222",
+          "$id": "229",
           "Kind": "uuid",
           "Encode": "string"
          }
@@ -1737,41 +1788,41 @@
     }
    ],
    "Protocol": {
-    "$id": "223"
+    "$id": "230"
    },
    "Parameters": [
     {
-     "$ref": "185"
+     "$ref": "192"
     }
    ]
   },
   {
-   "$id": "224",
+   "$id": "231",
    "Name": "MessageTemplateClient",
    "Description": "",
    "Operations": [
     {
-     "$id": "225",
+     "$id": "232",
      "Name": "getTemplates",
      "ResourceName": "MessageTemplateItem",
      "Description": "List all templates for given Azure Communication Services channel",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$ref": "185"
+       "$ref": "192"
       },
       {
-       "$id": "226",
+       "$id": "233",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "The API version to use for this operation.",
        "Type": {
-        "$id": "227",
+        "$id": "234",
         "Kind": "string"
        },
        "Location": "Query",
        "DefaultValue": {
-        "$ref": "189"
+        "$ref": "196"
        },
        "IsRequired": true,
        "IsApiVersion": true,
@@ -1783,12 +1834,12 @@
        "Kind": "Client"
       },
       {
-       "$id": "228",
+       "$id": "235",
        "Name": "channelId",
        "NameInRequest": "channelId",
        "Description": "The registration ID of the channel.",
        "Type": {
-        "$id": "229",
+        "$id": "236",
         "Kind": "uuid",
         "Encode": "string"
        },
@@ -1803,12 +1854,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "230",
+       "$id": "237",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "231",
+        "$id": "238",
         "Kind": "int32"
        },
        "Location": "Query",
@@ -1822,12 +1873,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "232",
+       "$id": "239",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "233",
+        "$id": "240",
         "Kind": "uuid",
         "Encode": "string"
        },
@@ -1842,11 +1893,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "234",
+       "$id": "241",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "235",
+        "$id": "242",
         "Kind": "string"
        },
        "Location": "Header",
@@ -1859,9 +1910,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "236",
+        "$id": "243",
         "Type": {
-         "$ref": "235"
+         "$ref": "242"
         },
         "Value": "application/json"
        }
@@ -1869,7 +1920,7 @@
      ],
      "Responses": [
       {
-       "$id": "237",
+       "$id": "244",
        "StatusCodes": [
         200
        ],
@@ -1879,12 +1930,12 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "238",
+         "$id": "245",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "239",
+          "$id": "246",
           "Kind": "uuid",
           "Encode": "string"
          }
@@ -1902,7 +1953,7 @@
      "Path": "/messages/channels/{channelId}/templates",
      "BufferResponse": true,
      "Paging": {
-      "$id": "240",
+      "$id": "247",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -1911,23 +1962,23 @@
     }
    ],
    "Protocol": {
-    "$id": "241"
+    "$id": "248"
    },
    "Parameters": [
     {
-     "$ref": "185"
+     "$ref": "192"
     }
    ]
   }
  ],
  "Auth": {
-  "$id": "242",
+  "$id": "249",
   "ApiKey": {
-   "$id": "243",
+   "$id": "250",
    "Name": "Authorization"
   },
   "OAuth2": {
-   "$id": "244",
+   "$id": "251",
    "Scopes": [
     "https://communication.azure.com/.default"
    ]

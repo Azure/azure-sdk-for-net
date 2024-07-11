@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> A request to send a template notification. </summary>
-    public partial class TemplateNotificationContent : NotificationContent
+    internal partial class TemplateNotificationContent : NotificationContent
     {
         /// <summary> Initializes a new instance of <see cref="TemplateNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
