@@ -29,6 +29,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         {
         }
 
+        [SetUp]
         public void Setup()
         {
             snapshot1SASUri = new Uri(Recording.GetVariable(nameof(snapshot1SASUri), ManagedDiskFixture.Instance.Snapshot1SASUri?.AbsoluteUri, v => SanitizeUri(v)));
@@ -37,7 +38,6 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         }
 
         [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/30035")]
         public async Task CanDiffPagesBetweenSnapshots()
         {
             // Arrange
@@ -71,7 +71,6 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         }
 
         [Test]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task GetManagedDiskPageRangesDiffAsync_Error()
         {
             // Arrange
@@ -90,7 +89,6 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         }
 
         [Test]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
         {
             Setup();
@@ -116,7 +114,6 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         }
 
         [Test]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
         {
             Setup();
