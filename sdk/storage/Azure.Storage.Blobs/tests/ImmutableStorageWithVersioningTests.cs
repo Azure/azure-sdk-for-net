@@ -109,7 +109,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task SetImmutibilityPolicyAsync()
         {
             // Arrange
@@ -164,7 +163,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task SetImmutibilityPolicyAsync_IfModifiedSince()
         {
             // Arrange
@@ -195,7 +193,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(nameof(BlobRequestConditions.IfMatch))]
         [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
@@ -248,7 +245,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         [TestCase(AccountSasPermissions.All)]
         [TestCase(AccountSasPermissions.SetImmutabilityPolicy)]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_AccoutnSas(AccountSasPermissions sasPermissions)
@@ -292,7 +288,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         [TestCase(BlobContainerSasPermissions.All)]
         [TestCase(BlobContainerSasPermissions.SetImmutabilityPolicy)]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_ContainerSas(BlobContainerSasPermissions sasPermissions)
@@ -331,7 +326,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         [TestCase(BlobSasPermissions.All)]
         [TestCase(BlobSasPermissions.SetImmutabilityPolicy)]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobSas(BlobSasPermissions sasPermissions)
@@ -372,7 +366,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         [TestCase(SnapshotSasPermissions.All)]
         [TestCase(SnapshotSasPermissions.SetImmutabilityPolicy)]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobSnapshotSas(SnapshotSasPermissions sasPermissions)
@@ -430,7 +423,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         [TestCase(BlobVersionSasPermissions.All)]
         [TestCase(BlobVersionSasPermissions.SetImmutabilityPolicy)]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobVersionSas(BlobVersionSasPermissions sasPermissions)
@@ -484,7 +476,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task SetImmutibilityPolicyAsync_IfModifiedSince_Failed()
         {
             // Arrange
@@ -511,7 +502,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task SetImmutibilityPolicyAsync_Error()
         {
             // Arrange
@@ -531,7 +521,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task SetImmutibilityPolicyAsync_Mutable()
         {
             // Arrange
@@ -551,7 +540,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task DeleteImmutibilityPolicyAsync()
         {
             // Arrange
@@ -576,7 +564,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task DeleteImmutibilityPolicyAsync_Error()
         {
             // Arrange
@@ -590,7 +577,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task SetLegalHoldAsync()
         {
             // Arrange
@@ -637,7 +623,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task SetLegalHoldAsync_Error()
         {
             // Arrange
@@ -651,7 +636,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task ContainerImmutableStorageWithVersioning()
         {
             // Validate we are deserializing Get Container Properties responses correctly.
@@ -673,7 +657,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task CreateAppendBlob_ImmutableStorageWithVersioning()
         {
             // Arrange
@@ -706,7 +689,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task CreatePageBlob_ImmutableStorageWithVersioning()
         {
             // Arrange
@@ -739,7 +721,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task CommitBlockList_ImmutableStorageWithVersioning()
         {
             // Arrange
@@ -782,7 +763,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         [TestCase(false)]
         [TestCase(true)]
         public async Task Upload_ImmutableStorageWithVersioning(bool multipart)
@@ -830,7 +810,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task SyncCopyFromUri_ImmutableStorageWithVersioning()
         {
             // Arrange
@@ -866,7 +845,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("DefaultAzureCredential does not play nicely with these tests.")]
         public async Task StartCopyFromUri_ImmutableStorageWithVersioning()
         {
             // Arrange
