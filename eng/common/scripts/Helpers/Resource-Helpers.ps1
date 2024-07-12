@@ -308,11 +308,11 @@ function Remove-WormStorageAccounts() {
   }
 }
 
-function SetResourceNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI, [switch]$Override) {
-  SetStorageNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -CI:$CI -Override:$Override
+function SetResourceNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI, [switch]$SetFirewall) {
+  SetStorageNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -CI:$CI -SetFirewall:$SetFirewall
 }
 
-function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI, [switch]$Override) {
+function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI, [switch]$SetFirewall) {
   $clientIp = $null
   $storageAccounts = Retry { Get-AzResource -ResourceGroupName $ResourceGroupName -ResourceType "Microsoft.Storage/storageAccounts" }
   # Add client IP to storage account when running as local user. Pipeline's have their own vnet with access
@@ -331,45 +331,43 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
       # otherwise it's not worth updating due to timing and throttling issues.
       # If the network rules are deny only without any vnet/ip allowances, then we can't ever purge the storage account
       # when immutable blobs need to be removed.
-      if ($Override -and $rules.DefaultAction -eq "Deny") {
-        if ($rules.VirtualNetworkRules.Length -gt 0 -or $rules.IpRules.Length -gt 0) {
-          return
-        }
+      if (!$rules -or !$SetFirewall -or $rules.DefaultAction -eq "Allow") {
+        return
       }
 
-      if ($rules -and ($Override -or $rules.DefaultAction -eq "Allow")) {
-        Write-Host "Restricting network rules in storage account '$($account.Name)' to deny access by default"
-        Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -DefaultAction Deny }
-        if ($CI -and $env:PoolSubnet) {
-          Write-Host "Enabling access to '$($account.Name)' from pipeline subnet $($env:PoolSubnet)"
-          Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -VirtualNetworkResourceId $env:PoolSubnet }
-          $appliedRule = $true
+      # Add firewall rules in cases where existing rules added were incomplete to enable blob removal
+      Write-Host "Restricting network rules in storage account '$($account.Name)' to deny access by default"
+      Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -DefaultAction Deny }
+      if ($CI -and $env:PoolSubnet) {
+        Write-Host "Enabling access to '$($account.Name)' from pipeline subnet $($env:PoolSubnet)"
+        Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -VirtualNetworkResourceId $env:PoolSubnet }
+        $appliedRule = $true
+      }
+      elseif ($AllowIpRanges) {
+        Write-Host "Enabling access to '$($account.Name)' to $($AllowIpRanges.Length) IP ranges"
+        $ipRanges = $AllowIpRanges | ForEach-Object {
+          @{ Action = 'allow'; IPAddressOrRange = $_ }
         }
-        elseif ($AllowIpRanges) {
-          Write-Host "Enabling access to '$($account.Name)' to $($AllowIpRanges.Length) IP ranges"
-          $ipRanges = $AllowIpRanges | ForEach-Object {
-            @{ Action = 'allow'; IPAddressOrRange = $_ }
-          }
-          Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -IPRule $ipRanges | Out-Null }
-          $appliedRule = $true
-        }
-        elseif (!$CI) {
-          Write-Host "Enabling access to '$($account.Name)' from client IP"
-          $clientIp ??= Retry { Invoke-RestMethod -Uri 'https://icanhazip.com/' }  # cloudflare owned ip site
-          $clientIp = $clientIp.Trim()
-          $ipRanges = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name
-          if ($ipRanges) {
-            foreach ($range in $ipRanges.IpRules) {
-              if (DoesSubnetOverlap $range.IPAddressOrRange $clientIp) {
-                return
-              }
+        Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -IPRule $ipRanges | Out-Null }
+        $appliedRule = $true
+      }
+      elseif (!$CI) {
+        Write-Host "Enabling access to '$($account.Name)' from client IP"
+        $clientIp ??= Retry { Invoke-RestMethod -Uri 'https://icanhazip.com/' }  # cloudflare owned ip site
+        $clientIp = $clientIp.Trim()
+        $ipRanges = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name
+        if ($ipRanges) {
+          foreach ($range in $ipRanges.IpRules) {
+            if (DoesSubnetOverlap $range.IPAddressOrRange $clientIp) {
+              return
             }
           }
-          Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
-          $appliedRule = $true
         }
+        Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
+        $appliedRule = $true
       }
     }
+
     if ($appliedRule) {
       Write-Host "Sleeping for 15 seconds to allow network rules to take effect"
       Start-Sleep 15
