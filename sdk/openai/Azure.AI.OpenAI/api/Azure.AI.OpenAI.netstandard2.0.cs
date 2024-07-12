@@ -40,7 +40,7 @@ namespace Azure.AI.OpenAI
         public override OpenAI.Moderations.ModerationClient GetModerationClient(string _) { throw null; }
         public override OpenAI.VectorStores.VectorStoreClient GetVectorStoreClient() { throw null; }
     }
-    public partial class AzureOpenAIClientOptions : OpenAI.OpenAIClientOptions
+    public partial class AzureOpenAIClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
         public AzureOpenAIClientOptions(Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion.V2024_05_01_Preview) { }
         public enum ServiceVersion
