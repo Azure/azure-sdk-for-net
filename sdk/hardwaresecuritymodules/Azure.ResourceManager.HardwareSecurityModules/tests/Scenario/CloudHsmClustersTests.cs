@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
         [RecordedTest]
         public async Task CreateOrUpdateCloudHsmClusterTest()
         {
-            string resourceName = Recording.GenerateAssetName("CloudhsmSDKTest");
+            string resourceName = Recording.GenerateAssetName("sdkT");
             //var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             var azureStorageBlobContainerUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer");
 
@@ -45,9 +45,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 Tags =
                 {
                     ["Dept"] = "SDK Testing",
-                    ["Env"] = "df",
-                    ["UseMockHfc"] = "true",
-                    ["MockHfcDelayInMs"] = "1"
+                    ["Env"] = "df"
                 }
                 //Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
             };
