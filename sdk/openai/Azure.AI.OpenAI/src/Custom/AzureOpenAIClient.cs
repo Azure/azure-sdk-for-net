@@ -257,6 +257,7 @@ public partial class AzureOpenAIClient : OpenAIClient
             [
                 authenticationPolicy,
                 CreateAddUserAgentHeaderPolicy(options),
+                CreateAddClientRequestIdHeaderPolicy(),
             ],
             perTryPolicies: [],
             beforeTransportPolicies: []);
@@ -335,9 +336,24 @@ public partial class AzureOpenAIClient : OpenAIClient
         });
     }
 
+    private static PipelinePolicy CreateAddClientRequestIdHeaderPolicy()
+    {
+        return new GenericActionPipelinePolicy(message =>
+        {
+            if (message?.Request?.Headers is not null)
+            {
+                string requestId = message.Request.Headers.TryGetValue(s_clientRequestIdHeaderKey, out string existingHeader) == true
+                    ? existingHeader
+                    : Guid.NewGuid().ToString().ToLowerInvariant();
+                message.Request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
+            }
+        });
+    }
+
     private static readonly string s_aoaiEndpointEnvironmentVariable = "AZURE_OPENAI_ENDPOINT";
     private static readonly string s_aoaiApiKeyEnvironmentVariable = "AZURE_OPENAI_API_KEY";
     private static readonly string s_userAgentHeaderKey = "User-Agent";
+    private static readonly string s_clientRequestIdHeaderKey = "x-ms-client-request-id";
     private static PipelineMessageClassifier _pipelineMessageClassifier;
     internal static PipelineMessageClassifier PipelineMessageClassifier
         => _pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });

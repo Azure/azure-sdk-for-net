@@ -171,18 +171,15 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     {
         IConfiguration testConfig = TestConfig.GetConfig("rate_limited_chat");
 
-        TestPipelinePolicy replaceResponseHeadersPolicy = new(
+        TestPipelinePolicy replaceHeadersPolicy = new(
             requestAction: null,
             responseAction: (response) =>
             {
                 Console.WriteLine("response");
             });
-        TestClientOptions clientOptions = new();
-        clientOptions.AddPolicy(replaceResponseHeadersPolicy, PipelinePosition.PerCall);
-        clientOptions.AddPolicy(replaceResponseHeadersPolicy, PipelinePosition.PerTry);
-        clientOptions.AddPolicy(replaceResponseHeadersPolicy, PipelinePosition.BeforeTransport);
-
-        ChatClient client = GetTestClient(testConfig, clientOptions);
+        TestClientOptions options = new();
+        options.AddPolicy(replaceHeadersPolicy, PipelinePosition.PerCall);
+        ChatClient client = GetTestClient(testConfig, options);
 
         BinaryContent requestContent = BinaryContent.Create(BinaryData.FromString($$"""
             {
@@ -202,14 +199,17 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             Stopwatch requestWatch = Stopwatch.StartNew();
             ClientResult protocolResult = await client.CompleteChatAsync(requestContent, noThrowOptions);
             PipelineResponse response = protocolResult.GetRawResponse();
-            if (response.Status == 200)
+            switch (response.Status)
             {
-                observed200Delay = requestWatch.Elapsed;
-            }
-            if (response.Status == 429)
-            {
-                observed429Delay = requestWatch.Elapsed;
-                break;
+                case 200:
+                    observed200Delay = requestWatch.Elapsed;
+                    break;
+                case 429:
+                    observed429Delay = requestWatch.Elapsed;
+                    break;
+                default:
+                    Assert.Fail();
+                    break;
             }
         }
 

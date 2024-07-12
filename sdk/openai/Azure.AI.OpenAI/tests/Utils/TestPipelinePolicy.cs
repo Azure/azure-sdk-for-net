@@ -25,10 +25,10 @@ internal partial class TestPipelinePolicy : PipelinePolicy
         ProcessNext(message, pipeline, currentIndex);
     }
 
-    public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         InvokeActions(message);
-        return ProcessNextAsync(message, pipeline, currentIndex);
+        await ProcessNextAsync(message, pipeline, currentIndex);
     }
 
     private void InvokeActions(PipelineMessage message)
