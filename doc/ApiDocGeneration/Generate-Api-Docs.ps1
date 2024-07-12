@@ -99,12 +99,20 @@ mkdir $DocOutDir
 
 if ($LibType -eq 'client') { 
     Write-Verbose "Build Packages for Doc Generation - Client"
-    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0
+    # JRS-ORIGINAL
+    # Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0"
+    # dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0
+    # JRS-ORIGINAL
+    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir"
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir
 
     Write-Verbose "Include client Dependencies"
-    Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
+    # JRS-ORIGINAL
+    # Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true"
+    # dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
+    # JRS-ORIGINAL
+    Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true"
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true
 }
 
 if ($LibType -eq 'management') {
