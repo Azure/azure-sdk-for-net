@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            ETag? eTag = default;
+            ETag? etag = default;
             CassandraReaperStatus reaperStatus = default;
             IReadOnlyList<CassandraConnectionError> connectionErrors = default;
             IReadOnlyList<CassandraError> errors = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reaperStatus"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CassandraClusterPublicStatus(
-                eTag,
+                etag,
                 reaperStatus,
                 connectionErrors ?? new ChangeTrackingList<CassandraConnectionError>(),
                 errors ?? new ChangeTrackingList<CassandraError>(),

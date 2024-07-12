@@ -342,6 +342,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
   IoT: Iot
   TLS: Tls
   VA: VulnerabilityAssessment

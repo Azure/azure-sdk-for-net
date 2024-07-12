@@ -125,17 +125,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             logRecord.ForEachScope(s_processScope, properties);
 
             var categoryName = logRecord.CategoryName;
-            if (!string.IsNullOrEmpty(categoryName))
+            if (!properties.ContainsKey("CategoryName") && !string.IsNullOrEmpty(categoryName))
             {
                 properties.Add("CategoryName", categoryName.Truncate(SchemaConstants.KVP_MaxValueLength)!);
             }
 
-            if (logRecord.EventId.Id != 0)
+            if (!properties.ContainsKey("EventId") && logRecord.EventId.Id != 0)
             {
                 properties.Add("EventId", logRecord.EventId.Id.ToString(CultureInfo.InvariantCulture));
             }
 
-            if (!string.IsNullOrEmpty(logRecord.EventId.Name))
+            if (!properties.ContainsKey("EventName") && !string.IsNullOrEmpty(logRecord.EventId.Name))
             {
                 properties.Add("EventName", logRecord.EventId.Name!.Truncate(SchemaConstants.KVP_MaxValueLength));
             }
