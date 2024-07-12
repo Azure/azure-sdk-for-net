@@ -528,12 +528,6 @@
 # ServiceLabel: %Guest Configuration
 # ServiceOwners:                                                   @mgreenegit @vivlingaiah
 
-# PRLabel: %Hardware Security Modules
-sdk/hardwaresecuritymodules/									   @emmeliaAra
-
-# ServiceLabel: %Hardware Security Modules
-# ServiceOwners:                                                   @emmeliaAra
-
 # PRlabel: %HDInsight
 /sdk/hdinsight/                                                    @aim-for-better @idear1203 @deshriva
 
@@ -952,6 +946,12 @@ sdk/hardwaresecuritymodules/									   @emmeliaAra
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+
+# PRLabel: %Hardware Security Modules
+sdk/hardwaresecuritymodules/									   @emmeliaAra
+
+# ServiceLabel: %Hardware Security Modules
+# ServiceOwners:                                                   @emmeliaAra
 
 # PRLabel: %Informatica Data Management
 /sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak

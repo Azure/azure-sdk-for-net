@@ -124,6 +124,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 {
                     ["Dept"] = "SDK Testing",
                     ["Env"] = "df",
+                    ["UseMockHfc"] = "true",
+                    ["MockHfcDelayInMs"] = "1"
                 },
             };
 
