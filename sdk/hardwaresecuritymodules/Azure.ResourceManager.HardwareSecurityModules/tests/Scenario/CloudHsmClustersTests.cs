@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 CloudHsmClusterSkuFamily.B.ToString(),
                 CloudHsmClusterSkuName.StandardB1.ToString(),
                 //(int)cloudHsmClusterBody.SecurityDomain.FipsState,
-                new Dictionary<string, string>(cloudHsmClusterBody.Tags));
-                //ManagedServiceIdentityType.UserAssigned);
+                new Dictionary<string, string>(cloudHsmClusterBody.Tags),
+                ManagedServiceIdentityType.UserAssigned);
 
             var getAllOperation = collection.GetAllAsync();
             int cloudhsmCount = 0;
