@@ -2,6 +2,8 @@
 
 ## 1.4.0-beta.1 (2024-07-12)
 
+### Bugs Fixed
+
 * Added the `LogRecord.CategoryName` field to log and exception telemetry.
   Previously the `CategoryName` field was omitted, which was inconsistent with
   expected `ILogger` behavior, and with Application Insights classic behavior.
