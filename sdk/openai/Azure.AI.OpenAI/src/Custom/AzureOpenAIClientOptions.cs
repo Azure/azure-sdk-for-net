@@ -64,18 +64,8 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
                 ?? TryGetTimeSpanFromHeader("x-ms-retry-after-ms")
                 ?? TryGetTimeSpanFromHeader("Retry-After", millisecondsPerValue: 1000, allowDateTimeOffset: true);
 
-           return delayFromHeader ?? DefaultDelay;
+            return delayFromHeader ?? base.GetNextDelay(message, tryCount);
         }
-
-        private TimeSpan DefaultDelay
-        {
-            get
-            {
-                _defaultDelay ??= TimeSpan.FromMilliseconds(800);
-                return _defaultDelay.Value;
-            }
-        }
-        private TimeSpan? _defaultDelay;
     }
 
     private const ServiceVersion LatestVersion = ServiceVersion.V2024_05_01_Preview;
