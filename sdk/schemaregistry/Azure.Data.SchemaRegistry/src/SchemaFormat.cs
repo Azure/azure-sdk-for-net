@@ -19,7 +19,7 @@ namespace Azure.Data.SchemaRegistry
 
         // Temporary until autorest bug is fixed
         private const string AvroContentType = "application/json; serialization=Avro";
-        private const string JsonContentType = "application/json; serialization=json";
+        private const string JsonContentType = "application/json; serialization=Json";
         private const string CustomContentType = "text/plain; charset=utf-8";
         private const string ProtobufContentType = "text/vnd.ms.protobuf";
 
