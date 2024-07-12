@@ -87,7 +87,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             TestHelper.AssertExpectedException(
-                () => new BlobServiceClient(httpUri, Tenants.GetOAuthCredential()),
+                () => new BlobServiceClient(httpUri, TestEnvironment.Credential),
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
@@ -183,7 +183,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -192,6 +192,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -202,7 +203,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -211,6 +212,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -221,7 +223,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -664,7 +666,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey()
         {
             // Arrange
-            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient service = GetServiceClient_OAuth();
 
             // Act
             Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
@@ -689,7 +691,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
-            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient service = GetServiceClient_OAuth();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
@@ -1260,7 +1262,7 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), new BlobClientOptions()).Object;
             mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
-            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+            mock = new Mock<BlobServiceClient>(new Uri("https://test/test"), TestEnvironment.Credential, new BlobClientOptions()).Object;
         }
     }
 }
