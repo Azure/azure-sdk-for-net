@@ -8,6 +8,10 @@ namespace Azure.Data.SchemaRegistry.Tests
 {
     public class SchemaFormatTests
     {
+        private const string _jsonContentType = "application/json; serialization=Json";
+        private const string _avroContentType = "application/json; serialization=Avro";
+        private const string _customContentType = "text/plain; charset=utf-8";
+
         [Test]
         public void VerifyAvroFormat()
         {
@@ -35,19 +39,25 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void VerifyAvroToContentType()
         {
-            Assert.AreEqual("application/json; serialization=Avro", SchemaFormat.Avro.ToContentType());
+            Assert.AreEqual(_avroContentType, SchemaFormat.Avro.ToContentType());
         }
 
         [Test]
         public void VerifyJsonToContentType()
         {
-            Assert.AreEqual("application/json; serialization=Json", SchemaFormat.Json.ToContentType());
+            Assert.AreEqual(_jsonContentType, SchemaFormat.Json.ToContentType());
         }
 
         [Test]
         public void VerifyCustomToContentType()
         {
-            Assert.AreEqual("text/plain; charset=utf-8", SchemaFormat.Custom.ToContentType());
+            Assert.AreEqual(_customContentType, SchemaFormat.Custom.ToContentType());
+        }
+
+        [Test]
+        public void VerifyDefaultToContentType()
+        {
+            Assert.AreEqual("MyContent", new SchemaFormat("MyContent").ToContentType());
         }
 
         //[Test]
@@ -59,22 +69,29 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void VerifyAvroFromContentType()
         {
-            var fromContentType = SchemaFormat.FromContentType("application/json; serialization=Avro");
+            var fromContentType = SchemaFormat.FromContentType(_avroContentType);
             Assert.AreEqual(SchemaFormat.Avro, fromContentType);
         }
 
         [Test]
         public void VerifyJsonFromContentType()
         {
-            var fromContentType = SchemaFormat.FromContentType("application/json; serialization=Json");
+            var fromContentType = SchemaFormat.FromContentType(_jsonContentType);
             Assert.AreEqual(SchemaFormat.Json, fromContentType);
         }
 
         [Test]
         public void VerifyCustomFromContentType()
         {
-            var fromContentType = SchemaFormat.FromContentType("text/plain; charset=utf-8");
+            var fromContentType = SchemaFormat.FromContentType(_customContentType);
             Assert.AreEqual(SchemaFormat.Custom, fromContentType);
+        }
+
+        [Test]
+        public void VerifyDefaultFromContentType()
+        {
+            var fromContentType = SchemaFormat.FromContentType("MyContentType");
+            Assert.AreEqual(new SchemaFormat("MyContentType"), fromContentType);
         }
 
         //[Test]
