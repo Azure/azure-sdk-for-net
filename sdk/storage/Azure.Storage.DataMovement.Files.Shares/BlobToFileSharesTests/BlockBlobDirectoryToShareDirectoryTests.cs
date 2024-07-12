@@ -127,14 +127,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         {
             ShareClientOptions options = DestinationClientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
-            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, options);
+            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
             return oauthService.GetShareClient(containerName);
         }
 
         protected override BlobContainerClient GetOAuthSourceContainerClient(string containerName)
         {
             BlobClientOptions options = SourceClientBuilder.GetOptions();
-            BlobServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, options);
+            BlobServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
             return oauthService.GetBlobContainerClient(containerName);
         }
 
