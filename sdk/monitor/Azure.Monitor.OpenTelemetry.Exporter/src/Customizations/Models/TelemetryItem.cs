@@ -25,17 +25,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             if (activity.GetTelemetryType() == TelemetryType.Request)
             {
-                if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+                var displayName = activity.DisplayName;
+                if (!string.IsNullOrEmpty(displayName)
+                    && !displayName.StartsWith(activity.Source.Name))
+                {   // AspNetCore telemetry usually sets DisplayName to the same value we want for OperationName
+                    // Also, it's important than any user-set DisplayName be used
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = displayName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
+                }
+                else if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
                 {
                     Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationNameV2(activity, ref activityTagsProcessor.MappedTags).Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
                 }
                 else if (activityTagsProcessor.activityType.HasFlag(OperationType.Http))
                 {
                     Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags).Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
-                }
-                else
-                {
-                    Tags[ContextTagKeys.AiOperationName.ToString()] = activity.DisplayName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
                 }
 
                 // Set ip in case of server spans only.
