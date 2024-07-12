@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using File = System.IO.File;
@@ -19,6 +21,13 @@ namespace Azure.AI.Inference.Tests
 {
     public class InferenceClientTest: RecordedTestBase<InferenceClientTestEnvironment>
     {
+        public enum TargetModel
+        {
+            MistralSmall,
+            GitHubGpt4o,
+            AoaiGpt4Turbo,
+        }
+
         public enum ToolChoiceTestType
         {
             DoNotSpecifyToolChoice,
@@ -48,8 +57,7 @@ namespace Azure.AI.Inference.Tests
             var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
             var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 
-            // var client = CreateClient(endpoint, credential);
-            var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, new ChatCompletionsClientOptions());
+            var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, new ChatCompletionsClientOptions());
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -81,9 +89,8 @@ namespace Azure.AI.Inference.Tests
             var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
             var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 
-            // var client = CreateClient(endpoint, credential);
             var clientOptions = new ChatCompletionsClientOptions();
-            var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
+            var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -95,8 +102,7 @@ namespace Azure.AI.Inference.Tests
                 MaxTokens = 512,
             };
 
-            StreamingResponse<StreamingChatCompletionsUpdate> response
-                = await client.CompleteStreamingAsync(requestOptions);
+            StreamingResponse<StreamingChatCompletionsUpdate> response = await client.CompleteStreamingAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
 
             StringBuilder contentBuilder = new();
@@ -151,8 +157,8 @@ namespace Azure.AI.Inference.Tests
             ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
 
-            // var client = CreateClient(endpoint, credential);
-            var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
+            var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
+
             List<ChatRequestMessage> messages = new List<ChatRequestMessage>
             {
                 new ChatRequestSystemMessage("You are a helpful assistant."),
@@ -220,13 +226,13 @@ namespace Azure.AI.Inference.Tests
         }
 
         [RecordedTest]
-        [TestCase(ToolChoiceTestType.DoNotSpecifyToolChoice)]
-        [TestCase(ToolChoiceTestType.UseAutoPresetToolChoice)]
-        [TestCase(ToolChoiceTestType.UseNonePresetToolChoice)]
-        [TestCase(ToolChoiceTestType.UseRequiredPresetToolChoice)]
-        [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice)]
-        [TestCase(ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice)]
-        public async Task TestChatCompletionsFunctionToolHandling(ToolChoiceTestType toolChoiceType = ToolChoiceTestType.DoNotSpecifyToolChoice)
+        [TestCase(ToolChoiceTestType.DoNotSpecifyToolChoice, TargetModel.MistralSmall)]
+        [TestCase(ToolChoiceTestType.UseAutoPresetToolChoice, TargetModel.MistralSmall)]
+        [TestCase(ToolChoiceTestType.UseNonePresetToolChoice, TargetModel.MistralSmall)]
+        [TestCase(ToolChoiceTestType.UseRequiredPresetToolChoice, TargetModel.MistralSmall, IgnoreReason = "Endpoint needs to be updated to support")]
+        [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice, TargetModel.GitHubGpt4o)]
+        [TestCase(ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice, TargetModel.GitHubGpt4o)]
+        public async Task TestChatCompletionsFunctionToolHandling(ToolChoiceTestType toolChoiceType, TargetModel targetModel)
         {
             FunctionDefinition futureTemperatureFunction = new FunctionDefinition("get_future_temperature")
             {
@@ -254,23 +260,31 @@ namespace Azure.AI.Inference.Tests
 
             ChatCompletionsFunctionToolDefinition functionToolDef = new ChatCompletionsFunctionToolDefinition(futureTemperatureFunction);
 
-            // var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
-            // var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+            var endpoint = targetModel switch
+            {
+                TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
+                TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
 
-            var githubEndpoint = new Uri(TestEnvironment.GithubEndpoint);
+            var credential = targetModel switch
+            {
+                TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
+                TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
             var githubModelName = "gpt-4o";
-            var githubCredential = new AzureKeyCredential(TestEnvironment.GithubToken);
 
-            /// AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
-
-            // var client = CreateClient(endpoint, credential);
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
             ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
-            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
-            //var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
 
-            var client = new ChatCompletionsClient(githubEndpoint, githubCredential, clientOptions);
+            // Uncomment the following lines to enable enhanced log output
+            // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
+
+            var client = CreateClient(endpoint, credential, clientOptions);
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -281,8 +295,12 @@ namespace Azure.AI.Inference.Tests
                 },
                 MaxTokens = 512,
                 Tools = { functionToolDef },
-                Model = githubModelName,
             };
+
+            if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                requestOptions.Model = githubModelName;
+            }
 
             requestOptions.ToolChoice = toolChoiceType switch
             {
@@ -323,7 +341,7 @@ namespace Azure.AI.Inference.Tests
             }
             else if (toolChoiceType == ToolChoiceTestType.UseAutoPresetToolChoice || toolChoiceType == ToolChoiceTestType.DoNotSpecifyToolChoice)
             {
-                // Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+                Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
                 // and continue the test
             }
             else
@@ -351,14 +369,19 @@ namespace Azure.AI.Inference.Tests
             {
                 Tools = { functionToolDef },
                 MaxTokens = 512,
-                Model = githubModelName,
             };
+
+            if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                followupOptions.Model = githubModelName;
+            }
 
             // Include all original messages
             foreach (ChatRequestMessage originalMessage in requestOptions.Messages)
             {
                 followupOptions.Messages.Add(originalMessage);
             }
+
             // And the tool call message just received back from the assistant
             followupOptions.Messages.Add(new ChatRequestAssistantMessage(choice.Message));
 
@@ -394,26 +417,19 @@ namespace Azure.AI.Inference.Tests
         [TestCase(ImageTestSourceKind.UsingBinaryData)]
         public async Task TestChatCompletionsWithImages(ImageTestSourceKind imageSourceKind)
         {
-            // var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
-            // var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
-
-            var githubEndpoint = new Uri(TestEnvironment.GithubEndpoint);
-            var githubModelName = "gpt-4o";
-            var githubCredential = new AzureKeyCredential(TestEnvironment.GithubToken);
-
             var aoaiEndpoint = new Uri(TestEnvironment.AoaiEndpoint);
+            var aoaiKey = new AzureKeyCredential(TestEnvironment.AoaiKey);
 
-            // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
-
-            // var client = CreateClient(endpoint, credential);
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
             ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
-            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
-            // var client = new ChatCompletionsClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
-            // var client = new ChatCompletionsClient(githubEndpoint, githubCredential, clientOptions);\
             clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(TestEnvironment), HttpPipelinePosition.PerCall);
-            var client = new ChatCompletionsClient(aoaiEndpoint, new AzureKeyCredential(TestEnvironment.AoaiKey), clientOptions);
+
+            // Uncomment the following lines to enable enhanced log output
+            // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
+
+            var client = CreateClient(aoaiEndpoint, aoaiKey, clientOptions);
 
             ChatMessageImageContentItem imageContentItem = imageSourceKind switch
             {
@@ -433,7 +449,6 @@ namespace Azure.AI.Inference.Tests
                         imageContentItem),
                 },
                 MaxTokens = 2048,
-                Model = githubModelName,
             };
 
             Response<ChatCompletions> response = null;
@@ -517,9 +532,9 @@ namespace Azure.AI.Inference.Tests
             }
         }
 
-        private ChatCompletionsClient CreateClient(Uri endpoint, AzureKeyCredential credential)
+        private ChatCompletionsClient CreateClient(Uri endpoint, AzureKeyCredential credential, ChatCompletionsClientOptions clientOptions)
         {
-            return InstrumentClient(new ChatCompletionsClient(endpoint, credential, InstrumentClientOptions(new ChatCompletionsClientOptions())));
+            return InstrumentClient(new ChatCompletionsClient(endpoint, credential, InstrumentClientOptions(clientOptions)));
         }
 
         private static BinaryData GetContentFromResponse(Response r)

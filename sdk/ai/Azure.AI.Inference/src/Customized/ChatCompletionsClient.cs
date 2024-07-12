@@ -115,7 +115,7 @@ namespace Azure.AI.Inference
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.GetChatCompletionsStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.CompleteStreaming");
             scope.Start();
 
             chatCompletionsOptions.InternalShouldStreamResponse = true;
@@ -171,7 +171,7 @@ namespace Azure.AI.Inference
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.GetChatCompletionsStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.CompleteStreaming");
             scope.Start();
 
             chatCompletionsOptions.InternalShouldStreamResponse = true;
