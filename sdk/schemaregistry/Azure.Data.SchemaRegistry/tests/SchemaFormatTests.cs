@@ -35,25 +35,25 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void VerifyAvroToContentType()
         {
-            Assert.AreEqual(ContentType.Avro, SchemaFormat.Avro.ToContentType());
+            Assert.AreEqual("application/json; serialization=Avro", SchemaFormat.Avro.ToContentType());
         }
 
         [Test]
         public void VerifyJsonToContentType()
         {
-            Assert.AreEqual(ContentType.Json, SchemaFormat.Json.ToContentType());
+            Assert.AreEqual("application/json; serialization=json", SchemaFormat.Json.ToContentType());
         }
 
         [Test]
         public void VerifyCustomToContentType()
         {
-            Assert.AreEqual(ContentType.Custom, SchemaFormat.Custom.ToContentType());
+            Assert.AreEqual("text/plain; charset=utf-8", SchemaFormat.Custom.ToContentType());
         }
 
         //[Test]
         //public void VerifyProtobufToContentType()
         //{
-        //    Assert.AreEqual(ContentType.Protobuf, SchemaFormat.Protobuf.ToContentType());
+        //    Assert.AreEqual("text/vnd.ms.protobuf", SchemaFormat.Protobuf.ToContentType());
         //}
 
         [Test]
@@ -66,7 +66,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void VerifyJsonFromContentType()
         {
-            var fromContentType = SchemaFormat.FromContentType("application/json; serialization=Json");
+            var fromContentType = SchemaFormat.FromContentType("application/json; serialization=json");
             Assert.AreEqual(SchemaFormat.Json, fromContentType);
         }
 
