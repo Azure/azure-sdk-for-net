@@ -977,6 +977,12 @@
 # ServiceLabel: %Oracle %Mgmt
 # ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @v-eelhomsi
 
+# PRLabel: %Quota
+/sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
+
+# ServiceLabel: %Quota %Mgmt
+# ServiceOwners:                                                   @tejasm-microsoft
+
 # PRLabel: %Recovery Services Backup
 /sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
 
@@ -992,8 +998,6 @@
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
 
-#PRLabel: %Quota
-/sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
 
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
