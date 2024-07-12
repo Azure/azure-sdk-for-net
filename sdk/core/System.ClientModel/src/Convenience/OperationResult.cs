@@ -47,8 +47,16 @@ public abstract class OperationResult : ClientResult
     // each.  It would require subtype constructors to take any relevant
     // information about polling intervals, cancellation tokens, etc, or just
     // say if you want to configure that you need to call the subtype directly.
+
+    // TODO: use Core methods/Template pattern instead?
     public abstract Task WaitAsync(CancellationToken cancellationToken = default);
     public abstract void Wait(CancellationToken cancellationToken = default);
+
+    // Returns false if operation has completed, or if continuing to poll for updates
+    // would cause an infinite loop.  "CanContinue"/"Has more updates" -> can MoveNext
+    // in the conceptual update stream.
+    public abstract Task<bool> UpdateStatusAsync(CancellationToken cancellationToken = default);
+    public abstract bool UpdateStatus(CancellationToken cancellationToken = default);
 
     // TODO: Consider providing an abstract UpdateStatus and UpdateStatusAsync
     // operation.  This would formalize the idea of having a stream of updates

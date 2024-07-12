@@ -39,6 +39,8 @@ public abstract class AsyncCollectionResult<T> : ClientResult, IAsyncEnumerable<
     {
     }
 
+    // TODO: better to implement this explicitly?
+
     /// <inheritdoc/>
     public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
 }
