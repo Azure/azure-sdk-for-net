@@ -28,8 +28,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 var displayName = activity.DisplayName;
                 if (!string.IsNullOrEmpty(displayName)
                     && !displayName.StartsWith(activity.Source.Name))
-                {   // AspNetCore telemetry usually sets DisplayName to the same value we want for OperationName
-                    // Also, it's important than any user-set DisplayName be used
+                {   // AspNetCore instrumentation sets DisplayName to the same value we want for OperationName
+                    // Also, it's important than any user-set DisplayName be used #44971
                     Tags[ContextTagKeys.AiOperationName.ToString()] = displayName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
                 }
                 else if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))

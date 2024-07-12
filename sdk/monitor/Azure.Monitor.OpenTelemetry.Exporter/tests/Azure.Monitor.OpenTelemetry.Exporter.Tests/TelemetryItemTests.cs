@@ -20,6 +20,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private const string ActivitySourceName = "TelemetryItemTests";
         private const string ActivityName = "TestActivity";
 
+        private const string RequestActivitySourceName = "Microsoft.AspNetCore";
+        private const string RequestActivityName = "Microsoft.AspNetCore.Hosting.HttpRequestIn";
+
         static TelemetryItemTests()
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
@@ -119,15 +122,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData(null)]
         public void HttpMethodAndHttpRouteIsUsedForHttpRequestOperationName(string? route)
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
-            activity.DisplayName = "/getaction";
 
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, route);
@@ -153,15 +155,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void HttpMethodAndHttpUrlPathIsUsedForHttpRequestOperationName()
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
-            activity.DisplayName = "displayname";
 
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/path?id=1");
@@ -176,9 +177,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ActivityNameIsUsedByDefaultForRequestOperationName()
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
@@ -186,6 +187,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             activity.DisplayName = "displayname";
             activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
+            activity.SetTag(SemanticConventions.AttributeHttpRoute, "api/test");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, "instrumentationKey", 1.0f);
@@ -197,9 +199,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void AiLocationIpIsSetAsHttpClientIpForHttpServerSpans()
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
@@ -218,9 +220,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void AiUserAgentIsSetAsHttpUserAgent()
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
@@ -239,9 +241,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void AiUserAgentIsSetAsUserAgentOriginal()
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
@@ -259,9 +261,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void AiLocationIpIsNotSetByDefault()
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
@@ -278,9 +280,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void AiUserAgentIsNotTransmittedByDefault()
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
@@ -335,15 +337,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void RequestNameMatchesOperationName()
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
-            activity.DisplayName = "displayname";
 
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, "/api/test");
@@ -361,15 +362,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void RequestNameMatchesOperationNameV2()
         {
-            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using ActivitySource activitySource = new ActivitySource(RequestActivitySourceName);
             using var activity = activitySource.StartActivity(
-                ActivityName,
+                RequestActivityName,
                 ActivityKind.Server,
                 null,
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
-            activity.DisplayName = "displayname";
 
             activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, "/api/test");
