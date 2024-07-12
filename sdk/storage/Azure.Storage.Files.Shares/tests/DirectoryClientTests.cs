@@ -132,7 +132,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -160,7 +159,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
