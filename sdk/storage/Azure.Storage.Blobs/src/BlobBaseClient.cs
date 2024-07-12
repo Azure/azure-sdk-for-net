@@ -1570,7 +1570,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 .EnsureCompleted(),
                             async startOffset => await StructuredMessageFactory(startOffset, async: true, cancellationToken)
                                 .ConfigureAwait(false),
-                            decodedData => response.Value.Details.ContentCrc = decodedData.TotalCrc.ToArray(),
+                            default, //decodedData => response.Value.Details.ContentCrc = decodedData.TotalCrc.ToArray(),
                             ClientConfiguration.Pipeline.ResponseClassifier,
                             Constants.MaxReliabilityRetries);
                     }
