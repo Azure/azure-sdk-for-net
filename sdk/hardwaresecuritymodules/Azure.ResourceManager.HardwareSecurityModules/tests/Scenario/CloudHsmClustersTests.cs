@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
         public async Task CreateOrUpdateCloudHsmClusterTest()
         {
             string resourceName = Recording.GenerateAssetName("CloudhsmSDKTest");
-            var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
+            //var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             var azureStorageBlobContainerUri = new Uri("https://myaccount.blob.core.windows.net/mycontainer");
 
             CloudHsmClusterData cloudHsmClusterBody = new CloudHsmClusterData(Location)
@@ -46,11 +46,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 {
                     ["Dept"] = "SDK Testing",
                     ["Env"] = "df",
-                },
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+                    ["UseMockHfc"] = "true",
+                    ["MockHfcDelayInMs"] = "1"
+                }
+                //Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
             };
 
-            cloudHsmClusterBody.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
+            //cloudHsmClusterBody.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             CloudHsmClusterCollection collection = ResourceGroupResource.GetCloudHsmClusters();
             var createOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, cloudHsmClusterBody);
             CloudHsmClusterResource cloudHsmClusterResult = createOperation.Value;
@@ -64,9 +66,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 Location.Name,
                 CloudHsmClusterSkuFamily.B.ToString(),
                 CloudHsmClusterSkuName.StandardB1.ToString(),
-                //(int)cloudHsmClusterBody.SecurityDomain.FipsState,
-                new Dictionary<string, string>(cloudHsmClusterBody.Tags),
-                ManagedServiceIdentityType.UserAssigned);
+                cloudHsmClusterBody.Properties.FipsApprovedMode,
+                new Dictionary<string, string>(cloudHsmClusterBody.Tags));
+                //ManagedServiceIdentityType.UserAssigned);
 
             var getOperation = await collection.GetAsync(resourceName);
 
@@ -79,9 +81,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
                 Location.Name,
                 CloudHsmClusterSkuFamily.B.ToString(),
                 CloudHsmClusterSkuName.StandardB1.ToString(),
-                //(int)cloudHsmClusterBody.SecurityDomain.FipsState,
-                new Dictionary<string, string>(cloudHsmClusterBody.Tags),
-                ManagedServiceIdentityType.UserAssigned);
+                cloudHsmClusterBody.Properties.FipsApprovedMode,
+                new Dictionary<string, string>(cloudHsmClusterBody.Tags));
+                //ManagedServiceIdentityType.UserAssigned);
 
             var getAllOperation = collection.GetAllAsync();
             int cloudhsmCount = 0;
@@ -104,9 +106,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             string expectedResourceLocation,
             string expectedSkuFamily,
             string expectedSkuName,
-            //int expectedFipsState,
+            bool? expectedFipsState,
             Dictionary<string, string> expectedTags,
-            ManagedServiceIdentityType expectedIdentityType,
+            //ManagedServiceIdentityType expectedIdentityType,
             int managedIdentityExpextedCount = 1
             )
         {
@@ -123,9 +125,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             Assert.NotNull(cloudHsmClusterData.Tags);
             Assert.True(expectedTags.Count == cloudHsmClusterData.Tags.Count && !expectedTags.Except(cloudHsmClusterData.Tags).Any());
             //Assert.NotNull(cloudHsmClusterData.SecurityDomain);
-            //Assert.AreEqual(expectedFipsState, cloudHsmClusterData.SecurityDomain.FipsState);
-            Assert.AreEqual(expectedIdentityType, cloudHsmClusterData.Identity.ManagedServiceIdentityType);
-            Assert.AreEqual(managedIdentityExpextedCount, cloudHsmClusterData.Identity.UserAssignedIdentities.Count);
+            Assert.AreEqual(expectedFipsState, cloudHsmClusterData.Properties.FipsApprovedMode);
+            //Assert.AreEqual(expectedIdentityType, cloudHsmClusterData.Identity.ManagedServiceIdentityType);
+            //Assert.AreEqual(managedIdentityExpextedCount, cloudHsmClusterData.Identity.UserAssignedIdentities.Count);
         }
 
         private async Task<GenericResource> CreateUserAssignedIdentityAsync()

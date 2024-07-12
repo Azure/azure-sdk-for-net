@@ -948,7 +948,7 @@
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
 # PRLabel: %Hardware Security Modules
-sdk/hardwaresecuritymodules/									   @emmeliaAra
+sdk/hardwaresecuritymodules/Azure.ResourceManager.*/			   @emmeliaAra
 
 # ServiceLabel: %Hardware Security Modules
 # ServiceOwners:                                                   @emmeliaAra
