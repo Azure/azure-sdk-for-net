@@ -144,7 +144,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="endpoint"> The endpoint to use. </param>
     /// <param name="options"> The additional client options to use. </param>
     protected AzureOpenAIClient(ClientPipeline pipeline, Uri endpoint, AzureOpenAIClientOptions options)
-        : base(pipeline, endpoint, options)
+        : base(pipeline, endpoint, null)
     {
         _options = options;
     }
@@ -253,12 +253,12 @@ public partial class AzureOpenAIClient : OpenAIClient
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
         => ClientPipeline.Create(
             options ?? new(),
-            perCallPolicies: [],
-            perTryPolicies:
+            perCallPolicies:
             [
                 authenticationPolicy,
                 CreateAddUserAgentHeaderPolicy(options),
             ],
+            perTryPolicies: [],
             beforeTransportPolicies: []);
 
     internal static ClientPipeline CreatePipeline(ApiKeyCredential credential, AzureOpenAIClientOptions options = null)
@@ -303,10 +303,6 @@ public partial class AzureOpenAIClient : OpenAIClient
         if (explicitEndpoint is not null)
         {
             return explicitEndpoint;
-        }
-        else if (options?.Endpoint is not null)
-        {
-            return options.Endpoint;
         }
         // To do: IConfiguration support
         else if (requireExplicitEndpoint)

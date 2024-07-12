@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -13,15 +14,18 @@ using Azure.AI.OpenAI.Chat;
 using Azure.AI.OpenAI.Tests.Utils;
 using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.AI.OpenAI.Tests.Utils.Pipeline;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Microsoft.Extensions.Options;
 using OpenAI.Chat;
+using OpenAI.Tests;
 
 namespace Azure.AI.OpenAI.Tests;
 
 public partial class ChatTests : AoaiTestBase<ChatClient>
 {
-    public ChatTests(bool isAsync) : base(isAsync)
+    public ChatTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
     { }
 
     #region General tests
@@ -154,6 +158,65 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(chatCompletion, Is.Not.Null);
         Assert.That(chatCompletion.Content, Is.Not.Null.Or.Empty);
         Assert.That(chatCompletion.Content[0].Text, Is.Not.Null.Or.Empty);
+    }
+
+    [RecordedTest]
+    [TestCase("x-ms-retry-after-ms", "1000", 1000)]
+    [TestCase("retry-after-ms", "1400", 1400)]
+    [TestCase("Retry-After", "1", 1000)]
+    [TestCase("Retry-After", "1.5", 1500)]
+    [TestCase("retry-after-ms", "200", 200)]
+    [TestCase("x-fake-test-retry-header", 1400, 800)]
+    public async Task RateLimitedRetryWorks(string headerName, string headerValue, double expectedDelayMilliseconds)
+    {
+        IConfiguration testConfig = TestConfig.GetConfig("rate_limited_chat");
+
+        TestPipelinePolicy replaceResponseHeadersPolicy = new(
+            requestAction: null,
+            responseAction: (response) =>
+            {
+                Console.WriteLine("response");
+            });
+        TestClientOptions clientOptions = new();
+        clientOptions.AddPolicy(replaceResponseHeadersPolicy, PipelinePosition.PerCall);
+        clientOptions.AddPolicy(replaceResponseHeadersPolicy, PipelinePosition.PerTry);
+        clientOptions.AddPolicy(replaceResponseHeadersPolicy, PipelinePosition.BeforeTransport);
+
+        ChatClient client = GetTestClient(testConfig, clientOptions);
+
+        BinaryContent requestContent = BinaryContent.Create(BinaryData.FromString($$"""
+            {
+              "model": "{{testConfig.Deployment}}",
+              "messages": [
+                { "role": "user", "content": "Write three haikus about tropical fruit." }
+              ]
+            }
+            """));
+        RequestOptions noThrowOptions = new() { ErrorOptions = ClientErrorBehaviors.NoThrow };
+
+        TimeSpan? observed200Delay = null;
+        TimeSpan? observed429Delay = null;
+
+        for (int i = 0; i < 3; i++)
+        {
+            Stopwatch requestWatch = Stopwatch.StartNew();
+            ClientResult protocolResult = await client.CompleteChatAsync(requestContent, noThrowOptions);
+            PipelineResponse response = protocolResult.GetRawResponse();
+            if (response.Status == 200)
+            {
+                observed200Delay = requestWatch.Elapsed;
+            }
+            if (response.Status == 429)
+            {
+                observed429Delay = requestWatch.Elapsed;
+                break;
+            }
+        }
+
+        Assert.That(observed200Delay.HasValue, Is.True);
+        Assert.That(observed429Delay.HasValue, Is.True);
+        Assert.That(observed429Delay.Value.TotalMilliseconds, Is.GreaterThan(expectedDelayMilliseconds));
+        Assert.That(observed429Delay.Value.TotalMilliseconds, Is.LessThan(expectedDelayMilliseconds + 1.5 * observed200Delay.Value.TotalMilliseconds));
     }
 
     #endregion
