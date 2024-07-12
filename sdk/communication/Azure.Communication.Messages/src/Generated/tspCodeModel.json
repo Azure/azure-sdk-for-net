@@ -288,10 +288,12 @@
      "Type": {
       "$id": "43",
       "Kind": "array",
+      "Name": "Array",
       "ValueType": {
        "$id": "44",
        "Kind": "string"
-      }
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -477,6 +479,7 @@
           "Type": {
            "$id": "71",
            "Kind": "array",
+           "Name": "ArrayMessageTemplateValue",
            "ValueType": {
             "$id": "72",
             "Kind": "model",
@@ -900,7 +903,8 @@
               ]
              }
             }
-           }
+           },
+           "CrossLanguageDefinitionId": "TypeSpec.Array"
           },
           "IsRequired": false,
           "IsReadOnly": false
@@ -974,6 +978,7 @@
                "Type": {
                 "$id": "142",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsComponent",
                 "ValueType": {
                  "$id": "143",
                  "Kind": "model",
@@ -995,7 +1000,8 @@
                    "IsReadOnly": false
                   }
                  ]
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1008,9 +1014,11 @@
                "Type": {
                 "$id": "147",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsComponent",
                 "ValueType": {
                  "$ref": "143"
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1023,9 +1031,11 @@
                "Type": {
                 "$id": "149",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsComponent",
                 "ValueType": {
                  "$ref": "143"
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1038,6 +1048,7 @@
                "Type": {
                 "$id": "151",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsButton",
                 "ValueType": {
                  "$id": "152",
                  "Kind": "model",
@@ -1070,7 +1081,8 @@
                    "IsReadOnly": false
                   }
                  ]
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1152,6 +1164,7 @@
      "Type": {
       "$id": "158",
       "Kind": "array",
+      "Name": "ArrayMessageReceipt",
       "ValueType": {
        "$id": "159",
        "Kind": "model",
@@ -1185,7 +1198,8 @@
          "IsReadOnly": false
         }
        ]
-      }
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -1211,6 +1225,7 @@
      "Type": {
       "$id": "166",
       "Kind": "array",
+      "Name": "ArrayMessageTemplateItem",
       "ValueType": {
        "$id": "167",
        "Kind": "model",
@@ -1317,7 +1332,8 @@
          ]
         }
        }
-      }
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -1363,8 +1379,7 @@
        "Description": "The communication resource, for example https://my-resource.communication.azure.com",
        "Type": {
         "$id": "186",
-        "Kind": "uri",
-        "IsNullable": false
+        "Kind": "url"
        },
        "Location": "Uri",
        "IsApiVersion": false,
@@ -1390,8 +1405,7 @@
         "$id": "189",
         "Type": {
          "$id": "190",
-         "Kind": "string",
-         "IsNullable": false
+         "Kind": "string"
         },
         "Value": "2024-02-01"
        },
@@ -1469,8 +1483,8 @@
       },
       {
        "$id": "198",
-       "Name": "NotificationContent",
-       "NameInRequest": "NotificationContent",
+       "Name": "notificationContent",
+       "NameInRequest": "body",
        "Description": "Details of the message to send.",
        "Type": {
         "$ref": "38"
@@ -1491,8 +1505,7 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "200",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1517,8 +1530,7 @@
        "NameInRequest": "Content-Type",
        "Type": {
         "$id": "203",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1664,8 +1676,7 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "217",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1836,8 +1847,7 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "235",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
