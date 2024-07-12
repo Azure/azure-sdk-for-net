@@ -950,7 +950,7 @@
 # PRLabel: %Hardware Security Modules
 sdk/hardwaresecuritymodules/Azure.ResourceManager.*/			   @emmeliaAra
 
-# ServiceLabel: %Hardware Security Modules
+# ServiceLabel: %Hardware Security Modules %Mgmt
 # ServiceOwners:                                                   @emmeliaAra
 
 # PRLabel: %Informatica Data Management
