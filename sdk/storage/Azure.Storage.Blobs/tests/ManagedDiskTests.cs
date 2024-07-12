@@ -38,10 +38,10 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         }
 
         [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/30035")]
         public async Task CanDiffPagesBetweenSnapshots()
         {
             // Arrange
+            Setup();
             var snapshot1Client = InstrumentClient(new PageBlobClient(snapshot1SASUri, GetOptions()));
             var snapshot2Client = InstrumentClient(new PageBlobClient(snapshot2SASUri, GetOptions()));
 
@@ -74,6 +74,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         public async Task GetManagedDiskPageRangesDiffAsync_Error()
         {
             // Arrange
+            Setup();
             var snapshot1Client = InstrumentClient(new PageBlobClient(snapshot1SASUri, GetOptions()));
 
             // Act
@@ -90,6 +91,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         [Test]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
         {
+            Setup();
             var snapshot2Client = InstrumentClient(new PageBlobClient(snapshot2SASUri, GetOptions()));
 
             foreach (var parameters in Reduced_AccessConditions_Data)
@@ -114,6 +116,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         [Test]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
         {
+            Setup();
             var snapshot2Client = InstrumentClient(new PageBlobClient(snapshot2SASUri, GetOptions()));
             foreach (var parameters in Reduced_AccessConditions_Fail_Data)
             {
