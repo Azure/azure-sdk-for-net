@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
     [TestFixture]
     public class GroupQuotaTests : QuotaManagementTestBase
     {
-        private const string ppeEnvironmentEndpoint = "https://eastus2euap.management.azure.com";
+        private const string canaryEnvironmentEndpoint = "https://centraluseuap.management.azure.com";
         private const string defaultSubscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
 
         public GroupQuotaTests() : base(true)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         public async Task SetGroupQuota()
         {
             var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(ppeEnvironmentEndpoint), "https://management.azure.com/");
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         public async Task PatchGroupQuota()
         {
             var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(ppeEnvironmentEndpoint), "https://management.azure.com/");
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         public async Task GetGroupQuotaList()
         {
             var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(ppeEnvironmentEndpoint), "https://management.azure.com/");
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             };
 
             var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(ppeEnvironmentEndpoint), "https://management.azure.com/");
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
@@ -172,12 +172,54 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         }
 
         [TestCase]
+        public async Task GetGroupQuotaLimit()
+        {
+            // invoke the operation
+            SubmittedResourceRequestStatusData requestBody = new SubmittedResourceRequestStatusData()
+            {
+                Properties = new SubmittedResourceRequestStatusProperties()
+                {
+                    RequestedResource = new GroupQuotaRequestBase()
+                    {
+                        Limit = 225,
+                        Region = "westus",
+                        Comments = "ticketComments"
+                    }
+                },
+            };
+
+            var options = new ArmClientOptions();
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
+
+            string managementGroupId = "testMgIdRoot";
+            string groupQuotaName = "sdk-test-group-quota";
+
+            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            //"Microsoft.Compute", "standardDv4family", data= patch
+
+            // get the collection of this GroupQuotaLimitResource
+            string resourceProviderName = "Microsoft.Compute";
+            GroupQuotaLimitCollection collection = groupQuotasEntity.GetGroupQuotaLimits(resourceProviderName);
+
+            // invoke the operation
+            string resourceName = "standarddv4family";
+            string filter = "location eq westus";
+            var result = await collection.GetAsync(resourceName, filter);
+            Assert.IsNotNull(result);
+        }
+
+        [TestCase]
         public async Task SetSubscription()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
             var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(ppeEnvironmentEndpoint), "https://management.azure.com/");
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -205,7 +247,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
             var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(ppeEnvironmentEndpoint), "https://management.azure.com/");
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -249,7 +291,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
             var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(ppeEnvironmentEndpoint), "https://management.azure.com/");
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -281,7 +323,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
             var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(ppeEnvironmentEndpoint), "https://management.azure.com/");
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
