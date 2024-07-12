@@ -133,11 +133,11 @@ namespace Azure.Data.SchemaRegistry
                 Response response;
                 if (async)
                 {
-                    response = await RegisterSchemaAsync(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken).ConfigureAwait(false);
+                    response = await RegisterSchemaAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RegisterSchema(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken);
+                    response = RegisterSchema(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType(), cancellationToken);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -210,11 +210,11 @@ namespace Azure.Data.SchemaRegistry
                 Response response;
                 if (async)
                 {
-                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType(), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaPropertiesByContent(groupName, schemaName, new BinaryData(schemaDefinition), new Core.ContentType(format.ToContentType().ToString()), cancellationToken);
+                    response = GetSchemaPropertiesByContent(groupName, schemaName, new BinaryData(schemaDefinition), format.ToContentType(), cancellationToken);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
