@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Sas;
@@ -83,22 +82,22 @@ namespace Azure.Storage.Queues.Tests
                     new Uri($"{TestConfigDefault.QueueServiceEndpoint}?{sasCredentials ?? GetNewQueueServiceSasCredentials(queueName, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
+        public QueueServiceClient GetServiceClient_OAuth(QueueClientOptions options = default)
+            => QueuesClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential, options);
+
         public Security.KeyVault.Keys.KeyClient GetKeyClient_TargetKeyClient()
             => GetKeyClient(TestConfigurations.DefaultTargetKeyVault);
 
         public TokenCredential GetTokenCredential_TargetKeyClient()
             => GetKeyClientTokenCredential(TestConfigurations.DefaultTargetKeyVault);
 
-        private static Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
+        private Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
             => new Security.KeyVault.Keys.KeyClient(
                 new Uri(config.VaultEndpoint),
                 GetKeyClientTokenCredential(config));
 
-        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
-            => new Identity.ClientSecretCredential(
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret);
+        private TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+            => TestEnvironment.Credential;
 
         public QueueServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false)
             => GetSecondaryReadServiceClient(Tenants.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
