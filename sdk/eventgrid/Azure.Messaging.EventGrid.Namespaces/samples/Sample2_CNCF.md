@@ -31,7 +31,7 @@ var receivedCloudEvent = jsonFormatter.DecodeStructuredModeMessage(
     null);
 ```
 
-Finally, we acknowledge the events using the lock token.
+Finally, we acknowledge the event using the lock token.
 
 ```C# Snippet:AcknowledgeCNCFEvent
 AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new[] { eventResponse.GetProperty("brokerProperties").GetProperty("lockToken").GetString() });
