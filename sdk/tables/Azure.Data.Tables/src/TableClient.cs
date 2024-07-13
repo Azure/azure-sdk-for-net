@@ -1345,7 +1345,7 @@ namespace Azure.Data.Tables
         /// Deletes the specified table entity.
         /// </summary>
         /// <remarks>Note: This method should not fail because the entity does not exist, however if delete operations are submitted in a <see cref="TableTransactionAction"/>, the transaction will fail if the entity does not exist.</remarks>
-        /// <param name="entity">The partitionKey that identifies the table entity.</param>
+        /// <param name="entity">The table entity to delete.</param>
         /// <param name="ifMatch">
         /// The If-Match value to be used for optimistic concurrency.
         /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
