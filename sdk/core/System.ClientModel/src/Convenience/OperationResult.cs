@@ -55,8 +55,8 @@ public abstract class OperationResult : ClientResult
     // Returns false if operation has completed, or if continuing to poll for updates
     // would cause an infinite loop.  "CanContinue"/"Has more updates" -> can MoveNext
     // in the conceptual update stream.
-    public abstract Task<bool> UpdateStatusAsync(CancellationToken cancellationToken = default);
-    public abstract bool UpdateStatus(CancellationToken cancellationToken = default);
+    public abstract Task<bool> UpdateAsync(CancellationToken cancellationToken = default);
+    public abstract bool Update(CancellationToken cancellationToken = default);
 
     // TODO: Consider providing an abstract UpdateStatus and UpdateStatusAsync
     // operation.  This would formalize the idea of having a stream of updates
