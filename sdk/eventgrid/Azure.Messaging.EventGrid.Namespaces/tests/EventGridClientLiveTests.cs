@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Messaging.EventGrid.Namespaces;
 using CloudNative.CloudEvents.SystemTextJson;
 using NUnit.Framework;
