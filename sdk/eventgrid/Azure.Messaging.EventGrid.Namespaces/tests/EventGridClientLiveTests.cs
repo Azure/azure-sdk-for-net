@@ -5,11 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Messaging.EventGrid.Namespaces;
 using CloudNative.CloudEvents.SystemTextJson;
 using NUnit.Framework;
@@ -320,12 +319,10 @@ namespace Azure.Messaging.EventGrid.Tests
             var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
 #endif
             Response response = await receiver.ReceiveAsync(maxEvents: 1, maxWaitTime: TimeSpan.FromSeconds(10), new RequestContext());
-            using var document = JsonDocument.Parse(response.Content);
 
-            var eventResponse = document.RootElement.GetProperty("value").EnumerateArray().First();
-            var eventText = eventResponse.GetProperty("event").GetRawText();
+            var eventResponse = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase).Value[0];
             var receivedCloudEvent = jsonFormatter.DecodeStructuredModeMessage(
-                Encoding.UTF8.GetBytes(eventText),
+                Encoding.UTF8.GetBytes(eventResponse.Event.ToString()),
                 new ContentType("application/cloudevents+json"),
                 null);
             #endregion
@@ -334,7 +331,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(evt.Id, receivedCloudEvent.Id);
 
             #region Snippet:AcknowledgeCNCFEvent
-            AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new[] { eventResponse.GetProperty("brokerProperties").GetProperty("lockToken").GetString() });
+            AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new string[] { eventResponse.BrokerProperties.LockToken.ToString() });
             #endregion
             Assert.IsEmpty(acknowledgeResult.FailedLockTokens);
         }

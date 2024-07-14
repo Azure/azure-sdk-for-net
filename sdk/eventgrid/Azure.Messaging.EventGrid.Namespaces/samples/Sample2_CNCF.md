@@ -21,12 +21,10 @@ Next, we receive the events using the `EventGridReceiverClient`.
 ```C# Snippet:ReceiveCNCFEvent
 var receiver = new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey));
 Response response = await receiver.ReceiveAsync(maxEvents: 1, maxWaitTime: TimeSpan.FromSeconds(10), new RequestContext());
-using var document = JsonDocument.Parse(response.Content);
 
-var eventResponse = document.RootElement.GetProperty("value").EnumerateArray().First();
-var eventText = eventResponse.GetProperty("event").GetRawText();
+var eventResponse = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase).Value[0];
 var receivedCloudEvent = jsonFormatter.DecodeStructuredModeMessage(
-    Encoding.UTF8.GetBytes(eventText),
+    Encoding.UTF8.GetBytes(eventResponse.Event.ToString()),
     new ContentType("application/cloudevents+json"),
     null);
 ```
@@ -34,5 +32,5 @@ var receivedCloudEvent = jsonFormatter.DecodeStructuredModeMessage(
 Finally, we acknowledge the event using the lock token.
 
 ```C# Snippet:AcknowledgeCNCFEvent
-AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new[] { eventResponse.GetProperty("brokerProperties").GetProperty("lockToken").GetString() });
+AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new string[] { eventResponse.BrokerProperties.LockToken.ToString() });
 ```
