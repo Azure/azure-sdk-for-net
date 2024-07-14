@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
         private FabricCapacityCollection _fabricCapacityCollection { get => ResourceGroup.GetFabricCapacities(); }
 
         public FabricCapacityTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
