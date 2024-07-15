@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
     public partial class StaticRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of <see cref="StaticRouterRule"/>. </summary>
-        public StaticRouterRule()
+        internal StaticRouterRule()
         {
             Kind = RouterRuleKind.Static;
         }
