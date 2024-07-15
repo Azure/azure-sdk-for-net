@@ -77,11 +77,7 @@ See [Credential Classes](#credential-classes) for a complete listing of availabl
 
 ### DefaultAzureCredential
 
-The `DefaultAzureCredential` is appropriate for most scenarios where the application is intended to ultimately be run in Azure. This is because the `DefaultAzureCredential` combines credentials commonly used to authenticate when deployed, with credentials used to authenticate in a development environment.
-
-> Note: `DefaultAzureCredential` is intended to simplify getting started with the SDK by handling common scenarios with reasonable default behaviors. Developers who want more control or whose scenario isn't served by the default settings should use other credential types.
-
-The `DefaultAzureCredential` attempts to authenticate via the following mechanisms, in this order, stopping when one succeeds:
+The `DefaultAzureCredential` simplifies authentication while developing applications that deploy to Azure by combining credentials used in Azure hosting environments and credentials used in local development. In production, it's better to use a specific credential type so authentication is more predictable and easier to debug. `DefaultAzureCredential` attempts to authenticate via the following mechanisms in this order, stopping when one succeeds:
 
 ![DefaultAzureCredential authentication flow][default_azure_credential_authflow_image]
 
