@@ -105,6 +105,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task Ctor_EscapeBlobName()
+        {
+            // Arrange
+            string blobName = "!*'();[]:@&%=+$,/#äÄöÖüÜß";
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(blobName));
+            ETag originalEtag;
+            using (var stream = new MemoryStream(data))
+            {
+                BlobContentInfo info = await blob.UploadAsync(stream);
+                originalEtag = info.ETag;
+            }
+
+            // Act
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = blob.BlobContainerName,
+                BlobName = blobName
+            };
+            BlobBaseClient freshBlobClient = InstrumentClient(new BlobBaseClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                GetOptions()));
+
+            // Assert
+            Assert.AreEqual(blobName, freshBlobClient.Name);
+            BlobProperties propertiesResponse = await freshBlobClient.GetPropertiesAsync();
+            Assert.AreEqual(originalEtag, propertiesResponse.ETag);
+        }
+
+        [RecordedTest]
         public void Ctor_Uri()
         {
             var accountName = "accountName";

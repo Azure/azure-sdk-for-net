@@ -338,6 +338,34 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task Ctor_EscapeName()
+        {
+            // Arrange
+            string directoryName = "!*'();[]:@&%=+$,#äÄöÖüÜß";
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            DataLakeDirectoryClient directory = InstrumentClient(test.Container.GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+
+            // Act
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = directory.FileSystemName,
+                DirectoryOrFilePath = directoryName
+            };
+            DataLakeDirectoryClient freshDirectoryClient = InstrumentClient(new DataLakeDirectoryClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                GetOptions()));
+
+            // Assert
+            bool exists = await freshDirectoryClient.ExistsAsync();
+            Assert.True(exists);
+            Assert.AreEqual(directoryName, freshDirectoryClient.Name);
+        }
+
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         public async Task CreateAsync(bool createIfNotExists)
