@@ -341,6 +341,39 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task Ctor_EscapeName()
+        {
+            // Arrange
+            string fileName = "!*'();[]:@&%=+$,#äÄöÖüÜß";
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            DataLakeFileClient file = InstrumentClient(test.Container.GetFileClient(fileName));
+            ETag originalEtag;
+            using (var stream = new MemoryStream(data))
+            {
+                PathInfo info = await file.UploadAsync(stream);
+                originalEtag = info.ETag;
+            }
+
+            // Act
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = file.FileSystemName,
+                DirectoryOrFilePath = fileName
+            };
+            DataLakeFileClient freshFileClient = InstrumentClient(new DataLakeFileClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                GetOptions()));
+
+            // Assert
+            Assert.AreEqual(fileName, freshFileClient.Name);
+            PathProperties propertiesResponse = await freshFileClient.GetPropertiesAsync();
+            Assert.AreEqual(originalEtag, propertiesResponse.ETag);
+        }
+
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         public async Task CreateAsync(bool createIfNotExists)

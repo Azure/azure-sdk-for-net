@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> List of all the resources being monitored by NewRelic monitor resource. </summary>
-    internal partial class NewRelicObservabilityMonitoredResourceListResult
+    /// <summary> List of all active newrelic deployments. </summary>
+    internal partial class ConnectedPartnerResourcesListResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,26 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityMonitoredResourceListResult"/>. </summary>
-        /// <param name="value"> The MonitoredResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal NewRelicObservabilityMonitoredResourceListResult(IEnumerable<NewRelicResourceMonitorResult> value)
+        /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourcesListResponse"/>. </summary>
+        internal ConnectedPartnerResourcesListResponse()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<NewRelicConnectedPartnerResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityMonitoredResourceListResult"/>. </summary>
-        /// <param name="value"> The MonitoredResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="ConnectedPartnerResourcesListResponse"/>. </summary>
+        /// <param name="value"> Results of a list operation. </param>
+        /// <param name="nextLink"> Link to the next set of results, if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicObservabilityMonitoredResourceListResult(IReadOnlyList<NewRelicResourceMonitorResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedPartnerResourcesListResponse(IReadOnlyList<NewRelicConnectedPartnerResourceInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityMonitoredResourceListResult"/> for deserialization. </summary>
-        internal NewRelicObservabilityMonitoredResourceListResult()
-        {
-        }
-
-        /// <summary> The MonitoredResource items on this page. </summary>
-        public IReadOnlyList<NewRelicResourceMonitorResult> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Results of a list operation. </summary>
+        public IReadOnlyList<NewRelicConnectedPartnerResourceInfo> Value { get; }
+        /// <summary> Link to the next set of results, if any. </summary>
+        public string NextLink { get; }
     }
 }
