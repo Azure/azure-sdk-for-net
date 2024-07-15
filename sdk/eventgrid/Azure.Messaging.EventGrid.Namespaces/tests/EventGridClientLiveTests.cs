@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventGrid.Tests
         }
 
         [RecordedTest]
-        public async Task RoundTripCncf()
+        public async Task RoundTripCNCF()
         {
             var namespaceTopicHost = TestEnvironment.NamespaceTopicHost;
             var namespaceKey = TestEnvironment.NamespaceKey;
