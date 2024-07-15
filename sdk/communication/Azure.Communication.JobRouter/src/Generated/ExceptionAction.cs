@@ -66,6 +66,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Unique Id of the exception action. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }
