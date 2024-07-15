@@ -48,7 +48,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of <see cref="TextBlocklist"/>. </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public TextBlocklist(string name)
+        internal TextBlocklist(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -72,8 +72,8 @@ namespace Azure.AI.ContentSafety
         }
 
         /// <summary> Text blocklist name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Text blocklist description. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
     }
 }
