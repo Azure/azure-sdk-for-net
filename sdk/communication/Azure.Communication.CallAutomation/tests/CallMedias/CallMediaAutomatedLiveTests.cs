@@ -143,7 +143,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [RecordedTest]
-        public async Task PlayMultipleSourcesWithPlayMediaTest()
+        public async Task PlayMultipleFilesSourcesWithPlayMediaTest()
         {
             // create caller and receiver
             CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -157,81 +157,439 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 {
                     // setup service bus
                     var uniqueId = await ServiceBusWithNewCall(user, target);
-                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
                     var callConnection = client.GetCallConnection(callConnectionId);
 
-                    string SpeechToTextVoice = "en-US-NancyNeural";
-
-                    // multiple Text Source
-                    var playTextSources = new List<PlaySource>() {
-                        new TextSource("Test prompt1") { VoiceName = SpeechToTextVoice },
-                        new TextSource("Test prompt2") { VoiceName = SpeechToTextVoice },
-                        new TextSource("Test prompt3") { VoiceName = SpeechToTextVoice }
-                    };
-
-                    // Assert the PlayToAll with multiple Text Sources
-                    await callConnection.GetCallMedia().PlayToAllAsync(playTextSources).ConfigureAwait(false);
-                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(playCompletedEvent);
-                    Assert.IsTrue(playCompletedEvent is PlayCompleted);
-                    Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
-
-                    // Assert the Play with multiple Text Sources
-                    await callConnection.GetCallMedia().PlayAsync(playTextSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
-                    playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(playCompletedEvent);
-                    Assert.IsTrue(playCompletedEvent is PlayCompleted);
-                    Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
-
-                    // multiple Text Source
+                    // multiple File Source
                     var playFileSources = new List<PlaySource>() {
                         new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
                         new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
                         new FileSource(new Uri(TestEnvironment.FileSourceUrl) )
                     };
 
-                    // Assert the PlayToAll with multiple File Sources
-                    await callConnection.GetCallMedia().PlayToAllAsync(playFileSources).ConfigureAwait(false);
-                    playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
+                    // Assert the Play with multiple File Sources
+                    await callConnection.GetCallMedia().PlayAsync(playFileSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
+                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
                     Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
 
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task PlayMultipleFilesSourcesWithPlayMediaAllTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // multiple File Source
+                    var playFileSources = new List<PlaySource>() {
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) )
+                    };
+
                     // Assert the Play with multiple File Sources
-                    await callConnection.GetCallMedia().PlayAsync(playFileSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
-                    playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
+                    await callConnection.GetCallMedia().PlayToAllAsync(playFileSources).ConfigureAwait(false);
+                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
                     Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
+        [RecordedTest]
+        public async Task PlayMultipleTextSourcesWithPlayMediaTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // multiple Text Source
+                    var playTextSources = new List<PlaySource>() {
+                        new TextSource("Test prompt1") { VoiceName = "en-US-NancyNeural" },
+                        new TextSource("Test prompt2") { VoiceName = "en-US-NancyNeural" },
+                        new TextSource("Test prompt3") { VoiceName = "en-US-NancyNeural" }
+                    };
+
+                    // Assert the Play with multiple Text Sources
+                    await callConnection.GetCallMedia().PlayAsync(playTextSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
+                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(playCompletedEvent);
+                    Assert.IsTrue(playCompletedEvent is PlayCompleted);
+                    Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
+        [RecordedTest]
+        public async Task PlayMultipleTextSourcesWithPlayMediaAllTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // multiple Text Source
+                    var playTextSources = new List<PlaySource>() {
+                        new TextSource("Test prompt1") { VoiceName = "en-US-NancyNeural" },
+                        new TextSource("Test prompt2") { VoiceName = "en-US-NancyNeural" },
+                        new TextSource("Test prompt3") { VoiceName = "en-US-NancyNeural" }
+                    };
+
+                    // Assert the Play with multiple Text Sources
+                    await callConnection.GetCallMedia().PlayToAllAsync(playTextSources).ConfigureAwait(false);
+                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(playCompletedEvent);
+                    Assert.IsTrue(playCompletedEvent is PlayCompleted);
+                    Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
+        [RecordedTest]
+        public async Task PlayCombinedTextAndFileSourcesWithPlayMediaTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
 
                     // multiple Sources
                     var playMultipleSources = new List<PlaySource>() {
                         new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
-                        new TextSource("Test prompt1") { VoiceName = SpeechToTextVoice }
+                        new TextSource("Test prompt1") { VoiceName = "en-US-NancyNeural" }
                     };
 
-                    // Assert the playall with multiple Text Sources
-                    await callConnection.GetCallMedia().PlayToAllAsync(playMultipleSources).ConfigureAwait(false);
-                    playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
+                    // Assert the Play with multiple Text Sources
+                    await callConnection.GetCallMedia().PlayAsync(playMultipleSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
+                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
                     Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
 
-                    // Assert the Play with multiple Sources
-                    await callConnection.GetCallMedia().PlayAsync(playMultipleSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
-                    playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
+        [RecordedTest]
+        public async Task PlayCombinedTextAndFileSourcesWithPlayMediaAllTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // multiple Sources
+                    var playMultipleSources = new List<PlaySource>() {
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
+                        new TextSource("Test prompt1") { VoiceName = "en-US-NancyNeural" }
+                    };
+
+                    // Assert the Play with multiple Text Sources
+                    await callConnection.GetCallMedia().PlayToAllAsync(playMultipleSources).ConfigureAwait(false);
+                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
                     Assert.AreEqual(callConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task PlayInvalidFileSourceWithPlayMediaTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
 
                     // Assert multiple Text Source with wrong file source play failed event
-                    playMultipleSources = new List<PlaySource>() {
-                        new FileSource(new Uri("https://dummy.com/dummyurl.wav")),
-                        new TextSource("Test prompt1") { VoiceName = SpeechToTextVoice }
+                    var playMultipleSources = new List<PlaySource>() {
+                        new FileSource(new Uri("https://dummy.com/dummyurl.wav"))
                     };
 
+                    // Assert the Play with multiple Text Sources
                     await callConnection.GetCallMedia().PlayAsync(playMultipleSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
                     var playFailedEvent = await WaitForEvent<PlayFailed>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playFailedEvent);
@@ -275,6 +633,77 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [RecordedTest]
+        public async Task PlayInvalidFileSourceWithPlayMediaAllTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // Assert multiple Text Source with wrong file source play failed event
+                    var playMultipleSources = new List<PlaySource>() {
+                        new FileSource(new Uri("https://dummy.com/dummyurl.wav"))
+                    };
+
+                    // Assert the Play with multiple Text Sources
+                    await callConnection.GetCallMedia().PlayToAllAsync(playMultipleSources).ConfigureAwait(false);
+
+                    var playFailedEvent = await WaitForEvent<PlayFailed>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(playFailedEvent);
+                    Assert.IsTrue(playFailedEvent is PlayFailed);
+                    Assert.AreEqual(callConnectionId, ((PlayFailed)playFailedEvent!).CallConnectionId);
+                    Assert.AreEqual(0, ((PlayFailed)playFailedEvent!).FailedPlaySourceIndex);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task DtmfRecognizeWithMultipleSourcesTest()
         {
@@ -362,6 +791,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task SpeechRecognizeWithMultipleSourcesTest()
         {
@@ -449,6 +879,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task ChoiceRecognizeWithMultipleSourcesTest()
         {
@@ -536,6 +967,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task SpeechOrDtmfRecognizeWithMultipleSourcesTest()
         {
@@ -701,6 +1133,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [Ignore(reason: "Skipping this until live test is re-recorded with latest API")]
         [RecordedTest]
         public async Task CreateCallWithMediaStreamingTest()
         {
@@ -766,6 +1199,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [Ignore(reason: "Skipping this until live test is re-recorded with latest API")]
         [RecordedTest]
         public async Task AnswerCallWithMediaStreamingTest()
         {
