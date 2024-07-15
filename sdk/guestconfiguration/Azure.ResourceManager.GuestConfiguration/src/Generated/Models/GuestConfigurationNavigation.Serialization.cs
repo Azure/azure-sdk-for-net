@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteStringValue(ContentHash);
             }
+            if (Optional.IsDefined(ContentManagedIdentity))
+            {
+                writer.WritePropertyName("contentManagedIdentity"u8);
+                writer.WriteStringValue(ContentManagedIdentity);
+            }
             if (Optional.IsDefined(AssignmentType))
             {
                 if (AssignmentType != null)
@@ -169,6 +174,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             string version = default;
             Uri contentUri = default;
             string contentHash = default;
+            string contentManagedIdentity = default;
             GuestConfigurationAssignmentType? assignmentType = default;
             string assignmentSource = default;
             string contentType = default;
@@ -211,6 +217,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 if (property.NameEquals("contentHash"u8))
                 {
                     contentHash = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contentManagedIdentity"u8))
+                {
+                    contentManagedIdentity = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("assignmentType"u8))
@@ -293,6 +304,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 version,
                 contentUri,
                 contentHash,
+                contentManagedIdentity,
                 assignmentType,
                 assignmentSource,
                 contentType,
