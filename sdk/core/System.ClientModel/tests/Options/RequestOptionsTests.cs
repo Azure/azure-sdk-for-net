@@ -164,7 +164,7 @@ public class RequestOptionsTests
     }
 
     [Test]
-    public void OverridesBufferResponse()
+    public void SetsBufferResponse()
     {
         ClientPipeline pipeline = ClientPipeline.Create();
         PipelineMessage message = pipeline.CreateMessage();
@@ -180,24 +180,5 @@ public class RequestOptionsTests
         message.Apply(bufferFalseOptions);
 
         Assert.IsFalse(message.BufferResponse);
-    }
-
-    [Test]
-    public void DoesntChangeBufferResponse()
-    {
-        RequestOptions options = new() { BufferResponse = null };
-
-        ClientPipeline pipeline = ClientPipeline.Create();
-        PipelineMessage message = pipeline.CreateMessage();
-
-        message.BufferResponse = false;
-        message.Apply(options);
-
-        Assert.IsFalse(message.BufferResponse);
-
-        message.BufferResponse = true;
-        message.Apply(options);
-
-        Assert.IsTrue(message.BufferResponse);
     }
 }

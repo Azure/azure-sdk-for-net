@@ -99,7 +99,7 @@ namespace Azure.Core.TestFramework
         {
             foreach (string header in _recordedTestBase.SanitizedHeaders)
             {
-                await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
+                await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header), RecordingId);
             }
 
             foreach (var header in _recordedTestBase.HeaderRegexSanitizers)
@@ -128,7 +128,7 @@ namespace Azure.Core.TestFramework
 
             foreach (string path in _recordedTestBase.JsonPathSanitizers)
             {
-                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = path }, RecordingId);
+                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(path), RecordingId);
             }
 
             foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)

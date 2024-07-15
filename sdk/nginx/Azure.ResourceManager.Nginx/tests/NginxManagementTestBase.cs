@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -238,12 +239,18 @@ namespace Azure.ResourceManager.Nginx.Tests
                 NetworkInterfaceSubnetId = subnetId
             };
 
+            NginxDeploymentScalingProperties nginxDeploymentScalingProperties = new NginxDeploymentScalingProperties(10, new List<NginxScaleProfile>(), null);
+
+            AutoUpgradeProfile autoUpgradeProfile = new AutoUpgradeProfile();
+            autoUpgradeProfile.UpgradeChannel = "preview";
+
             NginxDeploymentProperties deploymentProperties = new NginxDeploymentProperties
             {
                 NetworkProfile = networkProfile,
                 EnableDiagnosticsSupport = true,
-                ScalingCapacity = 10,
-                UserPreferredEmail = "test@mail.com"
+                ScalingProperties = nginxDeploymentScalingProperties,
+                UserPreferredEmail = "test@mail.com",
+                AutoUpgradeProfile = autoUpgradeProfile
             };
 
             ManagedServiceIdentity identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);

@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("scalingProperties"u8);
                 writer.WriteObjectValue(ScalingProperties, options);
             }
+            if (Optional.IsDefined(AutoUpgradeProfile))
+            {
+                writer.WritePropertyName("autoUpgradeProfile"u8);
+                writer.WriteObjectValue(AutoUpgradeProfile, options);
+            }
             if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
@@ -117,6 +122,7 @@ namespace Azure.ResourceManager.Nginx.Models
             bool? enableDiagnosticsSupport = default;
             NginxLogging logging = default;
             NginxDeploymentScalingProperties scalingProperties = default;
+            AutoUpgradeProfile autoUpgradeProfile = default;
             NginxDeploymentUserProfile userProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -182,6 +188,15 @@ namespace Azure.ResourceManager.Nginx.Models
                     scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("autoUpgradeProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeProfile = AutoUpgradeProfile.DeserializeAutoUpgradeProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("userProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -206,6 +221,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 enableDiagnosticsSupport,
                 logging,
                 scalingProperties,
+                autoUpgradeProfile,
                 userProfile,
                 serializedAdditionalRawData);
         }

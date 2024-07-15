@@ -7,11 +7,11 @@ param location string = resourceGroup().location
 param enableSoftDelete bool = true
 
 
-resource keyVault_7LloDNJK5 'Microsoft.KeyVault/vaults@2022-07-01' = {
+resource keyVault_NEuaN7OeP 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: toLower(take('kv${uniqueString(resourceGroup().id)}', 24))
   location: location
   properties: {
-    tenantId: '00000000-0000-0000-0000-000000000000'
+    tenantId: tenant().tenantId
     sku: {
       family: 'A'
       name: 'standard'
@@ -21,4 +21,4 @@ resource keyVault_7LloDNJK5 'Microsoft.KeyVault/vaults@2022-07-01' = {
   }
 }
 
-output VAULT_URI string = keyVault_7LloDNJK5.properties.vaultUri
+output VAULT_URI string = keyVault_NEuaN7OeP.properties.vaultUri

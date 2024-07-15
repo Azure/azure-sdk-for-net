@@ -119,12 +119,12 @@ override-operation-name:
   ResourceHealthMetadata_ListByResourceGroup: GetAllResourceHealthMetadataData
   ListSiteIdentifiersAssignedToHostName: GetAllSiteIdentifierData
   WebApps_ListConfigurations: GetAllConfigurationData
-  WebApps_ListHybridConnections: GetAllHybridConnectionData
+  WebApps_ListHybridConnections: GetHybridConnections
   WebApps_ListPremierAddOns: GetAllPremierAddOnData
   WebApps_ListRelayServiceConnections: GetAllRelayServiceConnectionData
   WebApps_ListSiteBackups: GetAllSiteBackupData
   WebApps_ListConfigurationsSlot: GetAllConfigurationSlotData
-  WebApps_ListHybridConnectionsSlot: GetAllHybridConnectionSlotData
+  WebApps_ListHybridConnectionsSlot: GetHybridConnectionsSlot
   WebApps_ListPremierAddOnsSlot: GetAllPremierAddOnSlotData
   WebApps_ListRelayServiceConnectionsSlot: GetAllRelayServiceConnectionSlotData
   WebApps_ListSiteBackupsSlot: GetAllSiteBackupSlotData
@@ -849,4 +849,12 @@ directive:
             "Aborted",
             "Running"
         ]
+  - from: WebApps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionRelays'].get
+    transform: >
+        $['responses']['200']['schema']['$ref'] = "./AppServicePlans.json#/definitions/HybridConnectionCollection";
+  - from: WebApps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays'].get
+    transform: >
+        $['responses']['200']['schema']['$ref'] = "./AppServicePlans.json#/definitions/HybridConnectionCollection";
 ```

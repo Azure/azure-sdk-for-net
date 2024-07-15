@@ -64,7 +64,10 @@ namespace Azure.Identity
 
         internal TokenCredential[] _sources;
 
-        internal DefaultAzureCredential() : this(false) { }
+        /// <summary>
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
+        protected DefaultAzureCredential() : this(false) { }
 
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.

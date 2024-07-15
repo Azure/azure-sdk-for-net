@@ -29,6 +29,7 @@ namespace Azure.Data.AppConfiguration.Tests
         private static readonly string s_credential = "b1d9b31";
         private static readonly string s_secret = "aabbccdd";
         private static readonly string s_connectionString = $"Endpoint={s_endpoint};Id={s_credential};Secret={s_secret}";
+        private static readonly string s_troubleshootingLink = "https://aka.ms/azsdk/net/appconfiguration/troubleshoot";
         private static readonly string s_version = new ConfigurationClientOptions().Version;
 
         private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
@@ -106,6 +107,27 @@ namespace Azure.Data.AppConfiguration.Tests
             });
 
             Assert.AreEqual(404, exception.Status);
+        }
+
+        // This test validates that the client throws an exception with the expected error message when it receives a
+        // non-success status code from the service.
+        [TestCase((int)HttpStatusCode.Unauthorized)]
+        [TestCase(403)]
+        [TestCase((int)HttpStatusCode.NotFound)]
+        public void GetUnsucessfulResponse(int statusCode)
+        {
+            var response = new MockResponse(statusCode);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await service.GetConfigurationSettingAsync(key: s_testSetting.Key);
+            });
+
+            Assert.AreEqual(statusCode, exception.Status);
+
+            Assert.True(exception?.Message.Contains(s_troubleshootingLink));
         }
 
         [Test]

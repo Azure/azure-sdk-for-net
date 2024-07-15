@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             // ACT
             using var dependencyActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
             Assert.NotNull(dependencyActivity);
-            dependencyActivity.SetTag("http.method", "GET");
+            dependencyActivity.SetTag("http.request.method", "GET");
             dependencyActivity.SetTag("url.full", "http://bing.com");
             dependencyActivity.SetTag("http.response.status_code", 200);
 

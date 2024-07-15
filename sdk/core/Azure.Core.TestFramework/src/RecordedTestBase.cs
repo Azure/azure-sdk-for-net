@@ -177,9 +177,10 @@ namespace Azure.Core.TestFramework
             {
                 _replacementHost = value;
                 UriRegexSanitizers.Add(
-                    new UriRegexSanitizer(@"https://(?<host>[^/]+)/", _replacementHost)
+                    new UriRegexSanitizer(@"https://(?<host>[^/]+)/")
                     {
-                        GroupForReplace = "host"
+                        GroupForReplace = "host",
+                        Value = _replacementHost
                     });
             }
         }

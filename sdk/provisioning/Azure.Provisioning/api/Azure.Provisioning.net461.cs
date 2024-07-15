@@ -161,6 +161,7 @@ namespace Azure.Provisioning
         public static Azure.Provisioning.RoleDefinition StorageBlobDataContributor { get { throw null; } }
         public static Azure.Provisioning.RoleDefinition StorageQueueDataContributor { get { throw null; } }
         public static Azure.Provisioning.RoleDefinition StorageTableDataContributor { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition WebPubSubServiceOwner { get { throw null; } }
         public bool Equals(Azure.Provisioning.RoleDefinition other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }

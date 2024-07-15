@@ -20,13 +20,25 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
     {
         protected ImageAnalysisTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Ocp-Apim-Subscription-Key", "***********"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(@"https:\/\/[a-zA-Z0-9-]*\.cognitiveservices.azure.com/", @"https://ResourceName.cognitiveservices.azure.com/"));
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Ocp-Apim-Subscription-Key") { Value = "***********" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"https:\/\/[a-zA-Z0-9-]*\.cognitiveservices.azure.com/") { Value = @"https://ResourceName.cognitiveservices.azure.com/" });
         }
 
         protected ImageAnalysisClient GetClientWithKey(string apiKey = null, ImageAnalysisClientOptions options = null)
         {
             var credential = string.IsNullOrEmpty(apiKey) ? GetCognitiveVisionApiKeyCredential() : new AzureKeyCredential(apiKey);
+
+            options = options ?? new ImageAnalysisClientOptions
+            {
+                Diagnostics = { IsLoggingContentEnabled = true }
+            };
+            var client = InstrumentClient(new ImageAnalysisClient(new Uri(TestEnvironment.Endpoint), credential, InstrumentClientOptions(options)));
+            return client;
+        }
+
+        protected ImageAnalysisClient GetClientWithDefaultCred(ImageAnalysisClientOptions options = null)
+        {
+            var credential = TestEnvironment.Credential;
 
             options = options ?? new ImageAnalysisClientOptions
             {

@@ -754,7 +754,6 @@ namespace Azure.Messaging.ServiceBus
             // Remove after service bug fixed.  Currently, the service responds
             // with a completely indecipherable message when the count is too high.
             // https://github.com/Azure/azure-sdk-for-net/issues/43801
-            //
             Argument.AssertInRange(messageCount, 1, MaxDeleteMessageCount, nameof(messageCount));
 
             Argument.AssertAtLeast(messageCount, 1, nameof(messageCount));

@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -12,21 +14,21 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using static Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.TelemetryValidationHelper;
 
 #if NET6_0_OR_GREATER
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public class DistroWebAppLiveTests : RecordedTestBase<AzureMonitorTestEnvironment>
     {
-        private const string TestServerUrl = "http://localhost:9998/";
-
-        // DEVELOPER TIP: Change roleName to something unique when working locally (Example "Test##") to easily find your records.
-        // Can search for all records in the portal via Log Analytics using this query:   Union * | where AppRoleName == 'Test##'
-        private const string RoleName = nameof(DistroWebAppLiveTests);
+        private const string TestServerPort = "9998";
+        private const string TestServerTarget = $"localhost:{TestServerPort}";
+        private const string TestServerUrl = $"http://{TestServerTarget}/";
 
         private const string LogMessage = "Message via ILogger";
 
@@ -38,9 +40,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         [RecordedTest]
         [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
-        [Ignore("Test fails in Mac-OS.")]
         public async Task VerifyDistro()
         {
+            var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+            Console.WriteLine($"Integration test '{nameof(VerifyDistro)}' running in mode '{TestEnvironment.Mode}'");
+
             // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
@@ -54,9 +58,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             _logsQueryClient.SetQueryWorkSpaceId(TestEnvironment.WorkspaceId);
 
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
+            string serviceName = "TestName", serviceNamespace = "TestNamespace", serviceInstance = "TestInstance", serviceVersion = "TestVersion";
+            string roleName = $"[{serviceNamespace}]/{serviceName}";
             var resourceAttributes = new Dictionary<string, object>
             {
-                { "service.name", RoleName },
+                { "service.name", serviceName },
+                { "service.namespace", serviceNamespace },
+                { "service.instance.id", serviceInstance },
+                { "service.version", serviceVersion }
             };
 
             var resourceBuilder = ResourceBuilder.CreateDefault();
@@ -69,12 +78,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 {
                     options.SetResourceBuilder(resourceBuilder);
                 });
+            builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddProcessor(new ActivityEnrichingProcessor()));
             builder.Services.AddOpenTelemetry()
-                .ConfigureResource(x => x.AddAttributes(resourceAttributes))
                 .UseAzureMonitor(options =>
                 {
+                    options.EnableLiveMetrics = false;
                     options.ConnectionString = TestEnvironment.ConnectionString;
-                });
+                })
+                // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
+                .ConfigureResource(x => x.AddAttributes(resourceAttributes));
 
             var app = builder.Build();
             app.MapGet("/", () =>
@@ -104,40 +116,153 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             // ASSERT
             // NOTE: The following queries are using the LogAnalytics schema.
-            // TODO: NEED TO PERFORM COLUMN LEVEL VALIDATIONS.
-            await VerifyTelemetry(
+
+            // DEVELOPER TIP: This test implicitly checks for telemetry within the last 30 minutes.
+            // When working locally, this has the benefit of "priming" telemetry so that additional runs can complete faster without waiting for ingestion.
+            // This can negatively impact the test results if you are debugging locally and making changes to the telemetry.
+            // To mitigate this, you can include a timestamp in the query to only check for telemetry created since this test started.
+            // IMPORTANT: we cannot include timestamps in the Recorded test because queries won't match during playback.
+            // C#:      var testStartTimeStamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+            // QUERY:   | where TimeGenerated >= datetime({testStartTimeStamp})
+
+            await QueryAndVerifyDependency(
                 description: "Dependency for invoking HttpClient, from testhost",
-                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
+                //query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({ testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppDependencies | where Data == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+                expectedAppDependency: new ExpectedAppDependency
+                {
+                    Target = TestServerTarget,
+                    DependencyType = "HTTP",
+                    Name = "GET /",
+                    Data = TestServerUrl,
+                    Success = "True",
+                    ResultCode = "200",
+                    AppVersion = serviceVersion,
+                    AppRoleName = roleName,
+                    ClientIP = "0.0.0.0",
+                    Type = "AppDependencies",
+                    UserAuthenticatedId = "TestAuthenticatedUserId",
+                    AppRoleInstance = serviceInstance,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("CustomProperty1", "Value1"),
+                    },
+                });
 
-            await VerifyTelemetry(
+            await QueryAndVerifyRequest(
                 description: "RequestTelemetry, from WebApp",
-                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
+                //query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppRequests | where Url == '{TestServerUrl}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+                expectedAppRequest: new ExpectedAppRequest
+                {
+                    Url = TestServerUrl,
+                    AppRoleName = roleName,
+                    Name = "GET /",
+                    Success = "True",
+                    ResultCode = "200",
+                    OperationName = "GET /",
+                    AppVersion = serviceVersion,
+                    ClientIP = "0.0.0.0",
+                    Type = "AppRequests",
+                    UserAuthenticatedId = "TestAuthenticatedUserId",
+                    AppRoleInstance = serviceInstance,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')"),
+                        new("CustomProperty1", "Value1"),
+                    },
+                });
 
-            await VerifyTelemetry(
+            await QueryAndVerifyMetric(
                 description: "Metric for outgoing request, from testhost",
-                query: $"AppMetrics | where Name == 'http.client.duration' | where AppRoleName == '{RoleName}' | where Properties.['net.peer.name'] == 'localhost' | top 1 by TimeGenerated");
+                //query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '{roleName}' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
+                expectedAppMetric: new ExpectedAppMetric
+                {
+                    Name = "http.client.request.duration",
+                    AppRoleName = roleName,
+                    AppVersion = serviceVersion,
+                    Type = "AppMetrics",
+                    AppRoleInstance = serviceInstance,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("http.request.method", "GET"),
+                        new("http.response.status_code", "200"),
+                        new("network.protocol.version", "1.1"),
+                        new("server.address", "localhost"),
+                        new("server.port", "9998"),
+                        new("url.scheme", "http"),
+                    },
+                });
 
-            await VerifyTelemetry(
+            await QueryAndVerifyMetric(
                 description: "Metric for incoming request, from WebApp",
-                query: $"AppMetrics | where Name == 'http.server.duration' | where AppRoleName == '{RoleName}' | where Properties.['net.host.name'] == 'localhost' | top 1 by TimeGenerated");
+                //query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+                expectedAppMetric: new ExpectedAppMetric
+                {
+                    Name = "http.server.request.duration",
+                    AppRoleName = roleName,
+                    AppVersion = serviceVersion,
+                    Type = "AppMetrics",
+                    AppRoleInstance = serviceInstance,
+                    Properties = new List<KeyValuePair<string, string>>
+                    {
+                        new("http.request.method", "GET"),
+                        new("http.response.status_code", "200"),
+                        new("http.route", "/"),
+                        new("network.protocol.version", "1.1"),
+                        new("url.scheme", "http")
+                    }
+                });
 
-            await VerifyTelemetry(
+            await QueryAndVerifyTrace(
                 description: "ILogger LogInformation, from WebApp",
-                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{RoleName}' | top 1 by TimeGenerated");
+                //query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{roleName}' | where TimeGenerated >= datetime({testStartTimeStamp}) | top 1 by TimeGenerated",
+                query: $"AppTraces | where Message == '{LogMessage}' | where AppRoleName == '{roleName}' | top 1 by TimeGenerated",
+                expectedAppTrace: new ExpectedAppTrace
+                {
+                    Message = LogMessage,
+                    SeverityLevel = "1",
+                    AppRoleName = roleName,
+                    AppVersion = serviceVersion,
+                    ClientIP = "0.0.0.0",
+                    Type = "AppTraces",
+                    AppRoleInstance = serviceInstance,
+                });
         }
 
-        private async Task VerifyTelemetry(string description, string query)
+        private async Task QueryAndVerifyDependency(string description, string query, ExpectedAppDependency expectedAppDependency)
         {
-            LogsTable? table = await _logsQueryClient!.CheckForRecordAsync(query);
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
+            ValidateExpectedTelemetry(description, logsTable, expectedAppDependency);
+        }
 
-            var rowCount = table?.Rows.Count;
-            if (rowCount == null || rowCount == 0)
+        private async Task QueryAndVerifyRequest(string description, string query, ExpectedAppRequest expectedAppRequest)
+        {
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
+            ValidateExpectedTelemetry(description, logsTable, expectedAppRequest);
+        }
+
+        private async Task QueryAndVerifyMetric(string description, string query, ExpectedAppMetric expectedAppMetric)
+        {
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
+            ValidateExpectedTelemetry(description, logsTable, expectedAppMetric);
+        }
+
+        private async Task QueryAndVerifyTrace(string description, string query, ExpectedAppTrace expectedAppTrace)
+        {
+            LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(description, query);
+            ValidateExpectedTelemetry(description, logsTable, expectedAppTrace);
+        }
+
+        public class ActivityEnrichingProcessor : BaseProcessor<Activity>
+        {
+            public override void OnEnd(Activity activity)
             {
-                Assert.Fail($"No telemetry records were found: {description}");
-            }
-            else
-            {
-                Assert.Pass();
+                activity.SetTag("CustomProperty1", "Value1");
+                activity.SetTag("enduser.id", "TestAuthenticatedUserId");
             }
         }
     }

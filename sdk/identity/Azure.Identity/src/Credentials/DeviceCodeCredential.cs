@@ -230,7 +230,7 @@ namespace Azure.Identity
                             cancellationToken)
                             .ConfigureAwait(false);
 
-                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                        return scope.Succeeded(result.ToAccessToken());
                     }
                     catch (MsalUiRequiredException e)
                     {
@@ -257,7 +257,7 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
-            return new AccessToken(result.AccessToken, result.ExpiresOn);
+            return result.ToAccessToken();
         }
 
         private Task DeviceCodeCallbackImpl(DeviceCodeResult deviceCode, CancellationToken cancellationToken)

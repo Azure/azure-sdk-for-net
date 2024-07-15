@@ -7,12 +7,20 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class DataMovementBlobConstants
     {
+        internal class ResourceId
+        {
+            internal const string BlockBlob = "BlockBlob";
+            internal const string PageBlob = "PageBlob";
+            internal const string AppendBlob = "AppendBlob";
+        }
+
         internal class SourceCheckpointData
         {
             internal const int SchemaVersion = 1;
 
             internal const int VersionIndex = 0;
-            internal const int BlobTypeIndex = VersionIndex + IntSizeInBytes;
+            internal const int PreserveBlobTypeIndex = VersionIndex + IntSizeInBytes;
+            internal const int BlobTypeIndex = PreserveBlobTypeIndex + OneByte;
             internal const int DataSize = BlobTypeIndex + OneByte;
         }
 
@@ -21,7 +29,8 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const int SchemaVersion = 2;
 
             internal const int VersionIndex = 0;
-            internal const int BlobTypeIndex = VersionIndex + IntSizeInBytes;
+            internal const int PreserveBlobTypeIndex = VersionIndex + IntSizeInBytes;
+            internal const int BlobTypeIndex = PreserveBlobTypeIndex + OneByte;
             internal const int PreserveContentTypeIndex = BlobTypeIndex + OneByte;
             internal const int ContentTypeOffsetIndex = PreserveContentTypeIndex + OneByte;
             internal const int ContentTypeLengthIndex = ContentTypeOffsetIndex + IntSizeInBytes;

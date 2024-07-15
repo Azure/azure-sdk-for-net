@@ -1998,6 +1998,25 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task StartCopyAsync_SourceErrorAndStatusCode()
+        {
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.StartCopyAsync(sourceUri: s_invalidUri),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 400"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: InvalidQueryParameterValue"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Value for one of the query parameters specified in the request URI is invalid."));
+                });
+        }
+
         [RecordedTest]
         public async Task StartCopyAsync_CopySourceFileCreatedOnError()
         {
@@ -4385,6 +4404,39 @@ namespace Azure.Storage.Files.Shares.Tests
                 range: destRange,
                 sourceRange: sourceRange),
                 e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task UploadRangeFromUriAsync_SourceErrorAndStatusCode()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync(shareName: GetNewShareName());
+            ShareClient share = test.Share;
+
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+            await directory.CreateIfNotExistsAsync();
+
+            ShareFileClient sourceFile = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            ShareFileClient destFile = directory.GetFileClient(GetNewFileName());
+            await destFile.CreateAsync(maxSize: Constants.KB);
+
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destFile.UploadRangeFromUriAsync(
+                sourceUri: destFile.Uri,
+                range: range,
+                sourceRange: range),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 401"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."));
+                });
         }
 
         [RecordedTest]

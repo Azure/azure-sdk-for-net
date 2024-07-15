@@ -7,7 +7,7 @@ This sample shows how to call GetPlantTissueAnalysisAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = await client.GetPlantTissueAnalysisAsync("<partyId>", "<plantTissueAnalysisId>", null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetPlantTissueAnalysisAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = await client.GetPlantTissueAnalysisAsync("<partyId>", "<plantTissueAnalysisId>", null);
 
@@ -61,7 +61,7 @@ This sample shows how to call GetPlantTissueAnalysis and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = client.GetPlantTissueAnalysis("<partyId>", "<plantTissueAnalysisId>", null);
 
@@ -72,7 +72,7 @@ This sample shows how to call GetPlantTissueAnalysis with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = client.GetPlantTissueAnalysis("<partyId>", "<plantTissueAnalysisId>", null);
 
@@ -115,7 +115,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantTissueAnalysisId>", content);
@@ -127,7 +127,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -201,7 +201,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<plantTissueAnalysisId>", content);
@@ -213,7 +213,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -287,7 +287,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<plantTissueAnalysisId>");
 
@@ -297,7 +297,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<plantTissueAnalysisId>");
 
@@ -310,7 +310,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = client.Delete("<partyId>", "<plantTissueAnalysisId>");
 
@@ -320,7 +320,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = client.Delete("<partyId>", "<plantTissueAnalysisId>");
 
@@ -333,7 +333,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -346,7 +346,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -371,7 +371,7 @@ This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -384,7 +384,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -409,7 +409,7 @@ This sample shows how to call GetPlantTissueAnalysesByPartyIdAsync and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 await foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -421,7 +421,7 @@ This sample shows how to call GetPlantTissueAnalysesByPartyIdAsync with all para
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 await foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyIdAsync("<partyId>", new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -465,7 +465,7 @@ This sample shows how to call GetPlantTissueAnalysesByPartyId and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -477,7 +477,7 @@ This sample shows how to call GetPlantTissueAnalysesByPartyId with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyId("<partyId>", new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -521,7 +521,7 @@ This sample shows how to call GetPlantTissueAnalysesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 await foreach (BinaryData item in client.GetPlantTissueAnalysesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -533,7 +533,7 @@ This sample shows how to call GetPlantTissueAnalysesAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 await foreach (BinaryData item in client.GetPlantTissueAnalysesAsync(new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -577,7 +577,7 @@ This sample shows how to call GetPlantTissueAnalyses and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 foreach (BinaryData item in client.GetPlantTissueAnalyses(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -589,7 +589,7 @@ This sample shows how to call GetPlantTissueAnalyses with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 foreach (BinaryData item in client.GetPlantTissueAnalyses(new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -633,7 +633,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantTissueAnalysisId>", null);
 BinaryData responseData = operation.Value;
@@ -647,7 +647,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantTissueAnalysisId>", null);
 BinaryData responseData = operation.Value;
@@ -673,7 +673,7 @@ This sample shows how to call CreateCascadeDeleteJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantTissueAnalysisId>", null);
 BinaryData responseData = operation.Value;
@@ -687,7 +687,7 @@ This sample shows how to call CreateCascadeDeleteJob with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantTissueAnalysisId>", null);
 BinaryData responseData = operation.Value;
