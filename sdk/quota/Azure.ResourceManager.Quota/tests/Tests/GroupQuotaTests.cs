@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
     [TestFixture]
     public class GroupQuotaTests : QuotaManagementTestBase
     {
-        private const string canaryEnvironmentEndpoint = "https://centraluseuap.management.azure.com";
+        private const string canaryEnvironmentEndpoint = "https://eastus2euap.management.azure.com";
         private const string defaultSubscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
 
         public GroupQuotaTests() : base(true)
@@ -106,6 +106,31 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
             var response = await groupQuotasEntity.UpdateAsync(WaitUntil.Started, patch);
             Assert.NotNull(response);
+        }
+
+        [TestCase]
+        public async Task GetGroupQuota()
+        {
+            var options = new ArmClientOptions();
+            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+
+            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
+
+            string managementGroupId = "testMgIdRoot";
+
+            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
+            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+
+            // get the collection of this GroupQuotasEntityResource
+            var collection = managementGroupResource.GetGroupQuotasEntities();
+
+            // invoke the operation
+            string groupQuotaName = "testGroupQuotaTj";
+            var result = await collection.GetAsync(groupQuotaName);
+            Assert.IsNotNull(result);
         }
 
         [TestCase]
@@ -312,7 +337,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             SubscriptionQuotaAllocationResource subscriptionQuotaAllocation = client.GetSubscriptionQuotaAllocationResource(subscriptionQuotaAllocationResourceId);
 
             // invoke the operation
-            string filter = "provider eq Microsoft.Compute & location eq westus2";
+            string filter = "location eq westus2";
             var result = await subscriptionQuotaAllocation.GetAsync(filter);
             Assert.IsNotNull(result);
         }
@@ -342,7 +367,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             SubscriptionQuotaAllocationCollection collection = managementGroupResource.GetSubscriptionQuotaAllocations(subscriptionId, groupQuotaName);
 
             // invoke the operation and iterate over the result
-            string filter = "provider eq Microsoft.Compute & location eq westus2";
+            string filter = "location eq westus2";
             await foreach (SubscriptionQuotaAllocationResource item in collection.GetAllAsync(filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
