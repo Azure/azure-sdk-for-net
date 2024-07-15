@@ -14,7 +14,7 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!-- These are still firing but not valid -->
-    <NoWarn>$(NoWarn);AZC0007;AZC0004</NoWarn>
+    <NoWarn>$(NoWarn);AZC0004</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 

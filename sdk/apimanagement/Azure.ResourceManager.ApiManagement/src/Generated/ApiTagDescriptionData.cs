@@ -77,14 +77,19 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Description of the Tag. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Absolute URL of external resources describing the tag. </summary>
+        [WirePath("properties.externalDocsUrl")]
         public Uri ExternalDocsUri { get; set; }
         /// <summary> Description of the external resources describing the tag. </summary>
+        [WirePath("properties.externalDocsDescription")]
         public string ExternalDocsDescription { get; set; }
         /// <summary> Identifier of the tag in the form of /tags/{tagId}. </summary>
+        [WirePath("properties.tagId")]
         public string TagId { get; set; }
         /// <summary> Tag name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
     }
 }

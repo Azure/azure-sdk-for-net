@@ -54,6 +54,22 @@ namespace Azure.AI.OpenAI.Tests
         public static TValue? GetValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue) where TKey : notnull
             => ((IReadOnlyDictionary<TKey, TValue>)dictionary).GetValueOrDefault(key, defaultValue);
 
+        public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TKey, TValue> valueFactory)
+        {
+            if (dictionary == null)
+            {
+                throw new ArgumentNullException(nameof(dictionary));
+            }
+
+            if (!dictionary.TryGetValue(key, out TValue? value))
+            {
+                value = valueFactory(key);
+                dictionary[key] = value;
+            }
+
+            return value!;
+        }
+
         public static string? GetFirstValueOrDefault(this PipelineResponseHeaders headers, string key)
         {
             IEnumerable<string>? values = null;

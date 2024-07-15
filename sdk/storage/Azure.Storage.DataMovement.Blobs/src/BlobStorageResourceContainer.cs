@@ -157,6 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <returns>List of the child resources in the storage container.</returns>
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            StorageResourceContainer destinationContainer = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             // Suffix the backwards slash when searching if there's a prefix specified,
