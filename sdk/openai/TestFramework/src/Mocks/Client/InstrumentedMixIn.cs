@@ -1,7 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace OpenAI.TestFramework.Proxy;
+
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace OpenAI.TestFramework.Mocks.Client;
 
 /// <summary>
 /// An implementation of <see cref="IInstrumented"/> that allows you to get the original back.

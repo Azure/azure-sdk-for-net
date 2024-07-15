@@ -3,7 +3,7 @@
 
 using Castle.DynamicProxy;
 
-namespace OpenAI.TestFramework.Proxy;
+namespace OpenAI.TestFramework.Mocks.Client;
 
 /// <summary>
 /// A basic interceptor that prevents the leaking of the original un-proxied this instance as a return value.

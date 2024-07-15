@@ -7,7 +7,7 @@ using System.Reflection;
 using Castle.DynamicProxy;
 using OpenAI.TestFramework.Adapters;
 
-namespace OpenAI.TestFramework.Proxy;
+namespace OpenAI.TestFramework.Mocks.Client;
 
 /// <summary>
 /// An interceptor for Castle dynamic proxies that allows you to call the synchronous version of a method when the asynchronous one

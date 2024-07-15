@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI.TestFramework.Proxy;
 using Castle.DynamicProxy;
 using NUnit.Framework;
+using OpenAI.TestFramework.Mocks.Client;
 
 namespace OpenAI.TestFramework;
 
