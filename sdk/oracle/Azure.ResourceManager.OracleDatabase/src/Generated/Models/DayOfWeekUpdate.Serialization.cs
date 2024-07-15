@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            DayOfWeekName? name = default;
+            OracleDatabaseDayOfWeekName? name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    name = new DayOfWeekName(property.Value.GetString());
+                    name = new OracleDatabaseDayOfWeekName(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// CloudExadataInfrastructureLifecycleState enum
-    /// Serialized Name: CloudExadataInfrastructureLifecycleState
-    /// </summary>
+    /// <summary> CloudExadataInfrastructureLifecycleState enum. </summary>
     public readonly partial struct CloudExadataInfrastructureLifecycleState : IEquatable<CloudExadataInfrastructureLifecycleState>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string MaintenanceInProgressValue = "MaintenanceInProgress";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Indicates that resource in Provisioning state
-        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Provisioning
-        /// </summary>
+        /// <summary> Indicates that resource in Provisioning state. </summary>
         public static CloudExadataInfrastructureLifecycleState Provisioning { get; } = new CloudExadataInfrastructureLifecycleState(ProvisioningValue);
-        /// <summary>
-        /// Indicates that resource in Available state
-        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Available
-        /// </summary>
+        /// <summary> Indicates that resource in Available state. </summary>
         public static CloudExadataInfrastructureLifecycleState Available { get; } = new CloudExadataInfrastructureLifecycleState(AvailableValue);
-        /// <summary>
-        /// Indicates that resource in Updating state
-        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Updating
-        /// </summary>
+        /// <summary> Indicates that resource in Updating state. </summary>
         public static CloudExadataInfrastructureLifecycleState Updating { get; } = new CloudExadataInfrastructureLifecycleState(UpdatingValue);
-        /// <summary>
-        /// Indicates that resource in Terminating state
-        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Terminating
-        /// </summary>
+        /// <summary> Indicates that resource in Terminating state. </summary>
         public static CloudExadataInfrastructureLifecycleState Terminating { get; } = new CloudExadataInfrastructureLifecycleState(TerminatingValue);
-        /// <summary>
-        /// Indicates that resource in Terminated state
-        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Terminated
-        /// </summary>
+        /// <summary> Indicates that resource in Terminated state. </summary>
         public static CloudExadataInfrastructureLifecycleState Terminated { get; } = new CloudExadataInfrastructureLifecycleState(TerminatedValue);
-        /// <summary>
-        /// Indicates that resource maintenance in progress state
-        /// Serialized Name: CloudExadataInfrastructureLifecycleState.MaintenanceInProgress
-        /// </summary>
+        /// <summary> Indicates that resource maintenance in progress state. </summary>
         public static CloudExadataInfrastructureLifecycleState MaintenanceInProgress { get; } = new CloudExadataInfrastructureLifecycleState(MaintenanceInProgressValue);
-        /// <summary>
-        /// Indicates that resource in Failed state
-        /// Serialized Name: CloudExadataInfrastructureLifecycleState.Failed
-        /// </summary>
+        /// <summary> Indicates that resource in Failed state. </summary>
         public static CloudExadataInfrastructureLifecycleState Failed { get; } = new CloudExadataInfrastructureLifecycleState(FailedValue);
         /// <summary> Determines if two <see cref="CloudExadataInfrastructureLifecycleState"/> values are the same. </summary>
         public static bool operator ==(CloudExadataInfrastructureLifecycleState left, CloudExadataInfrastructureLifecycleState right) => left.Equals(right);
@@ -83,7 +59,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

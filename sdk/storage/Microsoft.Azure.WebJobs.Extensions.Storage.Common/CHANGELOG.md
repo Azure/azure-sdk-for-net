@@ -1,7 +1,14 @@
 # Release History
 
-## 5.0.0-beta.3 (2021-03-09)
-- This release contains bug fixes to improve quality.
+## 5.0.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 5.0.0-beta.2 (2021-02-09)
 - This release contains bug fixes to improve quality.

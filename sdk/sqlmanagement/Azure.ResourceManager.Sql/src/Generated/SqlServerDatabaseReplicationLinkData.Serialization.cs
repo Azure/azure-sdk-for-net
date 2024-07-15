@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("partnerDatabase"u8);
                 writer.WriteStringValue(PartnerDatabase);
             }
+            if (options.Format != "W" && Optional.IsDefined(PartnerDatabaseId))
+            {
+                writer.WritePropertyName("partnerDatabaseId"u8);
+                writer.WriteStringValue(PartnerDatabaseId);
+            }
             if (options.Format != "W" && Optional.IsDefined(PartnerLocation))
             {
                 writer.WritePropertyName("partnerLocation"u8);
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("isTerminationAllowed"u8);
                 writer.WriteBooleanValue(IsTerminationAllowed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkType))
+            if (Optional.IsDefined(LinkType))
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());
@@ -151,6 +156,7 @@ namespace Azure.ResourceManager.Sql
             SystemData systemData = default;
             string partnerServer = default;
             string partnerDatabase = default;
+            string partnerDatabaseId = default;
             AzureLocation? partnerLocation = default;
             SqlServerDatabaseReplicationRole? role = default;
             SqlServerDatabaseReplicationRole? partnerRole = default;
@@ -205,6 +211,11 @@ namespace Azure.ResourceManager.Sql
                         if (property0.NameEquals("partnerDatabase"u8))
                         {
                             partnerDatabase = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("partnerDatabaseId"u8))
+                        {
+                            partnerDatabaseId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("partnerLocation"u8))
@@ -300,6 +311,7 @@ namespace Azure.ResourceManager.Sql
                 systemData,
                 partnerServer,
                 partnerDatabase,
+                partnerDatabaseId,
                 partnerLocation,
                 role,
                 partnerRole,
@@ -420,6 +432,29 @@ namespace Azure.ResourceManager.Sql
                     else
                     {
                         builder.AppendLine($"'{PartnerDatabase}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerDatabaseId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerDatabaseId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerDatabaseId))
+                {
+                    builder.Append("    partnerDatabaseId: ");
+                    if (PartnerDatabaseId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PartnerDatabaseId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PartnerDatabaseId}'");
                     }
                 }
             }

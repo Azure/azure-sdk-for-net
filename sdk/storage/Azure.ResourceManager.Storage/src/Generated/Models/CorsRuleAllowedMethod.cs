@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.Storage.Models
         private const string OptionsValue = "OPTIONS";
         private const string PutValue = "PUT";
         private const string PatchValue = "PATCH";
+        private const string ConnectValue = "CONNECT";
+        private const string TraceValue = "TRACE";
 
         /// <summary> DELETE. </summary>
         public static CorsRuleAllowedMethod Delete { get; } = new CorsRuleAllowedMethod(DeleteValue);
@@ -47,6 +49,10 @@ namespace Azure.ResourceManager.Storage.Models
         public static CorsRuleAllowedMethod Put { get; } = new CorsRuleAllowedMethod(PutValue);
         /// <summary> PATCH. </summary>
         public static CorsRuleAllowedMethod Patch { get; } = new CorsRuleAllowedMethod(PatchValue);
+        /// <summary> CONNECT. </summary>
+        public static CorsRuleAllowedMethod Connect { get; } = new CorsRuleAllowedMethod(ConnectValue);
+        /// <summary> TRACE. </summary>
+        public static CorsRuleAllowedMethod Trace { get; } = new CorsRuleAllowedMethod(TraceValue);
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethod"/> values are the same. </summary>
         public static bool operator ==(CorsRuleAllowedMethod left, CorsRuleAllowedMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethod"/> values are not the same. </summary>
@@ -62,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }
