@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> organization id. </summary>
+        [WirePath("properties.organizationId")]
         public string OrganizationId { get; set; }
         /// <summary> organization name. </summary>
+        [WirePath("properties.organizationName")]
         public string OrganizationName { get; set; }
         /// <summary> Billing source. </summary>
+        [WirePath("properties.billingSource")]
         public NewRelicObservabilityBillingSource? BillingSource { get; set; }
     }
 }
