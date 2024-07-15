@@ -293,6 +293,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 
             int propertiesCount = 0;
 
+            var categoryName = logRecord.CategoryName;
+            if (!string.IsNullOrEmpty(categoryName))
+            {
+                exceptionDocument.Properties.Add(new KeyValuePairString("CategoryName", categoryName));
+                propertiesCount++;
+            }
+
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
                 if (item.Value != null && item.Key != "{OriginalFormat}")
@@ -318,6 +325,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             };
 
             int propertiesCount = 0;
+
+            var categoryName = logRecord.CategoryName;
+            if (!string.IsNullOrEmpty(categoryName))
+            {
+                traceDocument.Properties.Add(new KeyValuePairString("CategoryName", categoryName));
+                propertiesCount++;
+            }
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {

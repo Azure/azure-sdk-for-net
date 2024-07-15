@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -114,6 +115,82 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new KeyVaultContractProperties(secretIdentifier, identityClientId, serializedAdditionalRawData, lastStatus);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastStatus))
+                {
+                    builder.Append("  lastStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LastStatus, options, 2, false, "  lastStatus: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretIdentifier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secretIdentifier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecretIdentifier))
+                {
+                    builder.Append("  secretIdentifier: ");
+                    if (SecretIdentifier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecretIdentifier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecretIdentifier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identityClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityClientId))
+                {
+                    builder.Append("  identityClientId: ");
+                    if (IdentityClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IdentityClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IdentityClientId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KeyVaultContractProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultContractProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +199,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultContractProperties)} does not support writing '{options.Format}' format.");
             }

@@ -65,26 +65,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="metadataEndpoint"> Metadata endpoint URI. </param>
         /// <param name="clientId"> Client ID of developer console which is the client application. </param>
         /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
+        /// <param name="useInTestConsole"> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </param>
+        /// <param name="useInApiDocumentation"> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret, bool? useInTestConsole, bool? useInApiDocumentation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
             MetadataEndpoint = metadataEndpoint;
             ClientId = clientId;
             ClientSecret = clientSecret;
+            UseInTestConsole = useInTestConsole;
+            UseInApiDocumentation = useInApiDocumentation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User-friendly OpenID Connect Provider name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> User-friendly description of OpenID Connect Provider. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Metadata endpoint URI. </summary>
+        [WirePath("properties.metadataEndpoint")]
         public string MetadataEndpoint { get; set; }
         /// <summary> Client ID of developer console which is the client application. </summary>
+        [WirePath("properties.clientId")]
         public string ClientId { get; set; }
         /// <summary> Client Secret of developer console which is the client application. </summary>
+        [WirePath("properties.clientSecret")]
         public string ClientSecret { get; set; }
+        /// <summary> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </summary>
+        [WirePath("properties.useInTestConsole")]
+        public bool? UseInTestConsole { get; set; }
+        /// <summary> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
+        [WirePath("properties.useInApiDocumentation")]
+        public bool? UseInApiDocumentation { get; set; }
     }
 }

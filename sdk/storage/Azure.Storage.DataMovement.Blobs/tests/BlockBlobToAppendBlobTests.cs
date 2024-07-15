@@ -245,7 +245,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(_defaultAccessTier.ToString(), destinationProperties.AccessTier);
                 Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
                 Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);

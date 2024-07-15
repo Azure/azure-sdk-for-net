@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ApiManagementPrivateLinkResourceData> Value { get; }
     }
 }

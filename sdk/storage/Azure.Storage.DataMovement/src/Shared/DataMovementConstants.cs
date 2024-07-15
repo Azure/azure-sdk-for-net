@@ -159,9 +159,12 @@ namespace Azure.Storage.DataMovement
             internal const string CacheControl = "CacheControl";
             internal const string ETag = "ETag";
             internal const string LastModified = "LastModified";
+            internal const string LastWrittenOn = "LastWrittenOn";
             internal const string Metadata = "Metadata";
             internal const string FileAttributes = "FileAttributes";
-            internal const string FilePermissionKey = "FilePermissionKey";
+            internal const string FilePermissions = "FilePermissions";
+            internal const string SourceFilePermissionKey = "SourceFilePermissionKey";
+            internal const string DestinationFilePermissionKey = "DestinationFilePermissionKey";
         }
     }
 }

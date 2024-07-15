@@ -128,7 +128,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
 
-        protected override StorageResourceContainer GetDestinationStorageResourceContainer(ShareClient containerClient, string directoryPath)
+        protected override StorageResourceContainer GetDestinationStorageResourceContainer(
+            ShareClient containerClient,
+            string directoryPath,
+            TransferPropertiesTestType propertiesTestType = default)
         {
             // Authorize with SAS when performing operations
             if (containerClient.CanGenerateSasUri)
@@ -144,14 +147,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         {
             ShareClientOptions options = DestinationClientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
-            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, options);
+            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
             return oauthService.GetShareClient(containerName);
         }
 
         protected override BlobContainerClient GetOAuthSourceContainerClient(string containerName)
         {
             BlobClientOptions options = SourceClientBuilder.GetOptions();
-            BlobServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, options);
+            BlobServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
             return oauthService.GetBlobContainerClient(containerName);
         }
 
@@ -171,7 +174,13 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             Assert.IsEmpty(items);
         }
 
-        protected override async Task VerifyResultsAsync(BlobContainerClient sourceContainer, string sourcePrefix, ShareClient destinationContainer, string destinationPrefix, CancellationToken cancellationToken = default)
+        protected override async Task VerifyResultsAsync(
+            BlobContainerClient sourceContainer,
+            string sourcePrefix,
+            ShareClient destinationContainer,
+            string destinationPrefix,
+            TransferPropertiesTestType propertiesTestType = default,
+            CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
