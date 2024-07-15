@@ -968,6 +968,12 @@
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ptnan7
 
+# PRLabel: %New Relic
+/sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
+
+# ServiceLabel: %New Relic %Mgmt
+# ServiceOwners:                                                   @dipeshbhakat-microsoft @vipray-ms
+
 # PRLabel: %Nginx
 /sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti
 
