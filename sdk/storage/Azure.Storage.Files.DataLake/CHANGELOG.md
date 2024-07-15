@@ -1,15 +1,8 @@
 # Release History
 
-## 12.19.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 12.19.0 (2024-07-16)
+- Includes all features from 12.19.0-beta.1
 - Fixed bug where storage clients when constructed with URLs with '#' character would truncate the path at the '#'.
-
-### Other Changes
 
 ## 12.19.0-beta.1 (2024-06-11)
 - Added support for service version 2024-08-04.
