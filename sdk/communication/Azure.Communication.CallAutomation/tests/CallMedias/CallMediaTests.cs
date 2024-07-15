@@ -1037,7 +1037,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.UpdateTranscriptionAsync("locale", "customEndpoint")
+                   callMedia => callMedia.UpdateTranscriptionAsync(new UpdateTranscriptionOptions("locale"){SpeechRecognitionModelEndpointId = "customEndpoint", OperationContext="context" })
                 }
             };
         }
