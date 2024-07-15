@@ -75,7 +75,7 @@ function ParseChart([string]$chartFile) {
 
 function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     foreach ($filter in $filters.GetEnumerator()) {
-        if (!$chart["annotations"] -or $chart["annotations"][$filter.Key] -ne $filter.Value) {
+        if (!$chart["annotations"] -or $chart["annotations"][$filter.Key] -notmatch $filter.Value) {
             return $false
         }
     }

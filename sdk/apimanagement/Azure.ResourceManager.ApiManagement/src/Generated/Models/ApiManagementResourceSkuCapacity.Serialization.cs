@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -137,6 +138,81 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ApiManagementResourceSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minimum), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minimum: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Minimum))
+                {
+                    builder.Append("  minimum: ");
+                    builder.AppendLine($"{Minimum.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maximum), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximum: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Maximum))
+                {
+                    builder.Append("  maximum: ");
+                    builder.AppendLine($"{Maximum.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  default: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Default))
+                {
+                    builder.Append("  default: ");
+                    builder.AppendLine($"{Default.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scaleType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleType))
+                {
+                    builder.Append("  scaleType: ");
+                    builder.AppendLine($"'{ScaleType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApiManagementResourceSkuCapacity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementResourceSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +221,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApiManagementResourceSkuCapacity)} does not support writing '{options.Format}' format.");
             }

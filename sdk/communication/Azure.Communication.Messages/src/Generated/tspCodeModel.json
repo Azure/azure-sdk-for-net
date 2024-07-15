@@ -9,6 +9,7 @@
    "$id": "2",
    "Kind": "enum",
    "Name": "CommunicationMessageKind",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.CommunicationMessageKind",
    "ValueType": {
     "$id": "3",
     "Kind": "string"
@@ -33,7 +34,6 @@
      "Description": "Template message type."
     }
    ],
-   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of message. Supports text, image, template.",
    "IsExtensible": true,
    "Usage": "Input"
@@ -42,6 +42,7 @@
    "$id": "7",
    "Kind": "enum",
    "Name": "MessageTemplateValueKind",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValueKind",
    "ValueType": {
     "$id": "8",
     "Kind": "string"
@@ -84,7 +85,6 @@
      "Description": "The quick action template parameter type."
     }
    ],
-   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of the template parameter.",
    "IsExtensible": true,
    "Usage": "Input"
@@ -93,6 +93,7 @@
    "$id": "15",
    "Kind": "enum",
    "Name": "MessageTemplateBindingsKind",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindingsKind",
    "ValueType": {
     "$id": "16",
     "Kind": "string"
@@ -105,7 +106,6 @@
      "Description": "The WhatsApp template type."
     }
    ],
-   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of the message template.",
    "IsExtensible": true,
    "Usage": "Input"
@@ -114,6 +114,7 @@
    "$id": "18",
    "Kind": "enum",
    "Name": "WhatsAppMessageButtonSubType",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageButtonSubType",
    "ValueType": {
     "$id": "19",
     "Kind": "string"
@@ -132,7 +133,6 @@
      "Description": "The WhatsApp button sub type is url."
     }
    ],
-   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The WhatsApp button sub type.",
    "IsExtensible": true,
    "Usage": "Input"
@@ -141,6 +141,7 @@
    "$id": "22",
    "Kind": "enum",
    "Name": "RepeatabilityResult",
+   "CrossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
    "ValueType": {
     "$id": "23",
     "Kind": "string"
@@ -159,7 +160,6 @@
      "Description": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server."
     }
    ],
-   "Namespace": "Azure.Core",
    "Description": "Repeatability Result header options",
    "IsExtensible": false,
    "Usage": "Output"
@@ -168,6 +168,7 @@
    "$id": "26",
    "Kind": "enum",
    "Name": "MessageTemplateStatus",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
    "ValueType": {
     "$id": "27",
     "Kind": "string"
@@ -198,7 +199,6 @@
      "Description": "Message template is paused."
     }
    ],
-   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The aggregated template status.",
    "IsExtensible": true,
    "Usage": "Output"
@@ -207,6 +207,7 @@
    "$id": "32",
    "Kind": "enum",
    "Name": "CommunicationMessagesChannel",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.CommunicationMessagesChannel",
    "ValueType": {
     "$id": "33",
     "Kind": "string"
@@ -219,7 +220,6 @@
      "Description": "The WhatsApp communication messages channel type."
     }
    ],
-   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of the communication messages channel.",
    "IsExtensible": true,
    "Usage": "Output"
@@ -228,6 +228,7 @@
    "$id": "35",
    "Kind": "enum",
    "Name": "Versions",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
    "ValueType": {
     "$id": "36",
     "Kind": "string"
@@ -240,7 +241,6 @@
      "Description": "Azure Communication Messages 2024-02-01 api version"
     }
    ],
-   "Namespace": "Azure.Communication.MessagesService",
    "Description": "Azure Communication Messages Versions",
    "IsExtensible": false,
    "Usage": "None"
@@ -251,7 +251,7 @@
    "$id": "38",
    "Kind": "model",
    "Name": "NotificationContent",
-   "Namespace": "Azure.Communication.MessagesService",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent",
    "Usage": "Input",
    "Description": "Details of the message to send.",
    "DiscriminatorProperty": {
@@ -288,10 +288,12 @@
      "Type": {
       "$id": "43",
       "Kind": "array",
+      "Name": "Array",
       "ValueType": {
        "$id": "44",
        "Kind": "string"
-      }
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -306,7 +308,7 @@
      "$id": "46",
      "Kind": "model",
      "Name": "TextNotificationContent",
-     "Namespace": "Azure.Communication.MessagesService",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.TextNotificationContent",
      "Usage": "Input",
      "Description": "A request to send a text notification.",
      "DiscriminatorValue": "text",
@@ -350,7 +352,7 @@
      "$id": "52",
      "Kind": "model",
      "Name": "MediaNotificationContent",
-     "Namespace": "Azure.Communication.MessagesService",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent",
      "Usage": "Input",
      "Description": "A request to send a media notification.",
      "DiscriminatorValue": "image",
@@ -406,7 +408,7 @@
      "$id": "60",
      "Kind": "model",
      "Name": "TemplateNotificationContent",
-     "Namespace": "Azure.Communication.MessagesService",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.TemplateNotificationContent",
      "Usage": "Input",
      "Description": "A request to send a template notification.",
      "DiscriminatorValue": "template",
@@ -441,7 +443,7 @@
         "$id": "65",
         "Kind": "model",
         "Name": "MessageTemplate",
-        "Namespace": "Azure.Communication.MessagesService",
+        "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate",
         "Usage": "Input",
         "Description": "The template object used to create templates.",
         "Properties": [
@@ -477,11 +479,12 @@
           "Type": {
            "$id": "71",
            "Kind": "array",
+           "Name": "ArrayMessageTemplateValue",
            "ValueType": {
             "$id": "72",
             "Kind": "model",
             "Name": "MessageTemplateValue",
-            "Namespace": "Azure.Communication.MessagesService",
+            "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue",
             "Usage": "Input",
             "Description": "The class describes a parameter of a template.",
             "DiscriminatorProperty": {
@@ -519,7 +522,7 @@
               "$id": "77",
               "Kind": "model",
               "Name": "MessageTemplateText",
-              "Namespace": "Azure.Communication.MessagesService",
+              "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateText",
               "Usage": "Input",
               "Description": "The message template's text value information.",
               "DiscriminatorValue": "text",
@@ -563,7 +566,7 @@
               "$id": "83",
               "Kind": "model",
               "Name": "MessageTemplateImage",
-              "Namespace": "Azure.Communication.MessagesService",
+              "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage",
               "Usage": "Input",
               "Description": "The message template's image value information.",
               "DiscriminatorValue": "image",
@@ -631,7 +634,7 @@
               "$id": "93",
               "Kind": "model",
               "Name": "MessageTemplateDocument",
-              "Namespace": "Azure.Communication.MessagesService",
+              "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument",
               "Usage": "Input",
               "Description": "The message template's document value information.",
               "DiscriminatorValue": "document",
@@ -699,7 +702,7 @@
               "$id": "103",
               "Kind": "model",
               "Name": "MessageTemplateVideo",
-              "Namespace": "Azure.Communication.MessagesService",
+              "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo",
               "Usage": "Input",
               "Description": "The message template's video value information.",
               "DiscriminatorValue": "video",
@@ -767,7 +770,7 @@
               "$id": "113",
               "Kind": "model",
               "Name": "MessageTemplateLocation",
-              "Namespace": "Azure.Communication.MessagesService",
+              "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation",
               "Usage": "Input",
               "Description": "The message template's location value information.",
               "DiscriminatorValue": "location",
@@ -847,7 +850,7 @@
               "$id": "125",
               "Kind": "model",
               "Name": "MessageTemplateQuickAction",
-              "Namespace": "Azure.Communication.MessagesService",
+              "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction",
               "Usage": "Input",
               "Description": "The message template's quick action value information.",
               "DiscriminatorValue": "quickAction",
@@ -900,7 +903,8 @@
               ]
              }
             }
-           }
+           },
+           "CrossLanguageDefinitionId": "TypeSpec.Array"
           },
           "IsRequired": false,
           "IsReadOnly": false
@@ -914,7 +918,7 @@
            "$id": "134",
            "Kind": "model",
            "Name": "MessageTemplateBindings",
-           "Namespace": "Azure.Communication.MessagesService",
+           "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindings",
            "Usage": "Input",
            "Description": "The binding object to link values to the template specific locations",
            "DiscriminatorProperty": {
@@ -940,7 +944,7 @@
              "$id": "137",
              "Kind": "model",
              "Name": "WhatsAppMessageTemplateBindings",
-             "Namespace": "Azure.Communication.MessagesService",
+             "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings",
              "Usage": "Input",
              "Description": "The template bindings for WhatsApp",
              "DiscriminatorValue": "whatsApp",
@@ -974,11 +978,12 @@
                "Type": {
                 "$id": "142",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsComponent",
                 "ValueType": {
                  "$id": "143",
                  "Kind": "model",
                  "Name": "WhatsAppMessageTemplateBindingsComponent",
-                 "Namespace": "Azure.Communication.MessagesService",
+                 "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsComponent",
                  "Usage": "Input",
                  "Description": "The template bindings component for WhatsApp",
                  "Properties": [
@@ -995,7 +1000,8 @@
                    "IsReadOnly": false
                   }
                  ]
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1008,9 +1014,11 @@
                "Type": {
                 "$id": "147",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsComponent",
                 "ValueType": {
                  "$ref": "143"
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1023,9 +1031,11 @@
                "Type": {
                 "$id": "149",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsComponent",
                 "ValueType": {
                  "$ref": "143"
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1038,11 +1048,12 @@
                "Type": {
                 "$id": "151",
                 "Kind": "array",
+                "Name": "ArrayWhatsAppMessageTemplateBindingsButton",
                 "ValueType": {
                  "$id": "152",
                  "Kind": "model",
                  "Name": "WhatsAppMessageTemplateBindingsButton",
-                 "Namespace": "Azure.Communication.MessagesService",
+                 "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton",
                  "Usage": "Input",
                  "Description": "The template bindings component button for WhatsApp",
                  "Properties": [
@@ -1070,7 +1081,8 @@
                    "IsReadOnly": false
                   }
                  ]
-                }
+                },
+                "CrossLanguageDefinitionId": "TypeSpec.Array"
                },
                "IsRequired": false,
                "IsReadOnly": false
@@ -1140,7 +1152,7 @@
    "$id": "156",
    "Kind": "model",
    "Name": "SendMessageResult",
-   "Namespace": "Azure.Communication.MessagesService",
+   "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.SendMessageResult",
    "Usage": "Output",
    "Description": "Result of the send message operation.",
    "Properties": [
@@ -1152,11 +1164,12 @@
      "Type": {
       "$id": "158",
       "Kind": "array",
+      "Name": "ArrayMessageReceipt",
       "ValueType": {
        "$id": "159",
        "Kind": "model",
        "Name": "MessageReceipt",
-       "Namespace": "Azure.Communication.MessagesService",
+       "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt",
        "Usage": "Output",
        "Description": "Receipt of the sending one message.",
        "Properties": [
@@ -1185,7 +1198,8 @@
          "IsReadOnly": false
         }
        ]
-      }
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -1199,7 +1213,7 @@
    "$id": "164",
    "Kind": "model",
    "Name": "PagedMessageTemplateItem",
-   "Namespace": "Azure.Core.Foundations",
+   "CrossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
    "Usage": "Output",
    "Description": "Paged collection of MessageTemplateItem items",
    "Properties": [
@@ -1211,11 +1225,12 @@
      "Type": {
       "$id": "166",
       "Kind": "array",
+      "Name": "ArrayMessageTemplateItem",
       "ValueType": {
        "$id": "167",
        "Kind": "model",
        "Name": "MessageTemplateItem",
-       "Namespace": "Azure.Communication.MessagesService",
+       "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem",
        "Usage": "Output",
        "Description": "The message template as returned from the service.",
        "DiscriminatorProperty": {
@@ -1276,7 +1291,7 @@
          "$id": "175",
          "Kind": "model",
          "Name": "WhatsAppMessageTemplateItem",
-         "Namespace": "Azure.Communication.MessagesService",
+         "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem",
          "Usage": "Output",
          "Description": "The WhatsApp-specific template response contract",
          "DiscriminatorValue": "whatsApp",
@@ -1317,7 +1332,8 @@
          ]
         }
        }
-      }
+      },
+      "CrossLanguageDefinitionId": "TypeSpec.Array"
      },
      "IsRequired": true,
      "IsReadOnly": false
@@ -1363,8 +1379,7 @@
        "Description": "The communication resource, for example https://my-resource.communication.azure.com",
        "Type": {
         "$id": "186",
-        "Kind": "uri",
-        "IsNullable": false
+        "Kind": "url"
        },
        "Location": "Uri",
        "IsApiVersion": false,
@@ -1390,8 +1405,7 @@
         "$id": "189",
         "Type": {
          "$id": "190",
-         "Kind": "string",
-         "IsNullable": false
+         "Kind": "string"
         },
         "Value": "2024-02-01"
        },
@@ -1469,8 +1483,8 @@
       },
       {
        "$id": "198",
-       "Name": "NotificationContent",
-       "NameInRequest": "NotificationContent",
+       "Name": "notificationContent",
+       "NameInRequest": "body",
        "Description": "Details of the message to send.",
        "Type": {
         "$ref": "38"
@@ -1491,8 +1505,7 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "200",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1517,8 +1530,7 @@
        "NameInRequest": "Content-Type",
        "Type": {
         "$id": "203",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1664,8 +1676,7 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "217",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1728,7 +1739,6 @@
    "Protocol": {
     "$id": "223"
    },
-   "Creatable": true,
    "Parameters": [
     {
      "$ref": "185"
@@ -1837,8 +1847,7 @@
        "NameInRequest": "Accept",
        "Type": {
         "$id": "235",
-        "Kind": "string",
-        "IsNullable": false
+        "Kind": "string"
        },
        "Location": "Header",
        "IsApiVersion": false,
@@ -1904,7 +1913,6 @@
    "Protocol": {
     "$id": "241"
    },
-   "Creatable": true,
    "Parameters": [
     {
      "$ref": "185"

@@ -61,7 +61,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task Ctor_TokenCredential()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttps();
             DataLakeServiceClient serviceClient = InstrumentClient(new DataLakeServiceClient(uri, tokenCredential, GetOptions()));
 
@@ -131,7 +131,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -211,6 +211,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -230,6 +231,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -1148,7 +1150,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             mock = new Mock<DataLakeServiceClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakeServiceClient>(new Uri("https://test/test"), Tenants.GetNewHnsSharedKeyCredentials(), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakeServiceClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
-            mock = new Mock<DataLakeServiceClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeServiceClient>(new Uri("https://test/test"), TestEnvironment.Credential, new DataLakeClientOptions()).Object;
         }
     }
 }
