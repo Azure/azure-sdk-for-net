@@ -1382,17 +1382,21 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// API to change transcription language.
         /// </summary>
-        /// <param name="locale">Defines new locale for transcription.</param>
-        /// <param name="speechRecognitionModelEndpointId">Sets Endpoint id where the custom model was deployed.</param>
+        /// <param name="options">An optional object containing update transcription options and configurations.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual Response UpdateTranscription(string locale, string speechRecognitionModelEndpointId, CancellationToken cancellationToken = default)
+        public virtual Response UpdateTranscription(UpdateTranscriptionOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscription)}");
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale) { SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId };
+                UpdateTranscriptionRequestInternal request = new(options.Locale)
+                {
+                    OperationContext = options.OperationContext,
+                    SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId
+                };
+
                 return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
@@ -1427,17 +1431,21 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// API to change transcription language.
         /// </summary>
-        /// <param name="locale">Defines new locale for transcription.</param>
-        /// <param name="speechRecognitionModelEndpointId">Sets Endpoint id where the custom model was deployed.</param>
+        /// <param name="options">An optional object containing update transcription options and configurations.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual async Task<Response> UpdateTranscriptionAsync(string locale, string speechRecognitionModelEndpointId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateTranscriptionAsync(UpdateTranscriptionOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscription)}");
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale) { SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId };
+                UpdateTranscriptionRequestInternal request = new(options.Locale)
+                {
+                    OperationContext = options.OperationContext,
+                    SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId
+                };
+
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -1536,7 +1544,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StopMediaStreamingRequestInternal()
-                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri };
+                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, OperationContext = options.OperationContext };
 
                 return await CallMediaRestClient.StopMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }

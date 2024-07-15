@@ -22,6 +22,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("speechRecognitionModelEndpointId"u8);
                 writer.WriteStringValue(SpeechRecognitionModelEndpointId);
             }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
             writer.WriteEndObject();
         }
 
