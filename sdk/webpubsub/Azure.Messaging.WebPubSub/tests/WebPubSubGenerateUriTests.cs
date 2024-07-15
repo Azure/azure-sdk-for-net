@@ -22,9 +22,9 @@ namespace Azure.Messaging.WebPubSub.Tests
 
         private static readonly JwtSecurityTokenHandler s_jwtTokenHandler = new();
 
-        [TestCase(ClientEndpointType.Default, "/client")]
-        [TestCase(ClientEndpointType.MQTT, "/clients/mqtt")]
-        public async Task GetClientAccessUri_AccessKey_Test(ClientEndpointType clientType, string clientUriPrefix)
+        [TestCase(ClientType.Default, "/client")]
+        [TestCase(ClientType.MQTT, "/clients/mqtt")]
+        public async Task GetClientAccessUri_AccessKey_Test(ClientType clientType, string clientUriPrefix)
         {
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
             var expectedUriPrefix = $"ws://localhost:8080{clientUriPrefix}/hubs/hub?access_token=";
@@ -36,9 +36,9 @@ namespace Azure.Messaging.WebPubSub.Tests
             Assert.True((await serviceClient.GetClientAccessUriAsync(DateTimeOffset.Now, default, default, default, clientType, default)).ToString().StartsWith(expectedUriPrefix));
         }
 
-        [TestCase(ClientEndpointType.Default, "/client", "default")]
-        [TestCase(ClientEndpointType.MQTT, "/clients/mqtt", "mqtt")]
-        public async Task GetClientAccessUri_MicrosoftEntraId_DefaultClient_Test(ClientEndpointType clientType, string clientUriPrefix, string clientTypeString)
+        [TestCase(ClientType.Default, "/client", "default")]
+        [TestCase(ClientType.MQTT, "/clients/mqtt", "mqtt")]
+        public async Task GetClientAccessUri_MicrosoftEntraId_DefaultClient_Test(ClientType clientType, string clientUriPrefix, string clientTypeString)
         {
             var serviceClient = new WebPubSubServiceSubClass(new Uri("https://localhost"), "hub", new DefaultAzureCredential());
             var expectedUri = new Uri($"wss://localhost{clientUriPrefix}/hubs/hub?access_token=fakeToken");

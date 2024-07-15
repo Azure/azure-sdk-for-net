@@ -4,9 +4,9 @@
 namespace Azure.Messaging.WebPubSub;
 
 /// <summary>
-/// The type of client endpoint.
+/// The type of client.
 /// </summary>
-public enum ClientEndpointType
+public enum ClientType
 {
     /// <summary>
     /// Default client endpoint type, whose path starts with "/client".
