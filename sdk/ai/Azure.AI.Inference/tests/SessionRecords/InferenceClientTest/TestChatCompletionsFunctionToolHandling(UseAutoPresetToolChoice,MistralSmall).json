@@ -1,0 +1,209 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "685",
+        "Content-Type": "application/json",
+        "traceparent": "00-a888100e439cb6b9bb05375e942c62ef-4c18bb634c94a60a-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240715.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "What should I wear in Honolulu in 3 days?",
+            "role": "user"
+          }
+        ],
+        "max_tokens": 512,
+        "tools": [
+          {
+            "function": {
+              "name": "get_future_temperature",
+              "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string",
+                    "description": "the name or brief description of a location for weather information"
+                  },
+                  "daysInAdvance": {
+                    "type": "integer",
+                    "description": "the number of days in the future for which to retrieve weather information"
+                  }
+                }
+              }
+            },
+            "type": "function"
+          }
+        ],
+        "tool_choice": "auto"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "azureml-model-group": "offer-mistral-bundled-paygo",
+        "azureml-model-session": "dep-eus-mis-bundle-240705002",
+        "Content-Length": "464",
+        "Content-Type": "application/json",
+        "Date": "Mon, 15 Jul 2024 20:03:10 GMT",
+        "prompt_token_len": "143",
+        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
+        "sampling_token_len": "36",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "X-Request-ID": "80bebfdf-18c8-47b5-9f75-10e47e1174eb"
+      },
+      "ResponseBody": {
+        "choices": [
+          {
+            "finish_reason": "tool_calls",
+            "index": 0,
+            "message": {
+              "content": "",
+              "role": "assistant",
+              "tool_calls": [
+                {
+                  "function": {
+                    "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}",
+                    "call_id": null,
+                    "name": "get_future_temperature"
+                  },
+                  "id": "d21HQei7s",
+                  "type": "function"
+                }
+              ]
+            }
+          }
+        ],
+        "created": 1721073790,
+        "id": "f0b70611b2bd46f49ae710a46db10b0e",
+        "model": "mistral-small",
+        "object": "chat.completion",
+        "usage": {
+          "completion_tokens": 36,
+          "prompt_tokens": 143,
+          "total_tokens": 179
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "954",
+        "Content-Type": "application/json",
+        "traceparent": "00-81a04b83ad5ac137e7d30c8bf515a5cc-3d3fd287e9fda4b7-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240715.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "What should I wear in Honolulu in 3 days?",
+            "role": "user"
+          },
+          {
+            "content": "",
+            "tool_calls": [
+              {
+                "function": {
+                  "name": "get_future_temperature",
+                  "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}"
+                },
+                "type": "function",
+                "id": "d21HQei7s"
+              }
+            ],
+            "role": "assistant"
+          },
+          {
+            "content": "31 celsius",
+            "tool_call_id": "d21HQei7s",
+            "role": "tool"
+          }
+        ],
+        "max_tokens": 512,
+        "tools": [
+          {
+            "function": {
+              "name": "get_future_temperature",
+              "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string",
+                    "description": "the name or brief description of a location for weather information"
+                  },
+                  "daysInAdvance": {
+                    "type": "integer",
+                    "description": "the number of days in the future for which to retrieve weather information"
+                  }
+                }
+              }
+            },
+            "type": "function"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "azureml-model-group": "offer-mistral-bundled-paygo",
+        "azureml-model-session": "dep-eus-mis-bundle-240705001",
+        "Content-Length": "558",
+        "Content-Type": "application/json",
+        "Date": "Mon, 15 Jul 2024 20:03:11 GMT",
+        "prompt_token_len": "220",
+        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
+        "sampling_token_len": "65",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "X-Request-ID": "f006a081-7de5-4f75-aa65-624f6048b659"
+      },
+      "ResponseBody": {
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "message": {
+              "content": "Based on the anticipated temperature in Honolulu in 3 days, I suggest wearing light, breathable clothing such as shorts, t-shirts, and sandals. It would also be a good idea to bring a hat and sunglasses for protection from the sun. Don't forget to pack sunscreen!",
+              "role": "assistant",
+              "tool_calls": null
+            }
+          }
+        ],
+        "created": 1721073790,
+        "id": "f63bb976796340c08709443d4471d00c",
+        "model": "mistral-small",
+        "object": "chat.completion",
+        "usage": {
+          "completion_tokens": 65,
+          "prompt_tokens": 220,
+          "total_tokens": 285
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
+    "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
+    "RandomSeed": "1457366430"
+  }
+}

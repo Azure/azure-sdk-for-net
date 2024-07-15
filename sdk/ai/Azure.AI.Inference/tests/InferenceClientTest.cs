@@ -43,7 +43,7 @@ namespace Azure.AI.Inference.Tests
             UsingBinaryData,
         }
 
-        public InferenceClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public InferenceClientTest(bool isAsync) : base(isAsync)
         {
         }
 
