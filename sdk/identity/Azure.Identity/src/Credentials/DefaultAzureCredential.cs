@@ -12,8 +12,13 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Provides a default <see cref="TokenCredential"/> authentication flow for applications that will be deployed to Azure. The following credential
-    /// types, if enabled, will be tried, in order:
+    /// <see cref="DefaultAzureCredential"/> simplifies authentication while developing applications that deploy to Azure by
+    /// combining credentials used in Azure hosting environments and credentials used in local development. In
+    /// production, it's better to use a specific credential type so authentication is more predictable and easier
+    /// to debug.
+    ///
+    /// <see cref="DefaultAzureCredential"/> attempts to authenticate with each of these credential types, in the following order,
+    /// stopping when one provides a token:
     /// <list type="bullet">
     /// <item><description><see cref="EnvironmentCredential"/></description></item>
     /// <item><description><see cref="WorkloadIdentityCredential"/></description></item>
