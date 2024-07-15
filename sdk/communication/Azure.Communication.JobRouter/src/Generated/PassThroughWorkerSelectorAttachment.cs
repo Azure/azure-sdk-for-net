@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator)
+        internal PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -45,6 +45,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> The label key to query against. </summary>
-        public string Key { get; set; }
+        public string Key { get; }
     }
 }

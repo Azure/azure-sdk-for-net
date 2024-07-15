@@ -30,6 +30,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> The label key to query against. </summary>
-        public string Key { get; set; }
+        public string Key { get; }
     }
 }
