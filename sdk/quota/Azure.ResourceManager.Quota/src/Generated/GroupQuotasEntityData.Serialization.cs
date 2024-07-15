@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quota
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier("/" + property.Value.GetString());
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
