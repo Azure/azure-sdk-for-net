@@ -359,5 +359,91 @@ namespace Azure.Core
                 return Task.CompletedTask;
             }
         }
+
+        private sealed class ModelRequestContent<T> : RequestContent where T : IPersistableModel<T>
+        {
+            private readonly T _model;
+            private readonly ModelReaderWriterOptions _options;
+            private BinaryData? _data;
+            private UnsafeBufferSequence.Reader? _reader;
+            private readonly bool _jsonFormatRequestedInOptions;
+
+            public ModelRequestContent(T model, ModelReaderWriterOptions options)
+            {
+                _model = model;
+                _options = options;
+                _jsonFormatRequestedInOptions = options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
+            }
+
+            private BinaryData Data => _data ??= _model.Write(_options);
+
+            private UnsafeBufferSequence.Reader Reader
+            {
+                get
+                {
+                    if (!(_model is IJsonModel<T> jsonModel))
+                    {
+                        throw new InvalidOperationException("The model does not implement IJsonModel<T>.");
+                    }
+
+                    using UnsafeBufferSequence sequenceWriter = new UnsafeBufferSequence();
+                    using var jsonWriter = new Utf8JsonWriter(sequenceWriter);
+                    jsonModel.Write(jsonWriter, _options);
+                    jsonWriter.Flush();
+                    return sequenceWriter.ExtractReader();
+                }
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = _jsonFormatRequestedInOptions && _model is IJsonModel<T> ? Reader.Length : Data.ToMemory().Length;
+                return true;
+            }
+
+#if NETFRAMEWORK || NETSTANDARD2_0
+            private byte[]? _bytes;
+            private byte[] Bytes => _bytes ??= Data.ToArray();
+#endif
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                Argument.AssertNotNull(stream, nameof(stream));
+
+                if (_jsonFormatRequestedInOptions && _model is IJsonModel<T> jsonModel)
+                {
+                    Reader.CopyTo(stream, cancellation);
+                    return;
+                }
+
+#if NETFRAMEWORK || NETSTANDARD2_0
+                stream.Write(Bytes, 0, Bytes.Length);
+#else
+                stream.Write(Data.ToMemory().Span);
+#endif
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                Argument.AssertNotNull(stream, nameof(stream));
+
+                if (_jsonFormatRequestedInOptions && _model is IJsonModel<T> jsonModel)
+                {
+                    await Reader.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+                    return;
+                }
+
+                await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
+            }
+
+            public override void Dispose()
+            {
+                var sequenceReader = _reader;
+                if (sequenceReader != null)
+                {
+                    _reader = null;
+                    sequenceReader.Dispose();
+                }
+            }
+        }
     }
 }
