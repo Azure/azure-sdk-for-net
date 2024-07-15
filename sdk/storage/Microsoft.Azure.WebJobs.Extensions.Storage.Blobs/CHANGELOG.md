@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Bumped version of Azure.Storage.Blobs to resolve issue where Blob Path was being truncated at '#' character.
 
 ### Other Changes
 
