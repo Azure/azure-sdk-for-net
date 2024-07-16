@@ -102,8 +102,6 @@ else {
   $allPackageProperties = Get-AllPkgProperties $serviceInput
 }
 
-Write-Host $allPackageProperties
-
 if ($allPackageProperties)
 {
     if (-not (Test-Path -Path $outDirectory))
