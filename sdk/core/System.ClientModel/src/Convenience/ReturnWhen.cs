@@ -12,11 +12,11 @@ public enum ReturnWhen
 {
     Started,
 
-    // TODO: validate that this works for streaming.
-    StateChanged,
+    //// TODO: validate that this works for streaming.
+    //StateChanged,
 
     // This means that Update/MoveNext on the update enumerator returned false
     // to indicate that updates aren't currently available.
-    Stopped
+    Completed
 }
 #pragma warning restore CS1591 // public XML comments

@@ -92,8 +92,7 @@ namespace System.ClientModel
     public enum ReturnWhen
     {
         Started = 0,
-        StateChanged = 1,
-        Stopped = 2,
+        Completed = 1,
     }
 }
 namespace System.ClientModel.Primitives
