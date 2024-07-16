@@ -13,7 +13,7 @@ using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Samples
 {
-    public partial class Sample_GuestConfgiurationVmwareSphereAssignmentResource
+    public partial class Sample_GuestConfigurationVmwareSphereAssignmentResource
     {
         // Create or update guest configuration assignment
         [NUnit.Framework.Test]
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GuestConfgiurationVmwareSphereAssignmentResource created on azure
-            // for more information of creating GuestConfgiurationVmwareSphereAssignmentResource, please refer to the document of GuestConfgiurationVmwareSphereAssignmentResource
+            // this example assumes you already have this GuestConfigurationVmwareSphereAssignmentResource created on azure
+            // for more information of creating GuestConfigurationVmwareSphereAssignmentResource, please refer to the document of GuestConfigurationVmwareSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             string guestConfigurationAssignmentName = "NotInstalledApplicationForWindows";
-            ResourceIdentifier guestConfgiurationVmwareSphereAssignmentResourceId = GuestConfgiurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
-            GuestConfgiurationVmwareSphereAssignmentResource guestConfgiurationVmwareSphereAssignment = client.GetGuestConfgiurationVmwareSphereAssignmentResource(guestConfgiurationVmwareSphereAssignmentResourceId);
+            ResourceIdentifier guestConfigurationVmwareSphereAssignmentResourceId = GuestConfigurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
+            GuestConfigurationVmwareSphereAssignmentResource guestConfigurationVmwareSphereAssignment = client.GetGuestConfigurationVmwareSphereAssignmentResource(guestConfigurationVmwareSphereAssignmentResourceId);
 
             // invoke the operation
             GuestConfigurationAssignmentData data = new GuestConfigurationAssignmentData()
@@ -63,8 +63,8 @@ Value = "NotePad,sql",
                 Name = "NotInstalledApplicationForWindows",
                 Location = new AzureLocation("westcentralus"),
             };
-            ArmOperation<GuestConfgiurationVmwareSphereAssignmentResource> lro = await guestConfgiurationVmwareSphereAssignment.UpdateAsync(WaitUntil.Completed, data);
-            GuestConfgiurationVmwareSphereAssignmentResource result = lro.Value;
+            ArmOperation<GuestConfigurationVmwareSphereAssignmentResource> lro = await guestConfigurationVmwareSphereAssignment.UpdateAsync(WaitUntil.Completed, data);
+            GuestConfigurationVmwareSphereAssignmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -86,17 +86,17 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GuestConfgiurationVmwareSphereAssignmentResource created on azure
-            // for more information of creating GuestConfgiurationVmwareSphereAssignmentResource, please refer to the document of GuestConfgiurationVmwareSphereAssignmentResource
+            // this example assumes you already have this GuestConfigurationVmwareSphereAssignmentResource created on azure
+            // for more information of creating GuestConfigurationVmwareSphereAssignmentResource, please refer to the document of GuestConfigurationVmwareSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             string guestConfigurationAssignmentName = "SecureProtocol";
-            ResourceIdentifier guestConfgiurationVmwareSphereAssignmentResourceId = GuestConfgiurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
-            GuestConfgiurationVmwareSphereAssignmentResource guestConfgiurationVmwareSphereAssignment = client.GetGuestConfgiurationVmwareSphereAssignmentResource(guestConfgiurationVmwareSphereAssignmentResourceId);
+            ResourceIdentifier guestConfigurationVmwareSphereAssignmentResourceId = GuestConfigurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
+            GuestConfigurationVmwareSphereAssignmentResource guestConfigurationVmwareSphereAssignment = client.GetGuestConfigurationVmwareSphereAssignmentResource(guestConfigurationVmwareSphereAssignmentResourceId);
 
             // invoke the operation
-            GuestConfgiurationVmwareSphereAssignmentResource result = await guestConfgiurationVmwareSphereAssignment.GetAsync();
+            GuestConfigurationVmwareSphereAssignmentResource result = await guestConfigurationVmwareSphereAssignment.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -118,17 +118,17 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GuestConfgiurationVmwareSphereAssignmentResource created on azure
-            // for more information of creating GuestConfgiurationVmwareSphereAssignmentResource, please refer to the document of GuestConfgiurationVmwareSphereAssignmentResource
+            // this example assumes you already have this GuestConfigurationVmwareSphereAssignmentResource created on azure
+            // for more information of creating GuestConfigurationVmwareSphereAssignmentResource, please refer to the document of GuestConfigurationVmwareSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             string guestConfigurationAssignmentName = "SecureProtocol";
-            ResourceIdentifier guestConfgiurationVmwareSphereAssignmentResourceId = GuestConfgiurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
-            GuestConfgiurationVmwareSphereAssignmentResource guestConfgiurationVmwareSphereAssignment = client.GetGuestConfgiurationVmwareSphereAssignmentResource(guestConfgiurationVmwareSphereAssignmentResourceId);
+            ResourceIdentifier guestConfigurationVmwareSphereAssignmentResourceId = GuestConfigurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
+            GuestConfigurationVmwareSphereAssignmentResource guestConfigurationVmwareSphereAssignment = client.GetGuestConfigurationVmwareSphereAssignmentResource(guestConfigurationVmwareSphereAssignmentResourceId);
 
             // invoke the operation
-            await guestConfgiurationVmwareSphereAssignment.DeleteAsync(WaitUntil.Completed);
+            await guestConfigurationVmwareSphereAssignment.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -146,17 +146,17 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GuestConfgiurationVmwareSphereAssignmentResource created on azure
-            // for more information of creating GuestConfgiurationVmwareSphereAssignmentResource, please refer to the document of GuestConfgiurationVmwareSphereAssignmentResource
+            // this example assumes you already have this GuestConfigurationVmwareSphereAssignmentResource created on azure
+            // for more information of creating GuestConfigurationVmwareSphereAssignmentResource, please refer to the document of GuestConfigurationVmwareSphereAssignmentResource
             string subscriptionId = "mySubscriptionid";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             string guestConfigurationAssignmentName = "AuditSecureProtocol";
-            ResourceIdentifier guestConfgiurationVmwareSphereAssignmentResourceId = GuestConfgiurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
-            GuestConfgiurationVmwareSphereAssignmentResource guestConfgiurationVmwareSphereAssignment = client.GetGuestConfgiurationVmwareSphereAssignmentResource(guestConfgiurationVmwareSphereAssignmentResourceId);
+            ResourceIdentifier guestConfigurationVmwareSphereAssignmentResourceId = GuestConfigurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
+            GuestConfigurationVmwareSphereAssignmentResource guestConfigurationVmwareSphereAssignment = client.GetGuestConfigurationVmwareSphereAssignmentResource(guestConfigurationVmwareSphereAssignmentResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GuestConfigurationAssignmentReport item in guestConfgiurationVmwareSphereAssignment.GetGuestConfigurationConnectedVMwarevSphereAssignmentsReportsAsync())
+            await foreach (GuestConfigurationAssignmentReport item in guestConfigurationVmwareSphereAssignment.GetGuestConfigurationConnectedVMwarevSphereAssignmentsReportsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -177,18 +177,18 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GuestConfgiurationVmwareSphereAssignmentResource created on azure
-            // for more information of creating GuestConfgiurationVmwareSphereAssignmentResource, please refer to the document of GuestConfgiurationVmwareSphereAssignmentResource
+            // this example assumes you already have this GuestConfigurationVmwareSphereAssignmentResource created on azure
+            // for more information of creating GuestConfigurationVmwareSphereAssignmentResource, please refer to the document of GuestConfigurationVmwareSphereAssignmentResource
             string subscriptionId = "mySubscriptionid";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myvm";
             string guestConfigurationAssignmentName = "AuditSecureProtocol";
-            ResourceIdentifier guestConfgiurationVmwareSphereAssignmentResourceId = GuestConfgiurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
-            GuestConfgiurationVmwareSphereAssignmentResource guestConfgiurationVmwareSphereAssignment = client.GetGuestConfgiurationVmwareSphereAssignmentResource(guestConfgiurationVmwareSphereAssignmentResourceId);
+            ResourceIdentifier guestConfigurationVmwareSphereAssignmentResourceId = GuestConfigurationVmwareSphereAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
+            GuestConfigurationVmwareSphereAssignmentResource guestConfigurationVmwareSphereAssignment = client.GetGuestConfigurationVmwareSphereAssignmentResource(guestConfigurationVmwareSphereAssignmentResourceId);
 
             // invoke the operation
             string reportId = "7367cbb8-ae99-47d0-a33b-a283564d2cb1";
-            GuestConfigurationAssignmentReport result = await guestConfgiurationVmwareSphereAssignment.GetGuestConfigurationConnectedVMwarevSphereAssignmentsReportAsync(reportId);
+            GuestConfigurationAssignmentReport result = await guestConfigurationVmwareSphereAssignment.GetGuestConfigurationConnectedVMwarevSphereAssignmentsReportAsync(reportId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

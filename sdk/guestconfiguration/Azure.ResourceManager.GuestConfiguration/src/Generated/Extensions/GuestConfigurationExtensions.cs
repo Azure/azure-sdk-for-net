@@ -321,21 +321,21 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// Gets a collection of GuestConfgiurationVmwareSphereAssignmentResources in the ArmClient.
+        /// Gets a collection of GuestConfigurationVmwareSphereAssignmentResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfgiurationVmwareSphereAssignments(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmwareSphereAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.ConnectedVMwarevSphere/virtualmachines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of GuestConfgiurationVmwareSphereAssignmentResources and their operations over a GuestConfgiurationVmwareSphereAssignmentResource. </returns>
-        public static GuestConfgiurationVmwareSphereAssignmentCollection GetGuestConfgiurationVmwareSphereAssignments(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of GuestConfigurationVmwareSphereAssignmentResources and their operations over a GuestConfigurationVmwareSphereAssignmentResource. </returns>
+        public static GuestConfigurationVmwareSphereAssignmentCollection GetGuestConfigurationVmwareSphereAssignments(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableGuestConfigurationArmClient(client).GetGuestConfgiurationVmwareSphereAssignments(scope);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmwareSphereAssignments(scope);
         }
 
         /// <summary>
@@ -355,12 +355,12 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestConfgiurationVmwareSphereAssignmentResource"/></description>
+        /// <description><see cref="GuestConfigurationVmwareSphereAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfgiurationVmwareSphereAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmwareSphereAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -370,11 +370,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<GuestConfgiurationVmwareSphereAssignmentResource>> GetGuestConfgiurationVmwareSphereAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<GuestConfigurationVmwareSphereAssignmentResource>> GetGuestConfigurationVmwareSphereAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableGuestConfigurationArmClient(client).GetGuestConfgiurationVmwareSphereAssignmentAsync(scope, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmwareSphereAssignmentAsync(scope, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -394,12 +394,12 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestConfgiurationVmwareSphereAssignmentResource"/></description>
+        /// <description><see cref="GuestConfigurationVmwareSphereAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfgiurationVmwareSphereAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmwareSphereAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<GuestConfgiurationVmwareSphereAssignmentResource> GetGuestConfgiurationVmwareSphereAssignment(this ArmClient client, ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<GuestConfigurationVmwareSphereAssignmentResource> GetGuestConfigurationVmwareSphereAssignment(this ArmClient client, ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableGuestConfigurationArmClient(client).GetGuestConfgiurationVmwareSphereAssignment(scope, guestConfigurationAssignmentName, cancellationToken);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmwareSphereAssignment(scope, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -474,22 +474,22 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GuestConfgiurationVmwareSphereAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestConfgiurationVmwareSphereAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfgiurationVmwareSphereAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GuestConfigurationVmwareSphereAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestConfigurationVmwareSphereAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmwareSphereAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfgiurationVmwareSphereAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmwareSphereAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GuestConfgiurationVmwareSphereAssignmentResource"/> object. </returns>
-        public static GuestConfgiurationVmwareSphereAssignmentResource GetGuestConfgiurationVmwareSphereAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GuestConfigurationVmwareSphereAssignmentResource"/> object. </returns>
+        public static GuestConfigurationVmwareSphereAssignmentResource GetGuestConfigurationVmwareSphereAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableGuestConfigurationArmClient(client).GetGuestConfgiurationVmwareSphereAssignmentResource(id);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmwareSphereAssignmentResource(id);
         }
     }
 }
