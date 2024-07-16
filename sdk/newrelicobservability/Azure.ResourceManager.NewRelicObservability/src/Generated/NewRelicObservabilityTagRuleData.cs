@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Provisioning State of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; }
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+        [WirePath("properties.logRules")]
         public NewRelicObservabilityLogRules LogRules { get; set; }
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
+        [WirePath("properties.metricRules")]
         public NewRelicObservabilityMetricRules MetricRules { get; set; }
     }
 }

@@ -93,12 +93,15 @@ namespace Azure.Storage.Test.Shared
             return InstrumentClient(
                 new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
-                    Tenants.GetOAuthCredential(config),
+                    TestEnvironment.Credential,
                     options));
         }
 
         public BlobServiceClient GetServiceClient_OauthAccount_TenantDiscovery() =>
             GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, true);
+
+        public BlobServiceClient GetServiceClient_OAuth()
+            => BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
 
         public BlobClientOptions GetFaultyBlobConnectionOptions(
             int raiseAt = default,
@@ -173,16 +176,13 @@ namespace Azure.Storage.Test.Shared
         public TokenCredential GetTokenCredential_TargetKeyClient()
             => GetKeyClientTokenCredential(TestConfigurations.DefaultTargetKeyVault);
 
-        private static Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
+        private Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
             => new Security.KeyVault.Keys.KeyClient(
                 new Uri(config.VaultEndpoint),
                 GetKeyClientTokenCredential(config));
 
-        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
-            => new Identity.ClientSecretCredential(
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret);
+        private  TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+            => TestEnvironment.Credential;
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
             string containerName,
