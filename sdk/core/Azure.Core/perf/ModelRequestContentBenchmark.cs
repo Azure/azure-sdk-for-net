@@ -3,14 +3,9 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.Tests.Models.ResourceManager.Compute;
 using Azure.Core.Tests.Models.ResourceManager.Resources;
 using BenchmarkDotNet.Attributes;

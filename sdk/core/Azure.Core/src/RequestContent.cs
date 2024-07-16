@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
