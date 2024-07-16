@@ -1199,7 +1199,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Skipping this until live test is re-recorded with latest API")]
         [RecordedTest]
         public async Task AnswerCallWithMediaStreamingTest()
         {
@@ -1265,7 +1264,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Skipping this until backend fix")]
         [RecordedTest]
         public async Task AnswerCallWithMediaStreamingUnmixedTest()
         {
