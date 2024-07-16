@@ -5,7 +5,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public abstract partial class VectorSearchVectorizer
     {
-        /// <summary> The name to associate with this particular vectorization method. </summary>
+        /// <summary> Gets the name associated with this particular vectorization method. </summary>
         public string VectorizerName { get; }
     }
 }
