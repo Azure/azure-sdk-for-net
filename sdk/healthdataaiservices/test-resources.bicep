@@ -36,6 +36,112 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   kind: 'StorageV2'
   properties: {
     minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Deny'
+      ipRules: [
+        {
+          action: 'Allow'
+          value: '4.0.0.0/8'
+        }
+        {
+          action: 'Allow'
+          value: '13.0.0.0/8'
+        }
+        {
+          action: 'Allow'
+          value: '20.0.0.0/8'
+        }
+        {
+          action: 'Allow'
+          value: '40.0.0.0/8'
+        }
+        {
+          action: 'Allow'
+          value: '51.0.0.0/8'
+        }
+        {
+          action: 'Allow'
+          value: '52.0.0.0/8'
+        }
+        {
+          action: 'Allow'
+          value: '65.0.0.0/8'
+        }
+        {
+          action: 'Allow'
+          value: '70.0.0.0/8'
+        }
+        {
+          action: 'Allow'
+          value: '74.234.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '74.235.60.120/30'
+        }
+        {
+          action: 'Allow'
+          value: '94.245.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '98.71.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '102.133.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '104.41.214.32/29'
+        }
+        {
+          action: 'Allow'
+          value: '104.44.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '104.45.71.156/30'
+        }
+        {
+          action: 'Allow'
+          value: '104.208.0.0/12'
+        }
+        {
+          action: 'Allow'
+          value: '108.142.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '131.107.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '157.58.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '167.220.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '172.128.0.0/13'
+        }
+        {
+          action: 'Allow'
+          value: '191.234.97.0/26'
+        }
+        {
+          action: 'Allow'
+          value: '194.69.0.0/16'
+        }
+        {
+          action: 'Allow'
+          value: '207.46.0.0/16'
+        }
+      ]
+    }
   }
 }
 
@@ -58,9 +164,21 @@ resource storageRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-
   scope: storageAccount
 }
 
-resource testDeidService 'microsoft.healthdataaiservices/deidservices@2023-06-01-preview' = {
+resource testDeidService 'microsoft.healthdataaiservices/deidservices@2024-02-28-preview' = {
   name: deidServiceName
   location: deidLocation
+  identity: {
+    type: 'SystemAssigned'
+  }
+}
+
+resource storageMIRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+  name: guid(resourceGroup().id, storageAccount.id, testDeidService.id, storageBlobDataContributor)
+  properties: {
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', storageBlobDataContributor)
+    principalId: testDeidService.identity.principalId
+  }
+  scope: storageAccount
 }
 
 resource realtimeRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
@@ -81,18 +199,6 @@ resource batchRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' 
   }
 }
 
-// https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts/list-account-sas?view=rest-storagerp-2023-01-01&tabs=HTTP
-var blobStorageSASUri = listAccountSAS(storageAccount.name, '2023-01-01', {
-  signedProtocol: 'https'
-  signedResourceTypes: 'sco'
-  signedPermission: 'rwlca'
-  signedServices: 'b'
-  signedExpiry: dateTimeAdd(deploymentTime, 'PT4H')
-}).accountSasToken
-
-var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storageAccount.listKeys().keys[0].value}'
-
-output DEID_SERVICE_ENDPOINT string = testDeidService.properties.serviceUrl
-output STORAGE_ACCOUNT_CONNECTION_STRING string = blobStorageConnectionString
-output STORAGE_ACCOUNT_SAS_URI string = '${storageAccount.properties.primaryEndpoints.blob}${blobContainerName}?${blobStorageSASUri}'
-output STORAGE_CONTAINER_NAME string = container.name
+output HEALTHDATAAISERVICES_DEID_SERVICE_ENDPOINT string = testDeidService.properties.serviceUrl
+output HEALTHDATAAISERVICES_STORAGE_ACCOUNT_NAME string = storageAccount.name
+output HEALTHDATAAISERVICES_STORAGE_CONTAINER_NAME string = container.name

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Result of the tag operation. </summary>
+    /// <summary> Result of the "Tag" operation. </summary>
     public partial class PhiTaggerResult
     {
         /// <summary>
@@ -48,26 +48,22 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
         /// <param name="entities"> List of entities detected in the input. </param>
-        /// <param name="stringIndexType"> Requested Encoding of the tag response indices. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
-        internal PhiTaggerResult(IEnumerable<PhiEntity> entities, StringIndexType stringIndexType)
+        internal PhiTaggerResult(IEnumerable<PhiEntity> entities)
         {
             Argument.AssertNotNull(entities, nameof(entities));
 
             Entities = entities.ToList();
-            StringIndexType = stringIndexType;
         }
 
         /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
         /// <param name="entities"> List of entities detected in the input. </param>
-        /// <param name="stringIndexType"> Requested Encoding of the tag response indices. </param>
-        /// <param name="path"> Path to the file in the storage container. </param>
+        /// <param name="path"> Path to the document in storage. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PhiTaggerResult(IReadOnlyList<PhiEntity> entities, StringIndexType stringIndexType, string path, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PhiTaggerResult(IReadOnlyList<PhiEntity> entities, string path, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Entities = entities;
-            StringIndexType = stringIndexType;
             Path = path;
             Etag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -80,11 +76,9 @@ namespace Azure.Health.Deidentification
 
         /// <summary> List of entities detected in the input. </summary>
         public IReadOnlyList<PhiEntity> Entities { get; }
-        /// <summary> Requested Encoding of the tag response indices. </summary>
-        public StringIndexType StringIndexType { get; }
-        /// <summary> Path to the file in the storage container. </summary>
+        /// <summary> Path to the document in storage. </summary>
         public string Path { get; }
         /// <summary> The entity tag for this resource. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

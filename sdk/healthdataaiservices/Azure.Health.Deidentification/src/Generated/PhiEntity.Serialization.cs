@@ -27,11 +27,11 @@ namespace Azure.Health.Deidentification
 
             writer.WriteStartObject();
             writer.WritePropertyName("category"u8);
-            writer.WriteStringValue(Category.ToSerialString());
+            writer.WriteStringValue(Category.ToString());
             writer.WritePropertyName("offset"u8);
-            writer.WriteNumberValue(Offset);
+            writer.WriteObjectValue(Offset, options);
             writer.WritePropertyName("length"u8);
-            writer.WriteNumberValue(Length);
+            writer.WriteObjectValue(Length, options);
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
@@ -81,8 +81,8 @@ namespace Azure.Health.Deidentification
                 return null;
             }
             PhiCategory category = default;
-            int offset = default;
-            int length = default;
+            StringIndex offset = default;
+            StringIndex length = default;
             string text = default;
             double? confidenceScore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -91,17 +91,17 @@ namespace Azure.Health.Deidentification
             {
                 if (property.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString().ToPhiCategory();
+                    category = new PhiCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("offset"u8))
                 {
-                    offset = property.Value.GetInt32();
+                    offset = StringIndex.DeserializeStringIndex(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("length"u8))
                 {
-                    length = property.Value.GetInt32();
+                    length = StringIndex.DeserializeStringIndex(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("text"u8))

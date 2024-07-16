@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> File report once job has completed. </summary>
-    public partial class HealthFileDetails
+    /// <summary> Details of a single document in a job. </summary>
+    public partial class DocumentDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HealthFileDetails"/>. </summary>
-        /// <param name="input"> File Location for the input. </param>
-        /// <param name="status"> Status of the file. </param>
+        /// <summary> Initializes a new instance of <see cref="DocumentDetails"/>. </summary>
+        /// <param name="input"> Location for the input. </param>
+        /// <param name="status"> Status of the document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        internal HealthFileDetails(FileLocation input, OperationState status)
+        internal DocumentDetails(DocumentLocation input, OperationState status)
         {
             Argument.AssertNotNull(input, nameof(input));
 
@@ -57,14 +57,14 @@ namespace Azure.Health.Deidentification
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthFileDetails"/>. </summary>
-        /// <param name="id"> Id of the file report. </param>
-        /// <param name="input"> File Location for the input. </param>
-        /// <param name="output"> File Location for the output. </param>
-        /// <param name="status"> Status of the file. </param>
-        /// <param name="error"> Error when file fails. </param>
+        /// <summary> Initializes a new instance of <see cref="DocumentDetails"/>. </summary>
+        /// <param name="id"> Id of the document details. </param>
+        /// <param name="input"> Location for the input. </param>
+        /// <param name="output"> Location for the output. </param>
+        /// <param name="status"> Status of the document. </param>
+        /// <param name="error"> Error when document fails. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthFileDetails(string id, FileLocation input, FileLocation output, OperationState status, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentDetails(string id, DocumentLocation input, DocumentLocation output, OperationState status, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Input = input;
@@ -74,20 +74,20 @@ namespace Azure.Health.Deidentification
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthFileDetails"/> for deserialization. </summary>
-        internal HealthFileDetails()
+        /// <summary> Initializes a new instance of <see cref="DocumentDetails"/> for deserialization. </summary>
+        internal DocumentDetails()
         {
         }
 
-        /// <summary> Id of the file report. </summary>
+        /// <summary> Id of the document details. </summary>
         public string Id { get; }
-        /// <summary> File Location for the input. </summary>
-        public FileLocation Input { get; }
-        /// <summary> File Location for the output. </summary>
-        public FileLocation Output { get; }
-        /// <summary> Status of the file. </summary>
+        /// <summary> Location for the input. </summary>
+        public DocumentLocation Input { get; }
+        /// <summary> Location for the output. </summary>
+        public DocumentLocation Output { get; }
+        /// <summary> Status of the document. </summary>
         public OperationState Status { get; }
-        /// <summary> Error when file fails. </summary>
+        /// <summary> Error when document fails. </summary>
         public ResponseError Error { get; }
     }
 }

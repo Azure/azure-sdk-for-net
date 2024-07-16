@@ -9,7 +9,7 @@ DeidentificationJob job = new()
 {
     SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/", new string[] { "*" }),
     TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_path"),
-    DataType = DocumentDataType.PlainText,
+    DataType = DocumentDataType.Plaintext,
     Operation = OperationType.Surrogate
 };
 

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> A job containing a batch of documents to deidentify. </summary>
+    /// <summary> A job containing a batch of documents to de-identify. </summary>
     public partial class DeidentificationJob
     {
         /// <summary>
@@ -71,8 +71,6 @@ namespace Azure.Health.Deidentification
         /// <param name="redactionFormat"> Format of the redacted output. Only valid when Operation is Redact. </param>
         /// <param name="status"> Current status of a job. </param>
         /// <param name="error"> Error when job fails in it's entirety. </param>
-        /// <param name="createdAt"> Date and time when the job was created. </param>
-        /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="lastUpdatedAt">
         /// Date and time when the job was completed.
         ///
@@ -80,9 +78,11 @@ namespace Azure.Health.Deidentification
         ///
         /// If the job failed, this is the time when the job failed.
         /// </param>
+        /// <param name="createdAt"> Date and time when the job was created. </param>
+        /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJob(string name, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, OperationType operation, DocumentDataType dataType, string redactionFormat, JobStatus status, ResponseError error, DateTimeOffset createdAt, DateTimeOffset? startedAt, DateTimeOffset? lastUpdatedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationJob(string name, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, OperationType operation, DocumentDataType dataType, string redactionFormat, JobStatus status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SourceLocation = sourceLocation;
@@ -92,9 +92,9 @@ namespace Azure.Health.Deidentification
             RedactionFormat = redactionFormat;
             Status = status;
             Error = error;
+            LastUpdatedAt = lastUpdatedAt;
             CreatedAt = createdAt;
             StartedAt = startedAt;
-            LastUpdatedAt = lastUpdatedAt;
             Summary = summary;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -120,10 +120,6 @@ namespace Azure.Health.Deidentification
         public JobStatus Status { get; }
         /// <summary> Error when job fails in it's entirety. </summary>
         public ResponseError Error { get; }
-        /// <summary> Date and time when the job was created. </summary>
-        public DateTimeOffset CreatedAt { get; }
-        /// <summary> Date and time when the job was started. </summary>
-        public DateTimeOffset? StartedAt { get; }
         /// <summary>
         /// Date and time when the job was completed.
         ///
@@ -131,7 +127,11 @@ namespace Azure.Health.Deidentification
         ///
         /// If the job failed, this is the time when the job failed.
         /// </summary>
-        public DateTimeOffset? LastUpdatedAt { get; }
+        public DateTimeOffset LastUpdatedAt { get; }
+        /// <summary> Date and time when the job was created. </summary>
+        public DateTimeOffset CreatedAt { get; }
+        /// <summary> Date and time when the job was started. </summary>
+        public DateTimeOffset? StartedAt { get; }
         /// <summary> Summary of a job. Exists only when the job is completed. </summary>
         public JobSummary Summary { get; }
     }

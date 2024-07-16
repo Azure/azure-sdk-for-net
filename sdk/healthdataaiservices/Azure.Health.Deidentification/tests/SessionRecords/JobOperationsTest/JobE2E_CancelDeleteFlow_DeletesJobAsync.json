@@ -1,61 +1,61 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-760053928-7_0_20?api-version=2024-01-16-preview",
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "243",
+        "Content-Length": "291",
         "Content-Type": "application/json",
-        "traceparent": "00-45e9129558f6d114252f69bbf8a544dc-82b074eef50e7944-00",
-        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240531.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-d1d475cd00f940d0dc8bba209a808b0b-cc992c462d510727-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "sourceLocation": {
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "example_patient_1",
           "extensions": [
             "*"
           ]
         },
         "targetLocation": {
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "_output"
         },
-        "dataType": "PlainText",
-        "operation": "Surrogate"
+        "operation": "Surrogate",
+        "dataType": "Plaintext"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-deprecated-versions": "1",
-        "api-supported-versions": "2024-01-16-preview",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2024 20:27:42 GMT",
-        "operation-id": "net-sdk-job-760053928-7_0_20",
-        "operation-location": "https://localhost:5020/jobs/net-sdk-job-760053928-7_0_20?api-version=2024-01-16-preview",
-        "Request-Context": "appId=cid-v1:21e9d617-e94e-4112-a988-f2432ba96e8f",
+        "Date": "Tue, 16 Jul 2024 18:40:22 GMT",
+        "operation-id": "net-sdk-job-943424199-4_0_303",
+        "operation-location": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
         "Server": "Kestrel",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-id": "834d4cb6-f987-4dc7-b77e-744beb21e4a2"
+        "x-ms-correlation-id": "14a21dd7-f3ba-48ff-b2d1-d623a5bd5d54"
       },
       "ResponseBody": {
-        "name": "net-sdk-job-760053928-7_0_20",
+        "name": "net-sdk-job-943424199-4_0_303",
         "status": "NotStarted",
-        "createdAt": "2024-05-31T20:27:43.1932498Z",
-        "lastUpdatedAt": "2024-05-31T20:27:43.1932498Z",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
         "sourceLocation": {
           "extensions": [
             "*"
           ],
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "example_patient_1"
         },
         "targetLocation": {
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "_output"
         },
         "dataType": "Plaintext",
@@ -63,13 +63,13 @@
       }
     },
     {
-      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-760053928-7_0_20?api-version=2024-01-16-preview",
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cd7b43e06b6e92c1ac2c25b34dcb6c38-d6fc2d325a56579e-00",
-        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240531.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-a5670e477aaccb22c020212dea5ff141-68fca112fd87117e-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -77,29 +77,29 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-deprecated-versions": "1",
-        "api-supported-versions": "2024-01-16-preview",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2024 20:27:43 GMT",
-        "Request-Context": "appId=cid-v1:21e9d617-e94e-4112-a988-f2432ba96e8f",
+        "Date": "Tue, 16 Jul 2024 18:40:22 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
         "Server": "Kestrel",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-id": "53fff3f7-635b-4c73-9d47-e8a91e2d5039"
+        "x-ms-correlation-id": "26af5df1-fd26-4bad-abc1-6da33c94b386"
       },
       "ResponseBody": {
-        "name": "net-sdk-job-760053928-7_0_20",
+        "name": "net-sdk-job-943424199-4_0_303",
         "status": "NotStarted",
-        "createdAt": "2024-05-31T20:27:43.1932498Z",
-        "lastUpdatedAt": "2024-05-31T20:27:43.1932498Z",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
         "sourceLocation": {
           "extensions": [
             "*"
           ],
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "example_patient_1"
         },
         "targetLocation": {
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "_output"
         },
         "dataType": "Plaintext",
@@ -107,13 +107,13 @@
       }
     },
     {
-      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-760053928-7_0_20?api-version=2024-01-16-preview",
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3272c91ce559ccfd441fdaf61908909e-d120b1871dd29bac-00",
-        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240531.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-2c9298a9edcf0ea338525555b406ade0-7ef38623e1a1a0e4-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -121,29 +121,29 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-deprecated-versions": "1",
-        "api-supported-versions": "2024-01-16-preview",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2024 20:27:45 GMT",
-        "Request-Context": "appId=cid-v1:21e9d617-e94e-4112-a988-f2432ba96e8f",
+        "Date": "Tue, 16 Jul 2024 18:40:24 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
         "Server": "Kestrel",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-id": "e827cec0-151b-49b9-ad43-29d22514aede"
+        "x-ms-correlation-id": "73cb0f1e-dd8f-41cb-a5f1-5625728a22da"
       },
       "ResponseBody": {
-        "name": "net-sdk-job-760053928-7_0_20",
+        "name": "net-sdk-job-943424199-4_0_303",
         "status": "NotStarted",
-        "createdAt": "2024-05-31T20:27:43.1932498Z",
-        "lastUpdatedAt": "2024-05-31T20:27:43.1932498Z",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
         "sourceLocation": {
           "extensions": [
             "*"
           ],
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "example_patient_1"
         },
         "targetLocation": {
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "_output"
         },
         "dataType": "Plaintext",
@@ -151,13 +151,13 @@
       }
     },
     {
-      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-760053928-7_0_20?api-version=2024-01-16-preview",
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-67d3a025cbabd67e8d1d12b0a3d63fb6-f94f5653954ea625-00",
-        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240531.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-54000ad3f7c084b0ab7ed5d621e85f16-5558386f58d47298-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -165,21 +165,381 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-deprecated-versions": "1",
-        "api-supported-versions": "2024-01-16-preview",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2024 20:27:47 GMT",
-        "Request-Context": "appId=cid-v1:21e9d617-e94e-4112-a988-f2432ba96e8f",
+        "Date": "Tue, 16 Jul 2024 18:40:27 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Retry-After": "2",
         "Server": "Kestrel",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-id": "25fca2b5-d7ab-4376-bd0e-8e6fb275bbdc"
+        "x-ms-correlation-id": "502557d0-2981-4d2f-abce-064565da808a"
       },
       "ResponseBody": {
-        "name": "net-sdk-job-760053928-7_0_20",
+        "name": "net-sdk-job-943424199-4_0_303",
+        "status": "NotStarted",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
+        "sourceLocation": {
+          "extensions": [
+            "*"
+          ],
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "example_patient_1"
+        },
+        "targetLocation": {
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "_output"
+        },
+        "dataType": "Plaintext",
+        "operation": "Surrogate"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ae292fdcf98a7f0af44725148c1d1e01-2578a47284699a57-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jul 2024 18:40:29 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Retry-After": "2",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "ff4a0c36-03b3-4446-b8ba-db68050737c4"
+      },
+      "ResponseBody": {
+        "name": "net-sdk-job-943424199-4_0_303",
+        "status": "NotStarted",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
+        "sourceLocation": {
+          "extensions": [
+            "*"
+          ],
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "example_patient_1"
+        },
+        "targetLocation": {
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "_output"
+        },
+        "dataType": "Plaintext",
+        "operation": "Surrogate"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7e7a635148aaa086c85fbecc31fadd8b-20e95ceb86fd827b-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jul 2024 18:40:31 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Retry-After": "3",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "686bd54a-3b17-4e48-919f-f4839c4de1d0"
+      },
+      "ResponseBody": {
+        "name": "net-sdk-job-943424199-4_0_303",
+        "status": "NotStarted",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
+        "sourceLocation": {
+          "extensions": [
+            "*"
+          ],
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "example_patient_1"
+        },
+        "targetLocation": {
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "_output"
+        },
+        "dataType": "Plaintext",
+        "operation": "Surrogate"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bfe6337c594c68f8e1f9a5279f84ee9d-35317cd1716a3c73-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jul 2024 18:40:33 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Retry-After": "3",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "2aeadfaf-c046-4964-b5a6-35acef683cd1"
+      },
+      "ResponseBody": {
+        "name": "net-sdk-job-943424199-4_0_303",
+        "status": "NotStarted",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
+        "sourceLocation": {
+          "extensions": [
+            "*"
+          ],
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "example_patient_1"
+        },
+        "targetLocation": {
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "_output"
+        },
+        "dataType": "Plaintext",
+        "operation": "Surrogate"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0ef21066e0ea6a9e8b1b68ae2c6352f8-578a20082c9d8afb-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jul 2024 18:40:35 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Retry-After": "3",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "6dca8d83-4193-479d-a1c8-3c2ee1cf336e"
+      },
+      "ResponseBody": {
+        "name": "net-sdk-job-943424199-4_0_303",
+        "status": "NotStarted",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
+        "sourceLocation": {
+          "extensions": [
+            "*"
+          ],
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "example_patient_1"
+        },
+        "targetLocation": {
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "_output"
+        },
+        "dataType": "Plaintext",
+        "operation": "Surrogate"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-48e7840436b3e9e3685d6800895500fc-c8e1db758ff61d89-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jul 2024 18:40:37 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Retry-After": "4",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "977a3e89-c844-4631-8f0b-915087f319cf"
+      },
+      "ResponseBody": {
+        "name": "net-sdk-job-943424199-4_0_303",
+        "status": "NotStarted",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
+        "sourceLocation": {
+          "extensions": [
+            "*"
+          ],
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "example_patient_1"
+        },
+        "targetLocation": {
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "_output"
+        },
+        "dataType": "Plaintext",
+        "operation": "Surrogate"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1e4577800d495cebf535c943dcd9c247-d70889f5da2453c0-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jul 2024 18:40:39 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Retry-After": "4",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "6e56a9a5-8e0c-42b7-b02b-27ce92db8b61"
+      },
+      "ResponseBody": {
+        "name": "net-sdk-job-943424199-4_0_303",
+        "status": "NotStarted",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
+        "sourceLocation": {
+          "extensions": [
+            "*"
+          ],
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "example_patient_1"
+        },
+        "targetLocation": {
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "_output"
+        },
+        "dataType": "Plaintext",
+        "operation": "Surrogate"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-267d91ac8fd1632957e8a948ea17b8fc-8ae5da3fe1ae9693-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jul 2024 18:40:41 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Retry-After": "4",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "d418e189-0976-4cae-904d-3da9c93409be"
+      },
+      "ResponseBody": {
+        "name": "net-sdk-job-943424199-4_0_303",
+        "status": "NotStarted",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "lastUpdatedAt": "2024-07-16T18:40:23.2701728Z",
+        "sourceLocation": {
+          "extensions": [
+            "*"
+          ],
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "example_patient_1"
+        },
+        "targetLocation": {
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
+          "prefix": "_output"
+        },
+        "dataType": "Plaintext",
+        "operation": "Surrogate"
+      }
+    },
+    {
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3e29ef3b098b7c4e1eb33ecd09b8814e-93fbdb24bf42a75a-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jul 2024 18:40:44 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "5148d6a9-c30f-48ef-922e-095832ad0859"
+      },
+      "ResponseBody": {
+        "name": "net-sdk-job-943424199-4_0_303",
         "status": "Running",
-        "createdAt": "2024-05-31T20:27:43.1932498Z",
-        "startedAt": "2024-05-31T20:27:45.9181518Z",
-        "lastUpdatedAt": "2024-05-31T20:27:46.1873576Z",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "startedAt": "2024-07-16T18:40:42.3825113Z",
+        "lastUpdatedAt": "2024-07-16T18:40:42.7307244Z",
         "summary": {
           "successful": 0,
           "failed": 0,
@@ -191,11 +551,11 @@
           "extensions": [
             "*"
           ],
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "example_patient_1"
         },
         "targetLocation": {
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "_output"
         },
         "dataType": "Plaintext",
@@ -203,14 +563,14 @@
       }
     },
     {
-      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-760053928-7_0_20:cancel?api-version=2024-01-16-preview",
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303:cancel?api-version=2024-07-12-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "traceparent": "00-b29809aa68579cebf02b09625a15e770-e0503addb1b4fc3e-00",
-        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240531.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-a63bbb2fcb8abbf36c37362681563a4d-c4b2b7d0358bf945-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -218,21 +578,21 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-deprecated-versions": "1",
-        "api-supported-versions": "2024-01-16-preview",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2024 20:27:49 GMT",
-        "Request-Context": "appId=cid-v1:21e9d617-e94e-4112-a988-f2432ba96e8f",
+        "Date": "Tue, 16 Jul 2024 18:40:46 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
         "Server": "Kestrel",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-id": "3bf0f123-a987-4ec8-9abf-5e1bc08b9a84"
+        "x-ms-correlation-id": "f2045565-9859-42a0-b8c7-bea1aa26d983"
       },
       "ResponseBody": {
-        "name": "net-sdk-job-760053928-7_0_20",
+        "name": "net-sdk-job-943424199-4_0_303",
         "status": "Canceled",
-        "createdAt": "2024-05-31T20:27:43.1932498Z",
-        "startedAt": "2024-05-31T20:27:45.9181518Z",
-        "lastUpdatedAt": "2024-05-31T20:27:49.8701643Z",
+        "createdAt": "2024-07-16T18:40:23.2701728Z",
+        "startedAt": "2024-07-16T18:40:42.3825113Z",
+        "lastUpdatedAt": "2024-07-16T18:40:46.9634191Z",
         "summary": {
           "successful": 0,
           "failed": 0,
@@ -244,11 +604,11 @@
           "extensions": [
             "*"
           ],
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "example_patient_1"
         },
         "targetLocation": {
-          "location": "https://localhost/fakecontainer",
+          "location": "https://fakeblobstorage.blob.core.windows.net/container",
           "prefix": "_output"
         },
         "dataType": "Plaintext",
@@ -256,13 +616,13 @@
       }
     },
     {
-      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-760053928-7_0_20?api-version=2024-01-16-preview",
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0446d6636cdc0f17502ad0aa49529de5-be86419b61c1b67b-00",
-        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240531.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9099a3e24e4c9dcbff2101c5b4ba62e6-ee4136e333206659-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -270,23 +630,23 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "api-deprecated-versions": "1",
-        "api-supported-versions": "2024-01-16-preview",
-        "Date": "Fri, 31 May 2024 20:27:49 GMT",
-        "Request-Context": "appId=cid-v1:21e9d617-e94e-4112-a988-f2432ba96e8f",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
+        "Date": "Tue, 16 Jul 2024 18:40:46 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
         "Server": "Kestrel",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-id": "c483205f-1ffb-4a48-b891-985345647011"
+        "x-ms-correlation-id": "1dd071f4-a4fe-4a36-a79d-c4e73be71c4e"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-760053928-7_0_20?api-version=2024-01-16-preview",
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-943424199-4_0_303?api-version=2024-07-12-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-625b9dd076a7a993466be3de5b484591-e9ba87e26de9f73e-00",
-        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240531.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-60ac86a423f2a5f59be903a871c9a1de-7fc061ed4309af32-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -294,16 +654,16 @@
       "StatusCode": 404,
       "ResponseHeaders": {
         "api-deprecated-versions": "1",
-        "api-supported-versions": "2024-01-16-preview",
+        "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
         "Cache-Control": "no-store, no-cache",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 31 May 2024 20:27:49 GMT",
+        "Date": "Tue, 16 Jul 2024 18:40:46 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-id": "d9503180-ecaa-4a5f-968e-ea1b082c175f",
+        "x-ms-correlation-id": "0e17b76f-0a35-4690-9d5e-8afbc890935c",
         "x-ms-error-code": "JobNotFound"
       },
       "ResponseBody": {
@@ -315,7 +675,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1373730547",
+    "RandomSeed": "1905741670",
     "STORAGE_ACCOUNT_SAS_URI": "https://localhost/fakecontainer"
   }
 }

@@ -56,6 +56,11 @@ namespace Azure.Health.Deidentification
             }
             if (options.Format != "W")
             {
+                writer.WritePropertyName("lastUpdatedAt"u8);
+                writer.WriteStringValue(LastUpdatedAt, "O");
+            }
+            if (options.Format != "W")
+            {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedAt, "O");
             }
@@ -63,11 +68,6 @@ namespace Azure.Health.Deidentification
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedAt.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedAt))
-            {
-                writer.WritePropertyName("lastUpdatedAt"u8);
-                writer.WriteStringValue(LastUpdatedAt.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Summary))
             {
@@ -120,9 +120,9 @@ namespace Azure.Health.Deidentification
             string redactionFormat = default;
             JobStatus status = default;
             ResponseError error = default;
+            DateTimeOffset lastUpdatedAt = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? startedAt = default;
-            DateTimeOffset? lastUpdatedAt = default;
             JobSummary summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -172,6 +172,11 @@ namespace Azure.Health.Deidentification
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("lastUpdatedAt"u8))
+                {
+                    lastUpdatedAt = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (property.NameEquals("createdAt"u8))
                 {
                     createdAt = property.Value.GetDateTimeOffset("O");
@@ -184,15 +189,6 @@ namespace Azure.Health.Deidentification
                         continue;
                     }
                     startedAt = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("lastUpdatedAt"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastUpdatedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("summary"u8))
@@ -219,9 +215,9 @@ namespace Azure.Health.Deidentification
                 redactionFormat,
                 status,
                 error,
+                lastUpdatedAt,
                 createdAt,
                 startedAt,
-                lastUpdatedAt,
                 summary,
                 serializedAdditionalRawData);
         }

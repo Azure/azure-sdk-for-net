@@ -29,17 +29,17 @@ namespace Azure.Health.Deidentification
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> NotStarted. </summary>
+        /// <summary> Job has been submitted and is waiting to be processed. </summary>
         public static JobStatus NotStarted { get; } = new JobStatus(NotStartedValue);
-        /// <summary> Running. </summary>
+        /// <summary> Job has been started. </summary>
         public static JobStatus Running { get; } = new JobStatus(RunningValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Job has completed successfully. All documents have succeeded. </summary>
         public static JobStatus Succeeded { get; } = new JobStatus(SucceededValue);
-        /// <summary> Job has completed with at least 1 file failing. </summary>
+        /// <summary> Job has completed with at least a single document failing. </summary>
         public static JobStatus PartialFailed { get; } = new JobStatus(PartialFailedValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Job has completed with all documents failing, or a validation failure. </summary>
         public static JobStatus Failed { get; } = new JobStatus(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Job has been canceled after user request. </summary>
         public static JobStatus Canceled { get; } = new JobStatus(CanceledValue);
         /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
         public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);
@@ -56,7 +56,7 @@ namespace Azure.Health.Deidentification
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

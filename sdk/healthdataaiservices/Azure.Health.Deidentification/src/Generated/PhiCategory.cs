@@ -5,68 +5,128 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Health.Deidentification
 {
     /// <summary> List of PHI Entities. </summary>
-    public enum PhiCategory
+    public readonly partial struct PhiCategory : IEquatable<PhiCategory>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="PhiCategory"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PhiCategory(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string UnknownValue = "Unknown";
+        private const string AccountValue = "Account";
+        private const string AgeValue = "Age";
+        private const string BioIDValue = "BioID";
+        private const string CityValue = "City";
+        private const string CountryOrRegionValue = "CountryOrRegion";
+        private const string DateValue = "Date";
+        private const string DeviceValue = "Device";
+        private const string DoctorValue = "Doctor";
+        private const string EmailValue = "Email";
+        private const string FaxValue = "Fax";
+        private const string HealthPlanValue = "HealthPlan";
+        private const string HospitalValue = "Hospital";
+        private const string IDNumValue = "IDNum";
+        private const string IPAddressValue = "IPAddress";
+        private const string LicenseValue = "License";
+        private const string LocationOtherValue = "LocationOther";
+        private const string MedicalRecordValue = "MedicalRecord";
+        private const string OrganizationValue = "Organization";
+        private const string PatientValue = "Patient";
+        private const string PhoneValue = "Phone";
+        private const string ProfessionValue = "Profession";
+        private const string SocialSecurityValue = "SocialSecurity";
+        private const string StateValue = "State";
+        private const string StreetValue = "Street";
+        private const string UrlValue = "Url";
+        private const string UsernameValue = "Username";
+        private const string VehicleValue = "Vehicle";
+        private const string ZipValue = "Zip";
+
         /// <summary> Unknown PHI Type. </summary>
-        Unknown,
+        public static PhiCategory Unknown { get; } = new PhiCategory(UnknownValue);
         /// <summary> Account Number. </summary>
-        Account,
+        public static PhiCategory Account { get; } = new PhiCategory(AccountValue);
         /// <summary> Age. </summary>
-        Age,
+        public static PhiCategory Age { get; } = new PhiCategory(AgeValue);
         /// <summary> Biological Identifier, such as a fingerprint or retinal scan. </summary>
-        BioID,
+        public static PhiCategory BioID { get; } = new PhiCategory(BioIDValue);
         /// <summary> City. </summary>
-        City,
+        public static PhiCategory City { get; } = new PhiCategory(CityValue);
         /// <summary> Country or Region. </summary>
-        CountryOrRegion,
+        public static PhiCategory CountryOrRegion { get; } = new PhiCategory(CountryOrRegionValue);
         /// <summary> Date. </summary>
-        Date,
+        public static PhiCategory Date { get; } = new PhiCategory(DateValue);
         /// <summary> Device ID or serial numbers. </summary>
-        Device,
+        public static PhiCategory Device { get; } = new PhiCategory(DeviceValue);
         /// <summary> Doctor's Name. </summary>
-        Doctor,
+        public static PhiCategory Doctor { get; } = new PhiCategory(DoctorValue);
         /// <summary> Email Addresses. </summary>
-        Email,
+        public static PhiCategory Email { get; } = new PhiCategory(EmailValue);
         /// <summary> Fax Number. </summary>
-        Fax,
+        public static PhiCategory Fax { get; } = new PhiCategory(FaxValue);
         /// <summary> Health Plan ID Numbers. </summary>
-        HealthPlan,
+        public static PhiCategory HealthPlan { get; } = new PhiCategory(HealthPlanValue);
         /// <summary> Hospital Name. </summary>
-        Hospital,
-        /// <summary> Id Numbers. Such as a passport number. </summary>
-        IDNum,
+        public static PhiCategory Hospital { get; } = new PhiCategory(HospitalValue);
+        /// <summary> Id Number, eg. passport number. </summary>
+        public static PhiCategory IDNum { get; } = new PhiCategory(IDNumValue);
         /// <summary> IP Address. </summary>
-        IPAddress,
-        /// <summary> License. Such as a driver's license or medical license. </summary>
-        License,
-        /// <summary> Location Other. Such as Golden Gate Park. </summary>
-        LocationOther,
+        public static PhiCategory IPAddress { get; } = new PhiCategory(IPAddressValue);
+        /// <summary> License, eg. Driver's license or medical license. </summary>
+        public static PhiCategory License { get; } = new PhiCategory(LicenseValue);
+        /// <summary> Location Other, eg. Golden Gate Park. </summary>
+        public static PhiCategory LocationOther { get; } = new PhiCategory(LocationOtherValue);
         /// <summary> Medical Record Number. </summary>
-        MedicalRecord,
-        /// <summary> Organization. Such as a company name. </summary>
-        Organization,
+        public static PhiCategory MedicalRecord { get; } = new PhiCategory(MedicalRecordValue);
+        /// <summary> Organization, eg. Microsoft. </summary>
+        public static PhiCategory Organization { get; } = new PhiCategory(OrganizationValue);
         /// <summary> Patient Name. </summary>
-        Patient,
+        public static PhiCategory Patient { get; } = new PhiCategory(PatientValue);
         /// <summary> Phone Number. </summary>
-        Phone,
+        public static PhiCategory Phone { get; } = new PhiCategory(PhoneValue);
         /// <summary> Profession. </summary>
-        Profession,
-        /// <summary> Social Security Numbers in the US. </summary>
-        SocialSecurity,
+        public static PhiCategory Profession { get; } = new PhiCategory(ProfessionValue);
+        /// <summary> Social Security Number. </summary>
+        public static PhiCategory SocialSecurity { get; } = new PhiCategory(SocialSecurityValue);
         /// <summary> State. </summary>
-        State,
+        public static PhiCategory State { get; } = new PhiCategory(StateValue);
         /// <summary> Street. </summary>
-        Street,
+        public static PhiCategory Street { get; } = new PhiCategory(StreetValue);
         /// <summary> Web URL. </summary>
-        Url,
-        /// <summary> Usernames, such as a social media handle. </summary>
-        Username,
-        /// <summary> Vehicle IDs, such as license plates or VIN numbers. </summary>
-        Vehicle,
+        public static PhiCategory Url { get; } = new PhiCategory(UrlValue);
+        /// <summary> Usernames, eg. a social media handle. </summary>
+        public static PhiCategory Username { get; } = new PhiCategory(UsernameValue);
+        /// <summary> Vehicle IDs, eg. license plate or VIN number. </summary>
+        public static PhiCategory Vehicle { get; } = new PhiCategory(VehicleValue);
         /// <summary> Zip Code. </summary>
-        Zip
+        public static PhiCategory Zip { get; } = new PhiCategory(ZipValue);
+        /// <summary> Determines if two <see cref="PhiCategory"/> values are the same. </summary>
+        public static bool operator ==(PhiCategory left, PhiCategory right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PhiCategory"/> values are not the same. </summary>
+        public static bool operator !=(PhiCategory left, PhiCategory right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="PhiCategory"/>. </summary>
+        public static implicit operator PhiCategory(string value) => new PhiCategory(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is PhiCategory other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(PhiCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

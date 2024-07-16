@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Location of a file. </summary>
-    public partial class FileLocation
+    /// <summary> Location of a document. </summary>
+    public partial class DocumentLocation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,35 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FileLocation"/>. </summary>
-        /// <param name="path"> Absolute path to the file in storage. </param>
+        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
+        /// <param name="path"> Path of document in storage. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        internal FileLocation(string path)
+        internal DocumentLocation(string path)
         {
             Argument.AssertNotNull(path, nameof(path));
 
             Path = path;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileLocation"/>. </summary>
-        /// <param name="path"> Absolute path to the file in storage. </param>
+        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
+        /// <param name="path"> Path of document in storage. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileLocation(string path, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentLocation(string path, ETag etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             Etag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileLocation"/> for deserialization. </summary>
-        internal FileLocation()
+        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/> for deserialization. </summary>
+        internal DocumentLocation()
         {
         }
 
-        /// <summary> Absolute path to the file in storage. </summary>
+        /// <summary> Path of document in storage. </summary>
         public string Path { get; }
         /// <summary> The entity tag for this resource. </summary>
-        public string Etag { get; }
+        public ETag Etag { get; }
     }
 }

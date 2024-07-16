@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="DeidentificationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Url of your Deid Service. </param>
+        /// <param name="endpoint"> Url of your De-identification Service. </param>
         public static IAzureClientBuilder<DeidentificationClient, DeidentificationClientOptions> AddDeidentificationClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {

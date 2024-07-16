@@ -15,23 +15,34 @@ param (
 )
 
 # Retrieve the connection string from environment variables
-$connectionString = $DeploymentOutputs['STORAGE_ACCOUNT_CONNECTION_STRING']
-$containerName = $DeploymentOutputs['STORAGE_CONTAINER_NAME']
+$resourceGroup = $DeploymentOutputs['HEALTHDATAAISERVICES_RESOURCE_GROUP']
+$storageAccountName = $DeploymentOutputs['HEALTHDATAAISERVICES_STORAGE_ACCOUNT_NAME']
+$containerName = $DeploymentOutputs['HEALTHDATAAISERVICES_STORAGE_CONTAINER_NAME']
 
 # Set the local folder path to upload
-$localFolderPath = "Azure.Health.Deidentification\tests\Data\example_patient_1"
+$localFolderPath = "Azure.Health.Deidentification\tests\data\example_patient_1"
 
 # Check if the connection string is present
-if ([string]::IsNullOrWhiteSpace($connectionString)) {
-    Write-Host "Error: Azure Storage connection string not found in environment variables."
+if ([string]::IsNullOrWhiteSpace($storageAccountName)) {
+    Write-Host "Error: Azure Storage Name string not found in environment variables."
     exit 1
 }
 
 # Load the Azure Storage module
 Import-Module Az.Storage
 
-# Connect to the storage account
-$storageContext = New-AzStorageContext -ConnectionString $connectionString
+# Connect to the storage acco1unt
+$storageContext = New-AzStorageContext -StorageAccountName $storageAccountName -UseConnectedAccount
+
+# FIXME Remove once vpn team fixes the network acl issue
+$networkRuleSet = New-Object -TypeName Microsoft.Azure.Commands.Management.Storage.Models.PSNetworkRuleSet
+$networkRuleSet.DefaultAction = "Allow"
+Set-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccountName -NetworkRuleSet $networkRuleSet
+
+# Sleep for 15 seconds to allow the network rule to take effect
+Write-Host "[Fix] Temporary sleep to allow network rule to take effect."
+Start-Sleep -Seconds 15
+
 Get-AzStorageContainer -Name $containerName -Context $storageContext
 
 # Upload the folder and its contents to the container

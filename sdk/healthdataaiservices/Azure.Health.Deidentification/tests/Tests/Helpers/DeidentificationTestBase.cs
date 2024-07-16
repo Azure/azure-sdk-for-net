@@ -10,9 +10,9 @@ namespace Azure.Health.Deidentification.Tests
 {
     public class DeidentificationTestBase : RecordedTestBase<DeidentificationTestEnvironment>
     {
-        public DeidentificationTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public DeidentificationTestBase(bool isAsync) : base(isAsync)
         {
-            BodyKeySanitizers.Add(new BodyKeySanitizer("$..location") { Value = DeidentificationTestEnvironment.FakeSASUri });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..location") { Value = TestEnvironment.FakeStorageLocation });
             BodyKeySanitizers.Add(new BodyKeySanitizer("$..nextLink") { Value = TestEnvironment.FakeNextLink });
         }
 

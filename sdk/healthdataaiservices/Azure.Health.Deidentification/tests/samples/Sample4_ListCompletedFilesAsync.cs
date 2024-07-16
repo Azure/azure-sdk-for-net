@@ -25,12 +25,12 @@ namespace Azure.Health.Deidentification.Samples
                 new DeidentificationClientOptions()
             );
 
-            string storageAccountUrl = TestEnvironment.StorageAccountSASUri;
+            string storageAccountUrl = TestEnvironment.GetStorageAccountLocation();
 
             #region Snippet:AzHealthDeidSample4Async_ListCompletedFiles
-            AsyncPageable<HealthFileDetails> files = client.GetJobFilesAsync("job-name-1");
+            AsyncPageable<DocumentDetails> files = client.GetJobDocumentsAsync("job-name-1");
 
-            await foreach (HealthFileDetails file in files)
+            await foreach (DocumentDetails file in files)
             {
                 Console.WriteLine($"File Name: {file.Input.Path}");
                 Console.WriteLine($"File Status: {file.Status}");

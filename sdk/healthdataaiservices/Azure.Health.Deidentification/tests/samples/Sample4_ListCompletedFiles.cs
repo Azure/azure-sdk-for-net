@@ -25,12 +25,12 @@ namespace Azure.Health.Deidentification.Samples
                 new DeidentificationClientOptions()
             );
 
-            string storageAccountUrl = TestEnvironment.StorageAccountSASUri;
+            string storageAccountUrl = TestEnvironment.GetStorageAccountLocation();
 
             #region Snippet:AzHealthDeidSample4_ListCompletedFiles
-            Pageable<HealthFileDetails> files = client.GetJobFiles("job-name-1");
+            Pageable<DocumentDetails> files = client.GetJobDocuments("job-name-1");
 
-            foreach (HealthFileDetails file in files)
+            foreach (DocumentDetails file in files)
             {
                 Console.WriteLine($"File Name: {file.Input.Path}");
                 Console.WriteLine($"File Status: {file.Status}");

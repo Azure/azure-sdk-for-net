@@ -59,6 +59,7 @@ Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToS
 Console.WriteLine(result.GetProperty("operation").ToString());
 Console.WriteLine(result.GetProperty("dataType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 ]]></code>
 This sample shows how to call GetJobAsync with all parameters and parse the result.
@@ -84,9 +85,9 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("startedAt").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
@@ -114,6 +115,7 @@ Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToS
 Console.WriteLine(result.GetProperty("operation").ToString());
 Console.WriteLine(result.GetProperty("dataType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 ]]></code>
 This sample shows how to call GetJob with all parameters and parse the result.
@@ -139,9 +141,9 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("startedAt").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
@@ -207,6 +209,7 @@ Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToS
 Console.WriteLine(result.GetProperty("operation").ToString());
 Console.WriteLine(result.GetProperty("dataType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 ]]></code>
 This sample shows how to call CancelJobAsync with all parameters and parse the result.
@@ -232,9 +235,9 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("startedAt").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
@@ -262,6 +265,7 @@ Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToS
 Console.WriteLine(result.GetProperty("operation").ToString());
 Console.WriteLine(result.GetProperty("dataType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 ]]></code>
 This sample shows how to call CancelJob with all parameters and parse the result.
@@ -287,9 +291,9 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("startedAt").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
@@ -351,7 +355,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.PlainText);
+DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.Plaintext);
 Response<DeidentificationResult> response = await client.DeidentifyAsync(body);
 ]]></code>
 This sample shows how to call DeidentifyAsync with all parameters.
@@ -360,7 +364,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.PlainText)
+DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.Plaintext)
 {
     RedactionFormat = "<redactionFormat>",
 };
@@ -375,7 +379,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.PlainText);
+DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.Plaintext);
 Response<DeidentificationResult> response = client.Deidentify(body);
 ]]></code>
 This sample shows how to call Deidentify with all parameters.
@@ -384,7 +388,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.PlainText)
+DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.Plaintext)
 {
     RedactionFormat = "<redactionFormat>",
 };
@@ -403,7 +407,7 @@ using RequestContent content = RequestContent.Create(new
 {
     inputText = "<inputText>",
     operation = "Redact",
-    dataType = "PlainText",
+    dataType = "Plaintext",
 });
 Response response = await client.DeidentifyAsync(content);
 
@@ -420,8 +424,7 @@ using RequestContent content = RequestContent.Create(new
 {
     inputText = "<inputText>",
     operation = "Redact",
-    dataType = "PlainText",
-    stringIndexType = "TextElement_v8",
+    dataType = "Plaintext",
     redactionFormat = "<redactionFormat>",
 });
 Response response = await client.DeidentifyAsync(content);
@@ -429,11 +432,14 @@ Response response = await client.DeidentifyAsync(content);
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("outputText").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").ToString());
-Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("utf8").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("utf16").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("codePoint").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("utf8").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("utf16").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("codePoint").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("text").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("confidenceScore").ToString());
-Console.WriteLine(result.GetProperty("taggerResult").GetProperty("stringIndexType").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("path").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("etag").ToString());
 ]]></code></example>
@@ -450,7 +456,7 @@ using RequestContent content = RequestContent.Create(new
 {
     inputText = "<inputText>",
     operation = "Redact",
-    dataType = "PlainText",
+    dataType = "Plaintext",
 });
 Response response = client.Deidentify(content);
 
@@ -467,8 +473,7 @@ using RequestContent content = RequestContent.Create(new
 {
     inputText = "<inputText>",
     operation = "Redact",
-    dataType = "PlainText",
-    stringIndexType = "TextElement_v8",
+    dataType = "Plaintext",
     redactionFormat = "<redactionFormat>",
 });
 Response response = client.Deidentify(content);
@@ -476,11 +481,14 @@ Response response = client.Deidentify(content);
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("outputText").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").ToString());
-Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("utf8").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("utf16").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("offset").GetProperty("codePoint").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("utf8").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("utf16").ToString());
+Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("length").GetProperty("codePoint").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("text").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("entities")[0].GetProperty("confidenceScore").ToString());
-Console.WriteLine(result.GetProperty("taggerResult").GetProperty("stringIndexType").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("path").ToString());
 Console.WriteLine(result.GetProperty("taggerResult").GetProperty("etag").ToString());
 ]]></code></example>
@@ -551,6 +559,7 @@ await foreach (BinaryData item in client.GetJobsAsync(null, null, null))
     Console.WriteLine(result.GetProperty("operation").ToString());
     Console.WriteLine(result.GetProperty("dataType").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
     Console.WriteLine(result.GetProperty("createdAt").ToString());
 }
 ]]></code>
@@ -577,9 +586,9 @@ await foreach (BinaryData item in client.GetJobsAsync(1234, "<continuationToken>
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
     Console.WriteLine(result.GetProperty("createdAt").ToString());
     Console.WriteLine(result.GetProperty("startedAt").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
     Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
     Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
     Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
@@ -608,6 +617,7 @@ foreach (BinaryData item in client.GetJobs(null, null, null))
     Console.WriteLine(result.GetProperty("operation").ToString());
     Console.WriteLine(result.GetProperty("dataType").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
     Console.WriteLine(result.GetProperty("createdAt").ToString());
 }
 ]]></code>
@@ -634,9 +644,9 @@ foreach (BinaryData item in client.GetJobs(1234, "<continuationToken>", null))
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
     Console.WriteLine(result.GetProperty("createdAt").ToString());
     Console.WriteLine(result.GetProperty("startedAt").ToString());
-    Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
     Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
     Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
     Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
@@ -645,61 +655,61 @@ foreach (BinaryData item in client.GetJobs(1234, "<continuationToken>", null))
 }
 ]]></code></example>
     </member>
-    <member name="GetJobFilesAsync(string,int?,string,CancellationToken)">
+    <member name="GetJobDocumentsAsync(string,int?,string,CancellationToken)">
       <example>
-This sample shows how to call GetJobFilesAsync.
+This sample shows how to call GetJobDocumentsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-await foreach (HealthFileDetails item in client.GetJobFilesAsync("<name>"))
+await foreach (DocumentDetails item in client.GetJobDocumentsAsync("<name>"))
 {
 }
 ]]></code>
-This sample shows how to call GetJobFilesAsync with all parameters.
+This sample shows how to call GetJobDocumentsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-await foreach (HealthFileDetails item in client.GetJobFilesAsync("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
+await foreach (DocumentDetails item in client.GetJobDocumentsAsync("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetJobFiles(string,int?,string,CancellationToken)">
+    <member name="GetJobDocuments(string,int?,string,CancellationToken)">
       <example>
-This sample shows how to call GetJobFiles.
+This sample shows how to call GetJobDocuments.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-foreach (HealthFileDetails item in client.GetJobFiles("<name>"))
+foreach (DocumentDetails item in client.GetJobDocuments("<name>"))
 {
 }
 ]]></code>
-This sample shows how to call GetJobFiles with all parameters.
+This sample shows how to call GetJobDocuments with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-foreach (HealthFileDetails item in client.GetJobFiles("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
+foreach (DocumentDetails item in client.GetJobDocuments("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetJobFilesAsync(string,int?,string,RequestContext)">
+    <member name="GetJobDocumentsAsync(string,int?,string,RequestContext)">
       <example>
-This sample shows how to call GetJobFilesAsync and parse the result.
+This sample shows how to call GetJobDocumentsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetJobFilesAsync("<name>", null, null, null))
+await foreach (BinaryData item in client.GetJobDocumentsAsync("<name>", null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -708,13 +718,13 @@ await foreach (BinaryData item in client.GetJobFilesAsync("<name>", null, null, 
     Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
-This sample shows how to call GetJobFilesAsync with all parameters and parse the result.
+This sample shows how to call GetJobDocumentsAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetJobFilesAsync("<name>", 1234, "<continuationToken>", null))
+await foreach (BinaryData item in client.GetJobDocumentsAsync("<name>", 1234, "<continuationToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -730,15 +740,15 @@ await foreach (BinaryData item in client.GetJobFilesAsync("<name>", 1234, "<cont
 }
 ]]></code></example>
     </member>
-    <member name="GetJobFiles(string,int?,string,RequestContext)">
+    <member name="GetJobDocuments(string,int?,string,RequestContext)">
       <example>
-This sample shows how to call GetJobFiles and parse the result.
+This sample shows how to call GetJobDocuments and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetJobFiles("<name>", null, null, null))
+foreach (BinaryData item in client.GetJobDocuments("<name>", null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -747,13 +757,13 @@ foreach (BinaryData item in client.GetJobFiles("<name>", null, null, null))
     Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
-This sample shows how to call GetJobFiles with all parameters and parse the result.
+This sample shows how to call GetJobDocuments with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetJobFiles("<name>", 1234, "<continuationToken>", null))
+foreach (BinaryData item in client.GetJobDocuments("<name>", 1234, "<continuationToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -777,7 +787,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.PlainText);
+DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.Plaintext);
 Operation<DeidentificationJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", resource);
 DeidentificationJob responseData = operation.Value;
 ]]></code>
@@ -787,7 +797,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.PlainText)
+DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.Plaintext)
 {
     RedactionFormat = "<redactionFormat>",
 };
@@ -803,7 +813,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.PlainText);
+DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.Plaintext);
 Operation<DeidentificationJob> operation = client.CreateJob(WaitUntil.Completed, "<name>", resource);
 DeidentificationJob responseData = operation.Value;
 ]]></code>
@@ -813,7 +823,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.PlainText)
+DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.Plaintext)
 {
     RedactionFormat = "<redactionFormat>",
 };
@@ -846,7 +856,7 @@ using RequestContent content = RequestContent.Create(new
         prefix = "<prefix>",
     },
     operation = "Redact",
-    dataType = "PlainText",
+    dataType = "Plaintext",
 });
 Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", content);
 BinaryData responseData = operation.Value;
@@ -861,6 +871,7 @@ Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToS
 Console.WriteLine(result.GetProperty("operation").ToString());
 Console.WriteLine(result.GetProperty("dataType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 ]]></code>
 This sample shows how to call CreateJobAsync with all parameters and request content and parse the result.
@@ -886,7 +897,7 @@ using RequestContent content = RequestContent.Create(new
         prefix = "<prefix>",
     },
     operation = "Redact",
-    dataType = "PlainText",
+    dataType = "Plaintext",
     redactionFormat = "<redactionFormat>",
 });
 Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", content);
@@ -907,9 +918,9 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("startedAt").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());
@@ -942,7 +953,7 @@ using RequestContent content = RequestContent.Create(new
         prefix = "<prefix>",
     },
     operation = "Redact",
-    dataType = "PlainText",
+    dataType = "Plaintext",
 });
 Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<name>", content);
 BinaryData responseData = operation.Value;
@@ -957,6 +968,7 @@ Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToS
 Console.WriteLine(result.GetProperty("operation").ToString());
 Console.WriteLine(result.GetProperty("dataType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 ]]></code>
 This sample shows how to call CreateJob with all parameters and request content and parse the result.
@@ -982,7 +994,7 @@ using RequestContent content = RequestContent.Create(new
         prefix = "<prefix>",
     },
     operation = "Redact",
-    dataType = "PlainText",
+    dataType = "Plaintext",
     redactionFormat = "<redactionFormat>",
 });
 Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<name>", content);
@@ -1003,9 +1015,9 @@ Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("startedAt").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("successful").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("summary").GetProperty("canceled").ToString());

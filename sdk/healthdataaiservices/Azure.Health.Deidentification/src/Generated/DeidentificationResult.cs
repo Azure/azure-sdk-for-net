@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Response for synchronous De-Identify operation. </summary>
+    /// <summary> Response body for de-identification operation. </summary>
     public partial class DeidentificationResult
     {
         /// <summary>
@@ -51,8 +51,8 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationResult"/>. </summary>
-        /// <param name="outputText"> Output text after de-identifying. Not available for Tag Operation. </param>
-        /// <param name="taggerResult"> Result of the tag operation. Only available for Tag Operation. </param>
+        /// <param name="outputText"> Output text after de-identification. Not available for "Tag" operation. </param>
+        /// <param name="taggerResult"> Result of the "Tag" operation. Only available for "Tag" Operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeidentificationResult(string outputText, PhiTaggerResult taggerResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +61,9 @@ namespace Azure.Health.Deidentification
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Output text after de-identifying. Not available for Tag Operation. </summary>
+        /// <summary> Output text after de-identification. Not available for "Tag" operation. </summary>
         public string OutputText { get; }
-        /// <summary> Result of the tag operation. Only available for Tag Operation. </summary>
+        /// <summary> Result of the "Tag" operation. Only available for "Tag" Operation. </summary>
         public PhiTaggerResult TaggerResult { get; }
     }
 }

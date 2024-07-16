@@ -32,8 +32,6 @@ namespace Azure.Health.Deidentification
             writer.WriteStringValue(Operation.ToString());
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
-            writer.WritePropertyName("stringIndexType"u8);
-            writer.WriteStringValue(StringIndexType.ToString());
             if (Optional.IsDefined(RedactionFormat))
             {
                 writer.WritePropertyName("redactionFormat"u8);
@@ -80,7 +78,6 @@ namespace Azure.Health.Deidentification
             string inputText = default;
             OperationType operation = default;
             DocumentDataType dataType = default;
-            StringIndexType stringIndexType = default;
             string redactionFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,15 +98,6 @@ namespace Azure.Health.Deidentification
                     dataType = new DocumentDataType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stringIndexType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    stringIndexType = new StringIndexType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("redactionFormat"u8))
                 {
                     redactionFormat = property.Value.GetString();
@@ -121,13 +109,7 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeidentificationContent(
-                inputText,
-                operation,
-                dataType,
-                stringIndexType,
-                redactionFormat,
-                serializedAdditionalRawData);
+            return new DeidentificationContent(inputText, operation, dataType, redactionFormat, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeidentificationContent>.Write(ModelReaderWriterOptions options)

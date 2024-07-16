@@ -22,10 +22,10 @@ namespace Azure.Health.Deidentification
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PlainTextValue = "PlainText";
+        private const string PlaintextValue = "Plaintext";
 
         /// <summary> Plain text data type. </summary>
-        public static DocumentDataType PlainText { get; } = new DocumentDataType(PlainTextValue);
+        public static DocumentDataType Plaintext { get; } = new DocumentDataType(PlaintextValue);
         /// <summary> Determines if two <see cref="DocumentDataType"/> values are the same. </summary>
         public static bool operator ==(DocumentDataType left, DocumentDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentDataType"/> values are not the same. </summary>
@@ -41,7 +41,7 @@ namespace Azure.Health.Deidentification
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

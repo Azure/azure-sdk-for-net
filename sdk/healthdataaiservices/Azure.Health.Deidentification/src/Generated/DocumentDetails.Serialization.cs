@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class HealthFileDetails : IUtf8JsonSerializable, IJsonModel<HealthFileDetails>
+    public partial class DocumentDetails : IUtf8JsonSerializable, IJsonModel<DocumentDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthFileDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HealthFileDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DocumentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthFileDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthFileDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.Health.Deidentification
                 writer.WriteObjectValue(Output, options);
             }
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
@@ -63,19 +63,19 @@ namespace Azure.Health.Deidentification
             writer.WriteEndObject();
         }
 
-        HealthFileDetails IJsonModel<HealthFileDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DocumentDetails IJsonModel<DocumentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthFileDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthFileDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthFileDetails(document.RootElement, options);
+            return DeserializeDocumentDetails(document.RootElement, options);
         }
 
-        internal static HealthFileDetails DeserializeHealthFileDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DocumentDetails DeserializeDocumentDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -84,8 +84,8 @@ namespace Azure.Health.Deidentification
                 return null;
             }
             string id = default;
-            FileLocation input = default;
-            FileLocation output = default;
+            DocumentLocation input = default;
+            DocumentLocation output = default;
             OperationState status = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("input"u8))
                 {
-                    input = FileLocation.DeserializeFileLocation(property.Value, options);
+                    input = DocumentLocation.DeserializeDocumentLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -108,12 +108,12 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    output = FileLocation.DeserializeFileLocation(property.Value, options);
+                    output = DocumentLocation.DeserializeDocumentLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString().ToOperationState();
+                    status = new OperationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -131,7 +131,7 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthFileDetails(
+            return new DocumentDetails(
                 id,
                 input,
                 output,
@@ -140,43 +140,43 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HealthFileDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DocumentDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthFileDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthFileDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HealthFileDetails IPersistableModel<HealthFileDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DocumentDetails IPersistableModel<DocumentDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthFileDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHealthFileDetails(document.RootElement, options);
+                        return DeserializeDocumentDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthFileDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HealthFileDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DocumentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static HealthFileDetails FromResponse(Response response)
+        internal static DocumentDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeHealthFileDetails(document.RootElement);
+            return DeserializeDocumentDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

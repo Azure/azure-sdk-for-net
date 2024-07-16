@@ -13,13 +13,13 @@ namespace Azure.Health.Deidentification
     /// <summary> Client options for DeidentificationClient. </summary>
     public partial class DeidentificationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_16_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_07_12_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2024-01-16-preview". </summary>
-            V2024_01_16_Preview = 1,
+            /// <summary> Service version "2024-07-12-preview". </summary>
+            V2024_07_12_Preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Health.Deidentification
         {
             Version = version switch
             {
-                ServiceVersion.V2024_01_16_Preview => "2024-01-16-preview",
+                ServiceVersion.V2024_07_12_Preview => "2024-07-12-preview",
                 _ => throw new NotSupportedException()
             };
         }

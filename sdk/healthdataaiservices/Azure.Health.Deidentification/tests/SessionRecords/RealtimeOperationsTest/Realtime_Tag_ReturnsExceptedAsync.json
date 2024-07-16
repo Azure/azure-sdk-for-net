@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:5020/deid?api-version=2024-07-12-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "86",
+        "Content-Type": "application/json",
+        "traceparent": "00-cef7a059746935c7a1ecd00456ac2545-399bb5d4789d88d3-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "inputText": "Hello, my name is John Smith.",
+        "operation": "Tag",
+        "dataType": "Plaintext"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1, 2024-01-16-preview",
+        "api-supported-versions": "2024-07-12-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Jul 2024 18:41:38 GMT",
+        "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "2ea26cde-5001-4069-950d-0031ac977912"
+      },
+      "ResponseBody": {
+        "taggerResult": {
+          "documentVersion": "v2024_07_12_preview",
+          "entities": [
+            {
+              "category": "Doctor",
+              "offset": {
+                "utf8": 18,
+                "utf16": 18,
+                "codePoint": 18
+              },
+              "length": {
+                "utf8": 10,
+                "utf16": 10,
+                "codePoint": 10
+              },
+              "text": "John Smith",
+              "confidenceScore": 0.907
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "378906456"
+  }
+}

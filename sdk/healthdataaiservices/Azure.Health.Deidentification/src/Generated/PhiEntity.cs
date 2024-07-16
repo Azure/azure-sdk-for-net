@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Phi Entity tag in the input. </summary>
+    /// <summary> PHI Entity tag in the input. </summary>
     public partial class PhiEntity
     {
         /// <summary>
@@ -46,24 +46,28 @@ namespace Azure.Health.Deidentification
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PhiEntity"/>. </summary>
-        /// <param name="category"> Phi Category of the entity. </param>
+        /// <param name="category"> PHI Category of the entity. </param>
         /// <param name="offset"> Starting index of the location from within the input text. </param>
         /// <param name="length"> Length of the input text. </param>
-        internal PhiEntity(PhiCategory category, int offset, int length)
+        /// <exception cref="ArgumentNullException"> <paramref name="offset"/> or <paramref name="length"/> is null. </exception>
+        internal PhiEntity(PhiCategory category, StringIndex offset, StringIndex length)
         {
+            Argument.AssertNotNull(offset, nameof(offset));
+            Argument.AssertNotNull(length, nameof(length));
+
             Category = category;
             Offset = offset;
             Length = length;
         }
 
         /// <summary> Initializes a new instance of <see cref="PhiEntity"/>. </summary>
-        /// <param name="category"> Phi Category of the entity. </param>
+        /// <param name="category"> PHI Category of the entity. </param>
         /// <param name="offset"> Starting index of the location from within the input text. </param>
         /// <param name="length"> Length of the input text. </param>
         /// <param name="text"> Text of the entity. </param>
-        /// <param name="confidenceScore"> Confidence score of the text/type pairing. </param>
+        /// <param name="confidenceScore"> Confidence score of the category match. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PhiEntity(PhiCategory category, int offset, int length, string text, double? confidenceScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PhiEntity(PhiCategory category, StringIndex offset, StringIndex length, string text, double? confidenceScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Offset = offset;
@@ -78,15 +82,15 @@ namespace Azure.Health.Deidentification
         {
         }
 
-        /// <summary> Phi Category of the entity. </summary>
+        /// <summary> PHI Category of the entity. </summary>
         public PhiCategory Category { get; }
         /// <summary> Starting index of the location from within the input text. </summary>
-        public int Offset { get; }
+        public StringIndex Offset { get; }
         /// <summary> Length of the input text. </summary>
-        public int Length { get; }
+        public StringIndex Length { get; }
         /// <summary> Text of the entity. </summary>
         public string Text { get; }
-        /// <summary> Confidence score of the text/type pairing. </summary>
+        /// <summary> Confidence score of the category match. </summary>
         public double? ConfidenceScore { get; }
     }
 }

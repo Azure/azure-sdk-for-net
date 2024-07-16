@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class FileLocation : IUtf8JsonSerializable, IJsonModel<FileLocation>
+    public partial class DocumentLocation : IUtf8JsonSerializable, IJsonModel<DocumentLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FileLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DocumentLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileLocation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.Health.Deidentification
             if (options.Format != "W")
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
+                writer.WriteStringValue(Etag.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -51,19 +51,19 @@ namespace Azure.Health.Deidentification
             writer.WriteEndObject();
         }
 
-        FileLocation IJsonModel<FileLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DocumentLocation IJsonModel<DocumentLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileLocation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFileLocation(document.RootElement, options);
+            return DeserializeDocumentLocation(document.RootElement, options);
         }
 
-        internal static FileLocation DeserializeFileLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DocumentLocation DeserializeDocumentLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -72,7 +72,7 @@ namespace Azure.Health.Deidentification
                 return null;
             }
             string path = default;
-            string etag = default;
+            ETag etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -84,7 +84,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -93,46 +93,46 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FileLocation(path, etag, serializedAdditionalRawData);
+            return new DocumentLocation(path, etag, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FileLocation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DocumentLocation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileLocation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FileLocation IPersistableModel<FileLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DocumentLocation IPersistableModel<DocumentLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFileLocation(document.RootElement, options);
+                        return DeserializeDocumentLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileLocation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentLocation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FileLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DocumentLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FileLocation FromResponse(Response response)
+        internal static DocumentLocation FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeFileLocation(document.RootElement);
+            return DeserializeDocumentLocation(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

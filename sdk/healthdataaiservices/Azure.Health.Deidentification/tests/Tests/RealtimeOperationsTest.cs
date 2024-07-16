@@ -30,7 +30,7 @@ namespace Azure.Health.Deidentification.Tests
 
             string input = "Hello, my name is John Smith.";
             // TODO: Defaults should be set for these.
-            DeidentificationContent content = new(input, OperationType.Surrogate, DocumentDataType.PlainText);
+            DeidentificationContent content = new(input, OperationType.Surrogate, DocumentDataType.Plaintext);
 
             // TODO: body should be changed to config
             DeidentificationResult result = await client.DeidentifyAsync(content);
@@ -49,7 +49,7 @@ namespace Azure.Health.Deidentification.Tests
 
             string input = "Hello, my name is John Smith.";
             // TODO: Defaults should be set for these.
-            DeidentificationContent content = new(input, OperationType.Tag, DocumentDataType.PlainText);
+            DeidentificationContent content = new(input, OperationType.Tag, DocumentDataType.Plaintext);
 
             // TODO: body should be changed to config
             DeidentificationResult result = await client.DeidentifyAsync(content);
@@ -58,13 +58,12 @@ namespace Azure.Health.Deidentification.Tests
             Assert.IsNull(result.OutputText, "On Tag Operation, expect OutputText to be null.");
             Assert.IsNull(result.TaggerResult.Etag, "Expected Etag to be null.");
             Assert.IsNull(result.TaggerResult.Path, "Expected Path to be null.");
-            Assert.AreEqual(StringIndexType.Utf16CodeUnit, result.TaggerResult.StringIndexType, "Expected StringIndexType to be Utf16CodeUnit.");
 
             Assert.IsTrue(result.TaggerResult.Entities.Count > 0, "Expected TaggerResult to have at least one tag.");
             Assert.IsTrue(result.TaggerResult.Entities[0].Category == PhiCategory.Doctor || result.TaggerResult.Entities[0].Category == PhiCategory.Patient, "Expected first tag to be a patient/doctor.");
             Assert.IsTrue(result.TaggerResult.Entities[0].Text == "John Smith", "Expected first tag to be 'John Smith'.");
-            Assert.IsTrue(result.TaggerResult.Entities[0].Offset == 18, "Expected first tag to start at index 19.");
-            Assert.IsTrue(result.TaggerResult.Entities[0].Length == 10, "Expected first tag to be 10 characters long.");
+            Assert.IsTrue(result.TaggerResult.Entities[0].Offset.Utf16 == 18, "Expected first tag to start at index 18.");
+            Assert.IsTrue(result.TaggerResult.Entities[0].Length.Utf16 == 10, "Expected first tag to be 10 characters long.");
         }
     }
 }

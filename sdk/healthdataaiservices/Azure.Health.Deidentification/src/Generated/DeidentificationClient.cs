@@ -36,7 +36,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of DeidentificationClient. </summary>
-        /// <param name="endpoint"> Url of your Deid Service. </param>
+        /// <param name="endpoint"> Url of your De-identification Service. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DeidentificationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DeidentificationClientOptions())
@@ -44,7 +44,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of DeidentificationClient. </summary>
-        /// <param name="endpoint"> Url of your Deid Service. </param>
+        /// <param name="endpoint"> Url of your De-identification Service. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
@@ -61,7 +61,7 @@ namespace Azure.Health.Deidentification
             _apiVersion = options.Version;
         }
 
-        /// <summary> Get a De-Identify Job. </summary>
+        /// <summary> Get a de-identification job. </summary>
         /// <param name="name"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -77,7 +77,7 @@ namespace Azure.Health.Deidentification
             return Response.FromValue(DeidentificationJob.FromResponse(response), response);
         }
 
-        /// <summary> Get a De-Identify Job. </summary>
+        /// <summary> Get a de-identification job. </summary>
         /// <param name="name"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -94,7 +94,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] Get a De-Identify Job
+        /// [Protocol Method] Get a de-identification job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -134,7 +134,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] Get a De-Identify Job
+        /// [Protocol Method] Get a de-identification job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -173,7 +173,7 @@ namespace Azure.Health.Deidentification
             }
         }
 
-        /// <summary> Cancel a De-Identify Job. </summary>
+        /// <summary> Cancel a de-identification job. </summary>
         /// <param name="name"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -181,7 +181,7 @@ namespace Azure.Health.Deidentification
         /// <remarks>
         /// Cancels a job that is in progress.
         ///
-        /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any files that have already been processed.
+        /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
         ///
         /// If the job is already complete, this will have no effect.
         /// </remarks>
@@ -195,7 +195,7 @@ namespace Azure.Health.Deidentification
             return Response.FromValue(DeidentificationJob.FromResponse(response), response);
         }
 
-        /// <summary> Cancel a De-Identify Job. </summary>
+        /// <summary> Cancel a de-identification job. </summary>
         /// <param name="name"> The name of a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -203,7 +203,7 @@ namespace Azure.Health.Deidentification
         /// <remarks>
         /// Cancels a job that is in progress.
         ///
-        /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any files that have already been processed.
+        /// The job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.
         ///
         /// If the job is already complete, this will have no effect.
         /// </remarks>
@@ -218,7 +218,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] Cancel a De-Identify Job
+        /// [Protocol Method] Cancel a de-identification job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -258,7 +258,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] Cancel a De-Identify Job
+        /// [Protocol Method] Cancel a de-identification job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -299,7 +299,7 @@ namespace Azure.Health.Deidentification
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete a De-Identify Job
+        /// [Protocol Method] Delete a de-identification job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -335,7 +335,7 @@ namespace Azure.Health.Deidentification
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete a De-Identify Job
+        /// [Protocol Method] Delete a de-identification job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -369,8 +369,8 @@ namespace Azure.Health.Deidentification
             }
         }
 
-        /// <summary> Realtime Synchronous Deidentification. </summary>
-        /// <param name="body"> The request body for realtime deidentification. </param>
+        /// <summary> De-identify text. </summary>
+        /// <param name="body"> Request body for de-identification operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> A remote procedure call (RPC) operation. </remarks>
@@ -385,8 +385,8 @@ namespace Azure.Health.Deidentification
             return Response.FromValue(DeidentificationResult.FromResponse(response), response);
         }
 
-        /// <summary> Realtime Synchronous Deidentification. </summary>
-        /// <param name="body"> The request body for realtime deidentification. </param>
+        /// <summary> De-identify text. </summary>
+        /// <param name="body"> Request body for de-identification operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> A remote procedure call (RPC) operation. </remarks>
@@ -402,7 +402,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] Realtime Synchronous Deidentification.
+        /// [Protocol Method] De-identify text.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -441,7 +441,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] Realtime Synchronous Deidentification.
+        /// [Protocol Method] De-identify text.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -479,7 +479,7 @@ namespace Azure.Health.Deidentification
             }
         }
 
-        /// <summary> List De-Identify Jobs. </summary>
+        /// <summary> List de-identification jobs. </summary>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -493,7 +493,7 @@ namespace Azure.Health.Deidentification
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DeidentificationJob.DeserializeDeidentificationJob(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobs", "value", "nextLink", context);
         }
 
-        /// <summary> List De-Identify Jobs. </summary>
+        /// <summary> List de-identification jobs. </summary>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -508,7 +508,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] List De-Identify Jobs
+        /// [Protocol Method] List de-identification jobs.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -536,7 +536,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] List De-Identify Jobs
+        /// [Protocol Method] List de-identification jobs.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -563,7 +563,7 @@ namespace Azure.Health.Deidentification
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobs", "value", "nextLink", context);
         }
 
-        /// <summary> List processed files within a Job. </summary>
+        /// <summary> List processed documents within a job. </summary>
         /// <param name="name"> The name of a job. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
@@ -571,18 +571,18 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Resource list operation template. </remarks>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobFilesAsync(string,int?,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<HealthFileDetails> GetJobFilesAsync(string name, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobDocumentsAsync(string,int?,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<DocumentDetails> GetJobDocumentsAsync(string name, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobFilesRequest(name, maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobFilesNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HealthFileDetails.DeserializeHealthFileDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobFiles", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(name, maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentDetails.DeserializeDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
         }
 
-        /// <summary> List processed files within a Job. </summary>
+        /// <summary> List processed documents within a job. </summary>
         /// <param name="name"> The name of a job. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
@@ -590,19 +590,19 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Resource list operation template. </remarks>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobFiles(string,int?,string,CancellationToken)']/*" />
-        public virtual Pageable<HealthFileDetails> GetJobFiles(string name, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobDocuments(string,int?,string,CancellationToken)']/*" />
+        public virtual Pageable<DocumentDetails> GetJobDocuments(string name, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobFilesRequest(name, maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobFilesNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HealthFileDetails.DeserializeHealthFileDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobFiles", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(name, maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentDetails.DeserializeDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] List processed files within a Job
+        /// [Protocol Method] List processed documents within a job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -611,7 +611,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobFilesAsync(string,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobDocumentsAsync(string,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -624,18 +624,18 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobFilesAsync(string,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetJobFilesAsync(string name, int? maxpagesize, string continuationToken, RequestContext context)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobDocumentsAsync(string,int?,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetJobDocumentsAsync(string name, int? maxpagesize, string continuationToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobFilesRequest(name, maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobFilesNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobFiles", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(name, maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] List processed files within a Job
+        /// [Protocol Method] List processed documents within a job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -644,7 +644,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetJobFiles(string,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetJobDocuments(string,int?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -657,17 +657,17 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobFiles(string,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetJobFiles(string name, int? maxpagesize, string continuationToken, RequestContext context)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobDocuments(string,int?,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetJobDocuments(string name, int? maxpagesize, string continuationToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobFilesRequest(name, maxpagesize, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobFilesNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobFiles", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(name, maxpagesize, continuationToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
         }
 
-        /// <summary> Create a De-Identify Job. </summary>
+        /// <summary> Create a de-identification job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of a job. </param>
         /// <param name="resource"> The resource instance. </param>
@@ -687,7 +687,7 @@ namespace Azure.Health.Deidentification
             return ProtocolOperationHelpers.Convert(response, DeidentificationJob.FromResponse, ClientDiagnostics, "DeidentificationClient.CreateJob");
         }
 
-        /// <summary> Create a De-Identify Job. </summary>
+        /// <summary> Create a de-identification job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of a job. </param>
         /// <param name="resource"> The resource instance. </param>
@@ -708,7 +708,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] Create a De-Identify Job
+        /// [Protocol Method] Create a de-identification job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -751,7 +751,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary>
-        /// [Protocol Method] Create a De-Identify Job
+        /// [Protocol Method] Create a de-identification job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -850,7 +850,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateGetJobFilesRequest(string name, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobDocumentsRequest(string name, int? maxpagesize, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -860,7 +860,7 @@ namespace Azure.Health.Deidentification
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(name, true);
-            uri.AppendPath("/files", false);
+            uri.AppendPath("/documents", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
@@ -939,7 +939,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateGetJobFilesNextPageRequest(string nextLink, string name, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobDocumentsNextPageRequest(string nextLink, string name, int? maxpagesize, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

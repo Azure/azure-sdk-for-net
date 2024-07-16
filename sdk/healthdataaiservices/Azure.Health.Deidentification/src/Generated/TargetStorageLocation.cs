@@ -46,8 +46,8 @@ namespace Azure.Health.Deidentification
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/>. </summary>
-        /// <param name="location"> URL to storage location. Must be a valid Azure Storage SAS URI. </param>
-        /// <param name="prefix"> Prefix to filter blobs by. </param>
+        /// <param name="location"> URL to storage location. </param>
+        /// <param name="prefix"> Prefix to filter path by. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="prefix"/> is null. </exception>
         public TargetStorageLocation(Uri location, string prefix)
         {
@@ -59,8 +59,8 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/>. </summary>
-        /// <param name="location"> URL to storage location. Must be a valid Azure Storage SAS URI. </param>
-        /// <param name="prefix"> Prefix to filter blobs by. </param>
+        /// <param name="location"> URL to storage location. </param>
+        /// <param name="prefix"> Prefix to filter path by. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TargetStorageLocation(Uri location, string prefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,9 +74,9 @@ namespace Azure.Health.Deidentification
         {
         }
 
-        /// <summary> URL to storage location. Must be a valid Azure Storage SAS URI. </summary>
+        /// <summary> URL to storage location. </summary>
         public Uri Location { get; set; }
-        /// <summary> Prefix to filter blobs by. </summary>
+        /// <summary> Prefix to filter path by. </summary>
         public string Prefix { get; set; }
     }
 }
