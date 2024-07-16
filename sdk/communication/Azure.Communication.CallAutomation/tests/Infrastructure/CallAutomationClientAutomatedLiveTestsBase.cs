@@ -53,6 +53,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..botAppId");
             JsonPathSanitizers.Add("$..ivrContext");
             JsonPathSanitizers.Add("$..dialog.botAppId");
+            JsonPathSanitizers.Add("$..operationContext");
             BodyKeySanitizers.Add(new BodyKeySanitizer(@"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized") { JsonPath = "..callbackUri" });
             BodyKeySanitizers.Add(new BodyKeySanitizer(@"wss://sanitized.skype.com") { JsonPath = "..transportUrl" });
             BodyKeySanitizers.Add(new BodyKeySanitizer(@"https://sanitized.skype.com/prompt.wav") { JsonPath="$..file.uri"});
