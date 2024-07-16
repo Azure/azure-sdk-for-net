@@ -129,6 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         public struct ExpectedAppTrace
         {
             public string Message { get; set; }
+            public List<KeyValuePair<string, string>> Properties { get; set; }
             public string SeverityLevel { get; set; }
             public string AppVersion { get; set; }
             public string AppRoleName { get; set; }
