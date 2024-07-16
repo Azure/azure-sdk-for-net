@@ -68,7 +68,7 @@ jobs:
           OSVmImage: windows-2022
         MacOs:
           Pool: Azure Pipelines
-          OSVmImage: "macos-latest"
+          OSVmImage: "macos-11"
     pool:
       name: $(Pool)
       vmImage: $(OSVmImage)

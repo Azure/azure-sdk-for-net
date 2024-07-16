@@ -29,7 +29,7 @@ stages:
               Image: 'MMSUbuntu20.04'
             Mac:
               Pool: 'Azure Pipelines'
-              Image: 'macos-latest'
+              Image: 'macos-11'
 
         pool:
           name: $(Pool)
