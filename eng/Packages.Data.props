@@ -125,9 +125,9 @@
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
-    <PackageReference Update="Azure.Storage.Common" Version="12.15.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
-    <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
+    <PackageReference Update="Azure.Storage.Common" Version="12.20.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.21.0" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.19.0" />
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager" Version="1.12.0" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
