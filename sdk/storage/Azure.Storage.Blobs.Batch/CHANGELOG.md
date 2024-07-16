@@ -1,6 +1,8 @@
 # Release History
 
 ## 12.18.0 (2024-07-16)
+
+### Features Added
 - Includes all features from 12.18.0-beta.1.
 
 ## 12.18.0-beta.1 (2024-06-11)
