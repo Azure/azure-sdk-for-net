@@ -85,7 +85,7 @@ namespace Azure.Identity
 
             if (exception is MsalServiceException and { ErrorCode: "user_assigned_managed_identity_not_supported" })
             {
-                exceptionMessage += Constants.CloudShellNoUserAssignedIdentityMessage;
+                exceptionMessage += Constants.MiSourceNoUserAssignedIdentityMessage;
             }
             else
             {

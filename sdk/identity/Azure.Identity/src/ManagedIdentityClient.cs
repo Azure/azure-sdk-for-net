@@ -21,6 +21,7 @@ namespace Azure.Identity
         private MsalConfidentialClient _msal;
         private MsalManagedIdentityClient _miMsal;
         private bool _enableLegacyMI;
+        private bool _isChainedCredential;
 
         protected ManagedIdentityClient()
         {
@@ -48,6 +49,7 @@ namespace Azure.Identity
             ResourceIdentifier = string.IsNullOrEmpty(options.ResourceIdentifier) ? null : options.ResourceIdentifier;
             Pipeline = options.Pipeline;
             _enableLegacyMI = options.EnableManagedIdentityLegacyBehavior;
+            _isChainedCredential = options.Options?.IsChainedCredential ?? false;
             _miMsal = new MsalManagedIdentityClient(options);
             _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options, _enableLegacyMI, _miMsal));
             _msal = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options);
@@ -68,18 +70,14 @@ namespace Azure.Identity
             }
             else
             {
-                /*
-                                MSAL flow:
-                                1. call new SelectManagedIdentitySource which calls ManagedIdentityApplication.GetManagedIdentitySource()
-                                2. If result is anything other than DefaultToImds, call AcquireTokenForManagedIdentityAsync
-                                3. If result is DefaultToImds, probe the IMDS endpoint to check for a response.
-                                4. If there is a response, call AcquireTokenForManagedIdentityAsync
-                                5. If there is no response, throw CredentialUnavailableException
-                */
                 var availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
-                if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds)
+                if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential)
                 {
                     return await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
+                }
+                if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ResourceIdentifier != null || ClientId != null))
+                {
+                    throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
                 }
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 result = await _miMsal.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false);
@@ -130,7 +128,8 @@ namespace Azure.Identity
             }
             else
             {
-                return new ImdsManagedIdentityProbeSource(options, client);
+                return TokenExchangeManagedIdentitySource.TryCreate(options) ??
+                new ImdsManagedIdentityProbeSource(options, client);
             }
         }
     }

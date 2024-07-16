@@ -79,7 +79,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        private static string CreateClientAssertionJWT(string clientId, string audience, X509Certificate2 clientCertificate)
+        public static string CreateClientAssertionJWT(string clientId, string audience, X509Certificate2 clientCertificate)
         {
             var headerBuff = new ArrayBufferWriter<byte>();
 
