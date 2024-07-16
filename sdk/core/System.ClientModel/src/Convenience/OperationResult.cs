@@ -15,15 +15,15 @@ public abstract class OperationResult : ClientResult
     // return types don't have to implement IDiposable. Given this, provide
     // both constructors.
 
-    protected OperationResult(ContinuationToken rehydrationToken) : base()
+    protected OperationResult(/*ContinuationToken rehydrationToken*/) : base()
     {
-        RehydrationToken = rehydrationToken;
+        //RehydrationToken = rehydrationToken;
     }
 
-    protected OperationResult(ContinuationToken rehydrationToken, PipelineResponse response)
+    protected OperationResult(/*ContinuationToken rehydrationToken,*/ PipelineResponse response)
         : base(response)
     {
-        RehydrationToken = rehydrationToken;
+        //RehydrationToken = rehydrationToken;
     }
 
     // Note: Don't provide this on the base type per not being able to support
@@ -33,7 +33,9 @@ public abstract class OperationResult : ClientResult
     // streaming LRO types by not providing a method on the client that takes
     // a rehydration token.
     // Open question: can we make this work for protocol methods?
-    public ContinuationToken RehydrationToken { get; protected set; }
+    // Note: in OAI, we don't get the run ID until we read the first message off
+    // the SSE stream.  So, let's not add it here - clients can generate it.
+    //public ContinuationToken RehydrationToken { get; protected set; }
 
     // Note: OAI LROs can stop before completing, and user needs to resume them somehow.
     public abstract bool IsCompleted { get; protected set; }
