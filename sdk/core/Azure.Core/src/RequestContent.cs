@@ -23,6 +23,7 @@ namespace Azure.Core
     {
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
+        private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.
@@ -132,7 +133,11 @@ namespace Azure.Core
         /// the <paramref name="model"/> will be written in.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps an <see cref="IPersistableModel{T}"/>.</returns>
         public static RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
-            => Create(ModelReaderWriter.Write(model, options));
+        {
+            Argument.AssertNotNull(model, nameof(model));
+
+            return new ModelRequestContent<T>(model, options ?? ModelWriteWireOptions);
+        }
 
         /// <summary>
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
@@ -360,6 +365,7 @@ namespace Azure.Core
             }
         }
 
+        // This should be switched to use BinaryContent when it is publicly available to avoid code duplication.
         private sealed class ModelRequestContent<T> : RequestContent where T : IPersistableModel<T>
         {
             private readonly T _model;
