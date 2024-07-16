@@ -257,20 +257,13 @@ directive:
 
   # we don't want user to interact with them / we don't support some operations
   - remove-operation: MachineRunCommands_Update #PATCH
+  # internal operations
   - remove-operation: AgentVersion_List
   - remove-operation: AgentVersion_Get
+  # we don't use them, pending to remove in the future
   - remove-operation: HybridIdentityMetadata_Get
   - remove-operation: HybridIdentityMetadata_ListByMachines
-
-  - remove-operation: Licenses_ValidateLicense
-  - remove-operation: Licenses_Update #PATCH
-
-  - remove-operation: LicenseProfiles_Get
-  - remove-operation: LicenseProfiles_Delete
-  - remove-operation: LicenseProfiles_Update
-  - remove-operation: LicenseProfiles_List
-  - remove-operation: LicenseProfiles_CreateOrUpdate
-
+  # we don't want user to interact with them
   - remove-operation: Settings_Get
   - remove-operation: Settings_Patch
 
