@@ -48,7 +48,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private readonly StorageChecksumAlgorithm _validationAlgorithm;
         private readonly int _checksumSize;
-        private bool UseMasterCrc => _validationAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
+        // TODO disabling master crc temporarily. segment CRCs still handled.
+        private bool UseMasterCrc => false; // _validationAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
         private StorageCrc64HashAlgorithm _masterCrcCalculator = null;
 
         /// <summary>
@@ -212,8 +213,20 @@ namespace Azure.Storage.Blobs
 
                 // If the first segment was the entire blob, we'll copy that to
                 // the output stream and finish now
-                long initialLength = initialResponse.Value.Details.ContentLength;
-                long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
+                long initialLength;
+                long totalLength;
+                // Get blob content length downloaded from content range when available to handle transit encoding
+                if (string.IsNullOrWhiteSpace(initialResponse.Value.Details.ContentRange))
+                {
+                    initialLength = initialResponse.Value.Details.ContentLength;
+                    totalLength = 0;
+                }
+                else
+                {
+                    ContentRange recievedRange = ContentRange.Parse(initialResponse.Value.Details.ContentRange);
+                    initialLength = recievedRange.End.Value - recievedRange.Start.Value + 1;
+                    totalLength = recievedRange.Size.Value;
+                }
                 if (initialLength == totalLength)
                 {
                     await HandleOneShotDownload(initialResponse, destination, async, cancellationToken)
@@ -395,20 +408,6 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private static long ParseRangeTotalLength(string range)
-        {
-            if (range == null)
-            {
-                return 0;
-            }
-            int lengthSeparator = range.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
-            if (lengthSeparator == -1)
-            {
-                throw BlobErrors.ParsingFullHttpRangeFailed(range);
-            }
-            return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
-        }
-
         private async Task CopyToInternal(
             Response<BlobDownloadStreamingResult> response,
             Stream destination,
@@ -417,7 +416,10 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            using IHasher hasher = ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
+            // if structured message, this crc is validated in the decoding process. don't decode it here.
+            using IHasher hasher = response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader)
+                ? null
+                : ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
             using Stream rawSource = response.Value.Content;
             using Stream source = hasher != null
                 ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
@@ -432,13 +434,13 @@ namespace Azure.Storage.Blobs
             if (hasher != null)
             {
                 hasher.GetFinalHash(checksumBuffer.Span);
-                (ReadOnlyMemory<byte> checksum, StorageChecksumAlgorithm _)
-                    = ContentHasher.GetResponseChecksumOrDefault(response.GetRawResponse());
-                if (!checksumBuffer.Span.SequenceEqual(checksum.Span))
-                {
-                    throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
+                    (ReadOnlyMemory<byte> checksum, StorageChecksumAlgorithm _)
+                        = ContentHasher.GetResponseChecksumOrDefault(response.GetRawResponse());
+                    if (!checksumBuffer.Span.SequenceEqual(checksum.Span))
+                    {
+                        throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
+                    }
                 }
-            }
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)

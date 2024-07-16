@@ -218,6 +218,31 @@ namespace Azure.Storage.Tests
             Assert.That(() => encodingStream.Position = 123, Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
+        [Test]
+        [Pairwise]
+        public async Task WrapperStreamCorrectData(
+            [Values(2048, 2005)] int dataLength,
+            [Values(8 * Constants.KB, 512, 530, 3)] int readLen)
+        {
+            int segmentContentLength = dataLength;
+            Flags flags = Flags.StorageCrc64;
+
+            byte[] originalData = new byte[dataLength];
+            new Random().NextBytes(originalData);
+            byte[] crc = CrcInline(originalData);
+            byte[] expectedEncodedData = StructuredMessageHelper.MakeEncodedData(originalData, segmentContentLength, flags);
+
+            Stream encodingStream = new StructuredMessagePrecalculatedCrcWrapperStream(new MemoryStream(originalData), crc);
+            byte[] encodedData;
+            using (MemoryStream dest = new())
+            {
+                await CopyStream(encodingStream, dest, readLen);
+                encodedData = dest.ToArray();
+            }
+
+            Assert.That(new Span<byte>(encodedData).SequenceEqual(expectedEncodedData));
+        }
+
         private static void AssertExpectedStreamHeader(ReadOnlySpan<byte> actual, int originalDataLength, Flags flags, int expectedSegments)
         {
             int expectedFooterLen = flags.HasFlag(Flags.StorageCrc64) ? Crc64Length : 0;

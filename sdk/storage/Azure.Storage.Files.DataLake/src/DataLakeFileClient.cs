@@ -2339,17 +2339,20 @@ namespace Azure.Storage.Files.DataLake
                 string structuredBodyType = null;
                 if (content != null &&
                     validationOptions != null &&
-                    validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                    validationOptions.PrecalculatedChecksum.IsEmpty)
+                    validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
                 {
                     // report progress in terms of caller bytes, not encoded bytes
                     structuredContentLength = contentLength;
                     structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
                     content = content.WithNoDispose().WithProgress(progressHandler);
-                    content = new StructuredMessageEncodingStream(
-                        content,
-                        Constants.StructuredMessage.DefaultSegmentContentLength,
-                        StructuredMessage.Flags.StorageCrc64);
+                    content = validationOptions.PrecalculatedChecksum.IsEmpty
+                        ? new StructuredMessageEncodingStream(
+                            content,
+                            Constants.StructuredMessage.DefaultSegmentContentLength,
+                            StructuredMessage.Flags.StorageCrc64)
+                        : new StructuredMessagePrecalculatedCrcWrapperStream(
+                            content,
+                            validationOptions.PrecalculatedChecksum.Span);
                     contentLength = content.Length - content.Position;
                 }
                 else
