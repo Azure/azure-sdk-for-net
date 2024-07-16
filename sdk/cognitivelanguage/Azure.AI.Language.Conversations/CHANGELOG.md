@@ -2,6 +2,8 @@
 
 ## 1.2.0-beta.1 (Unreleased)
 
+- Added support for service version 2023-04-01.
+
 ### Features Added
 
 ### Breaking Changes

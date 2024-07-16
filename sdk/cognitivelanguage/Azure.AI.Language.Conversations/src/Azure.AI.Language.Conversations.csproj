@@ -4,8 +4,8 @@
     <AssemblyTitle>Microsoft Azure.AI.Language.Conversations client library</AssemblyTitle>
     <Version>1.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.0</ApiCompatVersion>
-    <PackageTags>Azure AI Language Conversations LUIS</PackageTags>
+    <!--ApiCompatVersion>1.1.0</ApiCompatVersion-->
+    <PackageTags>Azure AI Language Conversations</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
