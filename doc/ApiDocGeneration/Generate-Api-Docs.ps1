@@ -140,7 +140,7 @@ if ($LibType -eq 'client') {
 }
 
 Write-Verbose "Remove all unneeded artifacts from build output directory"
-Remove-Item –Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml"
+Remove-Item –Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml" -Recurse -Force
 
 Write-Verbose "Initialize Frameworks File"
 & "${MDocTool}" fx-bootstrap "${FrameworkDir}"
