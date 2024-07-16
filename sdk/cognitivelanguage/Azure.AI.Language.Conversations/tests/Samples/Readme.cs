@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationsClientSamples : ConversationAnalysisTestBase<ConversationsClient>
     {
-        public void CreateConversationAnalysisClient()
+        public void CreateConversationClient()
         {
             #region Snippet:ConversationAnalysisClient_Create
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
         }
 
-        public void CreateConversationAnalysisClientWithDefaultAzureCredential()
+        public void CreateConversationClientWithDefaultAzureCredential()
         {
             #region Snippet:ConversationAnalysisClient_CreateWithDefaultAzureCredential
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");

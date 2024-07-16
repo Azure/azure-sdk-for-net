@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         }
                     });
 
-            var analyzeConversationOperation = client.AnalyzeConversationsOperation(data);
+            Response<AnalyzeConversationJobState> analyzeConversationOperation = client.AnalyzeConversationsOperation(data);
 
             dynamic jobResults = analyzeConversationOperation.Value;
             foreach (dynamic task in jobResults.Tasks.Items)
