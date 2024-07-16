@@ -43,6 +43,7 @@
     <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Vision.CustomVision.Training\**\*.csproj" />
     <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Personalizer\**\*.csproj" />
     <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\hdinsight\Microsoft.Azure.HDInsight.Job\**\*.csproj" />
+    <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\playwrighttesting\Azure.Developer.MicrosoftPlaywrightTesting.NUnit\samples\**\*.csproj" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\samples\**\*.csproj;..\sdk\$(ServiceDirectory)\samples\**\*.csproj" />
     <PerfProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\perf\**\*.csproj" />
