@@ -116,9 +116,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         new AzureOpenAIVectorizer("openai")
                         {
-                            AzureOpenAIParameters  = new AzureOpenAIParameters()
+                            Parameters  = new AzureOpenAIVectorizerParameters()
                             {
-                                ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
+                                ResourceUrl = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                                 ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                                 DeploymentName = deploymentName,
                                 ModelName = AzureOpenAIModelName.TextEmbedding3Small
