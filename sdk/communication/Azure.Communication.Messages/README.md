@@ -89,9 +89,7 @@ await foreach (MessageTemplateItem template in templates)
 {
     Console.WriteLine($"{template.Name}");
 }
-
----
-
+```
 
 ## Troubleshooting
 A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.
