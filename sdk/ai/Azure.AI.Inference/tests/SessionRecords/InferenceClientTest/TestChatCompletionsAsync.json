@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "130",
         "Content-Type": "application/json",
-        "traceparent": "00-e8e2a5099342c5e1fb85a384e27fd3ad-12ffb2b874c55108-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240715.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-a484d759e27cb13a0582a48e41d08059-01cf2a695c692167-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240716.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -31,13 +31,13 @@
         "azureml-model-session": "dep-eus-mis-bundle-240705001",
         "Content-Length": "324",
         "Content-Type": "application/json",
-        "Date": "Mon, 15 Jul 2024 20:04:25 GMT",
+        "Date": "Tue, 16 Jul 2024 17:49:16 GMT",
         "prompt_token_len": "19",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
         "sampling_token_len": "13",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "68088a11-5416-4abd-ab3d-59211c54ac33"
+        "X-Request-ID": "e66212ba-1c27-4678-8879-b345754e124c"
       },
       "ResponseBody": {
         "choices": [
@@ -51,8 +51,8 @@
             }
           }
         ],
-        "created": 1721073866,
-        "id": "094d5ee587a3496a9504303a7a209764",
+        "created": 1721152156,
+        "id": "3a7cdce0cdb8411ba8f472ccd9b28f06",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
@@ -66,6 +66,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "479665792"
+    "RandomSeed": "1087401414"
   }
 }

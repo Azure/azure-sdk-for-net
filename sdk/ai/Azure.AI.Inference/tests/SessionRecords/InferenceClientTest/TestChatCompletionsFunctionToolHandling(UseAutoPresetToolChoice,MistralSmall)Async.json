@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "685",
         "Content-Type": "application/json",
-        "traceparent": "00-007dd9bf4001b2395aea0677ee62143b-3eb2f62a67afa408-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240715.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-630099b4ea2221a870ccc356d5300314-f15f4e064bacf85c-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240716.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -55,13 +55,13 @@
         "azureml-model-session": "dep-eus-mis-bundle-240705002",
         "Content-Length": "464",
         "Content-Type": "application/json",
-        "Date": "Mon, 15 Jul 2024 20:03:28 GMT",
+        "Date": "Tue, 16 Jul 2024 17:48:21 GMT",
         "prompt_token_len": "143",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
         "sampling_token_len": "36",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "dae3ec01-9689-4bf9-bf8a-8b1276191336"
+        "X-Request-ID": "64c211c4-01c2-4fd5-92cf-63764ffa142d"
       },
       "ResponseBody": {
         "choices": [
@@ -78,15 +78,15 @@
                     "call_id": null,
                     "name": "get_future_temperature"
                   },
-                  "id": "lOJTetDtD",
+                  "id": "D5TFQJiLL",
                   "type": "function"
                 }
               ]
             }
           }
         ],
-        "created": 1721073808,
-        "id": "fbc794680e2f47c7b951b20eaeb7ba2d",
+        "created": 1721152101,
+        "id": "c3b318768e8c4ca4a6f8838b6fc50585",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
@@ -104,8 +104,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "954",
         "Content-Type": "application/json",
-        "traceparent": "00-3d5ff23e68ea2e729d25b9092839ebcf-c411198af553dc89-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240715.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9d9a350464d2af2d4f496c6c8e3d64cc-10580c9fecdf8feb-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240716.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -128,14 +128,14 @@
                   "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}"
                 },
                 "type": "function",
-                "id": "lOJTetDtD"
+                "id": "D5TFQJiLL"
               }
             ],
             "role": "assistant"
           },
           {
             "content": "31 celsius",
-            "tool_call_id": "lOJTetDtD",
+            "tool_call_id": "D5TFQJiLL",
             "role": "tool"
           }
         ],
@@ -167,15 +167,15 @@
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
         "azureml-model-session": "dep-eus-mis-bundle-240705001",
-        "Content-Length": "576",
+        "Content-Length": "548",
         "Content-Type": "application/json",
-        "Date": "Mon, 15 Jul 2024 20:03:29 GMT",
-        "prompt_token_len": "220",
+        "Date": "Tue, 16 Jul 2024 17:48:22 GMT",
+        "prompt_token_len": "218",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
-        "sampling_token_len": "71",
+        "sampling_token_len": "63",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "8a5e6ba3-4bbc-44bc-adef-876cb3d155a3"
+        "X-Request-ID": "d427a295-9c5b-4a87-9952-252d1cdd8167"
       },
       "ResponseBody": {
         "choices": [
@@ -183,20 +183,20 @@
             "finish_reason": "stop",
             "index": 0,
             "message": {
-              "content": "Based on the anticipated temperature in Honolulu in 3 days, it's expected to be quite warm at 31 degrees Celsius. I would recommend packing light, breathable clothing such as t-shirts, shorts, and sandals. Don't forget to bring a hat and sunscreen to protect yourself from the sun.",
+              "content": "Based on the anticipated future temperature, it would be around 31 degrees Celsius in Honolulu in 3 days. I recommend light, breathable clothing such as shorts, t-shirts, and sandals. Don't forget your sunscreen and a hat for protection against the sun.",
               "role": "assistant",
               "tool_calls": null
             }
           }
         ],
-        "created": 1721073809,
-        "id": "bb014d3451dc4eeda4c848cf688b005d",
+        "created": 1721152102,
+        "id": "660bb541535946db982316c9f3b76cbe",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
-          "completion_tokens": 71,
-          "prompt_tokens": 220,
-          "total_tokens": 291
+          "completion_tokens": 63,
+          "prompt_tokens": 218,
+          "total_tokens": 281
         }
       }
     }
@@ -204,6 +204,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "1513868869"
+    "RandomSeed": "1621751580"
   }
 }

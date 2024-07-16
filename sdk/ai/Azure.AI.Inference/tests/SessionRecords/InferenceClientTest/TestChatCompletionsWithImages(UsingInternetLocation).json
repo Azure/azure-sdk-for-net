@@ -7,10 +7,10 @@
         "Accept": "application/json",
         "api-key": "Sanitized",
         "Authorization": "Sanitized",
-        "Content-Length": "321",
+        "Content-Length": "259",
         "Content-Type": "application/json",
-        "traceparent": "00-d4b580c7fc5017e9afffa02f130b6d06-a959f40e836a90e5-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240715.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-856f1dac098e45be388d8145d67b418a-c2e2424c720341f4-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240716.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -28,7 +28,7 @@
               },
               {
                 "image_url": {
-                  "url": "https://aka.ms/azsdk/azure-ai-inference/csharp/tests/juggling_balls.png",
+                  "url": "Sanitized",
                   "detail": "low"
                 },
                 "type": "image_url"
@@ -42,22 +42,22 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "1",
-        "apim-request-id": "35a614ab-952a-4710-b49a-8f012c782793",
+        "apim-request-id": "506adafc-2a1b-4ace-8630-d021b8dc8d98",
         "azureml-model-session": "d004-20240713213546",
-        "Content-Length": "1337",
+        "Content-Length": "1308",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 15 Jul 2024 20:03:23 GMT",
-        "request-id": "35a614ab-952a-4710-b49a-8f012c782793",
+        "Date": "Tue, 16 Jul 2024 17:48:13 GMT",
+        "request-id": "506adafc-2a1b-4ace-8630-d021b8dc8d98",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "2463",
+        "x-envoy-upstream-service-time": "2139",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "Sweden Central",
         "x-ratelimit-remaining-requests": "9",
         "x-ratelimit-remaining-tokens": "7848",
-        "X-Request-ID": "7490a3e2-adf0-4a04-84b8-de4d9ff296e8"
+        "X-Request-ID": "076f41f4-b5a0-47b0-90ec-08b3f31ddc15"
       },
       "ResponseBody": {
         "choices": [
@@ -84,13 +84,13 @@
             "index": 0,
             "logprobs": null,
             "message": {
-              "content": "The image shows three colorful juggling balls resting on a wooden surface. Each ball is divided into four segments, with each segment being a different color: blue, red, green, and yellow. The balls are small and appear to be made of a soft, pliable material, suitable for juggling. The wooden surface has a natural grain pattern.",
+              "content": "This image shows three juggling balls resting on a wooden surface. Each ball is divided into four colorful segments: red, blue, yellow, and green. The balls appear to be made of a soft, flexible material, likely for ease of use in juggling. The wooden surface they are sitting on has a grainy texture.",
               "role": "assistant"
             }
           }
         ],
-        "created": 1721073803,
-        "id": "chatcmpl-9lMCp1ENGmrXMAokZP5Gm7mH7fLGz",
+        "created": 1721152093,
+        "id": "chatcmpl-9lgZZ0U3MDxUhTp6G6410tqe407Qy",
         "model": "gpt-4o-2024-05-13",
         "object": "chat.completion",
         "prompt_filter_results": [
@@ -135,9 +135,9 @@
         ],
         "system_fingerprint": "fp_abc28019ad",
         "usage": {
-          "completion_tokens": 68,
+          "completion_tokens": 64,
           "prompt_tokens": 90,
-          "total_tokens": 158
+          "total_tokens": 154
         }
       }
     }
@@ -145,6 +145,6 @@
   "Variables": {
     "AOAI_CHAT_COMPLETIONS_ENDPOINT": "https://openai-sdk-test-automation-account-sweden-central.openai.azure.com/openai/deployments/gpt-4o",
     "AOAI_CHAT_COMPLETIONS_KEY": "644e6b8b83b84596a8a3f1ae5d9f1e28",
-    "RandomSeed": "1893065523"
+    "RandomSeed": "260486222"
   }
 }

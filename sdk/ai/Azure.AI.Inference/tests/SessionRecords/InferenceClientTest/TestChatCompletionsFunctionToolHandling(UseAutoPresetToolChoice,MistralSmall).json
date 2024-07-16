@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "685",
         "Content-Type": "application/json",
-        "traceparent": "00-a888100e439cb6b9bb05375e942c62ef-4c18bb634c94a60a-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240715.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-6f150f58074bf521fd5ff9ff308d97b1-42535772bb58b230-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240716.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -52,16 +52,16 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240705002",
+        "azureml-model-session": "dep-eus-mis-bundle-240705001",
         "Content-Length": "464",
         "Content-Type": "application/json",
-        "Date": "Mon, 15 Jul 2024 20:03:10 GMT",
+        "Date": "Tue, 16 Jul 2024 17:48:01 GMT",
         "prompt_token_len": "143",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
         "sampling_token_len": "36",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "80bebfdf-18c8-47b5-9f75-10e47e1174eb"
+        "X-Request-ID": "25d7c102-0781-4e63-a213-071c4aefde98"
       },
       "ResponseBody": {
         "choices": [
@@ -78,15 +78,15 @@
                     "call_id": null,
                     "name": "get_future_temperature"
                   },
-                  "id": "d21HQei7s",
+                  "id": "mwFM90v5x",
                   "type": "function"
                 }
               ]
             }
           }
         ],
-        "created": 1721073790,
-        "id": "f0b70611b2bd46f49ae710a46db10b0e",
+        "created": 1721152081,
+        "id": "30205f89580b4c87b863728d549e632f",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
@@ -104,8 +104,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "954",
         "Content-Type": "application/json",
-        "traceparent": "00-81a04b83ad5ac137e7d30c8bf515a5cc-3d3fd287e9fda4b7-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240715.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-45a5a700cfdddc2512314d006f919343-9c6cb50badc4c63a-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240716.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -128,14 +128,14 @@
                   "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}"
                 },
                 "type": "function",
-                "id": "d21HQei7s"
+                "id": "mwFM90v5x"
               }
             ],
             "role": "assistant"
           },
           {
             "content": "31 celsius",
-            "tool_call_id": "d21HQei7s",
+            "tool_call_id": "mwFM90v5x",
             "role": "tool"
           }
         ],
@@ -166,16 +166,16 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240705001",
-        "Content-Length": "558",
+        "azureml-model-session": "dep-eus-mis-bundle-240705002",
+        "Content-Length": "505",
         "Content-Type": "application/json",
-        "Date": "Mon, 15 Jul 2024 20:03:11 GMT",
+        "Date": "Tue, 16 Jul 2024 17:48:02 GMT",
         "prompt_token_len": "220",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
-        "sampling_token_len": "65",
+        "sampling_token_len": "57",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "f006a081-7de5-4f75-aa65-624f6048b659"
+        "X-Request-ID": "6fa95b37-af82-4720-b7e9-d7c8783d02bb"
       },
       "ResponseBody": {
         "choices": [
@@ -183,20 +183,20 @@
             "finish_reason": "stop",
             "index": 0,
             "message": {
-              "content": "Based on the anticipated temperature in Honolulu in 3 days, I suggest wearing light, breathable clothing such as shorts, t-shirts, and sandals. It would also be a good idea to bring a hat and sunglasses for protection from the sun. Don't forget to pack sunscreen!",
+              "content": "In 3 days, the temperature in Honolulu is expected to be 31 degrees Celsius. I would suggest wearing light, breathable clothing such as shorts, t-shirts, and sandals. Don't forget your sunscreen and sunglasses!",
               "role": "assistant",
               "tool_calls": null
             }
           }
         ],
-        "created": 1721073790,
-        "id": "f63bb976796340c08709443d4471d00c",
+        "created": 1721152081,
+        "id": "e701c4c2ee59496f8282b94be0e32f71",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
-          "completion_tokens": 65,
+          "completion_tokens": 57,
           "prompt_tokens": 220,
-          "total_tokens": 285
+          "total_tokens": 277
         }
       }
     }
@@ -204,6 +204,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "1457366430"
+    "RandomSeed": "50353095"
   }
 }
