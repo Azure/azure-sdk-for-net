@@ -2931,7 +2931,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateFuzzySearchBatchSyncRequest(JsonFormat format, BatchRequestInternal batchRequest)
+        internal HttpMessage CreateFuzzySearchBatchSyncRequest(JsonFormat format, BatchRequestInternal batchRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2949,7 +2949,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequestInternal);
             request.Content = content;
             return message;
         }
@@ -3105,17 +3105,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchSyncAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchSyncAsync(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateFuzzySearchBatchSyncRequest(format, batchRequest);
+            using var message = CreateFuzzySearchBatchSyncRequest(format, batchRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3282,17 +3282,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public Response<SearchAddressBatchResult> FuzzySearchBatchSync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public Response<SearchAddressBatchResult> FuzzySearchBatchSync(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateFuzzySearchBatchSyncRequest(format, batchRequest);
+            using var message = CreateFuzzySearchBatchSyncRequest(format, batchRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3308,7 +3308,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateFuzzySearchBatchRequest(JsonFormat format, BatchRequestInternal batchRequest)
+        internal HttpMessage CreateFuzzySearchBatchRequest(JsonFormat format, BatchRequestInternal batchRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3326,7 +3326,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequestInternal);
             request.Content = content;
             return message;
         }
@@ -3482,17 +3482,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchFuzzySearchBatchHeaders>> FuzzySearchBatchAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public async Task<ResponseWithHeaders<SearchFuzzySearchBatchHeaders>> FuzzySearchBatchAsync(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateFuzzySearchBatchRequest(format, batchRequest);
+            using var message = CreateFuzzySearchBatchRequest(format, batchRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new SearchFuzzySearchBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -3656,17 +3656,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchFuzzySearchBatchHeaders> FuzzySearchBatch(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public ResponseWithHeaders<SearchFuzzySearchBatchHeaders> FuzzySearchBatch(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateFuzzySearchBatchRequest(format, batchRequest);
+            using var message = CreateFuzzySearchBatchRequest(format, batchRequestInternal);
             _pipeline.Send(message, cancellationToken);
             var headers = new SearchFuzzySearchBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -4044,7 +4044,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateSearchAddressBatchSyncRequest(JsonFormat format, BatchRequestInternal batchRequest)
+        internal HttpMessage CreateSearchAddressBatchSyncRequest(JsonFormat format, BatchRequestInternal batchRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4062,7 +4062,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequestInternal);
             request.Content = content;
             return message;
         }
@@ -4210,17 +4210,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<SearchAddressBatchResult>> SearchAddressBatchSyncAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public async Task<Response<SearchAddressBatchResult>> SearchAddressBatchSyncAsync(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateSearchAddressBatchSyncRequest(format, batchRequest);
+            using var message = CreateSearchAddressBatchSyncRequest(format, batchRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4379,17 +4379,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public Response<SearchAddressBatchResult> SearchAddressBatchSync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public Response<SearchAddressBatchResult> SearchAddressBatchSync(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateSearchAddressBatchSyncRequest(format, batchRequest);
+            using var message = CreateSearchAddressBatchSyncRequest(format, batchRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4405,7 +4405,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateSearchAddressBatchRequest(JsonFormat format, BatchRequestInternal batchRequest)
+        internal HttpMessage CreateSearchAddressBatchRequest(JsonFormat format, BatchRequestInternal batchRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4423,7 +4423,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequestInternal);
             request.Content = content;
             return message;
         }
@@ -4571,17 +4571,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchSearchAddressBatchHeaders>> SearchAddressBatchAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public async Task<ResponseWithHeaders<SearchSearchAddressBatchHeaders>> SearchAddressBatchAsync(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateSearchAddressBatchRequest(format, batchRequest);
+            using var message = CreateSearchAddressBatchRequest(format, batchRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new SearchSearchAddressBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -4737,17 +4737,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchSearchAddressBatchHeaders> SearchAddressBatch(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public ResponseWithHeaders<SearchSearchAddressBatchHeaders> SearchAddressBatch(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateSearchAddressBatchRequest(format, batchRequest);
+            using var message = CreateSearchAddressBatchRequest(format, batchRequestInternal);
             _pipeline.Send(message, cancellationToken);
             var headers = new SearchSearchAddressBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -5109,7 +5109,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateReverseSearchAddressBatchSyncRequest(JsonFormat format, BatchRequestInternal batchRequest)
+        internal HttpMessage CreateReverseSearchAddressBatchSyncRequest(JsonFormat format, BatchRequestInternal batchRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -5127,7 +5127,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequestInternal);
             request.Content = content;
             return message;
         }
@@ -5277,17 +5277,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<Response<ReverseSearchAddressBatchResult>> ReverseSearchAddressBatchSyncAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public async Task<Response<ReverseSearchAddressBatchResult>> ReverseSearchAddressBatchSyncAsync(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateReverseSearchAddressBatchSyncRequest(format, batchRequest);
+            using var message = CreateReverseSearchAddressBatchSyncRequest(format, batchRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -5448,17 +5448,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public Response<ReverseSearchAddressBatchResult> ReverseSearchAddressBatchSync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public Response<ReverseSearchAddressBatchResult> ReverseSearchAddressBatchSync(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateReverseSearchAddressBatchSyncRequest(format, batchRequest);
+            using var message = CreateReverseSearchAddressBatchSyncRequest(format, batchRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -5474,7 +5474,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        internal HttpMessage CreateReverseSearchAddressBatchRequest(JsonFormat format, BatchRequestInternal batchRequest)
+        internal HttpMessage CreateReverseSearchAddressBatchRequest(JsonFormat format, BatchRequestInternal batchRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -5492,7 +5492,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequestInternal);
             request.Content = content;
             return message;
         }
@@ -5642,17 +5642,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders>> ReverseSearchAddressBatchAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public async Task<ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders>> ReverseSearchAddressBatchAsync(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateReverseSearchAddressBatchRequest(format, batchRequest);
+            using var message = CreateReverseSearchAddressBatchRequest(format, batchRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new SearchReverseSearchAddressBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -5810,17 +5810,17 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
+        /// <param name="batchRequestInternal"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders> ReverseSearchAddressBatch(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="batchRequestInternal"/> is null. </exception>
+        public ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders> ReverseSearchAddressBatch(JsonFormat format, BatchRequestInternal batchRequestInternal, CancellationToken cancellationToken = default)
         {
-            if (batchRequest == null)
+            if (batchRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(batchRequest));
+                throw new ArgumentNullException(nameof(batchRequestInternal));
             }
 
-            using var message = CreateReverseSearchAddressBatchRequest(format, batchRequest);
+            using var message = CreateReverseSearchAddressBatchRequest(format, batchRequestInternal);
             _pipeline.Send(message, cancellationToken);
             var headers = new SearchReverseSearchAddressBatchHeaders(message.Response);
             switch (message.Response.Status)
