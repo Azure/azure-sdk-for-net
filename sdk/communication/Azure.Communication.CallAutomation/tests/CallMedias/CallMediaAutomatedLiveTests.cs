@@ -169,8 +169,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new FileSource(new Uri(TestEnvironment.FileSourceUrl) )
                     };
 
+                    PlayOptions options = new PlayOptions(playFileSources, new List<CommunicationUserIdentifier>() { target }) { OperationContext = "context" };
+
                     // Assert the Play with multiple File Sources
-                    await callConnection.GetCallMedia().PlayAsync(playFileSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
+                    await callConnection.GetCallMedia().PlayAsync(options).ConfigureAwait(false);
                     var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
@@ -239,8 +241,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new FileSource(new Uri(TestEnvironment.FileSourceUrl) )
                     };
 
+                    PlayToAllOptions options = new PlayToAllOptions(playFileSources) { OperationContext = "context" };
+
                     // Assert the Play with multiple File Sources
-                    await callConnection.GetCallMedia().PlayToAllAsync(playFileSources).ConfigureAwait(false);
+                    await callConnection.GetCallMedia().PlayToAllAsync(options).ConfigureAwait(false);
                     var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
@@ -310,8 +314,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new TextSource("Test prompt3") { VoiceName = "en-US-NancyNeural" }
                     };
 
+                    PlayOptions options = new PlayOptions(playTextSources, new List<CommunicationUserIdentifier>() { target }) { OperationContext = "context" };
+
                     // Assert the Play with multiple Text Sources
-                    await callConnection.GetCallMedia().PlayAsync(playTextSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
+                    await callConnection.GetCallMedia().PlayAsync(options).ConfigureAwait(false);
                     var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
@@ -381,8 +387,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new TextSource("Test prompt3") { VoiceName = "en-US-NancyNeural" }
                     };
 
+                    PlayToAllOptions options = new PlayToAllOptions(playTextSources) { OperationContext = "context" };
+
                     // Assert the Play with multiple Text Sources
-                    await callConnection.GetCallMedia().PlayToAllAsync(playTextSources).ConfigureAwait(false);
+                    await callConnection.GetCallMedia().PlayToAllAsync(options).ConfigureAwait(false);
                     var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
@@ -451,8 +459,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new TextSource("Test prompt1") { VoiceName = "en-US-NancyNeural" }
                     };
 
+                    PlayOptions options = new PlayOptions(playMultipleSources, new List<CommunicationUserIdentifier>() { target }) { OperationContext = "context" };
+
                     // Assert the Play with multiple Text Sources
-                    await callConnection.GetCallMedia().PlayAsync(playMultipleSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
+                    await callConnection.GetCallMedia().PlayAsync(options).ConfigureAwait(false);
                     var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
@@ -521,8 +531,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new TextSource("Test prompt1") { VoiceName = "en-US-NancyNeural" }
                     };
 
+                    PlayToAllOptions options = new PlayToAllOptions(playMultipleSources) { OperationContext = "context" };
+
                     // Assert the Play with multiple Text Sources
-                    await callConnection.GetCallMedia().PlayToAllAsync(playMultipleSources).ConfigureAwait(false);
+                    await callConnection.GetCallMedia().PlayToAllAsync(options).ConfigureAwait(false);
                     var playCompletedEvent = await WaitForEvent<PlayCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playCompletedEvent);
                     Assert.IsTrue(playCompletedEvent is PlayCompleted);
@@ -589,8 +601,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new FileSource(new Uri("https://dummy.com/dummyurl.wav"))
                     };
 
+                    PlayOptions options = new PlayOptions(playMultipleSources, new List<CommunicationUserIdentifier>() { target });
+
                     // Assert the Play with multiple Text Sources
-                    await callConnection.GetCallMedia().PlayAsync(playMultipleSources, new List<CommunicationUserIdentifier>() { target }).ConfigureAwait(false);
+                    await callConnection.GetCallMedia().PlayAsync(options).ConfigureAwait(false);
                     var playFailedEvent = await WaitForEvent<PlayFailed>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playFailedEvent);
                     Assert.IsTrue(playFailedEvent is PlayFailed);
@@ -658,8 +672,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new FileSource(new Uri("https://dummy.com/dummyurl.wav"))
                     };
 
+                    PlayToAllOptions options = new PlayToAllOptions(playMultipleSources) { OperationContext = "context" };
+
                     // Assert the Play with multiple Text Sources
-                    await callConnection.GetCallMedia().PlayToAllAsync(playMultipleSources).ConfigureAwait(false);
+                    await callConnection.GetCallMedia().PlayToAllAsync(options).ConfigureAwait(false);
 
                     var playFailedEvent = await WaitForEvent<PlayFailed>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playFailedEvent);
