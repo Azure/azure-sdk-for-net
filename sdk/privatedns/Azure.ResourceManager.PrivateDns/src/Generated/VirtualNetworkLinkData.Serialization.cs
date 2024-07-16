@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("registrationEnabled"u8);
                 writer.WriteBooleanValue(RegistrationEnabled.Value);
             }
+            if (Optional.IsDefined(ResolutionPolicy))
+            {
+                writer.WritePropertyName("resolutionPolicy"u8);
+                writer.WriteStringValue(ResolutionPolicy.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(VirtualNetworkLinkState))
             {
                 writer.WritePropertyName("virtualNetworkLinkState"u8);
@@ -137,6 +142,7 @@ namespace Azure.ResourceManager.PrivateDns
             SystemData systemData = default;
             WritableSubResource virtualNetwork = default;
             bool? registrationEnabled = default;
+            ResolutionPolicy? resolutionPolicy = default;
             VirtualNetworkLinkState? virtualNetworkLinkState = default;
             PrivateDnsProvisioningState? privateDnsProvisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -222,6 +228,15 @@ namespace Azure.ResourceManager.PrivateDns
                             registrationEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("resolutionPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resolutionPolicy = new ResolutionPolicy(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("virtualNetworkLinkState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -259,6 +274,7 @@ namespace Azure.ResourceManager.PrivateDns
                 etag,
                 virtualNetwork,
                 registrationEnabled,
+                resolutionPolicy,
                 virtualNetworkLinkState,
                 privateDnsProvisioningState,
                 serializedAdditionalRawData);

@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-06-01</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-06-01</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-06-01</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-06-01</description>
+        /// <description>2024-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
