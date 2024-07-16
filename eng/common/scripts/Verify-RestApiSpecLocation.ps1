@@ -169,7 +169,7 @@ function Verify-PackageVersion() {
       if (-not (Test-Path -Path $PackageInfoDirectory)) {
         # Call Save-Package-Properties.ps1 script to generate package info json files
         $savePropertiesScriptPath = Join-Path -Path $PSScriptRoot "Save-Package-Properties.ps1"
-        & $savePropertiesScriptPath -serviceDirectory $ServiceDirectory -outDirectory $PackageInfoDirectory
+        & $savePropertiesScriptPath -serviceInput $ServiceDirectory -outDirectory $PackageInfoDirectory
       }
     }
     $pkgPropPath = Join-Path -Path $PackageInfoDirectory "$PackageName.json"
