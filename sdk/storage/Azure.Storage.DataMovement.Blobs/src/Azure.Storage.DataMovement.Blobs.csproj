@@ -19,8 +19,8 @@
     <PackageId />
   </PropertyGroup>
   <ItemGroup>
-    <!--<PackageReference Include="Azure.Storage.Blobs" />-->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <!-- <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" /> -->
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
   <ItemGroup>
