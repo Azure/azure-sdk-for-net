@@ -10,7 +10,6 @@ using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
 #endregion
 #region Snippet:ConversationAuthoringClient_Namespace
-using Azure.AI.Language.Conversations.Authoring;
 #endregion
 #region Snippet:Conversation_Identity_Namespace
 using Azure.Identity;
@@ -18,7 +17,7 @@ using Azure.Identity;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
-    public partial class ConversationAnalysisClientSamples : ConversationAnalysisTestBase<ConversationAnalysisClient>
+    public partial class ConversationsClientSamples : ConversationAnalysisTestBase<ConversationsClient>
     {
         public void CreateConversationAnalysisClient()
         {
@@ -26,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+            ConversationsClient client = new ConversationsClient(endpoint, credential);
             #endregion
         }
 
@@ -36,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             DefaultAzureCredential credential = new DefaultAzureCredential();
 
-            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+            ConversationsClient client = new ConversationsClient(endpoint, credential);
             #endregion
         }
 
@@ -44,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         [SyncOnly]
         public void BadArgument()
         {
-            ConversationAnalysisClient client = Client;
+            ConversationsClient client = Client;
 
             #region Snippet:ConversationAnalysisClient_BadRequest
             try
@@ -71,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     kind = "Conversation",
                 };
 
-                Response response = client.AnalyzeConversation(RequestContent.Create(data));
+                Response response = client.AnalyzeConversations(RequestContent.Create(data));
             }
             catch (RequestFailedException ex)
             {

@@ -2,47 +2,46 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
 {
-    public class ConversationAuthoringClientTests
+    public class ConversationsClientTests
     {
         [Test]
-        public void ConversationAuthoringClientEndpointNull()
+        public void ConversationsClientEndpointNull()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationAuthoringClient(null, (AzureKeyCredential)null));
+                () => new ConversationsClient(null, (AzureKeyCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
         [Test]
-        public void ConversationAuthoringClientCredentialNull()
+        public void ConversationsClientCredentialNull()
         {
             Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationAuthoringClient(endpoint, (AzureKeyCredential)null));
+                () => new ConversationsClient(endpoint, (AzureKeyCredential)null));
             Assert.AreEqual("credential", ex.ParamName);
         }
 
         [Test]
-        public void ConversationAuthoringClientEndpointNullUsingTokenCredential()
+        public void ConversationsClientEndpointNullUsingTokenCredential()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationAuthoringClient(null, (TokenCredential)null));
+                () => new ConversationsClient(null, (TokenCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
         [Test]
-        public void ConversationAuthoringClientCredentialNullUsingTokenCredential()
+        public void ConversationsClientCredentialNullUsingTokenCredential()
         {
             Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationAuthoringClient(endpoint, (TokenCredential)null));
+                () => new ConversationsClient(endpoint, (TokenCredential)null));
             Assert.AreEqual("credential", ex.ParamName);
         }
     }

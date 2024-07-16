@@ -4,94 +4,57 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Serialization;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
-    public partial class ConversationAnalysisClientSamples
+    public partial class ConversationsClientSamples
     {
         [SyncOnly]
         [RecordedTest]
         [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public void AnalyzeConversation_ConversationSummarization()
         {
-            ConversationAnalysisClient client = Client;
+            ConversationsClient client = Client;
             List<string> aspects = new();
 
             #region Snippet:AnalyzeConversation_ConversationSummarization
-            var data = new
-            {
-                AnalysisInput = new
-                {
-                    Conversations = new[]
+            var data = new AnalyzeConversationJobsInput(
+                new MultiLanguageConversationAnalysisInput(
+                    new List<ConversationInput>
                     {
-                        new
+                        new TextConversation("1", "en", new List<TextConversationItem>()
                         {
-                            ConversationItems = new[]
-                            {
-                                new
-                                {
-                                    Text = "Hello, how can I help you?",
-                                    Id = "1",
-                                    Role = "Agent",
-                                    ParticipantId = "Agent_1",
-                                },
-                                new
-                                {
-                                    Text = "How to upgrade Office? I am getting error messages the whole day.",
-                                    Id = "2",
-                                    Role = "Customer",
-                                    ParticipantId = "Customer_1",
-                                },
-                                new
-                                {
-                                    Text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                                    Id = "3",
-                                    Role = "Agent",
-                                    ParticipantId = "Agent_1",
-                                },
-                            },
-                            Id = "1",
-                            Language = "en",
-                            Modality = "text",
-                        },
-                    }
-                },
-                Tasks = new[]
-                {
-                    new
+                            AILanguageConversationsModelFactory.TextConversationItem("1", "Agent_1", "Hello, how can I help you?", role: ParticipantRole.Agent),
+                            AILanguageConversationsModelFactory.TextConversationItem("2", "Customer_1", "How to upgrade Office? I am getting error messages the whole day.", role: ParticipantRole.Customer),
+                            AILanguageConversationsModelFactory.TextConversationItem("3", "Agent_1", "Press the upgrade button please. Then sign in and follow the instructions.", role: ParticipantRole.Agent)
+                        })
+                    }),
+                    new List<AnalyzeConversationJobTask>
                     {
-                        TaskName = "Issue task",
-                        Kind = "ConversationalSummarizationTask",
-                        Parameters = new
+                        new AnalyzeConversationSummarizationTask()
                         {
-                            SummaryAspects = new[]
+                            Parameters = new ConversationSummarizationTaskContent(new List<SummaryAspect>
                             {
-                                "issue",
-                            }
+                                SummaryAspect.Issue,
+                            }),
+                            TaskName = "Issue task",
                         },
-                    },
-                    new
-                    {
-                        TaskName = "Resolution task",
-                        Kind = "ConversationalSummarizationTask",
-                        Parameters = new
+                        new AnalyzeConversationSummarizationTask()
                         {
-                            SummaryAspects = new[]
+                            Parameters = new ConversationSummarizationTaskContent(new List<SummaryAspect>
                             {
-                                "resolution",
-                            }
-                        },
-                    },
-                },
-            };
+                                SummaryAspect.Resolution,
+                            }),
+                            TaskName = "Resolution task",
+                        }
+                    });
 
-            Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
+            var analyzeConversationOperation = client.AnalyzeConversationsOperation(data);
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic jobResults = analyzeConversationOperation.Value;
             foreach (dynamic task in jobResults.Tasks.Items)
             {
                 Console.WriteLine($"Task name: {task.TaskName}");
@@ -139,81 +102,45 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeConversationAsync_ConversationSummarization()
         {
-            ConversationAnalysisClient client = Client;
+            ConversationsClient client = Client;
             List<string> aspects = new();
 
-            var data = new
-            {
-                AnalysisInput = new
-                {
-                    Conversations = new[]
+            var data = new AnalyzeConversationJobsInput(
+                new MultiLanguageConversationAnalysisInput(
+                    new List<ConversationInput>
                     {
-                        new
+                        new TextConversation("1", "en", new List<TextConversationItem>()
                         {
-                            ConversationItems = new[]
-                            {
-                                new
-                                {
-                                    Text = "Hello, how can I help you?",
-                                    Id = "1",
-                                    Role = "Agent",
-                                    ParticipantId = "Agent_1",
-                                },
-                                new
-                                {
-                                    Text = "How to upgrade Office? I am getting error messages the whole day.",
-                                    Id = "2",
-                                    Role = "Customer",
-                                    ParticipantId = "Customer_1",
-                                },
-                                new
-                                {
-                                    Text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                                    Id = "3",
-                                    Role = "Agent",
-                                    ParticipantId = "Agent_1",
-                                },
-                            },
-                            Id = "1",
-                            Language = "en",
-                            Modality = "text",
-                        },
-                    }
-                },
-                Tasks = new[]
-                {
-                    new
+                            AILanguageConversationsModelFactory.TextConversationItem("1", "Agent", "Hello, how can I help you?", role: ParticipantRole.Agent),
+                            AILanguageConversationsModelFactory.TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day.", role: ParticipantRole.Customer),
+                            AILanguageConversationsModelFactory.TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.", role: ParticipantRole.Agent)
+                        })
+                    }),
+                    new List<AnalyzeConversationJobTask>
                     {
-                        TaskName = "Issue task",
-                        Kind = "ConversationalSummarizationTask",
-                        Parameters = new
+                        new AnalyzeConversationSummarizationTask()
                         {
-                            SummaryAspects = new[]
+                            Parameters = new ConversationSummarizationTaskContent(new List<SummaryAspect>
                             {
-                                "issue",
-                            }
+                                SummaryAspect.Issue,
+                            }),
+                            TaskName = "Issue task",
                         },
-                    },
-                    new
-                    {
-                        TaskName = "Resolution task",
-                        Kind = "ConversationalSummarizationTask",
-                        Parameters = new
+                        new AnalyzeConversationSummarizationTask()
                         {
-                            SummaryAspects = new[]
+                            Parameters = new ConversationSummarizationTaskContent(new List<SummaryAspect>
                             {
-                                "resolution",
-                            }
-                        },
-                    },
-                },
-            };
+                                SummaryAspect.Resolution,
+                            }),
+                            TaskName = "Resolution task",
+                        }
+                    });
 
             #region Snippet:AnalyzeConversationAsync_ConversationSummarization
-            Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
+            var analyzeConversationOperation = await client.AnalyzeConversationsOperationAsync(data);
             #endregion
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
             foreach (dynamic task in jobResults.Tasks.Items)
             {
                 Console.WriteLine($"Task name: {task.TaskName}");

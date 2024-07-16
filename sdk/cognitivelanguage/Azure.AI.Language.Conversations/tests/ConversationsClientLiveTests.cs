@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
@@ -11,9 +13,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
 {
-    public class ConversationAnalysisClientLiveTests : ConversationAnalysisTestBase<ConversationAnalysisClient>
+    public class ConversationsClientLiveTests : ConversationAnalysisTestBase<ConversationsClient>
     {
-        public ConversationAnalysisClientLiveTests(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion)
+        public ConversationsClientLiveTests(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
@@ -40,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 Kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+            Response response = await Client.AnalyzeConversationsAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -86,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
+            Response response = await Client.AnalyzeConversationsAsync(RequestContent.Create(data));
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -143,7 +145,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
+            Response response = await Client.AnalyzeConversationsAsync(RequestContent.Create(data));
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -195,7 +197,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
+            Response response = await Client.AnalyzeConversationsAsync(RequestContent.Create(data));
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -229,7 +231,7 @@ namespace Azure.AI.Language.Conversations.Tests
         [ServiceVersion(Max = ConversationsClientOptions.ServiceVersion.V2022_05_01)] // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29600
         public async Task SupportsAadAuthentication()
         {
-            ConversationAnalysisClient client = CreateClient<ConversationAnalysisClient>(
+            ConversationsClient client = CreateClient<ConversationsClient>(
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(
@@ -254,7 +256,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 kind = "Conversation",
             };
 
-            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+            Response response = await client.AnalyzeConversationsAsync(RequestContent.Create(data));
 
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
@@ -264,68 +266,37 @@ namespace Azure.AI.Language.Conversations.Tests
         [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeConversation_ConversationSummarization()
         {
-            var data = new
-            {
-                analysisInput = new
-                {
-                    conversations = new[]
+            var data = new AnalyzeConversationJobsInput(
+                new MultiLanguageConversationAnalysisInput(
+                    new List<ConversationInput>
                     {
-                        new
+                        new TextConversation("1", "en", new List<TextConversationItem>()
                         {
-                            conversationItems = new[]
-                            {
-                                new
-                                {
-                                    text = "Hello, how can I help you?",
-                                    id = "1",
-                                    participantId = "Agent",
-                                    role = "Agent",
-                                },
-                                new
-                                {
-                                    text = "How to upgrade Office? I am getting error messages the whole day.",
-                                    id = "2",
-                                    participantId = "Customer",
-                                    role = "Customer",
-                                },
-                                new
-                                {
-                                    text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                                    id = "3",
-                                    participantId = "Agent",
-                                    role = "Agent",
-                                },
-                            },
-                            id = "1",
-                            language = "en",
-                            modality = "text",
-                        },
-                    },
-                },
-                tasks = new[]
-                {
-                    new
+                            AILanguageConversationsModelFactory.TextConversationItem("1", "Agent", "Hello, how can I help you?", role: ParticipantRole.Agent),
+                            AILanguageConversationsModelFactory.TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day.", role: ParticipantRole.Customer),
+                            AILanguageConversationsModelFactory.TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.", role: ParticipantRole.Agent)
+                        })
+                    }),
+                    new List<AnalyzeConversationJobTask>
                     {
-                        parameters = new
+                        new AnalyzeConversationSummarizationTask()
                         {
-                            summaryAspects = new[]
+                            Parameters = new ConversationSummarizationTaskContent(new List<SummaryAspect>
                             {
-                                "issue",
-                                "resolution",
-                            },
-                        },
-                        kind = "ConversationalSummarizationTask",
-                        taskName = "1",
-                    },
-                },
-            };
+                                SummaryAspect.Issue,
+                                SummaryAspect.Resolution,
+                            }),
+                            TaskName = "1",
+                        }
+                    });
 
-            Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data));
+            Response<AnalyzeConversationJobState> analyzeConversationOperation = await Client.AnalyzeConversationsOperationAsync(data);
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            Assert.NotNull(jobResults);
+            AnalyzeConversationJobState analyzeConversationJobState = analyzeConversationOperation.Value;
 
-            foreach (dynamic analyzeConversationSummarization in jobResults.Tasks.Items)
+            Assert.NotNull(analyzeConversationJobState);
+
+            foreach (dynamic analyzeConversationSummarization in analyzeConversationJobState.Tasks.Items)
             {
                 Assert.NotNull(analyzeConversationSummarization);
 
