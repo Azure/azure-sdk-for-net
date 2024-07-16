@@ -601,7 +601,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new FileSource(new Uri("https://dummy.com/dummyurl.wav"))
                     };
 
-                    PlayOptions options = new PlayOptions(playMultipleSources, new List<CommunicationUserIdentifier>() { target });
+                    PlayOptions options = new PlayOptions(playMultipleSources, new List<CommunicationUserIdentifier>() { target }) { OperationContext = "context" };
 
                     // Assert the Play with multiple Text Sources
                     await callConnection.GetCallMedia().PlayAsync(options).ConfigureAwait(false);
