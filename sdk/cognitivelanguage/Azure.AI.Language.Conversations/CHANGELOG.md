@@ -2,11 +2,15 @@
 
 ## 1.2.0-beta.1 (Unreleased)
 
-- Added support for service version 2023-04-01.
+- Added support for service version 2024-05-01.
+- Added support for service version 2024-05-15-preview.
 
 ### Features Added
 
 ### Breaking Changes
+- Removed `ConversationAuthoringClient`. This will be moved to a separate package in the future.
+- Replaced `ConversationAnalysisClient` with `ConversationsClient`.
+- Removed `ConversationAnalysisClientExtensions`. 
 
 ### Bugs Fixed
 
