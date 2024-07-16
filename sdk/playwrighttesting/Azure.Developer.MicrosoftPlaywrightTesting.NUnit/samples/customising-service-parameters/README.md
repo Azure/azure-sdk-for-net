@@ -42,7 +42,7 @@ This guide explains the different options available to you in the Azure.Develope
 
 #### Known Issue - Minimal support for Azure Credentials
 
-This issue only impacts the reporting feature. Currently, the service provides a minimal support for the below [Azure Credential types](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
+This issue only impacts the reporting feature. Currently, the service provides minimal support for the following [Azure Credential types](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
 
 - EnvironmentCredential
 - WorkloadIdentityCredential
@@ -58,7 +58,7 @@ This issue only impacts the reporting feature. Currently, the service provides a
 
 Along with this, we also support passing a Managed Identity ClientId to be used along with `DefaultAzureCredential` and `ManagedIdentityCredential`. 
 
-If you only want to use cloud hosted browsers along with your tests, you can disable the reporting feature by removing the logger from the runsettings file and then modify the `PlaywrightServiceSetup.cs` file as per below.
+If you only want to use cloud hosted browsers along with your tests, you can disable the reporting feature by removing the logger from the runsettings file and then modify the `PlaywrightServiceSetup.cs` file as per the following.
 
 ```c#
 using Azure.Core;
@@ -93,10 +93,10 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit
     - **Description**: This settings exposes network available on the connecting client to the browser being connected to.
 
 4. **`DefaultAuth`**
-    - **Description**: This setting sllows you to specify the default authentication mechanism to be used for sending requests to the service.
+    - **Description**: This setting allows you to specify the default authentication mechanism to be used for sending requests to the service.
     - **Available Options**:
         - `ServiceAuth.ENTRA` for Entra ID authentication.
-        - `ServiceAuth.TOKEN` for MPT Access Token authenticaton.
+        - `ServiceAuth.TOKEN` for MPT Access Token authentication.
     - **Default Value**: `ServiceAuth.ENTRA`
 
 5. **`UseCloudHostedBrowsers`**

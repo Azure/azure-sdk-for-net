@@ -35,7 +35,7 @@ This guide will walk you through the steps to integrate your Playwright project,
 
 ### Setup Microsoft Playwright Testing
 
-1. Create a file `PlaywrightServiceSetup.cs` in the root directory with the below content
+1. Create a file `PlaywrightServiceSetup.cs` in the root directory with the following
 
     ```c#
     using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
