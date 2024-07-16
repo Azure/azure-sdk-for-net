@@ -166,6 +166,11 @@ public class RunSettingKey
     /// The managed identity client ID setting key.
     /// </summary>
     public static readonly string MANAGED_IDENTITY_CLIENT_ID = "ManagedIdentityClientId";
+
+    /// <summary>
+    /// Enable GitHub summary setting key.
+    /// </summary>
+    public static readonly string ENABLE_GITHUB_SUMMARY = "EnableGitHubSummary";
 }
 
 internal class Constants

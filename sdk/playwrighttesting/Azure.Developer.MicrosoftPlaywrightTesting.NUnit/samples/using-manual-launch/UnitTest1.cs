@@ -41,7 +41,6 @@ public class Tests
     }
 
     [Test]
-    [Category("Live")]
     public async Task HasTitle()
     {
         await _page.GotoAsync("https://playwright.dev");

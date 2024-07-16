@@ -18,6 +18,7 @@ using System.Net.Http;
 using System.Text;
 using PlaywrightConstants = Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility.Constants;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
+using System.IO;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
@@ -68,6 +69,8 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     internal TestRunDtoV2? TestRun { get; set; }
 
     internal TestRunShardDto? TestRunShard { get; set; }
+
+    internal bool EnableGithubSummary { get; set; } = true;
 
     internal List<TestResults> TestResults = new();
 
@@ -413,6 +416,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         LogMessage("TestRun Shard updated");
         playwrightService?.Cleanup();
         Console.WriteLine("Visit MPT Portal for Debugging: " + Uri.EscapeUriString(PortalUrl!));
+        if (EnableGithubSummary) GenerateMarkdownSummary();
         return true;
     }
 
@@ -624,6 +628,10 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         runParameters.TryGetValue(RunSettingKey.DEFAULT_AUTH, out var defaultAuth);
         runParameters.TryGetValue(RunSettingKey.AZURE_TOKEN_CREDENTIAL_TYPE, out var azureTokenCredential);
         runParameters.TryGetValue(RunSettingKey.MANAGED_IDENTITY_CLIENT_ID, out var managedIdentityClientId);
+        runParameters.TryGetValue(RunSettingKey.ENABLE_GITHUB_SUMMARY, out var enableGithubSummary);
+        string? enableGithubSummaryString = enableGithubSummary?.ToString();
+        EnableGithubSummary = string.IsNullOrEmpty(enableGithubSummaryString) || bool.Parse(enableGithubSummaryString!);
+
         PlaywrightServiceSettings? playwrightServiceSettings = null;
         try
         {
@@ -685,5 +693,35 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         IsInitialized = true;
 
         LogMessage("Playwright Service Reporter Intialized");
+    }
+
+    public void GenerateMarkdownSummary()
+    {
+        if (CiInfoProvider.GetCIProvider() == PlaywrightConstants.GITHUB_ACTIONS)
+        {
+            string markdownContent = @$"
+#### Results:
+
+![pass](https://img.shields.io/badge/status-passed-brightgreen) **Passed:** {TestRunShard!.ResultsSummary.NumPassedTests}
+
+![fail](https://img.shields.io/badge/status-failed-red) **Failed:** {TestRunShard!.ResultsSummary.NumFailedTests}
+
+![flaky](https://img.shields.io/badge/status-flaky-yellow) **Flaky:** {"0"}
+
+![skipped](https://img.shields.io/badge/status-skipped-lightgrey) **Skipped:** {TestRunShard!.ResultsSummary.NumSkippedTests}
+
+#### For more details, visit the [service dashboard]({Uri.EscapeUriString(PortalUrl!)}).
+";
+
+            string filePath = Environment.GetEnvironmentVariable("GITHUB_STEP_SUMMARY");
+            try
+            {
+                File.WriteAllText(filePath, markdownContent);
+            }
+            catch (Exception ex)
+            {
+                LogErrorMessage($"Error writing Markdown summary: {ex}");
+            }
+        }
     }
 }

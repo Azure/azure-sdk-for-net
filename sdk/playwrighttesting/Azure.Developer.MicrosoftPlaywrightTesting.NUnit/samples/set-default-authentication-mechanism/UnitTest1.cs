@@ -11,7 +11,6 @@ namespace PlaywrightTests;
 public class ExampleTest : PageTest
 {
     [Test]
-    [Category("Live")]
     public async Task HasTitle()
     {
         await Page.GotoAsync("https://playwright.dev");
@@ -21,7 +20,6 @@ public class ExampleTest : PageTest
     }
 
     [Test]
-    [Category("Live")]
     public async Task GetStartedLink()
     {
         await Page.GotoAsync("https://playwright.dev");
