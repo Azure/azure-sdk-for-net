@@ -11,6 +11,7 @@ namespace Azure.Health.Deidentification.Tests
         public string Endpoint => "https://localhost:5020"; // FIXME: GetRecordedVariable("HEALTHDATAAISERVICES_DEID_SERVICE_ENDPOINT");
         public string FakeNextLink => $"{Endpoint}/jobs?api-version=2024-01-16-preview&continuationToken=1234";
         public string FakeStorageLocation => "https://fakeblobstorage.blob.core.windows.net/container";
+        public string FakeJobName => "net-sdk-job-1234";
 
         public string GetStorageAccountLocation()
         {

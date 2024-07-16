@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-389510138-4_0_303?api-version=2024-07-12-preview",
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-1234?api-version=2024-07-12-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "291",
         "Content-Type": "application/json",
-        "traceparent": "00-adad582a5ad2bce6085cde275ac7c2bf-42f59668e4784055-00",
+        "traceparent": "00-188bb199b5f26d638e1db3b2968d29f8-a74bf603edc403c4-00",
         "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240716.1 (.NET Framework 4.8.9256.0; Microsoft Windows 10.0.22631 )",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -33,20 +33,20 @@
         "api-deprecated-versions": "1",
         "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Jul 2024 18:40:21 GMT",
-        "operation-id": "net-sdk-job-389510138-4_0_303",
-        "operation-location": "https://localhost:5020/jobs/net-sdk-job-389510138-4_0_303?api-version=2024-07-12-preview",
+        "Date": "Tue, 16 Jul 2024 21:50:28 GMT",
+        "operation-id": "net-sdk-job-714655287-4_0_303",
+        "operation-location": "https://localhost:5020/jobs/net-sdk-job-714655287-4_0_303?api-version=2024-07-12-preview",
         "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
         "Server": "Kestrel",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-id": "a9273eff-21aa-4881-ac4c-761957d95184"
+        "x-ms-correlation-id": "fde8eba7-9927-4d15-9740-d94ba9bc4c17"
       },
       "ResponseBody": {
-        "name": "net-sdk-job-389510138-4_0_303",
+        "name": "net-sdk-job-1234",
         "status": "NotStarted",
-        "createdAt": "2024-07-16T18:40:21.9658089Z",
-        "lastUpdatedAt": "2024-07-16T18:40:21.9658089Z",
+        "createdAt": "2024-07-16T21:50:29.2145472Z",
+        "lastUpdatedAt": "2024-07-16T21:50:29.2145472Z",
         "sourceLocation": {
           "extensions": [
             "*"
@@ -78,20 +78,20 @@
         "api-deprecated-versions": "1",
         "api-supported-versions": "2024-01-16-preview, 2024-07-12-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Jul 2024 18:40:21 GMT",
+        "Date": "Tue, 16 Jul 2024 21:50:28 GMT",
         "Request-Context": "appId=cid-v1:a76c5940-1f58-4a73-8ed5-ad2696fe4ae8",
         "Server": "Kestrel",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-id": "779145be-f95f-4a06-8cb5-4c8501b699c4"
+        "x-ms-correlation-id": "b4397112-f9fb-407a-a446-c5ebf3c24b83"
       },
       "ResponseBody": {
         "value": [
           {
-            "name": "net-sdk-job-389510138-4_0_303",
+            "name": "net-sdk-job-1234",
             "status": "NotStarted",
-            "createdAt": "2024-07-16T18:40:21.9658089Z",
-            "lastUpdatedAt": "2024-07-16T18:40:21.9658089Z",
+            "createdAt": "2024-07-16T21:50:29.2145472Z",
+            "lastUpdatedAt": "2024-07-16T21:50:29.2145472Z",
             "sourceLocation": {
               "extensions": [
                 "*"
@@ -107,10 +107,10 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-1845027873-4_0_303",
+            "name": "net-sdk-job-1234",
             "status": "NotStarted",
-            "createdAt": "2024-07-16T18:40:20.7416197Z",
-            "lastUpdatedAt": "2024-07-16T18:40:20.7416197Z",
+            "createdAt": "2024-07-16T21:50:27.9811939Z",
+            "lastUpdatedAt": "2024-07-16T21:50:27.9811939Z",
             "sourceLocation": {
               "extensions": [
                 "*"
@@ -126,11 +126,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-1789439424-6_0_32",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-16T18:39:29.898196Z",
-            "startedAt": "2024-07-16T18:39:40.7001165Z",
-            "lastUpdatedAt": "2024-07-16T18:40:06.9899385Z",
+            "createdAt": "2024-07-16T21:49:22.7074153Z",
+            "startedAt": "2024-07-16T21:49:47.6796978Z",
+            "lastUpdatedAt": "2024-07-16T21:50:16.5185979Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -153,15 +153,69 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-964243999-6_0_32",
+            "name": "net-sdk-job-1234",
+            "status": "Succeeded",
+            "createdAt": "2024-07-16T21:48:14.5090533Z",
+            "startedAt": "2024-07-16T21:49:02.2614795Z",
+            "lastUpdatedAt": "2024-07-16T21:49:28.3671022Z",
+            "summary": {
+              "successful": 2,
+              "failed": 0,
+              "canceled": 0,
+              "total": 2,
+              "bytesProcessed": 814
+            },
+            "sourceLocation": {
+              "extensions": [
+                "*"
+              ],
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "example_patient_1"
+            },
+            "targetLocation": {
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "_output"
+            },
+            "dataType": "Plaintext",
+            "operation": "Surrogate"
+          },
+          {
+            "name": "net-sdk-job-1234",
+            "status": "Succeeded",
+            "createdAt": "2024-07-16T21:48:15.6852693Z",
+            "startedAt": "2024-07-16T21:49:02.2838721Z",
+            "lastUpdatedAt": "2024-07-16T21:49:27.4527888Z",
+            "summary": {
+              "successful": 2,
+              "failed": 0,
+              "canceled": 0,
+              "total": 2,
+              "bytesProcessed": 814
+            },
+            "sourceLocation": {
+              "extensions": [
+                "*"
+              ],
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "example_patient_1"
+            },
+            "targetLocation": {
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "_output"
+            },
+            "dataType": "Plaintext",
+            "operation": "Surrogate"
+          },
+          {
+            "name": "net-sdk-job-1234",
             "status": "Failed",
             "error": {
               "code": "JobValidationError",
               "message": "Unable to access the Source or Target Storage."
             },
-            "createdAt": "2024-07-16T18:39:17.8777231Z",
-            "startedAt": "2024-07-16T18:39:25.5495357Z",
-            "lastUpdatedAt": "2024-07-16T18:39:25.773604Z",
+            "createdAt": "2024-07-16T21:49:07.5594585Z",
+            "startedAt": "2024-07-16T21:49:19.3260231Z",
+            "lastUpdatedAt": "2024-07-16T21:49:19.5009862Z",
             "sourceLocation": {
               "extensions": [
                 "*"
@@ -177,11 +231,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-1887380812-6_0_32",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-16T18:38:43.768987Z",
-            "startedAt": "2024-07-16T18:38:49.2183727Z",
-            "lastUpdatedAt": "2024-07-16T18:39:22.7538611Z",
+            "createdAt": "2024-07-16T21:47:27.129908Z",
+            "startedAt": "2024-07-16T21:47:36.7600983Z",
+            "lastUpdatedAt": "2024-07-16T21:48:03.1758742Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -204,11 +258,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-464696136-6_0_32",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-16T18:38:44.9585037Z",
-            "startedAt": "2024-07-16T18:38:49.2189787Z",
-            "lastUpdatedAt": "2024-07-16T18:39:15.5346852Z",
+            "createdAt": "2024-07-16T21:46:48.0732979Z",
+            "startedAt": "2024-07-16T21:47:07.5100593Z",
+            "lastUpdatedAt": "2024-07-16T21:47:30.8628533Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -231,96 +285,15 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-1151012594-7_0_20",
-            "status": "Succeeded",
-            "createdAt": "2024-07-16T18:37:59.4339278Z",
-            "startedAt": "2024-07-16T18:38:06.9323303Z",
-            "lastUpdatedAt": "2024-07-16T18:38:31.7767464Z",
-            "summary": {
-              "successful": 2,
-              "failed": 0,
-              "canceled": 0,
-              "total": 2,
-              "bytesProcessed": 814
-            },
-            "sourceLocation": {
-              "extensions": [
-                "*"
-              ],
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "example_patient_1"
-            },
-            "targetLocation": {
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "_output"
-            },
-            "dataType": "Plaintext",
-            "operation": "Surrogate"
-          },
-          {
-            "name": "net-sdk-job-139614549-7_0_20",
-            "status": "Succeeded",
-            "createdAt": "2024-07-16T18:37:32.0221941Z",
-            "startedAt": "2024-07-16T18:37:37.7157874Z",
-            "lastUpdatedAt": "2024-07-16T18:38:03.4799387Z",
-            "summary": {
-              "successful": 2,
-              "failed": 0,
-              "canceled": 0,
-              "total": 2,
-              "bytesProcessed": 814
-            },
-            "sourceLocation": {
-              "extensions": [
-                "*"
-              ],
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "example_patient_1"
-            },
-            "targetLocation": {
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "_output"
-            },
-            "dataType": "Plaintext",
-            "operation": "Surrogate"
-          },
-          {
-            "name": "net-sdk-job-2079439326-7_0_20",
-            "status": "Succeeded",
-            "createdAt": "2024-07-16T18:37:33.5030981Z",
-            "startedAt": "2024-07-16T18:37:37.832017Z",
-            "lastUpdatedAt": "2024-07-16T18:38:02.3683119Z",
-            "summary": {
-              "successful": 2,
-              "failed": 0,
-              "canceled": 0,
-              "total": 2,
-              "bytesProcessed": 814
-            },
-            "sourceLocation": {
-              "extensions": [
-                "*"
-              ],
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "example_patient_1"
-            },
-            "targetLocation": {
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "_output"
-            },
-            "dataType": "Plaintext",
-            "operation": "Surrogate"
-          },
-          {
-            "name": "net-sdk-job-876032660-7_0_20",
+            "name": "net-sdk-job-1234",
             "status": "Failed",
             "error": {
               "code": "JobValidationError",
               "message": "Unable to access the Source or Target Storage."
             },
-            "createdAt": "2024-07-16T18:37:43.8288713Z",
-            "startedAt": "2024-07-16T18:37:56.2366608Z",
-            "lastUpdatedAt": "2024-07-16T18:37:56.4172839Z",
+            "createdAt": "2024-07-16T21:47:12.1653151Z",
+            "startedAt": "2024-07-16T21:47:24.1561731Z",
+            "lastUpdatedAt": "2024-07-16T21:47:24.3037516Z",
             "sourceLocation": {
               "extensions": [
                 "*"
@@ -336,15 +309,69 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-1374202769-7_0_20",
+            "name": "net-sdk-job-1234",
+            "status": "Succeeded",
+            "createdAt": "2024-07-16T21:46:46.5353227Z",
+            "startedAt": "2024-07-16T21:46:54.3062515Z",
+            "lastUpdatedAt": "2024-07-16T21:47:18.8245399Z",
+            "summary": {
+              "successful": 2,
+              "failed": 0,
+              "canceled": 0,
+              "total": 2,
+              "bytesProcessed": 814
+            },
+            "sourceLocation": {
+              "extensions": [
+                "*"
+              ],
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "example_patient_1"
+            },
+            "targetLocation": {
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "_output"
+            },
+            "dataType": "Plaintext",
+            "operation": "Surrogate"
+          },
+          {
+            "name": "net-sdk-job-1234",
+            "status": "Succeeded",
+            "createdAt": "2024-07-16T21:42:52.2101651Z",
+            "startedAt": "2024-07-16T21:43:17.4135143Z",
+            "lastUpdatedAt": "2024-07-16T21:43:43.8807083Z",
+            "summary": {
+              "successful": 2,
+              "failed": 0,
+              "canceled": 0,
+              "total": 2,
+              "bytesProcessed": 814
+            },
+            "sourceLocation": {
+              "extensions": [
+                "*"
+              ],
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "example_patient_1"
+            },
+            "targetLocation": {
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "_output"
+            },
+            "dataType": "Plaintext",
+            "operation": "Surrogate"
+          },
+          {
+            "name": "net-sdk-job-1234",
             "status": "Failed",
             "error": {
               "code": "JobValidationError",
               "message": "Unable to access the Source or Target Storage."
             },
-            "createdAt": "2024-07-16T18:36:19.7851124Z",
-            "startedAt": "2024-07-16T18:36:30.1418452Z",
-            "lastUpdatedAt": "2024-07-16T18:36:30.3731749Z",
+            "createdAt": "2024-07-16T21:42:21.6021541Z",
+            "startedAt": "2024-07-16T21:42:48.1290066Z",
+            "lastUpdatedAt": "2024-07-16T21:42:48.3417043Z",
             "sourceLocation": {
               "extensions": [
                 "*"
@@ -360,83 +387,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-2083981210-7_0_20",
-            "status": "Failed",
-            "error": {
-              "code": "JobValidationError",
-              "message": "No files found in source container with given parameters."
-            },
-            "createdAt": "2024-07-16T18:35:37.1274693Z",
-            "startedAt": "2024-07-16T18:36:15.3187687Z",
-            "lastUpdatedAt": "2024-07-16T18:36:15.6844155Z",
-            "sourceLocation": {
-              "extensions": [
-                "*"
-              ],
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "example_patient_1"
-            },
-            "targetLocation": {
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "_output"
-            },
-            "dataType": "Plaintext",
-            "operation": "Surrogate"
-          },
-          {
-            "name": "net-sdk-job-1743961267-7_0_20",
-            "status": "Failed",
-            "error": {
-              "code": "JobValidationError",
-              "message": "No files found in source container with given parameters."
-            },
-            "createdAt": "2024-07-16T18:35:35.4876436Z",
-            "startedAt": "2024-07-16T18:36:09.8644899Z",
-            "lastUpdatedAt": "2024-07-16T18:36:11.0822153Z",
-            "sourceLocation": {
-              "extensions": [
-                "*"
-              ],
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "example_patient_1"
-            },
-            "targetLocation": {
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "_output"
-            },
-            "dataType": "Plaintext",
-            "operation": "Surrogate"
-          },
-          {
-            "name": "net-sdk-job-1964702460-7_0_20",
-            "status": "Failed",
-            "error": {
-              "code": "JobValidationError",
-              "message": "No files found in source container with given parameters."
-            },
-            "createdAt": "2024-07-16T18:35:32.1495647Z",
-            "startedAt": "2024-07-16T18:36:09.8645659Z",
-            "lastUpdatedAt": "2024-07-16T18:36:11.4156097Z",
-            "sourceLocation": {
-              "extensions": [
-                "*"
-              ],
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "example_patient_1"
-            },
-            "targetLocation": {
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "_output"
-            },
-            "dataType": "Plaintext",
-            "operation": "Surrogate"
-          },
-          {
-            "name": "net-sdk-job-1121613034-4_0_303",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-15T20:47:18.9218885Z",
-            "startedAt": "2024-07-15T20:47:43.85181Z",
-            "lastUpdatedAt": "2024-07-15T20:48:11.0112126Z",
+            "createdAt": "2024-07-16T21:42:06.1812991Z",
+            "startedAt": "2024-07-16T21:42:15.9415942Z",
+            "lastUpdatedAt": "2024-07-16T21:42:42.3839637Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -459,35 +414,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-380451671-4_0_303",
-            "status": "Failed",
-            "error": {
-              "code": "JobValidationError",
-              "message": "Unable to access the Source or Target Storage."
-            },
-            "createdAt": "2024-07-15T20:46:56.1871391Z",
-            "startedAt": "2024-07-15T20:47:16.4233909Z",
-            "lastUpdatedAt": "2024-07-15T20:47:16.8602859Z",
-            "sourceLocation": {
-              "extensions": [
-                "*"
-              ],
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "example_patient_1"
-            },
-            "targetLocation": {
-              "location": "https://fakeblobstorage.blob.core.windows.net/container",
-              "prefix": "_output"
-            },
-            "dataType": "Plaintext",
-            "operation": "Surrogate"
-          },
-          {
-            "name": "net-sdk-job-1064079028-4_0_303",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-15T20:46:39.3265772Z",
-            "startedAt": "2024-07-15T20:46:51.4050806Z",
-            "lastUpdatedAt": "2024-07-15T20:47:16.3753111Z",
+            "createdAt": "2024-07-16T21:42:08.0177045Z",
+            "startedAt": "2024-07-16T21:42:15.9400453Z",
+            "lastUpdatedAt": "2024-07-16T21:42:41.7130281Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -510,11 +441,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-1981246534-4_0_303",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-15T20:46:37.8807087Z",
-            "startedAt": "2024-07-15T20:46:51.4265161Z",
-            "lastUpdatedAt": "2024-07-15T20:47:15.7969885Z",
+            "createdAt": "2024-07-16T21:40:55.2050361Z",
+            "startedAt": "2024-07-16T21:41:12.2825665Z",
+            "lastUpdatedAt": "2024-07-16T21:41:52.655299Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -537,11 +468,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-462336730-6_0_32",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-15T20:45:03.3702237Z",
-            "startedAt": "2024-07-15T20:45:12.3330615Z",
-            "lastUpdatedAt": "2024-07-15T20:46:23.2226006Z",
+            "createdAt": "2024-07-16T21:40:30.6445617Z",
+            "startedAt": "2024-07-16T21:40:41.1371605Z",
+            "lastUpdatedAt": "2024-07-16T21:41:25.4484236Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -564,15 +495,69 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-1053809704-6_0_32",
+            "name": "net-sdk-job-1234",
+            "status": "Succeeded",
+            "createdAt": "2024-07-16T21:40:29.4685083Z",
+            "startedAt": "2024-07-16T21:40:41.0704983Z",
+            "lastUpdatedAt": "2024-07-16T21:41:18.9973367Z",
+            "summary": {
+              "successful": 2,
+              "failed": 0,
+              "canceled": 0,
+              "total": 2,
+              "bytesProcessed": 814
+            },
+            "sourceLocation": {
+              "extensions": [
+                "*"
+              ],
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "example_patient_1"
+            },
+            "targetLocation": {
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "_output"
+            },
+            "dataType": "Plaintext",
+            "operation": "Surrogate"
+          },
+          {
+            "name": "net-sdk-job-1234",
+            "status": "Succeeded",
+            "createdAt": "2024-07-16T21:38:48.9578775Z",
+            "startedAt": "2024-07-16T21:38:55.0218245Z",
+            "lastUpdatedAt": "2024-07-16T21:40:54.2765839Z",
+            "summary": {
+              "successful": 2,
+              "failed": 0,
+              "canceled": 0,
+              "total": 2,
+              "bytesProcessed": 814
+            },
+            "sourceLocation": {
+              "extensions": [
+                "*"
+              ],
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "example_patient_1"
+            },
+            "targetLocation": {
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "_output"
+            },
+            "dataType": "Plaintext",
+            "operation": "Surrogate"
+          },
+          {
+            "name": "net-sdk-job-1234",
             "status": "Failed",
             "error": {
               "code": "JobValidationError",
               "message": "Unable to access the Source or Target Storage."
             },
-            "createdAt": "2024-07-15T20:44:42.923344Z",
-            "startedAt": "2024-07-15T20:44:57.7554288Z",
-            "lastUpdatedAt": "2024-07-15T20:44:58.0733726Z",
+            "createdAt": "2024-07-16T21:40:46.2226972Z",
+            "startedAt": "2024-07-16T21:40:53.3567702Z",
+            "lastUpdatedAt": "2024-07-16T21:40:53.6041724Z",
             "sourceLocation": {
               "extensions": [
                 "*"
@@ -588,11 +573,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-1777922195-6_0_32",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-15T20:43:48.8874767Z",
-            "startedAt": "2024-07-15T20:44:03.3118034Z",
-            "lastUpdatedAt": "2024-07-15T20:44:30.3095335Z",
+            "createdAt": "2024-07-16T21:39:35.1638942Z",
+            "startedAt": "2024-07-16T21:39:50.4731414Z",
+            "lastUpdatedAt": "2024-07-16T21:40:18.4173289Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -615,11 +600,35 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-150075632-6_0_32",
+            "name": "net-sdk-job-1234",
+            "status": "Failed",
+            "error": {
+              "code": "JobValidationError",
+              "message": "Unable to access the Source or Target Storage."
+            },
+            "createdAt": "2024-07-16T21:39:23.2485186Z",
+            "startedAt": "2024-07-16T21:39:30.8136141Z",
+            "lastUpdatedAt": "2024-07-16T21:39:31.013191Z",
+            "sourceLocation": {
+              "extensions": [
+                "*"
+              ],
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "example_patient_1"
+            },
+            "targetLocation": {
+              "location": "https://fakeblobstorage.blob.core.windows.net/container",
+              "prefix": "_output"
+            },
+            "dataType": "Plaintext",
+            "operation": "Surrogate"
+          },
+          {
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-15T20:43:47.6611659Z",
-            "startedAt": "2024-07-15T20:44:03.312707Z",
-            "lastUpdatedAt": "2024-07-15T20:44:30.1415781Z",
+            "createdAt": "2024-07-16T21:38:50.4179445Z",
+            "startedAt": "2024-07-16T21:38:55.0214973Z",
+            "lastUpdatedAt": "2024-07-16T21:39:22.7449872Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -642,11 +651,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-603223871-7_0_20",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-15T20:43:06.3703245Z",
-            "startedAt": "2024-07-15T20:43:09.3775535Z",
-            "lastUpdatedAt": "2024-07-15T20:43:34.1730798Z",
+            "createdAt": "2024-07-16T21:32:13.6217456Z",
+            "startedAt": "2024-07-16T21:33:27.1415761Z",
+            "lastUpdatedAt": "2024-07-16T21:33:52.3427082Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -669,11 +678,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-1482293276-7_0_20",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-15T20:42:25.3640381Z",
-            "startedAt": "2024-07-15T20:42:39.412618Z",
-            "lastUpdatedAt": "2024-07-15T20:43:08.0315817Z",
+            "createdAt": "2024-07-16T21:31:54.0913965Z",
+            "startedAt": "2024-07-16T21:32:03.3946797Z",
+            "lastUpdatedAt": "2024-07-16T21:32:30.7568961Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -696,11 +705,11 @@
             "operation": "Surrogate"
           },
           {
-            "name": "net-sdk-job-696332830-7_0_20",
+            "name": "net-sdk-job-1234",
             "status": "Succeeded",
-            "createdAt": "2024-07-15T20:42:23.246003Z",
-            "startedAt": "2024-07-15T20:42:39.1706116Z",
-            "lastUpdatedAt": "2024-07-15T20:43:08.1186361Z",
+            "createdAt": "2024-07-16T21:31:52.8795644Z",
+            "startedAt": "2024-07-16T21:32:03.3947665Z",
+            "lastUpdatedAt": "2024-07-16T21:32:27.1803533Z",
             "summary": {
               "successful": 2,
               "failed": 0,
@@ -728,7 +737,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1837789411",
+    "RandomSeed": "1773578032",
     "STORAGE_ACCOUNT_SAS_URI": "https://localhost/fakecontainer"
   }
 }

@@ -216,6 +216,11 @@ namespace Azure.Health.Deidentification.Tests
 
         private string GenerateJobName()
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return TestEnvironment.FakeJobName;
+            }
+
             string netVersion = Environment.Version.ToString().Replace(".", "_");
             netVersion = netVersion.Length > 7 ? netVersion.Substring(0, 7) : netVersion;
             string jobName = "net-sdk-job-" + Recording.GenerateId() + "-" + netVersion;

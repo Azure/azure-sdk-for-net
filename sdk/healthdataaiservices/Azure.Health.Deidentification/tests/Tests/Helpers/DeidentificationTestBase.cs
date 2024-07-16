@@ -14,6 +14,8 @@ namespace Azure.Health.Deidentification.Tests
         {
             BodyKeySanitizers.Add(new BodyKeySanitizer("$..location") { Value = TestEnvironment.FakeStorageLocation });
             BodyKeySanitizers.Add(new BodyKeySanitizer("$..nextLink") { Value = TestEnvironment.FakeNextLink });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"net-sdk-job-\d+-[0-9_]+") { Value = TestEnvironment.FakeJobName });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"net-sdk-job-\d+-[0-9_]+") { Value = TestEnvironment.FakeJobName });
         }
 
         protected DeidentificationClient GetDeidClient()
