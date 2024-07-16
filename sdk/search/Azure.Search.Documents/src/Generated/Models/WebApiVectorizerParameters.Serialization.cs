@@ -17,10 +17,10 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Url.AbsoluteUri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(HttpHeaders))
             {

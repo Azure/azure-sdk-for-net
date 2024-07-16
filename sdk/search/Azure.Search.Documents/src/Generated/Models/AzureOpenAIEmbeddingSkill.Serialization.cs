@@ -29,10 +29,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (Optional.IsDefined(ResourceUrl))
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUrl.AbsoluteUri);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DeploymentName))
             {

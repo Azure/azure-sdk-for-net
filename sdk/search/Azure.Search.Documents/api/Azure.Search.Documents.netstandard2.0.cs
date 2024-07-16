@@ -363,7 +363,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string DeploymentName { get { throw null; } set { } }
         public int? Dimensions { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName? ModelName { get { throw null; } set { } }
-        public System.Uri ResourceUrl { get { throw null; } set { } }
+        public System.Uri ResourceUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureOpenAIModelName : System.IEquatable<Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName>
@@ -396,7 +396,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity AuthenticationIdentity { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName? ModelName { get { throw null; } set { } }
-        public System.Uri ResourceUrl { get { throw null; } set { } }
+        public System.Uri ResourceUri { get { throw null; } set { } }
     }
     public partial class BinaryQuantizationCompression : Azure.Search.Documents.Indexes.Models.VectorSearchCompression
     {
@@ -2929,7 +2929,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public System.Collections.Generic.IDictionary<string, string> HttpHeaders { get { throw null; } }
         public string HttpMethod { get { throw null; } set { } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
-        public System.Uri Url { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class WordDelimiterTokenFilter : Azure.Search.Documents.Indexes.Models.TokenFilter
     {

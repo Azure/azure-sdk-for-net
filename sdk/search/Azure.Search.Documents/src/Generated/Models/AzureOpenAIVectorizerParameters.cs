@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizerParameters"/>. </summary>
-        /// <param name="resourceUrl"> The resource URI of the Azure OpenAI resource. </param>
+        /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
         /// <param name="deploymentName"> ID of the Azure OpenAI model deployment on the designated resource. </param>
         /// <param name="apiKey"> API key of the designated Azure OpenAI resource. </param>
         /// <param name="authenticationIdentity">
@@ -27,9 +27,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
         /// <param name="modelName"> The name of the embedding model that is deployed at the provided deploymentId path. </param>
-        internal AzureOpenAIVectorizerParameters(Uri resourceUrl, string deploymentName, string apiKey, SearchIndexerDataIdentity authenticationIdentity, AzureOpenAIModelName? modelName)
+        internal AzureOpenAIVectorizerParameters(Uri resourceUri, string deploymentName, string apiKey, SearchIndexerDataIdentity authenticationIdentity, AzureOpenAIModelName? modelName)
         {
-            ResourceUrl = resourceUrl;
+            ResourceUri = resourceUri;
             DeploymentName = deploymentName;
             ApiKey = apiKey;
             AuthenticationIdentity = authenticationIdentity;
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The resource URI of the Azure OpenAI resource. </summary>
-        public Uri ResourceUrl { get; set; }
+        public Uri ResourceUri { get; set; }
         /// <summary> ID of the Azure OpenAI model deployment on the designated resource. </summary>
         public string DeploymentName { get; set; }
         /// <summary> API key of the designated Azure OpenAI resource. </summary>

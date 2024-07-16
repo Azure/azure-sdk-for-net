@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApiVectorizerParameters"/>. </summary>
-        /// <param name="url"> The URI of the Web API providing the vectorizer. </param>
+        /// <param name="uri"> The URI of the Web API providing the vectorizer. </param>
         /// <param name="httpHeaders"> The headers required to make the HTTP request. </param>
         /// <param name="httpMethod"> The method for the HTTP request. </param>
         /// <param name="timeout"> The desired timeout for the request. Default is 30 seconds. </param>
@@ -31,9 +31,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal WebApiVectorizerParameters(Uri url, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity)
+        internal WebApiVectorizerParameters(Uri uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity)
         {
-            Url = url;
+            Uri = uri;
             HttpHeaders = httpHeaders;
             HttpMethod = httpMethod;
             Timeout = timeout;
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The URI of the Web API providing the vectorizer. </summary>
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> The headers required to make the HTTP request. </summary>
         public IDictionary<string, string> HttpHeaders { get; }
         /// <summary> The method for the HTTP request. </summary>

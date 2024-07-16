@@ -90,7 +90,7 @@ directive:
   transform: >
     $.AzureOpenAIParameters["x-ms-client-name"] = "AzureOpenAIVectorizerParameters";
     $.AzureOpenAIParameters.properties.authIdentity["x-ms-client-name"] = "AuthenticationIdentity";
-    $.AzureOpenAIParameters.properties.resourceUri["x-ms-client-name"] = "resourceUrl";
+    $.AzureOpenAIParameters.properties.resourceUri["x-ms-client-name"] = "resourceUri";
 
     $.VectorSearchVectorizer.properties.name["x-ms-client-name"] = "VectorizerName";
     $.AzureOpenAIVectorizer.properties.azureOpenAIParameters["x-ms-client-name"] = "Parameters";
@@ -113,7 +113,7 @@ directive:
 
     $.WebApiVectorizer.properties.customWebApiParameters["x-ms-client-name"] = "Parameters";
     $.WebApiParameters["x-ms-client-name"] = "WebApiVectorizerParameters";
-    $.WebApiParameters.properties.uri["x-ms-client-name"] = "url";
+    $.WebApiParameters.properties.uri["x-ms-client-name"] = "uri";
 ```
 
 ### Change VectorizableImageUrlQuery.Url type to Uri
