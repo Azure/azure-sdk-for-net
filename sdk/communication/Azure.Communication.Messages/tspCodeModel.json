@@ -162,7 +162,7 @@
    ],
    "Description": "Repeatability Result header options",
    "IsExtensible": false,
-   "Usage": "Output"
+   "Usage": "None"
   },
   {
    "$id": "26",
@@ -243,7 +243,7 @@
    ],
    "Description": "Azure Communication Messages Versions",
    "IsExtensible": false,
-   "Usage": "None"
+   "Usage": "ApiVersionEnum"
   }
  ],
  "Models": [
@@ -1214,7 +1214,7 @@
    "Kind": "model",
    "Name": "PagedMessageTemplateItem",
    "CrossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
-   "Usage": "Output",
+   "Usage": "None",
    "Description": "Paged collection of MessageTemplateItem items",
    "Properties": [
     {
