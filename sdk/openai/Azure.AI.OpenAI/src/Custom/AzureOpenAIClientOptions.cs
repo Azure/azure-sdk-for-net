@@ -14,6 +14,11 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
     private readonly string _version;
 
     /// <summary>
+    /// Specifies custom authorization scopes to use when authenticating a client with a supplied <see cref="Azure.Core.TokenCredential"/>.
+    /// </summary>
+    public IReadOnlyList<string> TokenAuthorizationScopes { get; init; }
+
+    /// <summary>
     /// Initializes a new instance of <see cref="AzureOpenAIClientOptions"/>
     /// </summary>
     /// <param name="version"> The service API version to use with the client. </param>
