@@ -28,6 +28,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Threshold of number of jobs ahead in the queue to for this trigger to fire. </summary>
-        public int Threshold { get; }
+        public int Threshold { get; set; }
     }
 }
