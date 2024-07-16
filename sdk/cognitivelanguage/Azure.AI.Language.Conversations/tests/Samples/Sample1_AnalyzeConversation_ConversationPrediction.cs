@@ -10,13 +10,13 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
-    public partial class ConversationsClientSamples
+    public partial class ConversationAnalysisClientSamples
     {
         [SyncOnly]
         [RecordedTest]
         public void AnalyzeConversation()
         {
-            ConversationsClient client = Client;
+            ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversation
             string projectName = "Menu";
@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Kind = "Conversation",
             };
 
-            Response response = client.AnalyzeConversations(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+            Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
@@ -97,7 +97,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         [RecordedTest]
         public async Task AnalyzeConversationAsync()
         {
-            ConversationsClient client = Client;
+            ConversationAnalysisClient client = Client;
 
             string projectName = TestEnvironment.ProjectName;
             string deploymentName = TestEnvironment.DeploymentName;
@@ -125,7 +125,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationAsync
-            Response response = await client.AnalyzeConversationsAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
             #endregion
 
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);

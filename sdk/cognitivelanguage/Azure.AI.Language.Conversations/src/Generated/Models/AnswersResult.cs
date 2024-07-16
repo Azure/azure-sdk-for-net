@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents List of Question Answers. </summary>
-    public partial class AnswersResult
+    internal partial class AnswersResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

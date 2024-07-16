@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The reference point that the ordinal number denotes. </summary>
-    public readonly partial struct RelativeTo : IEquatable<RelativeTo>
+    internal readonly partial struct RelativeTo : IEquatable<RelativeTo>
     {
         private readonly string _value;
 

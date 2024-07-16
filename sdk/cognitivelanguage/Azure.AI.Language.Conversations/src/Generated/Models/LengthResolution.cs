@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the length entity resolution model. </summary>
-    public partial class LengthResolution : ResolutionBase
+    internal partial class LengthResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="LengthResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

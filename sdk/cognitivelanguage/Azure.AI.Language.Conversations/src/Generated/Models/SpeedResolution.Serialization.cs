@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class SpeedResolution : IUtf8JsonSerializable, IJsonModel<SpeedResolution>
+    internal partial class SpeedResolution : IUtf8JsonSerializable, IJsonModel<SpeedResolution>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpeedResolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

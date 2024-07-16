@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class KnowledgeBaseAnswerDialog : IUtf8JsonSerializable, IJsonModel<KnowledgeBaseAnswerDialog>
+    internal partial class KnowledgeBaseAnswerDialog : IUtf8JsonSerializable, IJsonModel<KnowledgeBaseAnswerDialog>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeBaseAnswerDialog>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

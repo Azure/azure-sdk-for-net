@@ -7,12 +7,12 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
+    [PersistableModelProxy(typeof(UnknownAnalyzeConversationResult))]
     public partial class AnalyzeConversationResult : IUtf8JsonSerializable, IJsonModel<AnalyzeConversationResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeConversationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -26,15 +26,8 @@ namespace Azure.AI.Language.Conversations.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("query"u8);
-            writer.WriteStringValue(Query);
-            if (Optional.IsDefined(DetectedLanguage))
-            {
-                writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteStringValue(DetectedLanguage);
-            }
-            writer.WritePropertyName("prediction"u8);
-            writer.WriteObjectValue(Prediction, options);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,35 +66,14 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 return null;
             }
-            string query = default;
-            string detectedLanguage = default;
-            PredictionBase prediction = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
-                if (property.NameEquals("query"u8))
+                switch (discriminator.GetString())
                 {
-                    query = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("detectedLanguage"u8))
-                {
-                    detectedLanguage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("prediction"u8))
-                {
-                    prediction = PredictionBase.DeserializePredictionBase(property.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    case "ConversationResult": return AnalyzeConversationConversationalResult.DeserializeAnalyzeConversationConversationalResult(element, options);
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AnalyzeConversationResult(query, detectedLanguage, prediction, serializedAdditionalRawData);
+            return UnknownAnalyzeConversationResult.DeserializeUnknownAnalyzeConversationResult(element, options);
         }
 
         BinaryData IPersistableModel<AnalyzeConversationResult>.Write(ModelReaderWriterOptions options)

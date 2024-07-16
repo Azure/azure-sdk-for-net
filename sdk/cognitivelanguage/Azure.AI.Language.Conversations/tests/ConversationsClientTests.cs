@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations.Tests
         public void ConversationsClientEndpointNull()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationsClient(null, (AzureKeyCredential)null));
+                () => new ConversationAnalysisClient(null, (AzureKeyCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationsClient(endpoint, (AzureKeyCredential)null));
+                () => new ConversationAnalysisClient(endpoint, (AzureKeyCredential)null));
             Assert.AreEqual("credential", ex.ParamName);
         }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Tests
         public void ConversationsClientEndpointNullUsingTokenCredential()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationsClient(null, (TokenCredential)null));
+                () => new ConversationAnalysisClient(null, (TokenCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
 
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new ConversationsClient(endpoint, (TokenCredential)null));
+                () => new ConversationAnalysisClient(endpoint, (TokenCredential)null));
             Assert.AreEqual("credential", ex.ParamName);
         }
     }

@@ -17,7 +17,7 @@ using Azure.Identity;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
-    public partial class ConversationsClientSamples : ConversationAnalysisTestBase<ConversationsClient>
+    public partial class ConversationAnalysisClientSamples : ConversationAnalysisTestBase<ConversationAnalysisClient>
     {
         public void CreateConversationClient()
         {
@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-            ConversationsClient client = new ConversationsClient(endpoint, credential);
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
             #endregion
         }
 
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             DefaultAzureCredential credential = new DefaultAzureCredential();
 
-            ConversationsClient client = new ConversationsClient(endpoint, credential);
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
             #endregion
         }
 
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         [SyncOnly]
         public void BadArgument()
         {
-            ConversationsClient client = Client;
+            ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysisClient_BadRequest
             try
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     kind = "Conversation",
                 };
 
-                Response response = client.AnalyzeConversations(RequestContent.Create(data));
+                Response response = client.AnalyzeConversation(RequestContent.Create(data));
             }
             catch (RequestFailedException ex)
             {

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The regex key extra data kind. </summary>
-    public partial class RegexKey : ConversationEntityExtraInformation
+    internal partial class RegexKey : ConversationEntityExtraInformation
     {
         /// <summary> Initializes a new instance of <see cref="RegexKey"/>. </summary>
         internal RegexKey()

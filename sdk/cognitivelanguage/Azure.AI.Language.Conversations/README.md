@@ -26,7 +26,7 @@ Though you can use this SDK to create and import conversation projects, [Languag
 
 ### Authenticate the client
 
-In order to interact with the Conversations service, you'll need to create an instance of the [`ConversationsClient`][conversationanalysis_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Conversations service, you'll need to create an instance of the [`ConversationAnalysisClient`][conversationanalysis_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get an API key
 
@@ -40,7 +40,7 @@ az cognitiveservices account keys list --resource-group <resource-group-name> --
 
 #### Namespaces
 
-Start by importing the namespace for the [`ConversationsClient`][conversationanalysis_client_class] and related class:
+Start by importing the namespace for the [`ConversationAnalysisClient`][conversationanalysis_client_class] and related class:
 
 ```C# Snippet:ConversationAnalysisClient_Namespaces
 using Azure.Core;
@@ -50,18 +50,18 @@ using Azure.AI.Language.Conversations;
 
 #### Create a ConversationAnalysisClient
 
-Once you've determined your **endpoint** and **API key** you can instantiate a `ConversationsClient`:
+Once you've determined your **endpoint** and **API key** you can instantiate a `ConversationAnalysisClient`:
 
 ```C# Snippet:ConversationAnalysisClient_Create
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-ConversationsClient client = new ConversationsClient(endpoint, credential);
+ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 ```
 
 #### Create a client using Azure Active Directory authentication
 
-You can also create a `ConversationsClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+You can also create a `ConversationAnalysisClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
 Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code.
 
 Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
@@ -81,16 +81,16 @@ Then you can create an instance of `DefaultAzureCredential` and pass it to a new
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
-ConversationsClient client = new ConversationsClient(endpoint, credential);
+ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 ```
 
 Note that regional endpoints do not support AAD authentication. Instead, create a [custom domain][custom_domain] name for your resource to use AAD authentication.
 
 ## Key concepts
 
-### ConversationsClient
+### ConversationAnalysisClient
 
-The [`ConversationsClient`][conversationanalysis_client_class] is the primary interface for making predictions using your deployed Conversations models. It provides both synchronous and asynchronous APIs to submit queries.
+The [`ConversationAnalysisClient`][conversationanalysis_client_class] is the primary interface for making predictions using your deployed Conversations models. It provides both synchronous and asynchronous APIs to submit queries.
 
 ### Thread safety
 
@@ -420,6 +420,13 @@ foreach (dynamic task in jobResults.Tasks.Items)
 }
 ```
 
+#### Conversational PII extraction
+
+To detect and redact PII in a conversation, you can use the `AnalyzeConversationsOperation` method overload with an action of type `PiiOperationAction`:
+
+```C# Snippet:AnalyzeConversation_ConversationPii
+```
+
 ### Additional samples
 
 Browser our [samples][conversationanalysis_samples] for more examples of how to analyze conversations.
@@ -541,7 +548,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [language_studio]: https://language.cognitive.azure.com/
 [nuget]: https://www.nuget.org/
 
-[conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/generated/ConversationsClient.cs
+[conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/generated/ConversationAnalysisClient.cs
 [conversationanalysis_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/
 [conversationanalysis_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/
 [conversationanalysis_nuget_package]: https://www.nuget.org/packages/Azure.AI.Language.Conversations/

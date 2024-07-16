@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
@@ -13,9 +14,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
 {
-    public class ConversationsClientLiveTests : ConversationAnalysisTestBase<ConversationsClient>
+    public class ConversationsClientLiveTests : ConversationAnalysisTestBase<ConversationAnalysisClient>
     {
-        public ConversationsClientLiveTests(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion)
+        public ConversationsClientLiveTests(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
@@ -42,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 Kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationsAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -88,7 +89,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationsAsync(RequestContent.Create(data));
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -145,7 +146,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationsAsync(RequestContent.Create(data));
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -197,7 +198,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 kind = "Conversation",
             };
 
-            Response response = await Client.AnalyzeConversationsAsync(RequestContent.Create(data));
+            Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
             Assert.IsNotNull(response);
@@ -228,14 +229,14 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Max = ConversationsClientOptions.ServiceVersion.V2022_05_01)] // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29600
+        [ServiceVersion(Max = ConversationAnalysisClientOptions.ServiceVersion.V2022_05_01)] // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29600
         public async Task SupportsAadAuthentication()
         {
-            ConversationsClient client = CreateClient<ConversationsClient>(
+            ConversationAnalysisClient client = CreateClient<ConversationAnalysisClient>(
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(
-                    new ConversationsClientOptions(ServiceVersion)));
+                    new ConversationAnalysisClientOptions(ServiceVersion)));
 
             var data = new
             {
@@ -256,58 +257,64 @@ namespace Azure.AI.Language.Conversations.Tests
                 kind = "Conversation",
             };
 
-            Response response = await client.AnalyzeConversationsAsync(RequestContent.Create(data));
+            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
             Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
+        [ServiceVersion(Min = ConversationAnalysisClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeConversation_ConversationSummarization()
         {
-            var data = new AnalyzeConversationJobsInput(
-                new MultiLanguageConversationAnalysisInput(
+            var data = new AnalyzeConversationOperationInput(
+                new MultiLanguageConversationInput(
                     new List<ConversationInput>
                     {
                         new TextConversation("1", "en", new List<TextConversationItem>()
                         {
-                            AILanguageConversationsModelFactory.TextConversationItem("1", "Agent", "Hello, how can I help you?", role: ParticipantRole.Agent),
-                            AILanguageConversationsModelFactory.TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day.", role: ParticipantRole.Customer),
-                            AILanguageConversationsModelFactory.TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.", role: ParticipantRole.Agent)
+                            new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
+                            new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
+                            new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.")
                         })
                     }),
-                    new List<AnalyzeConversationJobTask>
+                    new List<AnalyzeConversationOperationAction>
                     {
-                        new AnalyzeConversationSummarizationTask()
+                        new SummarizationOperationAction()
                         {
-                            Parameters = new ConversationSummarizationTaskContent(new List<SummaryAspect>
+                            ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
                             {
                                 SummaryAspect.Issue,
+                            }),
+                            Name = "Issue task",
+                        },
+                        new SummarizationOperationAction()
+                        {
+                            ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+                            {
                                 SummaryAspect.Resolution,
                             }),
-                            TaskName = "1",
+                            Name = "Resolution task",
                         }
                     });
 
-            Response<AnalyzeConversationJobState> analyzeConversationOperation = await Client.AnalyzeConversationsOperationAsync(data);
+            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await Client.AnalyzeConversationOperationAsync(data);
+            Assert.NotNull(analyzeConversationOperation);
 
-            AnalyzeConversationJobState analyzeConversationJobState = analyzeConversationOperation.Value;
+            AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+            Assert.IsNotNull(jobResults.Actions);
 
-            Assert.NotNull(analyzeConversationJobState);
-
-            foreach (dynamic analyzeConversationSummarization in analyzeConversationJobState.Tasks.Items)
+            foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
             {
-                Assert.NotNull(analyzeConversationSummarization);
+                SummaryResult results = task.Results;
 
-                dynamic results = analyzeConversationSummarization.Results;
                 Assert.NotNull(results);
 
-                Assert.NotNull(results.Conversations);
-                foreach (dynamic conversation in results.Conversations)
+                foreach (ConversationsSummaryResult conversation in results.Conversations)
                 {
-                    Assert.That((IEnumerable)conversation.Summaries, Is.Not.Null.And.Not.Empty);
-                    foreach (dynamic summary in conversation.Summaries)
+                    Console.WriteLine($"Conversation: #{conversation.Id}");
+                    Console.WriteLine("Summaries:");
+                    foreach (SummaryResultItem summary in conversation.Summaries)
                     {
                         Assert.NotNull(summary.Text);
                         Assert.That((string)summary.Aspect, Is.EqualTo("issue").Or.EqualTo("resolution"));

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Prompt for an answer. </summary>
-    public partial class KnowledgeBaseAnswerPrompt
+    internal partial class KnowledgeBaseAnswerPrompt
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

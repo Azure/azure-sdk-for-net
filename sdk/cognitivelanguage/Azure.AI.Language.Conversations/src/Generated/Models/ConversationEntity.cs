@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The entity extraction result of a Conversation project. </summary>
-    public partial class ConversationEntity
+    internal partial class ConversationEntity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

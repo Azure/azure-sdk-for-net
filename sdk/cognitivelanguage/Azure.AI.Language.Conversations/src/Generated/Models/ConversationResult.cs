@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The response returned by a Conversation project. </summary>
-    public partial class ConversationResult
+    internal partial class ConversationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

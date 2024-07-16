@@ -9,8 +9,7 @@
 
 ### Breaking Changes
 - Removed `ConversationAuthoringClient`. This will be moved to a separate package in the future.
-- Replaced `ConversationAnalysisClient` with `ConversationsClient`.
-- Removed `ConversationAnalysisClientExtensions`. 
+- Removed empty class `ConversationAnalysisClientExtensions`. 
 
 ### Bugs Fixed
 

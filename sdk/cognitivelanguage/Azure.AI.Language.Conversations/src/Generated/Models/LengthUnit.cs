@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The length unit of measurement. </summary>
-    public readonly partial struct LengthUnit : IEquatable<LengthUnit>
+    internal readonly partial struct LengthUnit : IEquatable<LengthUnit>
     {
         private readonly string _value;
 

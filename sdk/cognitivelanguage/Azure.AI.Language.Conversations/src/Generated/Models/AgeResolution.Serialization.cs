@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class AgeResolution : IUtf8JsonSerializable, IJsonModel<AgeResolution>
+    internal partial class AgeResolution : IUtf8JsonSerializable, IJsonModel<AgeResolution>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgeResolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

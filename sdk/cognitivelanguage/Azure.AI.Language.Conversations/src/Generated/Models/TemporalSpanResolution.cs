@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> represents the resolution of a date and/or time span. </summary>
-    public partial class TemporalSpanResolution : ResolutionBase
+    internal partial class TemporalSpanResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="TemporalSpanResolution"/>. </summary>
         internal TemporalSpanResolution()

@@ -28,7 +28,7 @@ namespace Azure.AI.Language.Conversations.Models
         private const string PersonValue = "Person";
         private const string NumericIdentifierValue = "NumericIdentifier";
         private const string PhoneNumberValue = "PhoneNumber";
-        private const string USSocialSecurityNumberValue = "USSocialSecurityNumber";
+        private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
         private const string MiscellaneousValue = "Miscellaneous";
         private const string AllValue = "All";
         private const string DefaultValue = "Default";
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Phone number category. </summary>
         public static ConversationPiiCategories PhoneNumber { get; } = new ConversationPiiCategories(PhoneNumberValue);
         /// <summary> US social security number category. </summary>
-        public static ConversationPiiCategories USSocialSecurityNumber { get; } = new ConversationPiiCategories(USSocialSecurityNumberValue);
+        public static ConversationPiiCategories UsSocialSecurityNumber { get; } = new ConversationPiiCategories(UsSocialSecurityNumberValue);
         /// <summary> Miscellaneous category. </summary>
         public static ConversationPiiCategories Miscellaneous { get; } = new ConversationPiiCategories(MiscellaneousValue);
         /// <summary> All categories. </summary>

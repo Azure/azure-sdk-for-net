@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class WeightResolution : IUtf8JsonSerializable, IJsonModel<WeightResolution>
+    internal partial class WeightResolution : IUtf8JsonSerializable, IJsonModel<WeightResolution>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WeightResolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

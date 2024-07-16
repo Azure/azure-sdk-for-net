@@ -28,7 +28,7 @@ namespace Azure.AI.Language.Conversations.Models
         private const string PersonValue = "Person";
         private const string NumericIdentifierValue = "NumericIdentifier";
         private const string PhoneNumberValue = "PhoneNumber";
-        private const string USSocialSecurityNumberValue = "USSocialSecurityNumber";
+        private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
 
         /// <summary> Address category. </summary>
         public static ConversationPiiCategoryExclusions Address { get; } = new ConversationPiiCategoryExclusions(AddressValue);
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Phone number category. </summary>
         public static ConversationPiiCategoryExclusions PhoneNumber { get; } = new ConversationPiiCategoryExclusions(PhoneNumberValue);
         /// <summary> US social security number category. </summary>
-        public static ConversationPiiCategoryExclusions USSocialSecurityNumber { get; } = new ConversationPiiCategoryExclusions(USSocialSecurityNumberValue);
+        public static ConversationPiiCategoryExclusions UsSocialSecurityNumber { get; } = new ConversationPiiCategoryExclusions(UsSocialSecurityNumberValue);
         /// <summary> Determines if two <see cref="ConversationPiiCategoryExclusions"/> values are the same. </summary>
         public static bool operator ==(ConversationPiiCategoryExclusions left, ConversationPiiCategoryExclusions right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConversationPiiCategoryExclusions"/> values are not the same. </summary>

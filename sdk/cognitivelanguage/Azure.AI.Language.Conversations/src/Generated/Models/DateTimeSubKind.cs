@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The Datetime SubKind. </summary>
-    public readonly partial struct DateTimeSubKind : IEquatable<DateTimeSubKind>
+    internal readonly partial struct DateTimeSubKind : IEquatable<DateTimeSubKind>
     {
         private readonly string _value;
 

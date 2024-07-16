@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> It is the response from a LUIS Generally Available application. </summary>
-    public partial class LuisResult
+    internal partial class LuisResult
     {
         /// <summary> Initializes a new instance of <see cref="LuisResult"/>. </summary>
         internal LuisResult()

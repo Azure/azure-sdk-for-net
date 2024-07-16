@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations.Models
     /// Please note <see cref="TargetIntentResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConversationTargetIntentResult"/>, <see cref="LuisTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/> and <see cref="QuestionAnsweringTargetIntentResult"/>.
     /// </summary>
-    public abstract partial class TargetIntentResult
+    internal abstract partial class TargetIntentResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

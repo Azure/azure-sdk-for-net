@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> represents the resolution of numeric intervals. </summary>
-    public partial class NumericRangeResolution : ResolutionBase
+    internal partial class NumericRangeResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="NumericRangeResolution"/>. </summary>
         /// <param name="rangeKind"> The kind of range that the resolution object represents. </param>
