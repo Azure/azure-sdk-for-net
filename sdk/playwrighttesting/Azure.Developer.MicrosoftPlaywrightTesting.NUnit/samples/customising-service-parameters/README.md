@@ -1,0 +1,128 @@
+## Learn about different available service parameters and how to use them
+
+Follow the steps listed in this [README](../../README.md) to integrate your existing Playwright test suite with the Microsoft Playwright Testing service.
+
+This guide explains the different options available to you in the Azure.Developer.MicrosoftPlaywrightTesting.NUnit package and how to use them.
+
+### Using runsettings file
+
+1. Create a `.runsettings` file in the root directory
+
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <RunSettings>
+        <TestRunParameters>
+            <!-- The below parameters are optional -->
+            <Parameter name="Os" value="linux" />
+            <Parameter name="RunId" value="sample-run-id" />
+            <Parameter name="ExposeNetwork" value="<loopback>" />
+            <Parameter name="DefaultAuth" value="ENTRA" />
+            <Parameter name="UseCloudHostedBrowsers" value="true" />
+            <Parameter name="AzureTokenCredentialType" value="DefaultAzureCredential" />
+            <Parameter name="ManagedIdentityClientId" value="77bfc267-86cb-4eeb-9e4a-747a217a318c" />
+            <Parameter name="EnableGitHubSummary" value="false" />
+        </TestRunParameters>
+        <!-- Enable Reporting feature -->
+        <LoggerRunSettings>
+            <Loggers>
+                <Logger friendlyName="ms-playwright-service" enabled="true" />
+            </Loggers>
+        </LoggerRunSettings>
+    </RunSettings>
+    ```
+
+  > [!NOTE]
+  > You can also modify the runid by setting the environment variable `PLAYWRIGHT_SERVICE_RUN_ID`.
+
+2. Run tests using the above runsettings file
+
+    ```dotnetcli
+    dotnet test --settings .runsettings
+    ```
+
+#### Known Issue - Minimal support for Azure Credentials
+
+This issue only impacts the reporting feature. Currently, the service provides a minimal support for the below [Azure Credential types](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
+
+- EnvironmentCredential
+- WorkloadIdentityCredential
+- ManagedIdentityCredential
+- SharedTokenCacheCredential
+- VisualStudioCredential
+- VisualStudioCodeCredential
+- AzureCliCredential
+- AzurePowerShellCredential
+- AzureDeveloperCliCredential
+- InteractiveBrowserCredential
+- DefaultAzureCredential (Default)
+
+Along with this, we also support passing a Managed Identity ClientId to be used along with `DefaultAzureCredential` and `ManagedIdentityCredential`. 
+
+If you only want to use cloud hosted browsers along with your tests, you can disable the reporting feature by removing the logger from the runsettings file and then modify the `PlaywrightServiceSetup.cs` file as per below.
+
+```c#
+using Azure.Core;
+using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
+using Azure.Identity;
+
+namespace PlaywrightTests;
+
+[SetUpFixture]
+public class PlaywrightServiceSetup : PlaywrightServiceNUnit
+{
+    public static readonly TokenCredential managedIdentityCredential = new ManagedIdentityCredential();
+
+    public PlaywrightServiceSetup() : base(managedIdentityCredential)
+    { }
+};
+```
+
+## Settings
+
+1. **`Os`**:
+    - **Description**: This setting allows you to choose the operating system where the browsers running Playwright tests will be hosted.
+    - **Available Options**:
+        - `ServiceOS.WINDOWS` for Windows OS.
+        - `ServiceOS.LINUX` for Linux OS.
+    - **Default Value**: `ServiceOS.LINUX`
+
+2. **`RunId`**:
+    - **Description**: This setting allows you to set a unique ID for every test run to distinguish them in the service portal.
+
+3. **`ExposeNetwork`**:
+    - **Description**: This settings exposes network available on the connecting client to the browser being connected to.
+
+4. **`DefaultAuth`**
+    - **Description**: This setting sllows you to specify the default authentication mechanism to be used for sending requests to the service.
+    - **Available Options**:
+        - `ServiceAuth.ENTRA` for Entra ID authentication.
+        - `ServiceAuth.TOKEN` for MPT Access Token authenticaton.
+    - **Default Value**: `ServiceAuth.ENTRA`
+
+5. **`UseCloudHostedBrowsers`**
+    - **Description**: This setting allows you to select whether to use cloud-hosted browsers to run your Playwright tests. Reporting features remain available even if you disable this setting.
+    - **Default Value**: `true`
+
+6. **`AzureTokenCredentialType`**:
+    - **Description**: This setting allows you to select the authentication method you want to use with Entra.
+    - **Available Options**:
+        - `AzureTokenCredentialType.EnvironmentCredential`
+        - `AzureTokenCredentialType.WorkloadIdentityCredential`
+        - `AzureTokenCredentialType.ManagedIdentityCredential`
+        - `AzureTokenCredentialType.SharedTokenCacheCredential`
+        - `AzureTokenCredentialType.VisualStudioCredential`
+        - `AzureTokenCredentialType.VisualStudioCodeCredential`
+        - `AzureTokenCredentialType.AzureCliCredential`
+        - `AzureTokenCredentialType.AzurePowerShellCredential`
+        - `AzureTokenCredentialType.AzureDeveloperCliCredential`
+        - `AzureTokenCredentialType.InteractiveBrowserCredential`
+        - `AzureTokenCredentialType.DefaultAzureCredential`
+    - **Default Value**: `AzureTokenCredentialType.DefaultAzureCredential`
+
+7. **`ManagedIdentityClientId`**
+    - **Description**: This setting allows you to specify the managed identity client id to be used for entra id authentication.
+
+8. **`EnableGitHubSummary`**:
+    - **Description**: This setting allows you to configure the Microsoft Playwright Testing service reporter. You can choose whether to include the test run summary in the GitHub summary when running in GitHub Actions.
+    - **Default Value**: `true`
+
