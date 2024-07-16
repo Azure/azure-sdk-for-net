@@ -1,6 +1,6 @@
 # Release History
 
-## 5.4.0 (2024-07-16)
+## 5.3.1 (2024-07-16)
 
 ### Bugs Fixed
 - Rely on PeekMessagesAsync when calculating message queue length
