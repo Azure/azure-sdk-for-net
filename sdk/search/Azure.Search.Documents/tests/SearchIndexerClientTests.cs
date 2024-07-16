@@ -650,7 +650,7 @@ namespace Azure.Search.Documents.Tests
 
                     Type _ when t == typeof(TextTranslationSkill) => new TextTranslationSkill(inputs, outputs, TextTranslationSkillLanguage.En),
                     Type _ when t == typeof(WebApiSkill) => new WebApiSkill(inputs, outputs, "https://microsoft.com"),
-                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUrl = new Uri("https://test-sample.openai.azure.com"), ApiKey = "api-key", DeploymentName = "model", ModelName = "text-embedding-3-large" },
+                    Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => new AzureOpenAIEmbeddingSkill(inputs, outputs) { ResourceUri = new Uri("https://test-sample.openai.azure.com"), ApiKey = "api-key", DeploymentName = "model", ModelName = "text-embedding-3-large" },
                     _ => (SearchIndexerSkill)Activator.CreateInstance(t, new object[] { inputs, outputs }),
                 };
             }

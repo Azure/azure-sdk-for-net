@@ -47,7 +47,7 @@ SearchIndex searchIndex = new(indexName)
             {
                 Parameters  = new AzureOpenAIVectorizerParameters()
                 {
-                    ResourceUrl = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
+                    ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                     ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                     DeploymentName = deploymentName,
                     ModelName = AzureOpenAIModelName.TextEmbedding3Small
