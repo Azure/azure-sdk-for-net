@@ -421,10 +421,6 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
             }
-            else if (ex is TaskCanceledException)
-            {
-                System.Diagnostics.Debug.WriteLine($"TaskCancellationToken Completion State Part:{PartNumber} | PreviousJobPartState: {JobPartStatus.State} (InvokeFailedArg)");
-            }
 
             try
             {
