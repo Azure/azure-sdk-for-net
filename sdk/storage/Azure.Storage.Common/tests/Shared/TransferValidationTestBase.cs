@@ -196,18 +196,12 @@ namespace Azure.Storage.Test.Shared
         internal static Action<Request> GetRequestChecksumHeaderAssertion(StorageChecksumAlgorithm algorithm, Func<Request, bool> isChecksumExpected = default, byte[] expectedChecksum = default)
         {
             // action to assert a request header is as expected
-            void AssertChecksum(RequestHeaders headers, string headerName)
+            void AssertChecksum(Request req, string headerName)
             {
-                if (headers.TryGetValue(headerName, out string checksum))
+                string checksum = req.AssertHeaderPresent(headerName);
+                if (expectedChecksum != default)
                 {
-                    if (expectedChecksum != default)
-                    {
-                        Assert.AreEqual(Convert.ToBase64String(expectedChecksum), checksum);
-                    }
-                }
-                else
-                {
-                    Assert.Fail($"{headerName} expected on request but was not found.");
+                    Assert.AreEqual(Convert.ToBase64String(expectedChecksum), checksum);
                 }
             };
 
@@ -222,10 +216,10 @@ namespace Azure.Storage.Test.Shared
                 switch (algorithm.ResolveAuto())
                 {
                     case StorageChecksumAlgorithm.MD5:
-                        AssertChecksum(request.Headers, "Content-MD5");
+                        AssertChecksum(request, "Content-MD5");
                         break;
                     case StorageChecksumAlgorithm.StorageCrc64:
-                        AssertChecksum(request.Headers, "x-ms-content-crc64");
+                        AssertChecksum(request, Constants.StructuredMessage.CrcStructuredMessageHeader);
                         break;
                     default:
                         throw new Exception($"Bad {nameof(StorageChecksumAlgorithm)} provided to {nameof(GetRequestChecksumHeaderAssertion)}.");
@@ -308,7 +302,7 @@ namespace Azure.Storage.Test.Shared
                         AssertChecksum(response.Headers, "Content-MD5");
                         break;
                     case StorageChecksumAlgorithm.StorageCrc64:
-                        AssertChecksum(response.Headers, "x-ms-content-crc64");
+                        AssertChecksum(response.Headers, Constants.StructuredMessage.CrcStructuredMessageHeader);
                         break;
                     default:
                         throw new Exception($"Bad {nameof(StorageChecksumAlgorithm)} provided to {nameof(GetRequestChecksumHeaderAssertion)}.");
@@ -355,7 +349,7 @@ namespace Azure.Storage.Test.Shared
             var exception = ThrowsOrInconclusiveAsync<RequestFailedException>(writeAction);
             if (expectStructuredMessage)
             {
-                Assert.That(exception.ErrorCode, Is.EqualTo("InvalidStructuredMessage"));
+                Assert.That(exception.ErrorCode, Is.EqualTo("Crc64Mismatch"));
             }
             else
             {
@@ -481,7 +475,9 @@ namespace Azure.Storage.Test.Shared
 
             // make pipeline assertion for checking precalculated checksum was present on upload
             // precalculated partition upload will never use structured message. always check header
-            var assertion = GetRequestChecksumHeaderAssertion(algorithm, expectedChecksum: precalculatedChecksum);
+            var assertion = GetRequestChecksumHeaderAssertion(
+                algorithm,
+                expectedChecksum: algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 ? default : precalculatedChecksum);
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: assertion);
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
@@ -499,7 +495,7 @@ namespace Azure.Storage.Test.Shared
                 AsyncTestDelegate operation = async () => await UploadPartitionAsync(client, stream, validationOptions);
 
                 // Assert
-                AssertWriteChecksumMismatch(operation, algorithm);
+                AssertWriteChecksumMismatch(operation, algorithm, algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64);
             }
         }
 
@@ -517,7 +513,7 @@ namespace Azure.Storage.Test.Shared
             };
 
             // Tamper with stream contents in the pipeline to simulate silent failure in the transit layer
-            var streamTamperPolicy = new TamperStreamContentsPolicy();
+            var streamTamperPolicy = TamperStreamContentsPolicy.TamperByteAt(100);
             var clientOptions = ClientBuilder.GetOptions();
             clientOptions.AddPolicy(streamTamperPolicy, HttpPipelinePosition.PerCall);
 
@@ -650,7 +646,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
-                if (request.Headers.Contains("x-ms-content-crc64"))
+                if (request.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage))
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
@@ -702,7 +698,9 @@ namespace Azure.Storage.Test.Shared
             // make pipeline assertion for checking checksum was present on upload
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumHeaderAssertion(algorithm));
             var clientOptions = ClientBuilder.GetOptions();
+            //ObserveStructuredMessagePolicy observe = new();
             clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+            //clientOptions.AddPolicy(observe, HttpPipelinePosition.BeforeTransport);
 
             var client = await GetResourceClientAsync(
                 disposingContainer.Container,
@@ -715,6 +713,7 @@ namespace Azure.Storage.Test.Shared
             using var writeStream = await OpenWriteAsync(client, validationOptions, streamBufferSize);
 
             // Assert
+            //using var obsv = observe.CheckRequestScope();
             using (checksumPipelineAssertion.CheckRequestScope())
             {
                 foreach (var _ in Enumerable.Range(0, streamWrites))
@@ -743,7 +742,7 @@ namespace Azure.Storage.Test.Shared
 
             // Tamper with stream contents in the pipeline to simulate silent failure in the transit layer
             var clientOptions = ClientBuilder.GetOptions();
-            var tamperPolicy = new TamperStreamContentsPolicy();
+            var tamperPolicy = TamperStreamContentsPolicy.TamperByteAt(100);
             clientOptions.AddPolicy(tamperPolicy, HttpPipelinePosition.PerCall);
 
             var client = await GetResourceClientAsync(
@@ -873,7 +872,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
-                if (request.Headers.Contains("x-ms-content-crc64"))
+                if (request.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage))
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
@@ -1236,7 +1235,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
-                if (request.Headers.Contains("x-ms-content-crc64"))
+                if (request.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage))
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
@@ -1301,15 +1300,17 @@ namespace Azure.Storage.Test.Shared
             };
 
             // Act
-            var dest = new MemoryStream();
+            byte[] dest;
+            using (MemoryStream ms = new())
             using (checksumPipelineAssertion.CheckRequestScope())
             {
-                await ParallelDownloadAsync(client, dest, validationOptions, transferOptions);
+                await ParallelDownloadAsync(client, ms, validationOptions, transferOptions);
+                dest = ms.ToArray();
             }
 
             // Assert
             // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            Assert.IsTrue(dest.SequenceEqual(data));
         }
 
         [Test]
@@ -1474,7 +1475,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
-                if (response.Headers.Contains("x-ms-content-crc64"))
+                if (response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage))
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
@@ -1682,7 +1683,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
-                if (response.Headers.Contains("x-ms-content-crc64"))
+                if (response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage))
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
@@ -1743,7 +1744,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains("x-ms-content-crc64"));
+                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
@@ -1834,7 +1835,9 @@ namespace Azure.Storage.Test.Shared
 
             // alter response contents in pipeline, forcing a checksum mismatch on verification step
             var clientOptions = ClientBuilder.GetOptions();
-            clientOptions.AddPolicy(new TamperStreamContentsPolicy() { TransformResponseBody = true }, HttpPipelinePosition.PerCall);
+            var tamperPolicy = TamperStreamContentsPolicy.TamperByteAt(50);
+            tamperPolicy.TransformResponseBody = true;
+            clientOptions.AddPolicy(tamperPolicy, HttpPipelinePosition.PerCall);
             client = await GetResourceClientAsync(
                 disposingContainer.Container,
                 createResource: false,
@@ -1846,7 +1849,7 @@ namespace Azure.Storage.Test.Shared
             AsyncTestDelegate operation = async () => await DownloadPartitionAsync(client, dest, validationOptions, new HttpRange(length: data.Length));
 
             // Assert
-            if (validate)
+            if (validate || algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
             {
                 // SDK responsible for finding bad checksum. Throw.
                 ThrowsOrInconclusiveAsync<InvalidDataException>(operation);
@@ -1904,7 +1907,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains("x-ms-content-crc64"));
+                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
@@ -1964,7 +1967,7 @@ namespace Azure.Storage.Test.Shared
                     Assert.True(response.Headers.Contains("Content-MD5"));
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    Assert.True(response.Headers.Contains("x-ms-content-crc64"));
+                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader));
                     break;
                 default:
                     Assert.Fail("Test can't validate given algorithm type.");
@@ -2003,7 +2006,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
-                if (response.Headers.Contains("x-ms-content-crc64"))
+                if (response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage))
                 {
                     Assert.Fail($"Hash found when none expected.");
                 }
@@ -2026,7 +2029,7 @@ namespace Azure.Storage.Test.Shared
             // Assert
             // no policies this time; just check response headers
             Assert.False(response.Headers.Contains("Content-MD5"));
-            Assert.False(response.Headers.Contains("x-ms-content-crc64"));
+            Assert.False(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessage));
             Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 

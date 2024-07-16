@@ -39,7 +39,7 @@ public class StructuredMessageDecodingRetriableStreamTests
 
         // mock with a simple MemoryStream rather than an actual StructuredMessageDecodingStream
         using (Stream src = new MemoryStream(data))
-        using (Stream retriableSrc = new StructuredMessageDecodingRetriableStream(src, new(), default, default, default, 1))
+        using (Stream retriableSrc = new StructuredMessageDecodingRetriableStream(src, new(), default, default, default, default, 1))
         using (Stream dst = new MemoryStream(dest))
         {
             await retriableSrc.CopyToInternal(dst, Async, default);
@@ -89,6 +89,7 @@ public class StructuredMessageDecodingRetriableStreamTests
             initialDecodedData,
             offset => Factory(offset, multipleInterrupts),
             offset => new ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>(Factory(offset, multipleInterrupts)),
+            null,
             AllExceptionsRetry().Object,
             int.MaxValue))
         using (Stream dst = new MemoryStream(dest))
@@ -159,6 +160,7 @@ public class StructuredMessageDecodingRetriableStreamTests
             initialDecodedData,
             offset => (mock.Object, new()),
             offset => new(Task.FromResult((mock.Object, new StructuredMessageDecodingStream.DecodedData()))),
+            null,
             AllExceptionsRetry().Object,
             1);
 
@@ -215,6 +217,7 @@ public class StructuredMessageDecodingRetriableStreamTests
             decodedData,
             offset => Factory(offset, multipleInterrupts),
             offset => new ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>(Factory(offset, multipleInterrupts)),
+            null,
             AllExceptionsRetry().Object,
             int.MaxValue);
         using Stream dst = new MemoryStream(dest);

@@ -1570,6 +1570,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 .EnsureCompleted(),
                             async startOffset => await StructuredMessageFactory(startOffset, async: true, cancellationToken)
                                 .ConfigureAwait(false),
+                            default, //decodedData => response.Value.Details.ContentCrc = decodedData.TotalCrc.ToArray(),
                             ClientConfiguration.Pipeline.ResponseClassifier,
                             Constants.MaxReliabilityRetries);
                     }
@@ -1719,14 +1720,7 @@ namespace Azure.Storage.Blobs.Specialized
                     rangeGetContentMD5 = true;
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    if (!forceStructuredMessage && pageRange?.Length <= Constants.StructuredMessage.MaxDownloadCrcWithHeader)
-                    {
-                        rangeGetContentCRC64 = true;
-                    }
-                    else
-                    {
-                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                    }
+                    structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
                     break;
                 default:
                     break;
