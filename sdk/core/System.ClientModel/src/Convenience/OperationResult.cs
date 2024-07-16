@@ -15,22 +15,25 @@ public abstract class OperationResult : ClientResult
     // return types don't have to implement IDiposable. Given this, provide
     // both constructors.
 
-    protected OperationResult(ClientPipeline pipeline) : base()
+    protected OperationResult(ContinuationToken rehydrationToken) : base()
     {
-        Pipeline = pipeline;
+        RehydrationToken = rehydrationToken;
     }
 
-    protected OperationResult(ClientPipeline pipeline, PipelineResponse response)
+    protected OperationResult(ContinuationToken rehydrationToken, PipelineResponse response)
         : base(response)
     {
-        Pipeline = pipeline;
+        RehydrationToken = rehydrationToken;
     }
-
-    protected ClientPipeline Pipeline { get; }
 
     // Note: Don't provide this on the base type per not being able to support
     // it from SSE, since the client isn't able to stop the stream, I don't think.
-    //public ContinuationToken RehydrationToken { get; protected set; }
+    // Note: adding this back since current plan is for OAI streaming types to
+    // inherit from polling LRO types - we will prevent rehydration of the
+    // streaming LRO types by not providing a method on the client that takes
+    // a rehydration token.
+    // Open question: can we make this work for protocol methods?
+    public ContinuationToken RehydrationToken { get; protected set; }
 
     // Note: OAI LROs can stop before completing, and user needs to resume them somehow.
     public abstract bool IsCompleted { get; protected set; }
@@ -55,6 +58,9 @@ public abstract class OperationResult : ClientResult
     // Returns false if operation has completed, or if continuing to poll for updates
     // would cause an infinite loop.  "CanContinue"/"Has more updates" -> can MoveNext
     // in the conceptual update stream.
+
+    // TODO: Can we make this less desireable to call?
+    // One idea is to actually expose an API to get the update enumerator.
     public abstract Task<bool> UpdateAsync(CancellationToken cancellationToken = default);
     public abstract bool Update(CancellationToken cancellationToken = default);
 

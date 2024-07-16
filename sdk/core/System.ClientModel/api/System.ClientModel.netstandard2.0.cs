@@ -92,7 +92,8 @@ namespace System.ClientModel
     public enum ReturnWhen
     {
         Started = 0,
-        Completed = 1,
+        StateChanged = 1,
+        Stopped = 2,
     }
 }
 namespace System.ClientModel.Primitives
@@ -188,10 +189,10 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class OperationResult : System.ClientModel.ClientResult
     {
-        protected OperationResult(System.ClientModel.Primitives.ClientPipeline pipeline) { }
-        protected OperationResult(System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineResponse response) { }
+        protected OperationResult(System.ClientModel.ContinuationToken rehydrationToken) { }
+        protected OperationResult(System.ClientModel.ContinuationToken rehydrationToken, System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract bool IsCompleted { get; protected set; }
-        protected System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
+        public System.ClientModel.ContinuationToken RehydrationToken { get { throw null; } protected set { } }
         public abstract bool Update(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task<bool> UpdateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract void Wait(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));

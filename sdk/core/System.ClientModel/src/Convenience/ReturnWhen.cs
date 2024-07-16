@@ -12,14 +12,11 @@ public enum ReturnWhen
 {
     Started,
 
-    //// Note: OAI LROs can stop before completing, and user needs to resume them somehow.
-    //// Generally: should this be extensible by the client to represent more
-    //// states in the state machine?
-    //Stopped,
+    // TODO: validate that this works for streaming.
+    StateChanged,
 
-    // Note: taking Stopped out b/c user can just call with ReturnWhen.Started
-    // and then use client-specific LRO APIs.  We can document this.
-
-    Completed
+    // This means that Update/MoveNext on the update enumerator returned false
+    // to indicate that updates aren't currently available.
+    Stopped
 }
 #pragma warning restore CS1591 // public XML comments
