@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// CloudVmCluster resource model
-    /// Serialized Name: CloudVmClusterProperties
-    /// </summary>
+    /// <summary> CloudVmCluster resource model. </summary>
     public partial class CloudVmClusterProperties
     {
         /// <summary>
@@ -51,38 +48,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterProperties"/>. </summary>
-        /// <param name="hostname">
-        /// The hostname for the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.hostname
-        /// </param>
-        /// <param name="cpuCoreCount">
-        /// The number of CPU cores enabled on the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.cpuCoreCount
-        /// </param>
-        /// <param name="cloudExadataInfrastructureId">
-        /// Cloud Exadata Infrastructure ID
-        /// Serialized Name: CloudVmClusterProperties.cloudExadataInfrastructureId
-        /// </param>
-        /// <param name="sshPublicKeys">
-        /// The public key portion of one or more key pairs used for SSH access to the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.sshPublicKeys
-        /// </param>
-        /// <param name="vnetId">
-        /// VNET for network connectivity
-        /// Serialized Name: CloudVmClusterProperties.vnetId
-        /// </param>
-        /// <param name="giVersion">
-        /// Oracle Grid Infrastructure (GI) software version
-        /// Serialized Name: CloudVmClusterProperties.giVersion
-        /// </param>
-        /// <param name="subnetId">
-        /// Client subnet
-        /// Serialized Name: CloudVmClusterProperties.subnetId
-        /// </param>
-        /// <param name="displayName">
-        /// Display Name
-        /// Serialized Name: CloudVmClusterProperties.displayName
-        /// </param>
+        /// <param name="hostname"> The hostname for the cloud VM cluster. </param>
+        /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
+        /// <param name="cloudExadataInfrastructureId"> Cloud Exadata Infrastructure ID. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
+        /// <param name="vnetId"> VNET for network connectivity. </param>
+        /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
+        /// <param name="subnetId"> Client subnet. </param>
+        /// <param name="displayName"> Display Name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostname"/>, <paramref name="cloudExadataInfrastructureId"/>, <paramref name="sshPublicKeys"/>, <paramref name="vnetId"/>, <paramref name="giVersion"/>, <paramref name="subnetId"/> or <paramref name="displayName"/> is null. </exception>
         public CloudVmClusterProperties(string hostname, int cpuCoreCount, ResourceIdentifier cloudExadataInfrastructureId, IEnumerable<string> sshPublicKeys, ResourceIdentifier vnetId, string giVersion, ResourceIdentifier subnetId, string displayName)
         {
@@ -103,216 +76,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             VnetId = vnetId;
             GiVersion = giVersion;
             SubnetId = subnetId;
-            NsgCidrs = new ChangeTrackingList<NsgCidr>();
+            NsgCidrs = new ChangeTrackingList<CloudVmClusterNsgCidr>();
             DisplayName = displayName;
-            ComputeNodes = new ChangeTrackingList<string>();
-            DbServers = new ChangeTrackingList<string>();
+            ComputeNodes = new ChangeTrackingList<ResourceIdentifier>();
+            DBServers = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterProperties"/>. </summary>
-        /// <param name="ocid">
-        /// Cloud VM Cluster ocid
-        /// Serialized Name: CloudVmClusterProperties.ocid
-        /// </param>
-        /// <param name="listenerPort">
-        /// The port number configured for the listener on the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.listenerPort
-        /// </param>
-        /// <param name="nodeCount">
-        /// The number of nodes in the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.nodeCount
-        /// </param>
-        /// <param name="storageSizeInGbs">
-        /// The data disk group size to be allocated in GBs per VM.
-        /// Serialized Name: CloudVmClusterProperties.storageSizeInGbs
-        /// </param>
-        /// <param name="dataStorageSizeInTbs">
-        /// The data disk group size to be allocated in TBs.
-        /// Serialized Name: CloudVmClusterProperties.dataStorageSizeInTbs
-        /// </param>
-        /// <param name="dbNodeStorageSizeInGbs">
-        /// The local node storage to be allocated in GBs.
-        /// Serialized Name: CloudVmClusterProperties.dbNodeStorageSizeInGbs
-        /// </param>
-        /// <param name="memorySizeInGbs">
-        /// The memory to be allocated in GBs.
-        /// Serialized Name: CloudVmClusterProperties.memorySizeInGbs
-        /// </param>
-        /// <param name="timeCreated">
-        /// The date and time that the cloud VM cluster was created.
-        /// Serialized Name: CloudVmClusterProperties.timeCreated
-        /// </param>
-        /// <param name="lifecycleDetails">
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: CloudVmClusterProperties.lifecycleDetails
-        /// </param>
-        /// <param name="timeZone">
-        /// The time zone of the cloud VM cluster. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm).
-        /// Serialized Name: CloudVmClusterProperties.timeZone
-        /// </param>
-        /// <param name="zoneId">
-        /// The OCID of the zone the cloud VM cluster is associated with.
-        /// Serialized Name: CloudVmClusterProperties.zoneId
-        /// </param>
-        /// <param name="hostname">
-        /// The hostname for the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.hostname
-        /// </param>
-        /// <param name="domain">
-        /// The domain name for the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.domain
-        /// </param>
-        /// <param name="cpuCoreCount">
-        /// The number of CPU cores enabled on the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.cpuCoreCount
-        /// </param>
-        /// <param name="ocpuCount">
-        /// The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part.
-        /// Serialized Name: CloudVmClusterProperties.ocpuCount
-        /// </param>
-        /// <param name="clusterName">
-        /// The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.
-        /// Serialized Name: CloudVmClusterProperties.clusterName
-        /// </param>
-        /// <param name="dataStoragePercentage">
-        /// The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Accepted values are 35, 40, 60 and 80. The default is 80 percent assigned to DATA storage. See [Storage Configuration](/Content/Database/Concepts/exaoverview.htm#Exadata) in the Exadata documentation for details on the impact of the configuration settings on storage.
-        /// Serialized Name: CloudVmClusterProperties.dataStoragePercentage
-        /// </param>
-        /// <param name="isLocalBackupEnabled">
-        /// If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.isLocalBackupEnabled
-        /// </param>
-        /// <param name="cloudExadataInfrastructureId">
-        /// Cloud Exadata Infrastructure ID
-        /// Serialized Name: CloudVmClusterProperties.cloudExadataInfrastructureId
-        /// </param>
-        /// <param name="isSparseDiskgroupEnabled">
-        /// If true, sparse disk group is configured for the cloud VM cluster. If false, sparse disk group is not created.
-        /// Serialized Name: CloudVmClusterProperties.isSparseDiskgroupEnabled
-        /// </param>
-        /// <param name="systemVersion">
-        /// Operating system version of the image.
-        /// Serialized Name: CloudVmClusterProperties.systemVersion
-        /// </param>
-        /// <param name="sshPublicKeys">
-        /// The public key portion of one or more key pairs used for SSH access to the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.sshPublicKeys
-        /// </param>
-        /// <param name="licenseModel">
-        /// The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED.
-        /// Serialized Name: CloudVmClusterProperties.licenseModel
-        /// </param>
-        /// <param name="diskRedundancy">
-        /// The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy.
-        /// Serialized Name: CloudVmClusterProperties.diskRedundancy
-        /// </param>
-        /// <param name="scanIPIds">
-        /// The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty.
-        /// Serialized Name: CloudVmClusterProperties.scanIpIds
-        /// </param>
-        /// <param name="vipIds">
-        /// The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty.
-        /// Serialized Name: CloudVmClusterProperties.vipIds
-        /// </param>
-        /// <param name="scanDnsName">
-        /// The FQDN of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.scanDnsName
-        /// </param>
-        /// <param name="scanListenerPortTcp">
-        /// The TCP Single Client Access Name (SCAN) port. The default port is 1521.
-        /// Serialized Name: CloudVmClusterProperties.scanListenerPortTcp
-        /// </param>
-        /// <param name="scanListenerPortTcpSsl">
-        /// The TCPS Single Client Access Name (SCAN) port. The default port is 2484.
-        /// Serialized Name: CloudVmClusterProperties.scanListenerPortTcpSsl
-        /// </param>
-        /// <param name="scanDnsRecordId">
-        /// The OCID of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.scanDnsRecordId
-        /// </param>
-        /// <param name="shape">
-        /// The model name of the Exadata hardware running the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.shape
-        /// </param>
-        /// <param name="provisioningState">
-        /// CloudVmCluster provisioning state
-        /// Serialized Name: CloudVmClusterProperties.provisioningState
-        /// </param>
-        /// <param name="lifecycleState">
-        /// CloudVmCluster lifecycle state
-        /// Serialized Name: CloudVmClusterProperties.lifecycleState
-        /// </param>
-        /// <param name="vnetId">
-        /// VNET for network connectivity
-        /// Serialized Name: CloudVmClusterProperties.vnetId
-        /// </param>
-        /// <param name="giVersion">
-        /// Oracle Grid Infrastructure (GI) software version
-        /// Serialized Name: CloudVmClusterProperties.giVersion
-        /// </param>
-        /// <param name="ociUri">
-        /// HTTPS link to OCI resources exposed to Azure Customer via Azure Interface.
-        /// Serialized Name: CloudVmClusterProperties.ociUrl
-        /// </param>
-        /// <param name="nsgUri">
-        /// HTTPS link to OCI Network Security Group exposed to Azure Customer via the Azure Interface.
-        /// Serialized Name: CloudVmClusterProperties.nsgUrl
-        /// </param>
-        /// <param name="subnetId">
-        /// Client subnet
-        /// Serialized Name: CloudVmClusterProperties.subnetId
-        /// </param>
-        /// <param name="backupSubnetCidr">
-        /// Client OCI backup subnet CIDR, default is 192.168.252.0/22
-        /// Serialized Name: CloudVmClusterProperties.backupSubnetCidr
-        /// </param>
-        /// <param name="nsgCidrs">
-        /// CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default.
-        /// Serialized Name: CloudVmClusterProperties.nsgCidrs
-        /// </param>
-        /// <param name="dataCollectionOptions">
-        /// Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS.
-        /// Serialized Name: CloudVmClusterProperties.dataCollectionOptions
-        /// </param>
-        /// <param name="displayName">
-        /// Display Name
-        /// Serialized Name: CloudVmClusterProperties.displayName
-        /// </param>
-        /// <param name="computeNodes">
-        /// The list of compute servers to be added to the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.computeNodes
-        /// </param>
-        /// <param name="iormConfigCache">
-        /// iormConfigCache details for cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.iormConfigCache
-        /// </param>
-        /// <param name="lastUpdateHistoryEntryId">
-        /// The OCID of the last maintenance update history entry.
-        /// Serialized Name: CloudVmClusterProperties.lastUpdateHistoryEntryId
-        /// </param>
-        /// <param name="dbServers">
-        /// The list of DB servers.
-        /// Serialized Name: CloudVmClusterProperties.dbServers
-        /// </param>
-        /// <param name="compartmentId">
-        /// Cluster compartmentId
-        /// Serialized Name: CloudVmClusterProperties.compartmentId
-        /// </param>
-        /// <param name="subnetOcid">
-        /// Cluster subnet ocid
-        /// Serialized Name: CloudVmClusterProperties.subnetOcid
-        /// </param>
+        /// <param name="ocid"> Cloud VM Cluster ocid. </param>
+        /// <param name="listenerPort"> The port number configured for the listener on the cloud VM cluster. </param>
+        /// <param name="nodeCount"> The number of nodes in the cloud VM cluster. </param>
+        /// <param name="storageSizeInGbs"> The data disk group size to be allocated in GBs per VM. </param>
+        /// <param name="dataStorageSizeInTbs"> The data disk group size to be allocated in TBs. </param>
+        /// <param name="dbNodeStorageSizeInGbs"> The local node storage to be allocated in GBs. </param>
+        /// <param name="memorySizeInGbs"> The memory to be allocated in GBs. </param>
+        /// <param name="createdOn"> The date and time that the cloud VM cluster was created. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="timeZone"> The time zone of the cloud VM cluster. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </param>
+        /// <param name="zoneId"> The OCID of the zone the cloud VM cluster is associated with. </param>
+        /// <param name="hostname"> The hostname for the cloud VM cluster. </param>
+        /// <param name="domain"> The domain name for the cloud VM cluster. </param>
+        /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
+        /// <param name="ocpuCount"> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </param>
+        /// <param name="clusterName"> The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </param>
+        /// <param name="dataStoragePercentage"> The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Accepted values are 35, 40, 60 and 80. The default is 80 percent assigned to DATA storage. See [Storage Configuration](/Content/Database/Concepts/exaoverview.htm#Exadata) in the Exadata documentation for details on the impact of the configuration settings on storage. </param>
+        /// <param name="isLocalBackupEnabled"> If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster. </param>
+        /// <param name="cloudExadataInfrastructureId"> Cloud Exadata Infrastructure ID. </param>
+        /// <param name="isSparseDiskgroupEnabled"> If true, sparse disk group is configured for the cloud VM cluster. If false, sparse disk group is not created. </param>
+        /// <param name="systemVersion"> Operating system version of the image. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </param>
+        /// <param name="diskRedundancy"> The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </param>
+        /// <param name="scanIPIds"> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="vipIds"> The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. </param>
+        /// <param name="scanListenerPortTcp"> The TCP Single Client Access Name (SCAN) port. The default port is 1521. </param>
+        /// <param name="scanListenerPortTcpSsl"> The TCPS Single Client Access Name (SCAN) port. The default port is 2484. </param>
+        /// <param name="scanDnsRecordId"> The OCID of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. </param>
+        /// <param name="shape"> The model name of the Exadata hardware running the cloud VM cluster. </param>
+        /// <param name="provisioningState"> CloudVmCluster provisioning state. </param>
+        /// <param name="lifecycleState"> CloudVmCluster lifecycle state. </param>
+        /// <param name="vnetId"> VNET for network connectivity. </param>
+        /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="nsgUri"> HTTPS link to OCI Network Security Group exposed to Azure Customer via the Azure Interface. </param>
+        /// <param name="subnetId"> Client subnet. </param>
+        /// <param name="backupSubnetCidr"> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </param>
+        /// <param name="nsgCidrs"> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </param>
+        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
+        /// <param name="displayName"> Display Name. </param>
+        /// <param name="computeNodes"> The list of compute servers to be added to the cloud VM cluster. </param>
+        /// <param name="iormConfigCache"> iormConfigCache details for cloud VM cluster. </param>
+        /// <param name="lastUpdateHistoryEntryId"> The OCID of the last maintenance update history entry. </param>
+        /// <param name="dbServers"> The list of DB servers. </param>
+        /// <param name="compartmentId"> Cluster compartmentId. </param>
+        /// <param name="subnetOcid"> Cluster subnet ocid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterProperties(string ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? timeCreated, string lifecycleDetails, string timeZone, string zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, LicenseModel? licenseModel, DiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordId, string shape, AzureResourceProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<NsgCidr> nsgCidrs, DataCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodes, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryId, IList<string> dbServers, string compartmentId, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterProperties(ResourceIdentifier ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, ResourceIdentifier zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, ResourceIdentifier scanDnsRecordId, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<ResourceIdentifier> computeNodes, ExadataIormConfig iormConfigCache, ResourceIdentifier lastUpdateHistoryEntryId, IList<ResourceIdentifier> dbServers, ResourceIdentifier compartmentId, ResourceIdentifier subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ListenerPort = listenerPort;
             NodeCount = nodeCount;
             StorageSizeInGbs = storageSizeInGbs;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
-            DbNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
+            DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             MemorySizeInGbs = memorySizeInGbs;
-            TimeCreated = timeCreated;
+            CreatedOn = createdOn;
             LifecycleDetails = lifecycleDetails;
             TimeZone = timeZone;
             ZoneId = zoneId;
@@ -350,7 +179,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ComputeNodes = computeNodes;
             IormConfigCache = iormConfigCache;
             LastUpdateHistoryEntryId = lastUpdateHistoryEntryId;
-            DbServers = dbServers;
+            DBServers = dbServers;
             CompartmentId = compartmentId;
             SubnetOcid = subnetOcid;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -361,245 +190,101 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary>
-        /// Cloud VM Cluster ocid
-        /// Serialized Name: CloudVmClusterProperties.ocid
-        /// </summary>
-        public string Ocid { get; }
-        /// <summary>
-        /// The port number configured for the listener on the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.listenerPort
-        /// </summary>
+        /// <summary> Cloud VM Cluster ocid. </summary>
+        public ResourceIdentifier Ocid { get; }
+        /// <summary> The port number configured for the listener on the cloud VM cluster. </summary>
         public long? ListenerPort { get; }
-        /// <summary>
-        /// The number of nodes in the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.nodeCount
-        /// </summary>
+        /// <summary> The number of nodes in the cloud VM cluster. </summary>
         public int? NodeCount { get; }
-        /// <summary>
-        /// The data disk group size to be allocated in GBs per VM.
-        /// Serialized Name: CloudVmClusterProperties.storageSizeInGbs
-        /// </summary>
+        /// <summary> The data disk group size to be allocated in GBs per VM. </summary>
         public int? StorageSizeInGbs { get; set; }
-        /// <summary>
-        /// The data disk group size to be allocated in TBs.
-        /// Serialized Name: CloudVmClusterProperties.dataStorageSizeInTbs
-        /// </summary>
+        /// <summary> The data disk group size to be allocated in TBs. </summary>
         public double? DataStorageSizeInTbs { get; set; }
-        /// <summary>
-        /// The local node storage to be allocated in GBs.
-        /// Serialized Name: CloudVmClusterProperties.dbNodeStorageSizeInGbs
-        /// </summary>
-        public int? DbNodeStorageSizeInGbs { get; set; }
-        /// <summary>
-        /// The memory to be allocated in GBs.
-        /// Serialized Name: CloudVmClusterProperties.memorySizeInGbs
-        /// </summary>
+        /// <summary> The local node storage to be allocated in GBs. </summary>
+        public int? DBNodeStorageSizeInGbs { get; set; }
+        /// <summary> The memory to be allocated in GBs. </summary>
         public int? MemorySizeInGbs { get; set; }
-        /// <summary>
-        /// The date and time that the cloud VM cluster was created.
-        /// Serialized Name: CloudVmClusterProperties.timeCreated
-        /// </summary>
-        public DateTimeOffset? TimeCreated { get; }
-        /// <summary>
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: CloudVmClusterProperties.lifecycleDetails
-        /// </summary>
+        /// <summary> The date and time that the cloud VM cluster was created. </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
-        /// <summary>
-        /// The time zone of the cloud VM cluster. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm).
-        /// Serialized Name: CloudVmClusterProperties.timeZone
-        /// </summary>
+        /// <summary> The time zone of the cloud VM cluster. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </summary>
         public string TimeZone { get; set; }
-        /// <summary>
-        /// The OCID of the zone the cloud VM cluster is associated with.
-        /// Serialized Name: CloudVmClusterProperties.zoneId
-        /// </summary>
-        public string ZoneId { get; set; }
-        /// <summary>
-        /// The hostname for the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.hostname
-        /// </summary>
+        /// <summary> The OCID of the zone the cloud VM cluster is associated with. </summary>
+        public ResourceIdentifier ZoneId { get; set; }
+        /// <summary> The hostname for the cloud VM cluster. </summary>
         public string Hostname { get; set; }
-        /// <summary>
-        /// The domain name for the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.domain
-        /// </summary>
+        /// <summary> The domain name for the cloud VM cluster. </summary>
         public string Domain { get; set; }
-        /// <summary>
-        /// The number of CPU cores enabled on the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.cpuCoreCount
-        /// </summary>
+        /// <summary> The number of CPU cores enabled on the cloud VM cluster. </summary>
         public int CpuCoreCount { get; set; }
-        /// <summary>
-        /// The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part.
-        /// Serialized Name: CloudVmClusterProperties.ocpuCount
-        /// </summary>
+        /// <summary> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </summary>
         public float? OcpuCount { get; set; }
-        /// <summary>
-        /// The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.
-        /// Serialized Name: CloudVmClusterProperties.clusterName
-        /// </summary>
+        /// <summary> The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </summary>
         public string ClusterName { get; set; }
-        /// <summary>
-        /// The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Accepted values are 35, 40, 60 and 80. The default is 80 percent assigned to DATA storage. See [Storage Configuration](/Content/Database/Concepts/exaoverview.htm#Exadata) in the Exadata documentation for details on the impact of the configuration settings on storage.
-        /// Serialized Name: CloudVmClusterProperties.dataStoragePercentage
-        /// </summary>
+        /// <summary> The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Accepted values are 35, 40, 60 and 80. The default is 80 percent assigned to DATA storage. See [Storage Configuration](/Content/Database/Concepts/exaoverview.htm#Exadata) in the Exadata documentation for details on the impact of the configuration settings on storage. </summary>
         public int? DataStoragePercentage { get; set; }
-        /// <summary>
-        /// If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.isLocalBackupEnabled
-        /// </summary>
+        /// <summary> If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster. </summary>
         public bool? IsLocalBackupEnabled { get; set; }
-        /// <summary>
-        /// Cloud Exadata Infrastructure ID
-        /// Serialized Name: CloudVmClusterProperties.cloudExadataInfrastructureId
-        /// </summary>
+        /// <summary> Cloud Exadata Infrastructure ID. </summary>
         public ResourceIdentifier CloudExadataInfrastructureId { get; set; }
-        /// <summary>
-        /// If true, sparse disk group is configured for the cloud VM cluster. If false, sparse disk group is not created.
-        /// Serialized Name: CloudVmClusterProperties.isSparseDiskgroupEnabled
-        /// </summary>
+        /// <summary> If true, sparse disk group is configured for the cloud VM cluster. If false, sparse disk group is not created. </summary>
         public bool? IsSparseDiskgroupEnabled { get; set; }
-        /// <summary>
-        /// Operating system version of the image.
-        /// Serialized Name: CloudVmClusterProperties.systemVersion
-        /// </summary>
+        /// <summary> Operating system version of the image. </summary>
         public string SystemVersion { get; set; }
-        /// <summary>
-        /// The public key portion of one or more key pairs used for SSH access to the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.sshPublicKeys
-        /// </summary>
+        /// <summary> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </summary>
         public IList<string> SshPublicKeys { get; }
-        /// <summary>
-        /// The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED.
-        /// Serialized Name: CloudVmClusterProperties.licenseModel
-        /// </summary>
-        public LicenseModel? LicenseModel { get; set; }
-        /// <summary>
-        /// The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy.
-        /// Serialized Name: CloudVmClusterProperties.diskRedundancy
-        /// </summary>
-        public DiskRedundancy? DiskRedundancy { get; }
-        /// <summary>
-        /// The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty.
-        /// Serialized Name: CloudVmClusterProperties.scanIpIds
-        /// </summary>
+        /// <summary> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </summary>
+        public OracleLicenseModel? LicenseModel { get; set; }
+        /// <summary> The type of redundancy configured for the cloud Vm cluster. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </summary>
+        public CloudVmClusterDiskRedundancy? DiskRedundancy { get; }
+        /// <summary> The Single Client Access Name (SCAN) IP addresses associated with the cloud VM cluster. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. **Note:** For a single-node DB system, this list is empty. </summary>
         public IReadOnlyList<string> ScanIPIds { get; }
-        /// <summary>
-        /// The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty.
-        /// Serialized Name: CloudVmClusterProperties.vipIds
-        /// </summary>
+        /// <summary> The virtual IP (VIP) addresses associated with the cloud VM cluster. The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster. **Note:** For a single-node DB system, this list is empty. </summary>
         public IReadOnlyList<string> VipIds { get; }
-        /// <summary>
-        /// The FQDN of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.scanDnsName
-        /// </summary>
+        /// <summary> The FQDN of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. </summary>
         public string ScanDnsName { get; }
-        /// <summary>
-        /// The TCP Single Client Access Name (SCAN) port. The default port is 1521.
-        /// Serialized Name: CloudVmClusterProperties.scanListenerPortTcp
-        /// </summary>
+        /// <summary> The TCP Single Client Access Name (SCAN) port. The default port is 1521. </summary>
         public int? ScanListenerPortTcp { get; set; }
-        /// <summary>
-        /// The TCPS Single Client Access Name (SCAN) port. The default port is 2484.
-        /// Serialized Name: CloudVmClusterProperties.scanListenerPortTcpSsl
-        /// </summary>
+        /// <summary> The TCPS Single Client Access Name (SCAN) port. The default port is 2484. </summary>
         public int? ScanListenerPortTcpSsl { get; set; }
-        /// <summary>
-        /// The OCID of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.scanDnsRecordId
-        /// </summary>
-        public string ScanDnsRecordId { get; }
-        /// <summary>
-        /// The model name of the Exadata hardware running the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.shape
-        /// </summary>
+        /// <summary> The OCID of the DNS record for the SCAN IP addresses that are associated with the cloud VM cluster. </summary>
+        public ResourceIdentifier ScanDnsRecordId { get; }
+        /// <summary> The model name of the Exadata hardware running the cloud VM cluster. </summary>
         public string Shape { get; }
-        /// <summary>
-        /// CloudVmCluster provisioning state
-        /// Serialized Name: CloudVmClusterProperties.provisioningState
-        /// </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// CloudVmCluster lifecycle state
-        /// Serialized Name: CloudVmClusterProperties.lifecycleState
-        /// </summary>
+        /// <summary> CloudVmCluster provisioning state. </summary>
+        public OracleDatabaseProvisioningState? ProvisioningState { get; }
+        /// <summary> CloudVmCluster lifecycle state. </summary>
         public CloudVmClusterLifecycleState? LifecycleState { get; }
-        /// <summary>
-        /// VNET for network connectivity
-        /// Serialized Name: CloudVmClusterProperties.vnetId
-        /// </summary>
+        /// <summary> VNET for network connectivity. </summary>
         public ResourceIdentifier VnetId { get; set; }
-        /// <summary>
-        /// Oracle Grid Infrastructure (GI) software version
-        /// Serialized Name: CloudVmClusterProperties.giVersion
-        /// </summary>
+        /// <summary> Oracle Grid Infrastructure (GI) software version. </summary>
         public string GiVersion { get; set; }
-        /// <summary>
-        /// HTTPS link to OCI resources exposed to Azure Customer via Azure Interface.
-        /// Serialized Name: CloudVmClusterProperties.ociUrl
-        /// </summary>
+        /// <summary> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </summary>
         public Uri OciUri { get; }
-        /// <summary>
-        /// HTTPS link to OCI Network Security Group exposed to Azure Customer via the Azure Interface.
-        /// Serialized Name: CloudVmClusterProperties.nsgUrl
-        /// </summary>
+        /// <summary> HTTPS link to OCI Network Security Group exposed to Azure Customer via the Azure Interface. </summary>
         public Uri NsgUri { get; }
-        /// <summary>
-        /// Client subnet
-        /// Serialized Name: CloudVmClusterProperties.subnetId
-        /// </summary>
+        /// <summary> Client subnet. </summary>
         public ResourceIdentifier SubnetId { get; set; }
-        /// <summary>
-        /// Client OCI backup subnet CIDR, default is 192.168.252.0/22
-        /// Serialized Name: CloudVmClusterProperties.backupSubnetCidr
-        /// </summary>
+        /// <summary> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </summary>
         public string BackupSubnetCidr { get; set; }
-        /// <summary>
-        /// CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default.
-        /// Serialized Name: CloudVmClusterProperties.nsgCidrs
-        /// </summary>
-        public IList<NsgCidr> NsgCidrs { get; }
-        /// <summary>
-        /// Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS.
-        /// Serialized Name: CloudVmClusterProperties.dataCollectionOptions
-        /// </summary>
-        public DataCollectionConfig DataCollectionOptions { get; set; }
-        /// <summary>
-        /// Display Name
-        /// Serialized Name: CloudVmClusterProperties.displayName
-        /// </summary>
+        /// <summary> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </summary>
+        public IList<CloudVmClusterNsgCidr> NsgCidrs { get; }
+        /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
+        public DiagnosticCollectionConfig DataCollectionOptions { get; set; }
+        /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The list of compute servers to be added to the cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.computeNodes
-        /// </summary>
-        public IList<string> ComputeNodes { get; }
-        /// <summary>
-        /// iormConfigCache details for cloud VM cluster.
-        /// Serialized Name: CloudVmClusterProperties.iormConfigCache
-        /// </summary>
+        /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>
+        public IList<ResourceIdentifier> ComputeNodes { get; }
+        /// <summary> iormConfigCache details for cloud VM cluster. </summary>
         public ExadataIormConfig IormConfigCache { get; }
-        /// <summary>
-        /// The OCID of the last maintenance update history entry.
-        /// Serialized Name: CloudVmClusterProperties.lastUpdateHistoryEntryId
-        /// </summary>
-        public string LastUpdateHistoryEntryId { get; }
-        /// <summary>
-        /// The list of DB servers.
-        /// Serialized Name: CloudVmClusterProperties.dbServers
-        /// </summary>
-        public IList<string> DbServers { get; }
-        /// <summary>
-        /// Cluster compartmentId
-        /// Serialized Name: CloudVmClusterProperties.compartmentId
-        /// </summary>
-        public string CompartmentId { get; }
-        /// <summary>
-        /// Cluster subnet ocid
-        /// Serialized Name: CloudVmClusterProperties.subnetOcid
-        /// </summary>
-        public string SubnetOcid { get; }
+        /// <summary> The OCID of the last maintenance update history entry. </summary>
+        public ResourceIdentifier LastUpdateHistoryEntryId { get; }
+        /// <summary> The list of DB servers. </summary>
+        public IList<ResourceIdentifier> DBServers { get; }
+        /// <summary> Cluster compartmentId. </summary>
+        public ResourceIdentifier CompartmentId { get; }
+        /// <summary> Cluster subnet ocid. </summary>
+        public ResourceIdentifier SubnetOcid { get; }
     }
 }

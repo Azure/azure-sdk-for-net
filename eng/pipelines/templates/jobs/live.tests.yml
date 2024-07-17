@@ -114,7 +114,12 @@ jobs:
         parameters:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
-          EnvVars: ${{ parameters.EnvVars }}
+          ${{ if parameters.UseFederatedAuth }}:
+            SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+          EnvVars:
+            Pool: $(Pool)
+            ${{ insert }}: ${{ parameters.EnvVars }}
+
       - pwsh: |
           $project = "${{ parameters.Project }}"
           $directory = "${{ parameters.ServiceDirectory }}"
@@ -134,12 +139,14 @@ jobs:
                   Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
                 ServiceDirectory: '${{ directory }}'
                 TestResourcesDirectory: '$(TestResourcesDirectory)'
-                EnvVars: ${{ parameters.EnvVars }}
                 SubscriptionConfiguration: $(SubscriptionConfiguration)
                 ArmTemplateParameters: $(ArmTemplateParameters)
                 UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                 ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
                 SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+                EnvVars:
+                  Pool: $(Pool)
+                  ${{ insert }}: ${{ parameters.EnvVars }}
         - ${{ if not(parameters.TestResourceDirectories) }}:
           - template: /eng/common/TestResources/deploy-test-resources.yml
             parameters:
@@ -147,12 +154,14 @@ jobs:
                 Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
               ServiceDirectory: '${{ parameters.ServiceDirectory }}'
               TestResourcesDirectory: '$(TestResourcesDirectory)'
-              EnvVars: ${{ parameters.EnvVars }}
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               ArmTemplateParameters: $(ArmTemplateParameters)
               UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
               ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
               SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+              EnvVars:
+                Pool: $(Pool)
+                ${{ insert }}: ${{ parameters.EnvVars }}
 
       - pwsh: |
           if ($env:SupportsRecording -and $env:Record) {
@@ -173,6 +182,14 @@ jobs:
             pwsh: true
             ScriptType: InlineScript
             Inline: >-
+              . ./eng/common/TestResources/SubConfig-Helpers.ps1
+              $serviceDirectoryPrefix = BuildServiceDirectoryPrefix ${{ parameters.ServiceDirectory }};
+              $account = (Get-AzContext).Account;
+              $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id;
+              $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants;
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}CLIENT_ID", $account.Id);
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}TENANT_ID", $account.Tenants);
+
               dotnet test eng/service.proj
               --framework $(TestTargetFramework)
               --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
@@ -194,6 +211,7 @@ jobs:
               exit $LASTEXITCODE;
           env:
             AZURE_TEST_MODE: $(TestMode)
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
             ${{ each var in parameters.EnvVars }}:
               ${{ var.key }}: ${{ var.value }}
 

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Cloud VM Cluster lifecycle state enum
-    /// Serialized Name: CloudVmClusterLifecycleState
-    /// </summary>
+    /// <summary> Cloud VM Cluster lifecycle state enum. </summary>
     public readonly partial struct CloudVmClusterLifecycleState : IEquatable<CloudVmClusterLifecycleState>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string MaintenanceInProgressValue = "MaintenanceInProgress";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Indicates that resource in Provisioning state
-        /// Serialized Name: CloudVmClusterLifecycleState.Provisioning
-        /// </summary>
+        /// <summary> Indicates that resource in Provisioning state. </summary>
         public static CloudVmClusterLifecycleState Provisioning { get; } = new CloudVmClusterLifecycleState(ProvisioningValue);
-        /// <summary>
-        /// Indicates that resource in Available state
-        /// Serialized Name: CloudVmClusterLifecycleState.Available
-        /// </summary>
+        /// <summary> Indicates that resource in Available state. </summary>
         public static CloudVmClusterLifecycleState Available { get; } = new CloudVmClusterLifecycleState(AvailableValue);
-        /// <summary>
-        /// Indicates that resource in Updating state
-        /// Serialized Name: CloudVmClusterLifecycleState.Updating
-        /// </summary>
+        /// <summary> Indicates that resource in Updating state. </summary>
         public static CloudVmClusterLifecycleState Updating { get; } = new CloudVmClusterLifecycleState(UpdatingValue);
-        /// <summary>
-        /// Indicates that resource in Terminating state
-        /// Serialized Name: CloudVmClusterLifecycleState.Terminating
-        /// </summary>
+        /// <summary> Indicates that resource in Terminating state. </summary>
         public static CloudVmClusterLifecycleState Terminating { get; } = new CloudVmClusterLifecycleState(TerminatingValue);
-        /// <summary>
-        /// Indicates that resource in Terminated state
-        /// Serialized Name: CloudVmClusterLifecycleState.Terminated
-        /// </summary>
+        /// <summary> Indicates that resource in Terminated state. </summary>
         public static CloudVmClusterLifecycleState Terminated { get; } = new CloudVmClusterLifecycleState(TerminatedValue);
-        /// <summary>
-        /// Indicates that resource Maintenance in progress state
-        /// Serialized Name: CloudVmClusterLifecycleState.MaintenanceInProgress
-        /// </summary>
+        /// <summary> Indicates that resource Maintenance in progress state. </summary>
         public static CloudVmClusterLifecycleState MaintenanceInProgress { get; } = new CloudVmClusterLifecycleState(MaintenanceInProgressValue);
-        /// <summary>
-        /// Indicates that resource in Failed state
-        /// Serialized Name: CloudVmClusterLifecycleState.Failed
-        /// </summary>
+        /// <summary> Indicates that resource in Failed state. </summary>
         public static CloudVmClusterLifecycleState Failed { get; } = new CloudVmClusterLifecycleState(FailedValue);
         /// <summary> Determines if two <see cref="CloudVmClusterLifecycleState"/> values are the same. </summary>
         public static bool operator ==(CloudVmClusterLifecycleState left, CloudVmClusterLifecycleState right) => left.Equals(right);
@@ -83,7 +59,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -23,6 +23,11 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(ContentType.ToString());
             writer.WritePropertyName("audioChannelType"u8);
             writer.WriteStringValue(AudioChannelType.ToString());
+            if (Optional.IsDefined(StartMediaStreaming))
+            {
+                writer.WritePropertyName("startMediaStreaming"u8);
+                writer.WriteBooleanValue(StartMediaStreaming.Value);
+            }
             writer.WriteEndObject();
         }
 
