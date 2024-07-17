@@ -90,8 +90,6 @@ namespace Azure.ResourceManager.Quota
                 case 200:
                 case 201:
                     return message.Response;
-                case 202:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
