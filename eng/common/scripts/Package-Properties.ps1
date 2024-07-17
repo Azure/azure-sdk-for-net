@@ -108,7 +108,7 @@ function Get-PkgProperties
 function Get-PrPkgProperties([string]$InputDiffJson) {
     $packagesWithChanges = @()
 
-    $allPackageProperties = Get-AllPkgProperties -ServiceDirectory media
+    $allPackageProperties = Get-AllPkgProperties
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
 
