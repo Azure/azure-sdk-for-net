@@ -13,21 +13,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeSecurityPostureReference : IUtf8JsonSerializable, IJsonModel<ComputeSecurityPostureReference>
+    public partial class SecurityPostureReferenceUpdate : IUtf8JsonSerializable, IJsonModel<SecurityPostureReferenceUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSecurityPostureReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPostureReferenceUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ComputeSecurityPostureReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityPostureReferenceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeSecurityPostureReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPostureReferenceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityPostureReferenceUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsCollectionDefined(ExcludeExtensions))
             {
                 writer.WritePropertyName("excludeExtensions"u8);
@@ -61,19 +64,19 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        ComputeSecurityPostureReference IJsonModel<ComputeSecurityPostureReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityPostureReferenceUpdate IJsonModel<SecurityPostureReferenceUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeSecurityPostureReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPostureReferenceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityPostureReferenceUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeSecurityPostureReference(document.RootElement, options);
+            return DeserializeSecurityPostureReferenceUpdate(document.RootElement, options);
         }
 
-        internal static ComputeSecurityPostureReference DeserializeComputeSecurityPostureReference(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SecurityPostureReferenceUpdate DeserializeSecurityPostureReferenceUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             IList<string> excludeExtensions = default;
             bool? isOverridable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("excludeExtensions"u8))
@@ -122,38 +125,38 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeSecurityPostureReference(id, excludeExtensions ?? new ChangeTrackingList<string>(), isOverridable, serializedAdditionalRawData);
+            return new SecurityPostureReferenceUpdate(id, excludeExtensions ?? new ChangeTrackingList<string>(), isOverridable, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ComputeSecurityPostureReference>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecurityPostureReferenceUpdate>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeSecurityPostureReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPostureReferenceUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityPostureReferenceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ComputeSecurityPostureReference IPersistableModel<ComputeSecurityPostureReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecurityPostureReferenceUpdate IPersistableModel<SecurityPostureReferenceUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeSecurityPostureReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPostureReferenceUpdate>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeComputeSecurityPostureReference(document.RootElement, options);
+                        return DeserializeSecurityPostureReferenceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityPostureReferenceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ComputeSecurityPostureReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityPostureReferenceUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

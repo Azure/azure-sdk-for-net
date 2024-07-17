@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="hardwareVmSizeProperties"> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </param>
         /// <param name="serviceArtifactReferenceId"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. Minimum api-version: 2022-11-01. </param>
-        /// <param name="securityPostureReference"> Specifies the security posture to be used for all virtual machines in the scale set. Minimum api-version: 2023-03-01. </param>
+        /// <param name="securityPostureReference"> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </param>
         /// <param name="timeCreated"> Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. Minimum API version for this property is 2024-03-01. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile with minimum api-version 2024-03-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmProfile"/> instance for mocking. </returns>
         public static VirtualMachineScaleSetVmProfile VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile = null, VirtualMachineScaleSetStorageProfile storageProfile = null, VirtualMachineScaleSetNetworkProfile networkProfile = null, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, VirtualMachineScaleSetExtensionProfile extensionProfile = null, string licenseType = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, VirtualMachineSizeProperties hardwareVmSizeProperties = null, ResourceIdentifier serviceArtifactReferenceId = null, ComputeSecurityPostureReference securityPostureReference = null, DateTimeOffset? timeCreated = null)
@@ -292,55 +292,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static ComputeSubResourceData ComputeSubResourceData(ResourceIdentifier id = null)
         {
             return new ComputeSubResourceData(id, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineExtensionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The virtual machine extension instance view. </param>
-        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
-        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        /// <returns> A new <see cref="Compute.VirtualMachineExtensionData"/> instance for mocking. </returns>
-        public static VirtualMachineExtensionData VirtualMachineExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string forceUpdateTag = null, string publisher = null, string extensionType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, bool? enableAutomaticUpgrade = null, BinaryData settings = null, BinaryData protectedSettings = null, string provisioningState = null, VirtualMachineExtensionInstanceView instanceView = null, bool? suppressFailures = null, KeyVaultSecretReference keyVaultProtectedSettings = null, IEnumerable<string> provisionAfterExtensions = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            provisionAfterExtensions ??= new List<string>();
-
-            return new VirtualMachineExtensionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                forceUpdateTag,
-                publisher,
-                extensionType,
-                typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                enableAutomaticUpgrade,
-                settings,
-                protectedSettings,
-                provisioningState,
-                instanceView,
-                suppressFailures,
-                keyVaultProtectedSettings,
-                provisionAfterExtensions?.ToList(),
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetInstanceView"/>. </summary>
@@ -866,6 +817,55 @@ namespace Azure.ResourceManager.Compute.Models
                 diskMBpsReadWrite,
                 detachOption,
                 deleteOption,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineExtensionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The virtual machine extension instance view. </param>
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
+        /// <returns> A new <see cref="Compute.VirtualMachineExtensionData"/> instance for mocking. </returns>
+        public static VirtualMachineExtensionData VirtualMachineExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string forceUpdateTag = null, string publisher = null, string extensionType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, bool? enableAutomaticUpgrade = null, BinaryData settings = null, BinaryData protectedSettings = null, string provisioningState = null, VirtualMachineExtensionInstanceView instanceView = null, bool? suppressFailures = null, KeyVaultSecretReference keyVaultProtectedSettings = null, IEnumerable<string> provisionAfterExtensions = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            provisionAfterExtensions ??= new List<string>();
+
+            return new VirtualMachineExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                forceUpdateTag,
+                publisher,
+                extensionType,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                provisioningState,
+                instanceView,
+                suppressFailures,
+                keyVaultProtectedSettings,
+                provisionAfterExtensions?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -2773,8 +2773,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
         /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
+        /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
         /// <returns> A new <see cref="Compute.DiskRestorePointData"/> instance for mocking. </returns>
-        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? timeCreated = null, ResourceIdentifier sourceResourceId = null, SupportedOperatingSystemType? osType = null, HyperVGeneration? hyperVGeneration = null, DiskPurchasePlan purchasePlan = null, SupportedCapabilities supportedCapabilities = null, string familyId = null, string sourceUniqueId = null, DiskEncryption encryption = null, bool? supportsHibernation = null, NetworkAccessPolicy? networkAccessPolicy = null, DiskPublicNetworkAccess? publicNetworkAccess = null, ResourceIdentifier diskAccessId = null, float? completionPercent = null, string replicationState = null, AzureLocation? sourceResourceLocation = null, DiskSecurityProfile securityProfile = null)
+        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? timeCreated = null, ResourceIdentifier sourceResourceId = null, SupportedOperatingSystemType? osType = null, HyperVGeneration? hyperVGeneration = null, DiskPurchasePlan purchasePlan = null, SupportedCapabilities supportedCapabilities = null, string familyId = null, string sourceUniqueId = null, DiskEncryption encryption = null, bool? supportsHibernation = null, NetworkAccessPolicy? networkAccessPolicy = null, DiskPublicNetworkAccess? publicNetworkAccess = null, ResourceIdentifier diskAccessId = null, float? completionPercent = null, string replicationState = null, AzureLocation? sourceResourceLocation = null, DiskSecurityProfile securityProfile = null, int? logicalSectorSize = null)
         {
             return new DiskRestorePointData(
                 id,
@@ -2798,6 +2799,7 @@ namespace Azure.ResourceManager.Compute.Models
                 replicationState,
                 sourceResourceLocation,
                 securityProfile,
+                logicalSectorSize,
                 serializedAdditionalRawData: null);
         }
 
@@ -4187,6 +4189,35 @@ namespace Azure.ResourceManager.Compute.Models
         public static OSVersionPropertiesBase OSVersionPropertiesBase(string version = null, string label = null, bool? isDefault = null, bool? isActive = null)
         {
             return new OSVersionPropertiesBase(version, label, isDefault, isActive, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.DiskRestorePointData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="timeCreated"> The timestamp of restorePoint creation. </param>
+        /// <param name="sourceResourceId"> arm id of source disk or source disk restore point. </param>
+        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
+        /// <param name="familyId"> id of the backing snapshot's MIS family. </param>
+        /// <param name="sourceUniqueId"> unique incarnation id of the source disk. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
+        /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
+        /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
+        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.DiskRestorePointData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation, DiskSecurityProfile securityProfile)
+        {
+            return DiskRestorePointData(id: id, name: name, resourceType: resourceType, systemData: systemData, timeCreated: timeCreated, sourceResourceId: sourceResourceId, osType: osType, hyperVGeneration: hyperVGeneration, purchasePlan: purchasePlan, supportedCapabilities: supportedCapabilities, familyId: familyId, sourceUniqueId: sourceUniqueId, encryption: encryption, supportsHibernation: supportsHibernation, networkAccessPolicy: networkAccessPolicy, publicNetworkAccess: publicNetworkAccess, diskAccessId: diskAccessId, completionPercent: completionPercent, replicationState: replicationState, sourceResourceLocation: sourceResourceLocation, securityProfile: securityProfile, logicalSectorSize: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.VirtualMachineScaleSetData" />. </summary>
