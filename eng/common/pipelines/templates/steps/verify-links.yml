@@ -13,7 +13,7 @@ parameters:
 steps:
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
     parameters:
-      condition: ${{ parameters.Condition }}
+      Condition: ${{ parameters.Condition }}
   - task: PowerShell@2
     displayName: Link verification check
     condition: ${{ parameters.Condition }}
