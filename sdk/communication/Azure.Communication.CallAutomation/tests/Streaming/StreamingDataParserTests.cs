@@ -151,6 +151,25 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         #region Transcription
 
         [Test]
+        public void ParseTranscriptionMetadata_Test()
+        {
+            var metadataJson =
+            "{" +
+                "\"kind\":\"TranscriptionMetadata\"," +
+                "\"transcriptionMetadata\":" +
+                "{" +
+                    "\"subscriptionId\":\"subscriptionId\"," +
+                    "\"locale\":\"en-US\"," +
+                    "\"callConnectionId\":\"callConnectionId\"," +
+                    "\"correlationId\":\"correlationId\"" +
+                "}" +
+            "}";
+
+            TranscriptionMetadata streamingMetadata = (TranscriptionMetadata)StreamingDataParser.Parse(metadataJson);
+            ValidateTranscriptionMetadata(streamingMetadata);
+        }
+
+        [Test]
         public void ParseTranscriptionData_Test()
         {
             var transcriptionJson =
@@ -228,7 +247,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         }
 
         [Test]
-        public void ParseTranscriptionMetadata_Test()
+        public void ParseTranscriptionMetadataBinaryArray_Test()
         {
             var metadataJson =
             "{" +

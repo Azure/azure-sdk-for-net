@@ -62,6 +62,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             UriRegexSanitizers.Add(new UriRegexSanitizer(ACSUserIdInUrlRegex, SanitizeValue));
         }
 
+        public bool SkipCallAutomationInteractionLiveTests
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS") == "TRUE";
+
         [SetUp]
         public void TestSetup()
         {
