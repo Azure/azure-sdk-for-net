@@ -79,9 +79,9 @@ namespace Azure.Identity
                 {
                     throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
                 }
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                result = await _miMsal.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false);
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                result = async ?
+                    await _miMsal.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
+                    _miMsal.AcquireTokenForManagedIdentity(context, cancellationToken);
             }
             return result.ToAccessToken();
         }

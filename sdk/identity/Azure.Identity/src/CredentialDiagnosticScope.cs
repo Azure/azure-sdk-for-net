@@ -47,7 +47,7 @@ namespace Azure.Identity
 
         public Exception FailWrapAndThrow(Exception ex, string additionalMessage = null, bool isCredentialUnavailable = false)
         {
-            var wrapped = TryWrapException(ref ex, additionalMessage);
+            var wrapped = TryWrapException(ref ex, additionalMessage, isCredentialUnavailable);
             RegisterFailed(ex);
 
             if (!wrapped)
@@ -83,9 +83,16 @@ namespace Azure.Identity
 
             string exceptionMessage = $"{_name.Substring(0, _name.IndexOf('.'))} authentication failed: ";
 
-            if (exception is MsalServiceException and { ErrorCode: "user_assigned_managed_identity_not_supported" })
+            if (exception is MsalServiceException mse)
             {
-                exceptionMessage += Constants.MiSourceNoUserAssignedIdentityMessage;
+                if (mse.ErrorCode == "user_assigned_managed_identity_not_supported")
+                {
+                    exceptionMessage += Constants.MiSourceNoUserAssignedIdentityMessage;
+                }
+                else if (mse.ErrorCode == "managed_identity_request_failed")
+                {
+                    exceptionMessage += mse.Message;
+                }
             }
             else
             {

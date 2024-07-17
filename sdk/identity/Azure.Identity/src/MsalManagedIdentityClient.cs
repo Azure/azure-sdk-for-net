@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.AppConfig;
 
@@ -85,11 +86,14 @@ namespace Azure.Identity
         }
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
-            await AcquireTokenForManagedIdentityAsyncCore(requestContext, cancellationToken).ConfigureAwait(false);
+            await AcquireTokenForManagedIdentityAsyncCore(true, requestContext, cancellationToken).ConfigureAwait(false);
 
-        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        public virtual AuthenticationResult AcquireTokenForManagedIdentity(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+            AcquireTokenForManagedIdentityAsyncCore(false, requestContext, cancellationToken).EnsureCompleted();
+
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            IManagedIdentityApplication client = await GetClientAsync(async: true, cancellationToken).ConfigureAwait(false);
+            IManagedIdentityApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenForManagedIdentity(requestContext.Scopes.FirstOrDefault());
 
@@ -97,8 +101,11 @@ namespace Azure.Identity
             {
                 builder.WithForceRefresh(true);
             }
-            return await builder.ExecuteAsync()
-                .ConfigureAwait(false);
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            return async ?
+                await builder.ExecuteAsync().ConfigureAwait(false) :
+                builder.ExecuteAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }
 }
