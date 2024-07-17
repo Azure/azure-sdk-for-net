@@ -1297,7 +1297,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1317,12 +1320,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Delay a moment to ensure that the messages are available to
                 // read/delete and lower the chance of being throttled.
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1342,12 +1348,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Delay a moment to ensure that the messages are available to
                 // read/delete and lower the chance of being throttled.
-                await Task.Delay(TimeSpan.FromSeconds(10));
+                await Task.Delay(TimeSpan.FromSeconds(15));
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1367,7 +1376,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 // Delay a moment to ensure that the messages are available to
                 // read/delete and lower the chance of being throttled.
-                await Task.Delay(TimeSpan.FromSeconds(10));
+                await Task.Delay(TimeSpan.FromSeconds(15));
 
                 // Mark the time for deleting.
                 var targetDate = DateTime.UtcNow;
@@ -1381,12 +1390,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync(targetDate);
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                // Because of the contract, we cannot assume that all eligible
+                // messages were deleted.  We know only that the count of deleted
+                // messages is less than or equal to the count of messages sent.
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
 
-                // All messages should have been deleted, except for our designated survivor.
-                var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNotNull(peekedMessage.Result);
-                Assert.AreEqual("survivor", peekedMessage.Result.MessageId);
+                // We cannot know what is left in the queue, so scan forward until we peek
+                // the last message.
+                var peekedMessage = await receiver.PeekMessageAsync();
+                var lastMessage = peekedMessage;
+
+                while (peekedMessage != null && peekedMessage.MessageId != message.MessageId)
+                {
+                    peekedMessage = await receiver.PeekMessageAsync(lastMessage.SequenceNumber);
+
+                    if (peekedMessage != null)
+                    {
+                        lastMessage = peekedMessage;
+                    }
+                }
+
+                Assert.IsNotNull(lastMessage);
+                Assert.AreEqual(message.MessageId, lastMessage.MessageId);
             }
         }
 

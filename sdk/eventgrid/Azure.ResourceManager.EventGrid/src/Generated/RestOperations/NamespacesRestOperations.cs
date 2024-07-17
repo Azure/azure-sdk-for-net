@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-12-15-preview";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -783,6 +783,92 @@ namespace Azure.ResourceManager.EventGrid
             Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, namespaceName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateValidateCustomDomainOwnershipRequestUri(string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/validateCustomDomainOwnership", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateValidateCustomDomainOwnershipRequest(string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/validateCustomDomainOwnership", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Performs ownership validation via checking TXT records for all custom domains in a namespace. </summary>
+        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
+        /// <param name="namespaceName"> Name of the Namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ValidateCustomDomainOwnershipAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
+            using var message = CreateValidateCustomDomainOwnershipRequest(subscriptionId, resourceGroupName, namespaceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Performs ownership validation via checking TXT records for all custom domains in a namespace. </summary>
+        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
+        /// <param name="namespaceName"> Name of the Namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ValidateCustomDomainOwnership(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
+            using var message = CreateValidateCustomDomainOwnershipRequest(subscriptionId, resourceGroupName, namespaceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

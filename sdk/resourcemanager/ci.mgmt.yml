@@ -97,6 +97,7 @@ trigger:
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -133,6 +134,7 @@ trigger:
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
+    - sdk/oracle/Azure.ResourceManager.OracleDatabase
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
@@ -291,6 +293,7 @@ pr:
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -327,6 +330,7 @@ pr:
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
+    - sdk/oracle/Azure.ResourceManager.OracleDatabase
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering

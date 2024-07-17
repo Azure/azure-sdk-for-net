@@ -819,14 +819,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await ServiceRestClient.SetPropertiesAsync(
-                            storageServiceProperties: properties,
+                            shareServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ServiceRestClient.SetProperties(
-                            storageServiceProperties: properties,
+                            shareServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
 
@@ -889,6 +889,9 @@ namespace Azure.Storage.Files.Shares
                 enabledProtocols: options?.Protocols,
                 rootSquash: options?.RootSquash,
                 enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
+                enablePaidBursting: options?.EnablePaidBursting,
+                paidBurstingMaxIops: options?.PaidBurstingMaxIops,
+                paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -938,6 +941,9 @@ namespace Azure.Storage.Files.Shares
                 enabledProtocols: options?.Protocols,
                 rootSquash: options?.RootSquash,
                 enableSnapshotVirtualDirectoryAccess: options?.EnableSnapshotVirtualDirectoryAccess,
+                enablePaidBursting: options?.EnablePaidBursting,
+                paidBurstingMaxIops: options?.PaidBurstingMaxIops,
+                paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -992,6 +998,9 @@ namespace Azure.Storage.Files.Shares
                 enabledProtocols: default,
                 rootSquash: default,
                 enableSnapshotVirtualDirectoryAccess: default,
+                enablePaidBursting: default,
+                paidBurstingMaxIops: default,
+                paidBurstingMaxBandwidthMibps: default,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1046,6 +1055,9 @@ namespace Azure.Storage.Files.Shares
                 enabledProtocols: default,
                 rootSquash: default,
                 enableSnapshotVirtualDirectoryAccess: default,
+                enablePaidBursting: default,
+                paidBurstingMaxIops: default,
+                paidBurstingMaxBandwidthMibps: default,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1419,6 +1431,42 @@ namespace Azure.Storage.Files.Shares
                 expiresOn,
                 AccountSasServices.Files,
                 resourceTypes));
+
+        /// <summary>
+        /// For debugging purposes only.
+        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// If you use this method, call it immediately before
+        /// <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="AccountSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. The time at which the shared access signature becomes invalid.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types associated with the shared access signature.
+        /// The user is restricted to operations on the specified resources.
+        /// See <see cref="AccountSasResourceTypes"/>.
+        /// </param>
+        /// <returns>
+        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string GenerateSasStringToSign(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasResourceTypes resourceTypes)
+        {
+            AccountSasBuilder shareSasBuilder = new AccountSasBuilder(
+                permissions,
+                expiresOn,
+                AccountSasServices.Files,
+                resourceTypes);
+
+            return shareSasBuilder.ToStringToSign(ClientConfiguration.SharedKeyCredential);
+        }
 
         /// <summary>
         /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/>

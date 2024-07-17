@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Base 64 encoded certificate using the application/x-pkcs12 representation. </summary>
+        [WirePath("properties.data")]
         public string Data { get; set; }
         /// <summary> Password for the Certificate. </summary>
+        [WirePath("properties.password")]
         public string Password { get; set; }
         /// <summary> KeyVault location details of the certificate. </summary>
+        [WirePath("properties.keyVault")]
         public KeyVaultContractCreateProperties KeyVaultDetails { get; set; }
     }
 }

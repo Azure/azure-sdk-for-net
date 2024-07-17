@@ -1,6 +1,6 @@
 # Release History
 
-## 1.40.0-beta.1 (Unreleased)
+## 1.42.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,30 @@
 
 ### Bugs Fixed
 
-- Fix for operation id not set of incomplete long-running operation.
+### Other Changes
+
+## 1.41.0 (2024-07-11)
+
+### Bugs Fixed
+
+- Fixed an issue that could result in `BearerTokenAuthenticationPolicy` fails to refresh a token, resulting in a `OperationCanceledException` ([#44882](https://github.com/Azure/azure-sdk-for-net/pull/44882)).
+- Fixed case where a GeoJSON string could not be deserialized when the BoundingBox JSON value ("bbox") was set explicitly to null ([#44835](https://github.com/Azure/azure-sdk-for-net/pull/44835)).
+
+## 1.40.0 (2024-06-06)
+
+### Features Added
+
+- Added `RefreshOn` property to `AccessToken` and updated `BearerTokenAuthenticationPolicy` to refresh long-lived credentials according to this value ([#43836](https://github.com/Azure/azure-sdk-for-net/issues/43836)).
+
+### Bugs Fixed
+
+- Fixed User-Agent telemetry so that it properly escapes operating system information if it contains non-ascii characters ([#44386](https://github.com/Azure/azure-sdk-for-net/pull/44386)).
+- Fixed case where Operation.Id was not being set for incomplete long-running operations ([#44098](https://github.com/Azure/azure-sdk-for-net/pull/44098)).
 
 ### Other Changes
+
+- Improved memory performance for HTTP message sanitization ([#43818](https://github.com/Azure/azure-sdk-for-net/pull/43818)).
+- Added `DynamicallyAccessedMembers` attribute to type parameter in `Operation<T>.Rehydrate` method ([#44208](https://github.com/Azure/azure-sdk-for-net/pull/44208)).
 
 ## 1.39.0 (2024-04-18)
 

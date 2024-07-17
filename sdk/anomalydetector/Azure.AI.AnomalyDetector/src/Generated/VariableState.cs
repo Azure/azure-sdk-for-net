@@ -46,7 +46,7 @@ namespace Azure.AI.AnomalyDetector
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VariableState"/>. </summary>
-        public VariableState()
+        internal VariableState()
         {
         }
 
@@ -68,14 +68,14 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Variable name in variable states. </summary>
-        public string Variable { get; set; }
+        public string Variable { get; }
         /// <summary> Proportion of missing values that need to be filled by fillNAMethod. </summary>
-        public float? FilledNARatio { get; set; }
+        public float? FilledNARatio { get; }
         /// <summary> Number of effective data points before fillNAMethod is applied. </summary>
-        public int? EffectiveCount { get; set; }
+        public int? EffectiveCount { get; }
         /// <summary> First valid time stamp with a value of input data. </summary>
-        public DateTimeOffset? FirstTimestamp { get; set; }
+        public DateTimeOffset? FirstTimestamp { get; }
         /// <summary> Last valid time stamp with a value of input data. </summary>
-        public DateTimeOffset? LastTimestamp { get; set; }
+        public DateTimeOffset? LastTimestamp { get; }
     }
 }

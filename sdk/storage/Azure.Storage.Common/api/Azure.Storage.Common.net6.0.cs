@@ -120,6 +120,7 @@ namespace Azure.Storage.Sas
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public string ToStringToSign(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
     }
     [System.FlagsAttribute]
     public enum AccountSasPermissions

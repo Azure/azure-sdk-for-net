@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string FieldValue = "Field";
         private const string UnaryValue = "Unary";
         private const string BinaryValue = "Binary";
+        private const string NAryValue = "NAry";
 
         /// <summary> Constant. </summary>
         public static DataFactoryExpressionV2Type Constant { get; } = new DataFactoryExpressionV2Type(ConstantValue);
@@ -35,6 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static DataFactoryExpressionV2Type Unary { get; } = new DataFactoryExpressionV2Type(UnaryValue);
         /// <summary> Binary. </summary>
         public static DataFactoryExpressionV2Type Binary { get; } = new DataFactoryExpressionV2Type(BinaryValue);
+        /// <summary> NAry. </summary>
+        public static DataFactoryExpressionV2Type NAry { get; } = new DataFactoryExpressionV2Type(NAryValue);
         /// <summary> Determines if two <see cref="DataFactoryExpressionV2Type"/> values are the same. </summary>
         public static bool operator ==(DataFactoryExpressionV2Type left, DataFactoryExpressionV2Type right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFactoryExpressionV2Type"/> values are not the same. </summary>
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -9,8 +9,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-CreateLivenessSessionContent createLivenessSessionContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive);
-Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(createLivenessSessionContent);
+CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive);
+Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(body);
 ]]></code>
 This sample shows how to call CreateLivenessSessionAsync with all parameters.
 <code><![CDATA[
@@ -18,14 +18,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-CreateLivenessSessionContent createLivenessSessionContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
+CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
 {
     SendResultsToClient = true,
     DeviceCorrelationIdSetInClient = true,
     DeviceCorrelationId = "<deviceCorrelationId>",
     AuthTokenTimeToLiveInSeconds = 1234,
 };
-Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(createLivenessSessionContent);
+Response<CreateLivenessSessionResult> response = await client.CreateLivenessSessionAsync(body);
 ]]></code></example>
     </member>
     <member name="CreateLivenessSession(CreateLivenessSessionContent,CancellationToken)">
@@ -36,8 +36,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-CreateLivenessSessionContent createLivenessSessionContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive);
-Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(createLivenessSessionContent);
+CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive);
+Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(body);
 ]]></code>
 This sample shows how to call CreateLivenessSession with all parameters.
 <code><![CDATA[
@@ -45,14 +45,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
-CreateLivenessSessionContent createLivenessSessionContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
+CreateLivenessSessionContent body = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
 {
     SendResultsToClient = true,
     DeviceCorrelationIdSetInClient = true,
     DeviceCorrelationId = "<deviceCorrelationId>",
     AuthTokenTimeToLiveInSeconds = 1234,
 };
-Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(createLivenessSessionContent);
+Response<CreateLivenessSessionResult> response = client.CreateLivenessSession(body);
 ]]></code></example>
     </member>
     <member name="CreateLivenessSessionAsync(RequestContent,RequestContext)">
