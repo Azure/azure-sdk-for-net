@@ -127,8 +127,17 @@ namespace Azure.ResourceManager.MySql.Tests
                 HighAvailability = new MySqlFlexibleServerHighAvailability() { Mode = MySqlFlexibleServerHighAvailabilityMode.Disabled },
                 ImportSourceProperties = new ImportSourceProperties() { StorageType = "AzureBlob", StorageUri = new System.Uri(sourceStorageUri), DataDirPath = sourceDataDirPath, SasToken = sourceStorageSasToken }
             };
-            var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
-            MySqlFlexibleServerResource server = lro.Value;
+            var lroImportFromStorage = await serverCollection.CreateOrUpdateAsync(WaitUntil.Started, serverName, data);
+            while (!lroImportFromStorage.HasCompleted)
+            {
+                var statusResult = await lroImportFromStorage.GetDetailedStatusAsync().ConfigureAwait(false);
+                if (statusResult.Value.PercentComplete is not null)
+                    Assert.IsTrue(statusResult.Value.PercentComplete >= 0);
+                ImportFromStorageResponseType responseType = (ImportFromStorageResponseType)statusResult.Value.Properties;
+                Assert.IsNotNull(responseType.EstimatedCompletionOn);
+                await Delay(5000);
+            }
+            MySqlFlexibleServerResource server = lroImportFromStorage.Value;
             Assert.AreEqual(serverName, server.Data.Name);
         }
     }

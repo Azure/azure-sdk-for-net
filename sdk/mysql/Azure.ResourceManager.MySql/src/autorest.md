@@ -19,7 +19,7 @@ batch:
 
 ``` yaml $(tag) == 'package-2020-01-01'
 namespace: Azure.ResourceManager.MySql
-require: https://github.com/Azure/azure-rest-api-specs/blob/c45a7f47c1901149828eb8a33c74898c554659c0/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1c63635d66ae38cff18045ab416a6572d3e15f6e/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySql/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
@@ -186,14 +186,14 @@ directive:
 ```
 
 ``` yaml $(tag) == 'package-flexibleserver-2023-12-01-preview'
-input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/c45a7f47c1901149828eb8a33c74898c554659c0/specification/common-types/resource-management/v5/privatelinks.json
 namespace: Azure.ResourceManager.MySql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/c45a7f47c1901149828eb8a33c74898c554659c0/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1c63635d66ae38cff18045ab416a6572d3e15f6e/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: false
+  skipped-operations:
+  - OperationProgress_Get
 modelerfour:
   flatten-payloads: false
 
@@ -313,6 +313,7 @@ rename-mapping:
   MaintenanceProvisioningState: MySqlFlexibleServerMaintenanceProvisioningState
   BackupType: MySqlFlexibleServerBackupType
   ProvisioningState: MySqlFlexibleServerBackupProvisioningState
+  ObjectType: MySqlFlexibleServerOperationType
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
@@ -321,7 +322,6 @@ override-operation-name:
   BackupAndExport_ValidateBackup: ValidateBackup
 
 directive:
-  - remove-operation: OperationProgress_Get
   - from: FlexibleServers.json
     where: $.definitions
     transform: >
@@ -329,7 +329,11 @@ directive:
       $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties['$ref'] = '#/definitions/UserAssignedIdentity';
       delete $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties.items;
       $.ServerProperties.properties.privateEndpointConnections.items['$ref'] = '../../../../../../common-types/resource-management/v5/privatelinks.json#/definitions/PrivateEndpointConnection';
-
+  # An abstract model should not be flatten
+  - from: common-types.json
+    where: $.definitions.OperationProgressResult
+    transform: >
+      $.properties.properties['x-ms-client-flatten'] = false;
   # Add a new mode for update operation
   - from: Configurations.json
     where: $.definitions
