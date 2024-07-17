@@ -110,6 +110,18 @@ namespace System.ClientModel.Primitives
     public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public ClientLoggingPolicy(System.ClientModel.Primitives.LoggingOptions? options = null) { }
+        protected ClientLoggingPolicy(string clientAssembly, System.ClientModel.Primitives.LoggingOptions? options = null) { }
+        protected virtual bool IsLoggingEnabled() { throw null; }
+        protected virtual void OnLogRequest(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnLogRequestAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        protected virtual void OnLogRequestContent(System.ClientModel.Primitives.PipelineMessage message, byte[] bytes, System.Text.Encoding? textEncoding) { }
+        protected virtual System.Threading.Tasks.ValueTask OnLogRequestContentAsync(System.ClientModel.Primitives.PipelineMessage message, byte[] bytes, System.Text.Encoding? textEncoding) { throw null; }
+        protected virtual void OnLogResponse(System.ClientModel.Primitives.PipelineMessage message, double elapsed) { }
+        protected virtual System.Threading.Tasks.ValueTask OnLogResponseAsync(System.ClientModel.Primitives.PipelineMessage message, double elapsed) { throw null; }
+        protected virtual void OnLogResponseContent(System.ClientModel.Primitives.PipelineMessage message, byte[] bytes, System.Text.Encoding? textEncoding, int? block) { }
+        protected virtual System.Threading.Tasks.ValueTask OnLogResponseContentAsync(System.ClientModel.Primitives.PipelineMessage message, byte[] bytes, System.Text.Encoding? textEncoding, int? block) { throw null; }
+        protected virtual void OnLogResponseException(System.ClientModel.Primitives.PipelineMessage message, System.Exception exception) { }
+        protected virtual System.Threading.Tasks.ValueTask OnLogResponseExceptionAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception exception) { throw null; }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
@@ -180,10 +192,10 @@ namespace System.ClientModel.Primitives
         public LoggingOptions() { }
         public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
+        public string? CorrelationIdHeaderName { get { throw null; } set { } }
         public bool IsLoggingContentEnabled { get { throw null; } set { } }
         public int LoggedContentSizeLimit { get { throw null; } set { } }
         public Microsoft.Extensions.Logging.ILoggerFactory LoggerFactory { get { throw null; } set { } }
-        public string? RequestIdHeaderName { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
     }
