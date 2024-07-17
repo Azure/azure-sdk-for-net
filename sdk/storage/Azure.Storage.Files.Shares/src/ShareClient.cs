@@ -1649,7 +1649,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.DeleteAsync(
                             deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1657,7 +1657,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.Delete(
                             deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1866,14 +1866,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await ShareRestClient.GetPropertiesAsync(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.GetProperties(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2047,7 +2047,7 @@ namespace Azure.Storage.Files.Shares
                             accessTier: accessTier,
                             rootSquash: rootSquash,
                             enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2058,7 +2058,7 @@ namespace Azure.Storage.Files.Shares
                             accessTier: accessTier,
                             rootSquash: rootSquash,
                             enableSnapshotVirtualDirectoryAccess: enableSnapshotVirtualDirectoryAccess,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2454,7 +2454,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.SetMetadataAsync(
                             metadata: metadata,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2462,7 +2462,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.SetMetadata(
                             metadata: metadata,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2667,14 +2667,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await ShareRestClient.GetAccessPolicyAsync(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.GetAccessPolicy(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2915,7 +2915,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.SetAccessPolicyAsync(
                             shareAcl: permissions,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2923,7 +2923,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.SetAccessPolicy(
                             shareAcl: permissions,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3119,14 +3119,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await ShareRestClient.GetStatisticsAsync(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.GetStatistics(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 

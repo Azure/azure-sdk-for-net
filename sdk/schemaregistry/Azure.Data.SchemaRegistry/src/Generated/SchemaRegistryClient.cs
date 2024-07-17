@@ -267,7 +267,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
-        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, BinaryData schemaContent, Core.ContentType contentType, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, BinaryData schemaContent, ContentType contentType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
@@ -288,7 +288,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
-        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, BinaryData schemaContent, Core.ContentType contentType, CancellationToken cancellationToken = default)
+        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, BinaryData schemaContent, ContentType contentType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
@@ -310,7 +310,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSchemaPropertiesByContentAsync(string,string,BinaryData,Core.ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSchemaPropertiesByContentAsync(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -324,7 +324,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, RequestContent content, Core.ContentType contentType, RequestContext context = null)
+        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
@@ -354,7 +354,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSchemaPropertiesByContent(string,string,BinaryData,Core.ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSchemaPropertiesByContent(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -368,7 +368,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, RequestContent content, Core.ContentType contentType, RequestContext context = null)
+        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
@@ -397,7 +397,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1. </remarks>
-        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, BinaryData schemaContent, Core.ContentType contentType, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, BinaryData schemaContent, ContentType contentType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
@@ -418,7 +418,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1. </remarks>
-        internal virtual Response RegisterSchema(string groupName, string schemaName, BinaryData schemaContent, Core.ContentType contentType, CancellationToken cancellationToken = default)
+        internal virtual Response RegisterSchema(string groupName, string schemaName, BinaryData schemaContent, ContentType contentType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
@@ -440,7 +440,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RegisterSchemaAsync(string,string,BinaryData,Core.ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RegisterSchemaAsync(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -454,7 +454,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, RequestContent content, Core.ContentType contentType, RequestContext context = null)
+        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
@@ -484,7 +484,7 @@ namespace Azure.Data.SchemaRegistry
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RegisterSchema(string,string,BinaryData,Core.ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RegisterSchema(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -498,7 +498,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response RegisterSchema(string groupName, string schemaName, RequestContent content, Core.ContentType contentType, RequestContext context = null)
+        internal virtual Response RegisterSchema(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
@@ -760,7 +760,7 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        internal HttpMessage CreateGetSchemaPropertiesByContentRequest(string groupName, string schemaName, RequestContent content, Core.ContentType contentType, RequestContext context)
+        internal HttpMessage CreateGetSchemaPropertiesByContentRequest(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -781,7 +781,7 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        internal HttpMessage CreateRegisterSchemaRequest(string groupName, string schemaName, RequestContent content, Core.ContentType contentType, RequestContext context)
+        internal HttpMessage CreateRegisterSchemaRequest(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
