@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Title of the Notification. </summary>
+        [WirePath("properties.title")]
         public string Title { get; set; }
         /// <summary> Description of the Notification. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Recipient Parameter values. </summary>
+        [WirePath("properties.recipients")]
         public RecipientsContractProperties Recipients { get; set; }
     }
 }

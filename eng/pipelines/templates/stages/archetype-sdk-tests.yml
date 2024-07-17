@@ -56,10 +56,11 @@ parameters:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         ServiceConnection: azure-sdk-tests
-        SubscriptionConfigurationFilePath: eng/common/TestResources/sub-config/AzurePublicMsft.json
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json
       Preview:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-        ServiceConnection: azure-sdk-tests
+        ServiceConnection: azure-sdk-tests-preview
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'eastus2euap'
@@ -113,7 +114,7 @@ parameters:
     default: true
   - name: UseFederatedAuth
     type: boolean
-    default: true
+    default: false
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -172,8 +173,7 @@ extends:
                     CloudConfig:
                       SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
                       ServiceConnection: ${{ cloud.value.ServiceConnection }}
-                      SubscriptionConfigurationFilePath: ${{ cloud.value.SubscriptionConfigurationFilePath }}
+                      SubscriptionConfigurationFilePaths: ${{ cloud.value.SubscriptionConfigurationFilePaths }}
                       SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
                       Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
                       Cloud: ${{ cloud.key }}
-

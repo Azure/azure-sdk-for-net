@@ -39,31 +39,18 @@ jobs:
 
       - ${{ if and(eq(parameters.ShouldPublishToNuget, 'true'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net')) }}:
 
-        - task: Powershell@2
-          displayName: 'Verify Package Tags and Create Git Releases'
-          inputs:
-            filePath: ${{ parameters.BuildToolsPath }}/scripts/create-tags-and-git-release.ps1
-            arguments: >
-              -artifactLocation '$(PIPELINE.WORKSPACE)/packages'
-              -workingDirectory $(System.DefaultWorkingDirectory)
-              -packageRepository 'Nuget'
-              -releaseSha '$(Build.SourceVersion)'
-              -repoOwner 'Azure'
-              -repoName 'azure-sdk-for-net'
-            pwsh: true
-          env:
-            GH_TOKEN: $(azuresdk-github-pat)
-          condition: and(succeeded(), ne(variables['SkipCreateTagAndGitRelease'], 'true'))
+        - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
+          parameters:
+            ArtifactLocation: '$(PIPELINE.WORKSPACE)/packages'
+            PackageRepository: Nuget
+            ReleaseSha: $(Build.SourceVersion)
 
-        - task: MSBuild@1
+        - template: pipelines/steps/publish-symbols.yml@azure-sdk-build-tools
           displayName: 'Upload Symbols'
-          inputs:
-            solution: '${{ parameters.BuildToolsPath }}/tools/symboltool/SymbolUploader.proj'
-            msbuildArguments: >
-              /p:PackagesPath=$(PIPELINE.WORKSPACE)/packages
-              /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
-              /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
-              /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
+          parameters:
+            BuildToolsRepositoryPath: ${{ parameters.BuildToolsPath }}
+            PackagesPath: $(PIPELINE.WORKSPACE)/packages
+            StagingDirectory: $(Build.ArtifactStagingDirectory)/symbols
 
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet ${{ parameters.NugetVersion }}'

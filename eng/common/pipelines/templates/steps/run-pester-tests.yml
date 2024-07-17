@@ -12,6 +12,7 @@ parameters:
     default: ''
 
 steps:
+
   - pwsh: |
        Install-Module -Name Pester -Force
     displayName: Install Pester

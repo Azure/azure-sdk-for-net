@@ -64,6 +64,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 request-path-to-resource-name:
   /providers/Microsoft.CostManagement/views/{viewName}: TenantsCostManagementViews

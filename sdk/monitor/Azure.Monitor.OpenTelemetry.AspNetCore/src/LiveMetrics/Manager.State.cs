@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using OpenTelemetry;
 
@@ -28,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
         private bool _shouldCollect = false;
         private Action _callbackAction = () => { };
         private Func<bool> _evaluateBackoff = () => false;
+        internal TimeSpan? _pingPeriodFromService;
 
         private readonly TimeSpan _pingPeriod = TimeSpan.FromSeconds(5);
         private readonly TimeSpan _postPeriod = TimeSpan.FromSeconds(1);
@@ -56,12 +58,30 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             _shutdownEvent.Dispose();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetPingIntervalFromService(int? milliseconds)
+        {
+            if (milliseconds.HasValue)
+            {
+                if (!_pingPeriodFromService.HasValue
+                    || _pingPeriodFromService.Value.TotalMilliseconds != milliseconds)
+                {
+                    _pingPeriodFromService = TimeSpan.FromMilliseconds(Convert.ToDouble(milliseconds));
+                    AzureMonitorAspNetCoreEventSource.Log.LiveMetricsPolingIntervalReceived(milliseconds.Value);
+                }
+            }
+            else
+            {
+                _pingPeriodFromService = null;
+            }
+        }
+
         private void SetPingState()
         {
             _state.Update(LiveMetricsState.Ping);
             _shouldCollect = false;
             _callbackAction = OnPing;
-            _period = _pingPeriod;
+            _period = _pingPeriodFromService ?? _pingPeriod;
             _evaluateBackoff = () => DateTimeOffset.UtcNow - _lastSuccessfulPing > _maximumPingInterval;
 
             // Must reset the timestamp here.

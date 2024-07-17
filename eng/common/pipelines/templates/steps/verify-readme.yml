@@ -15,10 +15,14 @@ parameters:
 - name: DocWardenVersion
   type: string
   default: ''
+- name: Condition
+  type: string
+  default: succeeded()
 
 steps:
 - task: PowerShell@2
   displayName: "Verify Readmes"
+  condition: ${{ parameters.Condition }}
   inputs:
     filePath: "eng/common/scripts/Verify-Readme.ps1"
     arguments: >

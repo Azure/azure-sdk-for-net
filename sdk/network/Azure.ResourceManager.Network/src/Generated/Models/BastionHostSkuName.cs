@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The name of this Bastion Host. </summary>
+    /// <summary> The name of the sku of this Bastion Host. </summary>
     public readonly partial struct BastionHostSkuName : IEquatable<BastionHostSkuName>
     {
         private readonly string _value;
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
         private const string DeveloperValue = "Developer";
+        private const string PremiumValue = "Premium";
 
         /// <summary> Basic. </summary>
         public static BastionHostSkuName Basic { get; } = new BastionHostSkuName(BasicValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Network.Models
         public static BastionHostSkuName Standard { get; } = new BastionHostSkuName(StandardValue);
         /// <summary> Developer. </summary>
         public static BastionHostSkuName Developer { get; } = new BastionHostSkuName(DeveloperValue);
+        /// <summary> Premium. </summary>
+        public static BastionHostSkuName Premium { get; } = new BastionHostSkuName(PremiumValue);
         /// <summary> Determines if two <see cref="BastionHostSkuName"/> values are the same. </summary>
         public static bool operator ==(BastionHostSkuName left, BastionHostSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BastionHostSkuName"/> values are not the same. </summary>
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

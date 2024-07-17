@@ -46,19 +46,33 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubApnsCredential"/>. </summary>
-        public NotificationHubApnsCredential()
+        /// <param name="endpoint"> Gets or sets the endpoint of this credential. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public NotificationHubApnsCredential(Uri endpoint)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubApnsCredential"/>. </summary>
-        /// <param name="apnsCertificate"> The APNS certificate. Specify if using Certificate Authentication Mode. </param>
-        /// <param name="certificateKey"> The APNS certificate password if it exists. </param>
-        /// <param name="endpoint"> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify 'gateway.sandbox.push.apple.com'. If using Certificate Authentication Mode and Production specify 'gateway.push.apple.com'. If using Token Authentication Mode and Sandbox specify 'https://api.development.push.apple.com:443/3/device'. If using Token Authentication Mode and Production specify 'https://api.push.apple.com:443/3/device'. </param>
-        /// <param name="thumbprintString"> The APNS certificate thumbprint. Specify if using Certificate Authentication Mode. </param>
-        /// <param name="keyId"> A 10-character key identifier (kid) key, obtained from your developer account. Specify if using Token Authentication Mode. </param>
-        /// <param name="appName"> The name of the application or BundleId. Specify if using Token Authentication Mode. </param>
-        /// <param name="appId"> The issuer (iss) registered claim key. The value is a 10-character TeamId, obtained from your developer account. Specify if using Token Authentication Mode. </param>
-        /// <param name="token"> Provider Authentication Token, obtained through your developer account. Specify if using Token Authentication Mode. </param>
+        /// <param name="apnsCertificate"> Gets or sets the APNS certificate. </param>
+        /// <param name="certificateKey"> Gets or sets the certificate key. </param>
+        /// <param name="endpoint"> Gets or sets the endpoint of this credential. </param>
+        /// <param name="thumbprintString"> Gets or sets the APNS certificate Thumbprint. </param>
+        /// <param name="keyId">
+        /// Gets or sets a 10-character key identifier (kid) key, obtained from
+        /// your developer account
+        /// </param>
+        /// <param name="appName"> Gets or sets the name of the application. </param>
+        /// <param name="appId">
+        /// Gets or sets the issuer (iss) registered claim key, whose value is
+        /// your 10-character Team ID, obtained from your developer account
+        /// </param>
+        /// <param name="token">
+        /// Gets or sets provider Authentication Token, obtained through your
+        /// developer account
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationHubApnsCredential(string apnsCertificate, string certificateKey, Uri endpoint, string thumbprintString, string keyId, string appName, string appId, string token, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,21 +87,30 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The APNS certificate. Specify if using Certificate Authentication Mode. </summary>
+        /// <summary> Gets or sets the APNS certificate. </summary>
         public string ApnsCertificate { get; set; }
-        /// <summary> The APNS certificate password if it exists. </summary>
+        /// <summary> Gets or sets the certificate key. </summary>
         public string CertificateKey { get; set; }
-        /// <summary> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify 'gateway.sandbox.push.apple.com'. If using Certificate Authentication Mode and Production specify 'gateway.push.apple.com'. If using Token Authentication Mode and Sandbox specify 'https://api.development.push.apple.com:443/3/device'. If using Token Authentication Mode and Production specify 'https://api.push.apple.com:443/3/device'. </summary>
+        /// <summary> Gets or sets the endpoint of this credential. </summary>
         public Uri Endpoint { get; set; }
-        /// <summary> The APNS certificate thumbprint. Specify if using Certificate Authentication Mode. </summary>
+        /// <summary> Gets or sets the APNS certificate Thumbprint. </summary>
         public string ThumbprintString { get; set; }
-        /// <summary> A 10-character key identifier (kid) key, obtained from your developer account. Specify if using Token Authentication Mode. </summary>
+        /// <summary>
+        /// Gets or sets a 10-character key identifier (kid) key, obtained from
+        /// your developer account
+        /// </summary>
         public string KeyId { get; set; }
-        /// <summary> The name of the application or BundleId. Specify if using Token Authentication Mode. </summary>
+        /// <summary> Gets or sets the name of the application. </summary>
         public string AppName { get; set; }
-        /// <summary> The issuer (iss) registered claim key. The value is a 10-character TeamId, obtained from your developer account. Specify if using Token Authentication Mode. </summary>
+        /// <summary>
+        /// Gets or sets the issuer (iss) registered claim key, whose value is
+        /// your 10-character Team ID, obtained from your developer account
+        /// </summary>
         public string AppId { get; set; }
-        /// <summary> Provider Authentication Token, obtained through your developer account. Specify if using Token Authentication Mode. </summary>
+        /// <summary>
+        /// Gets or sets provider Authentication Token, obtained through your
+        /// developer account
+        /// </summary>
         public string Token { get; set; }
     }
 }

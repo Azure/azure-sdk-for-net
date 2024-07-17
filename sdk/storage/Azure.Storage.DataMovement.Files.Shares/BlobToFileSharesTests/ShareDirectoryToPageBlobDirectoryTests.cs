@@ -137,13 +137,16 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
 
-        protected override StorageResourceContainer GetDestinationStorageResourceContainer(BlobContainerClient sourceContainerClient, string directoryPath)
+        protected override StorageResourceContainer GetDestinationStorageResourceContainer(
+            BlobContainerClient sourceContainerClient,
+            string directoryPath,
+            TransferPropertiesTestType propertiesTestType = default)
             => new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = new(BlobType.Page) });
 
         protected override BlobContainerClient GetOAuthDestinationContainerClient(string containerName)
         {
             BlobClientOptions options = DestinationClientBuilder.GetOptions();
-            BlobServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, options);
+            BlobServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
             return oauthService.GetBlobContainerClient(containerName);
         }
 
@@ -151,7 +154,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         {
             ShareClientOptions options = SourceClientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
-            ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, options);
+            ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential,options);
             return oauthService.GetShareClient(containerName);
         }
 
@@ -185,6 +188,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string sourcePrefix,
             BlobContainerClient destinationContainer,
             string destinationPrefix,
+            TransferPropertiesTestType propertiesTestType = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
