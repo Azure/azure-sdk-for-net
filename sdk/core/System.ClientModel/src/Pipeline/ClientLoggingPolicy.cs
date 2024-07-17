@@ -88,13 +88,17 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// TODO.
     /// </summary>
     /// <param name="message"></param>
-    protected virtual void OnLogRequestContent(PipelineMessage message) { }
+    /// <param name="bytes"></param>
+    /// <param name="textEncoding"></param>
+    protected virtual void OnLogRequestContent(PipelineMessage message, byte[] bytes, Encoding? textEncoding) { }
 
     /// <summary>
     /// TODO.
     /// </summary>
     /// <param name="message"></param>
-    protected virtual ValueTask OnLogRequestContentAsync(PipelineMessage message) => default;
+    /// <param name="bytes"></param>
+    /// <param name="textEncoding"></param>
+    protected virtual ValueTask OnLogRequestContentAsync(PipelineMessage message, byte[] bytes, Encoding? textEncoding) => default;
 
     /// <summary>
     /// TODO.
@@ -114,16 +118,20 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// TODO.
     /// </summary>
     /// <param name="message"></param>
+    /// <param name="bytes"></param>
+    /// <param name="textEncoding"></param>
     /// <param name="block"></param>
-    protected virtual void OnLogResponseContent(PipelineMessage message, int? block) { }
+    protected virtual void OnLogResponseContent(PipelineMessage message, byte[] bytes, Encoding? textEncoding, int? block) { }
 
     /// <summary>
     /// TODO.
     /// </summary>
     /// <param name="message"></param>
+    /// <param name="bytes"></param>
+    /// <param name="textEncoding"></param>
     /// <param name="block"></param>
     /// <returns></returns>
-    protected virtual ValueTask OnLogResponseContentAsync(PipelineMessage message, int? block) => default;
+    protected virtual ValueTask OnLogResponseContentAsync(PipelineMessage message, byte[] bytes, Encoding? textEncoding, int? block) => default;
 
     /// <summary>
     /// TODO.
@@ -186,16 +194,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (_logContent)
         {
-            await LogRequestContent(_logger, request, requestId, async, message.CancellationToken).ConfigureAwait(false);
-
-            if (async)
-            {
-                await OnLogRequestContentAsync(message).ConfigureAwait(false);
-            }
-            else
-            {
-                OnLogRequestContent(message);
-            }
+            await LogRequestContent(message, _logger, request, requestId, async, message.CancellationToken).ConfigureAwait(false);
         }
 
         var before = Stopwatch.GetTimestamp();
@@ -278,7 +277,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         ClientModelEventSource.Log.Request(requestId, request.Method, uri, headers, _clientAssembly);
     }
 
-    private async Task LogRequestContent(ILogger logger, PipelineRequest request, string requestId, bool async, CancellationToken cancellationToken)
+    private async Task LogRequestContent(PipelineMessage message, ILogger logger, PipelineRequest request, string requestId, bool async, CancellationToken cancellationToken)
     {
         bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
@@ -319,6 +318,15 @@ public class ClientLoggingPolicy : PipelinePolicy
         {
             ClientModelEventSource.Log.RequestContent(requestId, bytes);
             ClientModelLogMessages.RequestContent(logger, requestId, bytes);
+        }
+
+        if (async)
+        {
+            await OnLogRequestContentAsync(message, bytes, requestTextEncoding).ConfigureAwait(false);
+        }
+        else
+        {
+            OnLogRequestContent(message, bytes, requestTextEncoding);
         }
     }
 
@@ -377,11 +385,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             if (async)
             {
-                await OnLogResponseContentAsync(message, null).ConfigureAwait(false);
+                await OnLogResponseContentAsync(message, bytes, responseTextEncoding, null).ConfigureAwait(false);
             }
             else
             {
-                OnLogResponseContent(message, null);
+                OnLogResponseContent(message, bytes, responseTextEncoding, null);
             }
 
             return;
@@ -398,11 +406,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             if (async)
             {
-                await OnLogResponseContentAsync(message, null).ConfigureAwait(false);
+                await OnLogResponseContentAsync(message, bytes, responseTextEncoding, null).ConfigureAwait(false);
             }
             else
             {
-                OnLogResponseContent(message, null);
+                OnLogResponseContent(message, bytes, responseTextEncoding, null);
             }
 
             return;
@@ -584,11 +592,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             if (async)
             {
-                await _policy.OnLogResponseContentAsync(_message, _blockNumber).ConfigureAwait(false);
+                await _policy.OnLogResponseContentAsync(_message, bytes, _textEncoding, _blockNumber).ConfigureAwait(false);
             }
             else
             {
-                _policy.OnLogResponseContent(_message, _blockNumber);
+                _policy.OnLogResponseContent(_message, bytes, _textEncoding, _blockNumber);
             }
 
             _blockNumber++;
