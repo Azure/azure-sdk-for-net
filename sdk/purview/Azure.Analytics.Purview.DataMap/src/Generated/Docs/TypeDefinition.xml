@@ -3491,8 +3491,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+AtlasTypesDef body = new AtlasTypesDef();
+Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
 ]]></code>
 This sample shows how to call BatchCreateAsync with all parameters.
 <code><![CDATA[
@@ -3500,7 +3500,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+AtlasTypesDef body = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
@@ -3754,7 +3754,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         AttributeDefs = {default},
     }},
 };
-Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
 ]]></code></example>
     </member>
     <member name="BatchCreate(AtlasTypesDef,CancellationToken)">
@@ -3765,8 +3765,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+AtlasTypesDef body = new AtlasTypesDef();
+Response<AtlasTypesDef> response = client.BatchCreate(body);
 ]]></code>
 This sample shows how to call BatchCreate with all parameters.
 <code><![CDATA[
@@ -3774,7 +3774,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+AtlasTypesDef body = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
@@ -4028,7 +4028,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         AttributeDefs = {default},
     }},
 };
-Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+Response<AtlasTypesDef> response = client.BatchCreate(body);
 ]]></code></example>
     </member>
     <member name="BatchCreateAsync(RequestContent,RequestContext)">
@@ -5381,8 +5381,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
+AtlasTypesDef body = new AtlasTypesDef();
+Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
 ]]></code>
 This sample shows how to call BatchUpdateAsync with all parameters.
 <code><![CDATA[
@@ -5390,7 +5390,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+AtlasTypesDef body = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
@@ -5644,7 +5644,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         AttributeDefs = {default},
     }},
 };
-Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
+Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
 ]]></code></example>
     </member>
     <member name="BatchUpdate(AtlasTypesDef,CancellationToken)">
@@ -5655,8 +5655,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
+AtlasTypesDef body = new AtlasTypesDef();
+Response<AtlasTypesDef> response = client.BatchUpdate(body);
 ]]></code>
 This sample shows how to call BatchUpdate with all parameters.
 <code><![CDATA[
@@ -5664,7 +5664,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+AtlasTypesDef body = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
@@ -5918,7 +5918,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         AttributeDefs = {default},
     }},
 };
-Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
+Response<AtlasTypesDef> response = client.BatchUpdate(body);
 ]]></code></example>
     </member>
     <member name="BatchUpdateAsync(RequestContent,RequestContext)">
@@ -7271,8 +7271,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response response = await client.BatchDeleteAsync(atlasTypesDef);
+AtlasTypesDef body = new AtlasTypesDef();
+Response response = await client.BatchDeleteAsync(body);
 ]]></code>
 This sample shows how to call BatchDeleteAsync with all parameters.
 <code><![CDATA[
@@ -7280,7 +7280,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+AtlasTypesDef body = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
@@ -7534,7 +7534,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         AttributeDefs = {default},
     }},
 };
-Response response = await client.BatchDeleteAsync(atlasTypesDef);
+Response response = await client.BatchDeleteAsync(body);
 ]]></code></example>
     </member>
     <member name="BatchDelete(AtlasTypesDef,CancellationToken)">
@@ -7545,8 +7545,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response response = client.BatchDelete(atlasTypesDef);
+AtlasTypesDef body = new AtlasTypesDef();
+Response response = client.BatchDelete(body);
 ]]></code>
 This sample shows how to call BatchDelete with all parameters.
 <code><![CDATA[
@@ -7554,7 +7554,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+AtlasTypesDef body = new AtlasTypesDef
 {
     BusinessMetadataDefs = {new AtlasBusinessMetadataDef
     {
@@ -7808,7 +7808,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         AttributeDefs = {default},
     }},
 };
-Response response = client.BatchDelete(atlasTypesDef);
+Response response = client.BatchDelete(body);
 ]]></code></example>
     </member>
     <member name="BatchDeleteAsync(RequestContent,RequestContext)">

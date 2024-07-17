@@ -8,7 +8,7 @@ parameters:
   # EnvVars is used to help diagnose variable conflict issues early
   - name: EnvVars
     type: object
-    default: null
+    default: {}
   - name: SubscriptionConfigurationFilePaths
     type: object
     default: null
@@ -16,6 +16,7 @@ parameters:
 steps:
   - task: AzurePowerShell@5
     displayName: Set Pipeline Subnet Info
+    condition: and(succeeded(), ne(variables['Pool'], ''))
     env: ${{ parameters.EnvVars }}
     inputs:
       azureSubscription: azure-sdk-tests
@@ -67,6 +68,12 @@ steps:
       if ($subConfigFilesRaw) {
         $subConfigFiles = $subConfigFilesRaw | ConvertFrom-Json -AsHashtable
         foreach ($file in $subConfigFiles) {
+          # In some cases, $file could be an empty string. Get-Content will fail
+          # if $file is an empty string, so skip those cases.
+          if (!$file) {
+            continue
+          }
+
           Write-Host "Merging sub config from file: $file"
           $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
           $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
+        [WirePath("enabled")]
         public bool? IsUserRegistrationDelegationEnabled { get; set; }
     }
 }

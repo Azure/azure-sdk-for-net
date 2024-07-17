@@ -63,10 +63,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Private Endpoint Connection Resource Id. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> The connection state of the private endpoint connection. </summary>
         internal PrivateEndpointConnectionRequestProperties Properties { get; set; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {
             get => Properties is null ? default : Properties.PrivateLinkServiceConnectionState;

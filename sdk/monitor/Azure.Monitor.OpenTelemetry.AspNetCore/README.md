@@ -45,6 +45,14 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
 
 * [Azure Monitor Exporter](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/) allows sending traces, metrics, and logs data to Azure Monitor.
 
+### Migrating from Application Insights SDK?
+
+If you are currently using the Application Insights SDK and want to migrate to OpenTelemetry, please follow our [migration guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-dotnet-migrate?tabs=aspnetcore).
+
+### Already using OpenTelemetry?
+
+If you are currently using OpenTelemetry and want to send telemetry data to Azure Monitor, please follow our [getting started guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore).
+
 ### Install the package
 
 #### Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTelemetry.AspNetCore.svg)](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.AspNetCore/)

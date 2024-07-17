@@ -100,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMessageProperties: new Dictionary<string, string> { { "EventId", "1" }, { "name", "World" }, { "scopeKey1", "scopeValue1" } },
+                expectedMessageProperties: new Dictionary<string, string> { { "EventId", "1" }, { "name", "World" }, { "CategoryName", logCategoryName }, { "scopeKey1", "scopeValue1" } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }

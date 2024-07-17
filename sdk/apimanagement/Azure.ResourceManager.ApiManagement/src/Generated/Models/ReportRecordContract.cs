@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="subscriptionResourceId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
         /// <param name="callCountSuccess"> Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect. </param>
         /// <param name="callCountBlocked"> Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests. </param>
-        /// <param name="callCountFailed"> Number of calls failed due to proxy or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </param>
+        /// <param name="callCountFailed"> Number of calls failed due to gateway or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </param>
         /// <param name="callCountOther"> Number of other calls. </param>
         /// <param name="callCountTotal"> Total number of calls. </param>
         /// <param name="bandwidth"> Bandwidth consumed. </param>
@@ -114,59 +114,85 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name depending on report endpoint specifies product, API, operation or developer name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary>
         /// Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         ///
         /// </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Length of aggregation period.  Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations). </summary>
+        [WirePath("interval")]
         public string Interval { get; }
         /// <summary> Country to which this record data is related. </summary>
+        [WirePath("country")]
         public string Country { get; }
         /// <summary> Country region to which this record data is related. </summary>
+        [WirePath("region")]
         public string Region { get; }
         /// <summary> Zip code to which this record data is related. </summary>
+        [WirePath("zip")]
         public string Zip { get; }
         /// <summary> User identifier path. /users/{userId}. </summary>
+        [WirePath("userId")]
         public string UserId { get; }
         /// <summary> Product identifier path. /products/{productId}. </summary>
+        [WirePath("productId")]
         public string ProductId { get; }
         /// <summary> API identifier path. /apis/{apiId}. </summary>
+        [WirePath("apiId")]
         public string ApiId { get; }
         /// <summary> Operation identifier path. /apis/{apiId}/operations/{operationId}. </summary>
+        [WirePath("operationId")]
         public string OperationId { get; }
         /// <summary> API region identifier. </summary>
+        [WirePath("apiRegion")]
         public string ApiRegion { get; }
         /// <summary> Subscription identifier path. /subscriptions/{subscriptionId}. </summary>
+        [WirePath("subscriptionId")]
         public ResourceIdentifier SubscriptionResourceId { get; }
         /// <summary> Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect. </summary>
+        [WirePath("callCountSuccess")]
         public int? CallCountSuccess { get; }
         /// <summary> Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests. </summary>
+        [WirePath("callCountBlocked")]
         public int? CallCountBlocked { get; }
-        /// <summary> Number of calls failed due to proxy or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </summary>
+        /// <summary> Number of calls failed due to gateway or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </summary>
+        [WirePath("callCountFailed")]
         public int? CallCountFailed { get; }
         /// <summary> Number of other calls. </summary>
+        [WirePath("callCountOther")]
         public int? CallCountOther { get; }
         /// <summary> Total number of calls. </summary>
+        [WirePath("callCountTotal")]
         public int? CallCountTotal { get; }
         /// <summary> Bandwidth consumed. </summary>
+        [WirePath("bandwidth")]
         public long? Bandwidth { get; }
         /// <summary> Number of times when content was served from cache policy. </summary>
+        [WirePath("cacheHitCount")]
         public int? CacheHitCount { get; }
         /// <summary> Number of times content was fetched from backend. </summary>
+        [WirePath("cacheMissCount")]
         public int? CacheMissCount { get; }
         /// <summary> Average time it took to process request. </summary>
+        [WirePath("apiTimeAvg")]
         public double? ApiTimeAvg { get; }
         /// <summary> Minimum time it took to process request. </summary>
+        [WirePath("apiTimeMin")]
         public double? ApiTimeMin { get; }
         /// <summary> Maximum time it took to process request. </summary>
+        [WirePath("apiTimeMax")]
         public double? ApiTimeMax { get; }
         /// <summary> Average time it took to process request on backend. </summary>
+        [WirePath("serviceTimeAvg")]
         public double? ServiceTimeAvg { get; }
         /// <summary> Minimum time it took to process request on backend. </summary>
+        [WirePath("serviceTimeMin")]
         public double? ServiceTimeMin { get; }
         /// <summary> Maximum time it took to process request on backend. </summary>
+        [WirePath("serviceTimeMax")]
         public double? ServiceTimeMax { get; }
     }
 }
