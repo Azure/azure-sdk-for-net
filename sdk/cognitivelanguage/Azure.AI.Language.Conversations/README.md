@@ -77,7 +77,7 @@ using Azure.Identity;
 
 Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
 
-```C# Snippet:ConversationsClient_CreateWithDefaultAzureCredential
+```C# Snippet:ConversationAnalysisClient_CreateWithDefaultAzureCredential
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
