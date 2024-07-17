@@ -648,6 +648,78 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [RecordedTest]
+        public async Task PlayInvalidAndValidFileSourceWithPlayMediaTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // Assert multiple Text Source with wrong file source play failed event
+                    var playMultipleSources = new List<PlaySource>() {
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
+                        new FileSource(new Uri("https://dummy.com/dummyurl.wav"))
+                    };
+
+                    PlayOptions options = new PlayOptions(playMultipleSources, new List<CommunicationUserIdentifier>() { target }) { OperationContext = "context" };
+
+                    // Assert the Play with multiple Text Sources
+                    await callConnection.GetCallMedia().PlayAsync(options).ConfigureAwait(false);
+                    var playFailedEvent = await WaitForEvent<PlayFailed>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(playFailedEvent);
+                    Assert.IsTrue(playFailedEvent is PlayFailed);
+                    Assert.AreEqual(callConnectionId, ((PlayFailed)playFailedEvent!).CallConnectionId);
+                    Assert.AreEqual(1, ((PlayFailed)playFailedEvent!).FailedPlaySourceIndex);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
         public async Task PlayInvalidFileSourceWithPlayMediaAllTest()
         {
             // create caller and receiver
@@ -674,14 +746,85 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     PlayToAllOptions options = new PlayToAllOptions(playMultipleSources) { OperationContext = "context" };
 
-                    // Assert the Play with multiple Text Sources
+                    // Assert the Play with invalid file source
                     await callConnection.GetCallMedia().PlayToAllAsync(options).ConfigureAwait(false);
-
                     var playFailedEvent = await WaitForEvent<PlayFailed>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(playFailedEvent);
                     Assert.IsTrue(playFailedEvent is PlayFailed);
                     Assert.AreEqual(callConnectionId, ((PlayFailed)playFailedEvent!).CallConnectionId);
                     Assert.AreEqual(0, ((PlayFailed)playFailedEvent!).FailedPlaySourceIndex);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task PlayInvalidAndInvalidFileSourceWithPlayMediaAllTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // Assert multiple Text Source with wrong file source play failed event
+                    var playMultipleSources = new List<PlaySource>() {
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) ),
+                        new FileSource(new Uri("https://dummy.com/dummyurl.wav"))
+                    };
+
+                    PlayToAllOptions options = new PlayToAllOptions(playMultipleSources) { OperationContext = "context" };
+
+                    // Assert the Play with multiple Text Sources
+                    await callConnection.GetCallMedia().PlayToAllAsync(options).ConfigureAwait(false);
+                    var playFailedEvent = await WaitForEvent<PlayFailed>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(playFailedEvent);
+                    Assert.IsTrue(playFailedEvent is PlayFailed);
+                    Assert.AreEqual(callConnectionId, ((PlayFailed)playFailedEvent!).CallConnectionId);
+                    Assert.AreEqual(1, ((PlayFailed)playFailedEvent!).FailedPlaySourceIndex);
 
                     // try hangup
                     await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
