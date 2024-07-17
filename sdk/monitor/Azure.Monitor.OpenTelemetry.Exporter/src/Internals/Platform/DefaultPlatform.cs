@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 
 #if AZURE_MONITOR_EXPORTER
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-#elif LIVE_METRICS_EXPORTER
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 #elif ASP_NET_CORE_DISTRO
 using Azure.Monitor.OpenTelemetry.AspNetCore;
 #endif
@@ -26,68 +24,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
     internal class DefaultPlatform : IPlatform
 #endif
     {
-        private readonly IDictionary _environmentVariables;
-        private readonly bool _preCacheEnvironmentVariables;
-
-        /// <remarks>
-        /// When this class is used to initialize the entire SDK, it is recommended to set <paramref name="preCacheEnvironmentVariables"/> to true.
-        /// This will avoid reading environment variables multiple times and simplifies the exception handling.
-        /// An instance with this caching enabled should not be saved to allow GC to reclaim the memory.
-        /// Some secenarios require reading a single environment variable after initialization, in which case you should set <paramref name="preCacheEnvironmentVariables"/> to false.
-        /// </remarks>
+        internal static readonly IPlatform Instance
 #if ASP_NET_CORE_DISTRO
-        public DefaultPlatformDistro(bool preCacheEnvironmentVariables = false)
+            = new DefaultPlatformDistro();
 #else
-        public DefaultPlatform(bool preCacheEnvironmentVariables = false)
+            = new DefaultPlatform();
+#endif
+
+        private readonly IDictionary _environmentVariables;
+
+#if ASP_NET_CORE_DISTRO
+        public DefaultPlatformDistro()
+#else
+        public DefaultPlatform()
 #endif
         {
-            _preCacheEnvironmentVariables = preCacheEnvironmentVariables;
-
-            if (preCacheEnvironmentVariables)
+            try
             {
-                try
-                {
-                    _environmentVariables = Environment.GetEnvironmentVariables();
-                }
-                catch (Exception ex)
-                {
-#if AZURE_MONITOR_EXPORTER
-                    AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
-#elif ASP_NET_CORE_DISTRO
-                    AzureMonitorAspNetCoreEventSource.Log.FailedToReadEnvironmentVariables(ex);
-#endif
-                    _environmentVariables = new Dictionary<string, object>();
-                }
+                _environmentVariables = LoadEnvironmentVariables();
             }
-            else
+            catch (Exception ex)
             {
+#if AZURE_MONITOR_EXPORTER
+                AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
+#elif ASP_NET_CORE_DISTRO
+                AzureMonitorAspNetCoreEventSource.Log.FailedToReadEnvironmentVariables(ex);
+#endif
                 _environmentVariables = new Dictionary<string, object>();
             }
         }
 
-        public string? GetEnvironmentVariable(string name)
+        private static IDictionary LoadEnvironmentVariables()
         {
-            if (_preCacheEnvironmentVariables)
+            var variables = new Dictionary<string, string?>();
+            foreach (var key in EnvironmentVariableConstants.Variables)
             {
-                return _environmentVariables[name]?.ToString();
+                variables.Add(key, Environment.GetEnvironmentVariable(key));
             }
-            else
-            {
-                try
-                {
-                    return Environment.GetEnvironmentVariable(name);
-                }
-                catch (Exception ex)
-                {
-#if AZURE_MONITOR_EXPORTER
-                    AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
-#elif ASP_NET_CORE_DISTRO
-                    AzureMonitorAspNetCoreEventSource.Log.FailedToReadEnvironmentVariables(ex);
-#endif
-                    return null;
-                }
-            }
+            return variables;
         }
+
+        public string? GetEnvironmentVariable(string name) => _environmentVariables[name]?.ToString();
 
         public string GetOSPlatformName()
         {
