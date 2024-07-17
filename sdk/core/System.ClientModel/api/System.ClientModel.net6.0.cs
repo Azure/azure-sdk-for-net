@@ -126,7 +126,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
-        public System.ClientModel.Primitives.LoggingOptions? LoggingOptions { get { throw null; } set { } }
+        public System.ClientModel.Primitives.LoggingOptions LoggingOptions { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
