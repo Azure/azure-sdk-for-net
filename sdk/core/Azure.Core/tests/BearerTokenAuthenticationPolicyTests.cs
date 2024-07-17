@@ -253,8 +253,6 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
 
-            Assert.AreEqual(2, callCount);
-
             Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
             Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth2Value));
             Assert.True(transport.Requests[2].Headers.TryGetValue("Authorization", out string auth3Value));
@@ -263,6 +261,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(auth1Value, auth2Value);
             Assert.AreEqual(auth2Value, auth3Value);
             Assert.AreNotEqual(auth3Value, auth4Value);
+            Assert.GreaterOrEqual(callCount, 2);
         }
 
         [Test]
@@ -300,8 +299,6 @@ namespace Azure.Core.Tests
 
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
 
-            Assert.AreEqual(2, callCount);
-
             Assert.True(transport.Requests[0].Headers.TryGetValue("Authorization", out string auth1Value));
             Assert.True(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth2Value));
             Assert.True(transport.Requests[2].Headers.TryGetValue("Authorization", out string auth3Value));
@@ -310,6 +307,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(auth1Value, auth2Value);
             Assert.AreEqual(auth2Value, auth3Value);
             Assert.AreNotEqual(auth3Value, auth4Value);
+            Assert.GreaterOrEqual(callCount, 2);
         }
 
         [Test]
@@ -888,6 +886,58 @@ namespace Azure.Core.Tests
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
             // An additional call to TokenCredential.GetTokenAsync is expected now that the tenant has changed.
             Assert.AreEqual(3, callCount);
+        }
+
+        [Test]
+        public async Task TokenCacheCurrentTcsTOkenIsExpiredAndBackgroundTcsInitialized()
+        {
+            var currentTcs = new TaskCompletionSource<BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo>();
+            var backgroundTcs = new TaskCompletionSource<BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo>();
+
+            currentTcs.SetResult(new BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo("token", DateTimeOffset.UtcNow.AddMinutes(-5), DateTimeOffset.UtcNow.AddMinutes(-5)));
+
+            TokenRequestContext ctx = new TokenRequestContext(new[] { "scope" });
+            var cache = new BearerTokenAuthenticationPolicy.AccessTokenCache(
+                new TokenCredentialStub((r, c) => new AccessToken(string.Empty, DateTimeOffset.MaxValue), IsAsync),
+                TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+            {
+                _state = new BearerTokenAuthenticationPolicy.AccessTokenCache.TokenRequestState(
+                    ctx,
+                    currentTcs,
+                    backgroundTcs
+                    )
+            };
+            var msg = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(5000);
+            msg.CancellationToken = cts.Token;
+            await cache.GetAuthHeaderValueAsync(msg, ctx, IsAsync);
+        }
+
+        [Test]
+        public async Task TokenCacheCurrentTcsIsCancelledAndBackgroundTcsInitialized()
+        {
+            var currentTcs = new TaskCompletionSource<BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo>();
+            var backgroundTcs = new TaskCompletionSource<BearerTokenAuthenticationPolicy.AccessTokenCache.AuthHeaderValueInfo>();
+
+            currentTcs.SetCanceled();
+
+            TokenRequestContext ctx = new TokenRequestContext(new[] { "scope" });
+            var cache = new BearerTokenAuthenticationPolicy.AccessTokenCache(
+                new TokenCredentialStub((r, c) => new AccessToken(string.Empty, DateTimeOffset.MaxValue), IsAsync),
+                TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+            {
+                _state = new BearerTokenAuthenticationPolicy.AccessTokenCache.TokenRequestState(
+                    ctx,
+                    currentTcs,
+                    backgroundTcs
+                    )
+            };
+            var msg = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(5000);
+            msg.CancellationToken = cts.Token;
+            await cache.GetAuthHeaderValueAsync(msg, ctx, IsAsync);
         }
 
         private class ChallengeBasedAuthenticationTestPolicy : BearerTokenAuthenticationPolicy

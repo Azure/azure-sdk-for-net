@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -52,12 +53,14 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupDetail"/>. </summary>
         /// <param name="volumeName"> Volume name. </param>
+        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
         /// <param name="backupsCount"> Total count of backups for volume. </param>
         /// <param name="isPolicyEnabled"> Policy enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeBackupDetail(string volumeName, int? backupsCount, bool? isPolicyEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeBackupDetail(string volumeName, ResourceIdentifier volumeResourceId, int? backupsCount, bool? isPolicyEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VolumeName = volumeName;
+            VolumeResourceId = volumeResourceId;
             BackupsCount = backupsCount;
             IsPolicyEnabled = isPolicyEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -65,6 +68,8 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Volume name. </summary>
         public string VolumeName { get; }
+        /// <summary> ResourceId used to identify the Volume. </summary>
+        public ResourceIdentifier VolumeResourceId { get; }
         /// <summary> Total count of backups for volume. </summary>
         public int? BackupsCount { get; }
         /// <summary> Policy enabled. </summary>

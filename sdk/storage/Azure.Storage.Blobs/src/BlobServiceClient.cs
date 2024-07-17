@@ -1276,14 +1276,14 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response  = await ServiceRestClient.SetPropertiesAsync(
-                            storageServiceProperties: properties,
+                            blobServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ServiceRestClient.SetProperties(
-                            storageServiceProperties: properties,
+                            blobServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
 

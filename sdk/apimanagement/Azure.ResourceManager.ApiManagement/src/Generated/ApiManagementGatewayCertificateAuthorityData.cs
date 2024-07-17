@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Determines whether certificate authority is trusted. </summary>
+        [WirePath("properties.isTrusted")]
         public bool? IsTrusted { get; set; }
     }
 }

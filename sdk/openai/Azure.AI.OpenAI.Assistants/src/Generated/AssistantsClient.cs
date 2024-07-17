@@ -39,28 +39,28 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new assistant. </summary>
-        /// <param name="assistantCreationOptions"> The request details to use when creating a new assistant. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantCreationOptions"/> is null. </exception>
-        public virtual async Task<Response<Assistant>> CreateAssistantAsync(AssistantCreationOptions assistantCreationOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<Assistant>> CreateAssistantAsync(AssistantCreationOptions body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assistantCreationOptions, nameof(assistantCreationOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = assistantCreationOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateAssistantAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(Assistant.FromResponse(response), response);
         }
 
         /// <summary> Creates a new assistant. </summary>
-        /// <param name="assistantCreationOptions"> The request details to use when creating a new assistant. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantCreationOptions"/> is null. </exception>
-        public virtual Response<Assistant> CreateAssistant(AssistantCreationOptions assistantCreationOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<Assistant> CreateAssistant(AssistantCreationOptions body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assistantCreationOptions, nameof(assistantCreationOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = assistantCreationOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateAssistant(content, context);
             return Response.FromValue(Assistant.FromResponse(response), response);
@@ -332,16 +332,16 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Modifies an existing assistant. </summary>
         /// <param name="assistantId"> The ID of the assistant to modify. </param>
-        /// <param name="updateAssistantOptions"> The request details to use when modifying an existing assistant. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="updateAssistantOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Assistant>> UpdateAssistantAsync(string assistantId, UpdateAssistantOptions updateAssistantOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Assistant>> UpdateAssistantAsync(string assistantId, UpdateAssistantOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(updateAssistantOptions, nameof(updateAssistantOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = updateAssistantOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateAssistantAsync(assistantId, content, context).ConfigureAwait(false);
             return Response.FromValue(Assistant.FromResponse(response), response);
@@ -349,16 +349,16 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Modifies an existing assistant. </summary>
         /// <param name="assistantId"> The ID of the assistant to modify. </param>
-        /// <param name="updateAssistantOptions"> The request details to use when modifying an existing assistant. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="updateAssistantOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Assistant> UpdateAssistant(string assistantId, UpdateAssistantOptions updateAssistantOptions, CancellationToken cancellationToken = default)
+        public virtual Response<Assistant> UpdateAssistant(string assistantId, UpdateAssistantOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(updateAssistantOptions, nameof(updateAssistantOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = updateAssistantOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateAssistant(assistantId, content, context);
             return Response.FromValue(Assistant.FromResponse(response), response);
@@ -997,28 +997,28 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new thread. Threads contain messages and can be run by assistants. </summary>
-        /// <param name="assistantThreadCreationOptions"> The details used to create a new assistant thread. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantThreadCreationOptions"/> is null. </exception>
-        public virtual async Task<Response<AssistantThread>> CreateThreadAsync(AssistantThreadCreationOptions assistantThreadCreationOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<AssistantThread>> CreateThreadAsync(AssistantThreadCreationOptions body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assistantThreadCreationOptions, nameof(assistantThreadCreationOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = assistantThreadCreationOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateThreadAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
         }
 
         /// <summary> Creates a new thread. Threads contain messages and can be run by assistants. </summary>
-        /// <param name="assistantThreadCreationOptions"> The details used to create a new assistant thread. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantThreadCreationOptions"/> is null. </exception>
-        public virtual Response<AssistantThread> CreateThread(AssistantThreadCreationOptions assistantThreadCreationOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<AssistantThread> CreateThread(AssistantThreadCreationOptions body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assistantThreadCreationOptions, nameof(assistantThreadCreationOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = assistantThreadCreationOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateThread(content, context);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
@@ -2751,28 +2751,28 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Creates a new assistant thread and immediately starts a run using that new thread. </summary>
-        /// <param name="createAndRunThreadOptions"> The details used when creating and immediately running a new assistant thread. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createAndRunThreadOptions"/> is null. </exception>
-        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(CreateAndRunThreadOptions createAndRunThreadOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(CreateAndRunThreadOptions body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createAndRunThreadOptions, nameof(createAndRunThreadOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = createAndRunThreadOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateThreadAndRunAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Creates a new assistant thread and immediately starts a run using that new thread. </summary>
-        /// <param name="createAndRunThreadOptions"> The details used when creating and immediately running a new assistant thread. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createAndRunThreadOptions"/> is null. </exception>
-        public virtual Response<ThreadRun> CreateThreadAndRun(CreateAndRunThreadOptions createAndRunThreadOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<ThreadRun> CreateThreadAndRun(CreateAndRunThreadOptions body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createAndRunThreadOptions, nameof(createAndRunThreadOptions));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = createAndRunThreadOptions.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateThreadAndRun(content, context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
