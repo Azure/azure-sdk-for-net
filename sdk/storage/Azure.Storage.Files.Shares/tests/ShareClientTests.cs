@@ -565,6 +565,47 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
+        public async Task CreateAsync_PaidBursting()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnablePaidBursting = true,
+                PaidBurstingMaxIops = 5000,
+                PaidBurstingMaxBandwidthMibps = 1000
+            };
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.IsTrue(response.Value.EnablePaidBursting);
+                Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
+                Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
+
+                // Act
+                IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+                ShareItem shareItem = shares.SingleOrDefault(r => r.Name == share.Name);
+
+                // Assert
+                Assert.IsTrue(shareItem.Properties.EnablePaidBursting);
+                Assert.AreEqual(5000, shareItem.Properties.PaidBurstingMaxIops);
+                Assert.AreEqual(1000, shareItem.Properties.PaidBurstingMaxBandwidthMibps);
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task CreateAsync_OAuth()
         {
@@ -1708,6 +1749,77 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetPropertiesAsync(options),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetPropertiesAsync_EnableSnapshotVirtualDirectoryAccess(bool? enableSnapshotVirtualDirectoryAccess)
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                Protocols = ShareProtocols.Nfs,
+            };
+
+            try
+            {
+                await share.CreateAsync(options);
+
+                ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+                {
+                    EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+                };
+
+                // Act
+                await share.SetPropertiesAsync(setPropertiesOptions);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
+                if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
+                {
+                    Assert.IsTrue(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+                else
+                {
+                    Assert.IsFalse(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+            }
+            finally
+            {
+                await share.DeleteAsync();
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
+        public async Task SetPropertiesAsync_PaidBursting()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            await using DisposingShare test = await GetTestShareAsync(service);
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                EnablePaidBursting = true,
+                PaidBurstingMaxIops = 5000,
+                PaidBurstingMaxBandwidthMibps = 1000
+            };
+
+            // Act
+            await test.Share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.EnablePaidBursting);
+            Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
+            Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
         }
 
         [RecordedTest]
