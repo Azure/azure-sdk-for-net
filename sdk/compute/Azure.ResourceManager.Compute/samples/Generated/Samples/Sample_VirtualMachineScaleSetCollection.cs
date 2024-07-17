@@ -1938,13 +1938,9 @@ EnableIPForwarding = true,
 }
 },
                     },
-                    SecurityPostureReference = new ComputeSecurityPostureReference(new ResourceIdentifier("/CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|latest"))
+                    SecurityPostureReference = new ComputeSecurityPostureReference()
                     {
-                        ExcludeExtensions =
-{
-"{securityPostureVMExtensionName}"
-},
-                        IsOverridable = true,
+                        Id = new ResourceIdentifier("/CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest"),
                     },
                 },
                 Overprovision = true,

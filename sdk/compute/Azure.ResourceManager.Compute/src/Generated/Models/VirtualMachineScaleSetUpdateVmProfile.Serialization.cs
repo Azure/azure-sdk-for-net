@@ -41,11 +41,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile, options);
             }
-            if (Optional.IsDefined(SecurityPostureReference))
-            {
-                writer.WritePropertyName("securityPostureReference"u8);
-                writer.WriteObjectValue(SecurityPostureReference, options);
-            }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
@@ -127,7 +122,6 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetUpdateOSProfile osProfile = default;
             VirtualMachineScaleSetUpdateStorageProfile storageProfile = default;
             VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default;
-            SecurityPostureReferenceUpdate securityPostureReference = default;
             SecurityProfile securityProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
             VirtualMachineScaleSetExtensionProfile extensionProfile = default;
@@ -165,15 +159,6 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     networkProfile = VirtualMachineScaleSetUpdateNetworkProfile.DeserializeVirtualMachineScaleSetUpdateNetworkProfile(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("securityPostureReference"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    securityPostureReference = SecurityPostureReferenceUpdate.DeserializeSecurityPostureReferenceUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -250,7 +235,6 @@ namespace Azure.ResourceManager.Compute.Models
                 osProfile,
                 storageProfile,
                 networkProfile,
-                securityPostureReference,
                 securityProfile,
                 diagnosticsProfile,
                 extensionProfile,

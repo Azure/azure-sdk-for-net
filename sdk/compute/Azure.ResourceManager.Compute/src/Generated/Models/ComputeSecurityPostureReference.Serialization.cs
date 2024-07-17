@@ -26,22 +26,20 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsCollectionDefined(ExcludeExtensions))
             {
                 writer.WritePropertyName("excludeExtensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludeExtensions)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsOverridable))
-            {
-                writer.WritePropertyName("isOverridable"u8);
-                writer.WriteBooleanValue(IsOverridable.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,14 +80,17 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            IList<string> excludeExtensions = default;
-            bool? isOverridable = default;
+            IList<VirtualMachineExtensionData> excludeExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -99,21 +100,12 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<VirtualMachineExtensionData> array = new List<VirtualMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item, options));
                     }
                     excludeExtensions = array;
-                    continue;
-                }
-                if (property.NameEquals("isOverridable"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isOverridable = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeSecurityPostureReference(id, excludeExtensions ?? new ChangeTrackingList<string>(), isOverridable, serializedAdditionalRawData);
+            return new ComputeSecurityPostureReference(id, excludeExtensions ?? new ChangeTrackingList<VirtualMachineExtensionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeSecurityPostureReference>.Write(ModelReaderWriterOptions options)

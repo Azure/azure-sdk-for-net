@@ -135,11 +135,6 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(LogicalSectorSize))
-            {
-                writer.WritePropertyName("logicalSectorSize"u8);
-                writer.WriteNumberValue(LogicalSectorSize.Value);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -200,7 +195,6 @@ namespace Azure.ResourceManager.Compute
             string replicationState = default;
             AzureLocation? sourceResourceLocation = default;
             DiskSecurityProfile securityProfile = default;
-            int? logicalSectorSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -379,15 +373,6 @@ namespace Azure.ResourceManager.Compute
                             securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("logicalSectorSize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            logicalSectorSize = property0.Value.GetInt32();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -419,7 +404,6 @@ namespace Azure.ResourceManager.Compute
                 replicationState,
                 sourceResourceLocation,
                 securityProfile,
-                logicalSectorSize,
                 serializedAdditionalRawData);
         }
 
