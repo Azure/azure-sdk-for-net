@@ -1519,7 +1519,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StopMediaStreamingRequestInternal()
-                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri };
+                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, OperationContext = options.OperationContext };
 
                 return CallMediaRestClient.StopMediaStreaming(CallConnectionId, request, cancellationToken);
             }
@@ -1538,7 +1538,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
         public virtual async Task<Response> StopMediaStreamingAsync(StopMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopMediaStreamingAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopMediaStreaming)}");
             scope.Start();
             try
             {
