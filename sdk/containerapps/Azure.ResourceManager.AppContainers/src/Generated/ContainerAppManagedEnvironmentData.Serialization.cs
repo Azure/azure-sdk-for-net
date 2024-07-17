@@ -154,6 +154,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("peerAuthentication"u8);
                 writer.WriteObjectValue(PeerAuthentication, options);
             }
+            if (Optional.IsDefined(PeerTrafficConfiguration))
+            {
+                writer.WritePropertyName("peerTrafficConfiguration"u8);
+                writer.WriteObjectValue(PeerTrafficConfiguration, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -216,6 +221,7 @@ namespace Azure.ResourceManager.AppContainers
             DaprConfiguration daprConfiguration = default;
             string infrastructureResourceGroup = default;
             ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
+            ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -402,6 +408,15 @@ namespace Azure.ResourceManager.AppContainers
                             peerAuthentication = ManagedEnvironmentPropertiesPeerAuthentication.DeserializeManagedEnvironmentPropertiesPeerAuthentication(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("peerTrafficConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peerTrafficConfiguration = ManagedEnvironmentPropertiesPeerTrafficConfiguration.DeserializeManagedEnvironmentPropertiesPeerTrafficConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -435,6 +450,7 @@ namespace Azure.ResourceManager.AppContainers
                 daprConfiguration,
                 infrastructureResourceGroup,
                 peerAuthentication,
+                peerTrafficConfiguration,
                 serializedAdditionalRawData);
         }
 

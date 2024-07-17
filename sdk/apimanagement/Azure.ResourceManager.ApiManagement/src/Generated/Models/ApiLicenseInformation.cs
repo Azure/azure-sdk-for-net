@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The license name used for the API. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> A URL to the license used for the API. MUST be in the format of a URL. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
     }
 }

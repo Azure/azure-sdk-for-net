@@ -49,6 +49,10 @@ Param (
     $ArtifactStagingDirectory
 )
 
+function Log-Warning($message) {
+    Write-Host "##vso[task.logissue type=warning]$message"
+}
+
 function UpdateDocIndexFiles([string]$docPath, [string] $mainJsPath) {
     # Update docfx.json
     $docfxContent = Get-Content -Path $docPath -Raw
@@ -86,31 +90,57 @@ if ($LibType -eq 'management') {
 Write-Verbose "Package Location ${PackageLocation}"
 
 Write-Verbose "Create Directories Required for Doc Generation"
+Write-Verbose "Creating ApiDir '$ApiDir'"
 mkdir $ApiDir
+Write-Verbose "Creating ApiDependenciesDir '$ApiDependenciesDir'"
 mkdir $ApiDependenciesDir
+Write-Verbose "Creating XmlOutDir '$XmlOutDir'"
 mkdir $XmlOutDir
+Write-Verbose "Creating YamlOutDir '$YamlOutDir'"
 mkdir $YamlOutDir
+Write-Verbose "Creating DocOutDir '$DocOutDir'"
 mkdir $DocOutDir
 
 if ($LibType -eq 'client') { 
     Write-Verbose "Build Packages for Doc Generation - Client"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0
+    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir"
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir
+    if ($LASTEXITCODE -ne 0) {
+        Log-Warning "Build Packages for Doc Generation - Client failed with $LASTEXITCODE please see output above"
+        exit 0
+    }
 
-    Write-Verbose "Include client Dependencies"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
-}
-
-if ($LibType -eq 'management') {
+    Write-Verbose "Include Client Dependencies"
+    Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true"
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true
+    if ($LASTEXITCODE -ne 0) {
+        Log-Warning "Include Client Dependencies build failed with $LASTEXITCODE please see output above"
+        exit 0
+    }
+} elseif ($LibType -eq 'management') {
     # Management Package
     Write-Verbose "Build Packages for Doc Generation - Management"
+    Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false"
     dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false
+    if ($LASTEXITCODE -ne 0) {
+        Log-Warning "Build Packages for Doc Generation - Management failed with $LASTEXITCODE please see output above"
+        exit 0
+    }
 
     Write-Verbose "Include Management Dependencies"
+    Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false"
     dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
+    if ($LASTEXITCODE -ne 0) {
+        Log-Warning "Include Management Dependencies build failed with $LASTEXITCODE please see output above"
+        exit 0
+    }
+} else {
+    Log-Warning "'$LibType' is not a supported library type at this time."
+    exit 0
 }
 
 Write-Verbose "Remove all unneeded artifacts from build output directory"
-Remove-Item –Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml"
+Remove-Item –Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml" -Recurse -Force
 
 Write-Verbose "Initialize Frameworks File"
 & "${MDocTool}" fx-bootstrap "${FrameworkDir}"

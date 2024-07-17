@@ -1,14 +1,11 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.3.1 (2024-07-17)
 
 ### Bugs Fixed
-
-### Other Changes
+- Rely on PeekMessagesAsync when calculating message queue length
+- Fixing target base scale instance concurrency for queues
+- When grabbing Queue Metrics for amount of messages, will now use the QueueTriggerMetrics.QueueLength instead of the ApproximateMessagesCount for less stale metrics.
 
 ## 5.3.0 (2024-04-18)
 - Includes all features from 5.3.0-beta.1.

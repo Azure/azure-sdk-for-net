@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
         [TestCase(160, 20, 8)]
         public void QueueTargetScaler_Returns_Expected(int queueLength, int? concurrency, int expectedTargetWorkerCount)
         {
-            QueuesOptions options = new QueuesOptions { BatchSize = 16 };
+            QueuesOptions options = new QueuesOptions { BatchSize = 8, NewBatchThreshold = 8 };
 
             TargetScalerContext context = new TargetScalerContext
             {

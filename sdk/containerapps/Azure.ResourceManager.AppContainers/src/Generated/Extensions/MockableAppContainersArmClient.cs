@@ -203,6 +203,18 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppJobDetectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppJobDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppJobDetectorResource"/> object. </returns>
+        public virtual ContainerAppJobDetectorResource GetContainerAppJobDetectorResource(ResourceIdentifier id)
+        {
+            ContainerAppJobDetectorResource.ValidateResourceId(id);
+            return new ContainerAppJobDetectorResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -224,6 +236,18 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppManagedEnvironmentResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerAppJobDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppJobDetectorPropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobDetectorPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppJobDetectorPropertyResource"/> object. </returns>
+        public virtual ContainerAppJobDetectorPropertyResource GetContainerAppJobDetectorPropertyResource(ResourceIdentifier id)
+        {
+            ContainerAppJobDetectorPropertyResource.ValidateResourceId(id);
+            return new ContainerAppJobDetectorPropertyResource(Client, id);
         }
 
         /// <summary>

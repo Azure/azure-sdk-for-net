@@ -36,6 +36,18 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             return client;
         }
 
+        protected ImageAnalysisClient GetClientWithDefaultCred(ImageAnalysisClientOptions options = null)
+        {
+            var credential = TestEnvironment.Credential;
+
+            options = options ?? new ImageAnalysisClientOptions
+            {
+                Diagnostics = { IsLoggingContentEnabled = true }
+            };
+            var client = InstrumentClient(new ImageAnalysisClient(new Uri(TestEnvironment.Endpoint), credential, InstrumentClientOptions(options)));
+            return client;
+        }
+
         protected AzureKeyCredential GetCognitiveVisionApiKeyCredential()
         {
             if (Mode == RecordedTestMode.Playback)

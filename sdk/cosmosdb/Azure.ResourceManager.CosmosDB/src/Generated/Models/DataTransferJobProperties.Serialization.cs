@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? totalCount = default;
             DateTimeOffset? lastUpdatedUtcTime = default;
             int? workerCount = default;
-            ErrorResponse error = default;
+            CosmosDBErrorResult error = default;
             TimeSpan? duration = default;
             DataTransferJobMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value, options);
+                    error = CosmosDBErrorResult.DeserializeCosmosDBErrorResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("duration"u8))
