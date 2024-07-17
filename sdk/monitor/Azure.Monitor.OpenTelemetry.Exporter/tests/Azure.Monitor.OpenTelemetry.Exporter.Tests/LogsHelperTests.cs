@@ -539,7 +539,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = new ChangeTrackingDictionary<string, string>();
             LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
 
-            Assert.Single(properties);
+            Assert.Equal(2, properties.Count);
             Assert.True(properties.TryGetValue(expectedScopeKey, out string actualScopeValue));
             Assert.Equal(duplicateScopeValue2, actualScopeValue);
         }
