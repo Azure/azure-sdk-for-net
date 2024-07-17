@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/c4e661cdf92c8f579574008d0cd11874cc303da0/specification/network/resource-manager/readme.md
-# tag: package-2023-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/220ad9c6554fc7d6d10a89bdb441c1e3b36e3285/specification/network/resource-manager/readme.md
+# tag: package-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -196,6 +196,8 @@ rename-mapping:
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   IPRule: BastionHostIPRule
   NetworkVirtualApplianceConnection.properties.routingConfiguration: ConnectionRoutingConfiguration
+  # to workaround breaking change in FirewallPacketCaptureParameters, we have to keep the old codes and rename it
+  FirewallPacketCaptureParameters: FirewallPacketCaptureRequestParameters
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps

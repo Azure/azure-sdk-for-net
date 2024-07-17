@@ -43,7 +43,7 @@ namespace Azure.Storage.Files.Shares
             _fileRequestIntent = fileRequestIntent;
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(ShareServiceProperties storageServiceProperties, int? timeout)
+        internal HttpMessage CreateSetPropertiesRequest(ShareServiceProperties shareServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,24 +66,24 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
             var content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(storageServiceProperties, "StorageServiceProperties");
+            content.XmlWriter.WriteObjectValue(shareServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
         }
 
         /// <summary> Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
+        /// <param name="shareServiceProperties"> The StorageService properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(ShareServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="shareServiceProperties"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(ShareServiceProperties shareServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (shareServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(shareServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(shareServiceProperties, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -96,18 +96,18 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
+        /// <param name="shareServiceProperties"> The StorageService properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(ShareServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="shareServiceProperties"/> is null. </exception>
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(ShareServiceProperties shareServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (shareServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(shareServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(shareServiceProperties, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)

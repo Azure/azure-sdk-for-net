@@ -934,7 +934,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub being published to.</param>
         /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
         ///
-        [Event(46, Level = EventLevel.Informational, Message = "Impotently publishing events for Event Hub: {0} (Partition Id: '{1}').")]
+        [Event(46, Level = EventLevel.Informational, Message = "Idempotently publishing events for Event Hub: {0} (Partition Id: '{1}').")]
         public virtual void IdempotentPublishStart(string eventHubName,
                                                    string partitionId)
         {
@@ -951,7 +951,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub being published to.</param>
         /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
         ///
-        [Event(47, Level = EventLevel.Verbose, Message = "Impotently publishing for Event Hub: {0} (Partition Id: '{1}') has acquired the partition synchronization primitive.")]
+        [Event(47, Level = EventLevel.Verbose, Message = "Idempotently publishing for Event Hub: {0} (Partition Id: '{1}') has acquired the partition synchronization primitive.")]
         public virtual void IdempotentSynchronizationAcquire(string eventHubName,
                                                              string partitionId)
         {
@@ -968,7 +968,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub being published to.</param>
         /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
         ///
-        [Event(48, Level = EventLevel.Verbose, Message = "Impotently publishing for Event Hub: {0} (Partition Id: '{1}') has released the partition synchronization primitive.")]
+        [Event(48, Level = EventLevel.Verbose, Message = "Idempotently publishing for Event Hub: {0} (Partition Id: '{1}') has released the partition synchronization primitive.")]
         public virtual void IdempotentSynchronizationRelease(string eventHubName,
                                                              string partitionId)
         {
@@ -987,7 +987,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="startSequenceNumber">The starting sequence number used for publishing.</param>
         /// <param name="endSequenceNumber">The ending sequence number of partition state used for publishing.</param>
         ///
-        [Event(49, Level = EventLevel.Verbose, Message = "Impotently publishing for Event Hub: {0} (Partition Id: '{1}') is publishing events with the sequence number range from '{2}` to '{3}'.")]
+        [Event(49, Level = EventLevel.Verbose, Message = "Idempotently publishing for Event Hub: {0} (Partition Id: '{1}') is publishing events with the sequence number range from '{2}` to '{3}'.")]
         public virtual void IdempotentSequencePublish(string eventHubName,
                                                       string partitionId,
                                                       long startSequenceNumber,
@@ -1008,7 +1008,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="oldSequenceNumber">The sequence number of partition state before the update.</param>
         /// <param name="newSequenceNumber">The sequence number of partition state after the update.</param>
         ///
-        [Event(50, Level = EventLevel.Verbose, Message = "Impotently publishing for Event Hub: {0} (Partition Id: '{1}') has updated the tracked sequence number from '{2}` to '{3}'.")]
+        [Event(50, Level = EventLevel.Verbose, Message = "Idempotently publishing for Event Hub: {0} (Partition Id: '{1}') has updated the tracked sequence number from '{2}` to '{3}'.")]
         public virtual void IdempotentSequenceUpdate(string eventHubName,
                                                      string partitionId,
                                                      long oldSequenceNumber,
@@ -1235,17 +1235,19 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
         /// <param name="ownerLevel">The owner level that is associated with the link.</param>
         /// <param name="eventPosition">The position in the event stream that the link is being opened for.</param>
+        /// <param name="identifier">The identifier assigned to the link.</param>
         ///
-        [Event(62, Level = EventLevel.Verbose, Message = "Beginning creation of an AMQP consumer link for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}')")]
+        [Event(62, Level = EventLevel.Verbose, Message = "Beginning creation of an AMQP consumer link for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}', Identifier: '{5}')")]
         public virtual void AmqpConsumerLinkCreateStart(string eventHubName,
                                                         string consumerGroup,
                                                         string partitionId,
                                                         string ownerLevel,
-                                                        string eventPosition)
+                                                        string eventPosition,
+                                                        string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(62, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty);
+                WriteEvent(62, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty, identifier ?? string.Empty);
             }
         }
 
@@ -1258,17 +1260,19 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
         /// <param name="ownerLevel">The owner level that is associated with the link.</param>
         /// <param name="eventPosition">The position in the event stream that the link is being opened for.</param>
+        /// <param name="identifier">The identifier assigned to the link.</param>
         ///
-        [Event(63, Level = EventLevel.Verbose, Message = "Completed creation of an AMQP consumer link for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}')")]
+        [Event(63, Level = EventLevel.Verbose, Message = "Completed creation of an AMQP consumer link for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}', Identifier: '{5}')")]
         public virtual void AmqpConsumerLinkCreateComplete(string eventHubName,
                                                            string consumerGroup,
                                                            string partitionId,
                                                            string ownerLevel,
-                                                           string eventPosition)
+                                                           string eventPosition,
+                                                           string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(63, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty);
+                WriteEvent(63, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty, identifier ?? string.Empty);
             }
         }
 
@@ -1282,18 +1286,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="ownerLevel">The owner level that is associated with the link.</param>
         /// <param name="eventPosition">The position in the event stream that the link is being opened for.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="identifier">The identifier assigned to the link.</param>
         ///
-        [Event(64, Level = EventLevel.Verbose, Message = "An exception occurred while creating an AMQP consumer link for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}') Error Message: '{5}'")]
+        [Event(64, Level = EventLevel.Verbose, Message = "An exception occurred while creating an AMQP consumer link for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}') Error Message: '{5}'.  Identifier: '{6}'")]
         public virtual void AmqpConsumerLinkCreateError(string eventHubName,
                                                         string consumerGroup,
                                                         string partitionId,
                                                         string ownerLevel,
                                                         string eventPosition,
-                                                        string errorMessage)
+                                                        string errorMessage,
+                                                        string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(64, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(64, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty, errorMessage ?? string.Empty, identifier ?? string.Empty);
             }
         }
 
@@ -1304,15 +1310,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The type of transport being used for the connection</param>
         /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
         /// <param name="featureSet">The set of active features that the link is being opened for.</param>
+        /// <param name="identifier">The identifier assigned to the link.</param>
         ///
-        [Event(65, Level = EventLevel.Verbose, Message = "Beginning creation of an AMQP producer link for Event Hub: '{0}', Partition: '{1}'. (Active Features: '{2}')")]
+        [Event(65, Level = EventLevel.Verbose, Message = "Beginning creation of an AMQP producer link for Event Hub: '{0}', Partition: '{1}'. (Active Features: '{2}', Identifier: '{3}')")]
         public virtual void AmqpProducerLinkCreateStart(string eventHubName,
                                                         string partitionId,
-                                                        string featureSet)
+                                                        string featureSet,
+                                                        string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(65, eventHubName ?? string.Empty, partitionId ?? string.Empty, featureSet ?? string.Empty);
+                WriteEvent(65, eventHubName ?? string.Empty, partitionId ?? string.Empty, featureSet ?? string.Empty, identifier ?? string.Empty);
             }
         }
 
@@ -1323,15 +1331,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The type of transport being used for the connection</param>
         /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
         /// <param name="featureSet">The set of active features that the link is being opened for.</param>
+        /// <param name="identifier">The identifier assigned to the link.</param>
         ///
-        [Event(66, Level = EventLevel.Verbose, Message = "Completed creation of an AMQP producer link for Event Hub: '{0}', Partition: '{1}'. (Active Features: '{2}')")]
+        [Event(66, Level = EventLevel.Verbose, Message = "Completed creation of an AMQP producer link for Event Hub: '{0}', Partition: '{1}'. (Active Features: '{2}', Identifier: '{3}')")]
         public virtual void AmqpProducerLinkCreateComplete(string eventHubName,
                                                            string partitionId,
-                                                           string featureSet)
+                                                           string featureSet,
+                                                           string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(66, eventHubName ?? string.Empty, partitionId ?? string.Empty, featureSet ?? string.Empty);
+                WriteEvent(66, eventHubName ?? string.Empty, partitionId ?? string.Empty, featureSet ?? string.Empty, identifier ?? string.Empty);
             }
         }
 
@@ -1343,16 +1353,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition associated with the link.</param>
         /// <param name="featureSet">The set of active features that the link is being opened for.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="identifier">The identifier assigned to the link.</param>
         ///
-        [Event(67, Level = EventLevel.Verbose, Message = "An exception occurred while creating an AMQP producer link for Event Hub: '{0}', Partition: '{1}'. (Active Features: '{2}') Error Message: '{3}'")]
+        [Event(67, Level = EventLevel.Verbose, Message = "An exception occurred while creating an AMQP producer link for Event Hub: '{0}', Partition: '{1}'. (Active Features: '{2}') Error Message: '{3}'.  Identifier: '{4}'")]
         public virtual void AmqpProducerLinkCreateError(string eventHubName,
                                                         string partitionId,
                                                         string featureSet,
-                                                        string errorMessage)
+                                                        string errorMessage,
+                                                        string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(67, eventHubName ?? string.Empty, partitionId ?? string.Empty, featureSet ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(67, eventHubName ?? string.Empty, partitionId ?? string.Empty, featureSet ?? string.Empty, errorMessage ?? string.Empty, identifier ?? string.Empty);
             }
         }
 
@@ -1366,18 +1378,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="ownerLevel">The owner level that is associated with the link.</param>
         /// <param name="eventPosition">The position in the event stream that the link is being opened for.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="identifier">The identifier assigned to the link.</param>
         ///
-        [Event(68, Level = EventLevel.Verbose, Message = "An exception captured by fault tolerant close is being surfaced during consumer link creation for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}') Error Message: '{5}'")]
+        [Event(68, Level = EventLevel.Verbose, Message = "An exception captured by fault tolerant close is being surfaced during consumer link creation for Event Hub: '{0}', Consumer Group: '{1}', Partition: '{2}'. (Owner Level: '{3}', Event Position: '{4}') Error Message: '{5}'.  Identifier: '{6}'")]
         public virtual void AmqpConsumerLinkCreateCapturedErrorThrow(string eventHubName,
                                                                      string consumerGroup,
                                                                      string partitionId,
                                                                      string ownerLevel,
                                                                      string eventPosition,
-                                                                     string errorMessage)
+                                                                     string errorMessage,
+                                                                     string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(68, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(68, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, ownerLevel ?? string.Empty, eventPosition ?? string.Empty, errorMessage ?? string.Empty, identifier ?? string.Empty);
             }
         }
 
@@ -1410,7 +1424,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="identifier">A unique name used to identify the buffered producer.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         ///
-        [Event(70, Level = EventLevel.Informational, Message = "Starting background processing for the buffered producer instance with identifier '{0}' for Event Hub: {1}..")]
+        [Event(70, Level = EventLevel.Informational, Message = "Starting background processing for the buffered producer instance with identifier '{0}' for Event Hub: {1}.")]
         public virtual void BufferedProducerBackgroundProcessingStart(string identifier,
                                                                       string eventHubName)
         {
@@ -1793,7 +1807,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventCount">The number of events that was in the batch.</param>
         /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
         ///
-        [Event(89, Level = EventLevel.Informational, Message = "Completed publishing a batch of events for buffered producer instance with identifier '{0}' to Event Hub: {1},  Partition Id: '{2}', Operation Id: '{3}',  Events in the Batch: '{4}', Duration: '{5:0.00}' seconds..")]
+        [Event(89, Level = EventLevel.Informational, Message = "Completed publishing a batch of events for buffered producer instance with identifier '{0}' to Event Hub: {1},  Partition Id: '{2}', Operation Id: '{3}',  Events in the Batch: '{4}', Duration: '{5:0.00}' seconds.")]
         public virtual void BufferedProducerEventBatchPublishComplete(string identifier,
                                                                       string eventHubName,
                                                                       string partitionId,
@@ -2157,23 +2171,27 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="startingPosition">The position in the event stream that reading will start from.</param>
         /// <param name="checkpointUsed"><c>true</c> if a checkpoint was used for the position; otherwise, <c>false</c>.</param>
-        /// <param name="lastModified">The date and time that the checkpoint was last modified.</param>
         /// <param name="authorIdentifier">The author of the checkpoint used to determine this position.</param>
+        /// <param name="lastModified">The date and time that the checkpoint was last modified.</param>
         ///
-        [Event(105, Level = EventLevel.Verbose, Message = "The processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} is initializing partition '{0}' with starting position: [{4}]. Position chosen by {5} (AuthorIdentifier '{6}': LastModified: '{7}').")]
-        public virtual void EventProcessorPartitionProcessingEventPositionDetermined(string partitionId,
-                                                                                     string identifier,
+        [NonEvent]
+        public virtual void EventProcessorPartitionProcessingEventPositionDetermined(string identifier,
                                                                                      string eventHubName,
                                                                                      string consumerGroup,
+                                                                                     string partitionId,
                                                                                      string startingPosition,
                                                                                      bool checkpointUsed,
-                                                                                     DateTimeOffset? lastModified,
-                                                                                     string authorIdentifier)
+                                                                                     string authorIdentifier,
+                                                                                     DateTimeOffset? lastModified)
         {
             if (IsEnabled())
             {
+                authorIdentifier ??= "None";
+
                 var selectionBasedOn = checkpointUsed ? $"checkpoint" : "default";
-                WriteEvent(105, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, startingPosition ?? string.Empty, selectionBasedOn, authorIdentifier ?? string.Empty, lastModified ?? default);
+                var lastModifiedString = lastModified.HasValue ? lastModified.Value.ToString("yyyy-mm-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture) : "None";
+
+                EventProcessorPartitionProcessingEventPositionDeterminedCore(identifier, eventHubName, consumerGroup, partitionId, startingPosition, selectionBasedOn, authorIdentifier, lastModifiedString);
             }
         }
 
@@ -2590,7 +2608,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
         /// <param name="eventCount">The number of events in the batch that was passed to the processing handler.</param>
         ///
-        [Event(124, Level = EventLevel.Verbose, Message = "Completed dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.   Duration: '{5:0.00}' seconds, Event Count: '{6]'.")]
+        [Event(124, Level = EventLevel.Verbose, Message = "Completed dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.   Duration: '{5:0.00}' seconds, Event Count: '{6}'.")]
         public virtual void EventProcessorProcessingHandlerComplete(string partitionId,
                                                                     string identifier,
                                                                     string eventHubName,
@@ -2662,9 +2680,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         [Event(127, Level = EventLevel.Verbose, Message = "Publishing for the buffered producer instance with identifier '{0}' for Event Hub: {1} has exited the idle state; one or more events was enqueued.  Operation Id: '{2},' Duration: '{3:0.00}' seconds.")]
         public virtual void BufferedProducerIdleComplete(string identifier,
-                                                                 string eventHubName,
-                                                                 string operationId,
-                                                                 double durationSeconds)
+                                                         string eventHubName,
+                                                         string operationId,
+                                                         double durationSeconds)
         {
             if (IsEnabled())
             {
@@ -2680,7 +2698,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="loadBalancingIntervalSeconds">The interval, in seconds, that should pass between load balancing cycles.</param>
-        /// <param name="ownershipIntervalSeconds">The interval, in seconds, that partition ownership is reserved for..</param>
+        /// <param name="ownershipIntervalSeconds">The interval, in seconds, that partition ownership is reserved for.</param>
         ///
         [NonEvent]
         public virtual void ProcessorLoadBalancingIntervalsTooCloseWarning(string identifier,
@@ -2811,6 +2829,32 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                                                                      string troubleshootingGuideLink)
         {
             WriteEvent(104, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, maximumAdvisedCount, troubleshootingGuideLink);
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has taken ownership of a partition and is actively processing it.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
+        /// <param name="startingPosition">The position in the event stream that reading will start from.</param>
+        /// <param name="positionBasedOn">The textual description of how the position was chosen.  For example: "checkpoint".</param>
+        /// <param name="authorIdentifier">The author of the checkpoint used to determine this position.</param>
+        /// <param name="lastModified">The date and time that the checkpoint was last modified.</param>
+        ///
+        [Event(105, Level = EventLevel.Verbose, Message = "The processor instance with identifier '{0}' for Event Hub: {1} and Consumer Group: {2} is initializing partition '{3}' with starting position: [{4}]. Position chosen by {5} (AuthorIdentifier '{6}': LastModified: {7}).")]
+        private void EventProcessorPartitionProcessingEventPositionDeterminedCore(string identifier,
+                                                                                  string eventHubName,
+                                                                                  string consumerGroup,
+                                                                                  string partitionId,
+                                                                                  string startingPosition,
+                                                                                  string positionBasedOn,
+                                                                                  string authorIdentifier,
+                                                                                  string lastModified)
+        {
+            WriteEvent(105, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, startingPosition ?? string.Empty, positionBasedOn ?? string.Empty, authorIdentifier ?? string.Empty, lastModified ?? string.Empty);
         }
 
         /// <summary>
@@ -3994,19 +4038,145 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="arg5">The fifth argument.</param>
         /// <param name="arg6">The sixth argument.</param>
         /// <param name="arg7">The seventh argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6,
+                                       string arg7)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            fixed (char* arg6Ptr = arg6)
+            fixed (char* arg7Ptr = arg7)
+            {
+                var eventPayload = stackalloc EventData[7];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
+
+                eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
+                eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
+
+                WriteEventCore(eventId, 7, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with two string arguments and two value type arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        /// <param name="arg7">The seventh argument.</param>
+        /// <param name="arg8">The eighth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6,
+                                       string arg7,
+                                       string arg8)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            fixed (char* arg6Ptr = arg6)
+            fixed (char* arg7Ptr = arg7)
+            fixed (char* arg8Ptr = arg8)
+            {
+                var eventPayload = stackalloc EventData[8];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
+
+                eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
+                eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
+
+                eventPayload[7].Size = (arg8.Length + 1) * sizeof(char);
+                eventPayload[7].DataPointer = (IntPtr)arg8Ptr;
+
+                WriteEventCore(eventId, 8, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with two string arguments and two value type arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        /// <param name="arg7">The seventh argument.</param>
         /// <param name="arg8">The eighth argument.</param>
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void WriteEvent<TValue1>(int eventId,
-                                                         string arg1,
-                                                         string arg2,
-                                                         string arg3,
-                                                         string arg4,
-                                                         string arg5,
-                                                         string arg6,
-                                                         string arg7,
-                                                         TValue1 arg8)
+                                                string arg1,
+                                                string arg2,
+                                                string arg3,
+                                                string arg4,
+                                                string arg5,
+                                                string arg6,
+                                                string arg7,
+                                                TValue1 arg8)
             where TValue1 : struct
         {
             fixed (char* arg1Ptr = arg1)

@@ -1,11 +1,17 @@
 # Release History
 
-## 1.8.0 (2024-04-26)
+## 1.9.0 (2024-07-10)
+
+### Features Added
+- Upgraded api-version tag from 'package-2023-11' to 'package-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/220ad9c6554fc7d6d10a89bdb441c1e3b36e3285/specification/network/resource-manager/readme.md
+
+## 1.8.0 (2024-06-24)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-2023-09' to 'package-2023-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c4e661cdf92c8f579574008d0cd11874cc303da0/specification/network/resource-manager/readme.md
 - Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Update .Net SDK to older SDK by removing identity field for flowLog networkWatcher resource.
 
 ## 1.7.0 (2024-01-12)
 

@@ -77,6 +77,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 operations-to-lro-api-version-override:
   Fleets_CreateOrUpdate: "2016-03-30"

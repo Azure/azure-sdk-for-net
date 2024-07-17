@@ -127,7 +127,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetPropertiesAsync_OAuth()
         {
             // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
 
             // Act
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
@@ -194,7 +194,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task SetPropertiesAsync_OAuth()
         {
             // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
             properties.Value.Protocol = null;
 
@@ -412,7 +412,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ListSharesSegmentAsync_OAuth()
         {
             // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
 
             // Ensure at least one share
             await using DisposingShare test = await GetTestShareAsync(service);

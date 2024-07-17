@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.9 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2024-06-14)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-01-preview' to 'package-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a8c212bc18177ac4891ec93aa7b4c5c834c156e4/specification/eventhub/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.25.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.2.0 to 1.12.0
 
 ## 1.1.0-beta.8 (2024-05-07)
 

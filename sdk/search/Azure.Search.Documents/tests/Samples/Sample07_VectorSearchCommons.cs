@@ -3,6 +3,7 @@
 
 using System;
 using Azure.AI.OpenAI;
+using OpenAI.Embeddings;
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
@@ -16,11 +17,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
             AzureKeyCredential credential = new AzureKeyCredential(key);
 
-            OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-            EmbeddingsOptions embeddingsOptions = new("text-embedding-ada-002", new string[] { input });
+            AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
+            EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
-            Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
-            return embeddings.Data[0].Embedding;
+            Embedding embedding = embeddingClient.GenerateEmbedding(input);
+            return embedding.Vector;
         }
         #endregion
 

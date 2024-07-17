@@ -91,7 +91,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (publicAccessType == default)
             {
-                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+                publicAccessType = PublicAccessType.None;
             }
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));

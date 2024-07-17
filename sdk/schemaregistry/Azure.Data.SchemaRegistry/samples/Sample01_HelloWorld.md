@@ -45,7 +45,7 @@ SchemaRegistrySchema schema = avroClient.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
 
-### Register a Json schema (preview)
+### Register a Json schema
 
 Register a Json schema to be stored in the Azure Schema Registry.
 
@@ -75,7 +75,7 @@ string definition = @"
 Response<SchemaProperties> schemaProperties = jsonClient.RegisterSchema(groupName, name, definition, format);
 ```
 
-### Retrieve a Json schema (preview)
+### Retrieve a Json schema
 
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
@@ -84,7 +84,7 @@ SchemaRegistrySchema schema = jsonClient.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
 
-### Register a custom schema (preview)
+### Register a custom schema
 
 Register a custom schema to be stored in the Azure Schema Registry.
 
@@ -102,7 +102,7 @@ string definition = @"
 Response<SchemaProperties> schemaProperties = customClient.RegisterSchema(groupName, name, definition, format);
 ```
 
-### Retrieve a custom schema (preview)
+### Retrieve a custom schema
 
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 

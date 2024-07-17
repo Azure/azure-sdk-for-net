@@ -169,7 +169,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareClient aadShare = InstrumentClient(new ShareClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -194,7 +194,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareClient aadShare = InstrumentClient(new ShareClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -219,7 +219,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareClient aadShare = InstrumentClient(new ShareClient(
                 uriBuilder.ToUri(),
-                Tenants.GetOAuthCredential(),
+                TestEnvironment.Credential,
                 options));
 
             // Assert
@@ -465,7 +465,7 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = GetNewShareName();
             ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
             await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
-            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient oauthServiceClient = GetServiceClient_OAuth();
             ShareClient share = oauthServiceClient.GetShareClient(shareName);
 
             // Arrange
@@ -570,7 +570,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             var shareName = GetNewShareName();
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
 
             try
@@ -653,7 +653,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizesShareClient.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -976,7 +976,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             var shareName = GetNewShareName();
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             await share.CreateIfNotExistsAsync();
 
@@ -1083,7 +1083,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task SetMetadataAsync_OAuth()
         {
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
@@ -1189,7 +1189,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task GetAccessPolicyAsync_OAuth()
         {
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
@@ -1425,7 +1425,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task SetAccessPolicyAsync_OAuth()
         {
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
@@ -1557,7 +1557,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task GetStatisticsAsync_OAuth()
         {
             // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
@@ -1601,7 +1601,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task CreateSnapshotAsync_OAuth()
         {
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             await using DisposingShare test = await GetTestShareAsync(service);
             ShareClient share = test.Share;
 
@@ -1957,7 +1957,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             var shareName = GetNewShareName();
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
             await share.CreateIfNotExistsAsync(quotaInGB: 1);
 
@@ -2157,7 +2157,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task AcquireLeaseAsync_OAuth()
         {
             // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             ShareClient shareClient = InstrumentClient(service.GetShareClient(GetNewShareName()));
             await shareClient.CreateAsync();
             string id = Recording.Random.NewGuid().ToString();
@@ -2262,7 +2262,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ReleaseLeaseAsync_OAuth()
         {
             // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             await using DisposingShare test = await GetTestShareAsync(service);
             string id = Recording.Random.NewGuid().ToString();
             ShareLeaseClient leaseClient = InstrumentClient(test.Share.GetShareLeaseClient(id));
@@ -2368,7 +2368,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task ChangeLeaseAsync_OAuth()
         {
             // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             await using DisposingShare test = await GetTestShareAsync(service);
             string id = Recording.Random.NewGuid().ToString();
             string newId = Recording.Random.NewGuid().ToString();
@@ -2470,7 +2470,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task BreakLeaseAsync_OAuth()
         {
             // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             await using DisposingShare test = await GetTestShareAsync(service);
             string id = Recording.Random.NewGuid().ToString();
             string newId = Recording.Random.NewGuid().ToString();
@@ -2581,7 +2581,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task RenewLeaseAsync_OAuth()
         {
             // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareServiceClient service = GetServiceClient_OAuth();
             ShareClient shareClient = InstrumentClient(service.GetShareClient(GetNewShareName()));
             await shareClient.CreateAsync();
 

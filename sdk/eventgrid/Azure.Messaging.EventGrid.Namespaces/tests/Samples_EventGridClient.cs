@@ -5,7 +5,6 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Namespaces.Samples
@@ -18,7 +17,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -27,7 +26,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 type = "<type>",
                 specversion = "<specversion>",
             });
-            Response response = client.PublishCloudEvent("<topicName>", content);
+            Response response = client.SendEvent(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -39,7 +38,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -48,7 +47,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 type = "<type>",
                 specversion = "<specversion>",
             });
-            Response response = await client.PublishCloudEventAsync("<topicName>", content);
+            Response response = await client.SendEventAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -60,10 +59,10 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" });
-            Response response = client.PublishCloudEvent("<topicName>", @event);
+            Response response = client.Send(@event);
         }
 
         [Test]
@@ -72,10 +71,10 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" });
-            Response response = await client.PublishCloudEventAsync("<topicName>", @event);
+            Response response = await client.SendAsync(@event);
         }
 
         [Test]
@@ -84,7 +83,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -99,7 +98,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 datacontenttype = "<datacontenttype>",
                 subject = "<subject>",
             });
-            Response response = client.PublishCloudEvent("<topicName>", content);
+            Response response = client.SendEvent(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -111,7 +110,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -126,7 +125,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 datacontenttype = "<datacontenttype>",
                 subject = "<subject>",
             });
-            Response response = await client.PublishCloudEventAsync("<topicName>", content);
+            Response response = await client.SendEventAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -138,7 +137,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" })
             {
@@ -149,7 +148,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 DataContentType = "<datacontenttype>",
                 Subject = "<subject>",
             };
-            Response response = client.PublishCloudEvent("<topicName>", @event);
+            Response response = client.Send(@event);
         }
 
         [Test]
@@ -158,7 +157,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" })
             {
@@ -169,7 +168,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 DataContentType = "<datacontenttype>",
                 Subject = "<subject>",
             };
-            Response response = await client.PublishCloudEventAsync("<topicName>", @event);
+            Response response = await client.SendAsync(@event);
         }
 
         [Test]
@@ -178,7 +177,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -190,7 +189,7 @@ type = "<type>",
 specversion = "<specversion>",
 }
             });
-            Response response = client.PublishCloudEvents("<topicName>", content);
+            Response response = client.SendEvent(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -202,7 +201,7 @@ specversion = "<specversion>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -214,7 +213,7 @@ type = "<type>",
 specversion = "<specversion>",
 }
             });
-            Response response = await client.PublishCloudEventsAsync("<topicName>", content);
+            Response response = await client.SendEventAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -226,9 +225,9 @@ specversion = "<specversion>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
-            Response response = client.PublishCloudEvents("<topicName>", new CloudEvent[]
+            Response response = client.Send(new CloudEvent[]
             {
                 new CloudEvent("<source>", "<type>", new { foo = "bar" })
             });
@@ -240,9 +239,9 @@ specversion = "<specversion>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
-            Response response = await client.PublishCloudEventsAsync("<topicName>", new CloudEvent[]
+            Response response = await client.SendAsync(new CloudEvent[]
             {
                 new CloudEvent("<source>", "<type>", new { foo = "bar" })
             });
@@ -254,7 +253,7 @@ specversion = "<specversion>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -272,7 +271,7 @@ datacontenttype = "<datacontenttype>",
 subject = "<subject>",
 }
             });
-            Response response = client.PublishCloudEvents("<topicName>", content);
+            Response response = client.SendEvent(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -284,7 +283,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
             using RequestContent content = RequestContent.Create(new object[]
             {
@@ -302,7 +301,7 @@ datacontenttype = "<datacontenttype>",
 subject = "<subject>",
 }
             });
-            Response response = await client.PublishCloudEventsAsync("<topicName>", content);
+            Response response = await client.SendEventAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -314,9 +313,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
-            Response response = client.PublishCloudEvents("<topicName>", new CloudEvent[]
+            Response response = client.Send(new CloudEvent[]
             {
                 new CloudEvent("<source>", "<type>", new { foo = "bar" })
                 {
@@ -336,9 +335,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridSenderClient client = new EventGridSenderClient(endpoint, "<topicName>", credential);
 
-            Response response = await client.PublishCloudEventsAsync("<topicName>", new CloudEvent[]
+            Response response = await client.SendAsync(new CloudEvent[]
             {
                 new CloudEvent("<source>", "<type>", new { foo = "bar" })
                 {
@@ -358,9 +357,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            Response response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>", (int?)null, (TimeSpan?)null, (RequestContext)null);
+            Response response = client.Receive((int?)null, (TimeSpan?)null, (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
@@ -377,9 +376,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            Response response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>", (int?)null, (TimeSpan?)null, (RequestContext)null);
+            Response response = await client.ReceiveAsync((int?)null, (TimeSpan?)null, (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
@@ -396,9 +395,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            Response<ReceiveResult> response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>");
+            Response<ReceiveResult> response = client.Receive();
         }
 
         [Test]
@@ -407,9 +406,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            Response<ReceiveResult> response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>");
+            Response<ReceiveResult> response = await client.ReceiveAsync();
         }
 
         [Test]
@@ -418,9 +417,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            Response response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>", 1234, TimeSpan.FromSeconds(10), (RequestContext)null);
+            Response response = client.Receive(1234, TimeSpan.FromSeconds(10), (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
@@ -443,9 +442,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            Response response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>", 1234, TimeSpan.FromSeconds(10), (RequestContext)null);
+            Response response = await client.ReceiveAsync(1234, TimeSpan.FromSeconds(10), (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
@@ -468,9 +467,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            Response<ReceiveResult> response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>", maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
+            Response<ReceiveResult> response = client.Receive(maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
         }
 
         [Test]
@@ -479,9 +478,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            Response<ReceiveResult> response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>", maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
+            Response<ReceiveResult> response = await client.ReceiveAsync(maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
         }
 
         [Test]
@@ -490,7 +489,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -499,7 +498,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = client.AcknowledgeCloudEvents("<topicName>", "<eventSubscriptionName>", content);
+            Response response = client.Acknowledge(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -514,7 +513,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -523,7 +522,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = await client.AcknowledgeCloudEventsAsync("<topicName>", "<eventSubscriptionName>", content);
+            Response response = await client.AcknowledgeAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -538,10 +537,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            AcknowledgeOptions acknowledgeOptions = new AcknowledgeOptions(new string[] { "<lockTokens>" });
-            Response<AcknowledgeResult> response = client.AcknowledgeCloudEvents("<topicName>", "<eventSubscriptionName>", acknowledgeOptions);
+            Response<AcknowledgeResult> response = client.Acknowledge(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -550,10 +548,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            AcknowledgeOptions acknowledgeOptions = new AcknowledgeOptions(new string[] { "<lockTokens>" });
-            Response<AcknowledgeResult> response = await client.AcknowledgeCloudEventsAsync("<topicName>", "<eventSubscriptionName>", acknowledgeOptions);
+            Response<AcknowledgeResult> response = await client.AcknowledgeAsync(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -562,7 +559,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -571,7 +568,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = client.AcknowledgeCloudEvents("<topicName>", "<eventSubscriptionName>", content);
+            Response response = client.Acknowledge(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -588,7 +585,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -597,7 +594,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = await client.AcknowledgeCloudEventsAsync("<topicName>", "<eventSubscriptionName>", content);
+            Response response = await client.AcknowledgeAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -614,10 +611,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            AcknowledgeOptions acknowledgeOptions = new AcknowledgeOptions(new string[] { "<lockTokens>" });
-            Response<AcknowledgeResult> response = client.AcknowledgeCloudEvents("<topicName>", "<eventSubscriptionName>", acknowledgeOptions);
+            Response<AcknowledgeResult> response = client.Acknowledge(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -626,10 +622,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            AcknowledgeOptions acknowledgeOptions = new AcknowledgeOptions(new string[] { "<lockTokens>" });
-            Response<AcknowledgeResult> response = await client.AcknowledgeCloudEventsAsync("<topicName>", "<eventSubscriptionName>", acknowledgeOptions);
+            Response<AcknowledgeResult> response = await client.AcknowledgeAsync(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -638,7 +633,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -647,7 +642,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = client.ReleaseCloudEvents("<topicName>", "<eventSubscriptionName>", content);
+            Response response = client.Release(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -662,7 +657,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -671,7 +666,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = await client.ReleaseCloudEventsAsync("<topicName>", "<eventSubscriptionName>", content);
+            Response response = await client.ReleaseAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -686,10 +681,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            ReleaseOptions releaseOptions = new ReleaseOptions(new string[] { "<lockTokens>" });
-            Response<ReleaseResult> response = client.ReleaseCloudEvents("<topicName>", "<eventSubscriptionName>", releaseOptions);
+            Response<ReleaseResult> response = client.Release(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -698,10 +692,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            ReleaseOptions releaseOptions = new ReleaseOptions(new string[] { "<lockTokens>" });
-            Response<ReleaseResult> response = await client.ReleaseCloudEventsAsync("<topicName>", "<eventSubscriptionName>", releaseOptions);
+            Response<ReleaseResult> response = await client.ReleaseAsync(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -710,7 +703,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -719,7 +712,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = client.ReleaseCloudEvents("<topicName>", "<eventSubscriptionName>", content, releaseDelayInSeconds: 0);
+            Response response = client.Release(content, releaseDelayInSeconds: "0");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -736,7 +729,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -745,7 +738,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = await client.ReleaseCloudEventsAsync("<topicName>", "<eventSubscriptionName>", content, releaseDelayInSeconds: 0);
+            Response response = await client.ReleaseAsync(content, releaseDelayInSeconds: "0");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -762,10 +755,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            ReleaseOptions releaseOptions = new ReleaseOptions(new string[] { "<lockTokens>" });
-            Response<ReleaseResult> response = client.ReleaseCloudEvents("<topicName>", "<eventSubscriptionName>", releaseOptions, releaseDelayInSeconds: ReleaseDelay.By0Seconds);
+            Response<ReleaseResult> response = client.Release(new string[] { "<lockTokens>" }, delay: ReleaseDelay.NoDelay);
         }
 
         [Test]
@@ -774,10 +766,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            ReleaseOptions releaseOptions = new ReleaseOptions(new string[] { "<lockTokens>" });
-            Response<ReleaseResult> response = await client.ReleaseCloudEventsAsync("<topicName>", "<eventSubscriptionName>", releaseOptions, releaseDelayInSeconds: ReleaseDelay.By0Seconds);
+            Response<ReleaseResult> response = await client.ReleaseAsync(new string[] { "<lockTokens>" }, delay: ReleaseDelay.NoDelay);
         }
 
         [Test]
@@ -786,7 +777,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -795,7 +786,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = client.RejectCloudEvents("<topicName>", "<eventSubscriptionName>", content);
+            Response response = client.Reject(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -810,7 +801,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -819,7 +810,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = await client.RejectCloudEventsAsync("<topicName>", "<eventSubscriptionName>", content);
+            Response response = await client.RejectAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -834,10 +825,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            RejectOptions rejectOptions = new RejectOptions(new string[] { "<lockTokens>" });
-            Response<RejectResult> response = client.RejectCloudEvents("<topicName>", "<eventSubscriptionName>", rejectOptions);
+            Response<RejectResult> response = client.Reject(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -846,10 +836,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            RejectOptions rejectOptions = new RejectOptions(new string[] { "<lockTokens>" });
-            Response<RejectResult> response = await client.RejectCloudEventsAsync("<topicName>", "<eventSubscriptionName>", rejectOptions);
+            Response<RejectResult> response = await client.RejectAsync(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -858,7 +847,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -867,7 +856,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = client.RejectCloudEvents("<topicName>", "<eventSubscriptionName>", content);
+            Response response = client.Reject(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -884,7 +873,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -893,7 +882,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = await client.RejectCloudEventsAsync("<topicName>", "<eventSubscriptionName>", content);
+            Response response = await client.RejectAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -910,10 +899,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            RejectOptions rejectOptions = new RejectOptions(new string[] { "<lockTokens>" });
-            Response<RejectResult> response = client.RejectCloudEvents("<topicName>", "<eventSubscriptionName>", rejectOptions);
+            Response<RejectResult> response = client.Reject(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -922,10 +910,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            RejectOptions rejectOptions = new RejectOptions(new string[] { "<lockTokens>" });
-            Response<RejectResult> response = await client.RejectCloudEventsAsync("<topicName>", "<eventSubscriptionName>", rejectOptions);
+            Response<RejectResult> response = await client.RejectAsync(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -934,7 +921,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -943,7 +930,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = client.RenewCloudEventLocks("<topicName>", "<eventSubscriptionName>", content);
+            Response response = client.RenewLocks(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -958,7 +945,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -967,7 +954,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = await client.RenewCloudEventLocksAsync("<topicName>", "<eventSubscriptionName>", content);
+            Response response = await client.RenewLocksAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -982,10 +969,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            RenewLockOptions renewLockOptions = new RenewLockOptions(new string[] { "<lockTokens>" });
-            Response<RenewCloudEventLocksResult> response = client.RenewCloudEventLocks("<topicName>", "<eventSubscriptionName>", renewLockOptions);
+            Response<RenewLocksResult> response = client.RenewLocks(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -994,10 +980,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            RenewLockOptions renewLockOptions = new RenewLockOptions(new string[] { "<lockTokens>" });
-            Response<RenewCloudEventLocksResult> response = await client.RenewCloudEventLocksAsync("<topicName>", "<eventSubscriptionName>", renewLockOptions);
+            Response<RenewLocksResult> response = await client.RenewLocksAsync(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -1006,7 +991,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1015,7 +1000,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = client.RenewCloudEventLocks("<topicName>", "<eventSubscriptionName>", content);
+            Response response = client.RenewLocks(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -1032,7 +1017,7 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1041,7 +1026,7 @@ subject = "<subject>",
 "<lockTokens>"
             },
             });
-            Response response = await client.RenewCloudEventLocksAsync("<topicName>", "<eventSubscriptionName>", content);
+            Response response = await client.RenewLocksAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedLockTokens")[0].GetProperty("lockToken").ToString());
@@ -1058,10 +1043,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            RenewLockOptions renewLockOptions = new RenewLockOptions(new string[] { "<lockTokens>" });
-            Response<RenewCloudEventLocksResult> response = client.RenewCloudEventLocks("<topicName>", "<eventSubscriptionName>", renewLockOptions);
+            Response<RenewLocksResult> response = client.RenewLocks(new string[] { "<lockTokens>" });
         }
 
         [Test]
@@ -1070,10 +1054,9 @@ subject = "<subject>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            EventGridClient client = new EventGridClient(endpoint, credential);
+            EventGridReceiverClient client = new EventGridReceiverClient(endpoint, "<topicName>", "<eventSubscriptionName>", credential);
 
-            RenewLockOptions renewLockOptions = new RenewLockOptions(new string[] { "<lockTokens>" });
-            Response<RenewCloudEventLocksResult> response = await client.RenewCloudEventLocksAsync("<topicName>", "<eventSubscriptionName>", renewLockOptions);
+            Response<RenewLocksResult> response = await client.RenewLocksAsync(new string[] { "<lockTokens>" });
         }
     }
 }
