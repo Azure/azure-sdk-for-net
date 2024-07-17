@@ -191,7 +191,7 @@ namespace System.ClientModel.Primitives
         protected OperationResult() { }
         protected OperationResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract bool IsCompleted { get; protected set; }
-        public System.ClientModel.ContinuationToken? RehydrationToken { get { throw null; } protected set { } }
+        public abstract System.ClientModel.ContinuationToken? RehydrationToken { get; protected set; }
         public abstract void Wait(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WaitAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }

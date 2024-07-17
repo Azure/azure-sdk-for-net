@@ -28,7 +28,9 @@ public abstract class OperationResult : ClientResult
     // obtain the values (ids) needed to create the token.  This can't be done
     // e.g. in the case of a protocol method return type, and must be done after
     // a user begins reading the stream in convenience LRO types.
-    public ContinuationToken? RehydrationToken { get; protected set; }
+    // Note: if we make it abstract, then an implementation that doesn't support
+    // rehydration doesn't need a backing field for it.
+    public abstract ContinuationToken? RehydrationToken { get; protected set; }
 
     // Note: Don't provide this on the base type per not being able to support
     // it from SSE, since the client isn't able to stop the stream, I don't think.
