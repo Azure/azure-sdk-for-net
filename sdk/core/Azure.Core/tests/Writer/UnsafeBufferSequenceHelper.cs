@@ -5,6 +5,8 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
+#nullable enable
+
 namespace Azure.Core.Tests
 {
     internal class UnsafeBufferSequenceHelper

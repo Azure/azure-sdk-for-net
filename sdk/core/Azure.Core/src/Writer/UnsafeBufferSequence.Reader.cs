@@ -3,14 +3,19 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace Azure.Core;
 
+/// <summary>
+/// Provides a way to read a <see cref="UnsafeBufferSequence"/> without exposing the underlying buffers.
+/// This class is not thread safe and should only be used by one thread at a time.
+/// If you dispose while another thread is copying you will end up with a partial copy.
+/// </summary>
 internal partial class UnsafeBufferSequence
 {
     //Only needed to restrict ctor access of Reader to BufferSequence

@@ -364,14 +364,17 @@ namespace Azure.Core
             }
         }
 
-        // This should be switched to use BinaryContent when it is publicly available to avoid code duplication.
         private sealed class ModelRequestContent<T> : RequestContent where T : IPersistableModel<T>
         {
             private readonly T _model;
             private readonly ModelReaderWriterOptions _options;
-            private BinaryData? _data;
-            private UnsafeBufferSequence.Reader? _reader;
             private readonly bool _jsonFormatRequestedInOptions;
+
+            // Used when _model is an IJsonModel
+            private UnsafeBufferSequence.Reader? _sequenceReader;
+
+            // Used when _model is an IModel
+            private BinaryData? _data;
 
             public ModelRequestContent(T model, ModelReaderWriterOptions options)
             {
@@ -380,15 +383,13 @@ namespace Azure.Core
                 _jsonFormatRequestedInOptions = options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
             }
 
-            private BinaryData Data => _data ??= _model.Write(_options);
-
-            private UnsafeBufferSequence.Reader Reader
+            private UnsafeBufferSequence.Reader SequenceReader
             {
                 get
                 {
-                    if (!(_model is IJsonModel<T> jsonModel))
+                    if (_model is not IJsonModel<T> jsonModel)
                     {
-                        throw new InvalidOperationException("The model does not implement IJsonModel<T>.");
+                        throw new InvalidOperationException("Cannot use Writer with non-IJsonModel model type.");
                     }
 
                     using UnsafeBufferSequence sequenceWriter = new UnsafeBufferSequence();
@@ -399,9 +400,24 @@ namespace Azure.Core
                 }
             }
 
+            private BinaryData Data
+            {
+                get
+                {
+                    if (_jsonFormatRequestedInOptions && _model is IJsonModel<T>)
+                    {
+                        throw new InvalidOperationException("Should use ModelWriter instead of _model.Write with IJsonModel.");
+                    }
+
+                    _data ??= _model.Write(_options);
+                    return _data;
+                }
+            }
+
             public override bool TryComputeLength(out long length)
             {
-                length = _jsonFormatRequestedInOptions && _model is IJsonModel<T> ? Reader.Length : Data.ToMemory().Length;
+                length = _jsonFormatRequestedInOptions && _model is IJsonModel<T> ? SequenceReader.Length : Data.ToMemory().Length;
+
                 return true;
             }
 
@@ -414,16 +430,16 @@ namespace Azure.Core
             {
                 Argument.AssertNotNull(stream, nameof(stream));
 
-                if (_jsonFormatRequestedInOptions && _model is IJsonModel<T> jsonModel)
+                if (_jsonFormatRequestedInOptions && _model is IJsonModel<T>)
                 {
-                    Reader.CopyTo(stream, cancellation);
+                    SequenceReader.CopyTo(stream, cancellation);
                     return;
                 }
 
 #if NETFRAMEWORK || NETSTANDARD2_0
                 stream.Write(Bytes, 0, Bytes.Length);
 #else
-                stream.Write(Data.ToMemory().Span);
+            stream.Write(Data.ToMemory().Span);
 #endif
             }
 
@@ -431,9 +447,9 @@ namespace Azure.Core
             {
                 Argument.AssertNotNull(stream, nameof(stream));
 
-                if (_jsonFormatRequestedInOptions && _model is IJsonModel<T> jsonModel)
+                if (_jsonFormatRequestedInOptions && _model is IJsonModel<T>)
                 {
-                    await Reader.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+                    await SequenceReader.CopyToAsync(stream, cancellation).ConfigureAwait(false);
                     return;
                 }
 
@@ -442,10 +458,10 @@ namespace Azure.Core
 
             public override void Dispose()
             {
-                var sequenceReader = _reader;
+                var sequenceReader = _sequenceReader;
                 if (sequenceReader != null)
                 {
-                    _reader = null;
+                    _sequenceReader = null;
                     sequenceReader.Dispose();
                 }
             }

@@ -3,11 +3,17 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
-using System.Text;
+
+#nullable enable
 
 namespace Azure.Core;
 
+/// <summary>
+/// This class is a helper to write to a <see cref="IBufferWriter{T}"/> in a thread safe manner.
+/// It uses the shared pool to allocate buffers and returns them to the pool when disposed.
+/// Since there is no way to ensure someone didn't keep a reference to one of the buffers
+/// it must be disposed of in the same context it was created and its referenced should not be stored or shared.
+/// </summary>
 internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDisposable
 {
     private volatile UnsafeBufferSegment[] _buffers; // this is an array so items can be accessed by ref
@@ -21,7 +27,7 @@ internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDispo
     public UnsafeBufferSequence(int segmentSize = 16384)
     {
         // we perf tested a very large and a small model and found that the performance
-        // for 4k, 8k, 16k, 32k, was negligible for the small model but had a 30% alloc improvement
+        // for 4k, 8k, 16k, 32k, was neglible for the small model but had a 30% alloc improvment
         // from 4k to 16k on the very large model.
         _segmentSize = segmentSize;
         _buffers = Array.Empty<UnsafeBufferSegment>();

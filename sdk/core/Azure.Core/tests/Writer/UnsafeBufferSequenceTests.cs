@@ -4,6 +4,8 @@
 using System.Reflection;
 using NUnit.Framework;
 
+#nullable enable
+
 namespace Azure.Core.Tests
 {
     public class UnsafeBufferSequenceTests
