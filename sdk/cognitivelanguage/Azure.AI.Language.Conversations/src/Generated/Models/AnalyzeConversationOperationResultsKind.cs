@@ -22,9 +22,9 @@ namespace Azure.AI.Language.Conversations.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SummarizationOperationResultsValue = "ConversationalSummarizationResults";
-        private const string PiiOperationResultsValue = "ConversationalPIIResults";
-        private const string CustomSummarizationOperationResultsValue = "CustomConversationalSummarizationResults";
+        private const string SummarizationOperationResultsValue = "conversationalSummarizationResults";
+        private const string PiiOperationResultsValue = "conversationalPIIResults";
+        private const string CustomSummarizationOperationResultsValue = "customConversationalSummarizationResults";
 
         /// <summary> Conversational Summarization Results. </summary>
         public static AnalyzeConversationOperationResultsKind SummarizationOperationResults { get; } = new AnalyzeConversationOperationResultsKind(SummarizationOperationResultsValue);
