@@ -1,6 +1,6 @@
 # Release History
 
-## 11.6.0 (2024-07-16)
+## 11.6.0 (2024-07-17)
 
 ### Features Added
 - Added support for `2024-07-01` service version.
