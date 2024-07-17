@@ -31,7 +31,7 @@ namespace Azure.Messaging.WebPubSub
         internal static byte[] s_group = Encoding.UTF8.GetBytes("webpubsub.group");
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -45,7 +45,7 @@ namespace Azure.Messaging.WebPubSub
             => GetClientAccessUriInternal(expiresAt, userId, roles, null, WebPubSubClientAccess.Default, async: false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -60,7 +60,7 @@ namespace Azure.Messaging.WebPubSub
             => GetClientAccessUriInternal(expiresAt, userId, roles, groups, WebPubSubClientAccess.Default, async: false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -75,7 +75,7 @@ namespace Azure.Messaging.WebPubSub
             => GetClientAccessUriInternal(expiresAt, userId, roles, groups, clientType, async: false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -89,7 +89,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -104,7 +104,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one..
+        /// Creates a URI with authentication token for the clients..
         /// </summary>
         /// <param name="expiresAt">UTC time when the token expires.</param>
         /// <param name="userId">User Id.</param>
@@ -119,7 +119,7 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning restore AZC0015 // Unexpected client method return type.
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -139,7 +139,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -161,7 +161,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -184,7 +184,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -204,7 +204,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -226,7 +226,7 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Creates a URI with authentication token for the clients. Specify clientType to MQTT for MQTT clients, others use the default one.
+        /// Creates a URI with authentication token for the clients.
         /// </summary>
         /// <param name="expiresAfter">Defaults to one hour, if not specified. Must be greater or equal zero.</param>
         /// <param name="userId">User Id.</param>
@@ -395,19 +395,19 @@ namespace Azure.Messaging.WebPubSub
              string userId,
              IEnumerable<string> roles,
              IEnumerable<string> groups,
-             WebPubSubClientAccess clientType,
+             WebPubSubClientAccess clientAccess,
              bool async,
              CancellationToken cancellationToken = default)
         {
-            if (clientType == WebPubSubClientAccess.Mqtt && _apiVersionEnum < WebPubSubServiceClientOptions.ServiceVersion.V2024_01_01)
+            if (clientAccess == WebPubSubClientAccess.Mqtt && _apiVersionEnum < WebPubSubServiceClientOptions.ServiceVersion.V2024_01_01)
             {
                 throw new NotSupportedException($"Generating a client access URI for MQTT is only supported in API version {WebPubSubServiceClientOptions.ServiceVersion.V2024_01_01.ToVersionString()} or later.  You are currently using API version {_apiVersion}.");
             }
-            var clientEndpointString = clientType switch
+            var clientEndpointString = clientAccess switch
             {
                 WebPubSubClientAccess.Default => "default",
                 WebPubSubClientAccess.Mqtt => "mqtt",
-                _ => throw new ArgumentOutOfRangeException(nameof(clientType))
+                _ => throw new ArgumentOutOfRangeException(nameof(clientAccess))
             };
             if (_tokenCredential != null)
             {
@@ -423,7 +423,7 @@ namespace Azure.Messaging.WebPubSub
             }
             else if (_credential != null)
             {
-                return GenerateTokenFromAzureKeyCredential(expiresAt, clientType, userId, roles, groups);
+                return GenerateTokenFromAzureKeyCredential(expiresAt, clientAccess, userId, roles, groups);
             }
             else
             {
