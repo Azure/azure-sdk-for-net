@@ -62,16 +62,16 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies the phone number (MSISDN) associated with a device. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="numberVerificationWithCodeContent"> Request to verify number of device - second call. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="numberVerificationWithCodeContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
         /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCodeAsync(string,NumberVerificationWithCodeContent,CancellationToken)']/*" />
-        public virtual async Task<Response<NumberVerificationResult>> VerifyWithCodeAsync(string apcGatewayId, NumberVerificationWithCodeContent numberVerificationWithCodeContent, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NumberVerificationResult>> VerifyWithCodeAsync(string apcGatewayId, NumberVerificationWithCodeContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(numberVerificationWithCodeContent, nameof(numberVerificationWithCodeContent));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = numberVerificationWithCodeContent.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await VerifyWithCodeAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(NumberVerificationResult.FromResponse(response), response);
@@ -79,16 +79,16 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Verifies the phone number (MSISDN) associated with a device. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="numberVerificationWithCodeContent"> Request to verify number of device - second call. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="numberVerificationWithCodeContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
         /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCode(string,NumberVerificationWithCodeContent,CancellationToken)']/*" />
-        public virtual Response<NumberVerificationResult> VerifyWithCode(string apcGatewayId, NumberVerificationWithCodeContent numberVerificationWithCodeContent, CancellationToken cancellationToken = default)
+        public virtual Response<NumberVerificationResult> VerifyWithCode(string apcGatewayId, NumberVerificationWithCodeContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(numberVerificationWithCodeContent, nameof(numberVerificationWithCodeContent));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = numberVerificationWithCodeContent.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = VerifyWithCode(apcGatewayId, content, context);
             return Response.FromValue(NumberVerificationResult.FromResponse(response), response);

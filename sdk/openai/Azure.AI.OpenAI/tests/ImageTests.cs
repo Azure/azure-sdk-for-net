@@ -48,7 +48,7 @@ public class ImageTests : AoaiTestBase<ImageClient>
     public async Task CanCreateSimpleImage()
     {
         ImageClient client = GetTestClient();
-        GeneratedImage image = await client.GenerateImageAsync("a small watermelon", new()
+        GeneratedImage image = await client.GenerateImageAsync("a tabby cat", new()
         {
             Quality = GeneratedImageQuality.Standard,
             Size = GeneratedImageSize.W1024xH1024,
@@ -63,7 +63,7 @@ public class ImageTests : AoaiTestBase<ImageClient>
     public async Task CanGetContentFilterResults()
     {
         ImageClient client = GetTestClient();
-        ClientResult<GeneratedImage> imageResult = await client.GenerateImageAsync("a small watermelon", new()
+        ClientResult<GeneratedImage> imageResult = await client.GenerateImageAsync("a tabby cat", new()
         {
             Quality = GeneratedImageQuality.Standard,
             Size = GeneratedImageSize.W1024xH1024,

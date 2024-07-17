@@ -1712,7 +1712,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.DeleteAsync(
                             deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1720,7 +1720,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.Delete(
                             deleteSnapshots: shareSnapshotsDeleteOption.ToShareSnapshotsDeleteOptionInternal(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1929,14 +1929,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await ShareRestClient.GetPropertiesAsync(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.GetProperties(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2134,7 +2134,7 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2148,7 +2148,7 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2556,7 +2556,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.SetMetadataAsync(
                             metadata: metadata,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2564,7 +2564,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.SetMetadata(
                             metadata: metadata,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2769,14 +2769,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await ShareRestClient.GetAccessPolicyAsync(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.GetAccessPolicy(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3017,7 +3017,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.SetAccessPolicyAsync(
                             shareAcl: permissions,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3025,7 +3025,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.SetAccessPolicy(
                             shareAcl: permissions,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3221,14 +3221,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await ShareRestClient.GetStatisticsAsync(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ShareRestClient.GetStatistics(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3654,6 +3654,34 @@ namespace Azure.Storage.Files.Shares
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new ShareSasBuilder(permissions, expiresOn) { ShareName = Name });
+
+        /// <summary>
+        /// For debugging purposes only.
+        /// Returns the string to sign that will be used to generate the signature for the SAS URL.
+        /// If you use this method, call it immediately before
+        /// <see cref="GenerateSasStringToSign(ShareSasPermissions, DateTimeOffset)"/>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="ShareSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <returns>
+        /// The string to sign that will be used to generate the signature for the SAS URL.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual string GenerateSasStringToSign(ShareSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ShareSasBuilder shareSasBuilder = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = Name
+            };
+
+            return shareSasBuilder.ToStringToSign(ClientConfiguration.SharedKeyCredential);
+        }
 
         /// <summary>
         /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a <see cref="Uri"/>

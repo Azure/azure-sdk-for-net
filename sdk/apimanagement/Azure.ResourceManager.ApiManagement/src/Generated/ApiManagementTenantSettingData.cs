@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Tenant settings. </summary>
+        [WirePath("properties.settings")]
         public IDictionary<string, string> Settings { get; }
     }
 }
