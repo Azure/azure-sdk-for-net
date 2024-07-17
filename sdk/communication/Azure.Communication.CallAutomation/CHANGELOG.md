@@ -7,7 +7,7 @@
 - Support multiple play sources for Play and Recognize
 - Support for PlayStarted event in Play/Recognize
 - Support for the real time transcription
-- Monetization for real-time transcription (e.g. transcription, sentiment, nuance integration, etc)
+- Monetization for real-time transcription and audio streaming
 - Hold and Unhold the participant with/without the play source
 - Support to manage the rooms/servercall/group call using connect API
 - Support for the audio streaming
