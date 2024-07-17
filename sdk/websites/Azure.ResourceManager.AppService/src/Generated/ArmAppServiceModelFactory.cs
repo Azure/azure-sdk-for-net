@@ -2524,6 +2524,104 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppService.KubeEnvironmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> Extended Location. </param>
+        /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
+        /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
+        /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
+        /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
+        /// <param name="environmentType"> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </param>
+        /// <param name="arcConfiguration">
+        /// Cluster configuration which determines the ARC cluster
+        /// components types. Eg: Choosing between BuildService kind,
+        /// FrontEnd Service ArtifactsStorageType etc.
+        /// </param>
+        /// <param name="appLogsConfiguration">
+        /// Cluster configuration which enables the log daemon to export
+        /// app logs to a destination. Currently only "log-analytics" is
+        /// supported
+        /// </param>
+        /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
+        /// <param name="aksResourceId"></param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.KubeEnvironmentData"/> instance for mocking. </returns>
+        public static KubeEnvironmentData KubeEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, string environmentType = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ContainerAppsConfiguration containerAppsConfiguration = null, ResourceIdentifier aksResourceId = null, string kind = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new KubeEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                provisioningState,
+                deploymentErrors,
+                isInternalLoadBalancerEnabled,
+                defaultDomain,
+                staticIP,
+                environmentType,
+                arcConfiguration,
+                appLogsConfiguration,
+                containerAppsConfiguration,
+                aksResourceId,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.KubeEnvironmentPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
+        /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
+        /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
+        /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
+        /// <param name="arcConfiguration">
+        /// Cluster configuration which determines the ARC cluster
+        /// components types. Eg: Choosing between BuildService kind,
+        /// FrontEnd Service ArtifactsStorageType etc.
+        /// </param>
+        /// <param name="appLogsConfiguration">
+        /// Cluster configuration which enables the log daemon to export
+        /// app logs to a destination. Currently only "log-analytics" is
+        /// supported
+        /// </param>
+        /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
+        /// <param name="aksResourceId"></param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="Models.KubeEnvironmentPatch"/> instance for mocking. </returns>
+        public static KubeEnvironmentPatch KubeEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ContainerAppsConfiguration containerAppsConfiguration = null, ResourceIdentifier aksResourceId = null, string kind = null)
+        {
+            return new KubeEnvironmentPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                deploymentErrors,
+                isInternalLoadBalancerEnabled,
+                defaultDomain,
+                staticIP,
+                arcConfiguration,
+                appLogsConfiguration,
+                containerAppsConfiguration,
+                aksResourceId,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationStackResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

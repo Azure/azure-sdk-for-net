@@ -391,6 +391,75 @@ namespace Azure.ResourceManager.AppService.Mocking
             return GetAppCertificates().Get(name, cancellationToken);
         }
 
+        /// <summary> Gets a collection of KubeEnvironmentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of KubeEnvironmentResources and their operations over a KubeEnvironmentResource. </returns>
+        public virtual KubeEnvironmentCollection GetKubeEnvironments()
+        {
+            return GetCachedClient(client => new KubeEnvironmentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubeEnvironmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(string name, CancellationToken cancellationToken = default)
+        {
+            return await GetKubeEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get the properties of a Kubernetes Environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubeEnvironmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Kubernetes Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<KubeEnvironmentResource> GetKubeEnvironment(string name, CancellationToken cancellationToken = default)
+        {
+            return GetKubeEnvironments().Get(name, cancellationToken);
+        }
+
         /// <summary> Gets a collection of StaticSiteResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of StaticSiteResources and their operations over a StaticSiteResource. </returns>
         public virtual StaticSiteCollection GetStaticSites()

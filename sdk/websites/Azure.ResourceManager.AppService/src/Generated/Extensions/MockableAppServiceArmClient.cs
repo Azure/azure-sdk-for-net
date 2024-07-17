@@ -479,6 +479,18 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="KubeEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubeEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="KubeEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="KubeEnvironmentResource"/> object. </returns>
+        public virtual KubeEnvironmentResource GetKubeEnvironmentResource(ResourceIdentifier id)
+        {
+            KubeEnvironmentResource.ValidateResourceId(id);
+            return new KubeEnvironmentResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="HostingEnvironmentRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HostingEnvironmentRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentRecommendationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

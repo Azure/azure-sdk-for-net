@@ -11,7 +11,8 @@ azure-arm: true
 library-name: AppService
 title: WebSiteManagementClient
 namespace: Azure.ResourceManager.AppService
-tag: package-2023-12-WithoutContainerApp
+require: https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/web/resource-manager/readme.md
+#tag: package-2023-12
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -23,6 +24,9 @@ modelerfour:
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -904,178 +908,20 @@ directive:
         $["x-ms-enum"] = {
                 "name": "functionStorageType",
                 "modelAsString": true
-              };     
-```
-### Tag: package-2023-12-WithoutContainerApp
-
-Removed:
-  - Microsoft.Web/stable/2023-12-01/ContainerApps.json
-  - Microsoft.Web/stable/2023-12-01/ContainerAppsRevisions.json
-  - Microsoft.Web/stable/2023-12-01/KubeEnvironments.json
-
-```yaml $(tag) == 'package-2023-12-WithoutContainerApp'
-input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/AppServiceCertificateOrders.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/CertificateOrdersDiagnostics.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/CertificateRegistrationProvider.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/Domains.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/TopLevelDomains.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/DomainRegistrationProvider.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/AppServiceEnvironments.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/AppServicePlans.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/Certificates.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/CommonDefinitions.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/DeletedWebApps.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/Diagnostics.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/Global.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/Provider.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/Recommendations.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/ResourceHealthMetadata.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/ResourceProvider.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/StaticSites.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/f1546dc981fa5d164d7ecd13588520457462c22c/specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/WebApps.json
-directive:
-  # suppress each RPC 3016 error
-- where: $.definitions.FunctionSecrets.properties.trigger_url
-  suppress: R3016
-  reason: This requires a breaking change in functions runtime API.
-- where: $.definitions.Identifier.properties
-  suppress: R3019
-  reason: It's an old API, will resolve in next API version
-- where: $.definitions.VnetGateway
-  suppress: R4015
-  reason: Does not have list operation
-- where: $.definitions.VnetInfoResource
-  suppress: R4015
-  reason: Does not have list operation
-- suppress: R4009
-  from: AppServiceCertificateOrders.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: CertificateOrdersDiagnostics.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: CertificateRegistrationProvider.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: Domains.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: TopLevelDomains.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: DomainRegistrationProvider.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: Certificates.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: CommonDefinitions.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: DeletedWebApps.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: Diagnostics.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: Global.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: Provider.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: Recommendations.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: WebApps.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: StaticSites.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: AppServiceEnvironments.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: AppServicePlans.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: ResourceHealthMetadata.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: KubeEnvironments.json
-  reason: SystemData will implement in next version.
-- suppress: R4015
-  from: WebApps.json
-  where: $.definitions.NetworkFeatures
-  reason: Will fix in next version
-- suppress: R4019
-  from: Recommendations.json
-  reason: Will fix in next version
-- suppress: R4019
-  from: WebApps.json
-  reason: Will fix in next version
-- suppress: R3021
-  from: WebApps.json
-  reason: Will fix in next version
-- suppress: R4011
-  from: WebApps.json
-  reason: Will fix in next version
-- suppress: R4011
-  from: AppServiceEnvironments.json
-  reason: Will fix in next version
-- suppress: R4011
-  from: StaticSites.json
-  reason: Will fix in next version
-- suppress: R4011
-  from: AppServicePlans.json
-  reason: Will fix in next version
-- suppress: D5001
-  reason: Will fix in next version
-- suppress: R1003
-  reason: Will fix in next version
-- suppress: R2001
-  reason: Will fix in next version
-- suppress: R2029
-  reason: Will fix in next version
-- suppress: R2063
-  reason: Will fix in next version
-- suppress: R3010
-  reason: Will fix in next version
-- where: $.definitions.TriggeredJobRun.properties.trigger_url
-  suppress: R3016
-  reason: This requires a breaking change in kudu runtime API.
-- where: $.definitions.TriggeredJobRun.properties.web_job_name
-  suppress: R3016
-  reason: This requires a breaking change in kudu runtime API.
-- where: $.definitions.TriggeredJobRun.properties.start_time
-  suppress: R3016
-  reason: This requires a breaking change in kudu runtime API.
-- where: $.definitions.TriggeredJobRun.properties.end_time
-  suppress: R3016
-  reason: This requires a breaking change in kudu runtime API.
-- where: $.definitions.TriggeredJobRun.properties.output_url
-  suppress: R3016
-  reason: This requires a breaking change in kudu runtime API.
-- where: $.definitions.TriggeredJobRun.properties.error_url
-  suppress: R3016
-  reason: This requires a breaking change in kudu runtime API.
-- where: $.definitions.TriggeredJobRun.properties.job_name
-  suppress: R3016
-  reason: This requires a breaking change in kudu runtime API.
-- where: $.definitions.TriggeredJobRun.properties.web_job_id
-  suppress: R3016
-  reason: This requires a breaking change in kudu runtime API.
-- suppress: R4009
-  from: ContainerApps.json
-  reason: SystemData will implement in next version.
-- suppress: R4009
-  from: ContainerAppsRevisions.json
-  reason: SystemData will implement in next version.
-- suppress: R3026
-  from: ContainerApps.json
-  reason: Patch operation will be implemented in later version.
-- suppress: R3026
-  from: ContainerAppsRevisions.json
-  reason: Patch operation will be implemented in later version.
+              };
+  # Remove ContainerApps.json, ContainerAppsRevisions.json since Container Apps has been separated into another SDK
+  - from: ContainerApps.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
+  - from: ContainerAppsRevisions.json
+    where: $.paths
+    transform: >
+      for (var path in $)
+      {
+          delete $[path];
+      }
 ```
