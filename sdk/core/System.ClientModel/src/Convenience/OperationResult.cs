@@ -65,10 +65,10 @@ public abstract class OperationResult : ClientResult
     // would cause an infinite loop.  "CanContinue"/"Has more updates" -> can MoveNext
     // in the conceptual update stream.
 
-    // TODO: Can we make this less desireable to call?
-    // One idea is to actually expose an API to get the update enumerator.
-    public abstract Task<bool> UpdateAsync(CancellationToken cancellationToken = default);
-    public abstract bool Update(CancellationToken cancellationToken = default);
+    //// TODO: Can we make this less desireable to call?
+    //// One idea is to actually expose an API to get the update enumerator.
+    //public abstract Task<bool> UpdateAsync(CancellationToken cancellationToken = default);
+    //public abstract bool Update(CancellationToken cancellationToken = default);
 
     // TODO: Consider providing an abstract UpdateStatus and UpdateStatusAsync
     // operation.  This would formalize the idea of having a stream of updates
