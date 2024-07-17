@@ -105,21 +105,10 @@ function Get-PkgProperties
     return $null
 }
 
-function Get-PackageFolderFromPath($file) {
-    $parts = $file -split "/"
-
-    if ($parts.Length -lt 3) {
-        return ""
-    }
-    return [System.IO.Path]::Combine($parts[0], $parts[1], $parts[2])
-}
-
-# Takes an input diff json file generated from eng/common/scripts/Generate-PR-Diff.ps1
-# On PR builds, this function should be utilized instead of Get-AllPkgProperties.
 function Get-PrPkgProperties([string]$InputDiffJson) {
     $packagesWithChanges = @()
 
-    $allPackageProperties = Get-AllPkgProperties
+    $allPackageProperties = Get-AllPkgProperties -ServiceDirectory media
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
 
@@ -127,8 +116,9 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     {
         foreach($file in $targetedFiles)
         {
-            $pkgFolder = Get-PackageFolderFromPath($file)
-            if ($pkgFolder.EndsWith($pkg.ArtifactName)) {
+            $filePath = Resolve-Path (Join-Path $RepoRoot $file)
+            $shouldInclude = $filePath -like "$($pkg.DirectoryPath)*"
+            if ($shouldInclude) {
                 $packagesWithChanges += $pkg
             }
         }

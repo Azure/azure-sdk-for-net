@@ -14,8 +14,11 @@ In cases of collisions where track 2 packages (IsNewSdk = true) have the same
 filename as track 1 packages (e.g. same artifact name or package name), the
 track 2 package properties will be written.
 
-.PARAMETER serviceInput
-Service directory in which to search for packages, or file path ending in diff.json.
+.PARAMETER serviceDirectory
+Service directory in which to search for packages.
+
+.PARAMETER prDiff
+A file path leading to a file generated from Generate-PR-Diff.json. This parameter takes precedence over serviceDirectory, do not provide both.
 
 .PARAMETER outDirectory
 Output location (generally a package artifact directory in DevOps) for JSON 
@@ -32,10 +35,10 @@ Verison property in that file.
 
 [CmdletBinding()]
 Param (
-  [Parameter(Mandatory=$True)]
-  [string] $serviceInput,
+  [string] $serviceDirectory,
   [Parameter(Mandatory=$True)]
   [string] $outDirectory,
+  [string] $prDiff,
   [switch] $addDevVersion
 )
 
@@ -95,11 +98,11 @@ $exportedPaths = @{}
 
 $allPackageProperties = @()
 
-if ($serviceInput.endswith("diff.json")) {
-  $allPackageProperties = Get-PrPkgProperties $serviceInput
+if ($prDiff) {
+  $allPackageProperties = Get-PrPkgProperties $prDiff
 }
 else {
-  $allPackageProperties = Get-AllPkgProperties $serviceInput
+  $allPackageProperties = Get-AllPkgProperties $serviceDirectory
 }
 
 if ($allPackageProperties)
