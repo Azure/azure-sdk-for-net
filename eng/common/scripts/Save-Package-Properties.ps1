@@ -149,6 +149,6 @@ if ($allPackageProperties)
 }
 else
 {
-    Write-Error "Package properties are not available for service directory $($serviceInput)"
+    Write-Error "Package properties are not available for service directory $serviceDirectory or $prdiff"
     exit 1
 }
