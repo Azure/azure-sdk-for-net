@@ -4,17 +4,17 @@
 namespace Azure.Messaging.WebPubSub;
 
 /// <summary>
-/// The type of client.
+/// The access type of clients.
 /// </summary>
-public enum WebPubSubClientType
+public enum WebPubSubClientAccess
 {
     /// <summary>
-    /// Default client endpoint type, whose path starts with "/client".
+    /// Default client access, whose access endpoint starts with "/client".
     /// </summary>
     Default,
 
     /// <summary>
-    /// MQTT client endpoint, whose path starts with "/clients/mqtt".
+    /// MQTT client access, whose access endpoint starts with "/clients/mqtt".
     /// </summary>
     Mqtt,
 }

@@ -22,9 +22,9 @@ namespace Azure.Messaging.WebPubSub.Tests
 
         private static readonly JwtSecurityTokenHandler s_jwtTokenHandler = new();
 
-        [TestCase(WebPubSubClientType.Default, "/client")]
-        [TestCase(WebPubSubClientType.Mqtt, "/clients/mqtt")]
-        public async Task GetClientAccessUri_AccessKey_Test(WebPubSubClientType clientType, string clientUriPrefix)
+        [TestCase(WebPubSubClientAccess.Default, "/client")]
+        [TestCase(WebPubSubClientAccess.Mqtt, "/clients/mqtt")]
+        public async Task GetClientAccessUri_AccessKey_Test(WebPubSubClientAccess clientType, string clientUriPrefix)
         {
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
             var expectedUriPrefix = $"ws://localhost:8080{clientUriPrefix}/hubs/hub?access_token=";
@@ -36,9 +36,9 @@ namespace Azure.Messaging.WebPubSub.Tests
             Assert.True((await serviceClient.GetClientAccessUriAsync(DateTimeOffset.Now, default, default, default, clientType, default)).ToString().StartsWith(expectedUriPrefix));
         }
 
-        [TestCase(WebPubSubClientType.Default, "/client", "default")]
-        [TestCase(WebPubSubClientType.Mqtt, "/clients/mqtt", "mqtt")]
-        public async Task GetClientAccessUri_MicrosoftEntraId_DefaultClient_Test(WebPubSubClientType clientType, string clientUriPrefix, string clientTypeString)
+        [TestCase(WebPubSubClientAccess.Default, "/client", "default")]
+        [TestCase(WebPubSubClientAccess.Mqtt, "/clients/mqtt", "mqtt")]
+        public async Task GetClientAccessUri_MicrosoftEntraId_DefaultClient_Test(WebPubSubClientAccess clientType, string clientUriPrefix, string clientTypeString)
         {
             var serviceClient = new WebPubSubServiceSubClass(new Uri("https://localhost"), "hub", new DefaultAzureCredential());
             var expectedUri = new Uri($"wss://localhost{clientUriPrefix}/hubs/hub?access_token=fakeToken");
