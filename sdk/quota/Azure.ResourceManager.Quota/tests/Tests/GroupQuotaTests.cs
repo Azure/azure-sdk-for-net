@@ -70,45 +70,6 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         }
 
         [TestCase]
-        public async Task PatchGroupQuota()
-        {
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
-            string managementGroupId = "testMgIdRoot";
-            string groupQuotaName = "sdk-test-group-quota";
-
-            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-
-            // create body
-            GroupQuotasEntityPatch patch = new GroupQuotasEntityPatch()
-            {
-                Properties = new GroupQuotasEntityBasePatch()
-                {
-                    DisplayName = "sdk-test-group-quota",
-                    AdditionalAttributes = new AdditionalAttributesPatch()
-                    {
-                        GroupId = new GroupingId()
-                        {
-                            GroupingIdType = GroupingIdType.BillingId,
-                            Value = "ad41a99f-9c42-4b3d-9770-e711a24d8542",
-                        },
-                    },
-                },
-            };
-
-            //Patch the GroupQuota
-            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
-            var response = await groupQuotasEntity.UpdateAsync(WaitUntil.Started, patch);
-            Assert.NotNull(response);
-        }
-
-        [TestCase]
         public async Task GetGroupQuota()
         {
             var options = new ArmClientOptions();
@@ -256,12 +217,19 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             string managementGroupId = "testMgIdRoot";
             string groupQuotaName = "sdk-test-group-quota";
             string subscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
-            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionIdResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, subscriptionId);
-            GroupQuotaSubscriptionIdResource groupQuotaSubscriptionId = client.GetGroupQuotaSubscriptionIdResource(groupQuotaSubscriptionIdResourceId);
 
-            // invoke the operation
-            var response = await groupQuotaSubscriptionId.UpdateAsync(WaitUntil.Started);
-            Assert.IsNotNull(response);
+            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+
+            // get the collection of this GroupQuotaSubscriptionIdResource
+            GroupQuotaSubscriptionIdCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptionIds();
+
+            var response = await collection.CreateOrUpdateAsync(WaitUntil.Started, subscriptionId);
+
+            //Clean up Sub
+            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionIdResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, subscriptionId);
+
+            GroupQuotaSubscriptionIdResource groupQuotaSubscriptionId = client.GetGroupQuotaSubscriptionIdResource(groupQuotaSubscriptionIdResourceId);
 
             await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Started);
         }
@@ -308,6 +276,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             var allocationResponse = await managementGroupResource.CreateOrUpdateGroupQuotaSubscriptionAllocationRequestAsync(WaitUntil.Started, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data);
             Assert.IsNotNull(allocationResponse);
+            await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Started);
         }
 
         [TestCase]
@@ -345,8 +314,6 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task GetSubscriptionAllocationList()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
-            // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
             var options = new ArmClientOptions();
             options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
 

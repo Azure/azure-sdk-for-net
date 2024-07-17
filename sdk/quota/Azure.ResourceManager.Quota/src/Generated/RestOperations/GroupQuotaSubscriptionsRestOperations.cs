@@ -172,8 +172,6 @@ namespace Azure.ResourceManager.Quota
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
-                    return message.Response;
                 case 202:
                     return message.Response;
                 default:
