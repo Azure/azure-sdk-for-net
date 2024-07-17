@@ -446,6 +446,11 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.CloseHandlesResult ClosedHandlesInfo(int closedHandlesCount) { throw null; }
         public static Azure.Storage.Files.Shares.Models.CloseHandlesResult ClosedHandlesInfo(int closedHandlesCount, int failedHandlesCount) { throw null; }
     }
+    public enum FilePermissionKeyFormat
+    {
+        Sddl = 0,
+        Binary = 1,
+    }
     public partial class FileSmbProperties
     {
         public FileSmbProperties() { }
