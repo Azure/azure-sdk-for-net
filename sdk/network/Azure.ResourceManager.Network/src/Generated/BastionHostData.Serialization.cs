@@ -146,6 +146,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableKerberos"u8);
                 writer.WriteBooleanValue(EnableKerberos.Value);
             }
+            if (Optional.IsDefined(EnableSessionRecording))
+            {
+                writer.WritePropertyName("enableSessionRecording"u8);
+                writer.WriteBooleanValue(EnableSessionRecording.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -205,6 +210,7 @@ namespace Azure.ResourceManager.Network
             bool? enableShareableLink = default;
             bool? enableTunneling = default;
             bool? enableKerberos = default;
+            bool? enableSessionRecording = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -405,6 +411,15 @@ namespace Azure.ResourceManager.Network
                             enableKerberos = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableSessionRecording"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableSessionRecording = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -435,7 +450,8 @@ namespace Azure.ResourceManager.Network
                 enableIPConnect,
                 enableShareableLink,
                 enableTunneling,
-                enableKerberos);
+                enableKerberos,
+                enableSessionRecording);
         }
 
         BinaryData IPersistableModel<BastionHostData>.Write(ModelReaderWriterOptions options)

@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Header name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Header value. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Number of request body bytes to log. </summary>
+        [WirePath("bytes")]
         public int? Bytes { get; set; }
     }
 }

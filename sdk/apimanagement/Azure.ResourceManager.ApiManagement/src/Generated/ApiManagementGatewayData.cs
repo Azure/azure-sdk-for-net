@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gateway location. </summary>
+        [WirePath("properties.locationData")]
         public ResourceLocationDataContract LocationData { get; set; }
         /// <summary> Gateway description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
     }
 }

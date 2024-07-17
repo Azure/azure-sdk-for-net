@@ -4,11 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Messaging.EventGrid.Namespaces;
+using CloudNative.CloudEvents.SystemTextJson;
 using NUnit.Framework;
+using ContentType = System.Net.Mime.ContentType;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
@@ -281,6 +286,54 @@ namespace Azure.Messaging.EventGrid.Tests
             var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
             ReceiveResult result = await receiver.ReceiveAsync(maxEvents: 1);
             AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new[] { result.Details.First().BrokerProperties.LockToken });
+            Assert.IsEmpty(acknowledgeResult.FailedLockTokens);
+        }
+
+        [RecordedTest]
+        public async Task RoundTripCNCFEvent()
+        {
+            var namespaceTopicHost = TestEnvironment.NamespaceTopicHost;
+            var namespaceKey = TestEnvironment.NamespaceKey;
+            var topicName = TestEnvironment.NamespaceTopicName;
+            var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
+
+            #region Snippet:SendCNCFEvent
+            var evt = new CloudNative.CloudEvents.CloudEvent
+            {
+                Source = new Uri("http://localHost"),
+                Type = "type",
+                Data = new TestModel { Name = "Bob", Age = 18 },
+                Id = Recording.Random.NewGuid().ToString()
+            };
+            var jsonFormatter = new JsonEventFormatter();
+#if SNIPPET
+            var sender = new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey));
+#else
+            var sender = InstrumentClient(new EventGridSenderClient(new Uri(namespaceTopicHost), topicName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridSenderClientOptions())));
+#endif
+            await sender.SendEventAsync(RequestContent.Create(jsonFormatter.EncodeStructuredModeMessage(evt, out _)));
+            #endregion
+            #region Snippet:ReceiveCNCFEvent
+#if SNIPPET
+            var receiver = new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey));
+#else
+            var receiver = InstrumentClient(new EventGridReceiverClient(new Uri(namespaceTopicHost), topicName, subscriptionName, new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridReceiverClientOptions())));
+#endif
+            Response response = await receiver.ReceiveAsync(maxEvents: 1, maxWaitTime: TimeSpan.FromSeconds(10), new RequestContext());
+
+            var eventResponse = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase).Value[0];
+            var receivedCloudEvent = jsonFormatter.DecodeStructuredModeMessage(
+                Encoding.UTF8.GetBytes(eventResponse.Event.ToString()),
+                new ContentType("application/cloudevents+json"),
+                null);
+            #endregion
+            Assert.AreEqual(evt.Source, receivedCloudEvent.Source);
+            Assert.AreEqual(evt.Type, receivedCloudEvent.Type);
+            Assert.AreEqual(evt.Id, receivedCloudEvent.Id);
+
+            #region Snippet:AcknowledgeCNCFEvent
+            AcknowledgeResult acknowledgeResult = await receiver.AcknowledgeAsync(new string[] { eventResponse.BrokerProperties.LockToken.ToString() });
+            #endregion
             Assert.IsEmpty(acknowledgeResult.FailedLockTokens);
         }
 
