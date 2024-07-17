@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     if (!_transmitters.TryGetValue(key, out transmitter))
                     {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, new DefaultPlatform(preCacheEnvironmentVariables: true));
+                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, DefaultPlatform.Instance);
 
                         _transmitters.Add(key, transmitter);
                     }
