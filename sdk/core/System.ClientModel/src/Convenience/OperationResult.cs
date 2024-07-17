@@ -15,16 +15,20 @@ public abstract class OperationResult : ClientResult
     // return types don't have to implement IDiposable. Given this, provide
     // both constructors.
 
-    protected OperationResult(/*ContinuationToken rehydrationToken*/) : base()
+    protected OperationResult() : base()
     {
-        //RehydrationToken = rehydrationToken;
     }
 
-    protected OperationResult(/*ContinuationToken rehydrationToken,*/ PipelineResponse response)
+    protected OperationResult(PipelineResponse response)
         : base(response)
     {
-        //RehydrationToken = rehydrationToken;
     }
+
+    // Note: this is nullable because streaming LROs must read the stream to
+    // obtain the values (ids) needed to create the token.  This can't be done
+    // e.g. in the case of a protocol method return type, and must be done after
+    // a user begins reading the stream in convenience LRO types.
+    public ContinuationToken? RehydrationToken { get; protected set; }
 
     // Note: Don't provide this on the base type per not being able to support
     // it from SSE, since the client isn't able to stop the stream, I don't think.
