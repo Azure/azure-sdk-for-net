@@ -1,0 +1,3 @@
+directory: specification/mongocluster/Azure.ResourceManager.MongoCluster
+commit: 9ffd9e0835d39d83623047904ce9643a6525fa4d
+repo: welovej/azure-rest-api-specs
