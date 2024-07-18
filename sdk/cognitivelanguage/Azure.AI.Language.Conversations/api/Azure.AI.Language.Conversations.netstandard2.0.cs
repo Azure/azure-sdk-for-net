@@ -822,6 +822,16 @@ namespace Azure.AI.Language.Conversations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QueryFilters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QueryFilters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class QuestionAnsweringConfig : Azure.AI.Language.Conversations.Models.AnalysisConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig>
+    {
+        public QuestionAnsweringConfig() { }
+        public Azure.AI.Language.Conversations.Models.QuestionAnswersConfig CallingOptions { get { throw null; } set { } }
+        Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QuestionAnsweringConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class QuestionAnswersConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>
     {
         public QuestionAnswersConfig() { }
@@ -840,16 +850,6 @@ namespace Azure.AI.Language.Conversations.Models
         Azure.AI.Language.Conversations.Models.QuestionAnswersConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QuestionAnswersConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class QustionAnsweringConfig : Azure.AI.Language.Conversations.Models.AnalysisConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.QustionAnsweringConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QustionAnsweringConfig>
-    {
-        public QustionAnsweringConfig() { }
-        public Azure.AI.Language.Conversations.Models.QuestionAnswersConfig CallingOptions { get { throw null; } set { } }
-        Azure.AI.Language.Conversations.Models.QustionAnsweringConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.QustionAnsweringConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.QustionAnsweringConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.QustionAnsweringConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QustionAnsweringConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QustionAnsweringConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.QustionAnsweringConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RankerKind : System.IEquatable<Azure.AI.Language.Conversations.Models.RankerKind>
