@@ -775,7 +775,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyMsiUnavailableOnIMDSAggregateExcpetion()
         {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "http://169.254.169.001/" } });
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             // setting the delay to 1ms and retry mode to fixed to speed up test
             var options = new TokenCredentialOptions() { Retry = { Delay = TimeSpan.FromMilliseconds(1), Mode = RetryMode.Fixed, NetworkTimeout = TimeSpan.FromMilliseconds(100) } };
@@ -795,7 +795,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyMsiUnavailableOnIMDSRequestFailedExcpetion()
         {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "http://169.254.169.001/" } });
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var options = new TokenCredentialOptions() { Retry = { MaxRetries = 0, NetworkTimeout = TimeSpan.FromMilliseconds(100), MaxDelay = TimeSpan.Zero } };
 
@@ -977,6 +977,11 @@ namespace Azure.Identity.Tests
         [Test]
         public void VerifyArcIdentitySourceFilePathValidation_DoesNotEndInDotKey()
         {
+            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
+            {
+                Assert.Ignore("Test is not supported on MacOS");
+            }
+
             using var environment = new TestEnvVar(
                 new()
                 {
@@ -1017,6 +1022,10 @@ namespace Azure.Identity.Tests
         [Test]
         public void VerifyArcIdentitySourceFilePathValidation_FilePathInvalid()
         {
+            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
+            {
+                Assert.Ignore("Test is not supported on MacOS");
+            }
             using var environment = new TestEnvVar(
                 new()
                 {
