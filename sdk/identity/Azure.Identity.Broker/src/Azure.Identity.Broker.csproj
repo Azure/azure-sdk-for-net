@@ -17,9 +17,9 @@
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="Microsoft.Identity.Client" />
-    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
+    <PackageReference Include="Microsoft.Identity.Client" VersionOverride="4.62.0-preview" />
+    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" VersionOverride="4.62.0-preview" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
-    <PackageReference Include="Microsoft.Identity.Client.Broker" />
+    <PackageReference Include="Microsoft.Identity.Client.Broker" VersionOverride="4.62.0-preview" />
   </ItemGroup>
 </Project>
