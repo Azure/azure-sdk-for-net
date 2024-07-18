@@ -25,8 +25,6 @@ namespace Azure.Health.Deidentification.Samples
                 new DeidentificationClientOptions()
             );
 
-            string storageAccountUrl = TestEnvironment.GetStorageAccountLocation();
-
             #region Snippet:AzHealthDeidSample4_ListCompletedFiles
             Pageable<DocumentDetails> files = client.GetJobDocuments("job-name-1");
 

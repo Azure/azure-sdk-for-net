@@ -35,10 +35,16 @@ namespace Azure.Health.Deidentification
             writer.WriteObjectValue(SourceLocation, options);
             writer.WritePropertyName("targetLocation"u8);
             writer.WriteObjectValue(TargetLocation, options);
-            writer.WritePropertyName("operation"u8);
-            writer.WriteStringValue(Operation.ToString());
-            writer.WritePropertyName("dataType"u8);
-            writer.WriteStringValue(DataType.ToString());
+            if (Optional.IsDefined(Operation))
+            {
+                writer.WritePropertyName("operation"u8);
+                writer.WriteStringValue(Operation.Value.ToString());
+            }
+            if (Optional.IsDefined(DataType))
+            {
+                writer.WritePropertyName("dataType"u8);
+                writer.WriteStringValue(DataType.Value.ToString());
+            }
             if (Optional.IsDefined(RedactionFormat))
             {
                 writer.WritePropertyName("redactionFormat"u8);
@@ -115,8 +121,8 @@ namespace Azure.Health.Deidentification
             string name = default;
             SourceStorageLocation sourceLocation = default;
             TargetStorageLocation targetLocation = default;
-            OperationType operation = default;
-            DocumentDataType dataType = default;
+            OperationType? operation = default;
+            DocumentDataType? dataType = default;
             string redactionFormat = default;
             JobStatus status = default;
             ResponseError error = default;
@@ -145,11 +151,19 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("operation"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     operation = new OperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     dataType = new DocumentDataType(property.Value.GetString());
                     continue;
                 }

@@ -33,7 +33,7 @@ namespace Azure.Health.Deidentification.Samples
             #region Snippet:AzHealthDeidSample2Async_CreateJob
             DeidentificationJob job = new()
             {
-                SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/", new string[] { "*" }),
+                SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/"),
                 TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_path"),
                 DataType = DocumentDataType.Plaintext,
                 Operation = OperationType.Surrogate

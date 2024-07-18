@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Health.Deidentification
 {
@@ -49,17 +48,15 @@ namespace Azure.Health.Deidentification
         /// <summary> Initializes a new instance of <see cref="SourceStorageLocation"/>. </summary>
         /// <param name="location"> URL to storage location. </param>
         /// <param name="prefix"> Prefix to filter path by. </param>
-        /// <param name="extensions"> List of extensions to filter path by. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="prefix"/> or <paramref name="extensions"/> is null. </exception>
-        public SourceStorageLocation(Uri location, string prefix, IEnumerable<string> extensions)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="prefix"/> is null. </exception>
+        public SourceStorageLocation(Uri location, string prefix)
         {
             Argument.AssertNotNull(location, nameof(location));
             Argument.AssertNotNull(prefix, nameof(prefix));
-            Argument.AssertNotNull(extensions, nameof(extensions));
 
             Location = location;
             Prefix = prefix;
-            Extensions = extensions.ToList();
+            Extensions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceStorageLocation"/>. </summary>

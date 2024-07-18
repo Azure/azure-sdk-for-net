@@ -47,16 +47,12 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
-        /// <param name="operation"> Operation to perform on the input. </param>
-        /// <param name="dataType"> Data type of the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputText"/> is null. </exception>
-        public DeidentificationContent(string inputText, OperationType operation, DocumentDataType dataType)
+        public DeidentificationContent(string inputText)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
             InputText = inputText;
-            Operation = operation;
-            DataType = dataType;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
@@ -65,7 +61,7 @@ namespace Azure.Health.Deidentification
         /// <param name="dataType"> Data type of the input. </param>
         /// <param name="redactionFormat"> Format of the redacted output. Only valid when OperationType is "Redact". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, OperationType operation, DocumentDataType dataType, string redactionFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationContent(string inputText, OperationType? operation, DocumentDataType? dataType, string redactionFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InputText = inputText;
             Operation = operation;
@@ -82,9 +78,9 @@ namespace Azure.Health.Deidentification
         /// <summary> Input text to de-identify. </summary>
         public string InputText { get; }
         /// <summary> Operation to perform on the input. </summary>
-        public OperationType Operation { get; }
+        public OperationType? Operation { get; set; }
         /// <summary> Data type of the input. </summary>
-        public DocumentDataType DataType { get; }
+        public DocumentDataType? DataType { get; set; }
         /// <summary> Format of the redacted output. Only valid when OperationType is "Redact". </summary>
         public string RedactionFormat { get; set; }
     }

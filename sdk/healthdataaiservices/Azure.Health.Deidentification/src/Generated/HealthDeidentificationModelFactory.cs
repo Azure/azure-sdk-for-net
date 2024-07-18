@@ -34,7 +34,7 @@ namespace Azure.Health.Deidentification
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationJob"/> instance for mocking. </returns>
-        public static DeidentificationJob DeidentificationJob(string name = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, OperationType operation = default, DocumentDataType dataType = default, string redactionFormat = null, JobStatus status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, JobSummary summary = null)
+        public static DeidentificationJob DeidentificationJob(string name = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, OperationType? operation = null, DocumentDataType? dataType = null, string redactionFormat = null, JobStatus status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, JobSummary summary = null)
         {
             return new DeidentificationJob(
                 name,
@@ -103,7 +103,7 @@ namespace Azure.Health.Deidentification
         /// <param name="dataType"> Data type of the input. </param>
         /// <param name="redactionFormat"> Format of the redacted output. Only valid when OperationType is "Redact". </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        public static DeidentificationContent DeidentificationContent(string inputText = null, OperationType operation = default, DocumentDataType dataType = default, string redactionFormat = null)
+        public static DeidentificationContent DeidentificationContent(string inputText = null, OperationType? operation = null, DocumentDataType? dataType = null, string redactionFormat = null)
         {
             return new DeidentificationContent(inputText, operation, dataType, redactionFormat, serializedAdditionalRawData: null);
         }

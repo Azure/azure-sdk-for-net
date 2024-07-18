@@ -35,7 +35,7 @@ namespace Azure.Health.Deidentification.Tests
 
             DeidentificationJob job = new()
             {
-                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix, new string[] { "*" }),
+                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
                 DataType = DocumentDataType.Plaintext,
                 Operation = OperationType.Surrogate
@@ -53,9 +53,9 @@ namespace Azure.Health.Deidentification.Tests
             Assert.IsNull(job.RedactionFormat);
             Assert.IsNull(job.Summary);
             Assert.AreEqual(inputPrefix, job.SourceLocation.Prefix);
-            Assert.IsTrue(TestEnvironment.GetStorageAccountLocation().StartsWith(job.SourceLocation.Location.ToString()));
+            Assert.IsTrue(job.SourceLocation.Location.ToString().Contains("blob.core.windows.net"));
             Assert.AreEqual(OUTPUT_FOLDER, job.TargetLocation.Prefix);
-            Assert.IsTrue(TestEnvironment.GetStorageAccountLocation().StartsWith(job.TargetLocation.Location.ToString()));
+            Assert.IsTrue(job.TargetLocation.Location.ToString().Contains("blob.core.windows.net"));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Azure.Health.Deidentification.Tests
 
             DeidentificationJob job = new()
             {
-                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix, new string[] { "*" }),
+                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
                 DataType = DocumentDataType.Plaintext,
                 Operation = OperationType.Surrogate
@@ -94,9 +94,9 @@ namespace Azure.Health.Deidentification.Tests
                     Assert.IsNull(jobs.Current.RedactionFormat);
                     Assert.IsNull(jobs.Current.Summary);
                     Assert.AreEqual(inputPrefix, jobs.Current.SourceLocation.Prefix);
-                    Assert.IsTrue(TestEnvironment.GetStorageAccountLocation().StartsWith(jobs.Current.SourceLocation.Location.ToString()));
+                    Assert.IsTrue(jobs.Current.SourceLocation.Location.ToString().Contains("blob.core.windows.net"));
                     Assert.AreEqual(OUTPUT_FOLDER, jobs.Current.TargetLocation.Prefix);
-                    Assert.IsTrue(TestEnvironment.GetStorageAccountLocation().StartsWith(jobs.Current.TargetLocation.Location.ToString()));
+                    Assert.IsTrue(jobs.Current.SourceLocation.Location.ToString().Contains("blob.core.windows.net"));
                 }
 
                 if (jobFound || --jobsToLookThrough <= 0)
@@ -117,7 +117,7 @@ namespace Azure.Health.Deidentification.Tests
 
             DeidentificationJob job = new()
             {
-                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix, new string[] { "*" }),
+                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
                 DataType = DocumentDataType.Plaintext,
                 Operation = OperationType.Surrogate
@@ -156,7 +156,7 @@ namespace Azure.Health.Deidentification.Tests
 
             DeidentificationJob job = new()
             {
-                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix, new string[] { "*" }),
+                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
                 DataType = DocumentDataType.Plaintext,
                 Operation = OperationType.Surrogate
@@ -198,7 +198,7 @@ namespace Azure.Health.Deidentification.Tests
 
             DeidentificationJob job = new()
             {
-                SourceLocation = new SourceStorageLocation(new Uri(disfunctionalStorageUri), inputPrefix, new string[] { "*" }),
+                SourceLocation = new SourceStorageLocation(new Uri(disfunctionalStorageUri), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(disfunctionalStorageUri), OUTPUT_FOLDER),
                 DataType = DocumentDataType.Plaintext,
                 Operation = OperationType.Surrogate
@@ -218,7 +218,7 @@ namespace Azure.Health.Deidentification.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                return TestEnvironment.FakeJobName;
+                return DeidentificationTestEnvironment.FakeJobName;
             }
 
             string netVersion = Environment.Version.ToString().Replace(".", "_");

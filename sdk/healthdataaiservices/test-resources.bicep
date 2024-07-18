@@ -15,7 +15,8 @@ param baseName string
 param location string = resourceGroup().location
 
 @description('The location of the resource. By default, this is the same as the resource group.')
-param deidLocation string = 'canadacentral'
+param deidLocation string = 'eastus2euap'
+param deidLocationShort string = 'eup'
 
 param deploymentTime string = utcNow('u')
 
@@ -25,7 +26,7 @@ var storageBlobDataContributor = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 
 var blobStorageName = take(toLower(replace('blob-${baseName}', '-', '')), 24)
 var blobContainerName = 'container-${baseName}'
-var deidServiceName = 'deid-${baseName}'
+var deidServiceName = 'deid-${baseName}-${deidLocationShort}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: blobStorageName

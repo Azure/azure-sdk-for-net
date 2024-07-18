@@ -30,13 +30,16 @@ namespace Azure.Health.Deidentification
             writer.WriteStringValue(Location.AbsoluteUri);
             writer.WritePropertyName("prefix"u8);
             writer.WriteStringValue(Prefix);
-            writer.WritePropertyName("extensions"u8);
-            writer.WriteStartArray();
-            foreach (var item in Extensions)
+            if (Optional.IsCollectionDefined(Extensions))
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("extensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extensions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,6 +97,10 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("extensions"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -108,7 +115,7 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SourceStorageLocation(location, prefix, extensions, serializedAdditionalRawData);
+            return new SourceStorageLocation(location, prefix, extensions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceStorageLocation>.Write(ModelReaderWriterOptions options)

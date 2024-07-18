@@ -30,7 +30,7 @@ namespace Azure.Health.Deidentification.Tests
 
             string input = "Hello, my name is John Smith.";
             // TODO: Defaults should be set for these.
-            DeidentificationContent content = new(input, OperationType.Surrogate, DocumentDataType.Plaintext);
+            DeidentificationContent content = new(input);
 
             // TODO: body should be changed to config
             DeidentificationResult result = await client.DeidentifyAsync(content);
@@ -49,7 +49,7 @@ namespace Azure.Health.Deidentification.Tests
 
             string input = "Hello, my name is John Smith.";
             // TODO: Defaults should be set for these.
-            DeidentificationContent content = new(input, OperationType.Tag, DocumentDataType.Plaintext);
+            DeidentificationContent content = new(input, OperationType.Tag, null, null, null);
 
             // TODO: body should be changed to config
             DeidentificationResult result = await client.DeidentifyAsync(content);

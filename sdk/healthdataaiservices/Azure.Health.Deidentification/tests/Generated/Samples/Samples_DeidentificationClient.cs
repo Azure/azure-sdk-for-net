@@ -30,11 +30,8 @@ namespace Azure.Health.Deidentification.Samples
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("createdAt").ToString());
@@ -54,11 +51,8 @@ namespace Azure.Health.Deidentification.Samples
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("createdAt").ToString());
@@ -192,11 +186,8 @@ namespace Azure.Health.Deidentification.Samples
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("createdAt").ToString());
@@ -216,11 +207,8 @@ namespace Azure.Health.Deidentification.Samples
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("createdAt").ToString());
@@ -403,8 +391,6 @@ namespace Azure.Health.Deidentification.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 inputText = "<inputText>",
-                operation = "Redact",
-                dataType = "Plaintext",
             });
             Response response = client.Deidentify(content);
 
@@ -423,8 +409,6 @@ namespace Azure.Health.Deidentification.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 inputText = "<inputText>",
-                operation = "Redact",
-                dataType = "Plaintext",
             });
             Response response = await client.DeidentifyAsync(content);
 
@@ -440,7 +424,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.Plaintext);
+            DeidentificationContent body = new DeidentificationContent("<inputText>");
             Response<DeidentificationResult> response = client.Deidentify(body);
         }
 
@@ -452,7 +436,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.Plaintext);
+            DeidentificationContent body = new DeidentificationContent("<inputText>");
             Response<DeidentificationResult> response = await client.DeidentifyAsync(body);
         }
 
@@ -528,8 +512,10 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.Plaintext)
+            DeidentificationContent body = new DeidentificationContent("<inputText>")
             {
+                Operation = OperationType.Redact,
+                DataType = DocumentDataType.Plaintext,
                 RedactionFormat = "<redactionFormat>",
             };
             Response<DeidentificationResult> response = client.Deidentify(body);
@@ -543,8 +529,10 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationContent body = new DeidentificationContent("<inputText>", OperationType.Redact, DocumentDataType.Plaintext)
+            DeidentificationContent body = new DeidentificationContent("<inputText>")
             {
+                Operation = OperationType.Redact,
+                DataType = DocumentDataType.Plaintext,
                 RedactionFormat = "<redactionFormat>",
             };
             Response<DeidentificationResult> response = await client.DeidentifyAsync(body);
@@ -564,11 +552,8 @@ namespace Azure.Health.Deidentification.Samples
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
                 Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("operation").ToString());
-                Console.WriteLine(result.GetProperty("dataType").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
                 Console.WriteLine(result.GetProperty("createdAt").ToString());
@@ -589,11 +574,8 @@ namespace Azure.Health.Deidentification.Samples
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
                 Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-                Console.WriteLine(result.GetProperty("operation").ToString());
-                Console.WriteLine(result.GetProperty("dataType").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
                 Console.WriteLine(result.GetProperty("createdAt").ToString());
@@ -874,18 +856,12 @@ namespace Azure.Health.Deidentification.Samples
                 {
                     location = "http://localhost:3000",
                     prefix = "<prefix>",
-                    extensions = new object[]
-            {
-"<extensions>"
-            },
                 },
                 targetLocation = new
                 {
                     location = "http://localhost:3000",
                     prefix = "<prefix>",
                 },
-                operation = "Redact",
-                dataType = "Plaintext",
             });
             Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<name>", content);
             BinaryData responseData = operation.Value;
@@ -894,11 +870,8 @@ namespace Azure.Health.Deidentification.Samples
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("createdAt").ToString());
@@ -918,18 +891,12 @@ namespace Azure.Health.Deidentification.Samples
                 {
                     location = "http://localhost:3000",
                     prefix = "<prefix>",
-                    extensions = new object[]
-            {
-"<extensions>"
-            },
                 },
                 targetLocation = new
                 {
                     location = "http://localhost:3000",
                     prefix = "<prefix>",
                 },
-                operation = "Redact",
-                dataType = "Plaintext",
             });
             Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", content);
             BinaryData responseData = operation.Value;
@@ -938,11 +905,8 @@ namespace Azure.Health.Deidentification.Samples
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("targetLocation").GetProperty("prefix").ToString());
-            Console.WriteLine(result.GetProperty("operation").ToString());
-            Console.WriteLine(result.GetProperty("dataType").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
             Console.WriteLine(result.GetProperty("createdAt").ToString());
@@ -956,7 +920,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.Plaintext);
+            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"));
             Operation<DeidentificationJob> operation = client.CreateJob(WaitUntil.Completed, "<name>", resource);
             DeidentificationJob responseData = operation.Value;
         }
@@ -969,7 +933,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.Plaintext);
+            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"));
             Operation<DeidentificationJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", resource);
             DeidentificationJob responseData = operation.Value;
         }
@@ -1094,8 +1058,13 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.Plaintext)
+            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>")
             {
+                Extensions = { "<extensions>" },
+            }, new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"))
+            {
+                Operation = OperationType.Redact,
+                DataType = DocumentDataType.Plaintext,
                 RedactionFormat = "<redactionFormat>",
             };
             Operation<DeidentificationJob> operation = client.CreateJob(WaitUntil.Completed, "<name>", resource);
@@ -1110,8 +1079,13 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), OperationType.Redact, DocumentDataType.Plaintext)
+            DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>")
             {
+                Extensions = { "<extensions>" },
+            }, new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"))
+            {
+                Operation = OperationType.Redact,
+                DataType = DocumentDataType.Plaintext,
                 RedactionFormat = "<redactionFormat>",
             };
             Operation<DeidentificationJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", resource);
