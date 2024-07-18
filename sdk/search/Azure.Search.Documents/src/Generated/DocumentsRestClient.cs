@@ -103,7 +103,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateSearchPostRequest(SearchOptions searchOptions)
+        internal HttpMessage CreateSearchPostRequest(SearchOptions searchRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -119,23 +119,23 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(searchOptions);
+            content.JsonWriter.WriteObjectValue(searchRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="searchOptions"> The definition of the Search request. </param>
+        /// <param name="searchRequest"> The definition of the Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchOptions"/> is null. </exception>
-        public async Task<Response<SearchDocumentsResult>> SearchPostAsync(SearchOptions searchOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchRequest"/> is null. </exception>
+        public async Task<Response<SearchDocumentsResult>> SearchPostAsync(SearchOptions searchRequest, CancellationToken cancellationToken = default)
         {
-            if (searchOptions == null)
+            if (searchRequest == null)
             {
-                throw new ArgumentNullException(nameof(searchOptions));
+                throw new ArgumentNullException(nameof(searchRequest));
             }
 
-            using var message = CreateSearchPostRequest(searchOptions);
+            using var message = CreateSearchPostRequest(searchRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -152,17 +152,17 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="searchOptions"> The definition of the Search request. </param>
+        /// <param name="searchRequest"> The definition of the Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchOptions"/> is null. </exception>
-        public Response<SearchDocumentsResult> SearchPost(SearchOptions searchOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchRequest"/> is null. </exception>
+        public Response<SearchDocumentsResult> SearchPost(SearchOptions searchRequest, CancellationToken cancellationToken = default)
         {
-            if (searchOptions == null)
+            if (searchRequest == null)
             {
-                throw new ArgumentNullException(nameof(searchOptions));
+                throw new ArgumentNullException(nameof(searchRequest));
             }
 
-            using var message = CreateSearchPostRequest(searchOptions);
+            using var message = CreateSearchPostRequest(searchRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -281,7 +281,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateSuggestPostRequest(SuggestOptions suggestOptions)
+        internal HttpMessage CreateSuggestPostRequest(SuggestOptions suggestRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -297,23 +297,23 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(suggestOptions);
+            content.JsonWriter.WriteObjectValue(suggestRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="suggestOptions"> The Suggest request. </param>
+        /// <param name="suggestRequest"> The Suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suggestOptions"/> is null. </exception>
-        public async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(SuggestOptions suggestOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="suggestRequest"/> is null. </exception>
+        public async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
         {
-            if (suggestOptions == null)
+            if (suggestRequest == null)
             {
-                throw new ArgumentNullException(nameof(suggestOptions));
+                throw new ArgumentNullException(nameof(suggestRequest));
             }
 
-            using var message = CreateSuggestPostRequest(suggestOptions);
+            using var message = CreateSuggestPostRequest(suggestRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -330,17 +330,17 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="suggestOptions"> The Suggest request. </param>
+        /// <param name="suggestRequest"> The Suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suggestOptions"/> is null. </exception>
-        public Response<SuggestDocumentsResult> SuggestPost(SuggestOptions suggestOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="suggestRequest"/> is null. </exception>
+        public Response<SuggestDocumentsResult> SuggestPost(SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
         {
-            if (suggestOptions == null)
+            if (suggestRequest == null)
             {
-                throw new ArgumentNullException(nameof(suggestOptions));
+                throw new ArgumentNullException(nameof(suggestRequest));
             }
 
-            using var message = CreateSuggestPostRequest(suggestOptions);
+            using var message = CreateSuggestPostRequest(suggestRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -433,7 +433,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateAutocompletePostRequest(AutocompleteOptions autocompleteOptions)
+        internal HttpMessage CreateAutocompletePostRequest(AutocompleteOptions autocompleteRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -449,23 +449,23 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=none");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(autocompleteOptions);
+            content.JsonWriter.WriteObjectValue(autocompleteRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="autocompleteOptions"> The definition of the Autocomplete request. </param>
+        /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autocompleteOptions"/> is null. </exception>
-        public async Task<Response<AutocompleteResults>> AutocompletePostAsync(AutocompleteOptions autocompleteOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="autocompleteRequest"/> is null. </exception>
+        public async Task<Response<AutocompleteResults>> AutocompletePostAsync(AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
         {
-            if (autocompleteOptions == null)
+            if (autocompleteRequest == null)
             {
-                throw new ArgumentNullException(nameof(autocompleteOptions));
+                throw new ArgumentNullException(nameof(autocompleteRequest));
             }
 
-            using var message = CreateAutocompletePostRequest(autocompleteOptions);
+            using var message = CreateAutocompletePostRequest(autocompleteRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -482,17 +482,17 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="autocompleteOptions"> The definition of the Autocomplete request. </param>
+        /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autocompleteOptions"/> is null. </exception>
-        public Response<AutocompleteResults> AutocompletePost(AutocompleteOptions autocompleteOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="autocompleteRequest"/> is null. </exception>
+        public Response<AutocompleteResults> AutocompletePost(AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
         {
-            if (autocompleteOptions == null)
+            if (autocompleteRequest == null)
             {
-                throw new ArgumentNullException(nameof(autocompleteOptions));
+                throw new ArgumentNullException(nameof(autocompleteRequest));
             }
 
-            using var message = CreateAutocompletePostRequest(autocompleteOptions);
+            using var message = CreateAutocompletePostRequest(autocompleteRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
