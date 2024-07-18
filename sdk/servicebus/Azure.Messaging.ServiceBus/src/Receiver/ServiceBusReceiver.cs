@@ -37,6 +37,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>The maximum number of messages to delete in a single batch.  This cap is established and enforced by the service.</summary>
         internal const int MaxDeleteMessageCount = 4000;
 
+        /// <summary>The set of default options to use for initialization when no explicit options were provided.</summary>
+        private static ServiceBusReceiverOptions s_defaultOptions;
+
         /// <summary>
         /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
         /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -177,7 +180,11 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                options = options?.Clone() ?? new ServiceBusReceiverOptions();
+                // If no explicit options were provided, use the default set, creating them as needed.  There is
+                // a benign race condition here where multiple sets of default options may be created when initializing.
+                // The cost of hitting the race is lower than the cost of synchronizing each access.
+                options ??= s_defaultOptions ??= new ServiceBusReceiverOptions();
+
                 Identifier = string.IsNullOrEmpty(options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(entityPath) : options.Identifier;
                 _connection = connection;
                 _retryPolicy = connection.RetryOptions.ToRetryPolicy();
@@ -684,7 +691,7 @@ namespace Azure.Messaging.ServiceBus
         /// and throw the exception that was encountered.  It is recommended to evaluate this exception and determine which messages may not have been deleted.
         /// </remarks>
         /// <returns>The number of messages that were deleted.</returns>
-        public virtual async Task<int> PurgeMessagesAsync(
+        internal virtual async Task<int> PurgeMessagesAsync(
             DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default)
         {
@@ -746,7 +753,7 @@ namespace Azure.Messaging.ServiceBus
         /// Occurs when the <paramref name="messageCount"/> is less than 1 or exceeds the maximum allowed, as determined by the Service Bus service.
         /// For more information on service limits, see <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
         /// </exception>
-        public virtual async Task<int> DeleteMessagesAsync(
+        internal virtual async Task<int> DeleteMessagesAsync(
             int messageCount,
             DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default)

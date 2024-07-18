@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Shared Access Authorization token for the User. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

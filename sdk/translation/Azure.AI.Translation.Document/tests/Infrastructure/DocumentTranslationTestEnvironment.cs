@@ -23,12 +23,8 @@ namespace Azure.AI.Translation.Document.Tests
         /// <summary>The name of the environment variable from which the Document Translator Storage Account Name will be extracted for the live tests.</summary>
         private const string StorageAccountNameEnvironmentVariableName = "DOCUMENT_TRANSLATION_STORAGE_NAME";
 
-        /// <summary>The name of the environment variable from which the Document Translator Storage Primary key will be extracted for the live tests.</summary>
-        private const string StorageConnectionStringEnvironmentVariableName = "DOCUMENT_TRANSLATION_CONNECTION_STRING";
-
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
-        public string StorageConnectionString => GetRecordedVariable(StorageConnectionStringEnvironmentVariableName, options => options.HasSecretConnectionStringParameter("AccountKey", SanitizedValue.Base64));
         public string StorageAccountName => GetRecordedVariable(StorageAccountNameEnvironmentVariableName);
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()

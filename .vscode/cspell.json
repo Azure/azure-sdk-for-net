@@ -217,7 +217,12 @@
     {
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
-        "cifs"
+        "cifs",
+        "ocpdate",
+        "Reimage",
+        "Reimaging",
+        "reimaging",
+        "SSDLRS"
       ]
     },
     {
@@ -1322,7 +1327,11 @@
         "Guage",
         "Plex",
         "Vstsrm",
-        "Localizable"
+        "Localizable",
+        "Dapr",
+        "TLSAES",
+        "Unregistering",
+        "Diffie"
       ]
     },
     {
