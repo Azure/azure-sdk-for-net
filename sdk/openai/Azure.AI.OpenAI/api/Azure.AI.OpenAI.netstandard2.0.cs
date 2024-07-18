@@ -43,6 +43,7 @@ namespace Azure.AI.OpenAI
     public partial class AzureOpenAIClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
         public AzureOpenAIClientOptions(Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion.V2024_05_01_Preview) { }
+        public System.Collections.Generic.IReadOnlyList<string> TokenAuthorizationScopes { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2024_04_01_Preview = 7,
