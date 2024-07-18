@@ -1370,7 +1370,73 @@ namespace Azure.Storage.Files.Shares
 
         #region SetHttpHeaders
         /// <summary>
-        /// The <see cref="SetHttpHeaders"/> operation sets system
+        /// The <see cref="SetHttpHeaders(ShareDirectorySetHttpHeadersOptions, CancellationToken)"/> operation sets system
+        /// properties on the directory.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">
+        /// Set Directory Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareDirectoryInfo> SetHttpHeaders(
+            ShareDirectorySetHttpHeadersOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            SetHttpHeadersInternal(
+                options?.SmbProperties,
+                options?.FilePermission.Permission,
+                options?.FilePermission.PermissionFormat,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetHttpHeadersAsync(ShareDirectorySetHttpHeadersOptions, CancellationToken)"/> operation sets system
+        /// properties on the directory.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">Set Directory Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareDirectoryInfo>> SetHttpHeadersAsync(
+            ShareDirectorySetHttpHeadersOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await SetHttpHeadersInternal(
+                options?.SmbProperties,
+                options?.FilePermission.Permission,
+                options?.FilePermission.PermissionFormat,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetHttpHeaders(FileSmbProperties, string, CancellationToken)"/> operation sets system
         /// properties on the directory.
         ///
         /// For more information, see
@@ -1395,19 +1461,23 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareDirectoryInfo> SetHttpHeaders(
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
             SetHttpHeadersInternal(
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetHttpHeadersAsync"/> operation sets system
+        /// The <see cref="SetHttpHeadersAsync(FileSmbProperties, string, CancellationToken)"/> operation sets system
         /// properties on the directory.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">Set Directory Properties</see>.
@@ -1430,13 +1500,17 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareDirectoryInfo>> SetHttpHeadersAsync(
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
             await SetHttpHeadersInternal(
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1453,7 +1527,10 @@ namespace Azure.Storage.Files.Shares
         /// Optional SMB properties to set for the directory.
         /// </param>
         /// <param name="filePermission">
-        /// Optional file permission to set ofr the directory.
+        /// Optional file permission to set for the directory.
+        /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional file permission format.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1473,6 +1550,7 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<ShareDirectoryInfo>> SetHttpHeadersInternal(
             FileSmbProperties smbProperties,
             string filePermission,
+            FilePermissionFormat? filePermissionFormat,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1505,6 +1583,7 @@ namespace Azure.Storage.Files.Shares
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken)
@@ -1517,6 +1596,7 @@ namespace Azure.Storage.Files.Shares
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken);

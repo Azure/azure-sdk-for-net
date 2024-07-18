@@ -961,11 +961,59 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-            var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+            string filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
             await directory.CreateIfNotExistsAsync();
 
+            ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
+            {
+                FilePermission = new ShareFilePermission
+                {
+                    Permission = filePermission
+                }
+            };
+
             // Act
-            Response<ShareDirectoryInfo> response = await directory.SetHttpHeadersAsync(filePermission: filePermission);
+            Response<ShareDirectoryInfo> response = await directory.SetHttpHeadersAsync(options);
+
+            // Assert
+            AssertValidStorageDirectoryInfo(response);
+        }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(FilePermissionFormat.Sddl)]
+        [TestCase(FilePermissionFormat.Binary)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
+        public async Task SetPropertiesAsync_FilePermissionFormat(FilePermissionFormat? filePermissionFormat)
+        {
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareClient share = test.Share;
+
+            // Arrange
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+            await directory.CreateIfNotExistsAsync();
+
+            string permission;
+            if (filePermissionFormat == null || filePermissionFormat == FilePermissionFormat.Sddl)
+            {
+                permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            }
+            else
+            {
+                permission = "AQAUhGwAAACIAAAAAAAAABQAAAACAFgAAwAAAAAAFAD/AR8AAQEAAAAAAAUSAAAAAAAYAP8BHwABAgAAAAAABSAAAAAgAgAAAAAkAKkAEgABBQAAAAAABRUAAABZUbgXZnJdJWRjOwuMmS4AAQUAAAAAAAUVAAAAoGXPfnhLm1/nfIdwr/1IAQEFAAAAAAAFFQAAAKBlz354S5tf53yHcAECAAA=";
+            }
+
+            ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
+            {
+                FilePermission = new ShareFilePermission
+                {
+                    Permission = permission,
+                    PermissionFormat = filePermissionFormat
+                }
+            };
+
+            // Act
+            Response<ShareDirectoryInfo> response = await directory.SetHttpHeadersAsync(options);
 
             // Assert
             AssertValidStorageDirectoryInfo(response);
@@ -986,24 +1034,27 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<PermissionInfo> createPermissionResponse = await share.CreatePermissionAsync(filePermission);
 
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-            var smbProperties = new FileSmbProperties
+            ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
             {
-                FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareModelExtensions.ToFileAttributes("Directory|ReadOnly"),
-                FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
-                FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                SmbProperties = new FileSmbProperties
+                {
+                    FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
+                    FileAttributes = ShareModelExtensions.ToFileAttributes("Directory|ReadOnly"),
+                    FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                }
             };
 
             await directory.CreateIfNotExistsAsync();
 
             // Act
-            Response<ShareDirectoryInfo> response = await directory.SetHttpHeadersAsync(smbProperties: smbProperties);
+            Response<ShareDirectoryInfo> response = await directory.SetHttpHeadersAsync(options);
 
             // Assert
             AssertValidStorageDirectoryInfo(response);
-            Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
-            Assert.AreEqual(smbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
+            Assert.AreEqual(options.SmbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+            Assert.AreEqual(options.SmbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(options.SmbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
         }
 
         [RecordedTest]
@@ -1014,19 +1065,22 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync();
 
             ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
-            FileSmbProperties smbProperties = new FileSmbProperties
+            ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
             {
-                FileChangedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                SmbProperties = new FileSmbProperties
+                {
+                    FileChangedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                }
             };
 
             await directoryClient.CreateIfNotExistsAsync();
 
             // Act
-            Response<ShareDirectoryInfo> response = await directoryClient.SetHttpHeadersAsync(smbProperties: smbProperties);
+            Response<ShareDirectoryInfo> response = await directoryClient.SetHttpHeadersAsync(options);
 
             // Assert
             AssertValidStorageDirectoryInfo(response);
-            Assert.AreEqual(smbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
+            Assert.AreEqual(options.SmbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
         }
 
         [RecordedTest]
@@ -1037,13 +1091,18 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-            var filePermission = new string('*', 9 * Constants.KB);
+            ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
+            {
+                FilePermission = new ShareFilePermission
+                {
+                    Permission = new string('*', 9 * Constants.KB)
+                }
+            };
             await directory.CreateIfNotExistsAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
-                directory.SetHttpHeadersAsync(
-                    filePermission: filePermission),
+                directory.SetHttpHeadersAsync(options),
                 new ArgumentOutOfRangeException("filePermission", "Value must be less than or equal to 8192"));
         }
 
@@ -1055,18 +1114,22 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Arrange
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-            var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-            var fileSmbProperties = new FileSmbProperties()
-            {
-                FilePermissionKey = "filePermissionKey"
-            };
             await directory.CreateIfNotExistsAsync();
+            ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
+            {
+                SmbProperties = new FileSmbProperties
+                {
+                    FilePermissionKey = "filePermissionKey"
+                },
+                FilePermission = new ShareFilePermission
+                {
+                    Permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)"
+                }
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                directory.SetHttpHeadersAsync(
-                    smbProperties: fileSmbProperties,
-                    filePermission: filePermission),
+                directory.SetHttpHeadersAsync(options),
                 e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
         }
 
