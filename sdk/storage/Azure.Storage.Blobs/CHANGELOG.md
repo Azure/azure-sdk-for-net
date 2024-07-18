@@ -1,6 +1,6 @@
 # Release History
 
-## 12.21.0-beta.2 (Unreleased)
+## 12.22.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.21.0 (2024-07-16)
+
+### Features Added
+- Includes all features from 12.21.0-beta.1.
+
+### Bugs Fixed
+- Fixed bug where storage clients when constructed with URLs with '#' character would truncate the blob name at the '#'.
 
 ## 12.21.0-beta.1 (2024-06-11)
 - Added support for service version 2024-08-04.

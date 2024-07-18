@@ -144,7 +144,7 @@ namespace Azure.Search.Documents
         /// </summary>
         #pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
         void IDisposable.Dispose() =>
-            DisposeAsync(async: false).EnsureCompleted();
+            DisposeInternalAsync(async: false).EnsureCompleted();
         #pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.Search.Documents
         /// </returns>
 #pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
         async ValueTask IAsyncDisposable.DisposeAsync() =>
-            await DisposeAsync(async: true).ConfigureAwait(false);
+            await DisposeInternalAsync(async: true).ConfigureAwait(false);
 #pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="async">Whether to call this sync or async.</param>
         /// <returns>A Task that will wait until we're disposed.</returns>
-        internal async Task DisposeAsync(bool async)
+        internal async Task DisposeInternalAsync(bool async)
         {
             if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
             {

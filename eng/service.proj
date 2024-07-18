@@ -72,11 +72,6 @@
     <ProjectReference Remove="@(ProjectsToRemove)" />
   </ItemGroup>
 
-  <Target Name="fuck" AfterTargets="rebuild">
-    <Message Text="References: $(MSBuildThisFileDirectory)" Importance="High"/>
-    <Message Text="@(ProjectReference)" Importance="High"/>
-  </Target>
-
   <Target Name="CheckProjects" AfterTargets="Build">
     <!-- If scope is set this likely came from a call to build.proj and in cases where there is only mgmt projects we don't want to error so skip this extra check -->
     <Error Condition="'$(Scope)' == '' and '@(ProjectReference)' == ''"

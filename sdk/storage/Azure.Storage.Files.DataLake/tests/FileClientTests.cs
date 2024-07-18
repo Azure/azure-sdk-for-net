@@ -254,7 +254,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -283,7 +282,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -338,6 +336,39 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadFileClient.ExistsAsync(),
                 e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task Ctor_EscapeName()
+        {
+            // Arrange
+            string fileName = "!*'();[]:@&%=+$,#äÄöÖüÜß";
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            DataLakeFileClient file = InstrumentClient(test.Container.GetFileClient(fileName));
+            ETag originalEtag;
+            using (var stream = new MemoryStream(data))
+            {
+                PathInfo info = await file.UploadAsync(stream);
+                originalEtag = info.ETag;
+            }
+
+            // Act
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = file.FileSystemName,
+                DirectoryOrFilePath = fileName
+            };
+            DataLakeFileClient freshFileClient = InstrumentClient(new DataLakeFileClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                GetOptions()));
+
+            // Assert
+            Assert.AreEqual(fileName, freshFileClient.Name);
+            PathProperties propertiesResponse = await freshFileClient.GetPropertiesAsync();
+            Assert.AreEqual(originalEtag, propertiesResponse.ETag);
         }
 
         [RecordedTest]
