@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="targetProjectParameters">
         /// A dictionary representing the parameters for each target project.
         /// Please note <see cref="AnalysisConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QustionAnsweringConfig"/>.
+        /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QuestionAnsweringConfig"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConversationActionContent(string projectName, string deploymentName, bool? verbose, bool? isLoggingEnabled, StringIndexType? stringIndexType, string directTarget, IDictionary<string, AnalysisConfig> targetProjectParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -104,7 +104,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary>
         /// A dictionary representing the parameters for each target project.
         /// Please note <see cref="AnalysisConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QustionAnsweringConfig"/>.
+        /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QuestionAnsweringConfig"/>.
         /// </summary>
         public IDictionary<string, AnalysisConfig> TargetProjectParameters { get; }
     }

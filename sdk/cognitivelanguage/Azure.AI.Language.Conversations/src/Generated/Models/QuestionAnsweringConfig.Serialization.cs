@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class QustionAnsweringConfig : IUtf8JsonSerializable, IJsonModel<QustionAnsweringConfig>
+    public partial class QuestionAnsweringConfig : IUtf8JsonSerializable, IJsonModel<QuestionAnsweringConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QustionAnsweringConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuestionAnsweringConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<QustionAnsweringConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuestionAnsweringConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QustionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QustionAnsweringConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuestionAnsweringConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteEndObject();
         }
 
-        QustionAnsweringConfig IJsonModel<QustionAnsweringConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuestionAnsweringConfig IJsonModel<QuestionAnsweringConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QustionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QustionAnsweringConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuestionAnsweringConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQustionAnsweringConfig(document.RootElement, options);
+            return DeserializeQuestionAnsweringConfig(document.RootElement, options);
         }
 
-        internal static QustionAnsweringConfig DeserializeQustionAnsweringConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QuestionAnsweringConfig DeserializeQuestionAnsweringConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -108,46 +108,46 @@ namespace Azure.AI.Language.Conversations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QustionAnsweringConfig(targetProjectKind, apiVersion, serializedAdditionalRawData, callingOptions);
+            return new QuestionAnsweringConfig(targetProjectKind, apiVersion, serializedAdditionalRawData, callingOptions);
         }
 
-        BinaryData IPersistableModel<QustionAnsweringConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QuestionAnsweringConfig>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QustionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QustionAnsweringConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuestionAnsweringConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QustionAnsweringConfig IPersistableModel<QustionAnsweringConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QuestionAnsweringConfig IPersistableModel<QuestionAnsweringConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QustionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuestionAnsweringConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeQustionAnsweringConfig(document.RootElement, options);
+                        return DeserializeQuestionAnsweringConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QustionAnsweringConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuestionAnsweringConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QustionAnsweringConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuestionAnsweringConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new QustionAnsweringConfig FromResponse(Response response)
+        internal static new QuestionAnsweringConfig FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeQustionAnsweringConfig(document.RootElement);
+            return DeserializeQuestionAnsweringConfig(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

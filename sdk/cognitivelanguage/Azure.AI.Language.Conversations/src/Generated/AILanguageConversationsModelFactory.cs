@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="targetProjectParameters">
         /// A dictionary representing the parameters for each target project.
         /// Please note <see cref="AnalysisConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QustionAnsweringConfig"/>.
+        /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QuestionAnsweringConfig"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ConversationActionContent"/> instance for mocking. </returns>
         public static ConversationActionContent ConversationActionContent(string projectName = null, string deploymentName = null, bool? verbose = null, bool? isLoggingEnabled = null, StringIndexType? stringIndexType = null, string directTarget = null, IDictionary<string, AnalysisConfig> targetProjectParameters = null)

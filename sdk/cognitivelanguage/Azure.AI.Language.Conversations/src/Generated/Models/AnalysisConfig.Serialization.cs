@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Conversations.Models
                 {
                     case "Conversation": return ConversationConfig.DeserializeConversationConfig(element, options);
                     case "Luis": return LuisConfig.DeserializeLuisConfig(element, options);
-                    case "QuestionAnswering": return QustionAnsweringConfig.DeserializeQustionAnsweringConfig(element, options);
+                    case "QuestionAnswering": return QuestionAnsweringConfig.DeserializeQuestionAnsweringConfig(element, options);
                 }
             }
             return UnknownAnalysisConfig.DeserializeUnknownAnalysisConfig(element, options);
