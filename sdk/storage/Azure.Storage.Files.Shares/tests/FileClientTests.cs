@@ -1953,52 +1953,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase(null)]
-        [TestCase(FilePermissionFormat.Sddl)]
-        [TestCase(FilePermissionFormat.Binary)]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
-        public async Task StartCopyAsync_FilePermissionFormat(FilePermissionFormat? filePermissionFormat)
-        {
-            // Arrange
-            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
-            ShareFileClient source = testSource.File;
-            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
-            ShareFileClient dest = testSource.File;
-
-            var data = GetRandomBuffer(Constants.KB);
-            using (var stream = new MemoryStream(data))
-            {
-                await source.UploadRangeAsync(
-                    writeType: ShareFileRangeWriteType.Update,
-                    range: new HttpRange(0, Constants.KB),
-                    content: stream);
-            }
-
-            string permission;
-            if (filePermissionFormat == null || filePermissionFormat == FilePermissionFormat.Sddl)
-            {
-                permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
-            }
-            else
-            {
-                permission = "AQAUhGwAAACIAAAAAAAAABQAAAACAFgAAwAAAAAAFAD/AR8AAQEAAAAAAAUSAAAAAAAYAP8BHwABAgAAAAAABSAAAAAgAgAAAAAkAKkAEgABBQAAAAAABRUAAABZUbgXZnJdJWRjOwuMmS4AAQUAAAAAAAUVAAAAoGXPfnhLm1/nfIdwr/1IAQEFAAAAAAAFFQAAAKBlz354S5tf53yHcAECAAA=";
-            }
-            ShareFileCopyOptions options = new ShareFileCopyOptions
-            {
-                FilePermission = permission,
-                FilePermissionFormat = filePermissionFormat,
-                FilePermissionCopyMode = PermissionCopyMode.Override
-            };
-
-            // Act
-            await dest.StartCopyAsync(
-                sourceUri: source.Uri,
-                options: options);
-
-            Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
-        }
-
-        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
         public async Task StartCopyAsync_ChangeTime()
         {

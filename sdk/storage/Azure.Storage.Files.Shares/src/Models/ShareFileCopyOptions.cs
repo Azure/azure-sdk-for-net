@@ -28,11 +28,6 @@ namespace Azure.Storage.Files.Shares.Models
         public string FilePermission { get; set; }
 
         /// <summary>
-        /// Optional file permission format.  Default is SDDL.
-        /// </summary>
-        public FilePermissionFormat? FilePermissionFormat { get; set; }
-
-        /// <summary>
         /// Specifies the option to copy file security descriptor from source file or
         /// to set it using the value which is defined by the header value of FilePermission
         /// or FilePermissionKey.
