@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    /// <summary> The administration properties of the Fabric capacity resource. </summary>
-    internal partial class CapacityAdministrationUpdate
+    /// <summary> The updatable properties of the FabricCapacity. </summary>
+    internal partial class FabricCapacityUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,27 @@ namespace Azure.ResourceManager.Fabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CapacityAdministrationUpdate"/>. </summary>
-        public CapacityAdministrationUpdate()
+        /// <summary> Initializes a new instance of <see cref="FabricCapacityUpdateProperties"/>. </summary>
+        public FabricCapacityUpdateProperties()
         {
-            Members = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapacityAdministrationUpdate"/>. </summary>
-        /// <param name="members"> An array of administrator user identities. </param>
+        /// <summary> Initializes a new instance of <see cref="FabricCapacityUpdateProperties"/>. </summary>
+        /// <param name="administration"> The capacity administration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityAdministrationUpdate(IList<string> members, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricCapacityUpdateProperties(CapacityAdministration administration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Members = members;
+            Administration = administration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The capacity administration. </summary>
+        internal CapacityAdministration Administration { get; set; }
         /// <summary> An array of administrator user identities. </summary>
-        public IList<string> Members { get; }
+        public IList<string> AdministrationMembers
+        {
+            get => Administration is null ? default : Administration.Members;
+            set => Administration = new CapacityAdministration(value);
+        }
     }
 }

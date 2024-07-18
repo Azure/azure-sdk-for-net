@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> The administration properties of the Fabric capacity resource. </summary>
-    internal partial class CapacityAdministration
+    public partial class CapacityAdministration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

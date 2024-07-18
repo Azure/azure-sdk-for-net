@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    internal partial class CapacityAdministration : IUtf8JsonSerializable, IJsonModel<CapacityAdministration>
+    public partial class CapacityAdministration : IUtf8JsonSerializable, IJsonModel<CapacityAdministration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityAdministration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

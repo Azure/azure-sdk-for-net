@@ -42,14 +42,11 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Administration))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue(Administration, options);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,9 +85,9 @@ namespace Azure.ResourceManager.Fabric.Models
             {
                 return null;
             }
-            RpSkuUpdate sku = default;
+            FabricSku sku = default;
             IDictionary<string, string> tags = default;
-            CapacityAdministrationUpdate administration = default;
+            FabricCapacityUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +98,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     {
                         continue;
                     }
-                    sku = RpSkuUpdate.DeserializeRpSkuUpdate(property.Value, options);
+                    sku = FabricSku.DeserializeFabricSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -122,21 +119,9 @@ namespace Azure.ResourceManager.Fabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("administration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administration = CapacityAdministrationUpdate.DeserializeCapacityAdministrationUpdate(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = FabricCapacityUpdateProperties.DeserializeFabricCapacityUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +130,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FabricCapacityPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), administration, serializedAdditionalRawData);
+            return new FabricCapacityPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FabricCapacityPatch>.Write(ModelReaderWriterOptions options)

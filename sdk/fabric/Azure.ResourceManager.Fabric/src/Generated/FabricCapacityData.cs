@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public FabricCapacityData(AzureLocation location, RpSku sku) : base(location)
+        public FabricCapacityData(AzureLocation location, FabricSku sku) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
@@ -69,17 +69,13 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="sku"> The SKU details. </param>
-        /// <param name="provisioningState"> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </param>
-        /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
-        /// <param name="administration"> The capacity administration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RpSku sku, FabricProvisioningState? provisioningState, FabricResourceState? state, CapacityAdministration administration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal FabricCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FabricCapacityProperties properties, FabricSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Sku = sku;
-            ProvisioningState = provisioningState;
-            State = state;
-            Administration = administration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,19 +84,9 @@ namespace Azure.ResourceManager.Fabric
         {
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public FabricCapacityProperties Properties { get; set; }
         /// <summary> The SKU details. </summary>
-        public RpSku Sku { get; set; }
-        /// <summary> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </summary>
-        public FabricProvisioningState? ProvisioningState { get; }
-        /// <summary> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </summary>
-        public FabricResourceState? State { get; }
-        /// <summary> The capacity administration. </summary>
-        internal CapacityAdministration Administration { get; set; }
-        /// <summary> An array of administrator user identities. </summary>
-        public IList<string> AdministrationMembers
-        {
-            get => Administration is null ? default : Administration.Members;
-            set => Administration = new CapacityAdministration(value);
-        }
+        public FabricSku Sku { get; set; }
     }
 }

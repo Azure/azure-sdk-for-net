@@ -23,15 +23,12 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="sku"> The SKU details. </param>
-        /// <param name="provisioningState"> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </param>
-        /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
-        /// <param name="administrationMembers"> The capacity administration. </param>
         /// <returns> A new <see cref="Fabric.FabricCapacityData"/> instance for mocking. </returns>
-        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RpSku sku = null, FabricProvisioningState? provisioningState = null, FabricResourceState? state = null, IEnumerable<string> administrationMembers = null)
+        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, FabricCapacityProperties properties = null, FabricSku sku = null)
         {
             tags ??= new Dictionary<string, string>();
-            administrationMembers ??= new List<string>();
 
             return new FabricCapacityData(
                 id,
@@ -40,11 +37,21 @@ namespace Azure.ResourceManager.Fabric.Models
                 systemData,
                 tags,
                 location,
+                properties,
                 sku,
-                provisioningState,
-                state,
-                administrationMembers != null ? new CapacityAdministration(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FabricCapacityProperties"/>. </summary>
+        /// <param name="provisioningState"> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
+        /// <param name="administrationMembers"> The capacity administration. </param>
+        /// <returns> A new <see cref="Models.FabricCapacityProperties"/> instance for mocking. </returns>
+        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = null, FabricResourceState state = default, IEnumerable<string> administrationMembers = null)
+        {
+            administrationMembers ??= new List<string>();
+
+            return new FabricCapacityProperties(provisioningState, state, administrationMembers != null ? new CapacityAdministration(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FabricCheckNameAvailabilityResult"/>. </summary>
@@ -57,25 +64,25 @@ namespace Azure.ResourceManager.Fabric.Models
             return new FabricCheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RpSkuDetailsForNewCapacity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FabricSkuDetailsForNewCapacity"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The SKU's name. </param>
         /// <param name="locations"> The list of available locations for the SKU. </param>
-        /// <returns> A new <see cref="Models.RpSkuDetailsForNewCapacity"/> instance for mocking. </returns>
-        public static RpSkuDetailsForNewCapacity RpSkuDetailsForNewCapacity(string resourceType = null, string name = null, IEnumerable<string> locations = null)
+        /// <returns> A new <see cref="Models.FabricSkuDetailsForNewCapacity"/> instance for mocking. </returns>
+        public static FabricSkuDetailsForNewCapacity FabricSkuDetailsForNewCapacity(string resourceType = null, string name = null, IEnumerable<AzureLocation> locations = null)
         {
-            locations ??= new List<string>();
+            locations ??= new List<AzureLocation>();
 
-            return new RpSkuDetailsForNewCapacity(resourceType, name, locations?.ToList(), serializedAdditionalRawData: null);
+            return new FabricSkuDetailsForNewCapacity(resourceType, name, locations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RpSkuDetailsForExistingCapacity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FabricSkuDetailsForExistingCapacity"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU details. </param>
-        /// <returns> A new <see cref="Models.RpSkuDetailsForExistingCapacity"/> instance for mocking. </returns>
-        public static RpSkuDetailsForExistingCapacity RpSkuDetailsForExistingCapacity(string resourceType = null, RpSku sku = null)
+        /// <returns> A new <see cref="Models.FabricSkuDetailsForExistingCapacity"/> instance for mocking. </returns>
+        public static FabricSkuDetailsForExistingCapacity FabricSkuDetailsForExistingCapacity(string resourceType = null, FabricSku sku = null)
         {
-            return new RpSkuDetailsForExistingCapacity(resourceType, sku, serializedAdditionalRawData: null);
+            return new FabricSkuDetailsForExistingCapacity(resourceType, sku, serializedAdditionalRawData: null);
         }
     }
 }

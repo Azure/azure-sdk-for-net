@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    public partial class RpSku : IUtf8JsonSerializable, IJsonModel<RpSku>
+    public partial class FabricSku : IUtf8JsonSerializable, IJsonModel<FabricSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RpSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RpSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FabricSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RpSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RpSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Fabric.Models
             writer.WriteEndObject();
         }
 
-        RpSku IJsonModel<RpSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FabricSku IJsonModel<FabricSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RpSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RpSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRpSku(document.RootElement, options);
+            return DeserializeFabricSku(document.RootElement, options);
         }
 
-        internal static RpSku DeserializeRpSku(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FabricSku DeserializeFabricSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 return null;
             }
             string name = default;
-            RpSkuTier tier = default;
+            FabricSkuTier tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
                 if (property.NameEquals("tier"u8))
                 {
-                    tier = new RpSkuTier(property.Value.GetString());
+                    tier = new FabricSkuTier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RpSku(name, tier, serializedAdditionalRawData);
+            return new FabricSku(name, tier, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RpSku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FabricSku>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RpSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RpSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSku)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RpSku IPersistableModel<RpSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FabricSku IPersistableModel<FabricSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RpSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRpSku(document.RootElement, options);
+                        return DeserializeFabricSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RpSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSku)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RpSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FabricSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

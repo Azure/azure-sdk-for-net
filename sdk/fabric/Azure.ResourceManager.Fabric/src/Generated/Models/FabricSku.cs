@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> Represents the SKU name and Azure pricing tier for Microsoft Fabric capacity resource. </summary>
-    public partial class RpSku
+    public partial class FabricSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Fabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RpSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricSku"/>. </summary>
         /// <param name="name"> The name of the SKU level. </param>
         /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public RpSku(string name, RpSkuTier tier)
+        public FabricSku(string name, FabricSkuTier tier)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -57,25 +57,25 @@ namespace Azure.ResourceManager.Fabric.Models
             Tier = tier;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RpSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricSku"/>. </summary>
         /// <param name="name"> The name of the SKU level. </param>
         /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RpSku(string name, RpSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricSku(string name, FabricSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RpSku"/> for deserialization. </summary>
-        internal RpSku()
+        /// <summary> Initializes a new instance of <see cref="FabricSku"/> for deserialization. </summary>
+        internal FabricSku()
         {
         }
 
         /// <summary> The name of the SKU level. </summary>
         public string Name { get; set; }
         /// <summary> The name of the Azure pricing tier to which the SKU applies. </summary>
-        public RpSkuTier Tier { get; set; }
+        public FabricSkuTier Tier { get; set; }
     }
 }

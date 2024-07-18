@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Fabric.Models
             {
                 return null;
             }
-            IReadOnlyList<RpSkuDetailsForNewCapacity> value = default;
+            IReadOnlyList<FabricSkuDetailsForNewCapacity> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Fabric.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<RpSkuDetailsForNewCapacity> array = new List<RpSkuDetailsForNewCapacity>();
+                    List<FabricSkuDetailsForNewCapacity> array = new List<FabricSkuDetailsForNewCapacity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RpSkuDetailsForNewCapacity.DeserializeRpSkuDetailsForNewCapacity(item, options));
+                        array.Add(FabricSkuDetailsForNewCapacity.DeserializeFabricSkuDetailsForNewCapacity(item, options));
                     }
                     value = array;
                     continue;

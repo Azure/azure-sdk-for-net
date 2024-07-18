@@ -7,15 +7,17 @@ azure-arm: true
 csharp: true
 library-name: Fabric
 namespace: Azure.ResourceManager.Fabric
-require: https://github.com/Azure/azure-rest-api-specs/blob/df3cd3e3d50eec1d1da593750e1ea3a4db3f541d/specification/fabric/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1754617c39d7a2f072ba014b3bb699ddea35f8b6/specification/fabric/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  sample: false # temp
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: false
 use-model-reader-writer: true
 
 format-by-name-rules:
@@ -55,6 +57,9 @@ rename-mapping:
   CheckNameAvailabilityResult: FabricCheckNameAvailabilityResult
   ProvisioningState: FabricProvisioningState
   ResourceState: FabricResourceState
-  RpSkuDetailsForNewResource: RpSkuDetailsForNewCapacity
-  RpSkuDetailsForExistingResource: RpSkuDetailsForExistingCapacity
+  RpSkuDetailsForNewResource: FabricSkuDetailsForNewCapacity
+  RpSkuDetailsForNewResource.locations: -|azure-location
+  RpSkuDetailsForExistingResource: FabricSkuDetailsForExistingCapacity
+  RpSku: FabricSku
+  RpSkuTier: FabricSkuTier
 ```

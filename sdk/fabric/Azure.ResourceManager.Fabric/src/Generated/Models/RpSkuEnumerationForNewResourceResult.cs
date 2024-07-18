@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> Initializes a new instance of <see cref="RpSkuEnumerationForNewResourceResult"/>. </summary>
         /// <param name="value"> The collection of available SKUs for new resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RpSkuEnumerationForNewResourceResult(IEnumerable<RpSkuDetailsForNewCapacity> value)
+        internal RpSkuEnumerationForNewResourceResult(IEnumerable<FabricSkuDetailsForNewCapacity> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="value"> The collection of available SKUs for new resources. </param>
         /// <param name="nextLink"> Url for the next page.  Null if no more pages available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RpSkuEnumerationForNewResourceResult(IReadOnlyList<RpSkuDetailsForNewCapacity> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RpSkuEnumerationForNewResourceResult(IReadOnlyList<FabricSkuDetailsForNewCapacity> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Fabric.Models
         }
 
         /// <summary> The collection of available SKUs for new resources. </summary>
-        public IReadOnlyList<RpSkuDetailsForNewCapacity> Value { get; }
+        public IReadOnlyList<FabricSkuDetailsForNewCapacity> Value { get; }
         /// <summary> Url for the next page.  Null if no more pages available. </summary>
         public string NextLink { get; }
     }

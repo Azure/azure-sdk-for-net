@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Fabric
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
@@ -63,24 +68,6 @@ namespace Azure.ResourceManager.Fabric
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(Administration))
-            {
-                writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue(Administration, options);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -119,23 +106,30 @@ namespace Azure.ResourceManager.Fabric
             {
                 return null;
             }
-            RpSku sku = default;
+            FabricCapacityProperties properties = default;
+            FabricSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            FabricProvisioningState? provisioningState = default;
-            FabricResourceState? state = default;
-            CapacityAdministration administration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = FabricCapacityProperties.DeserializeFabricCapacityProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = RpSku.DeserializeRpSku(property.Value, options);
+                    sku = FabricSku.DeserializeFabricSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -181,45 +175,6 @@ namespace Azure.ResourceManager.Fabric
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new FabricProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            state = new FabricResourceState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("administration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administration = CapacityAdministration.DeserializeCapacityAdministration(property0.Value, options);
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -233,10 +188,8 @@ namespace Azure.ResourceManager.Fabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 sku,
-                provisioningState,
-                state,
-                administration,
                 serializedAdditionalRawData);
         }
 

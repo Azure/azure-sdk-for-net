@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RpSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RpSkuDetailsForNewCapacity> GetSkusFabricCapacitiesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FabricSkuDetailsForNewCapacity> GetSkusFabricCapacitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FabricCapacityRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricCapacityRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RpSkuDetailsForNewCapacity.DeserializeRpSkuDetailsForNewCapacity(e), FabricCapacityClientDiagnostics, Pipeline, "MockableFabricSubscriptionResource.GetSkusFabricCapacities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForNewCapacity.DeserializeFabricSkuDetailsForNewCapacity(e), FabricCapacityClientDiagnostics, Pipeline, "MockableFabricSubscriptionResource.GetSkusFabricCapacities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,12 +240,12 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RpSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RpSkuDetailsForNewCapacity> GetSkusFabricCapacities(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FabricSkuDetailsForNewCapacity> GetSkusFabricCapacities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FabricCapacityRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricCapacityRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RpSkuDetailsForNewCapacity.DeserializeRpSkuDetailsForNewCapacity(e), FabricCapacityClientDiagnostics, Pipeline, "MockableFabricSubscriptionResource.GetSkusFabricCapacities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForNewCapacity.DeserializeFabricSkuDetailsForNewCapacity(e), FabricCapacityClientDiagnostics, Pipeline, "MockableFabricSubscriptionResource.GetSkusFabricCapacities", "value", "nextLink", cancellationToken);
         }
     }
 }

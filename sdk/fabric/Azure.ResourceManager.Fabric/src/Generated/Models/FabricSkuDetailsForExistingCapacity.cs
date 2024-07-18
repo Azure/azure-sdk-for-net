@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    /// <summary> Represents the SKU name and Azure pricing tier for Microsoft Fabric capacity resource. </summary>
-    public partial class RpSkuUpdate
+    /// <summary> An object that represents SKU details for existing resources. </summary>
+    public partial class FabricSkuDetailsForExistingCapacity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,38 @@ namespace Azure.ResourceManager.Fabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RpSkuUpdate"/>. </summary>
-        public RpSkuUpdate()
+        /// <summary> Initializes a new instance of <see cref="FabricSkuDetailsForExistingCapacity"/>. </summary>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The SKU details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="sku"/> is null. </exception>
+        internal FabricSkuDetailsForExistingCapacity(string resourceType, FabricSku sku)
         {
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNull(sku, nameof(sku));
+
+            ResourceType = resourceType;
+            Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RpSkuUpdate"/>. </summary>
-        /// <param name="name"> The name of the SKU level. </param>
-        /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
+        /// <summary> Initializes a new instance of <see cref="FabricSkuDetailsForExistingCapacity"/>. </summary>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The SKU details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RpSkuUpdate(string name, RpSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricSkuDetailsForExistingCapacity(string resourceType, FabricSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Tier = tier;
+            ResourceType = resourceType;
+            Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the SKU level. </summary>
-        public string Name { get; set; }
-        /// <summary> The name of the Azure pricing tier to which the SKU applies. </summary>
-        public RpSkuTier? Tier { get; set; }
+        /// <summary> Initializes a new instance of <see cref="FabricSkuDetailsForExistingCapacity"/> for deserialization. </summary>
+        internal FabricSkuDetailsForExistingCapacity()
+        {
+        }
+
+        /// <summary> The resource type. </summary>
+        public string ResourceType { get; }
+        /// <summary> The SKU details. </summary>
+        public FabricSku Sku { get; }
     }
 }

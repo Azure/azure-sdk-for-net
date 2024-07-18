@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    public partial class RpSkuDetailsForExistingCapacity : IUtf8JsonSerializable, IJsonModel<RpSkuDetailsForExistingCapacity>
+    public partial class FabricSkuDetailsForExistingCapacity : IUtf8JsonSerializable, IJsonModel<FabricSkuDetailsForExistingCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RpSkuDetailsForExistingCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricSkuDetailsForExistingCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RpSkuDetailsForExistingCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FabricSkuDetailsForExistingCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RpSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RpSkuDetailsForExistingCapacity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSkuDetailsForExistingCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Fabric.Models
             writer.WriteEndObject();
         }
 
-        RpSkuDetailsForExistingCapacity IJsonModel<RpSkuDetailsForExistingCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FabricSkuDetailsForExistingCapacity IJsonModel<FabricSkuDetailsForExistingCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RpSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RpSkuDetailsForExistingCapacity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricSkuDetailsForExistingCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRpSkuDetailsForExistingCapacity(document.RootElement, options);
+            return DeserializeFabricSkuDetailsForExistingCapacity(document.RootElement, options);
         }
 
-        internal static RpSkuDetailsForExistingCapacity DeserializeRpSkuDetailsForExistingCapacity(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FabricSkuDetailsForExistingCapacity DeserializeFabricSkuDetailsForExistingCapacity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 return null;
             }
             string resourceType = default;
-            RpSku sku = default;
+            FabricSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = RpSku.DeserializeRpSku(property.Value, options);
+                    sku = FabricSku.DeserializeFabricSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RpSkuDetailsForExistingCapacity(resourceType, sku, serializedAdditionalRawData);
+            return new FabricSkuDetailsForExistingCapacity(resourceType, sku, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RpSkuDetailsForExistingCapacity>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FabricSkuDetailsForExistingCapacity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RpSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RpSkuDetailsForExistingCapacity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSkuDetailsForExistingCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RpSkuDetailsForExistingCapacity IPersistableModel<RpSkuDetailsForExistingCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FabricSkuDetailsForExistingCapacity IPersistableModel<FabricSkuDetailsForExistingCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RpSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricSkuDetailsForExistingCapacity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRpSkuDetailsForExistingCapacity(document.RootElement, options);
+                        return DeserializeFabricSkuDetailsForExistingCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RpSkuDetailsForExistingCapacity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricSkuDetailsForExistingCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RpSkuDetailsForExistingCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FabricSkuDetailsForExistingCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

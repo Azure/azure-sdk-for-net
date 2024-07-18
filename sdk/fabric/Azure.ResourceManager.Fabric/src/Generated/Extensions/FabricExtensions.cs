@@ -319,8 +319,8 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RpSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RpSkuDetailsForNewCapacity> GetSkusFabricCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FabricSkuDetailsForNewCapacity> GetSkusFabricCapacitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -355,8 +355,8 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="RpSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RpSkuDetailsForNewCapacity> GetSkusFabricCapacities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FabricSkuDetailsForNewCapacity> GetSkusFabricCapacities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

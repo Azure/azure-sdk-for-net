@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> The SKU details. </summary>
-    public partial class RpSkuDetailsForNewCapacity
+    public partial class FabricSkuDetailsForNewCapacity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.Fabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RpSkuDetailsForNewCapacity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricSkuDetailsForNewCapacity"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The SKU's name. </param>
         /// <param name="locations"> The list of available locations for the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/>, <paramref name="name"/> or <paramref name="locations"/> is null. </exception>
-        internal RpSkuDetailsForNewCapacity(string resourceType, string name, IEnumerable<string> locations)
+        internal FabricSkuDetailsForNewCapacity(string resourceType, string name, IEnumerable<AzureLocation> locations)
         {
             Argument.AssertNotNull(resourceType, nameof(resourceType));
             Argument.AssertNotNull(name, nameof(name));
@@ -62,12 +63,12 @@ namespace Azure.ResourceManager.Fabric.Models
             Locations = locations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RpSkuDetailsForNewCapacity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricSkuDetailsForNewCapacity"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The SKU's name. </param>
         /// <param name="locations"> The list of available locations for the SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RpSkuDetailsForNewCapacity(string resourceType, string name, IReadOnlyList<string> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricSkuDetailsForNewCapacity(string resourceType, string name, IReadOnlyList<AzureLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.Fabric.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RpSkuDetailsForNewCapacity"/> for deserialization. </summary>
-        internal RpSkuDetailsForNewCapacity()
+        /// <summary> Initializes a new instance of <see cref="FabricSkuDetailsForNewCapacity"/> for deserialization. </summary>
+        internal FabricSkuDetailsForNewCapacity()
         {
         }
 
@@ -85,6 +86,6 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> The SKU's name. </summary>
         public string Name { get; }
         /// <summary> The list of available locations for the SKU. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
     }
 }

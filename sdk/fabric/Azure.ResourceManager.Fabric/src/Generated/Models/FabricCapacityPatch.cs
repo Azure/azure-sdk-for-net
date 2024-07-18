@@ -54,30 +54,30 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> Initializes a new instance of <see cref="FabricCapacityPatch"/>. </summary>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="administration"> The capacity administration. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCapacityPatch(RpSkuUpdate sku, IDictionary<string, string> tags, CapacityAdministrationUpdate administration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricCapacityPatch(FabricSku sku, IDictionary<string, string> tags, FabricCapacityUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Tags = tags;
-            Administration = administration;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SKU details. </summary>
-        public RpSkuUpdate Sku { get; set; }
+        public FabricSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The capacity administration. </summary>
-        internal CapacityAdministrationUpdate Administration { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal FabricCapacityUpdateProperties Properties { get; set; }
         /// <summary> An array of administrator user identities. </summary>
         public IList<string> AdministrationMembers
         {
             get
             {
-                if (Administration is null)
-                    Administration = new CapacityAdministrationUpdate();
-                return Administration.Members;
+                if (Properties is null)
+                    Properties = new FabricCapacityUpdateProperties();
+                return Properties.AdministrationMembers;
             }
         }
     }
