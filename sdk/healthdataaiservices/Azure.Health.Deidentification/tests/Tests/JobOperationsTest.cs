@@ -162,7 +162,6 @@ namespace Azure.Health.Deidentification.Tests
                 Operation = OperationType.Surrogate
             };
 
-            // TODO: Bring up started language with SDK team
             job = (await client.CreateJobAsync(WaitUntil.Started, jobName, job)).Value;
 
             do

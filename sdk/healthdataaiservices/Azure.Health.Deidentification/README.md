@@ -2,14 +2,12 @@
 
 Azure.Health.Deidentification is a managed service that enables users to tag, redact, or surrogate health data.
 
-<!--  TODO
-Use the client library for to:
 
-* [Get secret](https://docs.microsoft.com/azure)
+<!-- TODO Add operation links once docs are generated -->
 
 [Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure) -->
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
@@ -23,7 +21,6 @@ dotnet add package Azure.Health.Deidentification --prerelease
 ```
 
 ### Prerequisites
-
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and `Deid Service`.
 
@@ -54,12 +51,24 @@ Basic code snippet to create your Deidentification Client and Deidentify a strin
 
 ## Key concepts
 
-Operation Modes:
+**Operation Modes**
 - Tag: Will return a structure of offset and length with the PHI category of the related text spans.
 - Redact: Will return output text with placeholder stubbed text. ex. `[name]`
 - Surrogate: Will return output text with synthetic replacements.
   - `My name is John Smith`
   - `My name is Tom Jones`
+
+**Job Integration with Azure Storage**
+Instead of sending text, you can send an Azure Storage Location to the service. We will asynchronously
+process the list of files and output the deidentified files to a location of your choice.
+
+Limitations:
+- Maximum file count per job: 1000 documents
+- Maximum file size per file: 2 MB
+
+**Redaction Formatting**
+
+[Redaction formatting guide](./docs/HowTo-RedactionFormatting.md)
 
 ### Thread safety
 
@@ -84,21 +93,12 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 ## Troubleshooting
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
-
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+-->
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+Other code samples can be viewed here [/samples](samples/)
 
-## Contributing
-
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
--->
 
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
