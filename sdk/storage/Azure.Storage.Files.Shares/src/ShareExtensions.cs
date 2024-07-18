@@ -987,7 +987,7 @@ namespace Azure.Storage.Files.Shares
                 new ShareFilePermission
                 {
                     Permission = response.Value.Permission,
-                    PermissionKeyFormat = response.Value.Format
+                    PermissionFormat = response.Value.Format
                 },
                 response.GetRawResponse());
         }

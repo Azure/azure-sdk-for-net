@@ -15,6 +15,7 @@ using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Storage.Common;
+using System.Net.Http.Headers;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -547,6 +548,106 @@ namespace Azure.Storage.Files.Shares
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileInfo> Create(
+            long maxSize,
+            ShareFileCreateOptions options = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            CreateInternal(
+                maxSize,
+                httpHeaders: options?.HttpHeaders,
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                conditions,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
+        /// </remarks>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileInfo>> CreateAsync(
+            long maxSize,
+            ShareFileCreateOptions options = default,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateInternal(
+                maxSize,
+                httpHeaders: options?.HttpHeaders,
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                conditions,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
+        /// Create File</see>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
+        /// </remarks>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
+        /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
         /// </param>
@@ -575,20 +676,24 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareFileInfo> Create(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long maxSize,
-            ShareFileHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            ShareFileHttpHeaders httpHeaders,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             CreateInternal(
                 maxSize,
                 httpHeaders,
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -648,6 +753,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -695,20 +801,24 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareFileInfo>> CreateAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long maxSize,
-            ShareFileHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
-            ShareFileRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            ShareFileHttpHeaders httpHeaders,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            ShareFileRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await CreateInternal(
                 maxSize,
                 httpHeaders,
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -768,6 +878,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -799,6 +910,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermission">
         /// Optional file permission to set on the file.
         /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional file permission format.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
@@ -827,6 +941,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
+            FilePermissionFormat? filePermissionFormat,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
@@ -868,6 +983,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             metadata: metadata,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
@@ -884,6 +1000,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             metadata: metadata,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
@@ -6553,6 +6670,7 @@ namespace Azure.Storage.Files.Shares
                         metadata: default,
                         smbProperties: default,
                         filePermission: default,
+                        filePermissionFormat: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -6582,6 +6700,7 @@ namespace Azure.Storage.Files.Shares
                             metadata: default,
                             smbProperties: default,
                             filePermission: default,
+                            filePermissionFormat: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)

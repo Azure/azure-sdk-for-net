@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -410,15 +411,59 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+            string filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                FilePermission = new ShareFilePermission
+                {
+                    Permission = filePermission
+                }
+            };
 
             // Act
             Response<ShareFileInfo> response = await file.CreateAsync(
                 maxSize: Constants.MB,
-                filePermission: filePermission);
+                options: options);
 
             // Assert
             AssertValidStorageFileInfo(response);
+        }
+
+        [RecordedTest]
+        [TestCase(null)]
+        [TestCase(FilePermissionFormat.Sddl)]
+        [TestCase(FilePermissionFormat.Binary)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
+        public async Task CreateAsync_FilePermissionFormat(FilePermissionFormat? filePermissionFormat)
+        {
+            // Arrange
+            string permission;
+            if (filePermissionFormat == null || filePermissionFormat == FilePermissionFormat.Sddl)
+            {
+                permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            }
+            else
+            {
+                permission = "AQAUhGwAAACIAAAAAAAAABQAAAACAFgAAwAAAAAAFAD/AR8AAQEAAAAAAAUSAAAAAAAYAP8BHwABAgAAAAAABSAAAAAgAgAAAAAkAKkAEgABBQAAAAAABRUAAABZUbgXZnJdJWRjOwuMmS4AAQUAAAAAAAUVAAAAoGXPfnhLm1/nfIdwr/1IAQEFAAAAAAAFFQAAAKBlz354S5tf53yHcAECAAA=";
+            }
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                FilePermission = new ShareFilePermission
+                {
+                    Permission = permission,
+                    PermissionFormat = filePermissionFormat
+                }
+            };
+
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await file.CreateAsync(
+                maxSize: Constants.MB,
+                options: options);
         }
 
         [RecordedTest]
@@ -429,18 +474,23 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            var filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-            var fileSmbProperties = new FileSmbProperties()
+            ShareFileCreateOptions options = new ShareFileCreateOptions
             {
-                FilePermissionKey = "filePermissionKey"
+                FilePermission = new ShareFilePermission
+                {
+                    Permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)"
+                },
+                SmbProperties = new FileSmbProperties
+                {
+                    FilePermissionKey = "filePermissionKey"
+                }
             };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 file.CreateAsync(
                     maxSize: Constants.MB,
-                    smbProperties: fileSmbProperties,
-                    filePermission: filePermission),
+                    options: options),
                 e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
         }
 
@@ -452,13 +502,20 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            var filePermission = new string('*', 9 * Constants.KB);
+            ShareFilePermission filePermission = new ShareFilePermission
+            {
+                Permission = new string('*', 9 * Constants.KB)
+            };
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                FilePermission = filePermission
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 file.CreateAsync(
                     maxSize: Constants.MB,
-                    filePermission: filePermission),
+                    options: options),
                 e =>
                 {
                     Assert.AreEqual("filePermission", e.ParamName);
@@ -484,24 +541,27 @@ namespace Azure.Storage.Files.Shares.Tests
             await directory.CreateIfNotExistsAsync();
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            var smbProperties = new FileSmbProperties
+            ShareFileCreateOptions options = new ShareFileCreateOptions
             {
-                FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
-                FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
-                FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                SmbProperties = new FileSmbProperties
+                {
+                    FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
+                    FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
+                    FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                    FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                }
             };
 
             // Act
             Response<ShareFileInfo> response = await file.CreateAsync(
                 maxSize: Constants.KB,
-                smbProperties: smbProperties);
+                options: options);
 
             // Assert
             AssertValidStorageFileInfo(response);
-            Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
-            Assert.AreEqual(smbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
-            Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
+            Assert.AreEqual(options.SmbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+            Assert.AreEqual(options.SmbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(options.SmbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
         }
 
         [RecordedTest]
@@ -513,20 +573,22 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
             await directoryClient.CreateIfNotExistsAsync();
             ShareFileClient fileClient = InstrumentClient(directoryClient.GetFileClient(GetNewFileName()));
-
-            FileSmbProperties fileSmbProperties = new FileSmbProperties
+            ShareFileCreateOptions options = new ShareFileCreateOptions
             {
-                FileChangedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero)
+                SmbProperties = new FileSmbProperties
+                {
+                    FileChangedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero)
+                }
             };
 
             // Act
             Response<ShareFileInfo> response = await fileClient.CreateAsync(
                 maxSize: Constants.KB,
-                smbProperties: fileSmbProperties);
+                options: options);
 
             // Assert
             AssertValidStorageFileInfo(response);
-            Assert.AreEqual(fileSmbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
+            Assert.AreEqual(options.SmbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
         }
 
         [RecordedTest]
@@ -537,16 +599,19 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-            IDictionary<string, string> metadata = BuildMetadata();
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                Metadata = BuildMetadata()
+            };
 
             // Act
             await file.CreateAsync(
                 maxSize: Constants.MB,
-                metadata: metadata);
+                options: options);
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
-            AssertDictionaryEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(options.Metadata, response.Value.Metadata);
         }
 
         [RecordedTest]
@@ -559,11 +624,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
-
-            // Act
-            await file.CreateAsync(
-                maxSize: Constants.MB,
-                httpHeaders: new ShareFileHttpHeaders
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                HttpHeaders = new ShareFileHttpHeaders
                 {
                     CacheControl = constants.CacheControl,
                     ContentDisposition = constants.ContentDisposition,
@@ -571,7 +634,13 @@ namespace Azure.Storage.Files.Shares.Tests
                     ContentLanguage = new string[] { constants.ContentLanguage },
                     ContentHash = constants.ContentMD5,
                     ContentType = constants.ContentType
-                });
+                }
+            };
+
+            // Act
+            await file.CreateAsync(
+                maxSize: Constants.MB,
+                options: options);
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
@@ -5806,14 +5875,16 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
             await sourceFile.CreateAsync(Constants.KB);
             ShareFileClient destFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName()));
-
-            FileSmbProperties fileSmbProperties = new FileSmbProperties
+            ShareFileCreateOptions createOptions = new ShareFileCreateOptions
             {
-                FileAttributes = NtfsFileAttributes.ReadOnly
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = NtfsFileAttributes.ReadOnly
+                }
             };
             await destFile.CreateAsync(
                 maxSize: Constants.KB,
-                smbProperties: fileSmbProperties);
+                options: createOptions);
 
             ShareFileRenameOptions options = new ShareFileRenameOptions
             {

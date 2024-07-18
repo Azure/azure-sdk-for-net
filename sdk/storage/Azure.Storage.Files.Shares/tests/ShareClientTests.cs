@@ -505,17 +505,17 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [TestCase(null)]
-        [TestCase(FilePermissionKeyFormat.Sddl)]
-        [TestCase(FilePermissionKeyFormat.Binary)]
+        [TestCase(FilePermissionFormat.Sddl)]
+        [TestCase(FilePermissionFormat.Binary)]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_11_04)]
-        public async Task CreateAndGetPermissionAsync_FilePermissionKeyFormat(FilePermissionKeyFormat? filePermissionKeyFormat)
+        public async Task CreateAndGetPermissionAsync_FilePermissionKeyFormat(FilePermissionFormat? filePermissionFormat)
         {
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
 
             // Arrange
             string permission;
-            if (filePermissionKeyFormat == null || filePermissionKeyFormat == FilePermissionKeyFormat.Sddl)
+            if (filePermissionFormat == null || filePermissionFormat == FilePermissionFormat.Sddl)
             {
                 permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
             }
@@ -526,22 +526,22 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFilePermission filePermission = new ShareFilePermission
             {
                 Permission = permission,
-                PermissionKeyFormat = filePermissionKeyFormat
+                PermissionFormat = filePermissionFormat
             };
 
             // Act
             Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(filePermission);
-            Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey, filePermissionKeyFormat);
+            Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey, filePermissionFormat);
 
             // Assert
             Assert.AreEqual(permission, getResponse.Value.Permission);
-            if (filePermissionKeyFormat == null || filePermissionKeyFormat == FilePermissionKeyFormat.Sddl)
+            if (filePermissionFormat == null || filePermissionFormat == FilePermissionFormat.Sddl)
             {
-                Assert.AreEqual(FilePermissionKeyFormat.Sddl, getResponse.Value.PermissionKeyFormat);
+                Assert.AreEqual(FilePermissionFormat.Sddl, getResponse.Value.PermissionFormat);
             }
             else
             {
-                Assert.AreEqual(FilePermissionKeyFormat.Binary, getResponse.Value.PermissionKeyFormat);
+                Assert.AreEqual(FilePermissionFormat.Binary, getResponse.Value.PermissionFormat);
             }
         }
 

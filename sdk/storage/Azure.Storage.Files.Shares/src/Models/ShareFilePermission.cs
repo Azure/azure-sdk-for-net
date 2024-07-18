@@ -11,7 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Format of File Permission.
         /// </summary>
-        public FilePermissionKeyFormat? PermissionKeyFormat { get;  set; }
+        public FilePermissionFormat? PermissionFormat { get;  set; }
 
         /// <summary>
         /// The File Permission itself, in SDDL or base64 encoded binary format.

@@ -3259,11 +3259,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey">
         /// The file permission key.
         /// </param>
-        /// <param name="filePermissionKeyFormat">
+        /// <param name="filePermissionFormat">
         /// Optional. Available for version 2024-11-04 and later. Specifies the format in which the permission is returned.
-        /// If filePermissionKeyFormat is unspecified or explicityly set to <see cref="FilePermissionKeyFormat.Sddl"/>, the permission will be
+        /// If filePermissionFormat is unspecified or explicityly set to <see cref="FilePermissionKeyFormat.Sddl"/>, the permission will be
         /// returned in SSDL format.
-        /// If filePermissionKeyFormat is explicity set to <see cref="FilePermissionKeyFormat.Binary"/>, the permission is returned as a
+        /// If filePermissionFormat is explicity set to <see cref="FilePermissionKeyFormat.Binary"/>, the permission is returned as a
         /// base64 string representing the binary encoding of the permission in self-relative format.
         /// </param>
         /// <param name="cancellationToken">
@@ -3275,11 +3275,11 @@ namespace Azure.Storage.Files.Shares
         /// </returns>
         public virtual Response<ShareFilePermission> GetPermission(
             string filePermissionKey,
-            FilePermissionKeyFormat? filePermissionKeyFormat = default,
+            FilePermissionFormat? filePermissionFormat = default,
             CancellationToken cancellationToken = default) =>
             GetPermissionInternal(
                 filePermissionKey: filePermissionKey,
-                filePermissionKeyFormat: filePermissionKeyFormat,
+                filePermissionFormat: filePermissionFormat,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3291,11 +3291,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionKey">
         /// The file permission key.
         /// </param>
-        /// <param name="filePermissionKeyFormat">
+        /// <param name="filePermissionFormat">
         /// Optional. Available for version 2024-11-04 and later. Specifies the format in which the permission is returned.
-        /// If filePermissionKeyFormat is unspecified or explicityly set to <see cref="FilePermissionKeyFormat.Sddl"/>, the permission will be
+        /// If filePermissionFormat is unspecified or explicityly set to <see cref="FilePermissionKeyFormat.Sddl"/>, the permission will be
         /// returned in SSDL format.
-        /// If filePermissionKeyFormat is explicity set to <see cref="FilePermissionKeyFormat.Binary"/>, the permission is returned as a
+        /// If filePermissionFormat is explicity set to <see cref="FilePermissionKeyFormat.Binary"/>, the permission is returned as a
         /// base64 string representing the binary encoding of the permission in self-relative format.
         /// </param>
         /// <param name="cancellationToken">
@@ -3307,11 +3307,11 @@ namespace Azure.Storage.Files.Shares
         /// </returns>
         public virtual async Task<Response<ShareFilePermission>> GetPermissionAsync(
             string filePermissionKey,
-            FilePermissionKeyFormat? filePermissionKeyFormat = default,
+            FilePermissionFormat? filePermissionFormat = default,
             CancellationToken cancellationToken = default) =>
             await GetPermissionInternal(
                 filePermissionKey: filePermissionKey,
-                filePermissionKeyFormat: filePermissionKeyFormat,
+                filePermissionFormat: filePermissionFormat,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3339,7 +3339,7 @@ namespace Azure.Storage.Files.Shares
         {
             Response<ShareFilePermission> response = GetPermissionInternal(
                 filePermissionKey: filePermissionKey,
-                filePermissionKeyFormat: default,
+                filePermissionFormat: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3372,7 +3372,7 @@ namespace Azure.Storage.Files.Shares
         {
             Response<ShareFilePermission> response = await GetPermissionInternal(
                 filePermissionKey: filePermissionKey,
-                filePermissionKeyFormat: default,
+                filePermissionFormat: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3384,7 +3384,7 @@ namespace Azure.Storage.Files.Shares
 
         private async Task<Response<ShareFilePermission>> GetPermissionInternal(
             string filePermissionKey,
-            FilePermissionKeyFormat? filePermissionKeyFormat,
+            FilePermissionFormat? filePermissionFormat,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3406,7 +3406,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await ShareRestClient.GetPermissionAsync(
                             filePermissionKey: filePermissionKey,
-                            filePermissionKeyFormat: filePermissionKeyFormat,
+                            filePermissionFormat: filePermissionFormat,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3414,7 +3414,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = ShareRestClient.GetPermission(
                             filePermissionKey: filePermissionKey,
-                            filePermissionKeyFormat: filePermissionKeyFormat,
+                            filePermissionFormat: filePermissionFormat,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3456,7 +3456,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             CreatePermissionInternal(
                 permission: filePermission?.Permission,
-                permissionKeyFormat: filePermission?.PermissionKeyFormat,
+                permissionFormat: filePermission?.PermissionFormat,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3482,7 +3482,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             await CreatePermissionInternal(
                 permission: filePermission?.Permission,
-                permissionKeyFormat: filePermission?.PermissionKeyFormat,
+                permissionFormat: filePermission?.PermissionFormat,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3512,7 +3512,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken) =>
             CreatePermissionInternal(
                 permission,
-                permissionKeyFormat: null,
+                permissionFormat: null,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3542,14 +3542,14 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken) =>
             await CreatePermissionInternal(
                 permission,
-                permissionKeyFormat: null,
+                permissionFormat: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         internal async Task<Response<PermissionInfo>> CreatePermissionInternal(
             string permission,
-            FilePermissionKeyFormat? permissionKeyFormat,
+            FilePermissionFormat? permissionFormat,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3565,7 +3565,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     scope.Start();
                     ResponseWithHeaders<ShareCreatePermissionHeaders> response;
-                    SharePermission sharePermission = new SharePermission(permission, permissionKeyFormat);
+                    SharePermission sharePermission = new SharePermission(permission, permissionFormat);
 
                     if (async)
                     {

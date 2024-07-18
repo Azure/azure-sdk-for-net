@@ -2001,13 +2001,16 @@ namespace Azure.Storage.Files.Shares.Tests
             await destParentDirectory.CreateAsync();
             ShareFileClient destFile = InstrumentClient(destParentDirectory.GetFileClient(GetNewFileName()));
 
-            FileSmbProperties fileSmbProperties = new FileSmbProperties
+            ShareFileCreateOptions fileCreateOptions = new ShareFileCreateOptions
             {
-                FileAttributes = NtfsFileAttributes.ReadOnly
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = NtfsFileAttributes.ReadOnly
+                }
             };
             await destFile.CreateAsync(
                 maxSize: Constants.KB,
-                smbProperties: fileSmbProperties);
+                options: fileCreateOptions);
 
             ShareFileRenameOptions options = new ShareFileRenameOptions
             {
