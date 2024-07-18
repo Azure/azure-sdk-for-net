@@ -173,8 +173,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 options));
 
             // Assert
-            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
-            PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(permission);
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            ShareFilePermission filePermission = new ShareFilePermission
+            {
+                Permission = permission,
+            };
+            PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(filePermission);
             Assert.IsNotNull(infoPermission);
         }
 
@@ -198,8 +202,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 options));
 
             // Assert
-            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
-            PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(permission);
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            ShareFilePermission filePermission = new ShareFilePermission
+            {
+                Permission = permission,
+            };
+            PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(filePermission);
             Assert.IsNotNull(infoPermission);
         }
 
@@ -223,8 +231,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 options));
 
             // Assert
-            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
-            PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(permission);
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            ShareFilePermission filePermission = new ShareFilePermission
+            {
+                Permission = permission,
+            };
+            PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(filePermission);
             Assert.IsNotNull(infoPermission);
         }
 
@@ -248,9 +260,13 @@ namespace Azure.Storage.Files.Shares.Tests
                 options));
 
             // Assert
-            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            ShareFilePermission filePermission = new ShareFilePermission
+            {
+                Permission = permission,
+            };
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                aadShare.CreatePermissionAsync(permission),
+                aadShare.CreatePermissionAsync(filePermission),
                 e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
@@ -448,10 +464,14 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = test.Share;
 
             // Arrange
-            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            ShareFilePermission filePermission = new ShareFilePermission
+            {
+                Permission = permission,
+            };
 
             // Act
-            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
+            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(filePermission);
             Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
 
             // Assert
@@ -469,10 +489,14 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = oauthServiceClient.GetShareClient(shareName);
 
             // Arrange
-            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            ShareFilePermission filePermission = new ShareFilePermission
+            {
+                Permission = permission,
+            };
 
             // Act
-            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
+            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(filePermission);
             Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
 
             // Assert
@@ -490,24 +514,34 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = test.Share;
 
             // Arrange
-            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            string permission;
+            if (filePermissionKeyFormat == null || filePermissionKeyFormat == FilePermissionKeyFormat.Sddl)
+            {
+                permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            }
+            else
+            {
+                permission = "AQAUhGwAAACIAAAAAAAAABQAAAACAFgAAwAAAAAAFAD/AR8AAQEAAAAAAAUSAAAAAAAYAP8BHwABAgAAAAAABSAAAAAgAgAAAAAkAKkAEgABBQAAAAAABRUAAABZUbgXZnJdJWRjOwuMmS4AAQUAAAAAAAUVAAAAoGXPfnhLm1/nfIdwr/1IAQEFAAAAAAAFFQAAAKBlz354S5tf53yHcAECAAA=";
+            }
+            ShareFilePermission filePermission = new ShareFilePermission
+            {
+                Permission = permission,
+                PermissionKeyFormat = filePermissionKeyFormat
+            };
 
             // Act
-            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
+            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(filePermission);
             Response<ShareFilePermission> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey, filePermissionKeyFormat);
 
             // Assert
-
+            Assert.AreEqual(permission, getResponse.Value.Permission);
             if (filePermissionKeyFormat == null || filePermissionKeyFormat == FilePermissionKeyFormat.Sddl)
             {
-                Assert.AreEqual(permission, getResponse.Value.Permission);
                 Assert.AreEqual(FilePermissionKeyFormat.Sddl, getResponse.Value.PermissionKeyFormat);
             }
             else
             {
-                Assert.AreEqual(
-                    "AQAUhGwAAACIAAAAAAAAABQAAAACAFgAAwAAAAAAFAD/AR8AAQEAAAAAAAUSAAAAAAAYAP8BHwABAgAAAAAABSAAAAAgAgAAAAAkAKkAEgABBQAAAAAABRUAAABZUbgXZnJdJWRjOwuMmS4AAQUAAAAAAAUVAAAAoGXPfnhLm1/nfIdwr/1IAQEFAAAAAAAFFQAAAKBlz354S5tf53yHcAECAAA=",
-                    getResponse.Value.Permission);
+                Assert.AreEqual(FilePermissionKeyFormat.Binary, getResponse.Value.PermissionKeyFormat);
             }
         }
 
@@ -518,11 +552,15 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = test.Share;
 
             // Arrange
-            var permission = "invalidPermission";
+            string permission = "invalidPermission";
+            ShareFilePermission filePermission = new ShareFilePermission
+            {
+                Permission = permission,
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                share.CreatePermissionAsync(permission),
+                share.CreatePermissionAsync(filePermission),
                 e => Assert.AreEqual("FileInvalidPermission", e.ErrorCode));
         }
 

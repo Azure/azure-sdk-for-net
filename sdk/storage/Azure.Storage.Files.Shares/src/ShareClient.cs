@@ -3440,6 +3440,57 @@ namespace Azure.Storage.Files.Shares
         /// Creates a permission (a security descriptor) at the share level. The created security descriptor
         /// can be used for the files/directories in the share.
         /// </summary>
+        /// <param name="filePermission">
+        /// A <see cref="ShareFilePermission"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Response<PermissionInfo> CreatePermission(
+            ShareFilePermission filePermission,
+            CancellationToken cancellationToken = default) =>
+            CreatePermissionInternal(
+                permission: filePermission?.Permission,
+                permissionKeyFormat: filePermission?.PermissionKeyFormat,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
+        /// </summary>
+        /// <param name="filePermission">
+        /// A <see cref="ShareFilePermission"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<PermissionInfo>> CreatePermissionAsync(
+            ShareFilePermission filePermission,
+            CancellationToken cancellationToken = default) =>
+            await CreatePermissionInternal(
+                permission: filePermission?.Permission,
+                permissionKeyFormat: filePermission?.PermissionKeyFormat,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor
+        /// can be used for the files/directories in the share.
+        /// </summary>
         /// <param name="permission">
         /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group,
         /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor
@@ -3453,11 +3504,15 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PermissionInfo> CreatePermission(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string permission,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             CreatePermissionInternal(
                 permission,
+                permissionKeyFormat: null,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3479,17 +3534,22 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
         /// </returns>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PermissionInfo>> CreatePermissionAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string permission,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             await CreatePermissionInternal(
                 permission,
+                permissionKeyFormat: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         internal async Task<Response<PermissionInfo>> CreatePermissionInternal(
             string permission,
+            FilePermissionKeyFormat? permissionKeyFormat,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3505,7 +3565,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     scope.Start();
                     ResponseWithHeaders<ShareCreatePermissionHeaders> response;
-                    SharePermission sharePermission = new SharePermission(permission);
+                    SharePermission sharePermission = new SharePermission(permission, permissionKeyFormat);
 
                     if (async)
                     {

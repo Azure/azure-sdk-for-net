@@ -11,23 +11,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Format of File Permission.
         /// </summary>
-        public FilePermissionKeyFormat? PermissionKeyFormat { get; internal set; }
+        public FilePermissionKeyFormat? PermissionKeyFormat { get;  set; }
 
         /// <summary>
         /// The File Permission itself, in SDDL or base64 encoded binary format.
         /// </summary>
-        public string Permission { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of ShareFilePermission instances.
-        /// You can use ShareModelFactory.ShareFilePermission instead.
-        /// </summary>
-        internal ShareFilePermission(
-            FilePermissionKeyFormat? filePermissionKeyFormat,
-            string permission)
-        {
-            PermissionKeyFormat = filePermissionKeyFormat;
-            Permission = permission;
-        }
+        public string Permission { get;  set; }
     }
 }

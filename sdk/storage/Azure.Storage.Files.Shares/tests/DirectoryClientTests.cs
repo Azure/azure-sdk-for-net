@@ -394,8 +394,12 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = test.Share;
 
             // Arrange
-            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-            Response<PermissionInfo> createPermissionResponse = await share.CreatePermissionAsync(permission);
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+            ShareFilePermission filePermission = new ShareFilePermission()
+            {
+                Permission = permission,
+            };
+            Response<PermissionInfo> createPermissionResponse = await share.CreatePermissionAsync(filePermission);
 
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
             var smbProperties = new FileSmbProperties
@@ -974,8 +978,12 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = test.Share;
 
             // Arrange
-            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-            Response<PermissionInfo> createPermissionResponse = await share.CreatePermissionAsync(permission);
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+            ShareFilePermission filePermission = new ShareFilePermission()
+            {
+                Permission = permission,
+            };
+            Response<PermissionInfo> createPermissionResponse = await share.CreatePermissionAsync(filePermission);
 
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
             var smbProperties = new FileSmbProperties
@@ -2194,7 +2202,11 @@ namespace Azure.Storage.Files.Shares.Tests
             string destDirName = GetNewDirectoryName();
 
             string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
-            Response<PermissionInfo> createPermissionResponse = await test.Share.CreatePermissionAsync(permission);
+            ShareFilePermission filePermission = new ShareFilePermission()
+            {
+                Permission = permission,
+            };
+            Response<PermissionInfo> createPermissionResponse = await test.Share.CreatePermissionAsync(filePermission);
 
             FileSmbProperties smbProperties = new FileSmbProperties
             {
