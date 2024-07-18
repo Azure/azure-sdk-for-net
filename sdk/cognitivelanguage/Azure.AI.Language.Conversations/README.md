@@ -594,4 +594,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_docs_demos]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/quickstart
 [conversationanalysis_docs_features]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/azure.ai.language.conversations
-[conversationanalysis_restdocs]: https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime
+[conversationanalysis_restdocs]: https://learn.microsoft.com/en-us/rest/api/language/analyze-conversations/analyze-conversations?view=rest-language-2023-04-01&tabs=HTTP
