@@ -54,6 +54,7 @@ public class ClientRetryPolicy : PipelinePolicy
         while (true)
         {
             Exception? thisTryException = null;
+            var before = Stopwatch.GetTimestamp();
 
             if (async)
             {
@@ -92,6 +93,9 @@ public class ClientRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
+            var after = Stopwatch.GetTimestamp();
+            double elapsed = (after-before) / (double)Stopwatch.Frequency;
+
             bool shouldRetry = async ?
                 await ShouldRetryInternalAsync(message, thisTryException).ConfigureAwait(false) :
                 ShouldRetryInternal(message, thisTryException);
@@ -116,6 +120,13 @@ public class ClientRetryPolicy : PipelinePolicy
 
                 message.RetryCount++;
                 OnTryComplete(message);
+
+                if (ClientModelEventSource.Log.IsEnabled())
+                {
+                    // TODO add ILogger - I think we need to get the logging options here to be able to get
+                    // the ILogger instance
+                    ClientModelEventSource.Log.RequestRetrying(message.LoggingCorrelationId, message.RetryCount, elapsed);
+                }
 
                 continue;
             }
