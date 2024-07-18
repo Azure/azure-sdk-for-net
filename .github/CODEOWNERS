@@ -120,7 +120,7 @@
 # ServiceOwners:                                                   @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @jorgerangel-msft @jsquire 
+/sdk/appconfiguration/                                             @jorgerangel-msft @jsquire
 
 # ServiceLabel: %App Configuration
 # AzureSdkOwners:                                                  @jsquire
@@ -533,6 +533,10 @@
 
 # ServiceLabel: %HDInsight
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
+
+# ServiceLabel: %HealthDeidentification
+# PRLabel: HealthDeidentification
+/sdk/healthdataaiservices/                                         @GrahamMThomas @danielszaniszlo @jovinson-ms
 
 # ServiceLabel: %HPC Cache
 # ServiceOwners:                                                   @romahamu @omzevall
