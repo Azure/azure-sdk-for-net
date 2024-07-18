@@ -67,164 +67,151 @@ function UpdateDocIndexFiles([string]$docPath, [string] $mainJsPath) {
     Set-Content -Path $mainJsPath -Value $mainJsContent -NoNewline
 }
 
-$SdkTypeEnvVarValue = $Env:SDKType
-try {
-    if ($SdkTypeEnvVarValue) {
-        Write-Verbose "SDKType environment var was set, unsetting for docs gen"
-        rm Env:SDKType
-    }
-    Write-Verbose "Name Reccuring paths with variable names"
-    if ([System.String]::IsNullOrEmpty($ArtifactsDirectoryName)) {
-        $ArtifactsDirectoryName = $ArtifactName
-    }
-    $PackageLocation = "${ServiceDirectory}/${ArtifactsDirectoryName}"
-    $FrameworkDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-docs"
-    $ApiDir = "${FrameworkDir}/my-api"
-    $ApiDependenciesDir = "${FrameworkDir}/dependencies/my-api"
-    $XmlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-xml-output"
-    $YamlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-yaml-output"
-    $DocOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/docfx-output/docfx_project"
-    $DocOutApiDir = "${DocOutDir}/api"
-    $DocOutHtmlDir = "${DocOutDir}/_site"
-    $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
-    $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
-    $DocCommonGenDir = "${RepoRoot}/eng/common/docgeneration"
-    $GACampaignId = "UA-62780441-41"
+Write-Verbose "Name Reccuring paths with variable names"
+if ([System.String]::IsNullOrEmpty($ArtifactsDirectoryName)) {
+    $ArtifactsDirectoryName = $ArtifactName
+}
+$PackageLocation = "${ServiceDirectory}/${ArtifactsDirectoryName}"
+$FrameworkDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-docs"
+$ApiDir = "${FrameworkDir}/my-api"
+$ApiDependenciesDir = "${FrameworkDir}/dependencies/my-api"
+$XmlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-xml-output"
+$YamlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-yaml-output"
+$DocOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/docfx-output/docfx_project"
+$DocOutApiDir = "${DocOutDir}/api"
+$DocOutHtmlDir = "${DocOutDir}/_site"
+$MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
+$DocFxTool = "${BinDirectory}/docfx/docfx.exe"
+$DocCommonGenDir = "${RepoRoot}/eng/common/docgeneration"
+$GACampaignId = "UA-62780441-41"
 
-    if ($LibType -eq 'management') {
-        $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
-    }
+if ($LibType -eq 'management') {
+    $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
+}
 
-    Write-Verbose "Package Location ${PackageLocation}"
+Write-Verbose "Package Location ${PackageLocation}"
 
-    Write-Verbose "Create Directories Required for Doc Generation"
-    Write-Verbose "Creating ApiDir '$ApiDir'"
-    mkdir $ApiDir
-    Write-Verbose "Creating ApiDependenciesDir '$ApiDependenciesDir'"
-    mkdir $ApiDependenciesDir
-    Write-Verbose "Creating XmlOutDir '$XmlOutDir'"
-    mkdir $XmlOutDir
-    Write-Verbose "Creating YamlOutDir '$YamlOutDir'"
-    mkdir $YamlOutDir
-    Write-Verbose "Creating DocOutDir '$DocOutDir'"
-    mkdir $DocOutDir
+Write-Verbose "Create Directories Required for Doc Generation"
+Write-Verbose "Creating ApiDir '$ApiDir'"
+mkdir $ApiDir
+Write-Verbose "Creating ApiDependenciesDir '$ApiDependenciesDir'"
+mkdir $ApiDependenciesDir
+Write-Verbose "Creating XmlOutDir '$XmlOutDir'"
+mkdir $XmlOutDir
+Write-Verbose "Creating YamlOutDir '$YamlOutDir'"
+mkdir $YamlOutDir
+Write-Verbose "Creating DocOutDir '$DocOutDir'"
+mkdir $DocOutDir
 
-    if ($LibType -eq 'client') {
-        Write-Verbose "Build Packages for Doc Generation - Client"
-        Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir"
-        dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir
-        if ($LASTEXITCODE -ne 0) {
-            Log-Warning "Build Packages for Doc Generation - Client failed with $LASTEXITCODE please see output above"
-            exit 0
-        }
-
-        Write-Verbose "Include Client Dependencies"
-        Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true"
-        dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true
-        if ($LASTEXITCODE -ne 0) {
-            Log-Warning "Include Client Dependencies build failed with $LASTEXITCODE please see output above"
-            exit 0
-        }
-    } elseif ($LibType -eq 'management') {
-        # Management Package
-        Write-Verbose "Build Packages for Doc Generation - Management"
-        Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false"
-        dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false
-        if ($LASTEXITCODE -ne 0) {
-            Log-Warning "Build Packages for Doc Generation - Management failed with $LASTEXITCODE please see output above"
-            exit 0
-        }
-
-        Write-Verbose "Include Management Dependencies"
-        Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false"
-        dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
-        if ($LASTEXITCODE -ne 0) {
-            Log-Warning "Include Management Dependencies build failed with $LASTEXITCODE please see output above"
-            exit 0
-        }
-    } else {
-        Log-Warning "'$LibType' is not a supported library type at this time."
+if ($LibType -eq 'client') {
+    Write-Verbose "Build Packages for Doc Generation - Client"
+    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir"
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDir
+    if ($LASTEXITCODE -ne 0) {
+        Log-Warning "Build Packages for Doc Generation - Client failed with $LASTEXITCODE please see output above"
         exit 0
     }
 
-    Write-Verbose "Remove all unneeded artifacts from build output directory"
-    Remove-Item -Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml" -Recurse -Force
-
-    Write-Verbose "Initialize Frameworks File"
-    & "${MDocTool}" fx-bootstrap "${FrameworkDir}"
-
-    Write-Verbose "Include XML Files"
-    & "${BinDirectory}/PopImport/popimport.exe" -f "${FrameworkDir}"
-
-    Write-Verbose "Produce ECMAXML"
-    & "${MDocTool}" update -fx "${FrameworkDir}" -o "${XmlOutDir}" --debug -lang docid -lang vb.net -lang fsharp --delete
-
-    Write-Verbose "Generate YAML"
-    & "${BinDirectory}/ECMA2Yml/ECMA2Yaml.exe" -s "${XmlOutDir}" -o "${YamlOutDir}"
-
-    Write-Verbose "Provision DocFX Directory"
-    & "${DocFxTool}" init -q -o "${DocOutDir}"
-
-    Write-Verbose "Copy over Package ReadMe"
-    $PkgReadMePath = "${RepoRoot}/sdk/${PackageLocation}/README.md"
-    if ([System.IO.File]::Exists($PkgReadMePath)) {
-        Copy-Item $PkgReadMePath -Destination "${DocOutApiDir}/index.md" -Force
+    Write-Verbose "Include Client Dependencies"
+    Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true"
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true
+    if ($LASTEXITCODE -ne 0) {
+        Log-Warning "Include Client Dependencies build failed with $LASTEXITCODE please see output above"
+        exit 0
     }
-    else {
-        New-Item "${DocOutApiDir}/index.md" -Force
-        Add-Content -Path "${DocOutApiDir}/index.md" -Value "This Package Contains no Readme."
-        Write-Verbose "Package ReadMe was not found"
+} elseif ($LibType -eq 'management') {
+    # Management Package
+    Write-Verbose "Build Packages for Doc Generation - Management"
+    Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false"
+    dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false
+    if ($LASTEXITCODE -ne 0) {
+        Log-Warning "Build Packages for Doc Generation - Management failed with $LASTEXITCODE please see output above"
+        exit 0
     }
 
-    Write-Verbose "Make changes to docfx.json and main.js."
-    UpdateDocIndexFiles -docPath "${DocCommonGenDir}/docfx.json" -mainJsPath "${DocCommonGenDir}\templates\matthews\styles\main.js"
-
-    Write-Verbose "Copy over generated yml and other assets"
-    Copy-Item "${YamlOutDir}/*"-Destination "${DocOutApiDir}" -Recurse -Force
-    New-Item -Path "${DocOutDir}" -Name templates -ItemType directory
-    Copy-Item "${DocCommonGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
-    Copy-Item "${DocCommonGenDir}/docfx.json" -Destination "${DocOutDir}" -Force
-
-    $headerTemplateLocation = "${DocOutDir}/templates/matthews/partials/head.tmpl.partial"
-
-    if (Test-Path $headerTemplateLocation){
-        $headerTemplateContent = Get-Content -Path $headerTemplateLocation -Raw
-        $headerTemplateContent = $headerTemplateContent -replace "GA_CAMPAIGN_ID", $GACampaignId
-        Set-Content -Path $headerTemplateLocation -Value $headerTemplateContent -NoNewline
+    Write-Verbose "Include Management Dependencies"
+    Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false"
+    dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
+    if ($LASTEXITCODE -ne 0) {
+        Log-Warning "Include Management Dependencies build failed with $LASTEXITCODE please see output above"
+        exit 0
     }
-
-    Write-Verbose "Create Toc for Site Navigation"
-    New-Item "${DocOutDir}/toc.yml" -Force
-    Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: index.md"
-
-    Write-Verbose "Build Doc Content"
-    & "${DocFxTool}" build "${DocOutDir}/docfx.json"
-
-    Write-Verbose "Copy over site Logo"
-    Copy-Item "${DocCommonGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
-
-    # Copy everything inside of /api out.
-    Write-Verbose "Copy index.html and toc.yml out."
-    $destFolder = "${DocOutHtmlDir}/"
-    Copy-Item -Path "${DocOutHtmlDir}/api/index.html" -Destination $destFolder -Confirm:$false -Force
-
-    # Change the relative path inside index.html.
-    Write-Verbose "Make changes on relative path on page index.html."
-    $baseUrl = $destFolder + "index.html"
-    $content = Get-Content -Path $baseUrl -Raw
-    $hrefRegex = "[""']\.\.\/([^""']*)[""']"
-    $tocRegex = "[""'](./)?toc.html[""']"
-    # The order matters for the following mutations. If excutes the latter one, then we will see two same toc.html path.
-    $mutatedContent = $content -replace $tocRegex , "`"./api/toc.html`""
-    $mutatedContent = $mutatedContent -replace $hrefRegex, '"./$1"'
-    Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
-
-    Write-Verbose "Compress and copy HTML into the staging Area"
-    Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest
+} else {
+    Log-Warning "'$LibType' is not a supported library type at this time."
+    exit 0
 }
-finally {
-    if ($SdkTypeEnvVarValue) {
-        Write-Verbose "Restoring SDKType env to $SdkTypeEnvVarValue"
-        Env:SDKType=$SdkTypeEnvVarValue
-    }
+
+Write-Verbose "Remove all unneeded artifacts from build output directory"
+Remove-Item -Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml" -Recurse -Force
+
+Write-Verbose "Initialize Frameworks File"
+& "${MDocTool}" fx-bootstrap "${FrameworkDir}"
+
+Write-Verbose "Include XML Files"
+& "${BinDirectory}/PopImport/popimport.exe" -f "${FrameworkDir}"
+
+Write-Verbose "Produce ECMAXML"
+& "${MDocTool}" update -fx "${FrameworkDir}" -o "${XmlOutDir}" --debug -lang docid -lang vb.net -lang fsharp --delete
+
+Write-Verbose "Generate YAML"
+& "${BinDirectory}/ECMA2Yml/ECMA2Yaml.exe" -s "${XmlOutDir}" -o "${YamlOutDir}"
+
+Write-Verbose "Provision DocFX Directory"
+& "${DocFxTool}" init -q -o "${DocOutDir}"
+
+Write-Verbose "Copy over Package ReadMe"
+$PkgReadMePath = "${RepoRoot}/sdk/${PackageLocation}/README.md"
+if ([System.IO.File]::Exists($PkgReadMePath)) {
+    Copy-Item $PkgReadMePath -Destination "${DocOutApiDir}/index.md" -Force
 }
+else {
+    New-Item "${DocOutApiDir}/index.md" -Force
+    Add-Content -Path "${DocOutApiDir}/index.md" -Value "This Package Contains no Readme."
+    Write-Verbose "Package ReadMe was not found"
+}
+
+Write-Verbose "Make changes to docfx.json and main.js."
+UpdateDocIndexFiles -docPath "${DocCommonGenDir}/docfx.json" -mainJsPath "${DocCommonGenDir}\templates\matthews\styles\main.js"
+
+Write-Verbose "Copy over generated yml and other assets"
+Copy-Item "${YamlOutDir}/*"-Destination "${DocOutApiDir}" -Recurse -Force
+New-Item -Path "${DocOutDir}" -Name templates -ItemType directory
+Copy-Item "${DocCommonGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force
+Copy-Item "${DocCommonGenDir}/docfx.json" -Destination "${DocOutDir}" -Force
+
+$headerTemplateLocation = "${DocOutDir}/templates/matthews/partials/head.tmpl.partial"
+
+if (Test-Path $headerTemplateLocation){
+    $headerTemplateContent = Get-Content -Path $headerTemplateLocation -Raw
+    $headerTemplateContent = $headerTemplateContent -replace "GA_CAMPAIGN_ID", $GACampaignId
+    Set-Content -Path $headerTemplateLocation -Value $headerTemplateContent -NoNewline
+}
+
+Write-Verbose "Create Toc for Site Navigation"
+New-Item "${DocOutDir}/toc.yml" -Force
+Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: ${ArtifactName}`r`n  href: index.md"
+
+Write-Verbose "Build Doc Content"
+& "${DocFxTool}" build "${DocOutDir}/docfx.json"
+
+Write-Verbose "Copy over site Logo"
+Copy-Item "${DocCommonGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
+
+# Copy everything inside of /api out.
+Write-Verbose "Copy index.html and toc.yml out."
+$destFolder = "${DocOutHtmlDir}/"
+Copy-Item -Path "${DocOutHtmlDir}/api/index.html" -Destination $destFolder -Confirm:$false -Force
+
+# Change the relative path inside index.html.
+Write-Verbose "Make changes on relative path on page index.html."
+$baseUrl = $destFolder + "index.html"
+$content = Get-Content -Path $baseUrl -Raw
+$hrefRegex = "[""']\.\.\/([^""']*)[""']"
+$tocRegex = "[""'](./)?toc.html[""']"
+# The order matters for the following mutations. If excutes the latter one, then we will see two same toc.html path.
+$mutatedContent = $content -replace $tocRegex , "`"./api/toc.html`""
+$mutatedContent = $mutatedContent -replace $hrefRegex, '"./$1"'
+Set-Content -Path $baseUrl -Value $mutatedContent -NoNewline
+
+Write-Verbose "Compress and copy HTML into the staging Area"
+Compress-Archive -Path "${DocOutHtmlDir}/*" -DestinationPath "${ArtifactStagingDirectory}/${ArtifactName}/${ArtifactName}.docs.zip" -CompressionLevel Fastest
