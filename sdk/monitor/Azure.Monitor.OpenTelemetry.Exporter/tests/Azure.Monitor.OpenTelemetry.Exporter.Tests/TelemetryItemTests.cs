@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static MockPlatform GetMockPlatform(string? enableResourceMetric = null)
         {
-            var mockPlatform = GetMockPlatform();
+            var mockPlatform = new MockPlatform();
             mockPlatform.SetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC, enableResourceMetric);
             return mockPlatform;
         }
