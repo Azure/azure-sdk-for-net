@@ -534,7 +534,7 @@
 # ServiceLabel: %HDInsight
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
 
-# PRLabel: Health Deidentification
+# PRLabel: %Health Deidentification
 /sdk/healthdataaiservices/                                         @GrahamMThomas @danielszaniszlo
 
 # ServiceLabel: %Health Deidentification
