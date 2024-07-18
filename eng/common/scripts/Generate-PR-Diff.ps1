@@ -45,7 +45,7 @@ $changedServices = Get-ChangedServices -ChangedFiles $changedFiles
 $result = [PSCustomObject]@{
     "ChangedFiles" = $changedFiles
     "ChangedServices" = $changedServices
-    "PRNumber" = $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER
+    "PRNumber" = if ($env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER) { $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER } else { "-1" }
 }
 
 $result | ConvertTo-Json | Out-File $ArtifactName

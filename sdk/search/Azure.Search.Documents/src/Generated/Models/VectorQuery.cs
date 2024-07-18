@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// The query parameters for vector and hybrid search queries.
     /// Please note <see cref="VectorQuery"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VectorizableImageBinaryQuery"/>, <see cref="VectorizableImageUrlQuery"/>, <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
+    /// The available derived classes include <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
     /// </summary>
     public abstract partial class VectorQuery
     {
@@ -26,12 +26,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
         /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </param>
-        /// <param name="threshold">
-        /// The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric.
-        /// Please note <see cref="VectorThreshold"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
-        /// </param>
-        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold)
+        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight)
         {
             Kind = kind;
             KNearestNeighborsCount = kNearestNeighborsCount;
@@ -39,7 +34,6 @@ namespace Azure.Search.Documents.Models
             Exhaustive = exhaustive;
             Oversampling = oversampling;
             Weight = weight;
-            Threshold = threshold;
         }
 
         /// <summary> The kind of vector query being performed. </summary>
@@ -52,11 +46,5 @@ namespace Azure.Search.Documents.Models
         public double? Oversampling { get; set; }
         /// <summary> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </summary>
         public float? Weight { get; set; }
-        /// <summary>
-        /// The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric.
-        /// Please note <see cref="VectorThreshold"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
-        /// </summary>
-        public VectorThreshold Threshold { get; set; }
     }
 }
