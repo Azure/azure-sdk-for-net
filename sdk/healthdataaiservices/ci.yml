@@ -3,27 +3,32 @@
 trigger:
   branches:
     include:
-    - main
-    - hotfix/*
-    - release/*
+      - master
+      - feature/*
+      - hotfix/*
+      - release/*
   paths:
     include:
-    - sdk/healthdataaiservices
-    - sdk/healthdataaiservices/ci.yml
-    - sdk/healthdataaiservices/Azure.Health.AI.Deidentification
+      - sdk/healthdataaiservices
+      - sdk/healthdataaiservices/test-resources.bicep
+      - sdk/healthdataaiservices/test-resources-post.ps1
+      - sdk/healthdataaiservices/ci.yml
+      - sdk/healthdataaiservices/Azure.Health.Deidentification
 
 pr:
   branches:
     include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
   paths:
     include:
-    - sdk/healthdataaiservices
-    - sdk/healthdataaiservices/ci.yml
-    - sdk/healthdataaiservices/Azure.Health.AI.Deidentification
+      - sdk/healthdataaiservices
+      - sdk/healthdataaiservices/test-resources.bicep
+      - sdk/healthdataaiservices/test-resources-post.ps1
+      - sdk/healthdataaiservices/ci.yml
+      - sdk/healthdataaiservices/Azure.Health.Deidentification
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -31,5 +36,5 @@ extends:
     ServiceDirectory: healthdataaiservices
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Health.AI.Deidentification
-      safeName: AzureHealthAIDeidentification
+      - name: Azure.Health.Deidentification
+        safeName: AzureHealthDeidentification
