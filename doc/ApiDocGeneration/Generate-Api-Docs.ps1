@@ -14,9 +14,6 @@ The Name of the servicedirectory, usually the name of the service e.g. core
 .PARAMETER ArtifactsDirectoryName
 Used in the case where the package directory name is different from the package name. e.g in cognitiveservice packages
 
-.PARAMETER LibType
-Specifies if its a client or management library
-
 .PARAMETER RepoRoot
 The root of the Azure-SDK-for-Net Repo
 
@@ -40,8 +37,6 @@ Param (
     [Parameter(Mandatory = $True)]
     $ServiceDirectory,
     $ArtifactsDirectoryName,
-    [ValidateSet('client', 'management')]
-    $LibType = "client",
     $RepoRoot = "${PSScriptRoot}/../..",
     [Parameter(Mandatory = $True)]
     $BinDirectory,
@@ -85,10 +80,6 @@ $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
 $DocCommonGenDir = "${RepoRoot}/eng/common/docgeneration"
 $GACampaignId = "UA-62780441-41"
 
-if ($LibType -eq 'management') {
-    $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
-}
-
 Write-Verbose "Package Location ${PackageLocation}"
 
 Write-Verbose "Create Directories Required for Doc Generation"
@@ -103,45 +94,19 @@ mkdir $YamlOutDir
 Write-Verbose "Creating DocOutDir '$DocOutDir'"
 mkdir $DocOutDir
 
-if ($LibType -eq 'client') {
-    Write-Verbose "Build Packages for Doc Generation - Client"
-    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir
-    if ($LASTEXITCODE -ne 0) {
-        Log-Warning "Build Packages for Doc Generation - Client failed with $LASTEXITCODE please see output above"
-        exit 0
-    }
+Write-Verbose "Build Packages for Doc Generation - Client"
+Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir"
+dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir
+if ($LASTEXITCODE -ne 0) {
+    Log-Warning "Build Packages for Doc Generation - Client failed with $LASTEXITCODE please see output above"
+    exit 0
+}
 
-    Write-Verbose "Include Client Dependencies"
-    Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true
-    if ($LASTEXITCODE -ne 0) {
-        Log-Warning "Include Client Dependencies build failed with $LASTEXITCODE please see output above"
-        exit 0
-    }
-} elseif ($LibType -eq 'management') {
-    # Management Package
-    Write-Verbose "Build Packages for Doc Generation - Management"
-    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir
-    # Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false"
-    # dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false
-    if ($LASTEXITCODE -ne 0) {
-        Log-Warning "Build Packages for Doc Generation - Management failed with $LASTEXITCODE please see output above"
-        exit 0
-    }
-
-    Write-Verbose "Include Management Dependencies"
-    Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true"
-    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true
-    # Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false"
-    # dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
-    if ($LASTEXITCODE -ne 0) {
-        Log-Warning "Include Management Dependencies build failed with $LASTEXITCODE please see output above"
-        exit 0
-    }
-} else {
-    Log-Warning "'$LibType' is not a supported library type at this time."
+Write-Verbose "Include Client Dependencies"
+Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true"
+dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true
+if ($LASTEXITCODE -ne 0) {
+    Log-Warning "Include Client Dependencies build failed with $LASTEXITCODE please see output above"
     exit 0
 }
 
