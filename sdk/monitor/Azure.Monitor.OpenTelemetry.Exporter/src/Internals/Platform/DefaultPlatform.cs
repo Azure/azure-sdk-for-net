@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         private static IDictionary LoadEnvironmentVariables()
         {
             var variables = new Dictionary<string, string?>();
-            foreach (var key in EnvironmentVariableConstants.Variables)
+            foreach (var key in EnvironmentVariableConstants.HashSetDefinedEnvironmentVariables)
             {
                 variables.Add(key, Environment.GetEnvironmentVariable(key));
             }

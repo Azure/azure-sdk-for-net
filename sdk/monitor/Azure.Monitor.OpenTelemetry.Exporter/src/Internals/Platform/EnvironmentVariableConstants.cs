@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// All environment variables are read at SDK initialization.
         /// A unit test exists to ensure all environment variables are added to this HashSet.
         /// </summary>
-        public static readonly HashSet<string> Variables = new()
+        public static readonly HashSet<string> HashSetDefinedEnvironmentVariables = new()
         {
             APPLICATIONINSIGHTS_CONNECTION_STRING,
             APPLICATIONINSIGHTS_STATSBEAT_DISABLED,

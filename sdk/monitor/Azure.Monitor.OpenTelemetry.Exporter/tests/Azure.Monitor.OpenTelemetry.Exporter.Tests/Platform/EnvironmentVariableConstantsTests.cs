@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.Platform
             {
                 string? constValue = field.GetValue(null)?.ToString();
 
-                if (!EnvironmentVariableConstants.Variables.Contains(constValue!))
+                if (!EnvironmentVariableConstants.HashSetDefinedEnvironmentVariables.Contains(constValue!))
                 {
                     Assert.Fail($"The constant value is not in the Variables HashSet. Name: '{field.Name}' Value: '{constValue}'");
                 }
