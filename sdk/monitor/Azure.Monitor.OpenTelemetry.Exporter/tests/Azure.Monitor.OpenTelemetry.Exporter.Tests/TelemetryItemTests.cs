@@ -446,7 +446,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform("true"), instrumentationKey: instrumentationKey);
 
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), azMonResource, instrumentationKey, 1.0f);
-            var telemetryItem = telemetryItems.FirstOrDefault();
+            var telemetryItem = telemetryItems.First(x => x.Name == "Metric"); // Collect the "_OTELRESOURCE_" metric.
 
             var monitorBase = telemetryItem?.Data;
             var metricsData = monitorBase?.BaseData as MetricsData;
@@ -490,7 +490,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform("true"), instrumentationKey: instrumentationKey);
 
             var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity1 }, 1), azMonResource, instrumentationKey, 1.0f);
-            var telemetryItem1 = telemetryItems.FirstOrDefault();
+            var telemetryItem1 = telemetryItems.First(x => x.Name == "Metric"); // Collect the "_OTELRESOURCE_" metric.
 
             var monitorBase = telemetryItem1?.Data;
             var metricsData = monitorBase?.BaseData as MetricsData;
@@ -515,8 +515,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(activity2);
 
-            telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity2 }, 1), null, instrumentationKey, 1.0f);
-            var telemetryItem2 = telemetryItems.FirstOrDefault();
+            telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity2 }, 1), azMonResource, instrumentationKey, 1.0f);
+            var telemetryItem2 = telemetryItems.First(x => x.Name == "Metric"); // Collect the "_OTELRESOURCE_" metric.
 
             Assert.NotEqual(telemetryItem1?.Time, telemetryItem2?.Time);
         }
