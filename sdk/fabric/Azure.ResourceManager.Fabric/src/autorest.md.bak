@@ -54,7 +54,6 @@ rename-mapping:
   CheckNameAvailabilityResponse: FabricCheckNameAvailabilityResult
   CheckNameAvailabilityRequest: FabricCheckNameAvailabilityContent
   CheckNameAvailabilityReason: FabricNameUnavailableReason
-  CheckNameAvailabilityResult: FabricCheckNameAvailabilityResult
   ProvisioningState: FabricProvisioningState
   ResourceState: FabricResourceState
   RpSkuDetailsForNewResource: FabricSkuDetailsForNewCapacity

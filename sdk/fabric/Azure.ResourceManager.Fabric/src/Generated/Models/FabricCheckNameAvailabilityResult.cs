@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> Initializes a new instance of <see cref="FabricCheckNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is available. </param>
+        /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FabricCheckNameAvailabilityResult(bool? nameAvailable, FabricNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Fabric.Models
         public bool? NameAvailable { get; }
         /// <summary> The reason why the given name is not available. </summary>
         public FabricNameUnavailableReason? Reason { get; }
-        /// <summary> Detailed reason why the given name is available. </summary>
+        /// <summary> Detailed reason why the given name is not available. </summary>
         public string Message { get; }
     }
 }

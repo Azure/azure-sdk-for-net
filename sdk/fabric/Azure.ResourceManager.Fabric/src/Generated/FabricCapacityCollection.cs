@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListByResourceGroup</description>
+        /// <description>FabricCapacity_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListByResourceGroup</description>
+        /// <description>FabricCapacity_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

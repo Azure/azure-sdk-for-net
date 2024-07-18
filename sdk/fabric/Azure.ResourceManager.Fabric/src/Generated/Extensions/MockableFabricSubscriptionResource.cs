@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListBySubscription</description>
+        /// <description>FabricCapacity_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListBySubscription</description>
+        /// <description>FabricCapacity_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -123,12 +123,14 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<FabricCheckNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(AzureLocation location, FabricCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<FabricCheckNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(string location, FabricCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = FabricCapacityClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckNameAvailabilityFabricCapacity");
@@ -166,12 +168,14 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<FabricCheckNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(AzureLocation location, FabricCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<FabricCheckNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(string location, FabricCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = FabricCapacityClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckNameAvailabilityFabricCapacity");
