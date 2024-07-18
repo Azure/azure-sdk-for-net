@@ -6,6 +6,7 @@ using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -127,6 +128,28 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         }
 
         Assert.AreEqual(501, message.Response!.Status);
+    }
+
+    [Test]
+    // Retry-After header is larger - wait Retry-After
+    [TestCase("Retry-After", "5", 5000)]
+    // Retry-After header is shorter - wait exponential backoff time
+    [TestCase("Retry-After", "1", 1600)]
+    // Not standard HTTP header - wait exponential backoff time
+    [TestCase("retry-after-ms", "5", 1600)]
+    // No Retry-After header - wait exponential backoff time
+    [TestCase("Content-Type", "application/json", 1600)]
+    public void RespectsRetryAfterHeader(string headerName, string headerValue, double expected)
+    {
+        MockRetryPolicy retryPolicy = new MockRetryPolicy();
+        MockPipelineMessage message = new();
+        MockPipelineResponse response = new MockPipelineResponse();
+        response.SetHeader(headerName, headerValue);
+        message.SetResponse(response);
+
+        // Default delay with exponential backoff for second try is 1600 ms.
+        double delayMillis = retryPolicy.GetNextDelayMilliseconds(message, 2);
+        Assert.AreEqual(expected, delayMillis);
     }
 
     [Test]
