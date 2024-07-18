@@ -534,9 +534,11 @@
 # ServiceLabel: %HDInsight
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
 
-# ServiceLabel: %HealthDeidentification
 # PRLabel: HealthDeidentification
-/sdk/healthdataaiservices/                                         @GrahamMThomas @danielszaniszlo @jovinson-ms
+/sdk/healthdataaiservices/                                         @GrahamMThomas @danielszaniszlo
+
+# ServiceLabel: %HealthDeidentification
+# ServiceOwners:                                                   @GrahamMThomas @danielszaniszlo
 
 # ServiceLabel: %HPC Cache
 # ServiceOwners:                                                   @romahamu @omzevall
