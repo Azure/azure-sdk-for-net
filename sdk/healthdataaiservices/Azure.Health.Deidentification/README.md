@@ -22,7 +22,7 @@ dotnet add package Azure.Health.Deidentification --prerelease
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and `Deid Service`.
+> You must have an `Azure subscription` and `Deid Service`.
 
 ### Authenticate the client
 
@@ -94,10 +94,6 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
 -->
-
-## Next steps
-
-Other code samples can be viewed here [/samples](samples/)
 
 
 <!-- LINKS -->
