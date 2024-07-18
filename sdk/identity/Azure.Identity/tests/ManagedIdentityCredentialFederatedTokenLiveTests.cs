@@ -30,6 +30,8 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43401")]
+
         public async Task VerifyViaMockK8TokenExchangeEnvironment()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;

@@ -314,12 +314,13 @@ namespace Azure.Identity.Tests
             var options = new TokenCredentialOptions { Transport = mockTransport };
             var pipeline = CredentialPipeline.GetInstance(options);
 
-            ManagedIdentityCredential credential = (clientId, includeResourceIdentifier) switch
+            ManagedIdentityClientOptions clientOptions = (clientId, includeResourceIdentifier) switch
             {
-                (Item1: null, Item2: true) => InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(_expectedResourceId), pipeline, options, preserveTransport: true)),
-                (Item1: not null, Item2: false) => InstrumentClient(new ManagedIdentityCredential(clientId, pipeline, options, preserveTransport: true)),
-                _ => InstrumentClient(new ManagedIdentityCredential(clientId: null, pipeline, options, preserveTransport: true))
+                (Item1: null, Item2: true) => new ManagedIdentityClientOptions() { ClientId = null, ResourceIdentifier = new ResourceIdentifier(_expectedResourceId), Pipeline = pipeline, IsForceRefreshEnabled = true },
+                (Item1: not null, Item2: false) => new ManagedIdentityClientOptions() { ClientId = clientId, ResourceIdentifier = null, Pipeline = pipeline, IsForceRefreshEnabled = true },
+                _ => new ManagedIdentityClientOptions() { ClientId = null, ResourceIdentifier = null, Pipeline = pipeline, Options = options, PreserveTransport = true, IsForceRefreshEnabled = true }
             };
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(new ManagedIdentityClient(clientOptions)));
 
             if (clientId != null || includeResourceIdentifier)
             {
@@ -662,8 +663,12 @@ namespace Azure.Identity.Tests
             var response = CreateMockResponse(200, ExpectedToken);
             var mockTransport = new MockTransport(response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
-            ManagedIdentityCredential credential =
-                InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(resourceId), options));
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                new ManagedIdentityClientOptions { Pipeline = pipeline, ResourceIdentifier = new ResourceIdentifier(resourceId), PreserveTransport = false, Options = options, IsForceRefreshEnabled = true })
+            ));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -745,21 +750,23 @@ namespace Azure.Identity.Tests
                 return response;
             });
             var options = new TokenCredentialOptions() { Transport = mockTransport };
+            var pipeline = CredentialPipeline.GetInstance(options);
 
-            ManagedIdentityCredential client = (clientId, includeResourceIdentifier) switch
+            ManagedIdentityClientOptions clientOptions = (clientId, includeResourceIdentifier) switch
             {
-                (Item1: null, Item2: true) => InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(_expectedResourceId), options)),
-                (Item1: not null, Item2: false) => InstrumentClient(new ManagedIdentityCredential(clientId, options)),
-                _ => InstrumentClient(new ManagedIdentityCredential(clientId: null, options))
+                (Item1: null, Item2: true) => new ManagedIdentityClientOptions() { ClientId = null, ResourceIdentifier = new ResourceIdentifier(_expectedResourceId), Pipeline = pipeline, IsForceRefreshEnabled = true },
+                (Item1: not null, Item2: false) => new ManagedIdentityClientOptions() { ClientId = clientId, ResourceIdentifier = null, Pipeline = pipeline, IsForceRefreshEnabled = true },
+                _ => new ManagedIdentityClientOptions() { ClientId = null, ResourceIdentifier = null, Pipeline = pipeline, Options = options, PreserveTransport = true, IsForceRefreshEnabled = true }
             };
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(new ManagedIdentityClient(clientOptions)));
 
             if (clientId != null || includeResourceIdentifier)
             {
-                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
                 Assert.That(ex.Message, Does.Contain(Constants.MiSourceNoUserAssignedIdentityMessage));
                 return;
             }
-            AccessToken actualToken = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
         }
@@ -884,7 +891,9 @@ namespace Azure.Identity.Tests
             options.Retry.MaxDelay = TimeSpan.Zero;
             var pipeline = CredentialPipeline.GetInstance(options);
 
-            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline));
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions() { Pipeline = pipeline, ClientId = "mock-client-id", IsForceRefreshEnabled = true, Options = options })));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             await Task.CompletedTask;
