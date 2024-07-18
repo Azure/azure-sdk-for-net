@@ -122,16 +122,20 @@ if ($LibType -eq 'client') {
 } elseif ($LibType -eq 'management') {
     # Management Package
     Write-Verbose "Build Packages for Doc Generation - Management"
-    Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false"
-    dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false
+    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir"
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir
+    # Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false"
+    # dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false
     if ($LASTEXITCODE -ne 0) {
         Log-Warning "Build Packages for Doc Generation - Management failed with $LASTEXITCODE please see output above"
         exit 0
     }
 
     Write-Verbose "Include Management Dependencies"
-    Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false"
-    dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
+    Write-Verbose "'${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true"
+    dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true
+    # Write-Verbose "dotnet msbuild '${RepoRoot}/eng/mgmt.proj' /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false"
+    # dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDependenciesDir /p:CopyLocalLockFileAssemblies=true -maxcpucount:1 -nodeReuse:false
     if ($LASTEXITCODE -ne 0) {
         Log-Warning "Include Management Dependencies build failed with $LASTEXITCODE please see output above"
         exit 0
