@@ -19,12 +19,14 @@ internal static class ResourceExtensions
     private const string DefaultServiceName = "unknown_service";
     private const int Version = 2;
 
-    internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, IPlatform platform, string? instrumentationKey = null)
+    internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, IPlatform? platform = null, string? instrumentationKey = null)
     {
         if (resource == null)
         {
             return null;
         }
+
+        platform ??= DefaultPlatform.Instance;
 
         MetricsData? metricsData = null;
         AksResourceProcessor? aksResourceProcessor = null;
