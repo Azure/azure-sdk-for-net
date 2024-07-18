@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Perf.Infrastructure
             Client = new(
                 TestEnvironment.Endpoint,
                 credential,
-                ConfigureClientOptions(new ConversationsClientOptions()));
+                ConfigureClientOptions(new ConversationAnalysisClientOptions()));
         }
 
         protected PerfTestEnvironment TestEnvironment { get; } = PerfTestEnvironment.Instance;
