@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -444,7 +445,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
             var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform("true"), instrumentationKey: instrumentationKey);
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), null, instrumentationKey, 1.0f);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity }, 1), azMonResource, instrumentationKey, 1.0f);
             var telemetryItem = telemetryItems.FirstOrDefault();
 
             var monitorBase = telemetryItem?.Data;
@@ -488,7 +489,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
             var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform("true"), instrumentationKey: instrumentationKey);
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity1 }, 1), null, instrumentationKey, 1.0f);
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(new Batch<Activity>(new Activity[] { activity1 }, 1), azMonResource, instrumentationKey, 1.0f);
             var telemetryItem1 = telemetryItems.FirstOrDefault();
 
             var monitorBase = telemetryItem1?.Data;
@@ -500,6 +501,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("_OTELRESOURCE_", metricDataPoint?.Name);
             Assert.Equal(1, metricsData?.Properties.Count);
             Assert.Equal("bar", metricsData?.Properties["foo"]);
+
+            // This test will simulate exporting a second batch of telemetry items.
+            // The timestamp on the second batch MUST NOT match the timestamp on the first batch.
+            // Here we force a 1 millisecond delay and evaulate that the timestamps are unique.
+            Task.Delay(1).Wait();
 
             using var activity2 = activitySource.StartActivity(
                 ActivityName,
