@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
+using System.IO.Pipelines;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -776,13 +778,17 @@ namespace Azure.Identity.Tests
         public async Task VerifyMsiUnavailableOnIMDSAggregateExcpetion()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
-
+            var mockTransport = new MockTransport(req =>
+            {
+                throw new OperationCanceledException();
+            });
             // setting the delay to 1ms and retry mode to fixed to speed up test
-            var options = new TokenCredentialOptions() { Retry = { Delay = TimeSpan.FromMilliseconds(1), Mode = RetryMode.Fixed, NetworkTimeout = TimeSpan.FromMilliseconds(100) } };
+            var options = new TokenCredentialOptions() { IsChainedCredential = true, Transport = mockTransport, Retry = { Delay = TimeSpan.FromMilliseconds(1), Mode = RetryMode.Fixed, NetworkTimeout = TimeSpan.FromMilliseconds(100) } };
+            var pipeline = CredentialPipeline.GetInstance(options);
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
                 new ManagedIdentityClient(
-                    new ManagedIdentityClientOptions() { IsForceRefreshEnabled = true, Options = options, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true) })));
+                    new ManagedIdentityClientOptions() { IsForceRefreshEnabled = true, Options = options, Pipeline = pipeline })));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -797,7 +803,11 @@ namespace Azure.Identity.Tests
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var options = new TokenCredentialOptions() { Retry = { MaxRetries = 0, NetworkTimeout = TimeSpan.FromMilliseconds(100), MaxDelay = TimeSpan.Zero } };
+            var mockTransport = new MockTransport(req =>
+            {
+                throw new TaskCanceledException();
+            });
+            var options = new TokenCredentialOptions() {IsChainedCredential = true, Transport = mockTransport };
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
                 new ManagedIdentityClient(
@@ -806,7 +816,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.AggregateError));
+            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentitySource.NoResponseError));
 
             await Task.CompletedTask;
         }
@@ -975,13 +985,9 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Platform(Exclude = "MacOS", Reason = "Test is not supported on MacOS")]
         public void VerifyArcIdentitySourceFilePathValidation_DoesNotEndInDotKey()
         {
-            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
-            {
-                Assert.Ignore("Test is not supported on MacOS");
-            }
-
             using var environment = new TestEnvVar(
                 new()
                 {
@@ -1020,12 +1026,9 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Platform(Exclude = "MacOS", Reason = "Test is not supported on MacOS")]
         public void VerifyArcIdentitySourceFilePathValidation_FilePathInvalid()
         {
-            if (Environment.OSVersion.Platform == PlatformID.MacOSX)
-            {
-                Assert.Ignore("Test is not supported on MacOS");
-            }
             using var environment = new TestEnvVar(
                 new()
                 {
