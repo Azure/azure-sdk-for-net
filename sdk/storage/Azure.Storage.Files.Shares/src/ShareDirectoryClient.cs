@@ -1397,8 +1397,8 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             SetHttpHeadersInternal(
                 options?.SmbProperties,
-                options?.FilePermission.Permission,
-                options?.FilePermission.PermissionFormat,
+                options?.FilePermission?.Permission,
+                options?.FilePermission?.PermissionFormat,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1429,8 +1429,8 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             await SetHttpHeadersInternal(
                 options?.SmbProperties,
-                options?.FilePermission.Permission,
-                options?.FilePermission.PermissionFormat,
+                options?.FilePermission?.Permission,
+                options?.FilePermission?.PermissionFormat,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
