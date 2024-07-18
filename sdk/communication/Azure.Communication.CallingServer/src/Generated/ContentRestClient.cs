@@ -37,7 +37,7 @@ namespace Azure.Communication.CallingServer
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreatePlayRequest(string callConnectionId, PlayRequestInternal playRequestInternal)
+        internal HttpMessage CreatePlayRequest(string callConnectionId, PlayRequestInternal playRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,28 +51,28 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(playRequestInternal);
+            content.JsonWriter.WriteObjectValue(playRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
         /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
-        /// <param name="playRequestInternal"> The <see cref="PlayRequestInternal"/> to use. </param>
+        /// <param name="playRequest"> The <see cref="PlayRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequestInternal"/> is null. </exception>
-        public async Task<Response> PlayAsync(string callConnectionId, PlayRequestInternal playRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
+        public async Task<Response> PlayAsync(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (playRequestInternal == null)
+            if (playRequest == null)
             {
-                throw new ArgumentNullException(nameof(playRequestInternal));
+                throw new ArgumentNullException(nameof(playRequest));
             }
 
-            using var message = CreatePlayRequest(callConnectionId, playRequestInternal);
+            using var message = CreatePlayRequest(callConnectionId, playRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -85,21 +85,21 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Plays audio to participants in the call. </summary>
         /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
-        /// <param name="playRequestInternal"> The <see cref="PlayRequestInternal"/> to use. </param>
+        /// <param name="playRequest"> The <see cref="PlayRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequestInternal"/> is null. </exception>
-        public Response Play(string callConnectionId, PlayRequestInternal playRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
+        public Response Play(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (playRequestInternal == null)
+            if (playRequest == null)
             {
-                throw new ArgumentNullException(nameof(playRequestInternal));
+                throw new ArgumentNullException(nameof(playRequest));
             }
 
-            using var message = CreatePlayRequest(callConnectionId, playRequestInternal);
+            using var message = CreatePlayRequest(callConnectionId, playRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -169,7 +169,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateRecognizeRequest(string callConnectionId, RecognizeRequestInternal recognizeRequestInternal)
+        internal HttpMessage CreateRecognizeRequest(string callConnectionId, RecognizeRequestInternal recognizeRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -183,28 +183,28 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(recognizeRequestInternal);
+            content.JsonWriter.WriteObjectValue(recognizeRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Recognize media from call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="recognizeRequestInternal"> The media recognize request. </param>
+        /// <param name="recognizeRequest"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequestInternal"/> is null. </exception>
-        public async Task<Response> RecognizeAsync(string callConnectionId, RecognizeRequestInternal recognizeRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequest"/> is null. </exception>
+        public async Task<Response> RecognizeAsync(string callConnectionId, RecognizeRequestInternal recognizeRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (recognizeRequestInternal == null)
+            if (recognizeRequest == null)
             {
-                throw new ArgumentNullException(nameof(recognizeRequestInternal));
+                throw new ArgumentNullException(nameof(recognizeRequest));
             }
 
-            using var message = CreateRecognizeRequest(callConnectionId, recognizeRequestInternal);
+            using var message = CreateRecognizeRequest(callConnectionId, recognizeRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -217,21 +217,21 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Recognize media from call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="recognizeRequestInternal"> The media recognize request. </param>
+        /// <param name="recognizeRequest"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequestInternal"/> is null. </exception>
-        public Response Recognize(string callConnectionId, RecognizeRequestInternal recognizeRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequest"/> is null. </exception>
+        public Response Recognize(string callConnectionId, RecognizeRequestInternal recognizeRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (recognizeRequestInternal == null)
+            if (recognizeRequest == null)
             {
-                throw new ArgumentNullException(nameof(recognizeRequestInternal));
+                throw new ArgumentNullException(nameof(recognizeRequest));
             }
 
-            using var message = CreateRecognizeRequest(callConnectionId, recognizeRequestInternal);
+            using var message = CreateRecognizeRequest(callConnectionId, recognizeRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -37,7 +37,7 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreatePlayRequest(string callConnectionId, PlayRequestInternal playRequestInternal)
+        internal HttpMessage CreatePlayRequest(string callConnectionId, PlayRequestInternal playRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,28 +52,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(playRequestInternal);
+            content.JsonWriter.WriteObjectValue(playRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Plays audio to participants in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="playRequestInternal"> play request payload. </param>
+        /// <param name="playRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequestInternal"/> is null. </exception>
-        public async Task<Response> PlayAsync(string callConnectionId, PlayRequestInternal playRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
+        public async Task<Response> PlayAsync(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (playRequestInternal == null)
+            if (playRequest == null)
             {
-                throw new ArgumentNullException(nameof(playRequestInternal));
+                throw new ArgumentNullException(nameof(playRequest));
             }
 
-            using var message = CreatePlayRequest(callConnectionId, playRequestInternal);
+            using var message = CreatePlayRequest(callConnectionId, playRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -86,21 +86,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Plays audio to participants in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="playRequestInternal"> play request payload. </param>
+        /// <param name="playRequest"> play request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequestInternal"/> is null. </exception>
-        public Response Play(string callConnectionId, PlayRequestInternal playRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="playRequest"/> is null. </exception>
+        public Response Play(string callConnectionId, PlayRequestInternal playRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (playRequestInternal == null)
+            if (playRequest == null)
             {
-                throw new ArgumentNullException(nameof(playRequestInternal));
+                throw new ArgumentNullException(nameof(playRequest));
             }
 
-            using var message = CreatePlayRequest(callConnectionId, playRequestInternal);
+            using var message = CreatePlayRequest(callConnectionId, playRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -111,7 +111,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStartTranscriptionRequest(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequestInternal)
+        internal HttpMessage CreateStartTranscriptionRequest(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -126,28 +126,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(startTranscriptionRequestInternal);
+            content.JsonWriter.WriteObjectValue(startTranscriptionRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Starts transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startTranscriptionRequestInternal"> The <see cref="StartTranscriptionRequestInternal"/> to use. </param>
+        /// <param name="startTranscriptionRequest"> The <see cref="StartTranscriptionRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequestInternal"/> is null. </exception>
-        public async Task<Response> StartTranscriptionAsync(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
+        public async Task<Response> StartTranscriptionAsync(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (startTranscriptionRequestInternal == null)
+            if (startTranscriptionRequest == null)
             {
-                throw new ArgumentNullException(nameof(startTranscriptionRequestInternal));
+                throw new ArgumentNullException(nameof(startTranscriptionRequest));
             }
 
-            using var message = CreateStartTranscriptionRequest(callConnectionId, startTranscriptionRequestInternal);
+            using var message = CreateStartTranscriptionRequest(callConnectionId, startTranscriptionRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -160,21 +160,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Starts transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startTranscriptionRequestInternal"> The <see cref="StartTranscriptionRequestInternal"/> to use. </param>
+        /// <param name="startTranscriptionRequest"> The <see cref="StartTranscriptionRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequestInternal"/> is null. </exception>
-        public Response StartTranscription(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
+        public Response StartTranscription(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (startTranscriptionRequestInternal == null)
+            if (startTranscriptionRequest == null)
             {
-                throw new ArgumentNullException(nameof(startTranscriptionRequestInternal));
+                throw new ArgumentNullException(nameof(startTranscriptionRequest));
             }
 
-            using var message = CreateStartTranscriptionRequest(callConnectionId, startTranscriptionRequestInternal);
+            using var message = CreateStartTranscriptionRequest(callConnectionId, startTranscriptionRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -185,7 +185,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopTranscriptionRequest(string callConnectionId, StopTranscriptionRequestInternal stopTranscriptionRequestInternal)
+        internal HttpMessage CreateStopTranscriptionRequest(string callConnectionId, StopTranscriptionRequestInternal stopTranscriptionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -200,28 +200,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stopTranscriptionRequestInternal);
+            content.JsonWriter.WriteObjectValue(stopTranscriptionRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Stops transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="stopTranscriptionRequestInternal"> stop transcription request payload. </param>
+        /// <param name="stopTranscriptionRequest"> stop transcription request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopTranscriptionRequestInternal"/> is null. </exception>
-        public async Task<Response> StopTranscriptionAsync(string callConnectionId, StopTranscriptionRequestInternal stopTranscriptionRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopTranscriptionRequest"/> is null. </exception>
+        public async Task<Response> StopTranscriptionAsync(string callConnectionId, StopTranscriptionRequestInternal stopTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (stopTranscriptionRequestInternal == null)
+            if (stopTranscriptionRequest == null)
             {
-                throw new ArgumentNullException(nameof(stopTranscriptionRequestInternal));
+                throw new ArgumentNullException(nameof(stopTranscriptionRequest));
             }
 
-            using var message = CreateStopTranscriptionRequest(callConnectionId, stopTranscriptionRequestInternal);
+            using var message = CreateStopTranscriptionRequest(callConnectionId, stopTranscriptionRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -234,21 +234,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Stops transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="stopTranscriptionRequestInternal"> stop transcription request payload. </param>
+        /// <param name="stopTranscriptionRequest"> stop transcription request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopTranscriptionRequestInternal"/> is null. </exception>
-        public Response StopTranscription(string callConnectionId, StopTranscriptionRequestInternal stopTranscriptionRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopTranscriptionRequest"/> is null. </exception>
+        public Response StopTranscription(string callConnectionId, StopTranscriptionRequestInternal stopTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (stopTranscriptionRequestInternal == null)
+            if (stopTranscriptionRequest == null)
             {
-                throw new ArgumentNullException(nameof(stopTranscriptionRequestInternal));
+                throw new ArgumentNullException(nameof(stopTranscriptionRequest));
             }
 
-            using var message = CreateStopTranscriptionRequest(callConnectionId, stopTranscriptionRequestInternal);
+            using var message = CreateStopTranscriptionRequest(callConnectionId, stopTranscriptionRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -319,7 +319,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateRecognizeRequest(string callConnectionId, RecognizeRequestInternal recognizeRequestInternal)
+        internal HttpMessage CreateRecognizeRequest(string callConnectionId, RecognizeRequestInternal recognizeRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -334,28 +334,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(recognizeRequestInternal);
+            content.JsonWriter.WriteObjectValue(recognizeRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Recognize media from call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="recognizeRequestInternal"> The media recognize request. </param>
+        /// <param name="recognizeRequest"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequestInternal"/> is null. </exception>
-        public async Task<Response> RecognizeAsync(string callConnectionId, RecognizeRequestInternal recognizeRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequest"/> is null. </exception>
+        public async Task<Response> RecognizeAsync(string callConnectionId, RecognizeRequestInternal recognizeRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (recognizeRequestInternal == null)
+            if (recognizeRequest == null)
             {
-                throw new ArgumentNullException(nameof(recognizeRequestInternal));
+                throw new ArgumentNullException(nameof(recognizeRequest));
             }
 
-            using var message = CreateRecognizeRequest(callConnectionId, recognizeRequestInternal);
+            using var message = CreateRecognizeRequest(callConnectionId, recognizeRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -368,21 +368,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Recognize media from call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="recognizeRequestInternal"> The media recognize request. </param>
+        /// <param name="recognizeRequest"> The media recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequestInternal"/> is null. </exception>
-        public Response Recognize(string callConnectionId, RecognizeRequestInternal recognizeRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="recognizeRequest"/> is null. </exception>
+        public Response Recognize(string callConnectionId, RecognizeRequestInternal recognizeRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (recognizeRequestInternal == null)
+            if (recognizeRequest == null)
             {
-                throw new ArgumentNullException(nameof(recognizeRequestInternal));
+                throw new ArgumentNullException(nameof(recognizeRequest));
             }
 
-            using var message = CreateRecognizeRequest(callConnectionId, recognizeRequestInternal);
+            using var message = CreateRecognizeRequest(callConnectionId, recognizeRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -393,7 +393,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStartContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequestInternal)
+        internal HttpMessage CreateStartContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -408,28 +408,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequestInternal);
+            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Start continuous Dtmf recognition by subscribing to tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="continuousDtmfRecognitionRequestInternal"> The continuous recognize request. </param>
+        /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequestInternal"/> is null. </exception>
-        public async Task<Response> StartContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
+        public async Task<Response> StartContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (continuousDtmfRecognitionRequestInternal == null)
+            if (continuousDtmfRecognitionRequest == null)
             {
-                throw new ArgumentNullException(nameof(continuousDtmfRecognitionRequestInternal));
+                throw new ArgumentNullException(nameof(continuousDtmfRecognitionRequest));
             }
 
-            using var message = CreateStartContinuousDtmfRecognitionRequest(callConnectionId, continuousDtmfRecognitionRequestInternal);
+            using var message = CreateStartContinuousDtmfRecognitionRequest(callConnectionId, continuousDtmfRecognitionRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -442,21 +442,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Start continuous Dtmf recognition by subscribing to tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="continuousDtmfRecognitionRequestInternal"> The continuous recognize request. </param>
+        /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequestInternal"/> is null. </exception>
-        public Response StartContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
+        public Response StartContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (continuousDtmfRecognitionRequestInternal == null)
+            if (continuousDtmfRecognitionRequest == null)
             {
-                throw new ArgumentNullException(nameof(continuousDtmfRecognitionRequestInternal));
+                throw new ArgumentNullException(nameof(continuousDtmfRecognitionRequest));
             }
 
-            using var message = CreateStartContinuousDtmfRecognitionRequest(callConnectionId, continuousDtmfRecognitionRequestInternal);
+            using var message = CreateStartContinuousDtmfRecognitionRequest(callConnectionId, continuousDtmfRecognitionRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -467,7 +467,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequestInternal)
+        internal HttpMessage CreateStopContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -482,28 +482,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequestInternal);
+            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Stop continuous Dtmf recognition by unsubscribing to tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="continuousDtmfRecognitionRequestInternal"> The continuous recognize request. </param>
+        /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequestInternal"/> is null. </exception>
-        public async Task<Response> StopContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
+        public async Task<Response> StopContinuousDtmfRecognitionAsync(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (continuousDtmfRecognitionRequestInternal == null)
+            if (continuousDtmfRecognitionRequest == null)
             {
-                throw new ArgumentNullException(nameof(continuousDtmfRecognitionRequestInternal));
+                throw new ArgumentNullException(nameof(continuousDtmfRecognitionRequest));
             }
 
-            using var message = CreateStopContinuousDtmfRecognitionRequest(callConnectionId, continuousDtmfRecognitionRequestInternal);
+            using var message = CreateStopContinuousDtmfRecognitionRequest(callConnectionId, continuousDtmfRecognitionRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -516,21 +516,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Stop continuous Dtmf recognition by unsubscribing to tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="continuousDtmfRecognitionRequestInternal"> The continuous recognize request. </param>
+        /// <param name="continuousDtmfRecognitionRequest"> The continuous recognize request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequestInternal"/> is null. </exception>
-        public Response StopContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="continuousDtmfRecognitionRequest"/> is null. </exception>
+        public Response StopContinuousDtmfRecognition(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (continuousDtmfRecognitionRequestInternal == null)
+            if (continuousDtmfRecognitionRequest == null)
             {
-                throw new ArgumentNullException(nameof(continuousDtmfRecognitionRequestInternal));
+                throw new ArgumentNullException(nameof(continuousDtmfRecognitionRequest));
             }
 
-            using var message = CreateStopContinuousDtmfRecognitionRequest(callConnectionId, continuousDtmfRecognitionRequestInternal);
+            using var message = CreateStopContinuousDtmfRecognitionRequest(callConnectionId, continuousDtmfRecognitionRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -541,7 +541,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateSendDtmfTonesRequest(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequestInternal)
+        internal HttpMessage CreateSendDtmfTonesRequest(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -558,28 +558,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sendDtmfTonesRequestInternal);
+            content.JsonWriter.WriteObjectValue(sendDtmfTonesRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfTonesRequestInternal"> The send dtmf tones request. </param>
+        /// <param name="sendDtmfTonesRequest"> The send dtmf tones request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequestInternal"/> is null. </exception>
-        public async Task<Response<SendDtmfTonesResult>> SendDtmfTonesAsync(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequest"/> is null. </exception>
+        public async Task<Response<SendDtmfTonesResult>> SendDtmfTonesAsync(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (sendDtmfTonesRequestInternal == null)
+            if (sendDtmfTonesRequest == null)
             {
-                throw new ArgumentNullException(nameof(sendDtmfTonesRequestInternal));
+                throw new ArgumentNullException(nameof(sendDtmfTonesRequest));
             }
 
-            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequestInternal);
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -597,21 +597,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfTonesRequestInternal"> The send dtmf tones request. </param>
+        /// <param name="sendDtmfTonesRequest"> The send dtmf tones request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequestInternal"/> is null. </exception>
-        public Response<SendDtmfTonesResult> SendDtmfTones(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequest"/> is null. </exception>
+        public Response<SendDtmfTonesResult> SendDtmfTones(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (sendDtmfTonesRequestInternal == null)
+            if (sendDtmfTonesRequest == null)
             {
-                throw new ArgumentNullException(nameof(sendDtmfTonesRequestInternal));
+                throw new ArgumentNullException(nameof(sendDtmfTonesRequest));
             }
 
-            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequestInternal);
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -627,7 +627,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateUpdateTranscriptionRequest(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequestInternal)
+        internal HttpMessage CreateUpdateTranscriptionRequest(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -642,29 +642,29 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateTranscriptionRequestInternal);
+            content.JsonWriter.WriteObjectValue(updateTranscriptionRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> UpdateTranscription Api. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="updateTranscriptionRequestInternal"> The UpdateTranscription request. </param>
+        /// <param name="updateTranscriptionRequest"> The UpdateTranscription request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequestInternal"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
         /// <remarks> API to change transcription language. </remarks>
-        public async Task<Response> UpdateTranscriptionAsync(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequestInternal, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateTranscriptionAsync(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (updateTranscriptionRequestInternal == null)
+            if (updateTranscriptionRequest == null)
             {
-                throw new ArgumentNullException(nameof(updateTranscriptionRequestInternal));
+                throw new ArgumentNullException(nameof(updateTranscriptionRequest));
             }
 
-            using var message = CreateUpdateTranscriptionRequest(callConnectionId, updateTranscriptionRequestInternal);
+            using var message = CreateUpdateTranscriptionRequest(callConnectionId, updateTranscriptionRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -677,22 +677,22 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> UpdateTranscription Api. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="updateTranscriptionRequestInternal"> The UpdateTranscription request. </param>
+        /// <param name="updateTranscriptionRequest"> The UpdateTranscription request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequestInternal"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
         /// <remarks> API to change transcription language. </remarks>
-        public Response UpdateTranscription(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequestInternal, CancellationToken cancellationToken = default)
+        public Response UpdateTranscription(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (updateTranscriptionRequestInternal == null)
+            if (updateTranscriptionRequest == null)
             {
-                throw new ArgumentNullException(nameof(updateTranscriptionRequestInternal));
+                throw new ArgumentNullException(nameof(updateTranscriptionRequest));
             }
 
-            using var message = CreateUpdateTranscriptionRequest(callConnectionId, updateTranscriptionRequestInternal);
+            using var message = CreateUpdateTranscriptionRequest(callConnectionId, updateTranscriptionRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -703,7 +703,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateHoldRequest(string callConnectionId, HoldRequestInternal holdRequestInternal)
+        internal HttpMessage CreateHoldRequest(string callConnectionId, HoldRequestInternal holdRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -718,28 +718,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(holdRequestInternal);
+            content.JsonWriter.WriteObjectValue(holdRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Hold participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="holdRequestInternal"> The participants to be hold from the call. </param>
+        /// <param name="holdRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequestInternal"/> is null. </exception>
-        public async Task<Response> HoldAsync(string callConnectionId, HoldRequestInternal holdRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequest"/> is null. </exception>
+        public async Task<Response> HoldAsync(string callConnectionId, HoldRequestInternal holdRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (holdRequestInternal == null)
+            if (holdRequest == null)
             {
-                throw new ArgumentNullException(nameof(holdRequestInternal));
+                throw new ArgumentNullException(nameof(holdRequest));
             }
 
-            using var message = CreateHoldRequest(callConnectionId, holdRequestInternal);
+            using var message = CreateHoldRequest(callConnectionId, holdRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -752,21 +752,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Hold participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="holdRequestInternal"> The participants to be hold from the call. </param>
+        /// <param name="holdRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequestInternal"/> is null. </exception>
-        public Response Hold(string callConnectionId, HoldRequestInternal holdRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequest"/> is null. </exception>
+        public Response Hold(string callConnectionId, HoldRequestInternal holdRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (holdRequestInternal == null)
+            if (holdRequest == null)
             {
-                throw new ArgumentNullException(nameof(holdRequestInternal));
+                throw new ArgumentNullException(nameof(holdRequest));
             }
 
-            using var message = CreateHoldRequest(callConnectionId, holdRequestInternal);
+            using var message = CreateHoldRequest(callConnectionId, holdRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -777,7 +777,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateUnholdRequest(string callConnectionId, UnholdRequestInternal unholdRequestInternal)
+        internal HttpMessage CreateUnholdRequest(string callConnectionId, UnholdRequestInternal unholdRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -792,28 +792,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(unholdRequestInternal);
+            content.JsonWriter.WriteObjectValue(unholdRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Unhold participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unholdRequestInternal"> The participants to be hold from the call. </param>
+        /// <param name="unholdRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequestInternal"/> is null. </exception>
-        public async Task<Response> UnholdAsync(string callConnectionId, UnholdRequestInternal unholdRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequest"/> is null. </exception>
+        public async Task<Response> UnholdAsync(string callConnectionId, UnholdRequestInternal unholdRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (unholdRequestInternal == null)
+            if (unholdRequest == null)
             {
-                throw new ArgumentNullException(nameof(unholdRequestInternal));
+                throw new ArgumentNullException(nameof(unholdRequest));
             }
 
-            using var message = CreateUnholdRequest(callConnectionId, unholdRequestInternal);
+            using var message = CreateUnholdRequest(callConnectionId, unholdRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -826,21 +826,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Unhold participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unholdRequestInternal"> The participants to be hold from the call. </param>
+        /// <param name="unholdRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequestInternal"/> is null. </exception>
-        public Response Unhold(string callConnectionId, UnholdRequestInternal unholdRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequest"/> is null. </exception>
+        public Response Unhold(string callConnectionId, UnholdRequestInternal unholdRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (unholdRequestInternal == null)
+            if (unholdRequest == null)
             {
-                throw new ArgumentNullException(nameof(unholdRequestInternal));
+                throw new ArgumentNullException(nameof(unholdRequest));
             }
 
-            using var message = CreateUnholdRequest(callConnectionId, unholdRequestInternal);
+            using var message = CreateUnholdRequest(callConnectionId, unholdRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -851,7 +851,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStartHoldMusicRequest(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequestInternal)
+        internal HttpMessage CreateStartHoldMusicRequest(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -866,28 +866,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(startHoldMusicRequestInternal);
+            content.JsonWriter.WriteObjectValue(startHoldMusicRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Hold participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startHoldMusicRequestInternal"> The participants to be hold from the call. </param>
+        /// <param name="startHoldMusicRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startHoldMusicRequestInternal"/> is null. </exception>
-        public async Task<Response> StartHoldMusicAsync(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startHoldMusicRequest"/> is null. </exception>
+        public async Task<Response> StartHoldMusicAsync(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (startHoldMusicRequestInternal == null)
+            if (startHoldMusicRequest == null)
             {
-                throw new ArgumentNullException(nameof(startHoldMusicRequestInternal));
+                throw new ArgumentNullException(nameof(startHoldMusicRequest));
             }
 
-            using var message = CreateStartHoldMusicRequest(callConnectionId, startHoldMusicRequestInternal);
+            using var message = CreateStartHoldMusicRequest(callConnectionId, startHoldMusicRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -900,21 +900,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Hold participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startHoldMusicRequestInternal"> The participants to be hold from the call. </param>
+        /// <param name="startHoldMusicRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startHoldMusicRequestInternal"/> is null. </exception>
-        public Response StartHoldMusic(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startHoldMusicRequest"/> is null. </exception>
+        public Response StartHoldMusic(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (startHoldMusicRequestInternal == null)
+            if (startHoldMusicRequest == null)
             {
-                throw new ArgumentNullException(nameof(startHoldMusicRequestInternal));
+                throw new ArgumentNullException(nameof(startHoldMusicRequest));
             }
 
-            using var message = CreateStartHoldMusicRequest(callConnectionId, startHoldMusicRequestInternal);
+            using var message = CreateStartHoldMusicRequest(callConnectionId, startHoldMusicRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -925,7 +925,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopHoldMusicRequest(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequestInternal)
+        internal HttpMessage CreateStopHoldMusicRequest(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -940,28 +940,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stopHoldMusicRequestInternal);
+            content.JsonWriter.WriteObjectValue(stopHoldMusicRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Unhold participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="stopHoldMusicRequestInternal"> The participants to be hold from the call. </param>
+        /// <param name="stopHoldMusicRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopHoldMusicRequestInternal"/> is null. </exception>
-        public async Task<Response> StopHoldMusicAsync(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopHoldMusicRequest"/> is null. </exception>
+        public async Task<Response> StopHoldMusicAsync(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (stopHoldMusicRequestInternal == null)
+            if (stopHoldMusicRequest == null)
             {
-                throw new ArgumentNullException(nameof(stopHoldMusicRequestInternal));
+                throw new ArgumentNullException(nameof(stopHoldMusicRequest));
             }
 
-            using var message = CreateStopHoldMusicRequest(callConnectionId, stopHoldMusicRequestInternal);
+            using var message = CreateStopHoldMusicRequest(callConnectionId, stopHoldMusicRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -974,21 +974,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Unhold participants from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="stopHoldMusicRequestInternal"> The participants to be hold from the call. </param>
+        /// <param name="stopHoldMusicRequest"> The participants to be hold from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopHoldMusicRequestInternal"/> is null. </exception>
-        public Response StopHoldMusic(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopHoldMusicRequest"/> is null. </exception>
+        public Response StopHoldMusic(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (stopHoldMusicRequestInternal == null)
+            if (stopHoldMusicRequest == null)
             {
-                throw new ArgumentNullException(nameof(stopHoldMusicRequestInternal));
+                throw new ArgumentNullException(nameof(stopHoldMusicRequest));
             }
 
-            using var message = CreateStopHoldMusicRequest(callConnectionId, stopHoldMusicRequestInternal);
+            using var message = CreateStopHoldMusicRequest(callConnectionId, stopHoldMusicRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -999,7 +999,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStartMediaStreamingRequest(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequestInternal)
+        internal HttpMessage CreateStartMediaStreamingRequest(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1014,29 +1014,29 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(startMediaStreamingRequestInternal);
+            content.JsonWriter.WriteObjectValue(startMediaStreamingRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Starts media streaming in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startMediaStreamingRequestInternal"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
+        /// <param name="startMediaStreamingRequest"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequestInternal"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequest"/> is null. </exception>
         /// <remarks> Starts media streaming in the call. </remarks>
-        public async Task<Response> StartMediaStreamingAsync(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequestInternal, CancellationToken cancellationToken = default)
+        public async Task<Response> StartMediaStreamingAsync(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (startMediaStreamingRequestInternal == null)
+            if (startMediaStreamingRequest == null)
             {
-                throw new ArgumentNullException(nameof(startMediaStreamingRequestInternal));
+                throw new ArgumentNullException(nameof(startMediaStreamingRequest));
             }
 
-            using var message = CreateStartMediaStreamingRequest(callConnectionId, startMediaStreamingRequestInternal);
+            using var message = CreateStartMediaStreamingRequest(callConnectionId, startMediaStreamingRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1049,22 +1049,22 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Starts media streaming in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startMediaStreamingRequestInternal"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
+        /// <param name="startMediaStreamingRequest"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequestInternal"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequest"/> is null. </exception>
         /// <remarks> Starts media streaming in the call. </remarks>
-        public Response StartMediaStreaming(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequestInternal, CancellationToken cancellationToken = default)
+        public Response StartMediaStreaming(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (startMediaStreamingRequestInternal == null)
+            if (startMediaStreamingRequest == null)
             {
-                throw new ArgumentNullException(nameof(startMediaStreamingRequestInternal));
+                throw new ArgumentNullException(nameof(startMediaStreamingRequest));
             }
 
-            using var message = CreateStartMediaStreamingRequest(callConnectionId, startMediaStreamingRequestInternal);
+            using var message = CreateStartMediaStreamingRequest(callConnectionId, startMediaStreamingRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1075,7 +1075,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopMediaStreamingRequest(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequestInternal)
+        internal HttpMessage CreateStopMediaStreamingRequest(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1090,29 +1090,29 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stopMediaStreamingRequestInternal);
+            content.JsonWriter.WriteObjectValue(stopMediaStreamingRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Stops media streaming in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="stopMediaStreamingRequestInternal"> stop media streaming request payload. </param>
+        /// <param name="stopMediaStreamingRequest"> stop media streaming request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequestInternal"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequest"/> is null. </exception>
         /// <remarks> Stops media streaming in the call. </remarks>
-        public async Task<Response> StopMediaStreamingAsync(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequestInternal, CancellationToken cancellationToken = default)
+        public async Task<Response> StopMediaStreamingAsync(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (stopMediaStreamingRequestInternal == null)
+            if (stopMediaStreamingRequest == null)
             {
-                throw new ArgumentNullException(nameof(stopMediaStreamingRequestInternal));
+                throw new ArgumentNullException(nameof(stopMediaStreamingRequest));
             }
 
-            using var message = CreateStopMediaStreamingRequest(callConnectionId, stopMediaStreamingRequestInternal);
+            using var message = CreateStopMediaStreamingRequest(callConnectionId, stopMediaStreamingRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1125,22 +1125,22 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Stops media streaming in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="stopMediaStreamingRequestInternal"> stop media streaming request payload. </param>
+        /// <param name="stopMediaStreamingRequest"> stop media streaming request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequestInternal"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequest"/> is null. </exception>
         /// <remarks> Stops media streaming in the call. </remarks>
-        public Response StopMediaStreaming(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequestInternal, CancellationToken cancellationToken = default)
+        public Response StopMediaStreaming(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (stopMediaStreamingRequestInternal == null)
+            if (stopMediaStreamingRequest == null)
             {
-                throw new ArgumentNullException(nameof(stopMediaStreamingRequestInternal));
+                throw new ArgumentNullException(nameof(stopMediaStreamingRequest));
             }
 
-            using var message = CreateStopMediaStreamingRequest(callConnectionId, stopMediaStreamingRequestInternal);
+            using var message = CreateStopMediaStreamingRequest(callConnectionId, stopMediaStreamingRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
