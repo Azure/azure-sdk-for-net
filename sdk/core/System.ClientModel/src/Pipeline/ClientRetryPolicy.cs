@@ -270,8 +270,22 @@ public class ClientRetryPolicy : PipelinePolicy
     /// </returns>
     protected virtual TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
     {
-        // Default implementation is exponential backoff
-        return TimeSpan.FromMilliseconds((1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds);
+        // Default implementation is exponential backoff, unless the response
+        // has a retry-after header.
+        double nextDelayMilliseconds = (1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds;
+
+        if (message.Response is not null &&
+            message.Response.Headers.TryGetValue("Retry-After", out string? retryAfter) &&
+            double.TryParse(retryAfter, out double retryAfterSeconds))
+        {
+            double retryAfterMilliseconds = retryAfterSeconds * 1000;
+            if (retryAfterMilliseconds > nextDelayMilliseconds)
+            {
+                nextDelayMilliseconds = retryAfterMilliseconds;
+            }
+        }
+
+        return TimeSpan.FromMilliseconds(nextDelayMilliseconds);
     }
 
     /// <summary>
