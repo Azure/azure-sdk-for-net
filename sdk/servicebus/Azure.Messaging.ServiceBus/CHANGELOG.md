@@ -26,7 +26,9 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains a fix for decoding messages with a null format code as the body.
 
-- Improved efficiency of subclient creation, reducing allocations when no explicit options are passed.  - Fixed deserialization of the lock token to take into account endianness. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
+- Improved efficiency of subclient creation, reducing allocations when no explicit options are passed.
+
+- Fixed deserialization of the lock token to take into account endianness. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
 
 ## 7.18.0-beta.1 (2024-05-08)
 
