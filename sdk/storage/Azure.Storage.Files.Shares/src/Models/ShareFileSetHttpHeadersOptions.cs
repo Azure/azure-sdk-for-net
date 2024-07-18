@@ -4,8 +4,8 @@
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// Optional parameters to set for <see cref="ShareFileClient.SetHttpHeaders(ShareFileSetHttpHeadersOptions, System.Threading.CancellationToken)"/>
-    /// and <see cref="ShareFileClient.SetHttpHeadersAsync(ShareFileSetHttpHeadersOptions, System.Threading.CancellationToken)"/>.
+    /// Optional parameters to set for <see cref="ShareFileClient.SetHttpHeaders(ShareFileSetHttpHeadersOptions, ShareFileRequestConditions, System.Threading.CancellationToken)"/>
+    /// and <see cref="ShareFileClient.SetHttpHeadersAsync(ShareFileSetHttpHeadersOptions, ShareFileRequestConditions, System.Threading.CancellationToken)"/>
     /// </summary>
     public class ShareFileSetHttpHeadersOptions
     {
