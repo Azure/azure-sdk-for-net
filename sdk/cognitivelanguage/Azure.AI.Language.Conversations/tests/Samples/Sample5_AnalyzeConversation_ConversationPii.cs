@@ -98,7 +98,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationAnalysisClientOptions.ServiceVersion.V2023_04_01)]
+        [ServiceVersion(Min = ConversationAnalysisClientOptions.ServiceVersion.V2024_05_01)]
         public async Task AnalyzeConversationAsync_ConversationPii()
         {
             ConversationAnalysisClient client = Client;

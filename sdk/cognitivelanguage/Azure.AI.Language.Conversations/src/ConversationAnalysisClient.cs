@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNull(analyzeConversationOperationInput, nameof(analyzeConversationOperationInput));
             Argument.AssertNotNull(cancellationToken, nameof(cancellationToken));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversationOperationAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.AnalyzeConversationOperation");
             scope.Start();
 
             using RequestContent content = analyzeConversationOperationInput.ToRequestContent();
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateAnalyzeConversationSubmitOperationRequest(content, context);
-                Operation<BinaryData> operation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.AnalyzeConversationOperationAsync", OperationFinalStateVia.OperationLocation, context, WaitUntil.Completed).ConfigureAwait(false);
+                Operation<BinaryData> operation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.AnalyzeConversationOperation", OperationFinalStateVia.OperationLocation, context, WaitUntil.Completed).ConfigureAwait(false);
                 Response response = operation.GetRawResponse();
                 return Response.FromValue(AnalyzeConversationOperationState.FromResponse(response), response);
             }
