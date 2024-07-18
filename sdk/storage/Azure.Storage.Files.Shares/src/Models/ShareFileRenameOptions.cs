@@ -49,7 +49,7 @@ namespace Azure.Storage.Files.Shares.Models
         public string FilePermission { get; set; }
 
         /// <summary>
-        /// Optional file permission format.  Default is SDDL.
+        /// optional file permission format to set on 
         /// </summary>
         public FilePermissionFormat? FilePermissionFormat { get; set; }
 
