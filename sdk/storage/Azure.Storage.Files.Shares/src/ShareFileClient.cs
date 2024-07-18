@@ -1303,6 +1303,7 @@ namespace Azure.Storage.Files.Shares
                 metadata: options?.Metadata,
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission,
+                filePermissionFormat: options?.FilePermissionFormat,
                 filePermissionCopyMode: options?.FilePermissionCopyMode,
                 ignoreReadOnly: options?.IgnoreReadOnly,
                 setArchiveAttribute: options?.Archive,
@@ -1379,6 +1380,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 filePermissionCopyMode,
                 ignoreReadOnly,
                 setArchiveAttribute,
@@ -1425,6 +1427,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties: default,
                 filePermission: default,
+                filePermissionFormat: default,
                 filePermissionCopyMode: default,
                 ignoreReadOnly: default,
                 setArchiveAttribute: default,
@@ -1468,6 +1471,7 @@ namespace Azure.Storage.Files.Shares
                 metadata: options?.Metadata,
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission,
+                filePermissionFormat: options?.FilePermissionFormat,
                 filePermissionCopyMode: options?.FilePermissionCopyMode,
                 ignoreReadOnly: options?.IgnoreReadOnly,
                 setArchiveAttribute: options?.Archive,
@@ -1544,6 +1548,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 filePermissionCopyMode,
                 ignoreReadOnly,
                 setArchiveAttribute,
@@ -1590,6 +1595,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties: default,
                 filePermission: default,
+                filePermissionFormat: default,
                 filePermissionCopyMode: default,
                 ignoreReadOnly: default,
                 setArchiveAttribute: default,
@@ -1617,6 +1623,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional file permission format.
         /// </param>
         /// <param name="filePermissionCopyMode">
         /// Specifies the option to copy file security descriptor from source file or
@@ -1659,6 +1668,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
+            FilePermissionFormat? filePermissionFormat,
             PermissionCopyMode? filePermissionCopyMode,
             bool? ignoreReadOnly,
             bool? setArchiveAttribute,
@@ -1769,6 +1779,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: uriBuilder.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
@@ -1781,6 +1792,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: uriBuilder.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
