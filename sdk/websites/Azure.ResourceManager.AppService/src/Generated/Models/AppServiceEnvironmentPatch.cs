@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, UpgradePreference? upgradePreference, int? dedicatedHostCount, bool? isZoneRedundant, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration, AseV3NetworkingConfigurationData networkingConfiguration, UpgradeAvailability? upgradeAvailability, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, AppServiceVirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, AppServiceEnvironmentUpgradePreference? upgradePreference, int? dedicatedHostCount, bool? isZoneRedundant, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration, AseV3NetworkingConfigurationData networkingConfiguration, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? HasLinuxWorkers { get; }
         /// <summary> Upgrade Preference. </summary>
         [WirePath("properties.upgradePreference")]
-        public UpgradePreference? UpgradePreference { get; set; }
+        public AppServiceEnvironmentUpgradePreference? UpgradePreference { get; set; }
         /// <summary> Dedicated Host Count. </summary>
         [WirePath("properties.dedicatedHostCount")]
         public int? DedicatedHostCount { get; set; }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
         public AseV3NetworkingConfigurationData NetworkingConfiguration { get; set; }
         /// <summary> Whether an upgrade is available for this App Service Environment. </summary>
         [WirePath("properties.upgradeAvailability")]
-        public UpgradeAvailability? UpgradeAvailability { get; }
+        public AppServiceEnvironmentUpgradeAvailability? UpgradeAvailability { get; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }

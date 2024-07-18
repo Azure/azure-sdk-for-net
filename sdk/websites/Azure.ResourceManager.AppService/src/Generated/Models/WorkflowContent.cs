@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowContent"/>. </summary>
-        /// <param name="parameterType"> The type. </param>
+        /// <param name="webAppParameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="description"> The description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowContent(ParameterType? parameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkflowContent(WebAppParameterType? webAppParameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ParameterType = parameterType;
+            WebAppParameterType = webAppParameterType;
             Value = value;
             Metadata = metadata;
             Description = description;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The type. </summary>
         [WirePath("type")]
-        public ParameterType? ParameterType { get; set; }
+        public WebAppParameterType? WebAppParameterType { get; set; }
         /// <summary>
         /// The value.
         /// <para>

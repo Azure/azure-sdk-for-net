@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.AppService
             string targetPort = default;
             bool? isMain = default;
             string startUpCommand = default;
-            AuthType? authType = default;
+            SiteContainerAuthType? authType = default;
             string userName = default;
             string passwordSecret = default;
             string userManagedIdentityClientId = default;
             DateTimeOffset? createdTime = default;
             DateTimeOffset? lastModifiedTime = default;
-            IList<VolumeMount> volumeMounts = default;
-            IList<EnvironmentVariable> environmentVariables = default;
+            IList<SiteContainerVolumeMount> volumeMounts = default;
+            IList<WebAppEnvironmentVariable> environmentVariables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            authType = property0.Value.GetString().ToAuthType();
+                            authType = property0.Value.GetString().ToSiteContainerAuthType();
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<VolumeMount> array = new List<VolumeMount>();
+                            List<SiteContainerVolumeMount> array = new List<SiteContainerVolumeMount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VolumeMount.DeserializeVolumeMount(item, options));
+                                array.Add(SiteContainerVolumeMount.DeserializeSiteContainerVolumeMount(item, options));
                             }
                             volumeMounts = array;
                             continue;
@@ -311,10 +311,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                            List<WebAppEnvironmentVariable> array = new List<WebAppEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item, options));
+                                array.Add(WebAppEnvironmentVariable.DeserializeWebAppEnvironmentVariable(item, options));
                             }
                             environmentVariables = array;
                             continue;
@@ -343,8 +343,8 @@ namespace Azure.ResourceManager.AppService
                 userManagedIdentityClientId,
                 createdTime,
                 lastModifiedTime,
-                volumeMounts ?? new ChangeTrackingList<VolumeMount>(),
-                environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),
+                volumeMounts ?? new ChangeTrackingList<SiteContainerVolumeMount>(),
+                environmentVariables ?? new ChangeTrackingList<WebAppEnvironmentVariable>(),
                 kind,
                 serializedAdditionalRawData);
         }

@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            RecurrenceFrequency? frequency = default;
+            WorkflowRecurrenceFrequency? frequency = default;
             int? interval = default;
             string startTime = default;
             string endTime = default;
             string timeZone = default;
-            RecurrenceSchedule schedule = default;
+            WorkflowRecurrenceSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    frequency = new RecurrenceFrequency(property.Value.GetString());
+                    frequency = new WorkflowRecurrenceFrequency(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interval"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    schedule = RecurrenceSchedule.DeserializeRecurrenceSchedule(property.Value, options);
+                    schedule = WorkflowRecurrenceSchedule.DeserializeWorkflowRecurrenceSchedule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

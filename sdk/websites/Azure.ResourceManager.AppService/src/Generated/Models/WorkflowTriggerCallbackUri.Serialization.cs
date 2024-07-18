@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
             string basePath = default;
             string relativePath = default;
             IReadOnlyList<string> relativePathParameters = default;
-            WorkflowTriggerListCallbackUrlQueries queries = default;
+            WorkflowTriggerListCallbackUriQueries queries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    queries = WorkflowTriggerListCallbackUrlQueries.DeserializeWorkflowTriggerListCallbackUrlQueries(property.Value, options);
+                    queries = WorkflowTriggerListCallbackUriQueries.DeserializeWorkflowTriggerListCallbackUriQueries(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

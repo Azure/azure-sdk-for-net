@@ -255,22 +255,22 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                 },
                 FunctionAppConfig = new FunctionAppConfig()
                 {
-                    DeploymentStorage = new FunctionsDeploymentStorage()
+                    DeploymentStorage = new FunctionAppStorage()
                     {
-                        FunctionStorageType = FunctionStorageType.BlobContainer,
+                        StorageType = FunctionAppStorageType.BlobContainer,
                         Value = new Uri("https://storageAccountName.blob.core.windows.net/containername"),
-                        Authentication = new FunctionsDeploymentStorageAuthentication()
+                        Authentication = new FunctionAppStorageAuthentication()
                         {
-                            AuthenticationType = AuthenticationType.StorageAccountConnectionString,
+                            AuthenticationType = FunctionAppStorageAccountAuthenticationType.StorageAccountConnectionString,
                             StorageAccountConnectionStringName = "TheAppSettingName",
                         },
                     },
-                    Runtime = new FunctionsRuntime()
+                    Runtime = new FunctionAppRuntime()
                     {
-                        Name = RuntimeName.Python,
+                        Name = FunctionAppRuntimeName.Python,
                         Version = "3.11",
                     },
-                    ScaleAndConcurrency = new FunctionsScaleAndConcurrency()
+                    ScaleAndConcurrency = new FunctionAppScaleAndConcurrency()
                     {
                         MaximumInstanceCount = 100,
                         InstanceMemoryMB = 2048,
@@ -332,26 +332,26 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                 },
                 FunctionAppConfig = new FunctionAppConfig()
                 {
-                    DeploymentStorage = new FunctionsDeploymentStorage()
+                    DeploymentStorage = new FunctionAppStorage()
                     {
-                        FunctionStorageType = FunctionStorageType.BlobContainer,
+                        StorageType = FunctionAppStorageType.BlobContainer,
                         Value = new Uri("https://storageAccountName.blob.core.windows.net/containername"),
-                        Authentication = new FunctionsDeploymentStorageAuthentication()
+                        Authentication = new FunctionAppStorageAuthentication()
                         {
-                            AuthenticationType = AuthenticationType.StorageAccountConnectionString,
+                            AuthenticationType = FunctionAppStorageAccountAuthenticationType.StorageAccountConnectionString,
                             StorageAccountConnectionStringName = "TheAppSettingName",
                         },
                     },
-                    Runtime = new FunctionsRuntime()
+                    Runtime = new FunctionAppRuntime()
                     {
-                        Name = RuntimeName.Python,
+                        Name = FunctionAppRuntimeName.Python,
                         Version = "3.11",
                     },
-                    ScaleAndConcurrency = new FunctionsScaleAndConcurrency()
+                    ScaleAndConcurrency = new FunctionAppScaleAndConcurrency()
                     {
                         AlwaysReady =
 {
-new FunctionsAlwaysReadyConfig()
+new FunctionAppAlwaysReadyConfig()
 {
 Name = "http",
 InstanceCount = 2,

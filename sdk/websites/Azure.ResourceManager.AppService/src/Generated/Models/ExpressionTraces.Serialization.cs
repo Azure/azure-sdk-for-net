@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             BinaryData value = default;
-            IReadOnlyList<ExpressionRoot> inputs = default;
+            IReadOnlyList<WorkflowExpressionRoot> inputs = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<ExpressionRoot> array = new List<ExpressionRoot>();
+                    List<WorkflowExpressionRoot> array = new List<WorkflowExpressionRoot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressionRoot.DeserializeExpressionRoot(item, options));
+                        array.Add(WorkflowExpressionRoot.DeserializeWorkflowExpressionRoot(item, options));
                     }
                     inputs = array;
                     continue;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExpressionTraces(value, inputs ?? new ChangeTrackingList<ExpressionRoot>(), nextLink, serializedAdditionalRawData);
+            return new ExpressionTraces(value, inputs ?? new ChangeTrackingList<WorkflowExpressionRoot>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

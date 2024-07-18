@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.AppService
         StaticSiteBuildLinkedBackendResource IOperationSource<StaticSiteBuildLinkedBackendResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(document.RootElement);
+            var data = StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(document.RootElement);
             return new StaticSiteBuildLinkedBackendResource(_client, data);
         }
 
         async ValueTask<StaticSiteBuildLinkedBackendResource> IOperationSource<StaticSiteBuildLinkedBackendResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(document.RootElement);
+            var data = StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(document.RootElement);
             return new StaticSiteBuildLinkedBackendResource(_client, data);
         }
     }

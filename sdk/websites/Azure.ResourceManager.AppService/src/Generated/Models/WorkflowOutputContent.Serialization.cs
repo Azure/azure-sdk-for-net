@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ParameterType))
+            if (Optional.IsDefined(WebAppParameterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ParameterType.Value.ToString());
+                writer.WriteStringValue(WebAppParameterType.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             BinaryData error = default;
-            ParameterType? type = default;
+            WebAppParameterType? type = default;
             BinaryData value = default;
             BinaryData metadata = default;
             string description = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    type = new ParameterType(property.Value.GetString());
+                    type = new WebAppParameterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParameterType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebAppParameterType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ParameterType))
+                if (Optional.IsDefined(WebAppParameterType))
                 {
                     builder.Append("  type: ");
-                    builder.AppendLine($"'{ParameterType.Value.ToString()}'");
+                    builder.AppendLine($"'{WebAppParameterType.Value.ToString()}'");
                 }
             }
 

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.AppService.Models
             CustomDomains = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
-            LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackend>();
-            DatabaseConnections = new ChangeTrackingList<DatabaseConnectionOverview>();
+            LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackendInfo>();
+            DatabaseConnections = new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSitePatch"/>. </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="databaseConnections"> Database connections for the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSitePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string defaultHostname, Uri repositoryUri, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplate templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackend> linkedBackends, string provider, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus, string publicNetworkAccess, IReadOnlyList<DatabaseConnectionOverview> databaseConnections, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSitePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string defaultHostname, Uri repositoryUri, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplate templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, string provider, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus, string publicNetworkAccess, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DefaultHostname = defaultHostname;
             RepositoryUri = repositoryUri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
         public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get; }
         /// <summary> Backends linked to the static side. </summary>
         [WirePath("properties.linkedBackends")]
-        public IReadOnlyList<StaticSiteLinkedBackend> LinkedBackends { get; }
+        public IReadOnlyList<StaticSiteLinkedBackendInfo> LinkedBackends { get; }
         /// <summary> The provider that submitted the last deployment to the primary environment of the static site. </summary>
         [WirePath("properties.provider")]
         public string Provider { get; set; }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string PublicNetworkAccess { get; set; }
         /// <summary> Database connections for the static site. </summary>
         [WirePath("properties.databaseConnections")]
-        public IReadOnlyList<DatabaseConnectionOverview> DatabaseConnections { get; }
+        public IReadOnlyList<StaticSiteDatabaseConnectionOverview> DatabaseConnections { get; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }

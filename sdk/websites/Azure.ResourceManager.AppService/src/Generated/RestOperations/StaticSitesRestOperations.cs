@@ -1647,7 +1647,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> GetBuildDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteDatabaseConnectionData>> GetBuildDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1661,13 +1661,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseConnectionData)null, message.Response);
+                    return Response.FromValue((StaticSiteDatabaseConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1682,7 +1682,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> GetBuildDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteDatabaseConnectionData> GetBuildDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1696,19 +1696,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseConnectionData)null, message.Response);
+                    return Response.FromValue((StaticSiteDatabaseConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateBuildDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionData data)
+        internal RequestUriBuilder CreateCreateOrUpdateBuildDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, StaticSiteDatabaseConnectionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateBuildDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionData data)
+        internal HttpMessage CreateCreateOrUpdateBuildDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, StaticSiteDatabaseConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1764,7 +1764,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="databaseConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> CreateOrUpdateBuildDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteDatabaseConnectionData>> CreateOrUpdateBuildDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, StaticSiteDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1779,9 +1779,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1799,7 +1799,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="databaseConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> CreateOrUpdateBuildDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionData data, CancellationToken cancellationToken = default)
+        public Response<StaticSiteDatabaseConnectionData> CreateOrUpdateBuildDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, StaticSiteDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1814,9 +1814,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1924,7 +1924,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateUpdateBuildDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchContent content)
+        internal RequestUriBuilder CreateUpdateBuildDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, StaticSiteDatabaseConnectionPatchContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1942,7 +1942,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateUpdateBuildDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchContent content)
+        internal HttpMessage CreateUpdateBuildDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, StaticSiteDatabaseConnectionPatchContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1980,7 +1980,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="databaseConnectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> UpdateBuildDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteDatabaseConnectionData>> UpdateBuildDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, StaticSiteDatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1995,9 +1995,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2015,7 +2015,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="databaseConnectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> UpdateBuildDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
+        public Response<StaticSiteDatabaseConnectionData> UpdateBuildDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, StaticSiteDatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2030,9 +2030,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2093,7 +2093,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> GetBuildDatabaseConnectionWithDetailsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteDatabaseConnectionData>> GetBuildDatabaseConnectionWithDetailsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2107,9 +2107,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2126,7 +2126,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> GetBuildDatabaseConnectionWithDetails(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteDatabaseConnectionData> GetBuildDatabaseConnectionWithDetails(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2140,9 +2140,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3288,7 +3288,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateGetBasicAuthRequestUri(string subscriptionId, string resourceGroupName, string name, BasicAuthName basicAuthName)
+        internal RequestUriBuilder CreateGetBasicAuthRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteBasicAuthName basicAuthName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3304,7 +3304,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateGetBasicAuthRequest(string subscriptionId, string resourceGroupName, string name, BasicAuthName basicAuthName)
+        internal HttpMessage CreateGetBasicAuthRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteBasicAuthName basicAuthName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3334,7 +3334,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteBasicAuthPropertiesARMResourceData>> GetBasicAuthAsync(string subscriptionId, string resourceGroupName, string name, BasicAuthName basicAuthName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteBasicAuthPropertyData>> GetBasicAuthAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3346,13 +3346,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteBasicAuthPropertiesARMResourceData value = default;
+                        StaticSiteBasicAuthPropertyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteBasicAuthPropertiesARMResourceData.DeserializeStaticSiteBasicAuthPropertiesARMResourceData(document.RootElement);
+                        value = StaticSiteBasicAuthPropertyData.DeserializeStaticSiteBasicAuthPropertyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteBasicAuthPropertiesARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteBasicAuthPropertyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3366,7 +3366,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteBasicAuthPropertiesARMResourceData> GetBasicAuth(string subscriptionId, string resourceGroupName, string name, BasicAuthName basicAuthName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteBasicAuthPropertyData> GetBasicAuth(string subscriptionId, string resourceGroupName, string name, StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3378,19 +3378,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteBasicAuthPropertiesARMResourceData value = default;
+                        StaticSiteBasicAuthPropertyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteBasicAuthPropertiesARMResourceData.DeserializeStaticSiteBasicAuthPropertiesARMResourceData(document.RootElement);
+                        value = StaticSiteBasicAuthPropertyData.DeserializeStaticSiteBasicAuthPropertyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteBasicAuthPropertiesARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteBasicAuthPropertyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateBasicAuthRequestUri(string subscriptionId, string resourceGroupName, string name, BasicAuthName basicAuthName, StaticSiteBasicAuthPropertiesARMResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateBasicAuthRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteBasicAuthName basicAuthName, StaticSiteBasicAuthPropertyData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3406,7 +3406,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateBasicAuthRequest(string subscriptionId, string resourceGroupName, string name, BasicAuthName basicAuthName, StaticSiteBasicAuthPropertiesARMResourceData data)
+        internal HttpMessage CreateCreateOrUpdateBasicAuthRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteBasicAuthName basicAuthName, StaticSiteBasicAuthPropertyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3441,7 +3441,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteBasicAuthPropertiesARMResourceData>> CreateOrUpdateBasicAuthAsync(string subscriptionId, string resourceGroupName, string name, BasicAuthName basicAuthName, StaticSiteBasicAuthPropertiesARMResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteBasicAuthPropertyData>> CreateOrUpdateBasicAuthAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteBasicAuthName basicAuthName, StaticSiteBasicAuthPropertyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3454,9 +3454,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteBasicAuthPropertiesARMResourceData value = default;
+                        StaticSiteBasicAuthPropertyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteBasicAuthPropertiesARMResourceData.DeserializeStaticSiteBasicAuthPropertiesARMResourceData(document.RootElement);
+                        value = StaticSiteBasicAuthPropertyData.DeserializeStaticSiteBasicAuthPropertyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3473,7 +3473,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteBasicAuthPropertiesARMResourceData> CreateOrUpdateBasicAuth(string subscriptionId, string resourceGroupName, string name, BasicAuthName basicAuthName, StaticSiteBasicAuthPropertiesARMResourceData data, CancellationToken cancellationToken = default)
+        public Response<StaticSiteBasicAuthPropertyData> CreateOrUpdateBasicAuth(string subscriptionId, string resourceGroupName, string name, StaticSiteBasicAuthName basicAuthName, StaticSiteBasicAuthPropertyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3486,9 +3486,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteBasicAuthPropertiesARMResourceData value = default;
+                        StaticSiteBasicAuthPropertyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteBasicAuthPropertiesARMResourceData.DeserializeStaticSiteBasicAuthPropertiesARMResourceData(document.RootElement);
+                        value = StaticSiteBasicAuthPropertyData.DeserializeStaticSiteBasicAuthPropertyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4332,7 +4332,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> GetDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteDatabaseConnectionData>> GetDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4345,13 +4345,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseConnectionData)null, message.Response);
+                    return Response.FromValue((StaticSiteDatabaseConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -4365,7 +4365,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> GetDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteDatabaseConnectionData> GetDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4378,19 +4378,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseConnectionData)null, message.Response);
+                    return Response.FromValue((StaticSiteDatabaseConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionData data)
+        internal RequestUriBuilder CreateCreateOrUpdateDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, StaticSiteDatabaseConnectionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -4406,7 +4406,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionData data)
+        internal HttpMessage CreateCreateOrUpdateDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, StaticSiteDatabaseConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4441,7 +4441,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="databaseConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> CreateOrUpdateDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteDatabaseConnectionData>> CreateOrUpdateDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, StaticSiteDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4455,9 +4455,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4474,7 +4474,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="databaseConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> CreateOrUpdateDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionData data, CancellationToken cancellationToken = default)
+        public Response<StaticSiteDatabaseConnectionData> CreateOrUpdateDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, StaticSiteDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4488,9 +4488,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4590,7 +4590,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateUpdateDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchContent content)
+        internal RequestUriBuilder CreateUpdateDatabaseConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, StaticSiteDatabaseConnectionPatchContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -4606,7 +4606,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateUpdateDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchContent content)
+        internal HttpMessage CreateUpdateDatabaseConnectionRequest(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, StaticSiteDatabaseConnectionPatchContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4641,7 +4641,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="databaseConnectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> UpdateDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteDatabaseConnectionData>> UpdateDatabaseConnectionAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, StaticSiteDatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4655,9 +4655,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4674,7 +4674,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="databaseConnectionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> UpdateDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
+        public Response<StaticSiteDatabaseConnectionData> UpdateDatabaseConnection(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, StaticSiteDatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4688,9 +4688,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4746,7 +4746,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseConnectionData>> GetDatabaseConnectionWithDetailsAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteDatabaseConnectionData>> GetDatabaseConnectionWithDetailsAsync(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4759,9 +4759,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4777,7 +4777,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseConnectionData> GetDatabaseConnectionWithDetails(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteDatabaseConnectionData> GetDatabaseConnectionWithDetails(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4790,9 +4790,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DatabaseConnectionData value = default;
+                        StaticSiteDatabaseConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseConnectionData.DeserializeDatabaseConnectionData(document.RootElement);
+                        value = StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -6522,7 +6522,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateValidateBackendRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data)
+        internal RequestUriBuilder CreateValidateBackendRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -6539,7 +6539,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateValidateBackendRequest(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data)
+        internal HttpMessage CreateValidateBackendRequest(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -6575,7 +6575,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateBackendAsync(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateBackendAsync(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -6604,7 +6604,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateBackend(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public Response ValidateBackend(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -6624,7 +6624,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateValidateBackendForBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data)
+        internal RequestUriBuilder CreateValidateBackendForBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -6643,7 +6643,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateValidateBackendForBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data)
+        internal HttpMessage CreateValidateBackendForBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -6682,7 +6682,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateBackendForBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateBackendForBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -6713,7 +6713,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateBackendForBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public Response ValidateBackendForBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -6976,7 +6976,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedBackendName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteLinkedBackendARMResourceData>> GetLinkedBackendAsync(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteLinkedBackendData>> GetLinkedBackendAsync(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -6989,13 +6989,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteLinkedBackendARMResourceData value = default;
+                        StaticSiteLinkedBackendData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(document.RootElement);
+                        value = StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteLinkedBackendARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteLinkedBackendData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -7009,7 +7009,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedBackendName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteLinkedBackendARMResourceData> GetLinkedBackend(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteLinkedBackendData> GetLinkedBackend(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -7022,19 +7022,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteLinkedBackendARMResourceData value = default;
+                        StaticSiteLinkedBackendData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(document.RootElement);
+                        value = StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteLinkedBackendARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteLinkedBackendData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateLinkBackendRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data)
+        internal RequestUriBuilder CreateLinkBackendRequestUri(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -7050,7 +7050,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateLinkBackendRequest(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data)
+        internal HttpMessage CreateLinkBackendRequest(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -7085,7 +7085,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> LinkBackendAsync(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> LinkBackendAsync(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -7113,7 +7113,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response LinkBackend(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public Response LinkBackend(string subscriptionId, string resourceGroupName, string name, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -7285,7 +7285,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="linkedBackendName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteLinkedBackendARMResourceData>> GetLinkedBackendForBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteLinkedBackendData>> GetLinkedBackendForBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -7299,13 +7299,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteLinkedBackendARMResourceData value = default;
+                        StaticSiteLinkedBackendData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(document.RootElement);
+                        value = StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteLinkedBackendARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteLinkedBackendData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -7320,7 +7320,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="linkedBackendName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteLinkedBackendARMResourceData> GetLinkedBackendForBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteLinkedBackendData> GetLinkedBackendForBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -7334,19 +7334,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteLinkedBackendARMResourceData value = default;
+                        StaticSiteLinkedBackendData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(document.RootElement);
+                        value = StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteLinkedBackendARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteLinkedBackendData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateLinkBackendToBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data)
+        internal RequestUriBuilder CreateLinkBackendToBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -7364,7 +7364,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateLinkBackendToBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data)
+        internal HttpMessage CreateLinkBackendToBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -7402,7 +7402,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> LinkBackendToBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> LinkBackendToBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -7432,7 +7432,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response LinkBackendToBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public Response LinkBackendToBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

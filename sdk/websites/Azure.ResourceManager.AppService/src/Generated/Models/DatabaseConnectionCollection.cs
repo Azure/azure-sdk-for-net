@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="DatabaseConnectionCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DatabaseConnectionCollection(IEnumerable<DatabaseConnectionData> value)
+        internal DatabaseConnectionCollection(IEnumerable<StaticSiteDatabaseConnectionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseConnectionCollection(IReadOnlyList<DatabaseConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatabaseConnectionCollection(IReadOnlyList<StaticSiteDatabaseConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<DatabaseConnectionData> Value { get; }
+        public IReadOnlyList<StaticSiteDatabaseConnectionData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

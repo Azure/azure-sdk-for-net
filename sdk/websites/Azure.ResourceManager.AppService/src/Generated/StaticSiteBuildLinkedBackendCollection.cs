@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StaticSiteBuildLinkedBackendResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StaticSiteBuildLinkedBackendResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
             Argument.AssertNotNull(data, nameof(data));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StaticSiteBuildLinkedBackendResource> CreateOrUpdate(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StaticSiteBuildLinkedBackendResource> CreateOrUpdate(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
             Argument.AssertNotNull(data, nameof(data));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateGetLinkedBackendsForBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateGetLinkedBackendsForBuildNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildLinkedBackendResource(Client, StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(e)), _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildLinkedBackendCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildLinkedBackendResource(Client, StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(e)), _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildLinkedBackendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateGetLinkedBackendsForBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildLinkedBackendStaticSitesRestClient.CreateGetLinkedBackendsForBuildNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildLinkedBackendResource(Client, StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(e)), _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildLinkedBackendCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildLinkedBackendResource(Client, StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(e)), _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildLinkedBackendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

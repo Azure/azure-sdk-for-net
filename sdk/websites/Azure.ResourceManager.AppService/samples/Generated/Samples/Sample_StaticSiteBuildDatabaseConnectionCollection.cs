@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Samples
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DatabaseConnectionData resourceData = item.Data;
+                StaticSiteDatabaseConnectionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatabaseConnectionData resourceData = result.Data;
+            StaticSiteDatabaseConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DatabaseConnectionData resourceData = result.Data;
+                StaticSiteDatabaseConnectionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // invoke the operation
             string databaseConnectionName = "default";
-            DatabaseConnectionData data = new DatabaseConnectionData()
+            StaticSiteDatabaseConnectionData data = new StaticSiteDatabaseConnectionData()
             {
                 ResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/databaseRG/providers/Microsoft.DocumentDB/databaseAccounts/exampleDatabaseName"),
                 ConnectionIdentity = "SystemAssigned",
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatabaseConnectionData resourceData = result.Data;
+            StaticSiteDatabaseConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

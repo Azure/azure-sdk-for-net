@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             WorkflowSkuName name = default;
-            ResourceReference plan = default;
+            WorkflowResourceReference plan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    plan = ResourceReference.DeserializeResourceReference(property.Value, options);
+                    plan = WorkflowResourceReference.DeserializeWorkflowResourceReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppJsonSchema>> GetSchemaJsonAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebAppJsonSchema>> GetSchemaJsonAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.GetSchemaJson");
             scope.Start();
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppJsonSchema> GetSchemaJson(CancellationToken cancellationToken = default)
+        public virtual Response<WebAppJsonSchema> GetSchemaJson(CancellationToken cancellationToken = default)
         {
             using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.GetSchemaJson");
             scope.Start();

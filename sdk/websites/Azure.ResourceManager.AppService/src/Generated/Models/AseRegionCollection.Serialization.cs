@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<AseRegion> value = default;
+            IReadOnlyList<AppServiceAseRegion> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AseRegion> array = new List<AseRegion>();
+                    List<AppServiceAseRegion> array = new List<AppServiceAseRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AseRegion.DeserializeAseRegion(item, options));
+                        array.Add(AppServiceAseRegion.DeserializeAppServiceAseRegion(item, options));
                     }
                     value = array;
                     continue;

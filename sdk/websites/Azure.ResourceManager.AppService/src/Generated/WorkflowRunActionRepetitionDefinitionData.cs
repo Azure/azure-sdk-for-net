@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public WorkflowRunActionRepetitionDefinitionData(AzureLocation location) : base(location)
         {
-            RetryHistory = new ChangeTrackingList<RetryHistory>();
-            RepetitionIndexes = new ChangeTrackingList<RepetitionIndex>();
+            RetryHistory = new ChangeTrackingList<WebAppRetryHistory>();
+            RepetitionIndexes = new ChangeTrackingList<WorkflowRunActionRepetitionIndex>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionData"/>. </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="iterationCount"></param>
         /// <param name="repetitionIndexes"> The repetition indexes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, RunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, string trackingId, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, BinaryData trackedProperties, IList<RetryHistory> retryHistory, int? iterationCount, IList<RepetitionIndex> repetitionIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, int? iterationCount, IList<WorkflowRunActionRepetitionIndex> repetitionIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> The correlation properties. </summary>
         [WirePath("properties.correlation")]
-        public RunActionCorrelation Correlation { get; set; }
+        public WebAppRunActionCorrelation Correlation { get; set; }
         /// <summary> The status of the workflow scope repetition. </summary>
         [WirePath("properties.status")]
         public WorkflowStatus? Status { get; set; }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService
         public BinaryData Inputs { get; }
         /// <summary> Gets the link to inputs. </summary>
         [WirePath("properties.inputsLink")]
-        public ContentLink InputsLink { get; }
+        public WebAppContentLink InputsLink { get; }
         /// <summary>
         /// Gets the outputs.
         /// <para>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         public BinaryData Outputs { get; }
         /// <summary> Gets the link to outputs. </summary>
         [WirePath("properties.outputsLink")]
-        public ContentLink OutputsLink { get; }
+        public WebAppContentLink OutputsLink { get; }
         /// <summary>
         /// Gets the tracked properties.
         /// <para>
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.AppService
         public BinaryData TrackedProperties { get; }
         /// <summary> Gets the retry histories. </summary>
         [WirePath("properties.retryHistory")]
-        public IList<RetryHistory> RetryHistory { get; }
+        public IList<WebAppRetryHistory> RetryHistory { get; }
         /// <summary> Gets or sets the iteration count. </summary>
         [WirePath("properties.iterationCount")]
         public int? IterationCount { get; set; }
         /// <summary> The repetition indexes. </summary>
         [WirePath("properties.repetitionIndexes")]
-        public IList<RepetitionIndex> RepetitionIndexes { get; }
+        public IList<WorkflowRunActionRepetitionIndex> RepetitionIndexes { get; }
     }
 }

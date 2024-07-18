@@ -366,11 +366,11 @@ namespace Azure.ResourceManager.AppService
             return GetStaticSiteUserProvidedFunctionApps().Get(functionAppName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteBasicAuthPropertiesARMResources in the StaticSite. </summary>
-        /// <returns> An object representing collection of StaticSiteBasicAuthPropertiesARMResources and their operations over a StaticSiteBasicAuthPropertiesARMResource. </returns>
-        public virtual StaticSiteBasicAuthPropertiesARMResourceCollection GetStaticSiteBasicAuthPropertiesARMResources()
+        /// <summary> Gets a collection of StaticSiteBasicAuthPropertyResources in the StaticSite. </summary>
+        /// <returns> An object representing collection of StaticSiteBasicAuthPropertyResources and their operations over a StaticSiteBasicAuthPropertyResource. </returns>
+        public virtual StaticSiteBasicAuthPropertyCollection GetStaticSiteBasicAuthProperties()
         {
-            return GetCachedClient(client => new StaticSiteBasicAuthPropertiesARMResourceCollection(client, Id));
+            return GetCachedClient(client => new StaticSiteBasicAuthPropertyCollection(client, Id));
         }
 
         /// <summary>
@@ -390,16 +390,16 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertiesARMResource"/></description>
+        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="basicAuthName"> name of the basic auth entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StaticSiteBasicAuthPropertiesARMResource>> GetStaticSiteBasicAuthPropertiesARMResourceAsync(BasicAuthName basicAuthName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteBasicAuthPropertyResource>> GetStaticSiteBasicAuthPropertyAsync(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
-            return await GetStaticSiteBasicAuthPropertiesARMResources().GetAsync(basicAuthName, cancellationToken).ConfigureAwait(false);
+            return await GetStaticSiteBasicAuthProperties().GetAsync(basicAuthName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -419,16 +419,16 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertiesARMResource"/></description>
+        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="basicAuthName"> name of the basic auth entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<StaticSiteBasicAuthPropertiesARMResource> GetStaticSiteBasicAuthPropertiesARMResource(BasicAuthName basicAuthName, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSiteBasicAuthPropertyResource> GetStaticSiteBasicAuthProperty(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
-            return GetStaticSiteBasicAuthPropertiesARMResources().Get(basicAuthName, cancellationToken);
+            return GetStaticSiteBasicAuthProperties().Get(basicAuthName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StaticSiteCustomDomainOverviewResources in the StaticSite. </summary>
@@ -1895,12 +1895,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseConnectionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseConnectionData> GetDatabaseConnectionsWithDetailsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StaticSiteDatabaseConnectionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StaticSiteDatabaseConnectionData> GetDatabaseConnectionsWithDetailsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetDatabaseConnectionsWithDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateGetDatabaseConnectionsWithDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatabaseConnectionData.DeserializeDatabaseConnectionData(e), _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetDatabaseConnectionsWithDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(e), _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetDatabaseConnectionsWithDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1925,12 +1925,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseConnectionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseConnectionData> GetDatabaseConnectionsWithDetails(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StaticSiteDatabaseConnectionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StaticSiteDatabaseConnectionData> GetDatabaseConnectionsWithDetails(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetDatabaseConnectionsWithDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateGetDatabaseConnectionsWithDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatabaseConnectionData.DeserializeDatabaseConnectionData(e), _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetDatabaseConnectionsWithDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(e), _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetDatabaseConnectionsWithDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

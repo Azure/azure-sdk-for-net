@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatabaseConnectionData resourceData = result.Data;
+            StaticSiteDatabaseConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildDatabaseConnectionResource staticSiteBuildDatabaseConnection = client.GetStaticSiteBuildDatabaseConnectionResource(staticSiteBuildDatabaseConnectionResourceId);
 
             // invoke the operation
-            DatabaseConnectionPatchContent content = new DatabaseConnectionPatchContent();
+            StaticSiteDatabaseConnectionPatchContent content = new StaticSiteDatabaseConnectionPatchContent();
             StaticSiteBuildDatabaseConnectionResource result = await staticSiteBuildDatabaseConnection.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatabaseConnectionData resourceData = result.Data;
+            StaticSiteDatabaseConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DatabaseConnectionData resourceData = result.Data;
+            StaticSiteDatabaseConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

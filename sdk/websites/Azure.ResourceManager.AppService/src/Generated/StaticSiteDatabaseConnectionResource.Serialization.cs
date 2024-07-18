@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class StaticSiteDatabaseConnectionResource : IJsonModel<DatabaseConnectionData>
+    public partial class StaticSiteDatabaseConnectionResource : IJsonModel<StaticSiteDatabaseConnectionData>
     {
-        void IJsonModel<DatabaseConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseConnectionData>)Data).Write(writer, options);
+        void IJsonModel<StaticSiteDatabaseConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteDatabaseConnectionData>)Data).Write(writer, options);
 
-        DatabaseConnectionData IJsonModel<DatabaseConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseConnectionData>)Data).Create(ref reader, options);
+        StaticSiteDatabaseConnectionData IJsonModel<StaticSiteDatabaseConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteDatabaseConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DatabaseConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StaticSiteDatabaseConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DatabaseConnectionData IPersistableModel<DatabaseConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseConnectionData>(data, options);
+        StaticSiteDatabaseConnectionData IPersistableModel<StaticSiteDatabaseConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteDatabaseConnectionData>(data, options);
 
-        string IPersistableModel<DatabaseConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StaticSiteDatabaseConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteDatabaseConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

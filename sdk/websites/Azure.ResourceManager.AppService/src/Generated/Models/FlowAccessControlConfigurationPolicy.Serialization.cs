@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<IPAddressRange> allowedCallerIPAddresses = default;
+            IList<WebAppIPAddressRange> allowedCallerIPAddresses = default;
             OpenAuthenticationAccessPolicies openAuthenticationPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IPAddressRange> array = new List<IPAddressRange>();
+                    List<WebAppIPAddressRange> array = new List<WebAppIPAddressRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressRange.DeserializeIPAddressRange(item, options));
+                        array.Add(WebAppIPAddressRange.DeserializeWebAppIPAddressRange(item, options));
                     }
                     allowedCallerIPAddresses = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FlowAccessControlConfigurationPolicy(allowedCallerIPAddresses ?? new ChangeTrackingList<IPAddressRange>(), openAuthenticationPolicies, serializedAdditionalRawData);
+            return new FlowAccessControlConfigurationPolicy(allowedCallerIPAddresses ?? new ChangeTrackingList<WebAppIPAddressRange>(), openAuthenticationPolicies, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, ResourceReference integrationAccount, BinaryData definition, IDictionary<string, WorkflowContent> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, WorkflowResourceReference integrationAccount, BinaryData definition, IDictionary<string, WorkflowContent> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
         public WorkflowSku Sku { get; }
         /// <summary> The integration account. </summary>
         [WirePath("properties.integrationAccount")]
-        public ResourceReference IntegrationAccount { get; set; }
+        public WorkflowResourceReference IntegrationAccount { get; set; }
         /// <summary>
         /// The definition.
         /// <para>

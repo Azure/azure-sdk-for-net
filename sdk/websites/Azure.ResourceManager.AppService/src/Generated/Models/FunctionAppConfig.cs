@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="runtime"> Function app runtime settings. </param>
         /// <param name="scaleAndConcurrency"> Function app scale and concurrency settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppConfig(FunctionsDeployment deployment, FunctionsRuntime runtime, FunctionsScaleAndConcurrency scaleAndConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FunctionAppConfig(FunctionsDeployment deployment, FunctionAppRuntime runtime, FunctionAppScaleAndConcurrency scaleAndConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Deployment = deployment;
             Runtime = runtime;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal FunctionsDeployment Deployment { get; set; }
         /// <summary> Storage for deployed package used by the function app. </summary>
         [WirePath("deployment.storage")]
-        public FunctionsDeploymentStorage DeploymentStorage
+        public FunctionAppStorage DeploymentStorage
         {
             get => Deployment is null ? default : Deployment.Storage;
             set
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Function app runtime settings. </summary>
         [WirePath("runtime")]
-        public FunctionsRuntime Runtime { get; set; }
+        public FunctionAppRuntime Runtime { get; set; }
         /// <summary> Function app scale and concurrency settings. </summary>
         [WirePath("scaleAndConcurrency")]
-        public FunctionsScaleAndConcurrency ScaleAndConcurrency { get; set; }
+        public FunctionAppScaleAndConcurrency ScaleAndConcurrency { get; set; }
     }
 }

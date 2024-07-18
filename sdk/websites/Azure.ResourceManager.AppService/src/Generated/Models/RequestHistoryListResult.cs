@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="RequestHistoryListResult"/>. </summary>
         internal RequestHistoryListResult()
         {
-            Value = new ChangeTrackingList<RequestHistoryData>();
+            Value = new ChangeTrackingList<WebAppRequestHistoryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestHistoryListResult"/>. </summary>
         /// <param name="value"> A list of workflow request histories. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RequestHistoryListResult(IReadOnlyList<RequestHistoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RequestHistoryListResult(IReadOnlyList<WebAppRequestHistoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> A list of workflow request histories. </summary>
-        public IReadOnlyList<RequestHistoryData> Value { get; }
+        public IReadOnlyList<WebAppRequestHistoryData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateRegenerateAccessKeyRequestUri(string subscriptionId, string resourceGroupName, string name, string workflowName, RegenerateActionParameter keyType)
+        internal RequestUriBuilder CreateRegenerateAccessKeyRequestUri(string subscriptionId, string resourceGroupName, string name, string workflowName, WorkflowRegenerateActionContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateRegenerateAccessKeyRequest(string subscriptionId, string resourceGroupName, string name, string workflowName, RegenerateActionParameter keyType)
+        internal HttpMessage CreateRegenerateAccessKeyRequest(string subscriptionId, string resourceGroupName, string name, string workflowName, WorkflowRegenerateActionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(keyType, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="keyType"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workflowName"/> or <paramref name="keyType"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workflowName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RegenerateAccessKeyAsync(string subscriptionId, string resourceGroupName, string name, string workflowName, RegenerateActionParameter keyType, CancellationToken cancellationToken = default)
+        public async Task<Response> RegenerateAccessKeyAsync(string subscriptionId, string resourceGroupName, string name, string workflowName, WorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(keyType, nameof(keyType));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, name, workflowName, keyType);
+            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, name, workflowName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -112,19 +112,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="keyType"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workflowName"/> or <paramref name="keyType"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workflowName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RegenerateAccessKey(string subscriptionId, string resourceGroupName, string name, string workflowName, RegenerateActionParameter keyType, CancellationToken cancellationToken = default)
+        public Response RegenerateAccessKey(string subscriptionId, string resourceGroupName, string name, string workflowName, WorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(keyType, nameof(keyType));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, name, workflowName, keyType);
+            using var message = CreateRegenerateAccessKeyRequest(subscriptionId, resourceGroupName, name, workflowName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateValidateRequestUri(string subscriptionId, string resourceGroupName, string name, string workflowName, Workflow validate)
+        internal RequestUriBuilder CreateValidateRequestUri(string subscriptionId, string resourceGroupName, string name, string workflowName, WorkflowData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string name, string workflowName, Workflow validate)
+        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string name, string workflowName, WorkflowData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(validate, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -184,19 +184,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="validate"> The workflow. </param>
+        /// <param name="data"> The workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workflowName"/> or <paramref name="validate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateAsync(string subscriptionId, string resourceGroupName, string name, string workflowName, Workflow validate, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateAsync(string subscriptionId, string resourceGroupName, string name, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(validate, nameof(validate));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, name, workflowName, validate);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, name, workflowName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -212,19 +212,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="validate"> The workflow. </param>
+        /// <param name="data"> The workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workflowName"/> or <paramref name="validate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Validate(string subscriptionId, string resourceGroupName, string name, string workflowName, Workflow validate, CancellationToken cancellationToken = default)
+        public Response Validate(string subscriptionId, string resourceGroupName, string name, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(validate, nameof(validate));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, name, workflowName, validate);
+            using var message = CreateValidateRequest(subscriptionId, resourceGroupName, name, workflowName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

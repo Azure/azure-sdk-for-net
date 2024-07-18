@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.AppService
             BinaryData error = default;
             string trackingId = default;
             Correlation correlation = default;
-            ContentLink inputsLink = default;
-            ContentLink outputsLink = default;
+            WebAppContentLink inputsLink = default;
+            WebAppContentLink outputsLink = default;
             bool? fired = default;
-            ResourceReference run = default;
+            WorkflowResourceReference run = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            inputsLink = ContentLink.DeserializeContentLink(property0.Value, options);
+                            inputsLink = WebAppContentLink.DeserializeWebAppContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputsLink"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            outputsLink = ContentLink.DeserializeContentLink(property0.Value, options);
+                            outputsLink = WebAppContentLink.DeserializeWebAppContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fired"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            run = ResourceReference.DeserializeResourceReference(property0.Value, options);
+                            run = WorkflowResourceReference.DeserializeWorkflowResourceReference(property0.Value, options);
                             continue;
                         }
                     }

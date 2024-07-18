@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="ExpressionTraces"/>. </summary>
         internal ExpressionTraces()
         {
-            Inputs = new ChangeTrackingList<ExpressionRoot>();
+            Inputs = new ChangeTrackingList<WorkflowExpressionRoot>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressionTraces"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="inputs"></param>
         /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressionTraces(BinaryData value, IReadOnlyList<ExpressionRoot> inputs, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExpressionTraces(BinaryData value, IReadOnlyList<WorkflowExpressionRoot> inputs, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Inputs = inputs;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public BinaryData Value { get; }
         /// <summary> Gets the inputs. </summary>
-        public IReadOnlyList<ExpressionRoot> Inputs { get; }
+        public IReadOnlyList<WorkflowExpressionRoot> Inputs { get; }
         /// <summary> The link used to get the next page of recommendations. </summary>
         public string NextLink { get; }
     }

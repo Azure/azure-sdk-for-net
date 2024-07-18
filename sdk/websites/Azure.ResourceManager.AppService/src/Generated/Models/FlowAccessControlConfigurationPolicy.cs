@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
         public FlowAccessControlConfigurationPolicy()
         {
-            AllowedCallerIPAddresses = new ChangeTrackingList<IPAddressRange>();
+            AllowedCallerIPAddresses = new ChangeTrackingList<WebAppIPAddressRange>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
         /// <param name="allowedCallerIPAddresses"> The allowed caller IP address ranges. </param>
         /// <param name="openAuthenticationPolicies"> The authentication policies for workflow. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlowAccessControlConfigurationPolicy(IList<IPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FlowAccessControlConfigurationPolicy(IList<WebAppIPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowedCallerIPAddresses = allowedCallerIPAddresses;
             OpenAuthenticationPolicies = openAuthenticationPolicies;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The allowed caller IP address ranges. </summary>
         [WirePath("allowedCallerIpAddresses")]
-        public IList<IPAddressRange> AllowedCallerIPAddresses { get; }
+        public IList<WebAppIPAddressRange> AllowedCallerIPAddresses { get; }
         /// <summary> The authentication policies for workflow. </summary>
         internal OpenAuthenticationAccessPolicies OpenAuthenticationPolicies { get; set; }
         /// <summary> Open authentication policies. </summary>

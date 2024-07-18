@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildResource staticSiteBuild = client.GetStaticSiteBuildResource(staticSiteBuildResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DatabaseConnectionData item in staticSiteBuild.GetBuildDatabaseConnectionsWithDetailsAsync())
+            await foreach (StaticSiteDatabaseConnectionData item in staticSiteBuild.GetBuildDatabaseConnectionsWithDetailsAsync())
             {
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");

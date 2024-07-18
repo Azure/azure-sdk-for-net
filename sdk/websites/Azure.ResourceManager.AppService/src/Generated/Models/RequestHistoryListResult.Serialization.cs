@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<RequestHistoryData> value = default;
+            IReadOnlyList<WebAppRequestHistoryData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<RequestHistoryData> array = new List<RequestHistoryData>();
+                    List<WebAppRequestHistoryData> array = new List<WebAppRequestHistoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RequestHistoryData.DeserializeRequestHistoryData(item, options));
+                        array.Add(WebAppRequestHistoryData.DeserializeWebAppRequestHistoryData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RequestHistoryListResult(value ?? new ChangeTrackingList<RequestHistoryData>(), nextLink, serializedAdditionalRawData);
+            return new RequestHistoryListResult(value ?? new ChangeTrackingList<WebAppRequestHistoryData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            FunctionsDeploymentStorage storage = default;
+            FunctionAppStorage storage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    storage = FunctionsDeploymentStorage.DeserializeFunctionsDeploymentStorage(property.Value, options);
+                    storage = FunctionAppStorage.DeserializeFunctionAppStorage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

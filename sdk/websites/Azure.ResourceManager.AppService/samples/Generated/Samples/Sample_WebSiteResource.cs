@@ -1128,11 +1128,11 @@ MountPath = "/mounts/a/files",
 
             // invoke the operation
             string workflowName = "testWorkflowName";
-            RegenerateActionParameter keyType = new RegenerateActionParameter()
+            WorkflowRegenerateActionContent content = new WorkflowRegenerateActionContent()
             {
-                KeyType = KeyType.Primary,
+                KeyType = WebAppKeyType.Primary,
             };
-            await webSite.RegenerateAccessKeyWorkflowAsync(workflowName, keyType);
+            await webSite.RegenerateAccessKeyWorkflowAsync(workflowName, content);
 
             Console.WriteLine($"Succeeded");
         }
@@ -1160,7 +1160,7 @@ MountPath = "/mounts/a/files",
 
             // invoke the operation
             string workflowName = "test-workflow";
-            Workflow validate = new Workflow(new AzureLocation("placeholder"))
+            WorkflowData data = new WorkflowData(new AzureLocation("placeholder"))
             {
                 Definition = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
@@ -1181,7 +1181,7 @@ MountPath = "/mounts/a/files",
                 }),
                 Kind = AppServiceKind.Stateful,
             };
-            await webSite.ValidateWorkflowAsync(workflowName, validate);
+            await webSite.ValidateWorkflowAsync(workflowName, data);
 
             Console.WriteLine($"Succeeded");
         }

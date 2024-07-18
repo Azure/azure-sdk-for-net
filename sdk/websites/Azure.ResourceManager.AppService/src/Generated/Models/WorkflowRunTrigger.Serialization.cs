@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string name = default;
             BinaryData inputs = default;
-            ContentLink inputsLink = default;
+            WebAppContentLink inputsLink = default;
             BinaryData outputs = default;
-            ContentLink outputsLink = default;
+            WebAppContentLink outputsLink = default;
             DateTimeOffset? scheduledTime = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    inputsLink = ContentLink.DeserializeContentLink(property.Value, options);
+                    inputsLink = WebAppContentLink.DeserializeWebAppContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    outputsLink = ContentLink.DeserializeContentLink(property.Value, options);
+                    outputsLink = WebAppContentLink.DeserializeWebAppContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduledTime"u8))

@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<AppIPAddress> outgoingIPAddresses = default;
-            IList<AppIPAddress> accessEndpointIPAddresses = default;
+            IList<WebAppIPAddress> outgoingIPAddresses = default;
+            IList<WebAppIPAddress> accessEndpointIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<AppIPAddress> array = new List<AppIPAddress>();
+                    List<WebAppIPAddress> array = new List<WebAppIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppIPAddress.DeserializeAppIPAddress(item, options));
+                        array.Add(WebAppIPAddress.DeserializeWebAppIPAddress(item, options));
                     }
                     outgoingIPAddresses = array;
                     continue;
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<AppIPAddress> array = new List<AppIPAddress>();
+                    List<WebAppIPAddress> array = new List<WebAppIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppIPAddress.DeserializeAppIPAddress(item, options));
+                        array.Add(WebAppIPAddress.DeserializeWebAppIPAddress(item, options));
                     }
                     accessEndpointIPAddresses = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FlowEndpoints(outgoingIPAddresses ?? new ChangeTrackingList<AppIPAddress>(), accessEndpointIPAddresses ?? new ChangeTrackingList<AppIPAddress>(), serializedAdditionalRawData);
+            return new FlowEndpoints(outgoingIPAddresses ?? new ChangeTrackingList<WebAppIPAddress>(), accessEndpointIPAddresses ?? new ChangeTrackingList<WebAppIPAddress>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

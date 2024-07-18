@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics;
         private readonly StaticSitesRestOperations _staticSiteBuildDatabaseConnectionStaticSitesRestClient;
-        private readonly DatabaseConnectionData _data;
+        private readonly StaticSiteDatabaseConnectionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/builds/databaseConnections";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildDatabaseConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StaticSiteBuildDatabaseConnectionResource(ArmClient client, DatabaseConnectionData data) : this(client, data.Id)
+        internal StaticSiteBuildDatabaseConnectionResource(ArmClient client, StaticSiteDatabaseConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DatabaseConnectionData Data
+        public virtual StaticSiteDatabaseConnectionData Data
         {
             get
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StaticSiteBuildDatabaseConnectionResource>> UpdateAsync(DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteBuildDatabaseConnectionResource>> UpdateAsync(StaticSiteDatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<StaticSiteBuildDatabaseConnectionResource> Update(DatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSiteBuildDatabaseConnectionResource> Update(StaticSiteDatabaseConnectionPatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

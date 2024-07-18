@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.AppService
             DateTimeOffset? lastUpdatedOn = default;
             StaticSiteBuildStatus? status = default;
             IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
-            IReadOnlyList<StaticSiteLinkedBackend> linkedBackends = default;
-            IReadOnlyList<DatabaseConnectionOverview> databaseConnections = default;
+            IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends = default;
+            IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<StaticSiteLinkedBackend> array = new List<StaticSiteLinkedBackend>();
+                            List<StaticSiteLinkedBackendInfo> array = new List<StaticSiteLinkedBackendInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StaticSiteLinkedBackend.DeserializeStaticSiteLinkedBackend(item, options));
+                                array.Add(StaticSiteLinkedBackendInfo.DeserializeStaticSiteLinkedBackendInfo(item, options));
                             }
                             linkedBackends = array;
                             continue;
@@ -299,10 +299,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<DatabaseConnectionOverview> array = new List<DatabaseConnectionOverview>();
+                            List<StaticSiteDatabaseConnectionOverview> array = new List<StaticSiteDatabaseConnectionOverview>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatabaseConnectionOverview.DeserializeDatabaseConnectionOverview(item, options));
+                                array.Add(StaticSiteDatabaseConnectionOverview.DeserializeStaticSiteDatabaseConnectionOverview(item, options));
                             }
                             databaseConnections = array;
                             continue;
@@ -329,8 +329,8 @@ namespace Azure.ResourceManager.AppService
                 lastUpdatedOn,
                 status,
                 userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
-                linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackend>(),
-                databaseConnections ?? new ChangeTrackingList<DatabaseConnectionOverview>(),
+                linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackendInfo>(),
+                databaseConnections ?? new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>(),
                 kind,
                 serializedAdditionalRawData);
         }

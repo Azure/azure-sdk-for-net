@@ -225,19 +225,19 @@ namespace Azure.ResourceManager.AppService
             SystemData systemData = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            RunActionCorrelation correlation = default;
+            WebAppRunActionCorrelation correlation = default;
             WorkflowStatus? status = default;
             string code = default;
             BinaryData error = default;
             string trackingId = default;
             BinaryData inputs = default;
-            ContentLink inputsLink = default;
+            WebAppContentLink inputsLink = default;
             BinaryData outputs = default;
-            ContentLink outputsLink = default;
+            WebAppContentLink outputsLink = default;
             BinaryData trackedProperties = default;
-            IList<RetryHistory> retryHistory = default;
+            IList<WebAppRetryHistory> retryHistory = default;
             int? iterationCount = default;
-            IList<RepetitionIndex> repetitionIndexes = default;
+            IList<WorkflowRunActionRepetitionIndex> repetitionIndexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            correlation = RunActionCorrelation.DeserializeRunActionCorrelation(property0.Value, options);
+                            correlation = WebAppRunActionCorrelation.DeserializeWebAppRunActionCorrelation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            inputsLink = ContentLink.DeserializeContentLink(property0.Value, options);
+                            inputsLink = WebAppContentLink.DeserializeWebAppContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            outputsLink = ContentLink.DeserializeContentLink(property0.Value, options);
+                            outputsLink = WebAppContentLink.DeserializeWebAppContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trackedProperties"u8))
@@ -400,10 +400,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<RetryHistory> array = new List<RetryHistory>();
+                            List<WebAppRetryHistory> array = new List<WebAppRetryHistory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.RetryHistory.DeserializeRetryHistory(item, options));
+                                array.Add(WebAppRetryHistory.DeserializeWebAppRetryHistory(item, options));
                             }
                             retryHistory = array;
                             continue;
@@ -423,10 +423,10 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            List<RepetitionIndex> array = new List<RepetitionIndex>();
+                            List<WorkflowRunActionRepetitionIndex> array = new List<WorkflowRunActionRepetitionIndex>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RepetitionIndex.DeserializeRepetitionIndex(item, options));
+                                array.Add(WorkflowRunActionRepetitionIndex.DeserializeWorkflowRunActionRepetitionIndex(item, options));
                             }
                             repetitionIndexes = array;
                             continue;
@@ -459,9 +459,9 @@ namespace Azure.ResourceManager.AppService
                 outputs,
                 outputsLink,
                 trackedProperties,
-                retryHistory ?? new ChangeTrackingList<RetryHistory>(),
+                retryHistory ?? new ChangeTrackingList<WebAppRetryHistory>(),
                 iterationCount,
-                repetitionIndexes ?? new ChangeTrackingList<RepetitionIndex>(),
+                repetitionIndexes ?? new ChangeTrackingList<WorkflowRunActionRepetitionIndex>(),
                 serializedAdditionalRawData);
         }
 

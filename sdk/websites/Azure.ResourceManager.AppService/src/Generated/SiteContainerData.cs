@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of <see cref="SiteContainerData"/>. </summary>
         public SiteContainerData()
         {
-            VolumeMounts = new ChangeTrackingList<VolumeMount>();
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
+            VolumeMounts = new ChangeTrackingList<SiteContainerVolumeMount>();
+            EnvironmentVariables = new ChangeTrackingList<WebAppEnvironmentVariable>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteContainerData"/>. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="environmentVariables"> List of environment variables. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string image, string targetPort, bool? isMain, string startUpCommand, AuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IList<VolumeMount> volumeMounts, IList<EnvironmentVariable> environmentVariables, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string image, string targetPort, bool? isMain, string startUpCommand, SiteContainerAuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IList<SiteContainerVolumeMount> volumeMounts, IList<WebAppEnvironmentVariable> environmentVariables, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Image = image;
             TargetPort = targetPort;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
         public string StartUpCommand { get; set; }
         /// <summary> Auth Type. </summary>
         [WirePath("properties.authType")]
-        public AuthType? AuthType { get; set; }
+        public SiteContainerAuthType? AuthType { get; set; }
         /// <summary> User Name. </summary>
         [WirePath("properties.userName")]
         public string UserName { get; set; }
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.AppService
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> List of volume mounts. </summary>
         [WirePath("properties.volumeMounts")]
-        public IList<VolumeMount> VolumeMounts { get; }
+        public IList<SiteContainerVolumeMount> VolumeMounts { get; }
         /// <summary> List of environment variables. </summary>
         [WirePath("properties.environmentVariables")]
-        public IList<EnvironmentVariable> EnvironmentVariables { get; }
+        public IList<WebAppEnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }

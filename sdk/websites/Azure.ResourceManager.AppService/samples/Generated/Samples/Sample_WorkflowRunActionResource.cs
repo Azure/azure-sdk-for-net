@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Samples
             WorkflowRunActionResource workflowRunAction = client.GetWorkflowRunActionResource(workflowRunActionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ExpressionRoot item in workflowRunAction.GetExpressionTracesAsync())
+            await foreach (WorkflowExpressionRoot item in workflowRunAction.GetExpressionTracesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

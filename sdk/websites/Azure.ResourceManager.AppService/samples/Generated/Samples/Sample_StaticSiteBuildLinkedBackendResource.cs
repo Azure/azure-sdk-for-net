@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildLinkedBackendResource staticSiteBuildLinkedBackend = client.GetStaticSiteBuildLinkedBackendResource(staticSiteBuildLinkedBackendResourceId);
 
             // invoke the operation
-            StaticSiteLinkedBackendARMResourceData data = new StaticSiteLinkedBackendARMResourceData()
+            StaticSiteLinkedBackendData data = new StaticSiteLinkedBackendData()
             {
                 BackendResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/backendRg/providers/Microsoft.Web/sites/testBackend"),
                 Region = "West US 2",
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            StaticSiteLinkedBackendARMResourceData resourceData = result.Data;
+            StaticSiteLinkedBackendData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildLinkedBackendResource staticSiteBuildLinkedBackend = client.GetStaticSiteBuildLinkedBackendResource(staticSiteBuildLinkedBackendResourceId);
 
             // invoke the operation
-            StaticSiteLinkedBackendARMResourceData data = new StaticSiteLinkedBackendARMResourceData()
+            StaticSiteLinkedBackendData data = new StaticSiteLinkedBackendData()
             {
                 BackendResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/backendRg/providers/Microsoft.Web/sites/testBackend"),
                 Region = "West US 2",
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            StaticSiteLinkedBackendARMResourceData resourceData = result.Data;
+            StaticSiteLinkedBackendData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

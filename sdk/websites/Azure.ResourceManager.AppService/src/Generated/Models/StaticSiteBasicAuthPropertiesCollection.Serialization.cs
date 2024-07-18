@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<StaticSiteBasicAuthPropertiesARMResourceData> value = default;
+            IReadOnlyList<StaticSiteBasicAuthPropertyData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<StaticSiteBasicAuthPropertiesARMResourceData> array = new List<StaticSiteBasicAuthPropertiesARMResourceData>();
+                    List<StaticSiteBasicAuthPropertyData> array = new List<StaticSiteBasicAuthPropertyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteBasicAuthPropertiesARMResourceData.DeserializeStaticSiteBasicAuthPropertiesARMResourceData(item, options));
+                        array.Add(StaticSiteBasicAuthPropertyData.DeserializeStaticSiteBasicAuthPropertyData(item, options));
                     }
                     value = array;
                     continue;

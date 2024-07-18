@@ -1398,11 +1398,11 @@ namespace Azure.ResourceManager.AppService
             return GetWebSiteSlotPublicCertificates().Get(publicCertificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotSitecontainerResources in the WebSiteSlot. </summary>
-        /// <returns> An object representing collection of SiteSlotSitecontainerResources and their operations over a SiteSlotSitecontainerResource. </returns>
-        public virtual SiteSlotSitecontainerCollection GetSiteSlotSitecontainers()
+        /// <summary> Gets a collection of SiteSlotSiteContainerResources in the WebSiteSlot. </summary>
+        /// <returns> An object representing collection of SiteSlotSiteContainerResources and their operations over a SiteSlotSiteContainerResource. </returns>
+        public virtual SiteSlotSiteContainerCollection GetSiteSlotSiteContainers()
         {
-            return GetCachedClient(client => new SiteSlotSitecontainerCollection(client, Id));
+            return GetCachedClient(client => new SiteSlotSiteContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -1422,7 +1422,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSitecontainerResource"/></description>
+        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1431,9 +1431,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteSlotSitecontainerResource>> GetSiteSlotSitecontainerAsync(string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotSiteContainerResource>> GetSiteSlotSiteContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            return await GetSiteSlotSitecontainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteSlotSiteContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SiteSlotSitecontainerResource"/></description>
+        /// <description><see cref="SiteSlotSiteContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1462,9 +1462,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteSlotSitecontainerResource> GetSiteSlotSitecontainer(string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotSiteContainerResource> GetSiteSlotSiteContainer(string containerName, CancellationToken cancellationToken = default)
         {
-            return GetSiteSlotSitecontainers().Get(containerName, cancellationToken);
+            return GetSiteSlotSiteContainers().Get(containerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebSiteSlotExtensionResources in the WebSiteSlot. </summary>

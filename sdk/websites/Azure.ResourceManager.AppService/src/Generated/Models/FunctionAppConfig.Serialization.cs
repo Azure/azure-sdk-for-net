@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             FunctionsDeployment deployment = default;
-            FunctionsRuntime runtime = default;
-            FunctionsScaleAndConcurrency scaleAndConcurrency = default;
+            FunctionAppRuntime runtime = default;
+            FunctionAppScaleAndConcurrency scaleAndConcurrency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    runtime = FunctionsRuntime.DeserializeFunctionsRuntime(property.Value, options);
+                    runtime = FunctionAppRuntime.DeserializeFunctionAppRuntime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleAndConcurrency"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scaleAndConcurrency = FunctionsScaleAndConcurrency.DeserializeFunctionsScaleAndConcurrency(property.Value, options);
+                    scaleAndConcurrency = FunctionAppScaleAndConcurrency.DeserializeFunctionAppScaleAndConcurrency(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

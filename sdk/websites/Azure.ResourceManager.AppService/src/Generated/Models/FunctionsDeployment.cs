@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="FunctionsDeployment"/>. </summary>
         /// <param name="storage"> Storage for deployed package used by the function app. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionsDeployment(FunctionsDeploymentStorage storage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FunctionsDeployment(FunctionAppStorage storage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Storage = storage;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Storage for deployed package used by the function app. </summary>
         [WirePath("storage")]
-        public FunctionsDeploymentStorage Storage { get; set; }
+        public FunctionAppStorage Storage { get; set; }
     }
 }

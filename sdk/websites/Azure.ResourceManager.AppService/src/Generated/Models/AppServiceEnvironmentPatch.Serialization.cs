@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.AppService.Models
             IList<AppServiceNameValuePair> clusterSettings = default;
             IList<string> userWhitelistedIPRanges = default;
             bool? hasLinuxWorkers = default;
-            UpgradePreference? upgradePreference = default;
+            AppServiceEnvironmentUpgradePreference? upgradePreference = default;
             int? dedicatedHostCount = default;
             bool? zoneRedundant = default;
             CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = default;
             AseV3NetworkingConfigurationData networkingConfiguration = default;
-            UpgradeAvailability? upgradeAvailability = default;
+            AppServiceEnvironmentUpgradeAvailability? upgradeAvailability = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            upgradePreference = new UpgradePreference(property0.Value.GetString());
+                            upgradePreference = new AppServiceEnvironmentUpgradePreference(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dedicatedHostCount"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            upgradeAvailability = new UpgradeAvailability(property0.Value.GetString());
+                            upgradeAvailability = new AppServiceEnvironmentUpgradeAvailability(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.AppService
             bool? vnetBackupRestoreEnabled = default;
             SiteConfigProperties siteConfig = default;
             FunctionAppConfig functionAppConfig = default;
-            DaprConfig daprConfig = default;
+            AppDaprConfig daprConfig = default;
             string workloadProfileName = default;
-            ResourceConfig resourceConfig = default;
+            FunctionAppResourceConfig resourceConfig = default;
             IReadOnlyList<string> trafficManagerHostNames = default;
             bool? scmSiteAlsoStopped = default;
             string targetSwapSlot = default;
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            daprConfig = DaprConfig.DeserializeDaprConfig(property0.Value, options);
+                            daprConfig = AppDaprConfig.DeserializeAppDaprConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workloadProfileName"u8))
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            resourceConfig = ResourceConfig.DeserializeResourceConfig(property0.Value, options);
+                            resourceConfig = FunctionAppResourceConfig.DeserializeFunctionAppResourceConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trafficManagerHostNames"u8))

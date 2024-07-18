@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="day"> The day of the week. </param>
         /// <param name="occurrence"> The occurrence. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecurrenceScheduleOccurrence(DayOfWeek? day, int? occurrence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecurrenceScheduleOccurrence(WebAppDayOfWeek? day, int? occurrence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Day = day;
             Occurrence = occurrence;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The day of the week. </summary>
         [WirePath("day")]
-        public DayOfWeek? Day { get; }
+        public WebAppDayOfWeek? Day { get; }
         /// <summary> The occurrence. </summary>
         [WirePath("occurrence")]
         public int? Occurrence { get; }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="relativePathParameters"> Gets the workflow trigger callback URL relative path parameters. </param>
         /// <param name="queries"> Gets the workflow trigger callback URL query parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerCallbackUri(string value, string method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, WorkflowTriggerListCallbackUrlQueries queries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkflowTriggerCallbackUri(string value, string method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, WorkflowTriggerListCallbackUriQueries queries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Method = method;
@@ -87,6 +87,6 @@ namespace Azure.ResourceManager.AppService.Models
         public IReadOnlyList<string> RelativePathParameters { get; }
         /// <summary> Gets the workflow trigger callback URL query parameters. </summary>
         [WirePath("queries")]
-        public WorkflowTriggerListCallbackUrlQueries Queries { get; }
+        public WorkflowTriggerListCallbackUriQueries Queries { get; }
     }
 }

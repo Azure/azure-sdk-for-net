@@ -255,7 +255,7 @@ KeyVaultSecretName = "SampleSecretName2",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AseRegion item in subscriptionResource.GetAseRegionsAsync())
+            await foreach (AppServiceAseRegion item in subscriptionResource.GetAseRegionsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

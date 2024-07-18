@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="StaticSiteLinkedBackendsCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StaticSiteLinkedBackendsCollection(IEnumerable<StaticSiteLinkedBackendARMResourceData> value)
+        internal StaticSiteLinkedBackendsCollection(IEnumerable<StaticSiteLinkedBackendData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteLinkedBackendsCollection(IReadOnlyList<StaticSiteLinkedBackendARMResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StaticSiteLinkedBackendsCollection(IReadOnlyList<StaticSiteLinkedBackendData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<StaticSiteLinkedBackendARMResourceData> Value { get; }
+        public IReadOnlyList<StaticSiteLinkedBackendData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

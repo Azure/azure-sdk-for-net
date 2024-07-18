@@ -989,22 +989,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBasicAuthPropertiesARMResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBasicAuthPropertiesARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBasicAuthPropertiesARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StaticSiteBasicAuthPropertyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBasicAuthPropertyResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBasicAuthPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBasicAuthPropertiesARMResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBasicAuthPropertyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteBasicAuthPropertiesARMResource"/> object. </returns>
-        public static StaticSiteBasicAuthPropertiesARMResource GetStaticSiteBasicAuthPropertiesARMResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSiteBasicAuthPropertyResource"/> object. </returns>
+        public static StaticSiteBasicAuthPropertyResource GetStaticSiteBasicAuthPropertyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetStaticSiteBasicAuthPropertiesARMResource(id);
+            return GetMockableAppServiceArmClient(client).GetStaticSiteBasicAuthPropertyResource(id);
         }
 
         /// <summary>
@@ -2072,41 +2072,41 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSitecontainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSitecontainerResource.CreateResourceIdentifier" /> to create a <see cref="SiteSitecontainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteContainerResource.CreateResourceIdentifier" /> to create a <see cref="SiteContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSitecontainerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteContainerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteSitecontainerResource"/> object. </returns>
-        public static SiteSitecontainerResource GetSiteSitecontainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteContainerResource"/> object. </returns>
+        public static SiteContainerResource GetSiteContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetSiteSitecontainerResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteContainerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotSitecontainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotSitecontainerResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotSitecontainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteSlotSiteContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotSiteContainerResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotSiteContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotSitecontainerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotSiteContainerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteSlotSitecontainerResource"/> object. </returns>
-        public static SiteSlotSitecontainerResource GetSiteSlotSitecontainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotSiteContainerResource"/> object. </returns>
+        public static SiteSlotSiteContainerResource GetSiteSlotSiteContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetSiteSlotSitecontainerResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotSiteContainerResource(id);
         }
 
         /// <summary>
@@ -2338,60 +2338,60 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkflowRunActionRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkflowRunActionRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunActionRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWorkflowRunActionRepetitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource"/> object. </returns>
-        public static SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkflowRunActionRepetitionResource"/> object. </returns>
+        public static WorkflowRunActionRepetitionResource GetWorkflowRunActionRepetitionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource(id);
+            return GetMockableAppServiceArmClient(client).GetWorkflowRunActionRepetitionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkflowRunActionScopeRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkflowRunActionScopeRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunActionScopeRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWorkflowRunActionScopeRepetitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource"/> object. </returns>
-        public static SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkflowRunActionScopeRepetitionResource"/> object. </returns>
+        public static WorkflowRunActionScopeRepetitionResource GetWorkflowRunActionScopeRepetitionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource(id);
+            return GetMockableAppServiceArmClient(client).GetWorkflowRunActionScopeRepetitionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RequestHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="RequestHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebAppRequestHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebAppRequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="WebAppRequestHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetRequestHistoryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppRequestHistoryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RequestHistoryResource"/> object. </returns>
-        public static RequestHistoryResource GetRequestHistoryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebAppRequestHistoryResource"/> object. </returns>
+        public static WebAppRequestHistoryResource GetWebAppRequestHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetRequestHistoryResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebAppRequestHistoryResource(id);
         }
 
         /// <summary>
@@ -4903,8 +4903,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AseRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AseRegion> GetAseRegionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceAseRegion> GetAseRegionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -4935,8 +4935,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AseRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AseRegion> GetAseRegions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceAseRegion> GetAseRegions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

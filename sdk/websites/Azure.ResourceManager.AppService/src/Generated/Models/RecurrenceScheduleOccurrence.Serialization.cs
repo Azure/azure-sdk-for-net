@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            DayOfWeek? day = default;
+            WebAppDayOfWeek? day = default;
             int? occurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    day = property.Value.GetString().ToDayOfWeek();
+                    day = property.Value.GetString().ToWebAppDayOfWeek();
                     continue;
                 }
                 if (property.NameEquals("occurrence"u8))

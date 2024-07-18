@@ -1624,12 +1624,12 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AseRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AseRegion> GetAseRegionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceAseRegion> GetAseRegionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListAseRegionsRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListAseRegionsNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AseRegion.DeserializeAseRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAseRegions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceAseRegion.DeserializeAppServiceAseRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAseRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1650,12 +1650,12 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AseRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AseRegion> GetAseRegions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceAseRegion> GetAseRegions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListAseRegionsRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListAseRegionsNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AseRegion.DeserializeAseRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAseRegions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceAseRegion.DeserializeAppServiceAseRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAseRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

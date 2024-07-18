@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService
             BinaryData error = default;
             string correlationId = default;
             Correlation correlation = default;
-            ResourceReference workflow = default;
+            WorkflowResourceReference workflow = default;
             WorkflowRunTrigger trigger = default;
             IReadOnlyDictionary<string, WorkflowOutputContent> outputs = default;
             WorkflowRunTrigger response = default;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            workflow = ResourceReference.DeserializeResourceReference(property0.Value, options);
+                            workflow = WorkflowResourceReference.DeserializeWorkflowResourceReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trigger"u8))

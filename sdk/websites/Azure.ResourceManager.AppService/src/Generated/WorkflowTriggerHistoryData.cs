@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFired"> The value indicating whether trigger was fired. </param>
         /// <param name="run"> Gets the reference to workflow run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, ContentLink inputsLink, ContentLink outputsLink, bool? isFired, ResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, bool? isFired, WorkflowResourceReference run, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the link to input parameters. </summary>
         [WirePath("properties.inputsLink")]
-        public ContentLink InputsLink { get; }
+        public WebAppContentLink InputsLink { get; }
         /// <summary> Gets the link to output parameters. </summary>
         [WirePath("properties.outputsLink")]
-        public ContentLink OutputsLink { get; }
+        public WebAppContentLink OutputsLink { get; }
         /// <summary> The value indicating whether trigger was fired. </summary>
         [WirePath("properties.fired")]
         public bool? IsFired { get; }
         /// <summary> Gets the reference to workflow run. </summary>
         [WirePath("properties.run")]
-        public ResourceReference Run { get; }
+        public WorkflowResourceReference Run { get; }
     }
 }

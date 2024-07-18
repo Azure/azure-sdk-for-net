@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<StaticSiteLinkedBackendARMResourceData> value = default;
+            IReadOnlyList<StaticSiteLinkedBackendData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<StaticSiteLinkedBackendARMResourceData> array = new List<StaticSiteLinkedBackendARMResourceData>();
+                    List<StaticSiteLinkedBackendData> array = new List<StaticSiteLinkedBackendData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(item, options));
+                        array.Add(StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(item, options));
                     }
                     value = array;
                     continue;

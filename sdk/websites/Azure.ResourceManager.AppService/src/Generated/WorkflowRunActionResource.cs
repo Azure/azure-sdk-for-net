@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResources in the WorkflowRunAction. </summary>
-        /// <returns> An object representing collection of SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResources and their operations over a SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource. </returns>
-        public virtual SiteHostruntimeWebhookApiWorkflowRunActionRepetitionCollection GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitions()
+        /// <summary> Gets a collection of WorkflowRunActionRepetitionResources in the WorkflowRunAction. </summary>
+        /// <returns> An object representing collection of WorkflowRunActionRepetitionResources and their operations over a WorkflowRunActionRepetitionResource. </returns>
+        public virtual WorkflowRunActionRepetitionCollection GetWorkflowRunActionRepetitions()
         {
-            return GetCachedClient(client => new SiteHostruntimeWebhookApiWorkflowRunActionRepetitionCollection(client, Id));
+            return GetCachedClient(client => new WorkflowRunActionRepetitionCollection(client, Id));
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource"/></description>
+        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource>> GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitionAsync(string repetitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkflowRunActionRepetitionResource>> GetWorkflowRunActionRepetitionAsync(string repetitionName, CancellationToken cancellationToken = default)
         {
-            return await GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitions().GetAsync(repetitionName, cancellationToken).ConfigureAwait(false);
+            return await GetWorkflowRunActionRepetitions().GetAsync(repetitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource"/></description>
+        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,47 +156,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource> GetSiteHostruntimeWebhookApiWorkflowRunActionRepetition(string repetitionName, CancellationToken cancellationToken = default)
+        public virtual Response<WorkflowRunActionRepetitionResource> GetWorkflowRunActionRepetition(string repetitionName, CancellationToken cancellationToken = default)
         {
-            return GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitions().Get(repetitionName, cancellationToken);
+            return GetWorkflowRunActionRepetitions().Get(repetitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResources in the WorkflowRunAction. </summary>
-        /// <returns> An object representing collection of SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResources and their operations over a SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource. </returns>
-        public virtual SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionCollection GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitions()
+        /// <summary> Gets a collection of WorkflowRunActionScopeRepetitionResources in the WorkflowRunAction. </summary>
+        /// <returns> An object representing collection of WorkflowRunActionScopeRepetitionResources and their operations over a WorkflowRunActionScopeRepetitionResource. </returns>
+        public virtual WorkflowRunActionScopeRepetitionCollection GetWorkflowRunActionScopeRepetitions()
         {
-            return GetCachedClient(client => new SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a workflow run action scoped repetition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/scopeRepetitions/{repetitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRunActionScopeRepetitions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="repetitionName"> The workflow repetition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource>> GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionAsync(string repetitionName, CancellationToken cancellationToken = default)
-        {
-            return await GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitions().GetAsync(repetitionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new WorkflowRunActionScopeRepetitionCollection(client, Id));
         }
 
         /// <summary>
@@ -216,7 +185,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource"/></description>
+        /// <description><see cref="WorkflowRunActionScopeRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,9 +194,40 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource> GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetition(string repetitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkflowRunActionScopeRepetitionResource>> GetWorkflowRunActionScopeRepetitionAsync(string repetitionName, CancellationToken cancellationToken = default)
         {
-            return GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitions().Get(repetitionName, cancellationToken);
+            return await GetWorkflowRunActionScopeRepetitions().GetAsync(repetitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a workflow run action scoped repetition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/scopeRepetitions/{repetitionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowRunActionScopeRepetitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkflowRunActionScopeRepetitionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="repetitionName"> The workflow repetition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkflowRunActionScopeRepetitionResource> GetWorkflowRunActionScopeRepetition(string repetitionName, CancellationToken cancellationToken = default)
+        {
+            return GetWorkflowRunActionScopeRepetitions().Get(repetitionName, cancellationToken);
         }
 
         /// <summary>
@@ -332,12 +332,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressionRoot> GetExpressionTracesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WorkflowExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkflowExpressionRoot> GetExpressionTracesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowRunActionRestClient.CreateListExpressionTracesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowRunActionRestClient.CreateListExpressionTracesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExpressionRoot.DeserializeExpressionRoot(e), _workflowRunActionClientDiagnostics, Pipeline, "WorkflowRunActionResource.GetExpressionTraces", "inputs", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WorkflowExpressionRoot.DeserializeWorkflowExpressionRoot(e), _workflowRunActionClientDiagnostics, Pipeline, "WorkflowRunActionResource.GetExpressionTraces", "inputs", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -362,12 +362,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressionRoot> GetExpressionTraces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkflowExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkflowExpressionRoot> GetExpressionTraces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowRunActionRestClient.CreateListExpressionTracesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowRunActionRestClient.CreateListExpressionTracesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExpressionRoot.DeserializeExpressionRoot(e), _workflowRunActionClientDiagnostics, Pipeline, "WorkflowRunActionResource.GetExpressionTraces", "inputs", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WorkflowExpressionRoot.DeserializeWorkflowExpressionRoot(e), _workflowRunActionClientDiagnostics, Pipeline, "WorkflowRunActionResource.GetExpressionTraces", "inputs", "nextLink", cancellationToken);
         }
     }
 }

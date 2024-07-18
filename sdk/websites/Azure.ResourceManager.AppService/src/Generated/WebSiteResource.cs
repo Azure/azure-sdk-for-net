@@ -1565,11 +1565,11 @@ namespace Azure.ResourceManager.AppService
             return GetSitePublicCertificates().Get(publicCertificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSitecontainerResources in the WebSite. </summary>
-        /// <returns> An object representing collection of SiteSitecontainerResources and their operations over a SiteSitecontainerResource. </returns>
-        public virtual SiteSitecontainerCollection GetSiteSitecontainers()
+        /// <summary> Gets a collection of SiteContainerResources in the WebSite. </summary>
+        /// <returns> An object representing collection of SiteContainerResources and their operations over a SiteContainerResource. </returns>
+        public virtual SiteContainerCollection GetSiteContainers()
         {
-            return GetCachedClient(client => new SiteSitecontainerCollection(client, Id));
+            return GetCachedClient(client => new SiteContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SiteSitecontainerResource"/></description>
+        /// <description><see cref="SiteContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1598,9 +1598,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteSitecontainerResource>> GetSiteSitecontainerAsync(string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteContainerResource>> GetSiteContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            return await GetSiteSitecontainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1620,7 +1620,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SiteSitecontainerResource"/></description>
+        /// <description><see cref="SiteContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1629,9 +1629,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteSitecontainerResource> GetSiteSitecontainer(string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteContainerResource> GetSiteContainer(string containerName, CancellationToken cancellationToken = default)
         {
-            return GetSiteSitecontainers().Get(containerName, cancellationToken);
+            return GetSiteContainers().Get(containerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebSiteExtensionResources in the WebSite. </summary>
@@ -8071,20 +8071,20 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="keyType"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="keyType"/> is null. </exception>
-        public virtual async Task<Response> RegenerateAccessKeyWorkflowAsync(string workflowName, RegenerateActionParameter keyType, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> RegenerateAccessKeyWorkflowAsync(string workflowName, WorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(keyType, nameof(keyType));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _workflowsClientDiagnostics.CreateScope("WebSiteResource.RegenerateAccessKeyWorkflow");
             scope.Start();
             try
             {
-                var response = await _workflowsRestClient.RegenerateAccessKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, keyType, cancellationToken).ConfigureAwait(false);
+                var response = await _workflowsRestClient.RegenerateAccessKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -8112,20 +8112,20 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="keyType"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="keyType"/> is null. </exception>
-        public virtual Response RegenerateAccessKeyWorkflow(string workflowName, RegenerateActionParameter keyType, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response RegenerateAccessKeyWorkflow(string workflowName, WorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(keyType, nameof(keyType));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _workflowsClientDiagnostics.CreateScope("WebSiteResource.RegenerateAccessKeyWorkflow");
             scope.Start();
             try
             {
-                var response = _workflowsRestClient.RegenerateAccessKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, keyType, cancellationToken);
+                var response = _workflowsRestClient.RegenerateAccessKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -8153,20 +8153,20 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="validate"> The workflow. </param>
+        /// <param name="data"> The workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="validate"/> is null. </exception>
-        public virtual async Task<Response> ValidateWorkflowAsync(string workflowName, Workflow validate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response> ValidateWorkflowAsync(string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(validate, nameof(validate));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workflowsClientDiagnostics.CreateScope("WebSiteResource.ValidateWorkflow");
             scope.Start();
             try
             {
-                var response = await _workflowsRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, validate, cancellationToken).ConfigureAwait(false);
+                var response = await _workflowsRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -8194,20 +8194,20 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="workflowName"> The workflow name. </param>
-        /// <param name="validate"> The workflow. </param>
+        /// <param name="data"> The workflow. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="validate"/> is null. </exception>
-        public virtual Response ValidateWorkflow(string workflowName, Workflow validate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
+        public virtual Response ValidateWorkflow(string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-            Argument.AssertNotNull(validate, nameof(validate));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workflowsClientDiagnostics.CreateScope("WebSiteResource.ValidateWorkflow");
             scope.Start();
             try
             {
-                var response = _workflowsRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, validate, cancellationToken);
+                var response = _workflowsRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, data, cancellationToken);
                 return response;
             }
             catch (Exception e)

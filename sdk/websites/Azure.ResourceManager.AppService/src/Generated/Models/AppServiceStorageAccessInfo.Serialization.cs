@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
             string accessKey = default;
             string mountPath = default;
             AppServiceStorageAccountState? state = default;
-            AzureStorageProtocol? protocol = default;
+            AppServiceStorageProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    protocol = new AzureStorageProtocol(property.Value.GetString());
+                    protocol = new AppServiceStorageProtocol(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

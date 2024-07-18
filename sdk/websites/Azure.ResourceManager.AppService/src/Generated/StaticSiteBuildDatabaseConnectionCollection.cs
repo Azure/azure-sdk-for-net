@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StaticSiteBuildDatabaseConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseConnectionName, DatabaseConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StaticSiteBuildDatabaseConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseConnectionName, StaticSiteDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StaticSiteBuildDatabaseConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string databaseConnectionName, DatabaseConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StaticSiteBuildDatabaseConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string databaseConnectionName, StaticSiteDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateGetBuildDatabaseConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateGetBuildDatabaseConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildDatabaseConnectionResource(Client, DatabaseConnectionData.DeserializeDatabaseConnectionData(e)), _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildDatabaseConnectionResource(Client, StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(e)), _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateGetBuildDatabaseConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateGetBuildDatabaseConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildDatabaseConnectionResource(Client, DatabaseConnectionData.DeserializeDatabaseConnectionData(e)), _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildDatabaseConnectionResource(Client, StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(e)), _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

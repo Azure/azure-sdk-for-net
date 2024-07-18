@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
             DateTimeOffset? lastExecutionTime = default;
             DateTimeOffset? nextExecutionTime = default;
             WorkflowTriggerRecurrence recurrence = default;
-            ResourceReference workflow = default;
+            WorkflowResourceReference workflow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            workflow = ResourceReference.DeserializeResourceReference(property0.Value, options);
+                            workflow = WorkflowResourceReference.DeserializeWorkflowResourceReference(property0.Value, options);
                             continue;
                         }
                     }

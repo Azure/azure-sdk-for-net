@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerRecurrence(RecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, RecurrenceSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkflowTriggerRecurrence(WorkflowRecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, WorkflowRecurrenceSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Frequency = frequency;
             Interval = interval;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The frequency. </summary>
         [WirePath("frequency")]
-        public RecurrenceFrequency? Frequency { get; }
+        public WorkflowRecurrenceFrequency? Frequency { get; }
         /// <summary> The interval. </summary>
         [WirePath("interval")]
         public int? Interval { get; }
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string TimeZone { get; }
         /// <summary> The recurrence schedule. </summary>
         [WirePath("schedule")]
-        public RecurrenceSchedule Schedule { get; }
+        public WorkflowRecurrenceSchedule Schedule { get; }
     }
 }

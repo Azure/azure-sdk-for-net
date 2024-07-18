@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService
             FlowEndpointsConfiguration endpointsConfiguration = default;
             FlowAccessControlConfiguration accessControl = default;
             WorkflowSku sku = default;
-            ResourceReference integrationAccount = default;
+            WorkflowResourceReference integrationAccount = default;
             BinaryData definition = default;
             IDictionary<string, WorkflowContent> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            integrationAccount = ResourceReference.DeserializeResourceReference(property0.Value, options);
+                            integrationAccount = WorkflowResourceReference.DeserializeWorkflowResourceReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("definition"u8))

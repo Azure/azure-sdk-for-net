@@ -1030,13 +1030,13 @@ namespace Azure.ResourceManager.AppService.Models
             int? xManagedServiceIdentityId = default;
             string keyVaultReferenceIdentity = default;
             IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default;
-            DefaultAction? ipSecurityRestrictionsDefaultAction = default;
+            SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default;
             IList<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default;
-            DefaultAction? scmIPSecurityRestrictionsDefaultAction = default;
+            SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default;
             bool? scmIPSecurityRestrictionsUseMain = default;
             bool? http20Enabled = default;
             AppServiceSupportedTlsVersion? minTlsVersion = default;
-            TlsCipherSuite? minTlsCipherSuite = default;
+            AppServiceTlsCipherSuite? minTlsCipherSuite = default;
             AppServiceSupportedTlsVersion? scmMinTlsVersion = default;
             AppServiceFtpsState? ftpsState = default;
             int? preWarmedInstanceCount = default;
@@ -1634,7 +1634,7 @@ namespace Azure.ResourceManager.AppService.Models
                         ipSecurityRestrictionsDefaultAction = null;
                         continue;
                     }
-                    ipSecurityRestrictionsDefaultAction = new DefaultAction(property.Value.GetString());
+                    ipSecurityRestrictionsDefaultAction = new SiteDefaultAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scmIpSecurityRestrictions"u8))
@@ -1659,7 +1659,7 @@ namespace Azure.ResourceManager.AppService.Models
                         scmIPSecurityRestrictionsDefaultAction = null;
                         continue;
                     }
-                    scmIPSecurityRestrictionsDefaultAction = new DefaultAction(property.Value.GetString());
+                    scmIPSecurityRestrictionsDefaultAction = new SiteDefaultAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scmIpSecurityRestrictionsUseMain"u8))
@@ -1699,7 +1699,7 @@ namespace Azure.ResourceManager.AppService.Models
                         minTlsCipherSuite = null;
                         continue;
                     }
-                    minTlsCipherSuite = new TlsCipherSuite(property.Value.GetString());
+                    minTlsCipherSuite = new AppServiceTlsCipherSuite(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scmMinTlsVersion"u8))

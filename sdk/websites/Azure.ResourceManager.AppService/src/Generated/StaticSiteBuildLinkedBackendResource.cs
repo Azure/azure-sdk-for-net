@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _staticSiteBuildLinkedBackendStaticSitesClientDiagnostics;
         private readonly StaticSitesRestOperations _staticSiteBuildLinkedBackendStaticSitesRestClient;
-        private readonly StaticSiteLinkedBackendARMResourceData _data;
+        private readonly StaticSiteLinkedBackendData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/builds/linkedBackends";
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildLinkedBackendResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StaticSiteBuildLinkedBackendResource(ArmClient client, StaticSiteLinkedBackendARMResourceData data) : this(client, data.Id)
+        internal StaticSiteBuildLinkedBackendResource(ArmClient client, StaticSiteLinkedBackendData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual StaticSiteLinkedBackendARMResourceData Data
+        public virtual StaticSiteLinkedBackendData Data
         {
             get
             {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StaticSiteBuildLinkedBackendResource>> UpdateAsync(WaitUntil waitUntil, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StaticSiteBuildLinkedBackendResource>> UpdateAsync(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StaticSiteBuildLinkedBackendResource> Update(WaitUntil waitUntil, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StaticSiteBuildLinkedBackendResource> Update(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> ValidateBackendForBuildAsync(WaitUntil waitUntil, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ValidateBackendForBuildAsync(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation ValidateBackendForBuild(WaitUntil waitUntil, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ValidateBackendForBuild(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
