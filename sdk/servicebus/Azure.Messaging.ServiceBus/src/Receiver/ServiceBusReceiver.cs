@@ -37,6 +37,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>The maximum number of messages to delete in a single batch.  This cap is established and enforced by the service.</summary>
         internal const int MaxDeleteMessageCount = 4000;
 
+        /// <summary>The set of default options to use for initialization when no explicit options were provided.</summary>
+        private static ServiceBusReceiverOptions s_defaultOptions;
+
         /// <summary>
         /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
         /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -177,7 +180,11 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                options = options?.Clone() ?? new ServiceBusReceiverOptions();
+                // If no explicit options were provided, use the default set, creating them as needed.  There is
+                // a benign race condition here where multiple sets of default options may be created when initializing.
+                // The cost of hitting the race is lower than the cost of synchronizing each access.
+                options ??= s_defaultOptions ??= new ServiceBusReceiverOptions();
+
                 Identifier = string.IsNullOrEmpty(options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(entityPath) : options.Identifier;
                 _connection = connection;
                 _retryPolicy = connection.RetryOptions.ToRetryPolicy();
