@@ -68,7 +68,7 @@ Limitations:
 
 **Redaction Formatting**
 
-[Redaction formatting guide](./docs/HowTo-RedactionFormatting.md)
+[Redaction formatting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthdataaiservices/Azure.Health.Deidentification/docs/HowTo-RedactionFormatting.md)
 
 ### Thread safety
 
