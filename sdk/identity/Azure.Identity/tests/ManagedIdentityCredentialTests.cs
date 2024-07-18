@@ -985,7 +985,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [Platform(Exclude = "MacOS", Reason = "Test is not supported on MacOS")]
+        [RunOnlyOnPlatforms(Windows = true, Linux = true, OSX = false, Reason = "Test is not supported on MacOS")]
         public void VerifyArcIdentitySourceFilePathValidation_DoesNotEndInDotKey()
         {
             using var environment = new TestEnvVar(
@@ -1026,7 +1026,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [Platform(Exclude = "MacOS", Reason = "Test is not supported on MacOS")]
+        [RunOnlyOnPlatforms(Windows = true, Linux = true, OSX = false, Reason = "Test is not supported on MacOS")]
         public void VerifyArcIdentitySourceFilePathValidation_FilePathInvalid()
         {
             using var environment = new TestEnvVar(
