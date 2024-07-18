@@ -9,8 +9,7 @@ using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
 #endregion
-#region Snippet:ConversationAuthoringClient_Namespace
-#endregion
+
 #region Snippet:Conversation_Identity_Namespace
 using Azure.Identity;
 #endregion

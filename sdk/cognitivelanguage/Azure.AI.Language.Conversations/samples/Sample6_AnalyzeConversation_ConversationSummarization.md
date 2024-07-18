@@ -26,93 +26,66 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
-var data = new
-{
-    AnalysisInput = new
-    {
-        Conversations = new[]
+var data = new AnalyzeConversationOperationInput(
+    new MultiLanguageConversationInput(
+        new List<ConversationInput>
         {
-            new
+            new TextConversation("1", "en", new List<TextConversationItem>()
             {
-                ConversationItems = new[]
+                new TextConversationItem("1", "Agent_1", "Hello, how can I help you?")
                 {
-                    new
-                    {
-                        Text = "Hello, how can I help you?",
-                        Id = "1",
-                        Role = "Agent",
-                        ParticipantId = "Agent_1",
-                    },
-                    new
-                    {
-                        Text = "How to upgrade Office? I am getting error messages the whole day.",
-                        Id = "2",
-                        Role = "Customer",
-                        ParticipantId = "Customer_1",
-                    },
-                    new
-                    {
-                        Text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                        Id = "3",
-                        Role = "Agent",
-                        ParticipantId = "Agent_1",
-                    },
+                    Role = ParticipantRole.Agent
                 },
-                Id = "1",
-                Language = "en",
-                Modality = "text",
-            },
-        }
-    },
-    Tasks = new[]
-    {
-        new
-        {
-            TaskName = "Issue task",
-            Kind = "ConversationalSummarizationTask",
-            Parameters = new
-            {
-                SummaryAspects = new[]
+                new TextConversationItem("2", "Customer_1", "How to upgrade Office? I am getting error messages the whole day.")
                 {
-                    "issue",
-                }
-            },
-        },
-        new
-        {
-            TaskName = "Resolution task",
-            Kind = "ConversationalSummarizationTask",
-            Parameters = new
-            {
-                SummaryAspects = new[]
+                    Role = ParticipantRole.Customer
+                },
+                new TextConversationItem("3", "Agent_1", "Press the upgrade button please. Then sign in and follow the instructions.")
                 {
-                    "resolution",
+                    Role = ParticipantRole.Agent
                 }
+            })
+        }),
+        new List<AnalyzeConversationOperationAction>
+        {
+            new SummarizationOperationAction()
+            {
+                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+                {
+                    SummaryAspect.Issue,
+                }),
+                Name = "Issue task",
             },
-        },
-    },
-};
+            new SummarizationOperationAction()
+            {
+                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+                {
+                    SummaryAspect.Resolution,
+                }),
+                Name = "Resolution task",
+            }
+        });
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
 
-dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-foreach (dynamic task in jobResults.Tasks.Items)
+AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
 {
-    Console.WriteLine($"Task name: {task.TaskName}");
-    dynamic results = task.Results;
-    foreach (dynamic conversation in results.Conversations)
+    Console.WriteLine($"Task name: {task.Name}");
+    SummaryResult results = task.Results;
+    foreach (ConversationsSummaryResult conversation in results.Conversations)
     {
         Console.WriteLine($"Conversation: #{conversation.Id}");
         Console.WriteLine("Summaries:");
-        foreach (dynamic summary in conversation.Summaries)
+        foreach (SummaryResultItem summary in conversation.Summaries)
         {
             Console.WriteLine($"Text: {summary.Text}");
             Console.WriteLine($"Aspect: {summary.Aspect}");
         }
-        if (results.Warnings != null)
+        if (conversation.Warnings != null && conversation.Warnings.Any())
         {
             Console.WriteLine("Warnings:");
-            foreach (dynamic warning in conversation.Warnings)
+            foreach (InputWarning warning in conversation.Warnings)
             {
                 Console.WriteLine($"Code: {warning.Code}");
                 Console.WriteLine($"Message: {warning.Message}");
@@ -120,10 +93,10 @@ foreach (dynamic task in jobResults.Tasks.Items)
         }
         Console.WriteLine();
     }
-    if (results.Errors != null)
+    if (results.Errors != null && results.Errors.Any())
     {
         Console.WriteLine("Errors:");
-        foreach (dynamic error in results.Errors)
+        foreach (DocumentError error in results.Errors)
         {
             Console.WriteLine($"Error: {error}");
         }
@@ -136,5 +109,71 @@ foreach (dynamic task in jobResults.Tasks.Items)
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationSummarization
-Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
+var data = new AnalyzeConversationOperationInput(
+    new MultiLanguageConversationInput(
+        new List<ConversationInput>
+        {
+            new TextConversation("1", "en", new List<TextConversationItem>()
+            {
+                new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
+                new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
+                new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.")
+            })
+        }),
+        new List<AnalyzeConversationOperationAction>
+        {
+            new SummarizationOperationAction()
+            {
+                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+                {
+                    SummaryAspect.Issue,
+                }),
+                Name = "Issue task",
+            },
+            new SummarizationOperationAction()
+            {
+                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+                {
+                    SummaryAspect.Resolution,
+                }),
+                Name = "Resolution task",
+            }
+        });
+
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
+
+AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
+{
+    Console.WriteLine($"Task name: {task.Name}");
+    SummaryResult results = task.Results;
+    foreach (ConversationsSummaryResult conversation in results.Conversations)
+    {
+        Console.WriteLine($"Conversation: #{conversation.Id}");
+        Console.WriteLine("Summaries:");
+        foreach (SummaryResultItem summary in conversation.Summaries)
+        {
+            Console.WriteLine($"Text: {summary.Text}");
+            Console.WriteLine($"Aspect: {summary.Aspect}");
+        }
+        if (conversation.Warnings != null && conversation.Warnings.Any())
+        {
+            Console.WriteLine("Warnings:");
+            foreach (InputWarning warning in conversation.Warnings)
+            {
+                Console.WriteLine($"Code: {warning.Code}");
+                Console.WriteLine($"Message: {warning.Message}");
+            }
+        }
+        Console.WriteLine();
+    }
+    if (results.Errors != null && results.Errors.Any())
+    {
+        Console.WriteLine("Errors:");
+        foreach (DocumentError error in results.Errors)
+        {
+            Console.WriteLine($"Error: {error}");
+        }
+    }
+}
 ```

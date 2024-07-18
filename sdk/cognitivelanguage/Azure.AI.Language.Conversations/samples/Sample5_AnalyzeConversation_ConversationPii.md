@@ -24,83 +24,52 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:AnalyzeConversation_ConversationPii
-var data = new
-{
-    AnalysisInput = new
-    {
-        Conversations = new[]
+var data = new AnalyzeConversationOperationInput(
+    new MultiLanguageConversationInput(
+        new List<ConversationInput>
         {
-            new
+            new TextConversation("1", "en", new List<TextConversationItem>()
             {
-                ConversationItems = new[]
-                {
-                    new
-                    {
-                        Text = "Hello, how can I help you?",
-                        Id = "1",
-                        Role = "Agent",
-                        ParticipantId = "Agent_1",
-                    },
-                    new
-                    {
-                        Text = "How to upgrade Office? I am getting error messages the whole day.",
-                        Id = "2",
-                        Role = "Customer",
-                        ParticipantId = "Customer_1",
-                    },
-                    new
-                    {
-                        Text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                        Id = "3",
-                        Role = "Agent",
-                        ParticipantId = "Agent_1",
-                    },
-                },
-                Id = "1",
-                Language = "en",
-                Modality = "text",
-            },
-        }
-    },
-    Tasks = new[]
-    {
-        new
+                new TextConversationItem("1", "Agent_1", "Can you provide you name?"),
+                new TextConversationItem("2", "Customer_1", "Hi, my name is John Doe."),
+                new TextConversationItem("3", "Agent_1", "Thank you John, that has been updated in our system.")
+            })
+        }),
+        new List<AnalyzeConversationOperationAction>
         {
-            TaskName = "Issue task",
-            Kind = "ConversationalPiiTask"
-        },
-        new
-        {
-            TaskName = "Resolution task",
-            Kind = "ConversationalSummarizationTask",
-            Parameters = new
+            new PiiOperationAction()
             {
-                SummaryAspects = new[]
-                {
-                    "resolution",
-                }
-            },
-        },
-    },
-};
+                ActionContent = new ConversationPiiActionContent(),
+                Name = "Conversation PII task",
+            }
+        });
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
 
-dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-foreach (dynamic task in jobResults.Tasks.Items)
+AnalyzeConversationOperationState operationResults = analyzeConversationOperation.Value;
+
+foreach (ConversationPiiOperationResult task in operationResults.Actions.Items.Cast<ConversationPiiOperationResult>())
 {
-    Console.WriteLine($"Task name: {task.TaskName}");
-    dynamic results = task.Results;
-    foreach (dynamic conversation in results.Conversations)
+    Console.WriteLine($"Operation name: {task.Name}");
+
+    foreach (ConversationalPiiResultWithResultBase conversation in task.Results.Conversations)
     {
         Console.WriteLine($"Conversation: #{conversation.Id}");
-        Console.WriteLine("Summaries:");
-        foreach (dynamic summary in conversation.Summaries)
+        Console.WriteLine("Detected Entities:");
+        foreach (ConversationPiiItemResult item in conversation.ConversationItems)
         {
-            Console.WriteLine($"Text: {summary.Text}");
-            Console.WriteLine($"Aspect: {summary.Aspect}");
+            foreach (NamedEntity entity in item.Entities)
+            {
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Subcategory: {entity.Subcategory}");
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
+                Console.WriteLine();
+            }
         }
-        if (results.Warnings != null)
+        if (conversation.Warnings != null && conversation.Warnings.Any())
         {
             Console.WriteLine("Warnings:");
             foreach (dynamic warning in conversation.Warnings)
@@ -111,10 +80,10 @@ foreach (dynamic task in jobResults.Tasks.Items)
         }
         Console.WriteLine();
     }
-    if (results.Errors != null)
+    if (operationResults.Errors != null && operationResults.Errors.Any())
     {
         Console.WriteLine("Errors:");
-        foreach (dynamic error in results.Errors)
+        foreach (dynamic error in operationResults.Errors)
         {
             Console.WriteLine($"Error: {error}");
         }
@@ -127,5 +96,68 @@ foreach (dynamic task in jobResults.Tasks.Items)
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationPii
-Operation<BinaryData> analyzeConversationOperation = await client.AnalyzeConversationsAsync(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
+var data = new AnalyzeConversationOperationInput(
+    new MultiLanguageConversationInput(
+        new List<ConversationInput>
+        {
+            new TextConversation("1", "en", new List<TextConversationItem>()
+            {
+                new TextConversationItem("1", "Agent_1", "Can you provide you name?"),
+                new TextConversationItem("2", "Customer_1", "Hi, my name is John Doe."),
+                new TextConversationItem("3", "Agent_1", "Thank you John, that has been updated in our system.")
+            })
+        }),
+        new List<AnalyzeConversationOperationAction>
+        {
+            new PiiOperationAction()
+            {
+                ActionContent = new ConversationPiiActionContent(),
+                Name = "Conversation PII task",
+            }
+        });
+
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
+AnalyzeConversationOperationState operationResults = analyzeConversationOperation.Value;
+
+foreach (ConversationPiiOperationResult task in operationResults.Actions.Items.Cast<ConversationPiiOperationResult>())
+{
+    Console.WriteLine($"Operation name: {task.Name}");
+
+    foreach (ConversationalPiiResultWithResultBase conversation in task.Results.Conversations)
+    {
+        Console.WriteLine($"Conversation: #{conversation.Id}");
+        Console.WriteLine("Detected Entities:");
+        foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+        {
+            foreach (NamedEntity entity in item.Entities)
+            {
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Subcategory: {entity.Subcategory}");
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
+                Console.WriteLine();
+            }
+        }
+        if (conversation.Warnings != null && conversation.Warnings.Any())
+        {
+            Console.WriteLine("Warnings:");
+            foreach (dynamic warning in conversation.Warnings)
+            {
+                Console.WriteLine($"Code: {warning.Code}");
+                Console.WriteLine($"Message: {warning.Message}");
+            }
+        }
+        Console.WriteLine();
+    }
+    if (operationResults.Errors != null && operationResults.Errors.Any())
+    {
+        Console.WriteLine("Errors:");
+        foreach (dynamic error in operationResults.Errors)
+        {
+            Console.WriteLine($"Error: {error}");
+        }
+    }
+}
 ```

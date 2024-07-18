@@ -315,93 +315,66 @@ if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
 To summarize a conversation, you can use the `AnalyzeConversationsOperation` method overload that returns an `Response<AnalyzeConversationJobState>`:
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
-var data = new
-{
-    AnalysisInput = new
-    {
-        Conversations = new[]
+var data = new AnalyzeConversationOperationInput(
+    new MultiLanguageConversationInput(
+        new List<ConversationInput>
         {
-            new
+            new TextConversation("1", "en", new List<TextConversationItem>()
             {
-                ConversationItems = new[]
+                new TextConversationItem("1", "Agent_1", "Hello, how can I help you?")
                 {
-                    new
-                    {
-                        Text = "Hello, how can I help you?",
-                        Id = "1",
-                        Role = "Agent",
-                        ParticipantId = "Agent_1",
-                    },
-                    new
-                    {
-                        Text = "How to upgrade Office? I am getting error messages the whole day.",
-                        Id = "2",
-                        Role = "Customer",
-                        ParticipantId = "Customer_1",
-                    },
-                    new
-                    {
-                        Text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                        Id = "3",
-                        Role = "Agent",
-                        ParticipantId = "Agent_1",
-                    },
+                    Role = ParticipantRole.Agent
                 },
-                Id = "1",
-                Language = "en",
-                Modality = "text",
-            },
-        }
-    },
-    Tasks = new[]
-    {
-        new
-        {
-            TaskName = "Issue task",
-            Kind = "ConversationalSummarizationTask",
-            Parameters = new
-            {
-                SummaryAspects = new[]
+                new TextConversationItem("2", "Customer_1", "How to upgrade Office? I am getting error messages the whole day.")
                 {
-                    "issue",
-                }
-            },
-        },
-        new
-        {
-            TaskName = "Resolution task",
-            Kind = "ConversationalSummarizationTask",
-            Parameters = new
-            {
-                SummaryAspects = new[]
+                    Role = ParticipantRole.Customer
+                },
+                new TextConversationItem("3", "Agent_1", "Press the upgrade button please. Then sign in and follow the instructions.")
                 {
-                    "resolution",
+                    Role = ParticipantRole.Agent
                 }
+            })
+        }),
+        new List<AnalyzeConversationOperationAction>
+        {
+            new SummarizationOperationAction()
+            {
+                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+                {
+                    SummaryAspect.Issue,
+                }),
+                Name = "Issue task",
             },
-        },
-    },
-};
+            new SummarizationOperationAction()
+            {
+                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+                {
+                    SummaryAspect.Resolution,
+                }),
+                Name = "Resolution task",
+            }
+        });
 
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
 
-dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-foreach (dynamic task in jobResults.Tasks.Items)
+AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
 {
-    Console.WriteLine($"Task name: {task.TaskName}");
-    dynamic results = task.Results;
-    foreach (dynamic conversation in results.Conversations)
+    Console.WriteLine($"Task name: {task.Name}");
+    SummaryResult results = task.Results;
+    foreach (ConversationsSummaryResult conversation in results.Conversations)
     {
         Console.WriteLine($"Conversation: #{conversation.Id}");
         Console.WriteLine("Summaries:");
-        foreach (dynamic summary in conversation.Summaries)
+        foreach (SummaryResultItem summary in conversation.Summaries)
         {
             Console.WriteLine($"Text: {summary.Text}");
             Console.WriteLine($"Aspect: {summary.Aspect}");
         }
-        if (results.Warnings != null)
+        if (conversation.Warnings != null && conversation.Warnings.Any())
         {
             Console.WriteLine("Warnings:");
-            foreach (dynamic warning in conversation.Warnings)
+            foreach (InputWarning warning in conversation.Warnings)
             {
                 Console.WriteLine($"Code: {warning.Code}");
                 Console.WriteLine($"Message: {warning.Message}");
@@ -409,10 +382,10 @@ foreach (dynamic task in jobResults.Tasks.Items)
         }
         Console.WriteLine();
     }
-    if (results.Errors != null)
+    if (results.Errors != null && results.Errors.Any())
     {
         Console.WriteLine("Errors:");
-        foreach (dynamic error in results.Errors)
+        foreach (DocumentError error in results.Errors)
         {
             Console.WriteLine($"Error: {error}");
         }
@@ -425,6 +398,71 @@ foreach (dynamic task in jobResults.Tasks.Items)
 To detect and redact PII in a conversation, you can use the `AnalyzeConversationsOperation` method overload with an action of type `PiiOperationAction`:
 
 ```C# Snippet:AnalyzeConversation_ConversationPii
+var data = new AnalyzeConversationOperationInput(
+    new MultiLanguageConversationInput(
+        new List<ConversationInput>
+        {
+            new TextConversation("1", "en", new List<TextConversationItem>()
+            {
+                new TextConversationItem("1", "Agent_1", "Can you provide you name?"),
+                new TextConversationItem("2", "Customer_1", "Hi, my name is John Doe."),
+                new TextConversationItem("3", "Agent_1", "Thank you John, that has been updated in our system.")
+            })
+        }),
+        new List<AnalyzeConversationOperationAction>
+        {
+            new PiiOperationAction()
+            {
+                ActionContent = new ConversationPiiActionContent(),
+                Name = "Conversation PII task",
+            }
+        });
+
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
+
+AnalyzeConversationOperationState operationResults = analyzeConversationOperation.Value;
+
+foreach (ConversationPiiOperationResult task in operationResults.Actions.Items.Cast<ConversationPiiOperationResult>())
+{
+    Console.WriteLine($"Operation name: {task.Name}");
+
+    foreach (ConversationalPiiResultWithResultBase conversation in task.Results.Conversations)
+    {
+        Console.WriteLine($"Conversation: #{conversation.Id}");
+        Console.WriteLine("Detected Entities:");
+        foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+        {
+            foreach (NamedEntity entity in item.Entities)
+            {
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Subcategory: {entity.Subcategory}");
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
+                Console.WriteLine();
+            }
+        }
+        if (conversation.Warnings != null && conversation.Warnings.Any())
+        {
+            Console.WriteLine("Warnings:");
+            foreach (dynamic warning in conversation.Warnings)
+            {
+                Console.WriteLine($"Code: {warning.Code}");
+                Console.WriteLine($"Message: {warning.Message}");
+            }
+        }
+        Console.WriteLine();
+    }
+    if (operationResults.Errors != null && operationResults.Errors.Any())
+    {
+        Console.WriteLine("Errors:");
+        foreach (dynamic error in operationResults.Errors)
+        {
+            Console.WriteLine($"Error: {error}");
+        }
+    }
+}
 ```
 
 ### Additional samples
