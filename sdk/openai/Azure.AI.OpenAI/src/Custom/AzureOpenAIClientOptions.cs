@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using OpenAI;
 
 namespace Azure.AI.OpenAI;
 
@@ -10,13 +11,33 @@ namespace Azure.AI.OpenAI;
 /// </summary>
 public partial class AzureOpenAIClientOptions : ClientPipelineOptions
 {
-    internal string Version => _version;
-    private readonly string _version;
+    internal string Version { get; }
 
     /// <summary>
     /// Specifies custom authorization scopes to use when authenticating a client with a supplied <see cref="Azure.Core.TokenCredential"/>.
     /// </summary>
-    public IReadOnlyList<string> TokenAuthorizationScopes { get; init; }
+    public IReadOnlyList<string> TokenAuthorizationScopes
+    {
+        get => _tokenAuthorizationScopes;
+        set
+        {
+            AssertNotFrozen();
+            _tokenAuthorizationScopes = value;
+        }
+    }
+    private IReadOnlyList<string> _tokenAuthorizationScopes;
+
+    /// <inheritdoc cref="OpenAIClientOptions.ApplicationId"/>
+    public string ApplicationId
+    {
+        get => _applicationId;
+        set
+        {
+            AssertNotFrozen();
+            _applicationId = value;
+        }
+    }
+    private string _applicationId;
 
     /// <summary>
     /// Initializes a new instance of <see cref="AzureOpenAIClientOptions"/>
@@ -26,7 +47,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
     public AzureOpenAIClientOptions(ServiceVersion version = LatestVersion)
         : base()
     {
-        _version = version switch
+        Version = version switch
         {
             ServiceVersion.V2024_04_01_Preview => "2024-04-01-preview",
             ServiceVersion.V2024_05_01_Preview => "2024-05-01-preview",
