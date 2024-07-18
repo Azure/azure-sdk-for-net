@@ -586,7 +586,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [language_studio]: https://language.cognitive.azure.com/
 [nuget]: https://www.nuget.org/
 
-[conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/generated/ConversationAnalysisClient.cs
+[conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/ConversationAnalysisClient.cs
 [conversationanalysis_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/
 [conversationanalysis_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/
 [conversationanalysis_nuget_package]: https://www.nuget.org/packages/Azure.AI.Language.Conversations/
