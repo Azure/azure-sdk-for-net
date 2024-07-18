@@ -64,41 +64,18 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <summary>
     /// TODO.
     /// </summary>
-    /// <returns></returns>
-    protected virtual bool IsLoggingEnabled()
-    {
-        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Warning); // We only log warnings, information, and trace
-        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled();
-        return isLoggerEnabled || isEventSourceEnabled;
-    }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
     /// <param name="message"></param>
-    protected virtual void OnLogRequest(PipelineMessage message) { }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    protected virtual ValueTask OnLogRequestAsync(PipelineMessage message) => default;
+    /// <param name="bytes"></param>
+    /// <param name="encoding"></param>
+    protected virtual void OnSendingRequest(PipelineMessage message, byte[]? bytes, Encoding? encoding) { }
 
     /// <summary>
     /// TODO.
     /// </summary>
     /// <param name="message"></param>
     /// <param name="bytes"></param>
-    /// <param name="textEncoding"></param>
-    protected virtual void OnLogRequestContent(PipelineMessage message, byte[] bytes, Encoding? textEncoding) { }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="bytes"></param>
-    /// <param name="textEncoding"></param>
-    protected virtual ValueTask OnLogRequestContentAsync(PipelineMessage message, byte[] bytes, Encoding? textEncoding) => default;
+    /// <param name="encoding"></param>
+    protected virtual ValueTask OnSendingRequestAsync(PipelineMessage message, byte[]? bytes, Encoding? encoding) => default;
 
     /// <summary>
     /// TODO.
@@ -133,21 +110,6 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <returns></returns>
     protected virtual ValueTask OnLogResponseContentAsync(PipelineMessage message, byte[] bytes, Encoding? textEncoding, int? block) => default;
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="exception"></param>
-    protected virtual void OnLogResponseException(PipelineMessage message, Exception exception) { }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="exception"></param>
-    /// <returns></returns>
-    protected virtual ValueTask OnLogResponseExceptionAsync(PipelineMessage message, Exception exception) => default;
-
     internal string? GetCorrelationIdFromHeaders(PipelineRequestHeaders keyValuePairs)
     {
         if (_correlationIdHeaderName == null)
@@ -160,7 +122,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        if (!IsLoggingEnabled())
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Warning); // We only log warnings, information, and trace
+        bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled();
+        var isLoggingEnabled = isLoggerEnabled || isEventSourceEnabled;
+
+        if (!isLoggingEnabled)
         {
             if (async)
             {
@@ -180,21 +146,25 @@ public class ClientLoggingPolicy : PipelinePolicy
         // If a request Id wasn't set, generate one so at least all the logs for this request and its corresponding response
         // can be correlated with each other.
         string requestId = GetCorrelationIdFromHeaders(request.Headers) ?? Guid.NewGuid().ToString();
+        message.LoggingCorrelationId = requestId;
 
         LogRequest(_logger, request, requestId);
-
-        if (async)
-        {
-            await OnLogRequestAsync(message).ConfigureAwait(false);
-        }
-        else
-        {
-            OnLogRequest(message);
-        }
 
         if (_logContent)
         {
             await LogRequestContent(message, _logger, request, requestId, async, message.CancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            // OnSendingRequest is called in LogRequestContent if content logging is enabled
+            if (async)
+            {
+                await OnSendingRequestAsync(message, null, null).ConfigureAwait(false);
+            }
+            else
+            {
+                OnSendingRequest(message, null, null);
+            }
         }
 
         var before = Stopwatch.GetTimestamp();
@@ -215,15 +185,6 @@ public class ClientLoggingPolicy : PipelinePolicy
             ClientModelLogMessages.ExceptionResponse(_logger, requestId, ex.ToString());
             ClientModelEventSource.Log.ExceptionResponse(requestId, ex.ToString());
 
-            if (async)
-            {
-                await OnLogResponseExceptionAsync(message, ex).ConfigureAwait(false);
-            }
-            else
-            {
-                OnLogResponseException(message, ex);
-            }
-
             throw;
         }
 
@@ -235,7 +196,9 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
+        // Prefer the value from the service if one is provided
         string responseId = GetCorrelationIdFromHeaders(response.Headers) ?? requestId; // Use the request ID if there was no response id
+        message.LoggingCorrelationId = responseId;
 
         LogResponse(_logger, response, responseId, elapsed);
 
@@ -322,11 +285,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (async)
         {
-            await OnLogRequestContentAsync(message, bytes, requestTextEncoding).ConfigureAwait(false);
+            await OnSendingRequestAsync(message, bytes, requestTextEncoding).ConfigureAwait(false);
         }
         else
         {
-            OnLogRequestContent(message, bytes, requestTextEncoding);
+            OnSendingRequest(message, bytes, requestTextEncoding);
         }
     }
 
