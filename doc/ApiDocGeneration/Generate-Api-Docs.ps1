@@ -105,7 +105,7 @@ mkdir $DocOutDir
 
 if ($LibType -eq 'client') {
     Write-Verbose "Build Packages for Doc Generation - Client"
-    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir
+    Write-Verbose "dotnet build '${RepoRoot}/eng/service.proj' /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir"
     dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$ServiceDirectory /p:Project=$ArtifactsDirectoryName /p:IncludeTests=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:BuildInParallel=false /p:OutputPath=$ApiDir
     if ($LASTEXITCODE -ne 0) {
         Log-Warning "Build Packages for Doc Generation - Client failed with $LASTEXITCODE please see output above"
