@@ -60,6 +60,8 @@ namespace Azure.Communication
         {
             static void AssertRawId(CommunicationIdentifier identifier, string expectedRawId) => Assert.AreEqual(expectedRawId, identifier.RawId);
 
+            AssertRawId(new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"), "8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa");
+            AssertRawId(new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"), "8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa");
             AssertRawId(new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"), "8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRawId(new CommunicationUserIdentifier("8:gcch-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"), "8:gcch-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRawId(new CommunicationUserIdentifier("someFutureFormat"), "someFutureFormat");
@@ -93,7 +95,8 @@ namespace Azure.Communication
                 Assert.IsTrue(CommunicationIdentifier.FromRawId(rawId) == expectedIdentifier);
                 Assert.IsFalse(CommunicationIdentifier.FromRawId(rawId) != expectedIdentifier);
             }
-
+             AssertIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa", new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"));
+             AssertIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa", new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"));
              AssertIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130", new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
              AssertIdentifier("8:spool:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130", new CommunicationUserIdentifier("8:spool:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
              AssertIdentifier("8:dod-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130", new CommunicationUserIdentifier("8:dod-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
@@ -121,6 +124,8 @@ namespace Azure.Communication
         {
             static void AssertRoundtrip(string rawId) => Assert.AreEqual(rawId,CommunicationIdentifier.FromRawId(rawId).RawId);
 
+            AssertRoundtrip("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa");
+            AssertRoundtrip("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa");
             AssertRoundtrip("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRoundtrip("8:spool:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRoundtrip("8:dod-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
@@ -155,6 +160,8 @@ namespace Azure.Communication
         {
             var dictionary = new Dictionary<CommunicationIdentifier, string>
             {
+                { new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"), nameof(CommunicationUserIdentifier)},
+                { new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"), nameof(CommunicationUserIdentifier)},
                 { new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"), nameof(CommunicationUserIdentifier)},
                 { new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"), nameof(MicrosoftTeamsUserIdentifier) },
                 { new PhoneNumberIdentifier("+14255550123"), nameof(PhoneNumberIdentifier) },
@@ -164,6 +171,8 @@ namespace Azure.Communication
 
             var hashSet = new HashSet<CommunicationIdentifier>
             {
+                new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"),
+                new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"),
                 new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"),
                 new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"),
                 new PhoneNumberIdentifier("+14255550123"),
@@ -173,6 +182,8 @@ namespace Azure.Communication
 
             var list = new List<CommunicationIdentifier>
             {
+                new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"),
+                new CommunicationUserIdentifier("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"),
                 new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"),
                 new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130"),
                 new PhoneNumberIdentifier("+14255550123"),
@@ -180,18 +191,24 @@ namespace Azure.Communication
                 new UnknownIdentifier("48:45ab2481-1c1c-4005-be24-0ffb879b1130")
             };
 
+            Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa")).WithValue(nameof(CommunicationUserIdentifier)));
+            Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa")).WithValue(nameof(CommunicationUserIdentifier)));
             Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130")).WithValue(nameof(CommunicationUserIdentifier)));
             Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")).WithValue(nameof(MicrosoftTeamsUserIdentifier)));
             Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("4:+14255550123")).WithValue(nameof(PhoneNumberIdentifier)));
             Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130")).WithValue(nameof(MicrosoftTeamsAppIdentifier)));
             Assert.That(dictionary, Does.ContainKey(CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130")).WithValue(nameof(UnknownIdentifier)));
 
+            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"));
+            CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"));
             CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
             CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
             CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("4:+14255550123"));
             CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("28:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
             CollectionAssert.Contains(hashSet, CommunicationIdentifier.FromRawId("48:45ab2481-1c1c-4005-be24-0ffb879b1130"));
 
+            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"));
+            CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:acs:52a5e676-39a3-4f45-a8ed-5a162dbbd7eb_ext_cdc5aeea-15c5-4db6-b079-fcadd2505dc2_cab309e5-a2e7-4ac8-b04e-5fadc3aa90fa"));
             CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
             CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130"));
             CollectionAssert.Contains(list, CommunicationIdentifier.FromRawId("4:+14255550123"));
