@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="LargeInstance.LargeInstanceData"/> instance for mocking. </returns>
-        public static LargeInstanceData LargeInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LargeInstanceHardwareProfile hardwareProfile = null, LargeInstanceStorageProfile storageProfile = null, LargeInstanceOSProfile osProfile = null, LargeInstanceNetworkProfile networkProfile = null, string azureLargeInstanceId = null, LargeInstancePowerState? powerState = null, string proximityPlacementGroup = null, string hwRevision = null, string partnerNodeId = null, LargeInstanceProvisioningState? provisioningState = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
+        public static LargeInstanceData LargeInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LargeInstanceHardwareProfile hardwareProfile = null, LargeInstanceStorageProfile storageProfile = null, LargeInstanceOSProfile osProfile = null, LargeInstanceNetworkProfile networkProfile = null, string azureLargeInstanceId = null, LargeInstancePowerState? powerState = null, string proximityPlacementGroup = null, string hwRevision = null, string partnerNodeId = null, LargeInstanceProvisioningState? provisioningState = null, IDictionary<string, string> tags = null, AzureLocation location = default)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="LargeInstance.LargeStorageInstanceData"/> instance for mocking. </returns>
-        public static LargeStorageInstanceData LargeStorageInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string azureLargeStorageInstanceUniqueIdentifier = null, LargeInstanceStorageProperties storageProperties = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
+        public static LargeStorageInstanceData LargeStorageInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string azureLargeStorageInstanceUniqueIdentifier = null, LargeInstanceStorageProperties storageProperties = null, IDictionary<string, string> tags = null, AzureLocation location = default)
         {
             tags ??= new Dictionary<string, string>();
 

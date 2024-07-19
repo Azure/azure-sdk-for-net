@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="summary"> Gets or sets the summary. </param>
         /// <param name="value"> Gets or sets the values of the job stream. </param>
         /// <returns> A new <see cref="Models.AutomationJobStream"/> instance for mocking. </returns>
-        public static AutomationJobStream AutomationJobStream(ResourceIdentifier id = null, string jobStreamId = null, DateTimeOffset? time = null, AutomationJobStreamType? streamType = null, string streamText = null, string summary = null, IReadOnlyDictionary<string, BinaryData> value = null)
+        public static AutomationJobStream AutomationJobStream(ResourceIdentifier id = null, string jobStreamId = null, DateTimeOffset? time = null, AutomationJobStreamType? streamType = null, string streamText = null, string summary = null, IDictionary<string, BinaryData> value = null)
         {
             value ??= new Dictionary<string, BinaryData>();
 
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="streamText"> The text of the sync job stream. </param>
         /// <param name="value"> The values of the job stream. </param>
         /// <returns> A new <see cref="Models.SourceControlSyncJobStreamResult"/> instance for mocking. </returns>
-        public static SourceControlSyncJobStreamResult SourceControlSyncJobStreamResult(ResourceIdentifier id = null, string sourceControlSyncJobStreamId = null, string summary = null, DateTimeOffset? time = null, SourceControlStreamType? streamType = null, string streamText = null, IReadOnlyDictionary<string, BinaryData> value = null)
+        public static SourceControlSyncJobStreamResult SourceControlSyncJobStreamResult(ResourceIdentifier id = null, string sourceControlSyncJobStreamId = null, string summary = null, DateTimeOffset? time = null, SourceControlStreamType? streamType = null, string streamText = null, IDictionary<string, BinaryData> value = null)
         {
             value ??= new Dictionary<string, BinaryData>();
 
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedOn"> Gets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.AutomationConnectionData"/> instance for mocking. </returns>
-        public static AutomationConnectionData AutomationConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string connectionTypeName = null, IReadOnlyDictionary<string, string> fieldDefinitionValues = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
+        public static AutomationConnectionData AutomationConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string connectionTypeName = null, IDictionary<string, string> fieldDefinitionValues = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
             fieldDefinitionValues ??= new Dictionary<string, string>();
 
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <returns> A new <see cref="Automation.AutomationConnectionTypeData"/> instance for mocking. </returns>
-        public static AutomationConnectionTypeData AutomationConnectionTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isGlobal = null, IReadOnlyDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
+        public static AutomationConnectionTypeData AutomationConnectionTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isGlobal = null, IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string description = null)
         {
             fieldDefinitions ??= new Dictionary<string, AutomationConnectionFieldDefinition>();
 
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="runOn"> Gets or sets the hybrid worker group that the scheduled job should run on. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job schedule. </param>
         /// <returns> A new <see cref="Automation.AutomationJobScheduleData"/> instance for mocking. </returns>
-        public static AutomationJobScheduleData AutomationJobScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? jobScheduleId = null, string scheduleName = null, string runbookName = null, string runOn = null, IReadOnlyDictionary<string, string> parameters = null)
+        public static AutomationJobScheduleData AutomationJobScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? jobScheduleId = null, string scheduleName = null, string runbookName = null, string runOn = null, IDictionary<string, string> parameters = null)
         {
             parameters ??= new Dictionary<string, string>();
 
@@ -1607,7 +1607,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="parameters"> Gets or sets the parameters of the test job. </param>
         /// <param name="logActivityTrace"> The activity-level tracing options of the runbook. </param>
         /// <returns> A new <see cref="Models.RunbookTestJob"/> instance for mocking. </returns>
-        public static RunbookTestJob RunbookTestJob(DateTimeOffset? createdOn = null, string status = null, string statusDetails = null, string runOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string exception = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? lastStatusModifiedOn = null, IReadOnlyDictionary<string, string> parameters = null, int? logActivityTrace = null)
+        public static RunbookTestJob RunbookTestJob(DateTimeOffset? createdOn = null, string status = null, string statusDetails = null, string runOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string exception = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? lastStatusModifiedOn = null, IDictionary<string, string> parameters = null, int? logActivityTrace = null)
         {
             parameters ??= new Dictionary<string, string>();
 

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="hostsRemaining"> Remaining hosts quota by sku type. </param>
         /// <param name="quotaEnabled"> Host quota is active for current subscription. </param>
         /// <returns> A new <see cref="Models.AvsSubscriptionQuotaAvailabilityResult"/> instance for mocking. </returns>
-        public static AvsSubscriptionQuotaAvailabilityResult AvsSubscriptionQuotaAvailabilityResult(IReadOnlyDictionary<string, int> hostsRemaining = null, AvsSubscriptionQuotaEnabled? quotaEnabled = null)
+        public static AvsSubscriptionQuotaAvailabilityResult AvsSubscriptionQuotaAvailabilityResult(IDictionary<string, int> hostsRemaining = null, AvsSubscriptionQuotaEnabled? quotaEnabled = null)
         {
             hostsRemaining ??= new Dictionary<string, int>();
 

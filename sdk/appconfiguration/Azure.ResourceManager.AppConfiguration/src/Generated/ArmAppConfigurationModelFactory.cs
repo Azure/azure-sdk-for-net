@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="tags"> Tags of the original configuration store. </param>
         /// <param name="isPurgeProtectionEnabled"> Purge protection status of the original configuration store. </param>
         /// <returns> A new <see cref="AppConfiguration.DeletedAppConfigurationStoreData"/> instance for mocking. </returns>
-        public static DeletedAppConfigurationStoreData DeletedAppConfigurationStoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier configurationStoreId = null, AzureLocation? location = null, DateTimeOffset? deletedOn = null, DateTimeOffset? scheduledPurgeOn = null, IReadOnlyDictionary<string, string> tags = null, bool? isPurgeProtectionEnabled = null)
+        public static DeletedAppConfigurationStoreData DeletedAppConfigurationStoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier configurationStoreId = null, AzureLocation? location = null, DateTimeOffset? deletedOn = null, DateTimeOffset? scheduledPurgeOn = null, IDictionary<string, string> tags = null, bool? isPurgeProtectionEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
 
