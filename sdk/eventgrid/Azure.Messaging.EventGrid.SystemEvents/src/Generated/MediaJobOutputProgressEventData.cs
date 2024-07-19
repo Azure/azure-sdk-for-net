@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="MediaJobOutputProgressEventData"/>. </summary>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobCorrelationData"/> is null. </exception>
-        internal MediaJobOutputProgressEventData(IReadOnlyDictionary<string, string> jobCorrelationData)
+        internal MediaJobOutputProgressEventData(IDictionary<string, string> jobCorrelationData)
         {
             Argument.AssertNotNull(jobCorrelationData, nameof(jobCorrelationData));
 

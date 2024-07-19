@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
         /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sipHeaders"/> or <paramref name="voipHeaders"/> is null. </exception>
-        internal AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders, IReadOnlyDictionary<string, string> voipHeaders)
+        internal AcsIncomingCallCustomContext(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
         {
             Argument.AssertNotNull(sipHeaders, nameof(sipHeaders));
             Argument.AssertNotNull(voipHeaders, nameof(voipHeaders));

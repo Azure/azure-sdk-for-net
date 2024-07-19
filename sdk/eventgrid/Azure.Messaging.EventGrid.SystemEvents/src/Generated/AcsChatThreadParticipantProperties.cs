@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
         /// <param name="metadata"> The metadata of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantCommunicationIdentifier"/> or <paramref name="metadata"/> is null. </exception>
-        internal AcsChatThreadParticipantProperties(CommunicationIdentifierModel participantCommunicationIdentifier, IReadOnlyDictionary<string, string> metadata)
+        internal AcsChatThreadParticipantProperties(CommunicationIdentifierModel participantCommunicationIdentifier, IDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(participantCommunicationIdentifier, nameof(participantCommunicationIdentifier));
             Argument.AssertNotNull(metadata, nameof(metadata));

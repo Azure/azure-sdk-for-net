@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobLabels"> Router Worker Offer Issued Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Issued Job Tags. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerLabels"/>, <paramref name="workerTags"/>, <paramref name="jobLabels"/> or <paramref name="jobTags"/> is null. </exception>
-        internal AcsRouterWorkerOfferIssuedEventData(IReadOnlyDictionary<string, string> workerLabels, DateTimeOffset offeredOn, DateTimeOffset expiresOn, IReadOnlyDictionary<string, string> workerTags, IReadOnlyDictionary<string, string> jobLabels, IReadOnlyDictionary<string, string> jobTags)
+        internal AcsRouterWorkerOfferIssuedEventData(IDictionary<string, string> workerLabels, DateTimeOffset offeredOn, DateTimeOffset expiresOn, IDictionary<string, string> workerTags, IDictionary<string, string> jobLabels, IDictionary<string, string> jobTags)
         {
             Argument.AssertNotNull(workerLabels, nameof(workerLabels));
             Argument.AssertNotNull(workerTags, nameof(workerTags));

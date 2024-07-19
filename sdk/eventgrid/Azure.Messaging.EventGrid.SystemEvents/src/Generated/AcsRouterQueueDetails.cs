@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AcsRouterQueueDetails"/>. </summary>
         /// <param name="labels"> Router Queue Labels. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labels"/> is null. </exception>
-        internal AcsRouterQueueDetails(IReadOnlyDictionary<string, string> labels)
+        internal AcsRouterQueueDetails(IDictionary<string, string> labels)
         {
             Argument.AssertNotNull(labels, nameof(labels));
 

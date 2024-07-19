@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderCommunicationIdentifier"/> or <paramref name="metadata"/> is null. </exception>
-        internal AcsChatMessageEditedInThreadEventData(CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset composeTime, IReadOnlyDictionary<string, string> metadata, DateTimeOffset editTime) : base(senderCommunicationIdentifier, composeTime)
+        internal AcsChatMessageEditedInThreadEventData(CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset composeTime, IDictionary<string, string> metadata, DateTimeOffset editTime) : base(senderCommunicationIdentifier, composeTime)
         {
             Argument.AssertNotNull(senderCommunicationIdentifier, nameof(senderCommunicationIdentifier));
             Argument.AssertNotNull(metadata, nameof(metadata));

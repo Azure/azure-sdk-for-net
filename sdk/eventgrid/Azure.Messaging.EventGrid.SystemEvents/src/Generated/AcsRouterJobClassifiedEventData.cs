@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="queueDetails"> Router Job Queue Info. </param>
         /// <param name="attachedWorkerSelectors"> Router Job Attached Worker Selector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/>, <paramref name="queueDetails"/> or <paramref name="attachedWorkerSelectors"/> is null. </exception>
-        internal AcsRouterJobClassifiedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors) : base(labels, tags)
+        internal AcsRouterJobClassifiedEventData(IDictionary<string, string> labels, IDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors) : base(labels, tags)
         {
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));

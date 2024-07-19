@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tags"> Router Worker Updated Tags. </param>
         /// <param name="updatedWorkerProperties"> Router Worker Properties Updated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueAssignments"/>, <paramref name="channelConfigurations"/>, <paramref name="labels"/>, <paramref name="tags"/> or <paramref name="updatedWorkerProperties"/> is null. </exception>
-        internal AcsRouterWorkerUpdatedEventData(IEnumerable<AcsRouterQueueDetails> queueAssignments, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IEnumerable<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties)
+        internal AcsRouterWorkerUpdatedEventData(IEnumerable<AcsRouterQueueDetails> queueAssignments, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations, IDictionary<string, string> labels, IDictionary<string, string> tags, IEnumerable<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties)
         {
             Argument.AssertNotNull(queueAssignments, nameof(queueAssignments));
             Argument.AssertNotNull(channelConfigurations, nameof(channelConfigurations));

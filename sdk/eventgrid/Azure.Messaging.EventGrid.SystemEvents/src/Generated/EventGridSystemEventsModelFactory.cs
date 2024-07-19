@@ -463,7 +463,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <param name="namedOutputs"> Named outputs of completed execution, if any. </param>
         /// <returns> A new <see cref="SystemEvents.AvsScriptExecutionFinishedEventData"/> instance for mocking. </returns>
-        public static AvsScriptExecutionFinishedEventData AvsScriptExecutionFinishedEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null, IReadOnlyDictionary<string, string> namedOutputs = null)
+        public static AvsScriptExecutionFinishedEventData AvsScriptExecutionFinishedEventData(string operationId = null, string cmdletId = null, IEnumerable<string> output = null, IDictionary<string, string> namedOutputs = null)
         {
             output ??= new List<string>();
             namedOutputs ??= new Dictionary<string, string>();
@@ -577,7 +577,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="sipHeaders"> Sip Headers for incoming call. </param>
         /// <param name="voipHeaders"> Voip Headers for incoming call. </param>
         /// <returns> A new <see cref="SystemEvents.AcsIncomingCallCustomContext"/> instance for mocking. </returns>
-        public static AcsIncomingCallCustomContext AcsIncomingCallCustomContext(IReadOnlyDictionary<string, string> sipHeaders = null, IReadOnlyDictionary<string, string> voipHeaders = null)
+        public static AcsIncomingCallCustomContext AcsIncomingCallCustomContext(IDictionary<string, string> sipHeaders = null, IDictionary<string, string> voipHeaders = null)
         {
             sipHeaders ??= new Dictionary<string, string>();
             voipHeaders ??= new Dictionary<string, string>();
@@ -651,7 +651,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset composeTime = default, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
+        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset composeTime = default, string type = null, long? version = null, string messageBody = null, IDictionary<string, string> metadata = null)
         {
             metadata ??= new Dictionary<string, string>();
 
@@ -706,7 +706,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset composeTime = default, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
+        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset composeTime = default, string type = null, long? version = null, string messageBody = null, IDictionary<string, string> metadata = null)
         {
             metadata ??= new Dictionary<string, string>();
 
@@ -738,7 +738,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset composeTime = default, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null, DateTimeOffset editTime = default)
+        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset composeTime = default, string type = null, long? version = null, string messageBody = null, IDictionary<string, string> metadata = null, DateTimeOffset editTime = default)
         {
             metadata ??= new Dictionary<string, string>();
 
@@ -771,7 +771,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset composeTime = default, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null, DateTimeOffset editTime = default)
+        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset composeTime = default, string type = null, long? version = null, string messageBody = null, IDictionary<string, string> metadata = null, DateTimeOffset editTime = default)
         {
             metadata ??= new Dictionary<string, string>();
 
@@ -873,7 +873,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset createTime = default, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, BinaryData> properties = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
+        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset createTime = default, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IDictionary<string, BinaryData> properties = null, IDictionary<string, string> metadata = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
         {
             properties ??= new Dictionary<string, BinaryData>();
             metadata ??= new Dictionary<string, string>();
@@ -897,7 +897,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
         /// <param name="metadata"> The metadata of the user. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadParticipantProperties"/> instance for mocking. </returns>
-        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName = null, CommunicationIdentifierModel participantCommunicationIdentifier = null, IReadOnlyDictionary<string, string> metadata = null)
+        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName = null, CommunicationIdentifierModel participantCommunicationIdentifier = null, IDictionary<string, string> metadata = null)
         {
             metadata ??= new Dictionary<string, string>();
 
@@ -925,7 +925,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = null, string threadId = null, DateTimeOffset createTime = default, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, BinaryData> properties = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
+        public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = null, string threadId = null, DateTimeOffset createTime = default, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IDictionary<string, BinaryData> properties = null, IDictionary<string, string> metadata = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
         {
             properties ??= new Dictionary<string, BinaryData>();
             metadata ??= new Dictionary<string, string>();
@@ -996,7 +996,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="properties"> The updated thread properties. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset createTime = default, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset editTime = default, IReadOnlyDictionary<string, string> metadata = null, IReadOnlyDictionary<string, BinaryData> properties = null)
+        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset createTime = default, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset editTime = default, IDictionary<string, string> metadata = null, IDictionary<string, BinaryData> properties = null)
         {
             metadata ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, BinaryData>();
@@ -1024,7 +1024,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, DateTimeOffset createTime = default, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset editTime = default, IReadOnlyDictionary<string, BinaryData> properties = null, IReadOnlyDictionary<string, string> metadata = null)
+        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, DateTimeOffset createTime = default, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset editTime = default, IDictionary<string, BinaryData> properties = null, IDictionary<string, string> metadata = null)
         {
             properties ??= new Dictionary<string, BinaryData>();
             metadata ??= new Dictionary<string, string>();
@@ -1313,7 +1313,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobEventData AcsRouterJobEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null)
+        public static AcsRouterJobEventData AcsRouterJobEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1338,7 +1338,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="note"> Router Job Note. </param>
         /// <param name="dispositionCode"> Router Job Disposition Code. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobCancelledEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobCancelledEventData AcsRouterJobCancelledEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string note = null, string dispositionCode = null)
+        public static AcsRouterJobCancelledEventData AcsRouterJobCancelledEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, string note = null, string dispositionCode = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1365,7 +1365,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
         /// <param name="errors"> Router Job Classification Failed Errors. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobClassificationFailedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobClassificationFailedEventData AcsRouterJobClassificationFailedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string classificationPolicyId = null, IEnumerable<AcsRouterCommunicationError> errors = null)
+        public static AcsRouterJobClassificationFailedEventData AcsRouterJobClassificationFailedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, string classificationPolicyId = null, IEnumerable<AcsRouterCommunicationError> errors = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1415,7 +1415,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="attachedWorkerSelectors"> Router Job Attached Worker Selector. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobClassifiedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobClassifiedEventData AcsRouterJobClassifiedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, AcsRouterQueueDetails queueDetails = null, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = null)
+        public static AcsRouterJobClassifiedEventData AcsRouterJobClassifiedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, AcsRouterQueueDetails queueDetails = null, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1440,7 +1440,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="name"> Router Queue Name. </param>
         /// <param name="labels"> Router Queue Labels. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterQueueDetails"/> instance for mocking. </returns>
-        public static AcsRouterQueueDetails AcsRouterQueueDetails(string id = null, string name = null, IReadOnlyDictionary<string, string> labels = null)
+        public static AcsRouterQueueDetails AcsRouterQueueDetails(string id = null, string name = null, IDictionary<string, string> labels = null)
         {
             labels ??= new Dictionary<string, string>();
 
@@ -1478,7 +1478,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="workerId"> Router Job Closed Worker Id. </param>
         /// <param name="dispositionCode"> Router Job Closed Disposition Code. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobClosedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobClosedEventData AcsRouterJobClosedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null, string dispositionCode = null)
+        public static AcsRouterJobClosedEventData AcsRouterJobClosedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, string assignmentId = null, string workerId = null, string dispositionCode = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1506,7 +1506,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="assignmentId"> Router Job Completed Assignment Id. </param>
         /// <param name="workerId"> Router Job Completed Worker Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobCompletedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobCompletedEventData AcsRouterJobCompletedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null)
+        public static AcsRouterJobCompletedEventData AcsRouterJobCompletedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, string assignmentId = null, string workerId = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1531,7 +1531,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobDeletedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobDeletedEventData AcsRouterJobDeletedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null)
+        public static AcsRouterJobDeletedEventData AcsRouterJobDeletedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1556,7 +1556,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="ruleKey"> Router Job Exception Triggered Rule Key. </param>
         /// <param name="exceptionRuleId"> Router Job Exception Triggered Rule Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobExceptionTriggeredEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobExceptionTriggeredEventData AcsRouterJobExceptionTriggeredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string ruleKey = null, string exceptionRuleId = null)
+        public static AcsRouterJobExceptionTriggeredEventData AcsRouterJobExceptionTriggeredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, string ruleKey = null, string exceptionRuleId = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1584,7 +1584,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="attachedWorkerSelectors"> Router Job Queued Attached Worker Selector. </param>
         /// <param name="requestedWorkerSelectors"> Router Job Queued Requested Worker Selector. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobQueuedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobQueuedEventData AcsRouterJobQueuedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null)
+        public static AcsRouterJobQueuedEventData AcsRouterJobQueuedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1618,7 +1618,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobReceivedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, AcsRouterJobStatus jobStatus = default, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null, DateTimeOffset scheduledOn = default, bool unavailableForMatching = default)
+        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, AcsRouterJobStatus jobStatus = default, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null, DateTimeOffset scheduledOn = default, bool unavailableForMatching = default)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1653,7 +1653,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="scheduledOn"> Router Job Scheduling Failed Scheduled Time in UTC. </param>
         /// <param name="failureReason"> Router Job Scheduling Failed Reason. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobSchedulingFailedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobSchedulingFailedEventData AcsRouterJobSchedulingFailedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, DateTimeOffset scheduledOn = default, string failureReason = null)
+        public static AcsRouterJobSchedulingFailedEventData AcsRouterJobSchedulingFailedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, DateTimeOffset scheduledOn = default, string failureReason = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1685,7 +1685,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="assignmentId"> Router Job Unassigned Assignment Id. </param>
         /// <param name="workerId"> Router Job Unassigned Worker Id. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobUnassignedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobUnassignedEventData AcsRouterJobUnassignedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, string assignmentId = null, string workerId = null)
+        public static AcsRouterJobUnassignedEventData AcsRouterJobUnassignedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, string assignmentId = null, string workerId = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1715,7 +1715,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="scheduledOn"> Router Job Waiting For Activation Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Router Job Waiting For Activation Unavailable For Matching. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobWaitingForActivationEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobWaitingForActivationEventData AcsRouterJobWaitingForActivationEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, DateTimeOffset scheduledOn = default, bool unavailableForMatching = default)
+        public static AcsRouterJobWaitingForActivationEventData AcsRouterJobWaitingForActivationEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, DateTimeOffset scheduledOn = default, bool unavailableForMatching = default)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1747,7 +1747,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="expiredRequestedWorkerSelectors"> Router Job Worker Selectors Expired Requested Worker Selectors. </param>
         /// <param name="expiredAttachedWorkerSelectors"> Router Job Worker Selectors Expired Attached Worker Selectors. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobWorkerSelectorsExpiredEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobWorkerSelectorsExpiredEventData AcsRouterJobWorkerSelectorsExpiredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null)
+        public static AcsRouterJobWorkerSelectorsExpiredEventData AcsRouterJobWorkerSelectorsExpiredEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = null, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = null)
         {
             labels ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1810,7 +1810,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobLabels"> Router Worker Offer Accepted Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Accepted Job Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferAcceptedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerOfferAcceptedEventData AcsRouterWorkerOfferAcceptedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, string assignmentId = null, int? jobPriority = null, IReadOnlyDictionary<string, string> workerLabels = null, IReadOnlyDictionary<string, string> workerTags = null, IReadOnlyDictionary<string, string> jobLabels = null, IReadOnlyDictionary<string, string> jobTags = null)
+        public static AcsRouterWorkerOfferAcceptedEventData AcsRouterWorkerOfferAcceptedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, string assignmentId = null, int? jobPriority = null, IDictionary<string, string> workerLabels = null, IDictionary<string, string> workerTags = null, IDictionary<string, string> jobLabels = null, IDictionary<string, string> jobTags = null)
         {
             workerLabels ??= new Dictionary<string, string>();
             workerTags ??= new Dictionary<string, string>();
@@ -1888,7 +1888,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobLabels"> Router Worker Offer Issued Job Labels. </param>
         /// <param name="jobTags"> Router Worker Offer Issued Job Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerOfferIssuedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerOfferIssuedEventData AcsRouterWorkerOfferIssuedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, int? jobPriority = null, IReadOnlyDictionary<string, string> workerLabels = null, DateTimeOffset offeredOn = default, DateTimeOffset expiresOn = default, IReadOnlyDictionary<string, string> workerTags = null, IReadOnlyDictionary<string, string> jobLabels = null, IReadOnlyDictionary<string, string> jobTags = null)
+        public static AcsRouterWorkerOfferIssuedEventData AcsRouterWorkerOfferIssuedEventData(string jobId = null, string channelReference = null, string channelId = null, string workerId = null, string queueId = null, string offerId = null, int? jobPriority = null, IDictionary<string, string> workerLabels = null, DateTimeOffset offeredOn = default, DateTimeOffset expiresOn = default, IDictionary<string, string> workerTags = null, IDictionary<string, string> jobLabels = null, IDictionary<string, string> jobTags = null)
         {
             workerLabels ??= new Dictionary<string, string>();
             workerTags ??= new Dictionary<string, string>();
@@ -1940,7 +1940,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Worker Registered Labels. </param>
         /// <param name="tags"> Router Worker Registered Tags. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerRegisteredEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerRegisteredEventData AcsRouterWorkerRegisteredEventData(string workerId = null, IEnumerable<AcsRouterQueueDetails> queueAssignments = null, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null)
+        public static AcsRouterWorkerRegisteredEventData AcsRouterWorkerRegisteredEventData(string workerId = null, IEnumerable<AcsRouterQueueDetails> queueAssignments = null, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null)
         {
             queueAssignments ??= new List<AcsRouterQueueDetails>();
             channelConfigurations ??= new List<AcsRouterChannelConfiguration>();
@@ -1976,7 +1976,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tags"> Router Worker Updated Tags. </param>
         /// <param name="updatedWorkerProperties"> Router Worker Properties Updated. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsRouterWorkerUpdatedEventData AcsRouterWorkerUpdatedEventData(string workerId = null, IEnumerable<AcsRouterQueueDetails> queueAssignments = null, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, IEnumerable<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties = null)
+        public static AcsRouterWorkerUpdatedEventData AcsRouterWorkerUpdatedEventData(string workerId = null, IEnumerable<AcsRouterQueueDetails> queueAssignments = null, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = null, IDictionary<string, string> labels = null, IDictionary<string, string> tags = null, IEnumerable<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties = null)
         {
             queueAssignments ??= new List<AcsRouterQueueDetails>();
             channelConfigurations ??= new List<AcsRouterChannelConfiguration>();
@@ -2650,7 +2650,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <returns> A new <see cref="SystemEvents.DeviceTelemetryEventProperties"/> instance for mocking. </returns>
-        public static DeviceTelemetryEventProperties DeviceTelemetryEventProperties(IReadOnlyDictionary<string, BinaryData> body = null, IReadOnlyDictionary<string, string> properties = null, IReadOnlyDictionary<string, string> systemProperties = null)
+        public static DeviceTelemetryEventProperties DeviceTelemetryEventProperties(IDictionary<string, BinaryData> body = null, IDictionary<string, string> properties = null, IDictionary<string, string> systemProperties = null)
         {
             body ??= new Dictionary<string, BinaryData>();
             properties ??= new Dictionary<string, string>();
@@ -2706,7 +2706,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <returns> A new <see cref="SystemEvents.IotHubDeviceTelemetryEventData"/> instance for mocking. </returns>
-        public static IotHubDeviceTelemetryEventData IotHubDeviceTelemetryEventData(IReadOnlyDictionary<string, BinaryData> body = null, IReadOnlyDictionary<string, string> properties = null, IReadOnlyDictionary<string, string> systemProperties = null)
+        public static IotHubDeviceTelemetryEventData IotHubDeviceTelemetryEventData(IDictionary<string, BinaryData> body = null, IDictionary<string, string> properties = null, IDictionary<string, string> systemProperties = null)
         {
             body ??= new Dictionary<string, BinaryData>();
             properties ??= new Dictionary<string, string>();
@@ -3034,7 +3034,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="modelTags"> The tags of the model that was registered. </param>
         /// <param name="modelProperties"> The properties of the model that was registered. </param>
         /// <returns> A new <see cref="SystemEvents.MachineLearningServicesModelRegisteredEventData"/> instance for mocking. </returns>
-        public static MachineLearningServicesModelRegisteredEventData MachineLearningServicesModelRegisteredEventData(string modelName = null, string modelVersion = null, IReadOnlyDictionary<string, BinaryData> modelTags = null, IReadOnlyDictionary<string, BinaryData> modelProperties = null)
+        public static MachineLearningServicesModelRegisteredEventData MachineLearningServicesModelRegisteredEventData(string modelName = null, string modelVersion = null, IDictionary<string, BinaryData> modelTags = null, IDictionary<string, BinaryData> modelProperties = null)
         {
             modelTags ??= new Dictionary<string, BinaryData>();
             modelProperties ??= new Dictionary<string, BinaryData>();
@@ -3049,7 +3049,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="serviceTags"> The tags of the deployed service. </param>
         /// <param name="serviceProperties"> The properties of the deployed service. </param>
         /// <returns> A new <see cref="SystemEvents.MachineLearningServicesModelDeployedEventData"/> instance for mocking. </returns>
-        public static MachineLearningServicesModelDeployedEventData MachineLearningServicesModelDeployedEventData(string serviceName = null, string serviceComputeType = null, string modelIds = null, IReadOnlyDictionary<string, BinaryData> serviceTags = null, IReadOnlyDictionary<string, BinaryData> serviceProperties = null)
+        public static MachineLearningServicesModelDeployedEventData MachineLearningServicesModelDeployedEventData(string serviceName = null, string serviceComputeType = null, string modelIds = null, IDictionary<string, BinaryData> serviceTags = null, IDictionary<string, BinaryData> serviceProperties = null)
         {
             serviceTags ??= new Dictionary<string, BinaryData>();
             serviceProperties ??= new Dictionary<string, BinaryData>();
@@ -3071,7 +3071,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runTags"> The tags of the completed Run. </param>
         /// <param name="runProperties"> The properties of the completed Run. </param>
         /// <returns> A new <see cref="SystemEvents.MachineLearningServicesRunCompletedEventData"/> instance for mocking. </returns>
-        public static MachineLearningServicesRunCompletedEventData MachineLearningServicesRunCompletedEventData(string experimentId = null, string experimentName = null, string runId = null, string runType = null, IReadOnlyDictionary<string, BinaryData> runTags = null, IReadOnlyDictionary<string, BinaryData> runProperties = null)
+        public static MachineLearningServicesRunCompletedEventData MachineLearningServicesRunCompletedEventData(string experimentId = null, string experimentName = null, string runId = null, string runType = null, IDictionary<string, BinaryData> runTags = null, IDictionary<string, BinaryData> runProperties = null)
         {
             runTags ??= new Dictionary<string, BinaryData>();
             runProperties ??= new Dictionary<string, BinaryData>();
@@ -3119,7 +3119,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runProperties"> The properties of the Machine Learning Run. </param>
         /// <param name="runStatus"> The status of the Machine Learning Run. </param>
         /// <returns> A new <see cref="SystemEvents.MachineLearningServicesRunStatusChangedEventData"/> instance for mocking. </returns>
-        public static MachineLearningServicesRunStatusChangedEventData MachineLearningServicesRunStatusChangedEventData(string experimentId = null, string experimentName = null, string runId = null, string runType = null, IReadOnlyDictionary<string, BinaryData> runTags = null, IReadOnlyDictionary<string, BinaryData> runProperties = null, string runStatus = null)
+        public static MachineLearningServicesRunStatusChangedEventData MachineLearningServicesRunStatusChangedEventData(string experimentId = null, string experimentName = null, string runId = null, string runType = null, IDictionary<string, BinaryData> runTags = null, IDictionary<string, BinaryData> runProperties = null, string runStatus = null)
         {
             runTags ??= new Dictionary<string, BinaryData>();
             runProperties ??= new Dictionary<string, BinaryData>();
@@ -3140,7 +3140,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobStateChangeEventData"/> instance for mocking. </returns>
-        public static MediaJobStateChangeEventData MediaJobStateChangeEventData(MediaJobState previousState = default, MediaJobState state = default, IReadOnlyDictionary<string, string> correlationData = null)
+        public static MediaJobStateChangeEventData MediaJobStateChangeEventData(MediaJobState previousState = default, MediaJobState state = default, IDictionary<string, string> correlationData = null)
         {
             correlationData ??= new Dictionary<string, string>();
 
@@ -3218,7 +3218,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputProgressEventData"/> instance for mocking. </returns>
-        public static MediaJobOutputProgressEventData MediaJobOutputProgressEventData(string label = null, long? progress = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        public static MediaJobOutputProgressEventData MediaJobOutputProgressEventData(string label = null, long? progress = null, IDictionary<string, string> jobCorrelationData = null)
         {
             jobCorrelationData ??= new Dictionary<string, string>();
 
@@ -3234,7 +3234,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputStateChangeEventData"/> instance for mocking. </returns>
-        public static MediaJobOutputStateChangeEventData MediaJobOutputStateChangeEventData(MediaJobState previousState = default, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        public static MediaJobOutputStateChangeEventData MediaJobOutputStateChangeEventData(MediaJobState previousState = default, MediaJobOutput output = null, IDictionary<string, string> jobCorrelationData = null)
         {
             jobCorrelationData ??= new Dictionary<string, string>();
 
@@ -3246,7 +3246,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobScheduledEventData"/> instance for mocking. </returns>
-        public static MediaJobScheduledEventData MediaJobScheduledEventData(MediaJobState previousState = default, MediaJobState state = default, IReadOnlyDictionary<string, string> correlationData = null)
+        public static MediaJobScheduledEventData MediaJobScheduledEventData(MediaJobState previousState = default, MediaJobState state = default, IDictionary<string, string> correlationData = null)
         {
             correlationData ??= new Dictionary<string, string>();
 
@@ -3258,7 +3258,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobProcessingEventData"/> instance for mocking. </returns>
-        public static MediaJobProcessingEventData MediaJobProcessingEventData(MediaJobState previousState = default, MediaJobState state = default, IReadOnlyDictionary<string, string> correlationData = null)
+        public static MediaJobProcessingEventData MediaJobProcessingEventData(MediaJobState previousState = default, MediaJobState state = default, IDictionary<string, string> correlationData = null)
         {
             correlationData ??= new Dictionary<string, string>();
 
@@ -3270,7 +3270,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobCancelingEventData"/> instance for mocking. </returns>
-        public static MediaJobCancelingEventData MediaJobCancelingEventData(MediaJobState previousState = default, MediaJobState state = default, IReadOnlyDictionary<string, string> correlationData = null)
+        public static MediaJobCancelingEventData MediaJobCancelingEventData(MediaJobState previousState = default, MediaJobState state = default, IDictionary<string, string> correlationData = null)
         {
             correlationData ??= new Dictionary<string, string>();
 
@@ -3287,7 +3287,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobFinishedEventData"/> instance for mocking. </returns>
-        public static MediaJobFinishedEventData MediaJobFinishedEventData(MediaJobState previousState = default, MediaJobState state = default, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
+        public static MediaJobFinishedEventData MediaJobFinishedEventData(MediaJobState previousState = default, MediaJobState state = default, IDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
         {
             correlationData ??= new Dictionary<string, string>();
             outputs ??= new List<MediaJobOutput>();
@@ -3305,7 +3305,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobCanceledEventData"/> instance for mocking. </returns>
-        public static MediaJobCanceledEventData MediaJobCanceledEventData(MediaJobState previousState = default, MediaJobState state = default, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
+        public static MediaJobCanceledEventData MediaJobCanceledEventData(MediaJobState previousState = default, MediaJobState state = default, IDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
         {
             correlationData ??= new Dictionary<string, string>();
             outputs ??= new List<MediaJobOutput>();
@@ -3323,7 +3323,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// The available derived classes include <see cref="SystemEvents.MediaJobOutputAsset"/>.
         /// </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobErroredEventData"/> instance for mocking. </returns>
-        public static MediaJobErroredEventData MediaJobErroredEventData(MediaJobState previousState = default, MediaJobState state = default, IReadOnlyDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
+        public static MediaJobErroredEventData MediaJobErroredEventData(MediaJobState previousState = default, MediaJobState state = default, IDictionary<string, string> correlationData = null, IEnumerable<MediaJobOutput> outputs = null)
         {
             correlationData ??= new Dictionary<string, string>();
             outputs ??= new List<MediaJobOutput>();
@@ -3340,7 +3340,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputCanceledEventData"/> instance for mocking. </returns>
-        public static MediaJobOutputCanceledEventData MediaJobOutputCanceledEventData(MediaJobState previousState = default, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        public static MediaJobOutputCanceledEventData MediaJobOutputCanceledEventData(MediaJobState previousState = default, MediaJobOutput output = null, IDictionary<string, string> jobCorrelationData = null)
         {
             jobCorrelationData ??= new Dictionary<string, string>();
 
@@ -3356,7 +3356,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputCancelingEventData"/> instance for mocking. </returns>
-        public static MediaJobOutputCancelingEventData MediaJobOutputCancelingEventData(MediaJobState previousState = default, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        public static MediaJobOutputCancelingEventData MediaJobOutputCancelingEventData(MediaJobState previousState = default, MediaJobOutput output = null, IDictionary<string, string> jobCorrelationData = null)
         {
             jobCorrelationData ??= new Dictionary<string, string>();
 
@@ -3372,7 +3372,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputErroredEventData"/> instance for mocking. </returns>
-        public static MediaJobOutputErroredEventData MediaJobOutputErroredEventData(MediaJobState previousState = default, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        public static MediaJobOutputErroredEventData MediaJobOutputErroredEventData(MediaJobState previousState = default, MediaJobOutput output = null, IDictionary<string, string> jobCorrelationData = null)
         {
             jobCorrelationData ??= new Dictionary<string, string>();
 
@@ -3388,7 +3388,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputFinishedEventData"/> instance for mocking. </returns>
-        public static MediaJobOutputFinishedEventData MediaJobOutputFinishedEventData(MediaJobState previousState = default, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        public static MediaJobOutputFinishedEventData MediaJobOutputFinishedEventData(MediaJobState previousState = default, MediaJobOutput output = null, IDictionary<string, string> jobCorrelationData = null)
         {
             jobCorrelationData ??= new Dictionary<string, string>();
 
@@ -3404,7 +3404,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputProcessingEventData"/> instance for mocking. </returns>
-        public static MediaJobOutputProcessingEventData MediaJobOutputProcessingEventData(MediaJobState previousState = default, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        public static MediaJobOutputProcessingEventData MediaJobOutputProcessingEventData(MediaJobState previousState = default, MediaJobOutput output = null, IDictionary<string, string> jobCorrelationData = null)
         {
             jobCorrelationData ??= new Dictionary<string, string>();
 
@@ -3420,7 +3420,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
         /// <returns> A new <see cref="SystemEvents.MediaJobOutputScheduledEventData"/> instance for mocking. </returns>
-        public static MediaJobOutputScheduledEventData MediaJobOutputScheduledEventData(MediaJobState previousState = default, MediaJobOutput output = null, IReadOnlyDictionary<string, string> jobCorrelationData = null)
+        public static MediaJobOutputScheduledEventData MediaJobOutputScheduledEventData(MediaJobState previousState = default, MediaJobOutput output = null, IDictionary<string, string> jobCorrelationData = null)
         {
             jobCorrelationData ??= new Dictionary<string, string>();
 
@@ -3748,7 +3748,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceWriteSuccessEventData"/> instance for mocking. </returns>
-        public static ResourceWriteSuccessEventData ResourceWriteSuccessEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
+        public static ResourceWriteSuccessEventData ResourceWriteSuccessEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
         {
             claims ??= new Dictionary<string, string>();
 
@@ -3772,7 +3772,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="action"> The action being requested. </param>
         /// <param name="evidence"> The evidence for the authorization. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceAuthorization"/> instance for mocking. </returns>
-        public static ResourceAuthorization ResourceAuthorization(string scope = null, string action = null, IReadOnlyDictionary<string, string> evidence = null)
+        public static ResourceAuthorization ResourceAuthorization(string scope = null, string action = null, IDictionary<string, string> evidence = null)
         {
             evidence ??= new Dictionary<string, string>();
 
@@ -3803,7 +3803,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceWriteFailureEventData"/> instance for mocking. </returns>
-        public static ResourceWriteFailureEventData ResourceWriteFailureEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
+        public static ResourceWriteFailureEventData ResourceWriteFailureEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
         {
             claims ??= new Dictionary<string, string>();
 
@@ -3835,7 +3835,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceWriteCancelEventData"/> instance for mocking. </returns>
-        public static ResourceWriteCancelEventData ResourceWriteCancelEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
+        public static ResourceWriteCancelEventData ResourceWriteCancelEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
         {
             claims ??= new Dictionary<string, string>();
 
@@ -3867,7 +3867,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceDeleteSuccessEventData"/> instance for mocking. </returns>
-        public static ResourceDeleteSuccessEventData ResourceDeleteSuccessEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
+        public static ResourceDeleteSuccessEventData ResourceDeleteSuccessEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
         {
             claims ??= new Dictionary<string, string>();
 
@@ -3899,7 +3899,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceDeleteFailureEventData"/> instance for mocking. </returns>
-        public static ResourceDeleteFailureEventData ResourceDeleteFailureEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
+        public static ResourceDeleteFailureEventData ResourceDeleteFailureEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
         {
             claims ??= new Dictionary<string, string>();
 
@@ -3931,7 +3931,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceDeleteCancelEventData"/> instance for mocking. </returns>
-        public static ResourceDeleteCancelEventData ResourceDeleteCancelEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
+        public static ResourceDeleteCancelEventData ResourceDeleteCancelEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
         {
             claims ??= new Dictionary<string, string>();
 
@@ -3963,7 +3963,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceActionSuccessEventData"/> instance for mocking. </returns>
-        public static ResourceActionSuccessEventData ResourceActionSuccessEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
+        public static ResourceActionSuccessEventData ResourceActionSuccessEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
         {
             claims ??= new Dictionary<string, string>();
 
@@ -3995,7 +3995,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceActionFailureEventData"/> instance for mocking. </returns>
-        public static ResourceActionFailureEventData ResourceActionFailureEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
+        public static ResourceActionFailureEventData ResourceActionFailureEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
         {
             claims ??= new Dictionary<string, string>();
 
@@ -4027,7 +4027,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceActionCancelEventData"/> instance for mocking. </returns>
-        public static ResourceActionCancelEventData ResourceActionCancelEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
+        public static ResourceActionCancelEventData ResourceActionCancelEventData(string tenantId = null, string subscriptionId = null, string resourceGroup = null, string resourceProvider = null, string resourceUri = null, string operationName = null, string status = null, ResourceAuthorization authorization = null, IDictionary<string, string> claims = null, string correlationId = null, ResourceHttpRequest httpRequest = null)
         {
             claims ??= new Dictionary<string, string>();
 
@@ -4169,7 +4169,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobCreatedEventData"/> instance for mocking. </returns>
-        public static StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string contentType = null, long? contentLength = null, long? contentOffset = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string contentType = null, long? contentLength = null, long? contentOffset = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IDictionary<string, BinaryData> storageDiagnostics = null)
         {
             storageDiagnostics ??= new Dictionary<string, BinaryData>();
 
@@ -4200,7 +4200,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobDeletedEventData"/> instance for mocking. </returns>
-        public static StorageBlobDeletedEventData StorageBlobDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageBlobDeletedEventData StorageBlobDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IDictionary<string, BinaryData> storageDiagnostics = null)
         {
             storageDiagnostics ??= new Dictionary<string, BinaryData>();
 
@@ -4227,7 +4227,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageDirectoryCreatedEventData"/> instance for mocking. </returns>
-        public static StorageDirectoryCreatedEventData StorageDirectoryCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string url = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageDirectoryCreatedEventData StorageDirectoryCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string url = null, string sequencer = null, string identity = null, IDictionary<string, BinaryData> storageDiagnostics = null)
         {
             storageDiagnostics ??= new Dictionary<string, BinaryData>();
 
@@ -4253,7 +4253,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageDirectoryDeletedEventData"/> instance for mocking. </returns>
-        public static StorageDirectoryDeletedEventData StorageDirectoryDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string url = null, string recursive = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageDirectoryDeletedEventData StorageDirectoryDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string url = null, string recursive = null, string sequencer = null, string identity = null, IDictionary<string, BinaryData> storageDiagnostics = null)
         {
             storageDiagnostics ??= new Dictionary<string, BinaryData>();
 
@@ -4279,7 +4279,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobRenamedEventData"/> instance for mocking. </returns>
-        public static StorageBlobRenamedEventData StorageBlobRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageBlobRenamedEventData StorageBlobRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, IDictionary<string, BinaryData> storageDiagnostics = null)
         {
             storageDiagnostics ??= new Dictionary<string, BinaryData>();
 
@@ -4305,7 +4305,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageDirectoryRenamedEventData"/> instance for mocking. </returns>
-        public static StorageDirectoryRenamedEventData StorageDirectoryRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageDirectoryRenamedEventData StorageDirectoryRenamedEventData(string api = null, string clientRequestId = null, string requestId = null, string sourceUrl = null, string destinationUrl = null, string sequencer = null, string identity = null, IDictionary<string, BinaryData> storageDiagnostics = null)
         {
             storageDiagnostics ??= new Dictionary<string, BinaryData>();
 
@@ -4354,7 +4354,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobTierChangedEventData"/> instance for mocking. </returns>
-        public static StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IDictionary<string, BinaryData> storageDiagnostics = null)
         {
             storageDiagnostics ??= new Dictionary<string, BinaryData>();
 
@@ -4384,7 +4384,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageAsyncOperationInitiatedEventData"/> instance for mocking. </returns>
-        public static StorageAsyncOperationInitiatedEventData StorageAsyncOperationInitiatedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IReadOnlyDictionary<string, BinaryData> storageDiagnostics = null)
+        public static StorageAsyncOperationInitiatedEventData StorageAsyncOperationInitiatedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, IDictionary<string, BinaryData> storageDiagnostics = null)
         {
             storageDiagnostics ??= new Dictionary<string, BinaryData>();
 
@@ -4866,7 +4866,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="attributes"> The key-value attributes that are assigned to the client resource. </param>
         /// <returns> A new <see cref="SystemEvents.EventGridMQTTClientCreatedOrUpdatedEventData"/> instance for mocking. </returns>
-        public static EventGridMQTTClientCreatedOrUpdatedEventData EventGridMQTTClientCreatedOrUpdatedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, EventGridMQTTClientState state = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, IReadOnlyDictionary<string, string> attributes = null)
+        public static EventGridMQTTClientCreatedOrUpdatedEventData EventGridMQTTClientCreatedOrUpdatedEventData(string clientAuthenticationName = null, string clientName = null, string namespaceName = null, EventGridMQTTClientState state = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, IDictionary<string, string> attributes = null)
         {
             attributes ??= new Dictionary<string, string>();
 
@@ -4976,7 +4976,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tags"> the tags on the resource for which the event is being emitted. </param>
         /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedDetails"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = null, string name = null, string type = null, string location = null, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, BinaryData> properties = null)
+        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = null, string name = null, string type = null, string location = null, IDictionary<string, string> tags = null, IDictionary<string, BinaryData> properties = null)
         {
             tags ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, BinaryData>();

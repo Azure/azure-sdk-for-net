@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="apiVersion"/> or <paramref name="docTypes"/> is null. </exception>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IDictionary<string, ClassifierDocumentTypeDetails> docTypes)
         {
             Argument.AssertNotNull(classifierId, nameof(classifierId));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));

@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/>, <paramref name="properties"/> or <paramref name="systemProperties"/> is null. </exception>
-        internal IotHubDeviceTelemetryEventData(IReadOnlyDictionary<string, BinaryData> body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties) : base(body, properties, systemProperties)
+        internal IotHubDeviceTelemetryEventData(IDictionary<string, BinaryData> body, IDictionary<string, string> properties, IDictionary<string, string> systemProperties) : base(body, properties, systemProperties)
         {
             Argument.AssertNotNull(body, nameof(body));
             Argument.AssertNotNull(properties, nameof(properties));

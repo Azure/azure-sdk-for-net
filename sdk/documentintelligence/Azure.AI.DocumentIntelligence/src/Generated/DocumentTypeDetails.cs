@@ -48,7 +48,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of <see cref="DocumentTypeDetails"/>. </summary>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldSchema"/> is null. </exception>
-        internal DocumentTypeDetails(IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema)
+        internal DocumentTypeDetails(IDictionary<string, DocumentFieldSchema> fieldSchema)
         {
             Argument.AssertNotNull(fieldSchema, nameof(fieldSchema));
 

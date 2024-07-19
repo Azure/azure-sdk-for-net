@@ -518,7 +518,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="fields"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
         /// <returns> A new <see cref="DocumentIntelligence.AnalyzedDocument"/> instance for mocking. </returns>
-        public static AnalyzedDocument AnalyzedDocument(string docType = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IReadOnlyDictionary<string, DocumentField> fields = null, float confidence = default)
+        public static AnalyzedDocument AnalyzedDocument(string docType = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IDictionary<string, DocumentField> fields = null, float confidence = default)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
@@ -555,7 +555,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentField"/> instance for mocking. </returns>
-        public static DocumentField DocumentField(DocumentFieldType type = default, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueDouble = null, long? valueLong = null, DocumentSelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IEnumerable<DocumentField> valueList = null, IReadOnlyDictionary<string, DocumentField> valueDictionary = null, CurrencyValue valueCurrency = null, AddressValue valueAddress = null, bool? valueBoolean = null, IEnumerable<string> valueSelectionGroup = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float? confidence = null)
+        public static DocumentField DocumentField(DocumentFieldType type = default, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueDouble = null, long? valueLong = null, DocumentSelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IEnumerable<DocumentField> valueList = null, IDictionary<string, DocumentField> valueDictionary = null, CurrencyValue valueCurrency = null, AddressValue valueAddress = null, bool? valueBoolean = null, IEnumerable<string> valueSelectionGroup = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float? confidence = null)
         {
             valueList ??= new List<DocumentField>();
             valueDictionary ??= new Dictionary<string, DocumentField>();
@@ -676,7 +676,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -714,7 +714,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="docTypes"> Supported document types. </param>
         /// <param name="warnings"> List of warnings encountered while building the model. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelDetails"/> instance for mocking. </returns>
-        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentBuildMode? buildMode = null, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
+        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, IDictionary<string, string> tags = null, DocumentBuildMode? buildMode = null, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IDictionary<string, DocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
         {
             tags ??= new Dictionary<string, string>();
             docTypes ??= new Dictionary<string, DocumentTypeDetails>();
@@ -741,7 +741,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
         /// <param name="fieldConfidence"> Estimated confidence for each field. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentTypeDetails"/> instance for mocking. </returns>
-        public static DocumentTypeDetails DocumentTypeDetails(string description = null, DocumentBuildMode? buildMode = null, IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = null, IReadOnlyDictionary<string, float> fieldConfidence = null)
+        public static DocumentTypeDetails DocumentTypeDetails(string description = null, DocumentBuildMode? buildMode = null, IDictionary<string, DocumentFieldSchema> fieldSchema = null, IDictionary<string, float> fieldConfidence = null)
         {
             fieldSchema ??= new Dictionary<string, DocumentFieldSchema>();
             fieldConfidence ??= new Dictionary<string, float>();
@@ -756,7 +756,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="items"> Field type schema of each array element. </param>
         /// <param name="properties"> Named sub-fields of the object field. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentFieldSchema"/> instance for mocking. </returns>
-        public static DocumentFieldSchema DocumentFieldSchema(DocumentFieldType type = default, string description = null, string example = null, DocumentFieldSchema items = null, IReadOnlyDictionary<string, DocumentFieldSchema> properties = null)
+        public static DocumentFieldSchema DocumentFieldSchema(DocumentFieldType type = default, string description = null, string example = null, DocumentFieldSchema items = null, IDictionary<string, DocumentFieldSchema> properties = null)
         {
             properties ??= new Dictionary<string, DocumentFieldSchema>();
 
@@ -791,7 +791,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.OperationDetails"/> instance for mocking. </returns>
-        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = null, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
+        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = null, Uri resourceLocation = null, string apiVersion = null, IDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -821,7 +821,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -852,7 +852,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -883,7 +883,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
+        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, string apiVersion = null, IDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -912,7 +912,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="docTypes"> List of document types to classify against. </param>
         /// <param name="warnings"> List of warnings encountered while building the classifier. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, string baseClassifierId = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, string baseClassifierId = null, IDictionary<string, ClassifierDocumentTypeDetails> docTypes = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
         {
             docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
             warnings ??= new List<DocumentIntelligenceWarning>();

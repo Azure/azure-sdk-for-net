@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="errors"> Router Job Classification Failed Errors. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/> or <paramref name="errors"/> is null. </exception>
-        internal AcsRouterJobClassificationFailedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IEnumerable<AcsRouterCommunicationError> errors) : base(labels, tags)
+        internal AcsRouterJobClassificationFailedEventData(IDictionary<string, string> labels, IDictionary<string, string> tags, IEnumerable<AcsRouterCommunicationError> errors) : base(labels, tags)
         {
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));

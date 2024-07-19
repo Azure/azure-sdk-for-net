@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createdByCommunicationIdentifier"/>, <paramref name="properties"/>, <paramref name="metadata"/> or <paramref name="participants"/> is null. </exception>
-        internal AcsChatThreadCreatedEventData(DateTimeOffset createTime, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, BinaryData> properties, IReadOnlyDictionary<string, string> metadata, IEnumerable<AcsChatThreadParticipantProperties> participants) : base(createTime)
+        internal AcsChatThreadCreatedEventData(DateTimeOffset createTime, CommunicationIdentifierModel createdByCommunicationIdentifier, IDictionary<string, BinaryData> properties, IDictionary<string, string> metadata, IEnumerable<AcsChatThreadParticipantProperties> participants) : base(createTime)
         {
             Argument.AssertNotNull(createdByCommunicationIdentifier, nameof(createdByCommunicationIdentifier));
             Argument.AssertNotNull(properties, nameof(properties));

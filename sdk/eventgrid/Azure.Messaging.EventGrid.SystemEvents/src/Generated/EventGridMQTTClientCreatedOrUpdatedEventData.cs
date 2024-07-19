@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="attributes"> The key-value attributes that are assigned to the client resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="attributes"/> is null. </exception>
-        internal EventGridMQTTClientCreatedOrUpdatedEventData(EventGridMQTTClientState state, DateTimeOffset createdOn, DateTimeOffset updatedOn, IReadOnlyDictionary<string, string> attributes)
+        internal EventGridMQTTClientCreatedOrUpdatedEventData(EventGridMQTTClientState state, DateTimeOffset createdOn, DateTimeOffset updatedOn, IDictionary<string, string> attributes)
         {
             Argument.AssertNotNull(attributes, nameof(attributes));
 

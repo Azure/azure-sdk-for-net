@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="targetRecoverPoint"> Details of the Target Recovery Point. </param>
         /// <param name="warningDetails"> A List, detailing the warnings related to the job. </param>
         /// <returns> A new <see cref="Models.BackupJobExtendedInfo"/> instance for mocking. </returns>
-        public static BackupJobExtendedInfo BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails = null, string backupInstanceState = null, double? dataTransferredInBytes = null, string recoveryDestination = null, RestoreJobRecoveryPointDetails sourceRecoverPoint = null, IEnumerable<BackupJobSubTask> subTasks = null, RestoreJobRecoveryPointDetails targetRecoverPoint = null, IEnumerable<UserFacingWarningDetail> warningDetails = null)
+        public static BackupJobExtendedInfo BackupJobExtendedInfo(IDictionary<string, string> additionalDetails = null, string backupInstanceState = null, double? dataTransferredInBytes = null, string recoveryDestination = null, RestoreJobRecoveryPointDetails sourceRecoverPoint = null, IEnumerable<BackupJobSubTask> subTasks = null, RestoreJobRecoveryPointDetails targetRecoverPoint = null, IEnumerable<UserFacingWarningDetail> warningDetails = null)
         {
             additionalDetails ??= new Dictionary<string, string>();
             subTasks ??= new List<BackupJobSubTask>();
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="taskProgress"> Progress of the Sub Task. </param>
         /// <param name="taskStatus"> Status of the Sub Task. </param>
         /// <returns> A new <see cref="Models.BackupJobSubTask"/> instance for mocking. </returns>
-        public static BackupJobSubTask BackupJobSubTask(IReadOnlyDictionary<string, string> additionalDetails = null, int taskId = default, string taskName = null, string taskProgress = null, string taskStatus = null)
+        public static BackupJobSubTask BackupJobSubTask(IDictionary<string, string> additionalDetails = null, int taskId = default, string taskName = null, string taskProgress = null, string taskStatus = null)
         {
             additionalDetails ??= new Dictionary<string, string>();
 

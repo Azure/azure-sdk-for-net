@@ -21,7 +21,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="decommissioned"> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </param>
         /// <param name="dtdlModel"> The model definition. </param>
         /// <returns> A new <see cref="Core.DigitalTwinsModelData"/> instance for mocking. </returns>
-        public static DigitalTwinsModelData DigitalTwinsModelData(IReadOnlyDictionary<string, string> languageDisplayNames = null, IReadOnlyDictionary<string, string> languageDescriptions = null, string id = null, DateTimeOffset? uploadedOn = null, bool? decommissioned = null, string dtdlModel = null)
+        public static DigitalTwinsModelData DigitalTwinsModelData(IDictionary<string, string> languageDisplayNames = null, IDictionary<string, string> languageDescriptions = null, string id = null, DateTimeOffset? uploadedOn = null, bool? decommissioned = null, string dtdlModel = null)
         {
             languageDisplayNames ??= new Dictionary<string, string>();
             languageDescriptions ??= new Dictionary<string, string>();

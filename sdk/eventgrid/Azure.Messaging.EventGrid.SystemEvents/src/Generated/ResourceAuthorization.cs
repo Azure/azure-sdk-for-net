@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/>. </summary>
         /// <param name="evidence"> The evidence for the authorization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evidence"/> is null. </exception>
-        internal ResourceAuthorization(IReadOnlyDictionary<string, string> evidence)
+        internal ResourceAuthorization(IDictionary<string, string> evidence)
         {
             Argument.AssertNotNull(evidence, nameof(evidence));
 

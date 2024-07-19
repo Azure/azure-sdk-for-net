@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="expiredRequestedWorkerSelectors"> Router Job Scheduling Failed Requested Worker Selector Expired. </param>
         /// <param name="scheduledOn"> Router Job Scheduling Failed Scheduled Time in UTC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/>, <paramref name="expiredAttachedWorkerSelectors"/> or <paramref name="expiredRequestedWorkerSelectors"/> is null. </exception>
-        internal AcsRouterJobSchedulingFailedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors, DateTimeOffset scheduledOn) : base(labels, tags)
+        internal AcsRouterJobSchedulingFailedEventData(IDictionary<string, string> labels, IDictionary<string, string> tags, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors, DateTimeOffset scheduledOn) : base(labels, tags)
         {
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));

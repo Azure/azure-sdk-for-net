@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="properties"> The updated thread properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="editedByCommunicationIdentifier"/>, <paramref name="metadata"/> or <paramref name="properties"/> is null. </exception>
-        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, DateTimeOffset createTime, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset editTime, IReadOnlyDictionary<string, string> metadata, IReadOnlyDictionary<string, BinaryData> properties) : base(recipientCommunicationIdentifier, createTime)
+        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, DateTimeOffset createTime, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset editTime, IDictionary<string, string> metadata, IDictionary<string, BinaryData> properties) : base(recipientCommunicationIdentifier, createTime)
         {
             Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
             Argument.AssertNotNull(editedByCommunicationIdentifier, nameof(editedByCommunicationIdentifier));

@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderCommunicationIdentifier"/> or <paramref name="metadata"/> is null. </exception>
-        internal AcsChatMessageReceivedInThreadEventData(CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset composeTime, IReadOnlyDictionary<string, string> metadata) : base(senderCommunicationIdentifier, composeTime)
+        internal AcsChatMessageReceivedInThreadEventData(CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset composeTime, IDictionary<string, string> metadata) : base(senderCommunicationIdentifier, composeTime)
         {
             Argument.AssertNotNull(senderCommunicationIdentifier, nameof(senderCommunicationIdentifier));
             Argument.AssertNotNull(metadata, nameof(metadata));

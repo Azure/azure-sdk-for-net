@@ -1963,7 +1963,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"> The reason the task was moved into its current state, if the task wasn't completed. </param>
         /// <param name="metadata"> Attributes unique to the task.  This differs by task type. </param>
         /// <returns> A new <see cref="Easm.TaskResource"/> instance for mocking. </returns>
-        public static TaskResource TaskResource(string id = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? lastPolledAt = null, TaskResourceState? state = null, TaskResourcePhase? phase = null, string reason = null, IReadOnlyDictionary<string, BinaryData> metadata = null)
+        public static TaskResource TaskResource(string id = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? lastPolledAt = null, TaskResourceState? state = null, TaskResourcePhase? phase = null, string reason = null, IDictionary<string, BinaryData> metadata = null)
         {
             metadata ??= new Dictionary<string, BinaryData>();
 

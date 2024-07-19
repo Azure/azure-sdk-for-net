@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/> or <paramref name="requestedWorkerSelectors"/> is null. </exception>
-        internal AcsRouterJobReceivedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus jobStatus, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset scheduledOn, bool unavailableForMatching) : base(labels, tags)
+        internal AcsRouterJobReceivedEventData(IDictionary<string, string> labels, IDictionary<string, string> tags, AcsRouterJobStatus jobStatus, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset scheduledOn, bool unavailableForMatching) : base(labels, tags)
         {
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));

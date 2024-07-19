@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionFinishedEventData"/>. </summary>
         /// <param name="namedOutputs"> Named outputs of completed execution, if any. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namedOutputs"/> is null. </exception>
-        internal AvsScriptExecutionFinishedEventData(IReadOnlyDictionary<string, string> namedOutputs)
+        internal AvsScriptExecutionFinishedEventData(IDictionary<string, string> namedOutputs)
         {
             Argument.AssertNotNull(namedOutputs, nameof(namedOutputs));
 

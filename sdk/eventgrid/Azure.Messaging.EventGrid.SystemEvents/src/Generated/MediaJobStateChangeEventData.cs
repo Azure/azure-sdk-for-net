@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="state"> The new state of the Job. </param>
         /// <param name="correlationData"> Gets the Job correlation data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="correlationData"/> is null. </exception>
-        internal MediaJobStateChangeEventData(MediaJobState previousState, MediaJobState state, IReadOnlyDictionary<string, string> correlationData)
+        internal MediaJobStateChangeEventData(MediaJobState previousState, MediaJobState state, IDictionary<string, string> correlationData)
         {
             Argument.AssertNotNull(correlationData, nameof(correlationData));
 

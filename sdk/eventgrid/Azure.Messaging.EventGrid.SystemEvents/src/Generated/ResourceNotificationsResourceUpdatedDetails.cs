@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tags"> the tags on the resource for which the event is being emitted. </param>
         /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> or <paramref name="properties"/> is null. </exception>
-        internal ResourceNotificationsResourceUpdatedDetails(IReadOnlyDictionary<string, string> tags, IReadOnlyDictionary<string, BinaryData> properties)
+        internal ResourceNotificationsResourceUpdatedDetails(IDictionary<string, string> tags, IDictionary<string, BinaryData> properties)
         {
             Argument.AssertNotNull(tags, nameof(tags));
             Argument.AssertNotNull(properties, nameof(properties));

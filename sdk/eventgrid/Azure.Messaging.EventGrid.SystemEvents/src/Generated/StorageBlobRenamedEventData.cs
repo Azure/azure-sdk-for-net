@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="StorageBlobRenamedEventData"/>. </summary>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiagnostics"/> is null. </exception>
-        internal StorageBlobRenamedEventData(IReadOnlyDictionary<string, BinaryData> storageDiagnostics)
+        internal StorageBlobRenamedEventData(IDictionary<string, BinaryData> storageDiagnostics)
         {
             Argument.AssertNotNull(storageDiagnostics, nameof(storageDiagnostics));
 

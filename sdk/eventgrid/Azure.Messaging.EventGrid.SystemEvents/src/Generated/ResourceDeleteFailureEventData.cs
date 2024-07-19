@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="claims"> The properties of the claims. </param>
         /// <param name="httpRequest"> The details of the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorization"/>, <paramref name="claims"/> or <paramref name="httpRequest"/> is null. </exception>
-        internal ResourceDeleteFailureEventData(ResourceAuthorization authorization, IReadOnlyDictionary<string, string> claims, ResourceHttpRequest httpRequest)
+        internal ResourceDeleteFailureEventData(ResourceAuthorization authorization, IDictionary<string, string> claims, ResourceHttpRequest httpRequest)
         {
             Argument.AssertNotNull(authorization, nameof(authorization));
             Argument.AssertNotNull(claims, nameof(claims));

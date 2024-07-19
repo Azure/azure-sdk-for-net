@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="serviceTags"> The tags of the deployed service. </param>
         /// <param name="serviceProperties"> The properties of the deployed service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceTags"/> or <paramref name="serviceProperties"/> is null. </exception>
-        internal MachineLearningServicesModelDeployedEventData(IReadOnlyDictionary<string, BinaryData> serviceTags, IReadOnlyDictionary<string, BinaryData> serviceProperties)
+        internal MachineLearningServicesModelDeployedEventData(IDictionary<string, BinaryData> serviceTags, IDictionary<string, BinaryData> serviceProperties)
         {
             Argument.AssertNotNull(serviceTags, nameof(serviceTags));
             Argument.AssertNotNull(serviceProperties, nameof(serviceProperties));

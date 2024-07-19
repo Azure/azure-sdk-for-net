@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="modelTags"> The tags of the model that was registered. </param>
         /// <param name="modelProperties"> The properties of the model that was registered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelTags"/> or <paramref name="modelProperties"/> is null. </exception>
-        internal MachineLearningServicesModelRegisteredEventData(IReadOnlyDictionary<string, BinaryData> modelTags, IReadOnlyDictionary<string, BinaryData> modelProperties)
+        internal MachineLearningServicesModelRegisteredEventData(IDictionary<string, BinaryData> modelTags, IDictionary<string, BinaryData> modelProperties)
         {
             Argument.AssertNotNull(modelTags, nameof(modelTags));
             Argument.AssertNotNull(modelProperties, nameof(modelProperties));

@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Worker Registered Labels. </param>
         /// <param name="tags"> Router Worker Registered Tags. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueAssignments"/>, <paramref name="channelConfigurations"/>, <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
-        internal AcsRouterWorkerRegisteredEventData(IEnumerable<AcsRouterQueueDetails> queueAssignments, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags)
+        internal AcsRouterWorkerRegisteredEventData(IEnumerable<AcsRouterQueueDetails> queueAssignments, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations, IDictionary<string, string> labels, IDictionary<string, string> tags)
         {
             Argument.AssertNotNull(queueAssignments, nameof(queueAssignments));
             Argument.AssertNotNull(channelConfigurations, nameof(channelConfigurations));

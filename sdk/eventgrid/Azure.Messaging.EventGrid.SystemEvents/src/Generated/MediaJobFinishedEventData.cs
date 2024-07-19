@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="correlationData"/> or <paramref name="outputs"/> is null. </exception>
-        internal MediaJobFinishedEventData(MediaJobState previousState, MediaJobState state, IReadOnlyDictionary<string, string> correlationData, IEnumerable<MediaJobOutput> outputs) : base(previousState, state, correlationData)
+        internal MediaJobFinishedEventData(MediaJobState previousState, MediaJobState state, IDictionary<string, string> correlationData, IEnumerable<MediaJobOutput> outputs) : base(previousState, state, correlationData)
         {
             Argument.AssertNotNull(correlationData, nameof(correlationData));
             Argument.AssertNotNull(outputs, nameof(outputs));

@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runTags"> The tags of the completed Run. </param>
         /// <param name="runProperties"> The properties of the completed Run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runTags"/> or <paramref name="runProperties"/> is null. </exception>
-        internal MachineLearningServicesRunCompletedEventData(IReadOnlyDictionary<string, BinaryData> runTags, IReadOnlyDictionary<string, BinaryData> runProperties)
+        internal MachineLearningServicesRunCompletedEventData(IDictionary<string, BinaryData> runTags, IDictionary<string, BinaryData> runProperties)
         {
             Argument.AssertNotNull(runTags, nameof(runTags));
             Argument.AssertNotNull(runProperties, nameof(runProperties));
