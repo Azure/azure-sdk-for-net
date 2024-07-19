@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Cache description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Runtime connection string to cache. </summary>
+        [WirePath("properties.connectionString")]
         public string ConnectionString { get; set; }
         /// <summary> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </summary>
+        [WirePath("properties.useFromLocation")]
         public string UseFromLocation { get; set; }
         /// <summary> Original uri of entity in external system cache points to. </summary>
+        [WirePath("properties.resourceId")]
         public Uri ResourceUri { get; set; }
     }
 }

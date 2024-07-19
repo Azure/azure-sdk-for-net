@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test.Shared;
 using ShareClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
@@ -45,11 +46,11 @@ namespace Azure.Storage.Files.Shares.Tests
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
 
         public static ShareServiceClient GetServiceClient_OAuth(
-            this ShareClientBuilder clientBuilder, ShareClientOptions options = default)
+            this ShareClientBuilder clientBuilder, TokenCredential tokenCredential, ShareClientOptions options = default)
         {
             options ??= clientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
-            return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, options);
+            return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, tokenCredential, options);
         }
 
         public static ShareServiceClient GetServiceClient_OAuthAccount_SharedKey(this ShareClientBuilder clientBuilder) =>
