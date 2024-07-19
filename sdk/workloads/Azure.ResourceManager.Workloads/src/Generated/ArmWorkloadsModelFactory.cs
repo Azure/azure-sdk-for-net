@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of <see cref="Models.SapDiskConfigurationsResult"/>. </summary>
         /// <param name="volumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </param>
         /// <returns> A new <see cref="Models.SapDiskConfigurationsResult"/> instance for mocking. </returns>
-        public static SapDiskConfigurationsResult SapDiskConfigurationsResult(IReadOnlyDictionary<string, SapDiskConfiguration> volumeConfigurations = null)
+        public static SapDiskConfigurationsResult SapDiskConfigurationsResult(IDictionary<string, SapDiskConfiguration> volumeConfigurations = null)
         {
             volumeConfigurations ??= new Dictionary<string, SapDiskConfiguration>();
 

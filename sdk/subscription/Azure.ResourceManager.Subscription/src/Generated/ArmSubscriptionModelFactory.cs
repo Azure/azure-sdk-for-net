@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="createdOn"> Created Time. </param>
         /// <param name="tags"> Tags for the subscription. </param>
         /// <returns> A new <see cref="Models.SubscriptionAliasProperties"/> instance for mocking. </returns>
-        public static SubscriptionAliasProperties SubscriptionAliasProperties(string subscriptionId = null, string displayName = null, SubscriptionProvisioningState? provisioningState = null, Uri acceptOwnershipUri = null, AcceptOwnershipState? acceptOwnershipState = null, string billingScope = null, SubscriptionWorkload? workload = null, string resellerId = null, string subscriptionOwnerId = null, string managementGroupId = null, DateTimeOffset? createdOn = null, IReadOnlyDictionary<string, string> tags = null)
+        public static SubscriptionAliasProperties SubscriptionAliasProperties(string subscriptionId = null, string displayName = null, SubscriptionProvisioningState? provisioningState = null, Uri acceptOwnershipUri = null, AcceptOwnershipState? acceptOwnershipState = null, string billingScope = null, SubscriptionWorkload? workload = null, string resellerId = null, string subscriptionOwnerId = null, string managementGroupId = null, DateTimeOffset? createdOn = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <param name="displayName"> The display name of the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
         /// <returns> A new <see cref="Models.AcceptOwnershipStatus"/> instance for mocking. </returns>
-        public static AcceptOwnershipStatus AcceptOwnershipStatus(string subscriptionId = null, AcceptOwnershipState? acceptOwnershipState = null, AcceptOwnershipProvisioningState? provisioningState = null, string billingOwner = null, Guid? subscriptionTenantId = null, string displayName = null, IReadOnlyDictionary<string, string> tags = null)
+        public static AcceptOwnershipStatus AcceptOwnershipStatus(string subscriptionId = null, AcceptOwnershipState? acceptOwnershipState = null, AcceptOwnershipProvisioningState? provisioningState = null, string billingOwner = null, Guid? subscriptionTenantId = null, string displayName = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 

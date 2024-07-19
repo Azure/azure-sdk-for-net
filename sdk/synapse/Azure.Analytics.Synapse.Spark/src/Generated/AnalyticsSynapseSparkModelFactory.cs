@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="state"> The batch state. </param>
         /// <param name="logLines"> The log lines. </param>
         /// <returns> A new <see cref="Models.SparkBatchJob"/> instance for mocking. </returns>
-        public static SparkBatchJob SparkBatchJob(SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkBatchJobResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
+        public static SparkBatchJob SparkBatchJob(SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkBatchJobResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IDictionary<string, string> tags = null, int id = default, string appId = null, IDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
         {
             errors ??= new List<SparkServiceError>();
             tags ??= new Dictionary<string, string>();
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="executorCores"></param>
         /// <param name="executorCount"></param>
         /// <returns> A new <see cref="Models.SparkRequest"/> instance for mocking. </returns>
-        public static SparkRequest SparkRequest(string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IReadOnlyDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
+        public static SparkRequest SparkRequest(string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
         {
             arguments ??= new List<string>();
             jars ??= new List<string>();
@@ -214,7 +214,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="state"> The session state. </param>
         /// <param name="logLines"></param>
         /// <returns> A new <see cref="Models.SparkSession"/> instance for mocking. </returns>
-        public static SparkSession SparkSession(SparkSessionState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkSessionResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
+        public static SparkSession SparkSession(SparkSessionState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkSessionResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IDictionary<string, string> tags = null, int id = default, string appId = null, IDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
         {
             errors ??= new List<SparkServiceError>();
             tags ??= new Dictionary<string, string>();

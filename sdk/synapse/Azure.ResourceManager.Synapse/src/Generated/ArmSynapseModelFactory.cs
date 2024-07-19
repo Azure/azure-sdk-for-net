@@ -1657,7 +1657,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="isAadOnlyAuthenticationEnabled"> Enable or Disable AzureADOnlyAuthentication on All Workspace subresource. </param>
         /// <param name="isTrustedServiceBypassEnabled"> Is trustedServiceBypassEnabled for the workspace. </param>
         /// <returns> A new <see cref="Synapse.SynapseWorkspaceData"/> instance for mocking. </returns>
-        public static SynapseWorkspaceData SynapseWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, string virtualNetworkComputeSubnetId = null, IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, IEnumerable<SynapsePrivateEndpointConnectionData> privateEndpointConnections = null, SynapseEncryptionDetails encryption = null, Guid? workspaceUid = null, IReadOnlyDictionary<string, BinaryData> extraProperties = null, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, ResourceIdentifier purviewResourceId = null, ResourceIdentifier adlaResourceId = null, WorkspacePublicNetworkAccess? publicNetworkAccess = null, Guid? initialWorkspaceAdminObjectId = null, IReadOnlyDictionary<string, BinaryData> settings = null, bool? isAadOnlyAuthenticationEnabled = null, bool? isTrustedServiceBypassEnabled = null)
+        public static SynapseWorkspaceData SynapseWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, string virtualNetworkComputeSubnetId = null, IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, IEnumerable<SynapsePrivateEndpointConnectionData> privateEndpointConnections = null, SynapseEncryptionDetails encryption = null, Guid? workspaceUid = null, IDictionary<string, BinaryData> extraProperties = null, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, ResourceIdentifier purviewResourceId = null, ResourceIdentifier adlaResourceId = null, WorkspacePublicNetworkAccess? publicNetworkAccess = null, Guid? initialWorkspaceAdminObjectId = null, IDictionary<string, BinaryData> settings = null, bool? isAadOnlyAuthenticationEnabled = null, bool? isTrustedServiceBypassEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
             connectivityEndpoints ??= new Dictionary<string, string>();
@@ -2029,7 +2029,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="maxConcurrentJobs"> The maximum concurrent jobs in this integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseSelfHostedIntegrationRuntimeNode"/> instance for mocking. </returns>
-        public static SynapseSelfHostedIntegrationRuntimeNode SynapseSelfHostedIntegrationRuntimeNode(string nodeName = null, string machineName = null, Uri hostServiceUri = null, SynapseSelfHostedIntegrationRuntimeNodeStatus? status = null, IReadOnlyDictionary<string, string> capabilities = null, string versionStatus = null, string version = null, DateTimeOffset? registerOn = null, DateTimeOffset? lastConnectedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? lastStartedOn = null, DateTimeOffset? lastStopOn = null, SynapseIntegrationRuntimeUpdateResult? lastUpdateResult = null, DateTimeOffset? lastStartUpdateOn = null, DateTimeOffset? lastEndUpdateOn = null, bool? isActiveDispatcher = null, int? concurrentJobsLimit = null, int? maxConcurrentJobs = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseSelfHostedIntegrationRuntimeNode SynapseSelfHostedIntegrationRuntimeNode(string nodeName = null, string machineName = null, Uri hostServiceUri = null, SynapseSelfHostedIntegrationRuntimeNodeStatus? status = null, IDictionary<string, string> capabilities = null, string versionStatus = null, string version = null, DateTimeOffset? registerOn = null, DateTimeOffset? lastConnectedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? lastStartedOn = null, DateTimeOffset? lastStopOn = null, SynapseIntegrationRuntimeUpdateResult? lastUpdateResult = null, DateTimeOffset? lastStartUpdateOn = null, DateTimeOffset? lastEndUpdateOn = null, bool? isActiveDispatcher = null, int? concurrentJobsLimit = null, int? maxConcurrentJobs = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             capabilities ??= new Dictionary<string, string>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -2065,7 +2065,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="isIdentityCertExprired"> Whether the identity certificate is expired. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeConnectionInfo"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeConnectionInfo SynapseIntegrationRuntimeConnectionInfo(string serviceToken = null, BinaryData identityCertThumbprint = null, Uri hostServiceUri = null, string version = null, string publicKey = null, bool? isIdentityCertExprired = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseIntegrationRuntimeConnectionInfo SynapseIntegrationRuntimeConnectionInfo(string serviceToken = null, BinaryData identityCertThumbprint = null, Uri hostServiceUri = null, string version = null, string publicKey = null, bool? isIdentityCertExprired = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -2098,7 +2098,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeStatus SynapseIntegrationRuntimeStatus(string runtimeType = null, string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseIntegrationRuntimeStatus SynapseIntegrationRuntimeStatus(string runtimeType = null, string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -2136,7 +2136,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="receivedBytes"> Received bytes on the integration runtime node. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeNodeMonitoringResult"/> instance for mocking. </returns>
-        public static SynapseIntegrationRuntimeNodeMonitoringResult SynapseIntegrationRuntimeNodeMonitoringResult(string nodeName = null, int? availableMemoryInMB = null, int? cpuUtilization = null, int? concurrentJobsLimit = null, int? concurrentJobsRunning = null, int? maxConcurrentJobs = null, float? sentBytes = null, float? receivedBytes = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseIntegrationRuntimeNodeMonitoringResult SynapseIntegrationRuntimeNodeMonitoringResult(string nodeName = null, int? availableMemoryInMB = null, int? cpuUtilization = null, int? concurrentJobsLimit = null, int? concurrentJobsRunning = null, int? maxConcurrentJobs = null, float? sentBytes = null, float? receivedBytes = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -2648,7 +2648,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="otherErrors"> The errors that occurred on this integration runtime. </param>
         /// <param name="lastOperation"> The last operation result that occurred on this integration runtime. </param>
         /// <returns> A new <see cref="Models.SynapseManagedIntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static SynapseManagedIntegrationRuntimeStatus SynapseManagedIntegrationRuntimeStatus(string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null, DateTimeOffset? createOn = null, IEnumerable<SynapseManagedIntegrationRuntimeNode> nodes = null, IEnumerable<SynapseManagedIntegrationRuntimeError> otherErrors = null, SynapseManagedIntegrationRuntimeOperationResult lastOperation = null)
+        public static SynapseManagedIntegrationRuntimeStatus SynapseManagedIntegrationRuntimeStatus(string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IDictionary<string, BinaryData> additionalProperties = null, DateTimeOffset? createOn = null, IEnumerable<SynapseManagedIntegrationRuntimeNode> nodes = null, IEnumerable<SynapseManagedIntegrationRuntimeError> otherErrors = null, SynapseManagedIntegrationRuntimeOperationResult lastOperation = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
             nodes ??= new List<SynapseManagedIntegrationRuntimeNode>();
@@ -2671,7 +2671,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="errors"> The errors that occurred on this integration runtime node. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseManagedIntegrationRuntimeNode"/> instance for mocking. </returns>
-        public static SynapseManagedIntegrationRuntimeNode SynapseManagedIntegrationRuntimeNode(string nodeId = null, SynapseManagedIntegrationRuntimeNodeStatus? status = null, IEnumerable<SynapseManagedIntegrationRuntimeError> errors = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseManagedIntegrationRuntimeNode SynapseManagedIntegrationRuntimeNode(string nodeId = null, SynapseManagedIntegrationRuntimeNodeStatus? status = null, IEnumerable<SynapseManagedIntegrationRuntimeError> errors = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             errors ??= new List<SynapseManagedIntegrationRuntimeError>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -2686,7 +2686,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="message"> Error message. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseManagedIntegrationRuntimeError"/> instance for mocking. </returns>
-        public static SynapseManagedIntegrationRuntimeError SynapseManagedIntegrationRuntimeError(DateTimeOffset? time = null, string code = null, IEnumerable<string> parameters = null, string message = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseManagedIntegrationRuntimeError SynapseManagedIntegrationRuntimeError(DateTimeOffset? time = null, string code = null, IEnumerable<string> parameters = null, string message = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             parameters ??= new List<string>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -2703,7 +2703,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="activityId"> The activity id for the operation request. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SynapseManagedIntegrationRuntimeOperationResult"/> instance for mocking. </returns>
-        public static SynapseManagedIntegrationRuntimeOperationResult SynapseManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType = null, DateTimeOffset? startOn = null, string result = null, string errorCode = null, IEnumerable<string> parameters = null, string activityId = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SynapseManagedIntegrationRuntimeOperationResult SynapseManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType = null, DateTimeOffset? startOn = null, string result = null, string errorCode = null, IEnumerable<string> parameters = null, string activityId = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             parameters ??= new List<string>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -2742,7 +2742,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="serviceRegion"> The service region of the integration runtime. </param>
         /// <param name="newerVersions"> The newer versions on download center. </param>
         /// <returns> A new <see cref="Models.SynapseSelfHostedIntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static SynapseSelfHostedIntegrationRuntimeStatus SynapseSelfHostedIntegrationRuntimeStatus(string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null, DateTimeOffset? createOn = null, string taskQueueId = null, string nodeCommunicationChannelEncryptionMode = null, SynapseIntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption = null, string version = null, IEnumerable<SynapseSelfHostedIntegrationRuntimeNode> nodes = null, DateTimeOffset? scheduledUpdateOn = null, string updateDelayOffset = null, string localTimeZoneOffset = null, IReadOnlyDictionary<string, string> capabilities = null, IEnumerable<string> serviceUrls = null, SynapseIntegrationRuntimeAutoUpdate? autoUpdate = null, string versionStatus = null, IEnumerable<SynapseLinkedIntegrationRuntime> links = null, string pushedVersion = null, string latestVersion = null, DateTimeOffset? autoUpdateEta = null, string serviceRegion = null, IEnumerable<string> newerVersions = null)
+        public static SynapseSelfHostedIntegrationRuntimeStatus SynapseSelfHostedIntegrationRuntimeStatus(string dataFactoryName = null, SynapseIntegrationRuntimeState? state = null, IDictionary<string, BinaryData> additionalProperties = null, DateTimeOffset? createOn = null, string taskQueueId = null, string nodeCommunicationChannelEncryptionMode = null, SynapseIntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption = null, string version = null, IEnumerable<SynapseSelfHostedIntegrationRuntimeNode> nodes = null, DateTimeOffset? scheduledUpdateOn = null, string updateDelayOffset = null, string localTimeZoneOffset = null, IDictionary<string, string> capabilities = null, IEnumerable<string> serviceUrls = null, SynapseIntegrationRuntimeAutoUpdate? autoUpdate = null, string versionStatus = null, IEnumerable<SynapseLinkedIntegrationRuntime> links = null, string pushedVersion = null, string latestVersion = null, DateTimeOffset? autoUpdateEta = null, string serviceRegion = null, IEnumerable<string> newerVersions = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
             nodes ??= new List<SynapseSelfHostedIntegrationRuntimeNode>();

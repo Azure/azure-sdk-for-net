@@ -207,7 +207,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Run notebook parameters. </param>
         /// <param name="notebookContent"> Notebook resource type. </param>
         /// <returns> A new <see cref="Models.RunNotebookSnapshot"/> instance for mocking. </returns>
-        public static RunNotebookSnapshot RunNotebookSnapshot(string exitValue = null, string id = null, string notebook = null, RunNotebookSparkSessionOptions sessionOptions = null, bool? honorSessionTimeToLive = null, string sessionId = null, string sparkPool = null, IReadOnlyDictionary<string, RunNotebookParameter> parameters = null, NotebookResource notebookContent = null)
+        public static RunNotebookSnapshot RunNotebookSnapshot(string exitValue = null, string id = null, string notebook = null, RunNotebookSparkSessionOptions sessionOptions = null, bool? honorSessionTimeToLive = null, string sessionId = null, string sparkPool = null, IDictionary<string, RunNotebookParameter> parameters = null, NotebookResource notebookContent = null)
         {
             parameters ??= new Dictionary<string, RunNotebookParameter>();
 
@@ -451,7 +451,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="lastActivityTime"> Last activity time of data flow debug session. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.DataFlowDebugSessionInfo"/> instance for mocking. </returns>
-        public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = null, string computeType = null, int? coreCount = null, int? nodeCount = null, string integrationRuntimeName = null, string sessionId = null, string startTime = null, int? timeToLiveInMinutes = null, string lastActivityTime = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = null, string computeType = null, int? coreCount = null, int? nodeCount = null, string integrationRuntimeName = null, string sessionId = null, string startTime = null, int? timeToLiveInMinutes = null, string lastActivityTime = null, IDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
@@ -708,7 +708,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="message"> The message from a pipeline run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.PipelineRun"/> instance for mocking. </returns>
-        public static PipelineRun PipelineRun(string runId = null, string runGroupId = null, bool? isLatest = null, string pipelineName = null, IReadOnlyDictionary<string, string> parameters = null, PipelineRunInvokedBy invokedBy = null, DateTimeOffset? lastUpdated = null, DateTimeOffset? runStart = null, DateTimeOffset? runEnd = null, int? durationInMs = null, string status = null, string message = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static PipelineRun PipelineRun(string runId = null, string runGroupId = null, bool? isLatest = null, string pipelineName = null, IDictionary<string, string> parameters = null, PipelineRunInvokedBy invokedBy = null, DateTimeOffset? lastUpdated = null, DateTimeOffset? runStart = null, DateTimeOffset? runEnd = null, int? durationInMs = null, string status = null, string message = null, IDictionary<string, object> additionalProperties = null)
         {
             parameters ??= new Dictionary<string, string>();
             additionalProperties ??= new Dictionary<string, object>();
@@ -766,7 +766,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="error"> The error if any from the activity run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.ActivityRun"/> instance for mocking. </returns>
-        public static ActivityRun ActivityRun(string pipelineName = null, string pipelineRunId = null, string activityName = null, string activityType = null, string activityRunId = null, string linkedServiceName = null, string status = null, DateTimeOffset? activityRunStart = null, DateTimeOffset? activityRunEnd = null, int? durationInMs = null, object input = null, object output = null, object error = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static ActivityRun ActivityRun(string pipelineName = null, string pipelineRunId = null, string activityName = null, string activityType = null, string activityRunId = null, string linkedServiceName = null, string status = null, DateTimeOffset? activityRunStart = null, DateTimeOffset? activityRunEnd = null, int? durationInMs = null, object input = null, object output = null, object error = null, IDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
@@ -819,7 +819,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="state"> The batch state. </param>
         /// <param name="logLines"> The log lines. </param>
         /// <returns> A new <see cref="Models.SparkBatchJob"/> instance for mocking. </returns>
-        public static SparkBatchJob SparkBatchJob(SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkBatchJobResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IReadOnlyDictionary<string, string> tags = null, int id = default, string appId = null, IReadOnlyDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
+        public static SparkBatchJob SparkBatchJob(SparkBatchJobState livyInfo = null, string name = null, string workspaceName = null, string sparkPoolName = null, string submitterName = null, string submitterId = null, string artifactId = null, SparkJobType? jobType = null, SparkBatchJobResultType? result = null, SparkScheduler scheduler = null, SparkServicePlugin plugin = null, IEnumerable<SparkServiceError> errors = null, IDictionary<string, string> tags = null, int id = default, string appId = null, IDictionary<string, string> appInfo = null, LivyStates? state = null, IEnumerable<string> logLines = null)
         {
             errors ??= new List<SparkServiceError>();
             tags ??= new Dictionary<string, string>();
@@ -888,7 +888,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="executorCores"></param>
         /// <param name="executorCount"></param>
         /// <returns> A new <see cref="Models.SparkRequest"/> instance for mocking. </returns>
-        public static SparkRequest SparkRequest(string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IReadOnlyDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
+        public static SparkRequest SparkRequest(string name = null, string file = null, string className = null, IEnumerable<string> arguments = null, IEnumerable<string> jars = null, IEnumerable<string> pythonFiles = null, IEnumerable<string> files = null, IEnumerable<string> archives = null, IDictionary<string, string> configuration = null, string driverMemory = null, int? driverCores = null, string executorMemory = null, int? executorCores = null, int? executorCount = null)
         {
             arguments ??= new List<string>();
             jars ??= new List<string>();
@@ -1089,7 +1089,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="triggeredPipelines"> List of pipeline name and run Id triggered by the trigger run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.TriggerRun"/> instance for mocking. </returns>
-        public static TriggerRun TriggerRun(string triggerRunId = null, string triggerName = null, string triggerType = null, DateTimeOffset? triggerRunTimestamp = null, TriggerRunStatus? status = null, string message = null, IReadOnlyDictionary<string, string> properties = null, IReadOnlyDictionary<string, string> triggeredPipelines = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static TriggerRun TriggerRun(string triggerRunId = null, string triggerName = null, string triggerType = null, DateTimeOffset? triggerRunTimestamp = null, TriggerRunStatus? status = null, string message = null, IDictionary<string, string> properties = null, IDictionary<string, string> triggeredPipelines = null, IDictionary<string, object> additionalProperties = null)
         {
             properties ??= new Dictionary<string, string>();
             triggeredPipelines ??= new Dictionary<string, string>();
@@ -1131,7 +1131,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="purviewConfiguration"> Purview Configuration. </param>
         /// <param name="adlaResourceId"> The ADLA resource ID. </param>
         /// <returns> A new <see cref="Models.Workspace"/> instance for mocking. </returns>
-        public static Workspace Workspace(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, ManagedIdentity identity = null, DataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, VirtualNetworkProfile virtualNetworkProfile = null, IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, IEnumerable<PrivateEndpointConnection> privateEndpointConnections = null, EncryptionDetails encryption = null, Guid? workspaceUID = null, IReadOnlyDictionary<string, object> extraProperties = null, ManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, PurviewConfiguration purviewConfiguration = null, string adlaResourceId = null)
+        public static Workspace Workspace(string id = null, string name = null, string type = null, IDictionary<string, string> tags = null, string location = null, ManagedIdentity identity = null, DataLakeStorageAccountDetails defaultDataLakeStorage = null, string sqlAdministratorLoginPassword = null, string managedResourceGroupName = null, string provisioningState = null, string sqlAdministratorLogin = null, VirtualNetworkProfile virtualNetworkProfile = null, IDictionary<string, string> connectivityEndpoints = null, string managedVirtualNetwork = null, IEnumerable<PrivateEndpointConnection> privateEndpointConnections = null, EncryptionDetails encryption = null, Guid? workspaceUID = null, IDictionary<string, object> extraProperties = null, ManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, PurviewConfiguration purviewConfiguration = null, string adlaResourceId = null)
         {
             tags ??= new Dictionary<string, string>();
             connectivityEndpoints ??= new Dictionary<string, string>();

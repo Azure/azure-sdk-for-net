@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="dictionary"> Languages that support dictionary API. </param>
         /// <returns> A new <see cref="Text.GetSupportedLanguagesResult"/> instance for mocking. </returns>
-        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation = null, IReadOnlyDictionary<string, TransliterationLanguage> transliteration = null, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary = null)
+        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(IDictionary<string, TranslationLanguage> translation = null, IDictionary<string, TransliterationLanguage> transliteration = null, IDictionary<string, SourceDictionaryLanguage> dictionary = null)
         {
             translation ??= new Dictionary<string, TranslationLanguage>();
             transliteration ??= new Dictionary<string, TransliterationLanguage>();

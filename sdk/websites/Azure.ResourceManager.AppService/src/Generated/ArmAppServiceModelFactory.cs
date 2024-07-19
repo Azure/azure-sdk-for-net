@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="properties"> Resource metric definition properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.ResourceMetricDefinition"/> instance for mocking. </returns>
-        public static ResourceMetricDefinition ResourceMetricDefinition(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string unit = null, string primaryAggregationType = null, IEnumerable<ResourceMetricAvailability> metricAvailabilities = null, Uri resourceUri = null, IReadOnlyDictionary<string, string> properties = null, string kind = null)
+        public static ResourceMetricDefinition ResourceMetricDefinition(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string unit = null, string primaryAggregationType = null, IEnumerable<ResourceMetricAvailability> metricAvailabilities = null, Uri resourceUri = null, IDictionary<string, string> properties = null, string kind = null)
         {
             metricAvailabilities ??= new List<ResourceMetricAvailability>();
             properties ??= new Dictionary<string, string>();
@@ -2733,7 +2733,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if the minor version the default; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <returns> A new <see cref="Models.FunctionAppRuntimeSettings"/> instance for mocking. </returns>
-        public static FunctionAppRuntimeSettings FunctionAppRuntimeSettings(string runtimeVersion = null, bool? isRemoteDebuggingSupported = null, AppInsightsWebAppStackSettings appInsightsSettings = null, GitHubActionWebAppStackSettings gitHubActionSettings = null, IReadOnlyDictionary<string, string> appSettingsDictionary = null, SiteConfigPropertiesDictionary siteConfigPropertiesDictionary = null, IEnumerable<string> supportedFunctionsExtensionVersions = null, bool? isPreview = null, bool? isDeprecated = null, bool? isHidden = null, DateTimeOffset? endOfLifeOn = null, bool? isAutoUpdate = null, bool? isEarlyAccess = null, bool? isDefault = null)
+        public static FunctionAppRuntimeSettings FunctionAppRuntimeSettings(string runtimeVersion = null, bool? isRemoteDebuggingSupported = null, AppInsightsWebAppStackSettings appInsightsSettings = null, GitHubActionWebAppStackSettings gitHubActionSettings = null, IDictionary<string, string> appSettingsDictionary = null, SiteConfigPropertiesDictionary siteConfigPropertiesDictionary = null, IEnumerable<string> supportedFunctionsExtensionVersions = null, bool? isPreview = null, bool? isDeprecated = null, bool? isHidden = null, DateTimeOffset? endOfLifeOn = null, bool? isAutoUpdate = null, bool? isEarlyAccess = null, bool? isDefault = null)
         {
             appSettingsDictionary ??= new Dictionary<string, string>();
             supportedFunctionsExtensionVersions ??= new List<string>();
@@ -3634,7 +3634,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <returns> A new <see cref="Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, AppServiceArmPlan plan = null, RemotePrivateEndpointConnection properties = null, AppServiceSkuDescription sku = null, string status = null, ResponseError error = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null)
+        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, AppServiceArmPlan plan = null, RemotePrivateEndpointConnection properties = null, AppServiceSkuDescription sku = null, string status = null, ResponseError error = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -5397,7 +5397,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionKeys"> Host level function keys. </param>
         /// <param name="systemKeys"> System keys. </param>
         /// <returns> A new <see cref="Models.FunctionAppHostKeys"/> instance for mocking. </returns>
-        public static FunctionAppHostKeys FunctionAppHostKeys(string masterKey = null, IReadOnlyDictionary<string, string> functionKeys = null, IReadOnlyDictionary<string, string> systemKeys = null)
+        public static FunctionAppHostKeys FunctionAppHostKeys(string masterKey = null, IDictionary<string, string> functionKeys = null, IDictionary<string, string> systemKeys = null)
         {
             functionKeys ??= new Dictionary<string, string>();
             systemKeys ??= new Dictionary<string, string>();
@@ -6401,7 +6401,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="flowState"> Gets or sets the state of the workflow. </param>
         /// <param name="health"> Gets or sets workflow health. </param>
         /// <returns> A new <see cref="Models.WorkflowEnvelopeProperties"/> instance for mocking. </returns>
-        public static WorkflowEnvelopeProperties WorkflowEnvelopeProperties(IReadOnlyDictionary<string, BinaryData> files = null, WorkflowState? flowState = null, WorkflowHealth health = null)
+        public static WorkflowEnvelopeProperties WorkflowEnvelopeProperties(IDictionary<string, BinaryData> files = null, WorkflowState? flowState = null, WorkflowHealth health = null)
         {
             files ??= new Dictionary<string, BinaryData>();
 
@@ -6435,7 +6435,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunData"/> instance for mocking. </returns>
-        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? waitEndOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string correlationId = null, string correlationClientTrackingId = null, WorkflowResourceReference workflow = null, WorkflowRunTrigger trigger = null, IReadOnlyDictionary<string, WorkflowOutputContent> outputs = null, WorkflowRunTrigger response = null)
+        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? waitEndOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string correlationId = null, string correlationClientTrackingId = null, WorkflowResourceReference workflow = null, WorkflowRunTrigger trigger = null, IDictionary<string, WorkflowOutputContent> outputs = null, WorkflowRunTrigger response = null)
         {
             outputs ??= new Dictionary<string, WorkflowOutputContent>();
 
