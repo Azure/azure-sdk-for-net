@@ -1488,7 +1488,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Skipping this until backend issue is fixed Bug 3761433: [Transcription] Transcription Subscription (callconnection properties object) state is showing as disabled instead of inactive for TranscriptionStopped event")]
+        // [Ignore(reason: "Skipping this until backend issue is fixed Bug 3761433: [Transcription] Transcription Subscription (callconnection properties object) state is showing as disabled instead of inactive for TranscriptionStopped event")]
         [RecordedTest]
         public async Task CreateCallAndTranscriptionTest()
         {
@@ -1681,7 +1681,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         createCallOptions.TranscriptionOptions = transcriptionOptions;
                         createCallOptions.CallIntelligenceOptions = new CallIntelligenceOptions()
                         {
-                            CognitiveServicesEndpoint = new Uri(TestEnvironment.CognitiveServiceEndpoint)
+                            CognitiveServicesEndpoint = new Uri("https://acs-callautomationtestsupporter-eastus.cognitiveservices.azure.com/")
                         };
                     }
                 }
