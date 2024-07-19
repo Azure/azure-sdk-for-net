@@ -924,7 +924,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="reportAdditionalData"> Additional data for the given health report, this field can include more details on the resource and the health scenario. </param>
         /// <param name="issues"> A collection of the issues in the report. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityHealthReportData"/> instance for mocking. </returns>
-        public static SecurityHealthReportData SecurityHealthReportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthReportResourceDetails resourceDetails = null, EnvironmentDetails environmentDetails = null, HealthDataClassification healthDataClassification = null, HealthReportStatus status = null, IEnumerable<string> affectedDefendersPlans = null, IEnumerable<string> affectedDefendersSubPlans = null, IReadOnlyDictionary<string, string> reportAdditionalData = null, IEnumerable<SecurityHealthReportIssue> issues = null)
+        public static SecurityHealthReportData SecurityHealthReportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthReportResourceDetails resourceDetails = null, EnvironmentDetails environmentDetails = null, HealthDataClassification healthDataClassification = null, HealthReportStatus status = null, IEnumerable<string> affectedDefendersPlans = null, IEnumerable<string> affectedDefendersSubPlans = null, IDictionary<string, string> reportAdditionalData = null, IEnumerable<SecurityHealthReportIssue> issues = null)
         {
             affectedDefendersPlans ??= new List<string>();
             affectedDefendersSubPlans ??= new List<string>();
@@ -2643,7 +2643,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="alertEntityType"> Type of entity. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SecurityAlertEntity"/> instance for mocking. </returns>
-        public static SecurityAlertEntity SecurityAlertEntity(string alertEntityType = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SecurityAlertEntity SecurityAlertEntity(string alertEntityType = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -2823,7 +2823,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="repositoryName"> Name of the repository which the vulnerable image belongs to. </param>
         /// <param name="imageDigest"> Digest of the vulnerable image. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryVulnerabilityProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryVulnerabilityProperties ContainerRegistryVulnerabilityProperties(string containerRegistryVulnerabilityPropertiesType = null, IReadOnlyDictionary<string, SecurityCvss> cvss = null, bool? isPatchable = null, IEnumerable<SecurityCve> cve = null, DateTimeOffset? publishedOn = null, IEnumerable<VendorReference> vendorReferences = null, string repositoryName = null, string imageDigest = null)
+        public static ContainerRegistryVulnerabilityProperties ContainerRegistryVulnerabilityProperties(string containerRegistryVulnerabilityPropertiesType = null, IDictionary<string, SecurityCvss> cvss = null, bool? isPatchable = null, IEnumerable<SecurityCve> cve = null, DateTimeOffset? publishedOn = null, IEnumerable<VendorReference> vendorReferences = null, string repositoryName = null, string imageDigest = null)
         {
             cvss ??= new Dictionary<string, SecurityCvss>();
             cve ??= new List<SecurityCve>();
@@ -2877,7 +2877,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="publishedOn"> Published time. </param>
         /// <param name="vendorReferences"></param>
         /// <returns> A new <see cref="Models.ServerVulnerabilityProperties"/> instance for mocking. </returns>
-        public static ServerVulnerabilityProperties ServerVulnerabilityProperties(string serverVulnerabilityType = null, IReadOnlyDictionary<string, SecurityCvss> cvss = null, bool? isPatchable = null, IEnumerable<SecurityCve> cve = null, string threat = null, DateTimeOffset? publishedOn = null, IEnumerable<VendorReference> vendorReferences = null)
+        public static ServerVulnerabilityProperties ServerVulnerabilityProperties(string serverVulnerabilityType = null, IDictionary<string, SecurityCvss> cvss = null, bool? isPatchable = null, IEnumerable<SecurityCve> cve = null, string threat = null, DateTimeOffset? publishedOn = null, IEnumerable<VendorReference> vendorReferences = null)
         {
             cvss ??= new Dictionary<string, SecurityCvss>();
             cve ??= new List<SecurityCve>();

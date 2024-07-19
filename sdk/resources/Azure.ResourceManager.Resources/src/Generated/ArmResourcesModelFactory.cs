@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="metadata"> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
         /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to 'versions'. </param>
         /// <returns> A new <see cref="Resources.TemplateSpecData"/> instance for mocking. </returns>
-        public static TemplateSpecData TemplateSpecData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, IDictionary<string, string> tags = null, string description = null, string displayName = null, BinaryData metadata = null, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions = null)
+        public static TemplateSpecData TemplateSpecData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, IDictionary<string, string> tags = null, string description = null, string displayName = null, BinaryData metadata = null, IDictionary<string, TemplateSpecVersionInfo> versions = null)
         {
             tags ??= new Dictionary<string, string>();
             versions ??= new Dictionary<string, TemplateSpecVersionInfo>();
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="tags"> Deployment tags. </param>
         /// <returns> A new <see cref="Resources.ArmDeploymentData"/> instance for mocking. </returns>
-        public static ArmDeploymentData ArmDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ArmDeploymentPropertiesExtended properties = null, IReadOnlyDictionary<string, string> tags = null)
+        public static ArmDeploymentData ArmDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ArmDeploymentPropertiesExtended properties = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 

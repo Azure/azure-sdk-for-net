@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
         /// <param name="provisioningState"> Status of Simplified Solution provisioning. </param>
         /// <returns> A new <see cref="SelfHelp.SelfHelpSimplifiedSolutionData"/> instance for mocking. </returns>
-        public static SelfHelpSimplifiedSolutionData SelfHelpSimplifiedSolutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, string title = null, IReadOnlyDictionary<string, string> appendix = null, string content = null, SolutionProvisioningState? provisioningState = null)
+        public static SelfHelpSimplifiedSolutionData SelfHelpSimplifiedSolutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, string title = null, IDictionary<string, string> appendix = null, string content = null, SolutionProvisioningState? provisioningState = null)
         {
             parameters ??= new Dictionary<string, string>();
             appendix ??= new Dictionary<string, string>();

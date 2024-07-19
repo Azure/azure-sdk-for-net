@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="defaultParameterList"> List of application type parameters that can be overridden when creating or updating the application. </param>
         /// <param name="etag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationTypeVersionData"/> instance for mocking. </returns>
-        public static ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string provisioningState = null, Uri appPackageUri = null, IReadOnlyDictionary<string, string> defaultParameterList = null, ETag? etag = null)
+        public static ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string provisioningState = null, Uri appPackageUri = null, IDictionary<string, string> defaultParameterList = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             defaultParameterList ??= new Dictionary<string, string>();

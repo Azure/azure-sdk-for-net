@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="alertLink"> The uri link of the alert. </param>
         /// <param name="resourceIdentifiers"> The list of resource identifiers of the alert. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsAlert"/> instance for mocking. </returns>
-        public static SecurityInsightsAlert SecurityInsightsAlert(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string alertDisplayName = null, string alertType = null, string compromisedEntity = null, SecurityInsightsAlertConfidenceLevel? confidenceLevel = null, IEnumerable<SecurityInsightsAlertConfidenceReason> confidenceReasons = null, double? confidenceScore = null, SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus = null, string description = null, DateTimeOffset? endOn = null, SecurityInsightsKillChainIntent? intent = null, string providerAlertId = null, DateTimeOffset? processingEndOn = null, string productComponentName = null, string productName = null, string productVersion = null, IEnumerable<string> remediationSteps = null, SecurityInsightsAlertSeverity? severity = null, DateTimeOffset? startOn = null, SecurityInsightsAlertStatus? status = null, string systemAlertId = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, DateTimeOffset? alertGeneratedOn = null, string vendorName = null, string alertLink = null, IEnumerable<BinaryData> resourceIdentifiers = null)
+        public static SecurityInsightsAlert SecurityInsightsAlert(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string alertDisplayName = null, string alertType = null, string compromisedEntity = null, SecurityInsightsAlertConfidenceLevel? confidenceLevel = null, IEnumerable<SecurityInsightsAlertConfidenceReason> confidenceReasons = null, double? confidenceScore = null, SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus = null, string description = null, DateTimeOffset? endOn = null, SecurityInsightsKillChainIntent? intent = null, string providerAlertId = null, DateTimeOffset? processingEndOn = null, string productComponentName = null, string productName = null, string productVersion = null, IEnumerable<string> remediationSteps = null, SecurityInsightsAlertSeverity? severity = null, DateTimeOffset? startOn = null, SecurityInsightsAlertStatus? status = null, string systemAlertId = null, IEnumerable<SecurityInsightsAttackTactic> tactics = null, DateTimeOffset? alertGeneratedOn = null, string vendorName = null, string alertLink = null, IEnumerable<BinaryData> resourceIdentifiers = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             confidenceReasons ??= new List<SecurityInsightsAlertConfidenceReason>();
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsHuntingBookmark"/> instance for mocking. </returns>
-        public static SecurityInsightsHuntingBookmark SecurityInsightsHuntingBookmark(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, DateTimeOffset? createdOn = null, SecurityInsightsUserInfo createdBy = null, string displayName = null, DateTimeOffset? eventOn = null, IEnumerable<string> labels = null, string notes = null, string query = null, string queryResult = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo updatedBy = null, SecurityInsightsBookmarkIncidentInfo incidentInfo = null)
+        public static SecurityInsightsHuntingBookmark SecurityInsightsHuntingBookmark(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, DateTimeOffset? createdOn = null, SecurityInsightsUserInfo createdBy = null, string displayName = null, DateTimeOffset? eventOn = null, IEnumerable<string> labels = null, string notes = null, string query = null, string queryResult = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo updatedBy = null, SecurityInsightsBookmarkIncidentInfo incidentInfo = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             labels ??= new List<string>();
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="modified"> Modified by. </param>
         /// <param name="extensions"> Extensions map. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsThreatIntelligenceIndicatorData"/> instance for mocking. </returns>
-        public static SecurityInsightsThreatIntelligenceIndicatorData SecurityInsightsThreatIntelligenceIndicatorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, IEnumerable<string> threatIntelligenceTags = null, DateTimeOffset? lastUpdatedOn = null, string source = null, string displayName = null, string description = null, IEnumerable<string> indicatorTypes = null, string pattern = null, string patternType = null, string patternVersion = null, IEnumerable<ThreatIntelligenceKillChainPhase> killChainPhases = null, IEnumerable<ThreatIntelligenceParsedPattern> parsedPattern = null, string externalId = null, string createdByRef = null, bool? isDefanged = null, DateTimeOffset? externalLastUpdatedOn = null, IEnumerable<ThreatIntelligenceExternalReference> externalReferences = null, IEnumerable<ThreatIntelligenceGranularMarkingEntity> granularMarkings = null, IEnumerable<string> labels = null, bool? isRevoked = null, int? confidence = null, IEnumerable<string> objectMarkingRefs = null, string language = null, IEnumerable<string> threatTypes = null, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, DateTimeOffset? createdOn = null, string modified = null, IDictionary<string, BinaryData> extensions = null)
+        public static SecurityInsightsThreatIntelligenceIndicatorData SecurityInsightsThreatIntelligenceIndicatorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, IEnumerable<string> threatIntelligenceTags = null, DateTimeOffset? lastUpdatedOn = null, string source = null, string displayName = null, string description = null, IEnumerable<string> indicatorTypes = null, string pattern = null, string patternType = null, string patternVersion = null, IEnumerable<ThreatIntelligenceKillChainPhase> killChainPhases = null, IEnumerable<ThreatIntelligenceParsedPattern> parsedPattern = null, string externalId = null, string createdByRef = null, bool? isDefanged = null, DateTimeOffset? externalLastUpdatedOn = null, IEnumerable<ThreatIntelligenceExternalReference> externalReferences = null, IEnumerable<ThreatIntelligenceGranularMarkingEntity> granularMarkings = null, IEnumerable<string> labels = null, bool? isRevoked = null, int? confidence = null, IEnumerable<string> objectMarkingRefs = null, string language = null, IEnumerable<string> threatTypes = null, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, DateTimeOffset? createdOn = null, string modified = null, IDictionary<string, BinaryData> extensions = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             threatIntelligenceTags ??= new List<string>();
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="upnSuffix"> The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com. </param>
         /// <param name="dnsDomain"> The fully qualified domain DNS name. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsAccountEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsAccountEntity SecurityInsightsAccountEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string aadTenantId = null, string aadUserId = null, string accountName = null, string displayName = null, string hostEntityId = null, bool? isDomainJoined = null, string ntDomain = null, Guid? objectGuid = null, string puid = null, string sid = null, string upnSuffix = null, string dnsDomain = null)
+        public static SecurityInsightsAccountEntity SecurityInsightsAccountEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string aadTenantId = null, string aadUserId = null, string accountName = null, string displayName = null, string hostEntityId = null, bool? isDomainJoined = null, string ntDomain = null, Guid? objectGuid = null, string puid = null, string sid = null, string upnSuffix = null, string dnsDomain = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -1410,7 +1410,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceId"> The azure resource id of the resource. </param>
         /// <param name="subscriptionId"> The subscription id of the resource. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsAzureResourceEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsAzureResourceEntity SecurityInsightsAzureResourceEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string resourceId = null, string subscriptionId = null)
+        public static SecurityInsightsAzureResourceEntity SecurityInsightsAzureResourceEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string resourceId = null, string subscriptionId = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -1438,7 +1438,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="appName"> The name of the related cloud application. </param>
         /// <param name="instanceName"> The user defined instance name of the cloud application. It is often used to distinguish between several applications of the same type that a customer has. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsCloudApplicationEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsCloudApplicationEntity SecurityInsightsCloudApplicationEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, int? appId = null, string appName = null, string instanceName = null)
+        public static SecurityInsightsCloudApplicationEntity SecurityInsightsCloudApplicationEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, int? appId = null, string appName = null, string instanceName = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="hostIPAddressEntityId"> An ip entity id for the dns request client. </param>
         /// <param name="ipAddressEntityIds"> Ip entity identifiers for the resolved ip address. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsDnsEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsDnsEntity SecurityInsightsDnsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string dnsServerIPEntityId = null, string domainName = null, string hostIPAddressEntityId = null, IEnumerable<string> ipAddressEntityIds = null)
+        public static SecurityInsightsDnsEntity SecurityInsightsDnsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string dnsServerIPEntityId = null, string domainName = null, string hostIPAddressEntityId = null, IEnumerable<string> ipAddressEntityIds = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             ipAddressEntityIds ??= new List<string>();
@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="fileName"> The file name without path (some alerts might not include path). </param>
         /// <param name="hostEntityId"> The Host entity id which the file belongs to. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsFileEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsFileEntity SecurityInsightsFileEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string directory = null, IEnumerable<string> fileHashEntityIds = null, string fileName = null, string hostEntityId = null)
+        public static SecurityInsightsFileEntity SecurityInsightsFileEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string directory = null, IEnumerable<string> fileHashEntityIds = null, string fileName = null, string hostEntityId = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             fileHashEntityIds ??= new List<string>();
@@ -1530,7 +1530,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="algorithm"> The hash algorithm type. </param>
         /// <param name="hashValue"> The file hash value. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsFileHashEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsFileHashEntity SecurityInsightsFileHashEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, SecurityInsightsFileHashAlgorithm? algorithm = null, string hashValue = null)
+        public static SecurityInsightsFileHashEntity SecurityInsightsFileHashEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, SecurityInsightsFileHashAlgorithm? algorithm = null, string hashValue = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -1586,7 +1586,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="osFamily"> The operating system type. </param>
         /// <param name="osVersion"> A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsHostEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsHostEntity SecurityInsightsHostEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, ResourceIdentifier azureId = null, string dnsDomain = null, string hostName = null, bool? isDomainJoined = null, string netBiosName = null, string ntDomain = null, string omsAgentId = null, SecurityInsightsHostOSFamily? osFamily = null, string osVersion = null)
+        public static SecurityInsightsHostEntity SecurityInsightsHostEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, ResourceIdentifier azureId = null, string dnsDomain = null, string hostName = null, bool? isDomainJoined = null, string netBiosName = null, string ntDomain = null, string omsAgentId = null, SecurityInsightsHostOSFamily? osFamily = null, string osVersion = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -1635,7 +1635,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="threatIntelligence"> A list of TI contexts attached to the IoTDevice entity. </param>
         /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsIotDeviceEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsIotDeviceEntity SecurityInsightsIotDeviceEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string deviceId = null, string deviceName = null, string source = null, Guid? iotSecurityAgentId = null, string deviceType = null, string vendor = null, string edgeId = null, string macAddress = null, string model = null, string serialNumber = null, string firmwareVersion = null, string operatingSystem = null, string iotHubEntityId = null, string hostEntityId = null, string ipAddressEntityId = null, IEnumerable<SecurityInsightsThreatIntelligence> threatIntelligence = null, IEnumerable<string> protocols = null)
+        public static SecurityInsightsIotDeviceEntity SecurityInsightsIotDeviceEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string deviceId = null, string deviceName = null, string source = null, Guid? iotSecurityAgentId = null, string deviceType = null, string vendor = null, string edgeId = null, string macAddress = null, string model = null, string serialNumber = null, string firmwareVersion = null, string operatingSystem = null, string iotHubEntityId = null, string hostEntityId = null, string ipAddressEntityId = null, IEnumerable<SecurityInsightsThreatIntelligence> threatIntelligence = null, IEnumerable<string> protocols = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             threatIntelligence ??= new List<SecurityInsightsThreatIntelligence>();
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="location"> The geo-location context attached to the ip entity. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the ip entity. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsIPEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsIPEntity SecurityInsightsIPEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, IPAddress address = null, SecurityInsightsIPEntityGeoLocation location = null, IEnumerable<SecurityInsightsThreatIntelligence> threatIntelligence = null)
+        public static SecurityInsightsIPEntity SecurityInsightsIPEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, IPAddress address = null, SecurityInsightsIPEntityGeoLocation location = null, IEnumerable<SecurityInsightsThreatIntelligence> threatIntelligence = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             threatIntelligence ??= new List<SecurityInsightsThreatIntelligence>();
@@ -1731,7 +1731,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="upn"> The mailbox's UPN. </param>
         /// <param name="externalDirectoryObjectId"> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsMailboxEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsMailboxEntity SecurityInsightsMailboxEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string mailboxPrimaryAddress = null, string displayName = null, string upn = null, Guid? externalDirectoryObjectId = null)
+        public static SecurityInsightsMailboxEntity SecurityInsightsMailboxEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string mailboxPrimaryAddress = null, string displayName = null, string upn = null, Guid? externalDirectoryObjectId = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -1773,7 +1773,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="clusterQueryEndOn"> The cluster query end time. </param>
         /// <param name="clusterGroup"> The cluster group. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsMailClusterEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsMailClusterEntity SecurityInsightsMailClusterEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, IEnumerable<string> networkMessageIds = null, BinaryData countByDeliveryStatus = null, BinaryData countByThreatType = null, BinaryData countByProtectionStatus = null, IEnumerable<string> threats = null, string query = null, DateTimeOffset? queryOn = null, int? mailCount = null, bool? isVolumeAnomaly = null, string source = null, string clusterSourceIdentifier = null, string clusterSourceType = null, DateTimeOffset? clusterQueryStartOn = null, DateTimeOffset? clusterQueryEndOn = null, string clusterGroup = null)
+        public static SecurityInsightsMailClusterEntity SecurityInsightsMailClusterEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, IEnumerable<string> networkMessageIds = null, BinaryData countByDeliveryStatus = null, BinaryData countByThreatType = null, BinaryData countByProtectionStatus = null, IEnumerable<string> threats = null, string query = null, DateTimeOffset? queryOn = null, int? mailCount = null, bool? isVolumeAnomaly = null, string source = null, string clusterSourceIdentifier = null, string clusterSourceType = null, DateTimeOffset? clusterQueryStartOn = null, DateTimeOffset? clusterQueryEndOn = null, string clusterGroup = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             networkMessageIds ??= new List<string>();
@@ -1838,7 +1838,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="deliveryAction"> The delivery action of this mail message like Delivered, Blocked, Replaced etc. </param>
         /// <param name="deliveryLocation"> The delivery location of this mail message like Inbox, JunkFolder etc. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsMailMessageEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsMailMessageEntity SecurityInsightsMailMessageEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, IEnumerable<string> fileEntityIds = null, string recipient = null, IEnumerable<Uri> uris = null, IEnumerable<string> threats = null, string p1Sender = null, string p1SenderDisplayName = null, string p1SenderDomain = null, IPAddress senderIP = null, string p2Sender = null, string p2SenderDisplayName = null, string p2SenderDomain = null, DateTimeOffset? receiveOn = null, Guid? networkMessageId = null, string internetMessageId = null, string subject = null, string language = null, IEnumerable<string> threatDetectionMethods = null, int? bodyFingerprintBin1 = null, int? bodyFingerprintBin2 = null, int? bodyFingerprintBin3 = null, int? bodyFingerprintBin4 = null, int? bodyFingerprintBin5 = null, AntispamMailDirection? antispamDirection = null, SecurityInsightsMailMessageDeliveryAction? deliveryAction = null, SecurityInsightsMailMessageDeliveryLocation? deliveryLocation = null)
+        public static SecurityInsightsMailMessageEntity SecurityInsightsMailMessageEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, IEnumerable<string> fileEntityIds = null, string recipient = null, IEnumerable<Uri> uris = null, IEnumerable<string> threats = null, string p1Sender = null, string p1SenderDisplayName = null, string p1SenderDomain = null, IPAddress senderIP = null, string p2Sender = null, string p2SenderDisplayName = null, string p2SenderDomain = null, DateTimeOffset? receiveOn = null, Guid? networkMessageId = null, string internetMessageId = null, string subject = null, string language = null, IEnumerable<string> threatDetectionMethods = null, int? bodyFingerprintBin1 = null, int? bodyFingerprintBin2 = null, int? bodyFingerprintBin3 = null, int? bodyFingerprintBin4 = null, int? bodyFingerprintBin5 = null, AntispamMailDirection? antispamDirection = null, SecurityInsightsMailMessageDeliveryAction? deliveryAction = null, SecurityInsightsMailMessageDeliveryLocation? deliveryLocation = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             fileEntityIds ??= new List<string>();
@@ -1894,7 +1894,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="malwareName"> The malware name by the vendor, e.g. Win32/Toga!rfn. </param>
         /// <param name="processEntityIds"> List of linked process entity identifiers on which the malware was found. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsMalwareEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsMalwareEntity SecurityInsightsMalwareEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string category = null, IEnumerable<string> fileEntityIds = null, string malwareName = null, IEnumerable<string> processEntityIds = null)
+        public static SecurityInsightsMalwareEntity SecurityInsightsMalwareEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string category = null, IEnumerable<string> fileEntityIds = null, string malwareName = null, IEnumerable<string> processEntityIds = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
             fileEntityIds ??= new List<string>();
@@ -1932,7 +1932,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="parentProcessEntityId"> The parent process entity id. </param>
         /// <param name="processId"> The process ID. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsProcessEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsProcessEntity SecurityInsightsProcessEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string accountEntityId = null, string commandLine = null, DateTimeOffset? createdOn = null, SecurityInsightsProcessElevationToken? elevationToken = null, string hostEntityId = null, string hostLogonSessionEntityId = null, string imageFileEntityId = null, string parentProcessEntityId = null, string processId = null)
+        public static SecurityInsightsProcessEntity SecurityInsightsProcessEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string accountEntityId = null, string commandLine = null, DateTimeOffset? createdOn = null, SecurityInsightsProcessElevationToken? elevationToken = null, string hostEntityId = null, string hostLogonSessionEntityId = null, string imageFileEntityId = null, string parentProcessEntityId = null, string processId = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -1966,7 +1966,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="hive"> the hive that holds the registry key. </param>
         /// <param name="key"> The registry key path. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsRegistryKeyEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsRegistryKeyEntity SecurityInsightsRegistryKeyEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, SecurityInsightsRegistryHive? hive = null, string key = null)
+        public static SecurityInsightsRegistryKeyEntity SecurityInsightsRegistryKeyEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, SecurityInsightsRegistryHive? hive = null, string key = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -1995,7 +1995,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="valueName"> The registry value name. </param>
         /// <param name="valueType"> Specifies the data types to use when storing values in the registry, or identifies the data type of a value in the registry. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsRegistryValueEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsRegistryValueEntity SecurityInsightsRegistryValueEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string keyEntityId = null, string valueData = null, string valueName = null, SecurityInsightsRegistryValueKind? valueType = null)
+        public static SecurityInsightsRegistryValueEntity SecurityInsightsRegistryValueEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string keyEntityId = null, string valueData = null, string valueName = null, SecurityInsightsRegistryValueKind? valueType = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -2025,7 +2025,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="objectGuid"> A single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
         /// <param name="sid"> The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsGroupEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsGroupEntity SecurityInsightsGroupEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string distinguishedName = null, Guid? objectGuid = null, string sid = null)
+        public static SecurityInsightsGroupEntity SecurityInsightsGroupEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string distinguishedName = null, Guid? objectGuid = null, string sid = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -2061,7 +2061,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="subject"> The subject of submission mail. </param>
         /// <param name="reportType"> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsSubmissionMailEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsSubmissionMailEntity SecurityInsightsSubmissionMailEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, Guid? networkMessageId = null, Guid? submissionId = null, string submitter = null, DateTimeOffset? submitOn = null, DateTimeOffset? messageReceivedOn = null, string recipient = null, string sender = null, IPAddress senderIP = null, string subject = null, string reportType = null)
+        public static SecurityInsightsSubmissionMailEntity SecurityInsightsSubmissionMailEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, Guid? networkMessageId = null, Guid? submissionId = null, string submitter = null, DateTimeOffset? submitOn = null, DateTimeOffset? messageReceivedOn = null, string recipient = null, string sender = null, IPAddress senderIP = null, string subject = null, string reportType = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -2095,7 +2095,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="uri"> A full URL the entity points to. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsUriEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, Uri uri = null)
+        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> additionalData = null, string friendlyName = null, Uri uri = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
