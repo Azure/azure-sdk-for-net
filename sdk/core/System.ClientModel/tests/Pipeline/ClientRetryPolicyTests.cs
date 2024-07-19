@@ -150,14 +150,19 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         MockRetryPolicy retryPolicy = new();
         MockPipelineMessage message = new();
         MockPipelineResponse response = new();
-        response.SetHeader("Retry-After", (DateTime.Now + TimeSpan.FromSeconds(10)).ToString("R"));
+
+        // Retry after 100 seconds from now
+        response.SetHeader(
+            "Retry-After",
+            (DateTimeOffset.Now + TimeSpan.FromSeconds(100)).ToString("R"));
         message.SetResponse(response);
 
         // Default delay with exponential backoff for second try is 1600 ms.
         double delayMillis = retryPolicy.GetNextDelayMilliseconds(message, 2);
 
-        // Retry-After header is larger - wait Retry-After time
-        Assert.GreaterOrEqual(8000, delayMillis);
+        // Retry-After header is larger - wait the Retry-After time, which
+        // should be approx 100s, so test for > 20s.
+        Assert.GreaterOrEqual(delayMillis, 20 * 1000);
     }
 
     [Test]
@@ -405,7 +410,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
 
         // Retry-After header is smaller - wait exponential backoff
         yield return new object[] { "Retry-After",
-            (DateTime.Now + TimeSpan.FromSeconds(1)).ToString("R"),
+            (DateTimeOffset.Now + TimeSpan.FromSeconds(1)).ToString("R"),
             1600 };
     }
     #endregion
