@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         internal KeyVaultClient(int msiRetryTimeoutInSeconds = 0, string managedIdentityClientId = null, HttpClient httpClient = null, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null)
         {
             _msiRetryTimeoutInSeconds = msiRetryTimeoutInSeconds;
-#if NETSTANDARD1_4 || net452 || net461
+#if net461
             _httpClient = httpClient ?? new HttpClient();
 #else
             _httpClient = httpClient ?? new HttpClient(new HttpClientHandler() { CheckCertificateRevocationList = true });

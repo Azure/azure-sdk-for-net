@@ -15,10 +15,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net452;net461;netstandard1.4;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net461</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;FullNetFx;LEGACY;</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
