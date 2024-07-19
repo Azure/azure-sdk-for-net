@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Fabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NameAvailable))
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (Optional.IsDefined(Reason))
             {

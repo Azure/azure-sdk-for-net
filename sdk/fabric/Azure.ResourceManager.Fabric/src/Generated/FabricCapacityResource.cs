@@ -432,66 +432,6 @@ namespace Azure.ResourceManager.Fabric
         }
 
         /// <summary>
-        /// List eligible SKUs for a Microsoft Fabric resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListSkusForCapacity</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacityAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricCapacityRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricCapacityRestClient.CreateListSkusForCapacityNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForExistingCapacity.DeserializeFabricSkuDetailsForExistingCapacity(e), _fabricCapacityClientDiagnostics, Pipeline, "FabricCapacityResource.GetSkusForCapacity", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List eligible SKUs for a Microsoft Fabric resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListSkusForCapacity</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FabricCapacityResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacity(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricCapacityRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricCapacityRestClient.CreateListSkusForCapacityNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForExistingCapacity.DeserializeFabricSkuDetailsForExistingCapacity(e), _fabricCapacityClientDiagnostics, Pipeline, "FabricCapacityResource.GetSkusForCapacity", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Suspend operation of the specified Fabric capacity instance.
         /// <list type="bullet">
         /// <item>
@@ -573,6 +513,66 @@ namespace Azure.ResourceManager.Fabric
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List eligible SKUs for a Microsoft Fabric resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_ListSkusForCapacity</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacityAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricCapacityRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricCapacityRestClient.CreateListSkusForCapacityNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForExistingCapacity.DeserializeFabricSkuDetailsForExistingCapacity(e), _fabricCapacityClientDiagnostics, Pipeline, "FabricCapacityResource.GetSkusForCapacity", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List eligible SKUs for a Microsoft Fabric resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_ListSkusForCapacity</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacity(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricCapacityRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricCapacityRestClient.CreateListSkusForCapacityNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForExistingCapacity.DeserializeFabricSkuDetailsForExistingCapacity(e), _fabricCapacityClientDiagnostics, Pipeline, "FabricCapacityResource.GetSkusForCapacity", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

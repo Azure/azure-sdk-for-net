@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    /// <summary> The reason why the given name is not available. </summary>
+    /// <summary> Possible reasons for a name not being available. </summary>
     public readonly partial struct FabricNameUnavailableReason : IEquatable<FabricNameUnavailableReason>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Fabric.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Name is invalid. </summary>
         public static FabricNameUnavailableReason Invalid { get; } = new FabricNameUnavailableReason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+        /// <summary> Name already exists. </summary>
         public static FabricNameUnavailableReason AlreadyExists { get; } = new FabricNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="FabricNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(FabricNameUnavailableReason left, FabricNameUnavailableReason right) => left.Equals(right);
