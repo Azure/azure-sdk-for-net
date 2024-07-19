@@ -66,12 +66,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> User id. </summary>
+        [WirePath("userId")]
         public string UserId { get; set; }
         /// <summary> NewRelic Account Information. </summary>
+        [WirePath("accountInfo")]
         public NewRelicObservabilityAccountInfo AccountInfo { get; set; }
         /// <summary> NewRelic Organization Information. </summary>
         internal NewRelicObservabilityOrganizationInfo OrganizationInfo { get; set; }
         /// <summary> Organization id. </summary>
+        [WirePath("organizationInfo.organizationId")]
         public string OrganizationId
         {
             get => OrganizationInfo is null ? default : OrganizationInfo.OrganizationId;
@@ -84,6 +87,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> date when plan was applied. </summary>
+        [WirePath("singleSignOnProperties")]
         public NewRelicSingleSignOnProperties SingleSignOnProperties { get; set; }
     }
 }
