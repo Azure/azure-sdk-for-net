@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure resource IDs. </summary>
+        [WirePath("azureResourceIds")]
         public IReadOnlyList<string> AzureResourceIds { get; }
     }
 }

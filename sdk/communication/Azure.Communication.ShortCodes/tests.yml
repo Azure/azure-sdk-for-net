@@ -5,16 +5,15 @@ extends:
   parameters:
     ServiceDirectory: communication
     Project: Azure.Communication.ShortCodes
+    UseFederatedAuth: true
     CloudConfig:
       Public:
+        ServiceConnection: azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicMsft.json   
         SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
-      Int:
-        SubscriptionConfigurations:
-          - $(sub-config-communication-int-test-resources-common)
-          - $(sub-config-communication-int-test-resources-net)
-    Clouds: Public,Int
+    Clouds: Public
     TestResourceDirectories:
-      - communication/test-resources/
+      - communication/

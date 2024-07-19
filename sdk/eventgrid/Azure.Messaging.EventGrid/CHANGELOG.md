@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 4.24.1 (2024-07-16)
+
+### Bugs Fixed
+
+- Fixed deserialization bugs in `AcsEmailEngagementTrackingReportReceivedEventData` and `AcsEmailDeliveryReportReceivedEventData` system events that caused the `DeliveryAttemptTimestamp` and `UserActionTimeStamp` properties to be null.
+
 ## 4.24.0 (2024-04-09)
 
 ### Features Added
