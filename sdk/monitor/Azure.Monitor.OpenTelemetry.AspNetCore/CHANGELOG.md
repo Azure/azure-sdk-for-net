@@ -9,7 +9,7 @@
 ### Bugs Fixed
 
 * Fixed a bug in LiveMetrics that counted all manually created Dependencies as failures.
-  ([]())
+  ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 
 ### Other Changes
 
