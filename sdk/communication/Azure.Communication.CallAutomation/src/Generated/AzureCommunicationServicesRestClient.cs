@@ -37,7 +37,7 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateCallRequest(CreateCallRequestInternal createCallRequestInternal)
+        internal HttpMessage CreateCreateCallRequest(CreateCallRequestInternal createCallRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,23 +52,23 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(createCallRequestInternal);
+            content.JsonWriter.WriteObjectValue(createCallRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Create an outbound call. </summary>
-        /// <param name="createCallRequestInternal"> The create call request. </param>
+        /// <param name="createCallRequest"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createCallRequestInternal"/> is null. </exception>
-        public async Task<Response<CallConnectionPropertiesInternal>> CreateCallAsync(CreateCallRequestInternal createCallRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="createCallRequest"/> is null. </exception>
+        public async Task<Response<CallConnectionPropertiesInternal>> CreateCallAsync(CreateCallRequestInternal createCallRequest, CancellationToken cancellationToken = default)
         {
-            if (createCallRequestInternal == null)
+            if (createCallRequest == null)
             {
-                throw new ArgumentNullException(nameof(createCallRequestInternal));
+                throw new ArgumentNullException(nameof(createCallRequest));
             }
 
-            using var message = CreateCreateCallRequest(createCallRequestInternal);
+            using var message = CreateCreateCallRequest(createCallRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -85,17 +85,17 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Create an outbound call. </summary>
-        /// <param name="createCallRequestInternal"> The create call request. </param>
+        /// <param name="createCallRequest"> The create call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createCallRequestInternal"/> is null. </exception>
-        public Response<CallConnectionPropertiesInternal> CreateCall(CreateCallRequestInternal createCallRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="createCallRequest"/> is null. </exception>
+        public Response<CallConnectionPropertiesInternal> CreateCall(CreateCallRequestInternal createCallRequest, CancellationToken cancellationToken = default)
         {
-            if (createCallRequestInternal == null)
+            if (createCallRequest == null)
             {
-                throw new ArgumentNullException(nameof(createCallRequestInternal));
+                throw new ArgumentNullException(nameof(createCallRequest));
             }
 
-            using var message = CreateCreateCallRequest(createCallRequestInternal);
+            using var message = CreateCreateCallRequest(createCallRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -111,7 +111,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateAnswerCallRequest(AnswerCallRequestInternal answerCallRequestInternal)
+        internal HttpMessage CreateAnswerCallRequest(AnswerCallRequestInternal answerCallRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -126,24 +126,24 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(answerCallRequestInternal);
+            content.JsonWriter.WriteObjectValue(answerCallRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Answer a Call. </summary>
-        /// <param name="answerCallRequestInternal"> The answer call request. </param>
+        /// <param name="answerCallRequest"> The answer call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequestInternal"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
         /// <remarks> Answer a call using the IncomingCallContext from Event Grid. </remarks>
-        public async Task<Response<CallConnectionPropertiesInternal>> AnswerCallAsync(AnswerCallRequestInternal answerCallRequestInternal, CancellationToken cancellationToken = default)
+        public async Task<Response<CallConnectionPropertiesInternal>> AnswerCallAsync(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
         {
-            if (answerCallRequestInternal == null)
+            if (answerCallRequest == null)
             {
-                throw new ArgumentNullException(nameof(answerCallRequestInternal));
+                throw new ArgumentNullException(nameof(answerCallRequest));
             }
 
-            using var message = CreateAnswerCallRequest(answerCallRequestInternal);
+            using var message = CreateAnswerCallRequest(answerCallRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -160,18 +160,18 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Answer a Call. </summary>
-        /// <param name="answerCallRequestInternal"> The answer call request. </param>
+        /// <param name="answerCallRequest"> The answer call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequestInternal"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="answerCallRequest"/> is null. </exception>
         /// <remarks> Answer a call using the IncomingCallContext from Event Grid. </remarks>
-        public Response<CallConnectionPropertiesInternal> AnswerCall(AnswerCallRequestInternal answerCallRequestInternal, CancellationToken cancellationToken = default)
+        public Response<CallConnectionPropertiesInternal> AnswerCall(AnswerCallRequestInternal answerCallRequest, CancellationToken cancellationToken = default)
         {
-            if (answerCallRequestInternal == null)
+            if (answerCallRequest == null)
             {
-                throw new ArgumentNullException(nameof(answerCallRequestInternal));
+                throw new ArgumentNullException(nameof(answerCallRequest));
             }
 
-            using var message = CreateAnswerCallRequest(answerCallRequestInternal);
+            using var message = CreateAnswerCallRequest(answerCallRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -187,7 +187,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateRedirectCallRequest(RedirectCallRequestInternal redirectCallRequestInternal)
+        internal HttpMessage CreateRedirectCallRequest(RedirectCallRequestInternal redirectCallRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -202,23 +202,23 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(redirectCallRequestInternal);
+            content.JsonWriter.WriteObjectValue(redirectCallRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequestInternal"> The redirect call request. </param>
+        /// <param name="redirectCallRequest"> The redirect call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequestInternal"/> is null. </exception>
-        public async Task<Response> RedirectCallAsync(RedirectCallRequestInternal redirectCallRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
+        public async Task<Response> RedirectCallAsync(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)
         {
-            if (redirectCallRequestInternal == null)
+            if (redirectCallRequest == null)
             {
-                throw new ArgumentNullException(nameof(redirectCallRequestInternal));
+                throw new ArgumentNullException(nameof(redirectCallRequest));
             }
 
-            using var message = CreateRedirectCallRequest(redirectCallRequestInternal);
+            using var message = CreateRedirectCallRequest(redirectCallRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -230,17 +230,17 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Redirect a call. </summary>
-        /// <param name="redirectCallRequestInternal"> The redirect call request. </param>
+        /// <param name="redirectCallRequest"> The redirect call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequestInternal"/> is null. </exception>
-        public Response RedirectCall(RedirectCallRequestInternal redirectCallRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="redirectCallRequest"/> is null. </exception>
+        public Response RedirectCall(RedirectCallRequestInternal redirectCallRequest, CancellationToken cancellationToken = default)
         {
-            if (redirectCallRequestInternal == null)
+            if (redirectCallRequest == null)
             {
-                throw new ArgumentNullException(nameof(redirectCallRequestInternal));
+                throw new ArgumentNullException(nameof(redirectCallRequest));
             }
 
-            using var message = CreateRedirectCallRequest(redirectCallRequestInternal);
+            using var message = CreateRedirectCallRequest(redirectCallRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -251,7 +251,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateRejectCallRequest(RejectCallRequestInternal rejectCallRequestInternal)
+        internal HttpMessage CreateRejectCallRequest(RejectCallRequestInternal rejectCallRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -266,23 +266,23 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(rejectCallRequestInternal);
+            content.JsonWriter.WriteObjectValue(rejectCallRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Reject the call. </summary>
-        /// <param name="rejectCallRequestInternal"> The reject call request. </param>
+        /// <param name="rejectCallRequest"> The reject call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequestInternal"/> is null. </exception>
-        public async Task<Response> RejectCallAsync(RejectCallRequestInternal rejectCallRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequest"/> is null. </exception>
+        public async Task<Response> RejectCallAsync(RejectCallRequestInternal rejectCallRequest, CancellationToken cancellationToken = default)
         {
-            if (rejectCallRequestInternal == null)
+            if (rejectCallRequest == null)
             {
-                throw new ArgumentNullException(nameof(rejectCallRequestInternal));
+                throw new ArgumentNullException(nameof(rejectCallRequest));
             }
 
-            using var message = CreateRejectCallRequest(rejectCallRequestInternal);
+            using var message = CreateRejectCallRequest(rejectCallRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -294,17 +294,17 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Reject the call. </summary>
-        /// <param name="rejectCallRequestInternal"> The reject call request. </param>
+        /// <param name="rejectCallRequest"> The reject call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequestInternal"/> is null. </exception>
-        public Response RejectCall(RejectCallRequestInternal rejectCallRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rejectCallRequest"/> is null. </exception>
+        public Response RejectCall(RejectCallRequestInternal rejectCallRequest, CancellationToken cancellationToken = default)
         {
-            if (rejectCallRequestInternal == null)
+            if (rejectCallRequest == null)
             {
-                throw new ArgumentNullException(nameof(rejectCallRequestInternal));
+                throw new ArgumentNullException(nameof(rejectCallRequest));
             }
 
-            using var message = CreateRejectCallRequest(rejectCallRequestInternal);
+            using var message = CreateRejectCallRequest(rejectCallRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

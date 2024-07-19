@@ -225,7 +225,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequestInternal)
+        internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -242,28 +242,28 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(transferToParticipantRequestInternal);
+            content.JsonWriter.WriteObjectValue(transferToParticipantRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="transferToParticipantRequestInternal"> The transfer to participant request. </param>
+        /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequestInternal"/> is null. </exception>
-        public async Task<Response<TransferCallToParticipantResult>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
+        public async Task<Response<TransferCallToParticipantResult>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (transferToParticipantRequestInternal == null)
+            if (transferToParticipantRequest == null)
             {
-                throw new ArgumentNullException(nameof(transferToParticipantRequestInternal));
+                throw new ArgumentNullException(nameof(transferToParticipantRequest));
             }
 
-            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequestInternal);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -281,21 +281,21 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="transferToParticipantRequestInternal"> The transfer to participant request. </param>
+        /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequestInternal"/> is null. </exception>
-        public Response<TransferCallToParticipantResult> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
+        public Response<TransferCallToParticipantResult> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (transferToParticipantRequestInternal == null)
+            if (transferToParticipantRequest == null)
             {
-                throw new ArgumentNullException(nameof(transferToParticipantRequestInternal));
+                throw new ArgumentNullException(nameof(transferToParticipantRequest));
             }
 
-            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequestInternal);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -381,7 +381,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequestInternal)
+        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -398,28 +398,28 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(addParticipantsRequestInternal);
+            content.JsonWriter.WriteObjectValue(addParticipantsRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Add participants to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="addParticipantsRequestInternal"> The add participants request. </param>
+        /// <param name="addParticipantsRequest"> The add participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequestInternal"/> is null. </exception>
-        public async Task<Response<AddParticipantsResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
+        public async Task<Response<AddParticipantsResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (addParticipantsRequestInternal == null)
+            if (addParticipantsRequest == null)
             {
-                throw new ArgumentNullException(nameof(addParticipantsRequestInternal));
+                throw new ArgumentNullException(nameof(addParticipantsRequest));
             }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequestInternal);
+            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -437,21 +437,21 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Add participants to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="addParticipantsRequestInternal"> The add participants request. </param>
+        /// <param name="addParticipantsRequest"> The add participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequestInternal"/> is null. </exception>
-        public Response<AddParticipantsResponseInternal> AddParticipant(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
+        public Response<AddParticipantsResponseInternal> AddParticipant(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (addParticipantsRequestInternal == null)
+            if (addParticipantsRequest == null)
             {
-                throw new ArgumentNullException(nameof(addParticipantsRequestInternal));
+                throw new ArgumentNullException(nameof(addParticipantsRequest));
             }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequestInternal);
+            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -467,7 +467,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateRemoveParticipantsRequest(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequestInternal)
+        internal HttpMessage CreateRemoveParticipantsRequest(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -484,28 +484,28 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(removeParticipantsRequestInternal);
+            content.JsonWriter.WriteObjectValue(removeParticipantsRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Remove participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="removeParticipantsRequestInternal"> The participants to be removed from the call. </param>
+        /// <param name="removeParticipantsRequest"> The participants to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequestInternal"/> is null. </exception>
-        public async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
+        public async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (removeParticipantsRequestInternal == null)
+            if (removeParticipantsRequest == null)
             {
-                throw new ArgumentNullException(nameof(removeParticipantsRequestInternal));
+                throw new ArgumentNullException(nameof(removeParticipantsRequest));
             }
 
-            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequestInternal);
+            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -523,21 +523,21 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Remove participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="removeParticipantsRequestInternal"> The participants to be removed from the call. </param>
+        /// <param name="removeParticipantsRequest"> The participants to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequestInternal"/> is null. </exception>
-        public Response<RemoveParticipantsResult> RemoveParticipants(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequestInternal, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
+        public Response<RemoveParticipantsResult> RemoveParticipants(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (removeParticipantsRequestInternal == null)
+            if (removeParticipantsRequest == null)
             {
-                throw new ArgumentNullException(nameof(removeParticipantsRequestInternal));
+                throw new ArgumentNullException(nameof(removeParticipantsRequest));
             }
 
-            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequestInternal);
+            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
