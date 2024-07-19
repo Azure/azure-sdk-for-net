@@ -323,6 +323,9 @@
 # PRLabel: %Communication - Rooms
 /sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
 
+# PRLabel: %Communication - Email
+/sdk/communication/Azure.Communication.Email/                      @kagbakpem @yogeshmo @matthohn-msft
+
 # PRLabel: %Compute
 /sdk/compute/                                                      @sandido @dkulkarni-ms @haagha @MS-syh2qs @grizzlytheodore @TravisCragg-MSFT @melina5656
 
