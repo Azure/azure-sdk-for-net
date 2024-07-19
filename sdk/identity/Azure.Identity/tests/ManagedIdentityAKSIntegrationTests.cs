@@ -37,11 +37,11 @@ namespace Azure.Identity.Tests
             // Get the path to kubectl
             kubectlPath = RunCommand("which", "kubectl");
 
-            // Login to Azure
-            RunCommand(azPath, $"login --service-principal -u {sp} -p {secret} --tenant {tenant}");
+            // // Login to Azure
+            // RunCommand(azPath, $"login --service-principal -u {sp} -p {secret} --tenant {tenant}");
 
-            // Set the subscription
-            RunCommand(azPath, $"account set --subscription {subscription}");
+            // // Set the subscription
+            // RunCommand(azPath, $"account set --subscription {subscription}");
 
             // Get the AKS credentials
             RunCommand(azPath, $"aks get-credentials --resource-group {rg} --name {aks} --overwrite-existing");
