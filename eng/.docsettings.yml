@@ -118,6 +118,7 @@ known_content_issues:
   - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/System.ClientModel/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404', 'Missing section: Azure .+ client library for .NET']
+  - ['sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventhub/Azure.Messaging.EventHubs.Shared/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventhub/Azure.Messaging.EventHubs.Experimental/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
@@ -134,8 +135,8 @@ known_content_issues:
   - ['sdk/storage/Azure.Storage.Files.DataLake/README.md', 'Storage: #11492: Needs auth section']
   - ['sdk/storage/Azure.Storage.Files.Shares/README.md', 'Storage: #11492: Needs auth section']
 
-  - ['sdk/extensions/wcf/Microsoft.CoreWCF.Azure.StorageQueues/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
-  - ['sdk/extensions/wcf/Microsoft.WCF.Azure.StorageQueues/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/extension-wcf/Microsoft.CoreWCF.Azure.StorageQueues/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/extension-wcf/Microsoft.WCF.Azure.StorageQueues/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

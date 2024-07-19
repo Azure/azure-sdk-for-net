@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
-                WriteLongitude(writer);
+                WriteLongitude(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
-                WriteLatitude(writer);
+                WriteLatitude(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PhysicalLocation))
             {

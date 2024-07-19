@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
-                WriteExtendedLocationType(writer);
+                WriteExtendedLocationType(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

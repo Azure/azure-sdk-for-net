@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$..accessToken");
-            BodyKeySanitizers.Add(new BodyKeySanitizer("https://sanitized.blob.core.windows.net") { JsonPath = "$..containerUrl" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..containerUrl") { Value = "https://sanitized.blob.core.windows.net" });
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 

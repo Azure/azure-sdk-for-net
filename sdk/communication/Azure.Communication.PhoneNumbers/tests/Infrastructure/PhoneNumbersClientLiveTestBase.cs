@@ -20,13 +20,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
         {
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("location", SanitizeValue)
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("location")
             {
                 Regex = PhoneNumberRegEx
             });
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(PhoneNumberRegEx));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
             SanitizedHeaders.Add("x-ms-content-sha256");
         }
 

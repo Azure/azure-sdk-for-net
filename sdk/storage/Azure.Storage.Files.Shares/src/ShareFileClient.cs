@@ -870,7 +870,7 @@ namespace Azure.Storage.Files.Shares
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -886,7 +886,7 @@ namespace Azure.Storage.Files.Shares
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1654,7 +1654,7 @@ namespace Azure.Storage.Files.Shares
                             filePermission: filePermission,
                             filePermissionKey: smbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1666,7 +1666,7 @@ namespace Azure.Storage.Files.Shares
                             filePermission: filePermission,
                             filePermissionKey: smbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1885,7 +1885,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await FileRestClient.AbortCopyAsync(
                             copyId: copyId,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1893,7 +1893,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = FileRestClient.AbortCopy(
                             copyId: copyId,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2414,7 +2414,7 @@ namespace Azure.Storage.Files.Shares
                 response = await FileRestClient.DownloadAsync(
                     range: pageRange == default ? null : pageRange.ToString(),
                     rangeGetContentMD5: transferValidationOverride?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
-                    leaseAccessConditions: conditions,
+                    shareFileRequestConditions: conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -2423,7 +2423,7 @@ namespace Azure.Storage.Files.Shares
                 response = FileRestClient.Download(
                     range: pageRange == default ? null : pageRange.ToString(),
                     rangeGetContentMD5: transferValidationOverride?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
-                    leaseAccessConditions: conditions,
+                    shareFileRequestConditions: conditions,
                     cancellationToken: cancellationToken);
             }
 
@@ -2970,14 +2970,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await FileRestClient.DeleteAsync(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = FileRestClient.Delete(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3190,14 +3190,14 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await FileRestClient.GetPropertiesAsync(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = FileRestClient.GetProperties(
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3531,7 +3531,7 @@ namespace Azure.Storage.Files.Shares
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3546,7 +3546,7 @@ namespace Azure.Storage.Files.Shares
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3771,7 +3771,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await FileRestClient.SetMetadataAsync(
                             metadata: metadata,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3779,7 +3779,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = FileRestClient.SetMetadata(
                             metadata: metadata,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3937,7 +3937,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: 0,
                             // TODO remove this
                             optionalbody: new MemoryStream(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3949,7 +3949,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: 0,
                             // TODO remove this
                             optionalbody: new MemoryStream(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -4432,7 +4432,7 @@ namespace Azure.Storage.Files.Shares
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
                             contentMD5: hashResult?.MD5AsArray,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4445,7 +4445,7 @@ namespace Azure.Storage.Files.Shares
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
                             contentMD5: hashResult?.MD5AsArray,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -4834,7 +4834,7 @@ namespace Azure.Storage.Files.Shares
                             sourceRange: sourceRange.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             fileLastWrittenMode: fileLastWrittenMode,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4847,7 +4847,7 @@ namespace Azure.Storage.Files.Shares
                             sourceRange: sourceRange.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             fileLastWrittenMode: fileLastWrittenMode,
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 
@@ -5619,7 +5619,7 @@ namespace Azure.Storage.Files.Shares
                             prevsharesnapshot: previousSnapshot,
                             supportRename: supportRename,
                             range: range?.ToString(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -5630,7 +5630,7 @@ namespace Azure.Storage.Files.Shares
                             prevsharesnapshot: previousSnapshot,
                             supportRename: supportRename,
                             range: range?.ToString(),
-                            leaseAccessConditions: conditions,
+                            shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
 

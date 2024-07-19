@@ -5,47 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Translator profanity markers. </summary>
-    public readonly partial struct ProfanityMarker : IEquatable<ProfanityMarker>
+    public enum ProfanityMarker
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProfanityMarker"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProfanityMarker(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string AsteriskValue = "Asterisk";
-        private const string TagValue = "Tag";
-
-        /// <summary> Asterisk. </summary>
-        public static ProfanityMarker Asterisk { get; } = new ProfanityMarker(AsteriskValue);
-        /// <summary> Tag. </summary>
-        public static ProfanityMarker Tag { get; } = new ProfanityMarker(TagValue);
-        /// <summary> Determines if two <see cref="ProfanityMarker"/> values are the same. </summary>
-        public static bool operator ==(ProfanityMarker left, ProfanityMarker right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ProfanityMarker"/> values are not the same. </summary>
-        public static bool operator !=(ProfanityMarker left, ProfanityMarker right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProfanityMarker"/>. </summary>
-        public static implicit operator ProfanityMarker(string value) => new ProfanityMarker(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProfanityMarker other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ProfanityMarker other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> Profanity is marked with asterisk. </summary>
+        Asterisk,
+        /// <summary> Profanity is marked with the tags. </summary>
+        Tag
     }
 }

@@ -23,9 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         private const string ScalarQuantizationValue = "scalarQuantization";
+        private const string BinaryQuantizationValue = "binaryQuantization";
 
         /// <summary> Scalar Quantization, a type of compression method. In scalar quantization, the original vectors values are compressed to a narrower type by discretizing and representing each component of a vector using a reduced set of quantized values, thereby reducing the overall data size. </summary>
         public static VectorSearchCompressionKind ScalarQuantization { get; } = new VectorSearchCompressionKind(ScalarQuantizationValue);
+        /// <summary> Binary Quantization, a type of compression method. In binary quantization, the original vectors values are compressed to the narrower binary type by discretizing and representing each component of a vector using binary values, thereby reducing the overall data size. </summary>
+        public static VectorSearchCompressionKind BinaryQuantization { get; } = new VectorSearchCompressionKind(BinaryQuantizationValue);
         /// <summary> Determines if two <see cref="VectorSearchCompressionKind"/> values are the same. </summary>
         public static bool operator ==(VectorSearchCompressionKind left, VectorSearchCompressionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorSearchCompressionKind"/> values are not the same. </summary>
@@ -41,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

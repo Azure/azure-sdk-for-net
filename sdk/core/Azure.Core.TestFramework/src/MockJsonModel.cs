@@ -11,7 +11,7 @@ namespace Azure.Core.TestFramework
 {
     public class MockJsonModel : IJsonModel<MockJsonModel>
     {
-        internal MockJsonModel()
+        public MockJsonModel()
         {
         }
 

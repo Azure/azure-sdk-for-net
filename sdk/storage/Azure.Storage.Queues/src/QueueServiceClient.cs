@@ -718,14 +718,14 @@ namespace Azure.Storage.Queues
                     if (async)
                     {
                         response = await _serviceRestClient.SetPropertiesAsync(
-                            storageServiceProperties: properties,
+                            queueServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = _serviceRestClient.SetProperties(
-                            storageServiceProperties: properties,
+                            queueServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
 

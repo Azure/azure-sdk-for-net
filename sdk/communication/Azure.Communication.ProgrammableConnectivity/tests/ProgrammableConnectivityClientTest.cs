@@ -25,8 +25,11 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         public ProgrammableConnectivityClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             HeaderRegexSanitizers.Add(
-                new HeaderRegexSanitizer("apc-gateway-id", "**********/resourceGroups")
-                { Regex = @"[A-Za-z0-9-\-]+/resourceGroups" });
+                new HeaderRegexSanitizer("apc-gateway-id")
+                {
+                    Regex = @"[A-Za-z0-9-\-]+/resourceGroups",
+                    Value = "**********/resourceGroups"
+                });
             credential = TestEnvironment.Credential;
         }
 

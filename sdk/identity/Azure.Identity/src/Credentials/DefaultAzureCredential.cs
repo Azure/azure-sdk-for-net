@@ -12,8 +12,13 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Provides a default <see cref="TokenCredential"/> authentication flow for applications that will be deployed to Azure. The following credential
-    /// types, if enabled, will be tried, in order:
+    /// <see cref="DefaultAzureCredential"/> simplifies authentication while developing applications that deploy to Azure by
+    /// combining credentials used in Azure hosting environments and credentials used in local development. In
+    /// production, it's better to use a specific credential type so authentication is more predictable and easier
+    /// to debug.
+    ///
+    /// <see cref="DefaultAzureCredential"/> attempts to authenticate with each of these credential types, in the following order,
+    /// stopping when one provides a token:
     /// <list type="bullet">
     /// <item><description><see cref="EnvironmentCredential"/></description></item>
     /// <item><description><see cref="WorkloadIdentityCredential"/></description></item>
@@ -64,7 +69,10 @@ namespace Azure.Identity
 
         internal TokenCredential[] _sources;
 
-        internal DefaultAzureCredential() : this(false) { }
+        /// <summary>
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
+        protected DefaultAzureCredential() : this(false) { }
 
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.
@@ -106,6 +114,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -124,6 +133,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);

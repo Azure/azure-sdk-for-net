@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -244,7 +245,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileStorageResourceOptions options = new()
             {
                 FileAttributes = checkpointData.FileAttributes,
-                FilePermissionKey = checkpointData.FilePermissionKey,
+                FilePermissions = new(checkpointData.PreserveFilePermission),
                 CacheControl = checkpointData.CacheControl,
                 ContentDisposition = checkpointData.ContentDisposition,
                 ContentEncoding = checkpointData.ContentEncoding,
@@ -256,7 +257,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 DirectoryMetadata = checkpointData.DirectoryMetadata,
                 FileMetadata = checkpointData.FileMetadata,
             };
-
             return Task.FromResult(properties.IsContainer
                 ? FromDirectory(properties.DestinationUri.AbsoluteUri, options)
                 : FromFile(properties.DestinationUri.AbsoluteUri, options));
@@ -319,7 +319,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromFile(string fileUri, ShareFileStorageResourceOptions options = default)
+        public StorageResource FromFile(
+            string fileUri,
+            ShareFileStorageResourceOptions options = default)
         {
             ShareFileClient client = _credentialType switch
             {

@@ -82,7 +82,7 @@ namespace Azure.AI.Translation.Text
                 return null;
             }
             DetectedLanguage detectedLanguage = default;
-            IReadOnlyList<Translation> translations = default;
+            IReadOnlyList<TranslationText> translations = default;
             SourceText sourceText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,10 +99,10 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("translations"u8))
                 {
-                    List<Translation> array = new List<Translation>();
+                    List<TranslationText> array = new List<TranslationText>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Translation.DeserializeTranslation(item, options));
+                        array.Add(TranslationText.DeserializeTranslationText(item, options));
                     }
                     translations = array;
                     continue;

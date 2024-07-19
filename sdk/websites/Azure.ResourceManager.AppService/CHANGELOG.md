@@ -1,34 +1,36 @@
 # Release History
 
-## 1.1.0-beta.6 (Unreleased)
+## 1.2.0 (2024-07-19)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Upgraded api-version tag from 'package-2021-02' to 'package-2023-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/web/resource-manager/readme.md
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.31.0 to 1.41.0
+- Upgraded Azure.ResourceManager from 1.5.0 to 1.12.0
 
 ## 1.1.0-beta.5 (2024-04-19)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Bugs Fixed
 
-- Add `200` to the response code of the `SyncFunctionTriggers`
+- Added `200` to the response code of the `SyncFunctionTriggers`
 - SiteFunctionResource.GetFunctionKeysAsync /SiteSlotFunctionResource.GetFunctionKeysSlotAsync fixed: can not populated with function keys
-- Add more enum values for `TriggeredWebJobStatus`
+- Added more enum values for `TriggeredWebJobStatus`
 
 ## 1.1.0-beta.4 (2023-11-30)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
-### Other Changes
+### Other ChangesGetHybridConnectionsAsync
 
 - Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
@@ -36,7 +38,7 @@
 
 ### Bugs Fixed
 
-- Due to `HealthCheckUri` not being a valid URI, add a new property `HealthCheckUriString` to replace it in order to fix the URI format issue.
+- Due to `HealthCheckUri` not being a valid URI, added a new property `HealthCheckUriString` to replace it in order to fix the URI format issue.
 
 ## 1.1.0-beta.2 (2023-09-06)
 
@@ -50,7 +52,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added `AppCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `AppCertificateData.Thumbprint` has been hidden but is still available.
 - Added `AppServiceVirtualNetworkData.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.

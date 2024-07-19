@@ -68,7 +68,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<VectorSearchProfile> profiles = default;
             IList<VectorSearchAlgorithmConfiguration> algorithms = default;
             IList<VectorSearchVectorizer> vectorizers = default;
-            IList<VectorSearchCompressionConfiguration> compressions = default;
+            IList<VectorSearchCompression> compressions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profiles"u8))
@@ -119,16 +119,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    List<VectorSearchCompressionConfiguration> array = new List<VectorSearchCompressionConfiguration>();
+                    List<VectorSearchCompression> array = new List<VectorSearchCompression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchCompressionConfiguration.DeserializeVectorSearchCompressionConfiguration(item));
+                        array.Add(VectorSearchCompression.DeserializeVectorSearchCompression(item));
                     }
                     compressions = array;
                     continue;
                 }
             }
-            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(), compressions ?? new ChangeTrackingList<VectorSearchCompressionConfiguration>());
+            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(), compressions ?? new ChangeTrackingList<VectorSearchCompression>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

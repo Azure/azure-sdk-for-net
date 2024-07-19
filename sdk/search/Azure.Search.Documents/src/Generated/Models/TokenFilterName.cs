@@ -111,7 +111,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TokenFilterName Snowball { get; } = new TokenFilterName(SnowballValue);
         /// <summary> Normalizes the Unicode representation of Sorani text. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ckb/SoraniNormalizationFilter.html. </summary>
         public static TokenFilterName SoraniNormalization { get; } = new TokenFilterName(SoraniNormalizationValue);
-        /// <summary> Language specific stemming filter. See https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters. </summary>
+        /// <summary> Language specific stemming filter. See https://learn.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#TokenFilters. </summary>
         public static TokenFilterName Stemmer { get; } = new TokenFilterName(StemmerValue);
         /// <summary> Removes stop words from a token stream. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopFilter.html. </summary>
         public static TokenFilterName Stopwords { get; } = new TokenFilterName(StopwordsValue);
@@ -140,7 +140,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

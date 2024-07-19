@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_fetchDetailsBySubscriptionIdAndTrackingId</description>
+        /// <description>Event_FetchDetailsBySubscriptionIdAndTrackingId</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Event_fetchDetailsBySubscriptionIdAndTrackingId</description>
+        /// <description>Event_FetchDetailsBySubscriptionIdAndTrackingId</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

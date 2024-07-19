@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.IO;
-using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 
@@ -10,8 +9,8 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class BlobSourceCheckpointData : BlobCheckpointData
     {
-        public BlobSourceCheckpointData(BlobType blobType)
-            : base(DataMovementBlobConstants.SourceCheckpointData.SchemaVersion, blobType)
+        public BlobSourceCheckpointData()
+            : base(DataMovementBlobConstants.SourceCheckpointData.SchemaVersion)
         {
         }
 
@@ -24,9 +23,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Version
             writer.Write(Version);
-
-            // BlobType
-            writer.Write((byte)BlobType);
         }
 
         internal static BlobSourceCheckpointData Deserialize(Stream stream)
@@ -41,10 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
             }
 
-            // BlobType
-            BlobType blobType = (BlobType)reader.ReadByte();
-
-            return new BlobSourceCheckpointData(blobType);
+            return new BlobSourceCheckpointData();
         }
     }
 }
