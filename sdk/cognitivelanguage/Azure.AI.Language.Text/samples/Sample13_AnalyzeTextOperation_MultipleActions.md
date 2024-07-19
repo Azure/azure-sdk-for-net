@@ -11,21 +11,21 @@ This sample demonstrates how to perform multiple text analysis actions on one or
 - Custom Named Entity Recognition
 - Custom Text Classification
 
-## Create a `TextClient`
+## Create a `TextAnalysisClient`
 
-To create a new `TextClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
+To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = TestEnvironment.Endpoint;
-AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-TextClient client = new TextClient(endpoint, credential);;
+Uri endpoint = new Uri("<your endpoint>");
+AzureKeyCredential credential = new("your apikey");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Summarize one or more text documents
 
-To perform multiple actions on one or more text documents, call `AnalyzeTextOperation` on the `TextClient` client by passing the documents as a `MultiLanguageTextInput` parameter with the actions you want to take (in this example the actions are `EntitiesOperationAction` and `KeyPhraseOperationAction`). This returns an `Response<AnalyzeTextOperationState>` which you can extract the results of the actions you chose for you input (in this example the actions are `EntityRecognitionOperationResult` and `KeyPhraseExtractionOperationResult`).
+To perform multiple actions on one or more text documents, call `AnalyzeTextOperation` on the `TextAnalysisClient` client by passing the documents as a `MultiLanguageTextInput` parameter with the actions you want to take (in this example the actions are `EntitiesOperationAction` and `KeyPhraseOperationAction`). This returns an `Response<AnalyzeTextOperationState>` which you can extract the results of the actions you chose for you input (in this example the actions are `EntityRecognitionOperationResult` and `KeyPhraseExtractionOperationResult`).
 
 ```C# Snippet:Sample13_AnalyzeTextOperation_MultipleActions
 string documentA =

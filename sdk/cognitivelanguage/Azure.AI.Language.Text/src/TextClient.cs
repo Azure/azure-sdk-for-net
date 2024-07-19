@@ -10,7 +10,7 @@ using Azure.AI.Language.Text.Models;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms.  The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href=\"https://docs.microsoft.com/azure/cognitive-services/language-service/overview\"&gt;https://docs.microsoft.com/azure/cognitive-services/language-service/overview&lt;/a&gt;.0. </summary>
-    public partial class TextClient
+    public partial class TextAnalysisClient
     {
         /// <summary> Submit a collection of text documents for analysis and get the results. Specify one or more unique tasks to be executed as a long-running operation. </summary>
         /// <param name="textInput"> Contains the input to be analyzed. </param>
@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Text
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
 
-            string scopeName = $"{nameof(TextClient)}.{nameof(AnalyzeTextOperation)}";
+            string scopeName = $"{nameof(TextAnalysisClient)}.{nameof(AnalyzeTextOperation)}";
             using var scope = ClientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Text
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
 
-            string scopeName = $"{nameof(TextClient)}.{nameof(AnalyzeTextOperation)}";
+            string scopeName = $"{nameof(TextAnalysisClient)}.{nameof(AnalyzeTextOperation)}";
             using var scope = ClientDiagnostics.CreateScope(scopeName);
             scope.Start();
 

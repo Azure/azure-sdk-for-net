@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Client options for TextClient. </summary>
-    public partial class TextClientOptions : ClientOptions
+    /// <summary> Client options for TextAnalysisClient. </summary>
+    public partial class TextAnalysisClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_11_15_Preview;
 
@@ -28,8 +28,8 @@ namespace Azure.AI.Language.Text
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of TextClientOptions. </summary>
-        public TextClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of TextAnalysisClientOptions. </summary>
+        public TextAnalysisClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

@@ -2,21 +2,21 @@
 
 This sample demonstrates how to detect the language of one or more documents.
 
-## Create a `TextClient`
+## Create a `TextAnalysisClient`
 
-To create a new `TextClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
+To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = TestEnvironment.Endpoint;
-AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-TextClient client = new TextClient(endpoint, credential);;
+Uri endpoint = new Uri("<your endpoint>");
+AzureKeyCredential credential = new("your apikey");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Detect the language of documents
 
-To detect the language of a document, call `AnalyzeText` on the `TextClient`, which returns a `AnalyzeTextLanguageDetectionResult` object with the name of the language, a confidence score, and more.
+To detect the language of a document, call `AnalyzeText` on the `TextAnalysisClient`, which returns a `AnalyzeTextLanguageDetectionResult` object with the name of the language, a confidence score, and more.
 
 ```C# Snippet:Sample1_AnalyzeText_LanguageDetection
 string documentA =
@@ -72,9 +72,9 @@ catch (RequestFailedException exception)
 }
 ```
 
-To detect the language of a document, call `AnalyzeText` on the `TextClient`, which returns a `AnalyzeTextLanguageDetectionResult` object with the name of the language, a confidence score, and more.
+To detect the language of a document, call `AnalyzeText` on the `TextAnalysisClient`, which returns a `AnalyzeTextLanguageDetectionResult` object with the name of the language, a confidence score, and more.
 
-If the country where a document originates from is known, you can aid the language detection model if you call `AnalyzeText` on the `TextClient` while passing the documents as an `IEnumerable<LanguageInput>` parameter, having set the `CountryHint` property on each `LanguageInput` object accordingly.
+If the country where a document originates from is known, you can aid the language detection model if you call `AnalyzeText` on the `TextAnalysisClient` while passing the documents as an `IEnumerable<LanguageInput>` parameter, having set the `CountryHint` property on each `LanguageInput` object accordingly.
 
 ```C# Snippet:Sample1_AnalyzeText_LanguageDetection_CountryHint
 string documentA =

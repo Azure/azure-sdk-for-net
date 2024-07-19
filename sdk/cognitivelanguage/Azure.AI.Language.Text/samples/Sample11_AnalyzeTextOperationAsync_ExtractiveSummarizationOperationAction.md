@@ -2,21 +2,21 @@
 
 This sample demonstrates how to perform extractive summarization, which can generate a summary from a text document by extracting sentences verbatim from it that collectively represent the most important or relevant information. To learn more about document summarization, see [here][Document_Summarization].
 
-## Create a `TextClient`
+## Create a `TextAnalysisClient`
 
-To create a new `TextClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
+To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = TestEnvironment.Endpoint;
-AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-TextClient client = new TextClient(endpoint, credential);;
+Uri endpoint = new Uri("<your endpoint>");
+AzureKeyCredential credential = new("your apikey");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Summarize one or more text documents
 
-To summarize one or more text documents using extractive summarization, call `AnalyzeTextOperationAsync` on the `TextClient` by passing the documents as `MultiLanguageTextInput` parameter and a `AnalyzeTextOperationAction` with a `ExtractiveSummarizationOperationAction` action. This returns a `Response<AnalyzeTextOperationState>` which you can extract the `ExtractiveSummarizationOperationResult`.
+To summarize one or more text documents using extractive summarization, call `AnalyzeTextOperationAsync` on the `TextAnalysisClient` by passing the documents as `MultiLanguageTextInput` parameter and a `AnalyzeTextOperationAction` with a `ExtractiveSummarizationOperationAction` action. This returns a `Response<AnalyzeTextOperationState>` which you can extract the `ExtractiveSummarizationOperationResult`.
 
 ```C# Snippet:Sample11_AnalyzeTextOperationAsync_ExtractiveSummarizationOperationAction
 string documentA =

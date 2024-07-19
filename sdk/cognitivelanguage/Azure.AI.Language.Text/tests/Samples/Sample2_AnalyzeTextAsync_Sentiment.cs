@@ -22,7 +22,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample2_AnalyzeTextAsync_Sentiment
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextClient client = new TextClient(endpoint, credential);;
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
 
             string documentA =
                 "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
@@ -90,7 +90,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample2_AnalyzeTextAsync_Sentiment_OpinionMining
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextClient client = new TextClient(endpoint, credential);;
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
 
             string reviewA =
                 "The food and service were unacceptable, but the concierge were nice. After talking to them about the"

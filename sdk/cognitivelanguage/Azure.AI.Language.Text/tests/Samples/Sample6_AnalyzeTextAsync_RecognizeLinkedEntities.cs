@@ -19,7 +19,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample6_AnalyzeText_RecognizeLinkedEntities
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextClient client = new TextClient(endpoint, credential);;
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
 
             string documentA =
                 "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"

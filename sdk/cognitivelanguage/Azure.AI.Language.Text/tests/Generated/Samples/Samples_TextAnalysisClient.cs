@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Text.Samples
 {
-    public partial class Samples_TextClient
+    public partial class Samples_TextAnalysisClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput();
             Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
@@ -71,7 +71,7 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput();
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
@@ -83,7 +83,7 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -123,7 +123,7 @@ language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -163,7 +163,7 @@ language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
             {
@@ -190,7 +190,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
             {
@@ -217,7 +217,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Response response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null);
 
@@ -238,7 +238,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null);
 
@@ -259,7 +259,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
@@ -270,7 +270,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
@@ -281,7 +281,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Response response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, 1234, 1234, null);
 
@@ -320,7 +320,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, 1234, 1234, null);
 
@@ -359,7 +359,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true, top: 1234, skip: 1234);
         }
@@ -370,7 +370,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true, top: 1234, skip: 1234);
         }
@@ -381,7 +381,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -403,7 +403,7 @@ kind = "CustomEntityRecognition",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -425,7 +425,7 @@ kind = "CustomEntityRecognition",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             MultiLanguageTextInput textInput = new MultiLanguageTextInput();
             Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
@@ -440,7 +440,7 @@ new CustomEntitiesOperationAction()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             MultiLanguageTextInput textInput = new MultiLanguageTextInput();
             Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
@@ -455,7 +455,7 @@ new CustomEntitiesOperationAction()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -498,7 +498,7 @@ taskName = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -541,7 +541,7 @@ taskName = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             MultiLanguageTextInput textInput = new MultiLanguageTextInput
             {
@@ -570,7 +570,7 @@ Name = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             MultiLanguageTextInput textInput = new MultiLanguageTextInput
             {
@@ -599,7 +599,7 @@ Name = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Operation operation = client.AnalyzeTextCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
@@ -610,7 +610,7 @@ Name = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Operation operation = await client.AnalyzeTextCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
@@ -621,7 +621,7 @@ Name = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Operation operation = client.AnalyzeTextCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
@@ -632,7 +632,7 @@ Name = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextClient client = new TextClient(endpoint, credential);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Operation operation = await client.AnalyzeTextCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }

@@ -19,7 +19,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample13_AnalyzeTextOperation_MultipleActions
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextClient client = new TextClient(endpoint, credential);;
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
 
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"

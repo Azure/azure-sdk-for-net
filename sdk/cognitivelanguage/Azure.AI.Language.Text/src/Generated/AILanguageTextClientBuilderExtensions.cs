@@ -12,35 +12,35 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="TextClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="TextAnalysisClient"/> to client builder. </summary>
     public static partial class AILanguageTextClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="TextClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="TextAnalysisClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<TextClient, TextClientOptions> AddTextClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<TextAnalysisClient, TextAnalysisClientOptions> AddTextAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<TextClient, TextClientOptions>((options) => new TextClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<TextAnalysisClient, TextAnalysisClientOptions>((options) => new TextAnalysisClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="TextClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="TextAnalysisClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
-        public static IAzureClientBuilder<TextClient, TextClientOptions> AddTextClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<TextAnalysisClient, TextAnalysisClientOptions> AddTextAnalysisClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<TextClient, TextClientOptions>((options, cred) => new TextClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<TextAnalysisClient, TextAnalysisClientOptions>((options, cred) => new TextAnalysisClient(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="TextClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="TextAnalysisClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<TextClient, TextClientOptions> AddTextClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<TextAnalysisClient, TextAnalysisClientOptions> AddTextAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<TextClient, TextClientOptions>(configuration);
+            return builder.RegisterClientFactory<TextAnalysisClient, TextAnalysisClientOptions>(configuration);
         }
     }
 }

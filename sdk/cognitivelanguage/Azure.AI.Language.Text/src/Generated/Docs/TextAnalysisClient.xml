@@ -7,7 +7,7 @@ This sample shows how to call AnalyzeTextAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput();
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
@@ -16,7 +16,7 @@ This sample shows how to call AnalyzeTextAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
 {
@@ -43,7 +43,7 @@ This sample shows how to call AnalyzeText.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput();
 Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
@@ -52,7 +52,7 @@ This sample shows how to call AnalyzeText with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
 {
@@ -79,7 +79,7 @@ This sample shows how to call AnalyzeTextAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -94,7 +94,7 @@ This sample shows how to call AnalyzeTextAsync with all parameters and request c
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -134,7 +134,7 @@ This sample shows how to call AnalyzeText and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -149,7 +149,7 @@ This sample shows how to call AnalyzeText with all parameters and request conten
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -189,7 +189,7 @@ This sample shows how to call AnalyzeTextOperationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -197,7 +197,7 @@ This sample shows how to call AnalyzeTextOperationStatusAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true, top: 1234, skip: 1234);
 ]]></code></example>
@@ -208,7 +208,7 @@ This sample shows how to call AnalyzeTextOperationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -216,7 +216,7 @@ This sample shows how to call AnalyzeTextOperationStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true, top: 1234, skip: 1234);
 ]]></code></example>
@@ -227,7 +227,7 @@ This sample shows how to call AnalyzeTextOperationStatusAsync and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null);
 
@@ -245,7 +245,7 @@ This sample shows how to call AnalyzeTextOperationStatusAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, 1234, 1234, null);
 
@@ -284,7 +284,7 @@ This sample shows how to call AnalyzeTextOperationStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Response response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null);
 
@@ -302,7 +302,7 @@ This sample shows how to call AnalyzeTextOperationStatus with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Response response = client.AnalyzeTextOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, 1234, 1234, null);
 
@@ -341,7 +341,7 @@ This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 MultiLanguageTextInput textInput = new MultiLanguageTextInput();
 Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
@@ -353,7 +353,7 @@ This sample shows how to call AnalyzeTextSubmitOperationAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 MultiLanguageTextInput textInput = new MultiLanguageTextInput
 {
@@ -382,7 +382,7 @@ This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 MultiLanguageTextInput textInput = new MultiLanguageTextInput();
 Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
@@ -394,7 +394,7 @@ This sample shows how to call AnalyzeTextSubmitOperation with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 MultiLanguageTextInput textInput = new MultiLanguageTextInput
 {
@@ -423,7 +423,7 @@ This sample shows how to call AnalyzeTextSubmitOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -442,7 +442,7 @@ This sample shows how to call AnalyzeTextSubmitOperationAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -485,7 +485,7 @@ This sample shows how to call AnalyzeTextSubmitOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -504,7 +504,7 @@ This sample shows how to call AnalyzeTextSubmitOperation with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -547,7 +547,7 @@ This sample shows how to call AnalyzeTextCancelOperationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Operation operation = await client.AnalyzeTextCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -555,7 +555,7 @@ This sample shows how to call AnalyzeTextCancelOperationAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Operation operation = await client.AnalyzeTextCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>
@@ -566,7 +566,7 @@ This sample shows how to call AnalyzeTextCancelOperation.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Operation operation = client.AnalyzeTextCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -574,7 +574,7 @@ This sample shows how to call AnalyzeTextCancelOperation with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextClient client = new TextClient(endpoint, credential);
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
 Operation operation = client.AnalyzeTextCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>

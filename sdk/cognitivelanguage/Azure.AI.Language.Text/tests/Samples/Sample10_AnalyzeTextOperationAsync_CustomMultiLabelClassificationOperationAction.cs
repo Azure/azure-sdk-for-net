@@ -21,7 +21,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample10_AnalyzeTextSubmitJob_CustomMultiLabelClassificationLROTask
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextClient client = new TextClient(endpoint, credential);;
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
 
             string documentA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"

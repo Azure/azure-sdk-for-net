@@ -1,6 +1,6 @@
-# Azure.AI.Language.AnalyzeText client library for .NET
+# Azure.AI.Language.Text client library for .NET
 
-Azure.AI.Language.AnalyzeText is a managed service that helps developers get secret simply and securely.
+Azure.AI.Language.Text is a managed service that helps developers get secret simply and securely.
 
 Use the client library for to:
 
@@ -8,7 +8,7 @@ Use the client library for to:
 
 [Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.AnalyzeText/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
@@ -21,7 +21,7 @@ First, provide instruction for obtaining and installing the package or library. 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.Language.AnalyzeText --prerelease
+dotnet add package Azure.AI.Language.Text --prerelease
 ```
 
 ### Prerequisites
@@ -48,9 +48,9 @@ For example,
 
 ```C# Snippet:Create<YourService>ClientForSpecificApiVersion
 Uri endpoint = new Uri("<your endpoint>");
-DefaultAzureCredential credential = new DefaultAzureCredential();
-<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
-var client = new <YourService>Client(endpoint, credential, options);
+AzureKeyCredential credential = new("your apikey");
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_0);
+var client = new TextAnalysisClient(endpoint, credential, options);
 ```
 
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
@@ -80,7 +80,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.AnalyzeText/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples).
 
 ## Troubleshooting
 
@@ -104,4 +104,4 @@ This is a template, but your SDK readme should include details on how to contrib
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/cognitivelanguage/Azure.AI.Language.AnalyzeText/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/cognitivelanguage/Azure.AI.Language.Text/README.png)
