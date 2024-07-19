@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -107,6 +108,51 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeServiceStatuses(extensionService, guestConfigurationService, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtensionService), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extensionService: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtensionService))
+                {
+                    builder.Append("  extensionService: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExtensionService, options, 2, false, "  extensionService: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GuestConfigurationService), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  guestConfigurationService: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GuestConfigurationService))
+                {
+                    builder.Append("  guestConfigurationService: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GuestConfigurationService, options, 2, false, "  guestConfigurationService: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<HybridComputeServiceStatuses>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeServiceStatuses>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +161,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeServiceStatuses)} does not support writing '{options.Format}' format.");
             }

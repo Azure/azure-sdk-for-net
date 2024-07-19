@@ -52,7 +52,7 @@ namespace Azure.Identity
         /// Creates a new DeviceCodeCredential with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
-        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        /// <param name="clientId">The client ID of the application to which the users will authenticate. It's recommended that developers register their applications and assign appropriate roles. For more information, visit <see href="https://aka.ms/azsdk/identity/AppRegistrationAndRoleAssignment"/>. If not specified, users will authenticate to an Azure development application, which isn't recommended for production scenarios.</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string clientId, TokenCredentialOptions options = default)
@@ -65,7 +65,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
         /// <param name="tenantId">The tenant id of the application to which users will authenticate.  This can be null for multi-tenanted applications.</param>
-        /// <param name="clientId">The client id of the application to which the users will authenticate</param>
+        /// <param name="clientId">The client id of the application to which the users will authenticate. It is recommended that developers register their applications and assign appropriate roles. For more information, visit <see href="https://aka.ms/azsdk/identity/AppRegistrationAndRoleAssignment"/>. If not specified, users will authenticate to an Azure development application, which is not recommended for production scenarios.</param>
         /// <param name="options">The client options for the newly created DeviceCodeCredential</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, TokenCredentialOptions options = default)
