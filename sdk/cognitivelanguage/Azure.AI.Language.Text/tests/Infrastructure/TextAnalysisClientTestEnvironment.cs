@@ -6,9 +6,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Text.Tests
 {
-    public class TextClientTestEnvironment : TestEnvironment
+    public class TextAnalysisClientTestEnvironment : TestEnvironment
     {
-        public Uri Endpoint => new Uri(GetRecordedVariable("AZURE_TEXT_ENDPOINT"));
+        public Uri Endpoint => new(GetRecordedVariable("AZURE_TEXT_ENDPOINT"));
 
         // Add other client paramters here as above.
         public string ApiKey => GetRecordedVariable("AZURE_TEXT_KEY", options => options.IsSecret());

@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample6_AnalyzeTextAsync_RecognizeLinkedEntities : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample6_AnalyzeTextAsync_RecognizeLinkedEntities : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]

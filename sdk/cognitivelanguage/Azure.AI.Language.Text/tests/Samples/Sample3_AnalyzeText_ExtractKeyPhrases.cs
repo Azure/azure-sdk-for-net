@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample3_AnalyzeText_ExtractKeyPhrases : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample3_AnalyzeText_ExtractKeyPhrases : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [SyncOnly]

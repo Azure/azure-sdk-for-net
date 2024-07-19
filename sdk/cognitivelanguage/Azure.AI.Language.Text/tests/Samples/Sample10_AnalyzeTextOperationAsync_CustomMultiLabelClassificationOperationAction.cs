@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample10_AnalyzeTextSubmitJobAsync_CustomMultiLabelClassificationLROTask : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample10_AnalyzeTextSubmitJobAsync_CustomMultiLabelClassificationLROTask : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]

@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample1_AnalyzeTextAsync_LanguageDetection: SamplesBase<TextClientTestEnvironment>
+    public partial class Sample1_AnalyzeTextAsync_LanguageDetection: SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]

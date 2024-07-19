@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample11_AnalyzeTextOperation_ExtractiveSummarizationOperationAction : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample11_AnalyzeTextOperation_ExtractiveSummarizationOperationAction : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [SyncOnly]

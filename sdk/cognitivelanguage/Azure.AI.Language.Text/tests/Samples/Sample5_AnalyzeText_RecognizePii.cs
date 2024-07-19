@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample5_AnalyzeText_RecognizePii : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample5_AnalyzeText_RecognizePii : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [SyncOnly]

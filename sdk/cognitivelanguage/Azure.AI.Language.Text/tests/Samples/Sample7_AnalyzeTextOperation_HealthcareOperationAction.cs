@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample7_AnalyzeTextOperation_HealthcareOperationAction : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample7_AnalyzeTextOperation_HealthcareOperationAction : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [SyncOnly]

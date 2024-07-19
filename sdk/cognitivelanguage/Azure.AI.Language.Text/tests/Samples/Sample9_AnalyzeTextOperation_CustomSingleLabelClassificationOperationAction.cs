@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample9_AnalyzeTextOperation_CustomSingleLabelClassificationOperationAction : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample9_AnalyzeTextOperation_CustomSingleLabelClassificationOperationAction : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [SyncOnly]

@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample4_AnalyzeText_RecognizeEntities : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample4_AnalyzeText_RecognizeEntities : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [SyncOnly]

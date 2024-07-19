@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample2_AnalyzeTextAsync_Sentiment : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample2_AnalyzeTextAsync_Sentiment : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]

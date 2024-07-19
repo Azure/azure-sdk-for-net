@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample13_AnalyzeTextOperationAsync_MultipleActions : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample13_AnalyzeTextOperationAsync_MultipleActions : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]

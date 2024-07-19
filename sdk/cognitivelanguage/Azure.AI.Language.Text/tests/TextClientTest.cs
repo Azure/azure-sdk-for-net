@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Text.Tests
 {
-    public class TextClientTest: RecordedTestBase<TextClientTestEnvironment>
+    public class TextClientTest: RecordedTestBase<TextAnalysisClientTestEnvironment>
     {
         public TextClientTest(bool isAsync) : base(isAsync)
         {

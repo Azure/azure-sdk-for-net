@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample10_AnalyzeTextOperation_CustomMultiLabelClassificationOperationAction : SamplesBase<TextClientTestEnvironment>
+    public partial class Sample10_AnalyzeTextOperation_CustomMultiLabelClassificationOperationAction : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
