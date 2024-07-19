@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="size"> The size of this sku. </param>
         /// <param name="capabilities"></param>
         /// <returns> A new <see cref="Models.ReservationCatalog"/> instance for mocking. </returns>
-        public static ReservationCatalog ReservationCatalog(string appliedResourceType = null, string skuName = null, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans = null, IEnumerable<ReservationTerm> terms = null, IEnumerable<AzureLocation> locations = null, IEnumerable<SkuProperty> skuProperties = null, ReservationCatalogMsrp msrp = null, IEnumerable<SkuRestriction> restrictions = null, string tier = null, string size = null, IEnumerable<SkuCapability> capabilities = null)
+        public static ReservationCatalog ReservationCatalog(string appliedResourceType = null, string skuName = null, IDictionary<string, IList<ReservationBillingPlan>> billingPlans = null, IEnumerable<ReservationTerm> terms = null, IEnumerable<AzureLocation> locations = null, IEnumerable<SkuProperty> skuProperties = null, ReservationCatalogMsrp msrp = null, IEnumerable<SkuRestriction> restrictions = null, string tier = null, string size = null, IEnumerable<SkuCapability> capabilities = null)
         {
             billingPlans ??= new Dictionary<string, IList<ReservationBillingPlan>>();
             terms ??= new List<ReservationTerm>();

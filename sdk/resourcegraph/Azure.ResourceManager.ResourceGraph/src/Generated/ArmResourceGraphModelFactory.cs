@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="message"> A human readable error message. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.FacetErrorDetails"/> instance for mocking. </returns>
-        public static FacetErrorDetails FacetErrorDetails(string code = null, string message = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static FacetErrorDetails FacetErrorDetails(string code = null, string message = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 

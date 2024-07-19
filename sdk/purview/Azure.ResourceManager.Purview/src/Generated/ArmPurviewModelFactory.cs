@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Initializes a new instance of <see cref="Models.PurviewBatchFeatureStatus"/>. </summary>
         /// <param name="features"> Features with enabled status. </param>
         /// <returns> A new <see cref="Models.PurviewBatchFeatureStatus"/> instance for mocking. </returns>
-        public static PurviewBatchFeatureStatus PurviewBatchFeatureStatus(IReadOnlyDictionary<string, bool> features = null)
+        public static PurviewBatchFeatureStatus PurviewBatchFeatureStatus(IDictionary<string, bool> features = null)
         {
             features ??= new Dictionary<string, bool>();
 

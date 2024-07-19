@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <param name="sshKeys"> Map of Customer User Public, Private SSH Keys and Certificate when available. </param>
         /// <returns> A new <see cref="Models.ApplianceClusterUserKeysResult"/> instance for mocking. </returns>
-        public static ApplianceClusterUserKeysResult ApplianceClusterUserKeysResult(IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles = null, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = null, IReadOnlyDictionary<string, ApplianceSshKey> sshKeys = null)
+        public static ApplianceClusterUserKeysResult ApplianceClusterUserKeysResult(IDictionary<string, ApplianceArtifactProfile> artifactProfiles = null, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = null, IDictionary<string, ApplianceSshKey> sshKeys = null)
         {
             artifactProfiles ??= new Dictionary<string, ApplianceArtifactProfile>();
             kubeconfigs ??= new List<ApplianceCredentialKubeconfig>();

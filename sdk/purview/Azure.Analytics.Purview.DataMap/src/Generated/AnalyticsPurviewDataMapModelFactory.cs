@@ -83,7 +83,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="mutatedEntities"> The entity headers of mutated entities. </param>
         /// <param name="partialUpdatedEntities"> An array of entity headers that partially updated. </param>
         /// <returns> A new <see cref="DataMap.EntityMutationResult"/> instance for mocking. </returns>
-        public static EntityMutationResult EntityMutationResult(IReadOnlyDictionary<string, string> guidAssignments = null, IReadOnlyDictionary<string, IList<AtlasEntityHeader>> mutatedEntities = null, IEnumerable<AtlasEntityHeader> partialUpdatedEntities = null)
+        public static EntityMutationResult EntityMutationResult(IDictionary<string, string> guidAssignments = null, IDictionary<string, IList<AtlasEntityHeader>> mutatedEntities = null, IEnumerable<AtlasEntityHeader> partialUpdatedEntities = null)
         {
             guidAssignments ??= new Dictionary<string, string>();
             mutatedEntities ??= new Dictionary<string, IList<AtlasEntityHeader>>();
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="categoryInfo"> The glossary category information. </param>
         /// <param name="termInfo"> The glossary term information. </param>
         /// <returns> A new <see cref="DataMap.AtlasGlossaryExtInfo"/> instance for mocking. </returns>
-        public static AtlasGlossaryExtInfo AtlasGlossaryExtInfo(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, IEnumerable<AtlasRelatedCategoryHeader> categories = null, string language = null, IEnumerable<AtlasRelatedTermHeader> terms = null, string usage = null, IReadOnlyDictionary<string, AtlasGlossaryCategory> categoryInfo = null, IReadOnlyDictionary<string, AtlasGlossaryTerm> termInfo = null)
+        public static AtlasGlossaryExtInfo AtlasGlossaryExtInfo(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, IEnumerable<AtlasRelatedCategoryHeader> categories = null, string language = null, IEnumerable<AtlasRelatedTermHeader> terms = null, string usage = null, IDictionary<string, AtlasGlossaryCategory> categoryInfo = null, IDictionary<string, AtlasGlossaryTerm> termInfo = null)
         {
             classifications ??= new List<AtlasClassification>();
             categories ??= new List<AtlasRelatedCategoryHeader>();
@@ -491,7 +491,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="parentRelations"> An array of parentRelations relations. </param>
         /// <param name="relations"> An array of lineage relations. </param>
         /// <returns> A new <see cref="DataMap.AtlasLineageInfo"/> instance for mocking. </returns>
-        public static AtlasLineageInfo AtlasLineageInfo(string baseEntityGuid = null, IReadOnlyDictionary<string, AtlasEntityHeader> guidEntityMap = null, IReadOnlyDictionary<string, IDictionary<string, BinaryData>> widthCounts = null, int? lineageDepth = null, int? lineageWidth = null, int? childrenCount = null, LineageDirection? lineageDirection = null, IEnumerable<ParentRelation> parentRelations = null, IEnumerable<LineageRelation> relations = null)
+        public static AtlasLineageInfo AtlasLineageInfo(string baseEntityGuid = null, IDictionary<string, AtlasEntityHeader> guidEntityMap = null, IDictionary<string, IDictionary<string, BinaryData>> widthCounts = null, int? lineageDepth = null, int? lineageWidth = null, int? childrenCount = null, LineageDirection? lineageDirection = null, IEnumerable<ParentRelation> parentRelations = null, IEnumerable<LineageRelation> relations = null)
         {
             guidEntityMap ??= new Dictionary<string, AtlasEntityHeader>();
             widthCounts ??= new Dictionary<string, IDictionary<string, BinaryData>>();
@@ -535,7 +535,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="referredEntities"> The referred entity header. </param>
         /// <param name="relationship"> Atlas relationship instance. </param>
         /// <returns> A new <see cref="DataMap.AtlasRelationshipWithExtInfo"/> instance for mocking. </returns>
-        public static AtlasRelationshipWithExtInfo AtlasRelationshipWithExtInfo(IReadOnlyDictionary<string, AtlasEntityHeader> referredEntities = null, AtlasRelationship relationship = null)
+        public static AtlasRelationshipWithExtInfo AtlasRelationshipWithExtInfo(IDictionary<string, AtlasEntityHeader> referredEntities = null, AtlasRelationship relationship = null)
         {
             referredEntities ??= new Dictionary<string, AtlasEntityHeader>();
 
@@ -613,7 +613,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="relationshipLabel"> The label of the relationship. </param>
         /// <param name="attributeDefs"> An array of attribute definitions. </param>
         /// <returns> A new <see cref="DataMap.AtlasTypeDef"/> instance for mocking. </returns>
-        public static AtlasTypeDef AtlasTypeDef(TypeCategory? category = null, long? createTime = null, string createdBy = null, AtlasDateFormat dateFormatter = null, string description = null, string guid = null, string name = null, IReadOnlyDictionary<string, string> options = null, string serviceType = null, string typeVersion = null, long? updateTime = null, string updatedBy = null, long? version = null, string lastModifiedTS = null, IEnumerable<string> entityTypes = null, IEnumerable<string> subTypes = null, IEnumerable<string> superTypes = null, IEnumerable<AtlasRelationshipAttributeDef> relationshipAttributeDefs = null, string defaultValue = null, IEnumerable<AtlasEnumElementDef> elementDefs = null, AtlasRelationshipEndDef endDef1 = null, AtlasRelationshipEndDef endDef2 = null, RelationshipCategory? relationshipCategory = null, string relationshipLabel = null, IEnumerable<AtlasAttributeDef> attributeDefs = null)
+        public static AtlasTypeDef AtlasTypeDef(TypeCategory? category = null, long? createTime = null, string createdBy = null, AtlasDateFormat dateFormatter = null, string description = null, string guid = null, string name = null, IDictionary<string, string> options = null, string serviceType = null, string typeVersion = null, long? updateTime = null, string updatedBy = null, long? version = null, string lastModifiedTS = null, IEnumerable<string> entityTypes = null, IEnumerable<string> subTypes = null, IEnumerable<string> superTypes = null, IEnumerable<AtlasRelationshipAttributeDef> relationshipAttributeDefs = null, string defaultValue = null, IEnumerable<AtlasEnumElementDef> elementDefs = null, AtlasRelationshipEndDef endDef1 = null, AtlasRelationshipEndDef endDef2 = null, RelationshipCategory? relationshipCategory = null, string relationshipLabel = null, IEnumerable<AtlasAttributeDef> attributeDefs = null)
         {
             options ??= new Dictionary<string, string>();
             entityTypes ??= new List<string>();

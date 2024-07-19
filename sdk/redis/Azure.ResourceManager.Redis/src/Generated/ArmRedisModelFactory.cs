@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="timestamp"> Timestamp when upgrade notification occurred. </param>
         /// <param name="upsellNotification"> Details about this upgrade notification. </param>
         /// <returns> A new <see cref="Models.RedisUpgradeNotification"/> instance for mocking. </returns>
-        public static RedisUpgradeNotification RedisUpgradeNotification(string name = null, DateTimeOffset? timestamp = null, IReadOnlyDictionary<string, string> upsellNotification = null)
+        public static RedisUpgradeNotification RedisUpgradeNotification(string name = null, DateTimeOffset? timestamp = null, IDictionary<string, string> upsellNotification = null)
         {
             upsellNotification ??= new Dictionary<string, string>();
 
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
         /// <returns> A new <see cref="Models.RedisOperationStatus"/> instance for mocking. </returns>
-        public static RedisOperationStatus RedisOperationStatus(ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, IReadOnlyDictionary<string, BinaryData> properties = null)
+        public static RedisOperationStatus RedisOperationStatus(ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, IDictionary<string, BinaryData> properties = null)
         {
             operations ??= new List<OperationStatusResult>();
             properties ??= new Dictionary<string, BinaryData>();

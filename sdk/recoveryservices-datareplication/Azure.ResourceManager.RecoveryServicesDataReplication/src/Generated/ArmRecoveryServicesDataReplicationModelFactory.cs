@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <returns> A new <see cref="Models.WorkflowModelCustomProperties"/> instance for mocking. </returns>
-        public static WorkflowModelCustomProperties WorkflowModelCustomProperties(string instanceType = null, IReadOnlyDictionary<string, string> affectedObjectDetails = null)
+        public static WorkflowModelCustomProperties WorkflowModelCustomProperties(string instanceType = null, IDictionary<string, string> affectedObjectDetails = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
 
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="protectedItemDetails"> Gets or sets the failed over protected item details. </param>
         /// <returns> A new <see cref="Models.FailoverWorkflowModelCustomProperties"/> instance for mocking. </returns>
-        public static FailoverWorkflowModelCustomProperties FailoverWorkflowModelCustomProperties(IReadOnlyDictionary<string, string> affectedObjectDetails = null, IEnumerable<FailoverProtectedItemProperties> protectedItemDetails = null)
+        public static FailoverWorkflowModelCustomProperties FailoverWorkflowModelCustomProperties(IDictionary<string, string> affectedObjectDetails = null, IEnumerable<FailoverProtectedItemProperties> protectedItemDetails = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
             protectedItemDetails ??= new List<FailoverProtectedItemProperties>();
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="comments"> Gets or sets the test failover cleanup comments. </param>
         /// <returns> A new <see cref="Models.TestFailoverCleanupWorkflowModelCustomProperties"/> instance for mocking. </returns>
-        public static TestFailoverCleanupWorkflowModelCustomProperties TestFailoverCleanupWorkflowModelCustomProperties(IReadOnlyDictionary<string, string> affectedObjectDetails = null, string comments = null)
+        public static TestFailoverCleanupWorkflowModelCustomProperties TestFailoverCleanupWorkflowModelCustomProperties(IDictionary<string, string> affectedObjectDetails = null, string comments = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
 
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="protectedItemDetails"> Gets or sets the test VM details. </param>
         /// <returns> A new <see cref="Models.TestFailoverWorkflowModelCustomProperties"/> instance for mocking. </returns>
-        public static TestFailoverWorkflowModelCustomProperties TestFailoverWorkflowModelCustomProperties(IReadOnlyDictionary<string, string> affectedObjectDetails = null, IEnumerable<FailoverProtectedItemProperties> protectedItemDetails = null)
+        public static TestFailoverWorkflowModelCustomProperties TestFailoverWorkflowModelCustomProperties(IDictionary<string, string> affectedObjectDetails = null, IEnumerable<FailoverProtectedItemProperties> protectedItemDetails = null)
         {
             affectedObjectDetails ??= new Dictionary<string, string>();
             protectedItemDetails ??= new List<FailoverProtectedItemProperties>();

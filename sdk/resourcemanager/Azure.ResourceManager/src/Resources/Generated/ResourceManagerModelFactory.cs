@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
         /// <param name="properties"> The properties. </param>
         /// <returns> A new <see cref="Resources.Models.ProviderResourceType"/> instance for mocking. </returns>
-        public static ProviderResourceType ProviderResourceType(string resourceType = null, IEnumerable<string> locations = null, IEnumerable<ProviderExtendedLocation> locationMappings = null, IEnumerable<ResourceTypeAlias> aliases = null, IEnumerable<string> apiVersions = null, string defaultApiVersion = null, IEnumerable<ZoneMapping> zoneMappings = null, IEnumerable<ApiProfile> apiProfiles = null, string capabilities = null, IReadOnlyDictionary<string, string> properties = null)
+        public static ProviderResourceType ProviderResourceType(string resourceType = null, IEnumerable<string> locations = null, IEnumerable<ProviderExtendedLocation> locationMappings = null, IEnumerable<ResourceTypeAlias> aliases = null, IEnumerable<string> apiVersions = null, string defaultApiVersion = null, IEnumerable<ZoneMapping> zoneMappings = null, IEnumerable<ApiProfile> apiProfiles = null, string capabilities = null, IDictionary<string, string> properties = null)
         {
             locations ??= new List<string>();
             locationMappings ??= new List<ProviderExtendedLocation>();
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
         /// <returns> A new <see cref="Resources.SubscriptionData"/> instance for mocking. </returns>
-        public static SubscriptionData SubscriptionData(ResourceIdentifier id = null, string subscriptionId = null, string displayName = null, Guid? tenantId = null, SubscriptionState? state = null, SubscriptionPolicies subscriptionPolicies = null, string authorizationSource = null, IEnumerable<ManagedByTenant> managedByTenants = null, IReadOnlyDictionary<string, string> tags = null)
+        public static SubscriptionData SubscriptionData(ResourceIdentifier id = null, string subscriptionId = null, string displayName = null, Guid? tenantId = null, SubscriptionState? state = null, SubscriptionPolicies subscriptionPolicies = null, string authorizationSource = null, IEnumerable<ManagedByTenant> managedByTenants = null, IDictionary<string, string> tags = null)
         {
             managedByTenants ??= new List<ManagedByTenant>();
             tags ??= new Dictionary<string, string>();
