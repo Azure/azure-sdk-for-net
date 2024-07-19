@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <returns> A new <see cref="Models.PrivateStoreOfferResult"/> instance for mocking. </returns>
-        public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? eTag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IReadOnlyDictionary<string, Uri> iconFileUris = null, IEnumerable<PrivateStorePlan> plans = null)
+        public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId = null, string offerDisplayName = null, string publisherDisplayName = null, ETag? eTag = null, Guid? privateStoreId = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, IEnumerable<string> specificPlanIdsLimitation = null, bool? isUpdateSuppressedDueToIdempotence = null, IDictionary<string, Uri> iconFileUris = null, IEnumerable<PrivateStorePlan> plans = null)
         {
             specificPlanIdsLimitation ??= new List<string>();
             iconFileUris ??= new Dictionary<string, Uri>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of <see cref="Models.CollectionsToSubscriptionsMappingResult"/>. </summary>
         /// <param name="details"> The map of collections subscriptions. </param>
         /// <returns> A new <see cref="Models.CollectionsToSubscriptionsMappingResult"/> instance for mocking. </returns>
-        public static CollectionsToSubscriptionsMappingResult CollectionsToSubscriptionsMappingResult(IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details = null)
+        public static CollectionsToSubscriptionsMappingResult CollectionsToSubscriptionsMappingResult(IDictionary<string, CollectionsSubscriptionsMappingDetails> details = null)
         {
             details ??= new Dictionary<string, CollectionsSubscriptionsMappingDetails>();
 
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="eTag"> Gets or sets e-tag field. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
         /// <returns> A new <see cref="Models.QueryApprovalRequestResult"/> instance for mocking. </returns>
-        public static QueryApprovalRequestResult QueryApprovalRequestResult(string uniqueOfferId = null, IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails = null, ETag? eTag = null, long? messageCode = null)
+        public static QueryApprovalRequestResult QueryApprovalRequestResult(string uniqueOfferId = null, IDictionary<string, PrivateStorePlanDetails> plansDetails = null, ETag? eTag = null, long? messageCode = null)
         {
             plansDetails ??= new Dictionary<string, PrivateStorePlanDetails>();
 

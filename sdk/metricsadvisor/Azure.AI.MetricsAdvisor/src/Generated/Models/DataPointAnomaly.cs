@@ -13,5 +13,19 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyResult. </summary>
     public partial class DataPointAnomaly
     {
+        /// <summary> Initializes a new instance of <see cref="DataPointAnomaly"/>. </summary>
+        /// <param name="timestamp"> anomaly time. </param>
+        /// <param name="dimension"> dimension specified for series. </param>
+        /// <param name="property"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dimension"/> or <paramref name="property"/> is null. </exception>
+        internal DataPointAnomaly(DateTimeOffset timestamp, IDictionary<string, string> dimension, AnomalyProperty property)
+        {
+            Argument.AssertNotNull(dimension, nameof(dimension));
+            Argument.AssertNotNull(property, nameof(property));
+
+            Timestamp = timestamp;
+            Dimension = dimension;
+            Property = property;
+        }
     }
 }

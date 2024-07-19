@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="targetEnvironmentId"> Asset ID of the target environment created by package operation. </param>
         /// <returns> A new <see cref="Models.ModelPackageResult"/> instance for mocking. </returns>
-        public static ModelPackageResult ModelPackageResult(BaseEnvironmentSource baseEnvironmentSource = null, string buildId = null, PackageBuildState? buildState = null, IReadOnlyDictionary<string, string> environmentVariables = null, InferencingServer inferencingServer = null, IEnumerable<ModelPackageInput> inputs = null, Uri logUri = null, ModelConfiguration modelConfiguration = null, IReadOnlyDictionary<string, string> tags = null, string targetEnvironmentId = null)
+        public static ModelPackageResult ModelPackageResult(BaseEnvironmentSource baseEnvironmentSource = null, string buildId = null, PackageBuildState? buildState = null, IDictionary<string, string> environmentVariables = null, InferencingServer inferencingServer = null, IEnumerable<ModelPackageInput> inputs = null, Uri logUri = null, ModelConfiguration modelConfiguration = null, IDictionary<string, string> tags = null, string targetEnvironmentId = null)
         {
             environmentVariables ??= new Dictionary<string, string>();
             inputs ??= new List<ModelPackageInput>();
@@ -1179,7 +1179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Specifies the tags if any. </param>
         /// <param name="featureStoreJobType"> Specifies the feature store job type. </param>
         /// <returns> A new <see cref="Models.MachineLearningFeatureSetJob"/> instance for mocking. </returns>
-        public static MachineLearningFeatureSetJob MachineLearningFeatureSetJob(DateTimeOffset? createdOn = null, string displayName = null, TimeSpan? duration = null, string experimentId = null, FeatureWindow featureWindow = null, string jobId = null, MachineLearningJobStatus? status = null, IReadOnlyDictionary<string, string> tags = null, FeatureStoreJobType? featureStoreJobType = null)
+        public static MachineLearningFeatureSetJob MachineLearningFeatureSetJob(DateTimeOffset? createdOn = null, string displayName = null, TimeSpan? duration = null, string experimentId = null, FeatureWindow featureWindow = null, string jobId = null, MachineLearningJobStatus? status = null, IDictionary<string, string> tags = null, FeatureStoreJobType? featureStoreJobType = null)
         {
             tags ??= new Dictionary<string, string>();
 

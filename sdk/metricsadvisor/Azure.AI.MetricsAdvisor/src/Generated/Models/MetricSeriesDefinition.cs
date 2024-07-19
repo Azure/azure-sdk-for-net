@@ -15,6 +15,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of <see cref="MetricSeriesDefinition"/>. </summary>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimension"> dimension name and value pair. </param>
+        internal MetricSeriesDefinition(string metricId, IDictionary<string, string> dimension)
+        {
+            MetricId = metricId;
+            Dimension = dimension;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesDefinition"/>. </summary>
+        /// <param name="metricId"> metric unique id. </param>
+        /// <param name="dimension"> dimension name and value pair. </param>
         internal MetricSeriesDefinition(string metricId, IReadOnlyDictionary<string, string> dimension)
         {
             MetricId = metricId;
