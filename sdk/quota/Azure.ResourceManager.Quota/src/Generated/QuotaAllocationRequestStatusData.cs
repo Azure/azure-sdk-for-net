@@ -62,26 +62,30 @@ namespace Azure.ResourceManager.Quota
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="requestedResource"> The new quota request allocated to subscription. </param>
-        /// <param name="requestSubmitOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="requestSubmittedOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="faultCode"> Details of the failure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaAllocationRequestStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaAllocationRequestBase requestedResource, DateTimeOffset? requestSubmitOn, RequestState? provisioningState, string faultCode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal QuotaAllocationRequestStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaAllocationRequestBase requestedResource, DateTimeOffset? requestSubmittedOn, QuotaRequestStatus? provisioningState, string faultCode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RequestedResource = requestedResource;
-            RequestSubmitOn = requestSubmitOn;
+            RequestSubmittedOn = requestSubmittedOn;
             ProvisioningState = provisioningState;
             FaultCode = faultCode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The new quota request allocated to subscription. </summary>
+        [WirePath("properties.requestedResource")]
         public QuotaAllocationRequestBase RequestedResource { get; set; }
         /// <summary> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
-        public DateTimeOffset? RequestSubmitOn { get; }
+        [WirePath("properties.requestSubmitTime")]
+        public DateTimeOffset? RequestSubmittedOn { get; }
         /// <summary> Request status. </summary>
-        public RequestState? ProvisioningState { get; }
+        [WirePath("properties.provisioningState")]
+        public QuotaRequestStatus? ProvisioningState { get; }
         /// <summary> Details of the failure. </summary>
+        [WirePath("properties.faultCode")]
         public string FaultCode { get; }
     }
 }

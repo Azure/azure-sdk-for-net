@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of <see cref="GroupQuotaList"/>. </summary>
         internal GroupQuotaList()
         {
-            Value = new ChangeTrackingList<GroupQuotasEntityData>();
+            Value = new ChangeTrackingList<GroupQuotaEntityData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaList"/>. </summary>
         /// <param name="value"> List of Group Quotas at MG level. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaList(IReadOnlyList<GroupQuotasEntityData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupQuotaList(IReadOnlyList<GroupQuotaEntityData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> List of Group Quotas at MG level. </summary>
-        public IReadOnlyList<GroupQuotasEntityData> Value { get; }
+        public IReadOnlyList<GroupQuotaEntityData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

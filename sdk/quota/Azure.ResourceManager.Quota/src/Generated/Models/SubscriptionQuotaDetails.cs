@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Location/Azure region for the quota requested for resource. </summary>
+        [WirePath("region")]
         public string Region { get; set; }
         /// <summary> The total quota limit for the subscription. </summary>
+        [WirePath("limit")]
         public long? Limit { get; set; }
         /// <summary> The shareable quota for the subscription. </summary>
+        [WirePath("shareableQuota")]
         public long? ShareableQuota { get; }
         /// <summary> Resource name. </summary>
+        [WirePath("name.value")]
         public string Value { get; }
         /// <summary> Resource display name. </summary>
+        [WirePath("name.localizedValue")]
         public string LocalizedValue { get; }
     }
 }

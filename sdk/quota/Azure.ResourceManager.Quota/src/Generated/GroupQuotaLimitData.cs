@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Group Quota properties for the specified resource. </summary>
+        [WirePath("properties")]
         public GroupQuotaDetails Properties { get; set; }
     }
 }

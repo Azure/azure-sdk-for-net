@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Quota properties for the specified resource. </summary>
+        [WirePath("properties")]
         public SubscriptionQuotaDetails Properties { get; set; }
     }
 }

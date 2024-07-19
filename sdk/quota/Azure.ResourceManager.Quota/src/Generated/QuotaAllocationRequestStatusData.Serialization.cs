@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -55,10 +56,10 @@ namespace Azure.ResourceManager.Quota
                 writer.WritePropertyName("requestedResource"u8);
                 writer.WriteObjectValue(RequestedResource, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestSubmitOn))
+            if (options.Format != "W" && Optional.IsDefined(RequestSubmittedOn))
             {
                 writer.WritePropertyName("requestSubmitTime"u8);
-                writer.WriteStringValue(RequestSubmitOn.Value, "O");
+                writer.WriteStringValue(RequestSubmittedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Quota
             SystemData systemData = default;
             QuotaAllocationRequestBase requestedResource = default;
             DateTimeOffset? requestSubmitTime = default;
-            RequestState? provisioningState = default;
+            QuotaRequestStatus? provisioningState = default;
             string faultCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.Quota
                             {
                                 continue;
                             }
-                            provisioningState = new RequestState(property0.Value.GetString());
+                            provisioningState = new QuotaRequestStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("faultCode"u8))
@@ -207,6 +208,146 @@ namespace Azure.ResourceManager.Quota
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedResource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedResource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedResource))
+                {
+                    builder.Append("    requestedResource: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RequestedResource, options, 4, false, "    requestedResource: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestSubmittedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestSubmitTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestSubmittedOn))
+                {
+                    builder.Append("    requestSubmitTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(RequestSubmittedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FaultCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    faultCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FaultCode))
+                {
+                    builder.Append("    faultCode: ");
+                    if (FaultCode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FaultCode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FaultCode}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<QuotaAllocationRequestStatusData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QuotaAllocationRequestStatusData>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,6 +356,8 @@ namespace Azure.ResourceManager.Quota
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(QuotaAllocationRequestStatusData)} does not support writing '{options.Format}' format.");
             }

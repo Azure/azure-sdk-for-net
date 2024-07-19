@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Quota
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementResponseData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaEnforcementData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Quota
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementResponseData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaEnforcementData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementResponseData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaEnforcementData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementResponseData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaEnforcementData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementResponseData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaEnforcementData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Quota
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementResponseData data)
+        internal HttpMessage CreateUpdateRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaEnforcementData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementResponseData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaEnforcementData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/>, <paramref name="resourceProviderName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotasEnforcementResponseData data, CancellationToken cancellationToken = default)
+        public Response Update(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaEnforcementData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GroupQuotasEnforcementResponseData>> GetAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<GroupQuotaEnforcementData>> GetAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
@@ -314,13 +314,13 @@ namespace Azure.ResourceManager.Quota
             {
                 case 200:
                     {
-                        GroupQuotasEnforcementResponseData value = default;
+                        GroupQuotaEnforcementData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GroupQuotasEnforcementResponseData.DeserializeGroupQuotasEnforcementResponseData(document.RootElement);
+                        value = GroupQuotaEnforcementData.DeserializeGroupQuotaEnforcementData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GroupQuotasEnforcementResponseData)null, message.Response);
+                    return Response.FromValue((GroupQuotaEnforcementData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GroupQuotasEnforcementResponseData> Get(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<GroupQuotaEnforcementData> Get(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
@@ -346,13 +346,13 @@ namespace Azure.ResourceManager.Quota
             {
                 case 200:
                     {
-                        GroupQuotasEnforcementResponseData value = default;
+                        GroupQuotaEnforcementData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GroupQuotasEnforcementResponseData.DeserializeGroupQuotasEnforcementResponseData(document.RootElement);
+                        value = GroupQuotaEnforcementData.DeserializeGroupQuotaEnforcementData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GroupQuotasEnforcementResponseData)null, message.Response);
+                    return Response.FromValue((GroupQuotaEnforcementData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

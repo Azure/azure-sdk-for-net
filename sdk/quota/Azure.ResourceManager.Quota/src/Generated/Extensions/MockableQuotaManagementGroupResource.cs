@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Quota.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of GroupQuotasEntityResources in the ManagementGroupResource. </summary>
-        /// <returns> An object representing collection of GroupQuotasEntityResources and their operations over a GroupQuotasEntityResource. </returns>
-        public virtual GroupQuotasEntityCollection GetGroupQuotasEntities()
+        /// <summary> Gets a collection of GroupQuotaEntityResources in the ManagementGroupResource. </summary>
+        /// <returns> An object representing collection of GroupQuotaEntityResources and their operations over a GroupQuotaEntityResource. </returns>
+        public virtual GroupQuotaEntityCollection GetGroupQuotaEntities()
         {
-            return GetCachedClient(client => new GroupQuotasEntityCollection(client, Id));
+            return GetCachedClient(client => new GroupQuotaEntityCollection(client, Id));
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GroupQuotasEntityResource"/></description>
+        /// <description><see cref="GroupQuotaEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GroupQuotasEntityResource>> GetGroupQuotasEntityAsync(string groupQuotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GroupQuotaEntityResource>> GetGroupQuotaEntityAsync(string groupQuotaName, CancellationToken cancellationToken = default)
         {
-            return await GetGroupQuotasEntities().GetAsync(groupQuotaName, cancellationToken).ConfigureAwait(false);
+            return await GetGroupQuotaEntities().GetAsync(groupQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GroupQuotasEntityResource"/></description>
+        /// <description><see cref="GroupQuotaEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GroupQuotasEntityResource> GetGroupQuotasEntity(string groupQuotaName, CancellationToken cancellationToken = default)
+        public virtual Response<GroupQuotaEntityResource> GetGroupQuotaEntity(string groupQuotaName, CancellationToken cancellationToken = default)
         {
-            return GetGroupQuotasEntities().Get(groupQuotaName, cancellationToken);
+            return GetGroupQuotaEntities().Get(groupQuotaName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionQuotaAllocationResources in the ManagementGroupResource. </summary>
