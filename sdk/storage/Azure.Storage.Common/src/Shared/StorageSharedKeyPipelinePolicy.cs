@@ -212,7 +212,7 @@ namespace Azure.Storage
                 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,    0x0, 0x0, 0x0, 0x0, 0x0, 0x0,    0x0, 0x0,
             };
 
-            private static int[][] s_tables = { s_table_lv0, s_table_lv2, s_table_lv4 };
+            private static readonly int[][] s_tables = { s_table_lv0, s_table_lv2, s_table_lv4 };
 
             public int Compare(string x, string y)
             {
