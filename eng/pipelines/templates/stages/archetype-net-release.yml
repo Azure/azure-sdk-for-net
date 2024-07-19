@@ -334,7 +334,8 @@ stages:
             parameters:
               PackageInfoLocations:
                 - ${{ each artifact in parameters.Artifacts }}:
-                  - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
+                  - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
+                    - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
               WorkingDirectory: $(System.DefaultWorkingDirectory)
               TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
               TargetDocRepoName: ${{parameters.TargetDocRepoName}}

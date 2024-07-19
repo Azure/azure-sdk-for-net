@@ -167,6 +167,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
 #if PREVIEW_FEATURE_FLAG
@@ -184,6 +185,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
 #if PREVIEW_FEATURE_FLAG
@@ -202,6 +204,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public AccessToken GetToken(PopTokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -215,6 +218,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public async ValueTask<AccessToken> GetTokenAsync(PopTokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -226,6 +230,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public virtual AuthenticationRecord Authenticate(PopTokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return AuthenticateImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -237,6 +242,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(PopTokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await AuthenticateImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
