@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="System.Threading" Version="4.3.0" />
     <ProjectReference Include="..\src\Microsoft.Azure.Management.Blueprint.csproj" />
   </ItemGroup>
