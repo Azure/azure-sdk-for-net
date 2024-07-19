@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmQuotaModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotasEntityData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotaEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </param>
-        /// <returns> A new <see cref="Quota.GroupQuotasEntityData"/> instance for mocking. </returns>
-        public static GroupQuotasEntityData GroupQuotasEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotasEntityBase properties = null)
+        /// <returns> A new <see cref="Quota.GroupQuotaEntityData"/> instance for mocking. </returns>
+        public static GroupQuotaEntityData GroupQuotaEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotaEntityBase properties = null)
         {
-            return new GroupQuotasEntityData(
+            return new GroupQuotaEntityData(
                 id,
                 name,
                 resourceType,
@@ -34,26 +34,26 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotasEntityBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaEntityBase"/>. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
         /// <param name="additionalAttributes"> Additional attributes to filter/restrict the subscriptions, which can be added to the subscriptionIds. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
-        /// <returns> A new <see cref="Models.GroupQuotasEntityBase"/> instance for mocking. </returns>
-        public static GroupQuotasEntityBase GroupQuotasEntityBase(string displayName = null, AdditionalAttributes additionalAttributes = null, RequestState? provisioningState = null)
+        /// <returns> A new <see cref="Models.GroupQuotaEntityBase"/> instance for mocking. </returns>
+        public static GroupQuotaEntityBase GroupQuotaEntityBase(string displayName = null, GroupQuotaAdditionalAttributes additionalAttributes = null, QuotaRequestStatus? provisioningState = null)
         {
-            return new GroupQuotasEntityBase(displayName, additionalAttributes, provisioningState, serializedAdditionalRawData: null);
+            return new GroupQuotaEntityBase(displayName, additionalAttributes, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotasEntityPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaEntityPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </param>
-        /// <returns> A new <see cref="Models.GroupQuotasEntityPatch"/> instance for mocking. </returns>
-        public static GroupQuotasEntityPatch GroupQuotasEntityPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotasEntityBasePatch properties = null)
+        /// <returns> A new <see cref="Models.GroupQuotaEntityPatch"/> instance for mocking. </returns>
+        public static GroupQuotaEntityPatch GroupQuotaEntityPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotasEntityBasePatch properties = null)
         {
-            return new GroupQuotasEntityPatch(
+            return new GroupQuotaEntityPatch(
                 id,
                 name,
                 resourceType,
@@ -67,21 +67,21 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="additionalAttributes"> Additional attributes to filter/restrict the subscriptions, which can be added to the subscriptionIds. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
         /// <returns> A new <see cref="Models.GroupQuotasEntityBasePatch"/> instance for mocking. </returns>
-        public static GroupQuotasEntityBasePatch GroupQuotasEntityBasePatch(string displayName = null, AdditionalAttributesPatch additionalAttributes = null, RequestState? provisioningState = null)
+        public static GroupQuotasEntityBasePatch GroupQuotasEntityBasePatch(string displayName = null, GroupQuotaAdditionalAttributesPatch additionalAttributes = null, QuotaRequestStatus? provisioningState = null)
         {
             return new GroupQuotasEntityBasePatch(displayName, additionalAttributes, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotaSubscriptionIdData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotaSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Quota.GroupQuotaSubscriptionIdData"/> instance for mocking. </returns>
-        public static GroupQuotaSubscriptionIdData GroupQuotaSubscriptionIdData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotaSubscriptionIdProperties properties = null)
+        /// <returns> A new <see cref="Quota.GroupQuotaSubscriptionData"/> instance for mocking. </returns>
+        public static GroupQuotaSubscriptionData GroupQuotaSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotaSubscriptionProperties properties = null)
         {
-            return new GroupQuotaSubscriptionIdData(
+            return new GroupQuotaSubscriptionData(
                 id,
                 name,
                 resourceType,
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaSubscriptionIdProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaSubscriptionProperties"/>. </summary>
         /// <param name="subscriptionId"> An Azure subscriptionId. </param>
         /// <param name="provisioningState"> Status of this subscriptionId being associated with the GroupQuotasEntity. </param>
-        /// <returns> A new <see cref="Models.GroupQuotaSubscriptionIdProperties"/> instance for mocking. </returns>
-        public static GroupQuotaSubscriptionIdProperties GroupQuotaSubscriptionIdProperties(string subscriptionId = null, RequestState? provisioningState = null)
+        /// <returns> A new <see cref="Models.GroupQuotaSubscriptionProperties"/> instance for mocking. </returns>
+        public static GroupQuotaSubscriptionProperties GroupQuotaSubscriptionProperties(string subscriptionId = null, QuotaRequestStatus? provisioningState = null)
         {
-            return new GroupQuotaSubscriptionIdProperties(subscriptionId, provisioningState, serializedAdditionalRawData: null);
+            return new GroupQuotaSubscriptionProperties(subscriptionId, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotaSubscriptionRequestStatusData"/>. </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="requestSubmitOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Status of this subscriptionId being associated with the GroupQuotasEntity. </param>
         /// <returns> A new <see cref="Models.GroupQuotaSubscriptionRequestStatusProperties"/> instance for mocking. </returns>
-        public static GroupQuotaSubscriptionRequestStatusProperties GroupQuotaSubscriptionRequestStatusProperties(string subscriptionId = null, DateTimeOffset? requestSubmitOn = null, RequestState? provisioningState = null)
+        public static GroupQuotaSubscriptionRequestStatusProperties GroupQuotaSubscriptionRequestStatusProperties(string subscriptionId = null, DateTimeOffset? requestSubmitOn = null, QuotaRequestStatus? provisioningState = null)
         {
             return new GroupQuotaSubscriptionRequestStatusProperties(subscriptionId, requestSubmitOn, provisioningState, serializedAdditionalRawData: null);
         }
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
         /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
-        public static GroupQuotaDetails GroupQuotaDetails(string region = null, long? limit = null, string comment = null, string unit = null, long? availableLimit = null, IEnumerable<AllocatedToSubscription> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null)
+        public static GroupQuotaDetails GroupQuotaDetails(string region = null, long? limit = null, string comment = null, string unit = null, long? availableLimit = null, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null)
         {
-            allocatedToSubscriptionsValue ??= new List<AllocatedToSubscription>();
+            allocatedToSubscriptionsValue ??= new List<SubscriptionAllocatedQuota>();
 
             return new GroupQuotaDetails(
                 region,
@@ -171,25 +171,25 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AllocatedToSubscription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionAllocatedQuota"/>. </summary>
         /// <param name="subscriptionId"> An Azure subscriptionId. </param>
         /// <param name="quotaAllocated"> The amount of quota allocated to this subscriptionId from the GroupQuotasEntity. </param>
-        /// <returns> A new <see cref="Models.AllocatedToSubscription"/> instance for mocking. </returns>
-        public static AllocatedToSubscription AllocatedToSubscription(string subscriptionId = null, long? quotaAllocated = null)
+        /// <returns> A new <see cref="Models.SubscriptionAllocatedQuota"/> instance for mocking. </returns>
+        public static SubscriptionAllocatedQuota SubscriptionAllocatedQuota(string subscriptionId = null, long? quotaAllocated = null)
         {
-            return new AllocatedToSubscription(subscriptionId, quotaAllocated, serializedAdditionalRawData: null);
+            return new SubscriptionAllocatedQuota(subscriptionId, quotaAllocated, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Quota.SubmittedResourceRequestStatusData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotaRequestStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Quota.SubmittedResourceRequestStatusData"/> instance for mocking. </returns>
-        public static SubmittedResourceRequestStatusData SubmittedResourceRequestStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubmittedResourceRequestStatusProperties properties = null)
+        /// <returns> A new <see cref="Quota.GroupQuotaRequestStatusData"/> instance for mocking. </returns>
+        public static GroupQuotaRequestStatusData GroupQuotaRequestStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotaRequestStatusProperties properties = null)
         {
-            return new SubmittedResourceRequestStatusData(
+            return new GroupQuotaRequestStatusData(
                 id,
                 name,
                 resourceType,
@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubmittedResourceRequestStatusProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaRequestStatusProperties"/>. </summary>
         /// <param name="requestedResource"> Requested Resource. </param>
-        /// <param name="requestSubmitOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="requestSubmittedOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="faultCode"> Details of the failure. </param>
-        /// <returns> A new <see cref="Models.SubmittedResourceRequestStatusProperties"/> instance for mocking. </returns>
-        public static SubmittedResourceRequestStatusProperties SubmittedResourceRequestStatusProperties(GroupQuotaRequestBase requestedResource = null, DateTimeOffset? requestSubmitOn = null, RequestState? provisioningState = null, string faultCode = null)
+        /// <returns> A new <see cref="Models.GroupQuotaRequestStatusProperties"/> instance for mocking. </returns>
+        public static GroupQuotaRequestStatusProperties GroupQuotaRequestStatusProperties(GroupQuotaRequestBase requestedResource = null, DateTimeOffset? requestSubmittedOn = null, QuotaRequestStatus? provisioningState = null, string faultCode = null)
         {
-            return new SubmittedResourceRequestStatusProperties(requestedResource, requestSubmitOn, provisioningState, faultCode, serializedAdditionalRawData: null);
+            return new GroupQuotaRequestStatusProperties(requestedResource, requestSubmittedOn, provisioningState, faultCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaRequestBase"/>. </summary>
@@ -269,11 +269,11 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="requestedResource"> The new quota request allocated to subscription. </param>
-        /// <param name="requestSubmitOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
+        /// <param name="requestSubmittedOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="faultCode"> Details of the failure. </param>
         /// <returns> A new <see cref="Quota.QuotaAllocationRequestStatusData"/> instance for mocking. </returns>
-        public static QuotaAllocationRequestStatusData QuotaAllocationRequestStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, QuotaAllocationRequestBase requestedResource = null, DateTimeOffset? requestSubmitOn = null, RequestState? provisioningState = null, string faultCode = null)
+        public static QuotaAllocationRequestStatusData QuotaAllocationRequestStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, QuotaAllocationRequestBase requestedResource = null, DateTimeOffset? requestSubmittedOn = null, QuotaRequestStatus? provisioningState = null, string faultCode = null)
         {
             return new QuotaAllocationRequestStatusData(
                 id,
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Quota.Models
                 resourceType,
                 systemData,
                 requestedResource,
-                requestSubmitOn,
+                requestSubmittedOn,
                 provisioningState,
                 faultCode,
                 serializedAdditionalRawData: null);
@@ -298,16 +298,16 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaAllocationRequestBase(limit, region, value, localizedValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceUsages"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaResourceUsages"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Resource details with usages and GroupQuota. </param>
-        /// <returns> A new <see cref="Models.ResourceUsages"/> instance for mocking. </returns>
-        public static ResourceUsages ResourceUsages(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotaUsagesBase properties = null)
+        /// <returns> A new <see cref="Models.GroupQuotaResourceUsages"/> instance for mocking. </returns>
+        public static GroupQuotaResourceUsages GroupQuotaResourceUsages(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotaUsagesBase properties = null)
         {
-            return new ResourceUsages(
+            return new GroupQuotaResourceUsages(
                 id,
                 name,
                 resourceType,
@@ -334,16 +334,16 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotasEnforcementResponseData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota.GroupQuotaEnforcementData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Quota.GroupQuotasEnforcementResponseData"/> instance for mocking. </returns>
-        public static GroupQuotasEnforcementResponseData GroupQuotasEnforcementResponseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotasEnforcementResponseProperties properties = null)
+        /// <returns> A new <see cref="Quota.GroupQuotaEnforcementData"/> instance for mocking. </returns>
+        public static GroupQuotaEnforcementData GroupQuotaEnforcementData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GroupQuotaEnforcementProperties properties = null)
         {
-            return new GroupQuotasEnforcementResponseData(
+            return new GroupQuotaEnforcementData(
                 id,
                 name,
                 resourceType,
@@ -352,14 +352,14 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotasEnforcementResponseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaEnforcementProperties"/>. </summary>
         /// <param name="enforcementEnabled"> Is the GroupQuota Enforcement enabled for the Azure region. </param>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="faultCode"> Details of the failure. </param>
-        /// <returns> A new <see cref="Models.GroupQuotasEnforcementResponseProperties"/> instance for mocking. </returns>
-        public static GroupQuotasEnforcementResponseProperties GroupQuotasEnforcementResponseProperties(EnforcementState? enforcementEnabled = null, RequestState? provisioningState = null, string faultCode = null)
+        /// <returns> A new <see cref="Models.GroupQuotaEnforcementProperties"/> instance for mocking. </returns>
+        public static GroupQuotaEnforcementProperties GroupQuotaEnforcementProperties(GroupQuotaEnforcementState? enforcementEnabled = null, QuotaRequestStatus? provisioningState = null, string faultCode = null)
         {
-            return new GroupQuotasEnforcementResponseProperties(enforcementEnabled, provisioningState, faultCode, serializedAdditionalRawData: null);
+            return new GroupQuotaEnforcementProperties(enforcementEnabled, provisioningState, faultCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Quota.CurrentUsagesBaseData"/>. </summary>

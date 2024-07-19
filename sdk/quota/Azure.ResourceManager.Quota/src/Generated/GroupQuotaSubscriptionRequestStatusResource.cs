@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Quota
     /// A Class representing a GroupQuotaSubscriptionRequestStatus along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GroupQuotaSubscriptionRequestStatusResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetGroupQuotaSubscriptionRequestStatusResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GroupQuotasEntityResource"/> using the GetGroupQuotaSubscriptionRequestStatus method.
+    /// Otherwise you can get one from its parent resource <see cref="GroupQuotaEntityResource"/> using the GetGroupQuotaSubscriptionRequestStatus method.
     /// </summary>
     public partial class GroupQuotaSubscriptionRequestStatusResource : ArmResource
     {

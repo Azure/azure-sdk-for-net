@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this GroupQuotasEntityResource
-            GroupQuotasEntityCollection collection = managementGroupResource.GetGroupQuotasEntities();
+            GroupQuotaEntityCollection collection = managementGroupResource.GetGroupQuotaEntities();
 
             // invoke the operation
             string groupQuotaName = "sdk-test-group-quota-create";
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // Builds the Group Quota Request Body
             GroupQuotasEntityData data = new GroupQuotasEntityData()
             {
-                Properties = new GroupQuotasEntityBase()
+                Properties = new GroupQuotaEntityBase()
                 {
                     DisplayName = "sdk-test-group-quota-create",
-                    AdditionalAttributes = new AdditionalAttributes(new GroupingId()
+                    AdditionalAttributes = new GroupQuotaAdditionalAttributes(new GroupQuotaGroupingId()
                     {
-                        GroupingIdType = GroupingIdType.BillingId,
+                        GroupingIdType = GroupQuotaGroupingIdType.BillingId,
                         Value = "ad41a99f-9c42-4b3d-9770-e711a24d8542",
                     })
                 },
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this GroupQuotasEntityResource
-            var collection = managementGroupResource.GetGroupQuotasEntities();
+            var collection = managementGroupResource.GetGroupQuotaEntities();
 
             // Performs the GET operation on a Group Quota resource
             string groupQuotaName = "sdk-test-group-quota";
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // Create the Group Quota Limit Request Body
             SubmittedResourceRequestStatusData requestBody = new SubmittedResourceRequestStatusData()
             {
-                Properties = new SubmittedResourceRequestStatusProperties()
+                Properties = new GroupQuotaRequestStatusProperties()
                 {
                     RequestedResource = new GroupQuotaRequestBase()
                     {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
 
             // get the collection of this GroupQuotaSubscriptionIdResource
-            GroupQuotaSubscriptionIdCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptionIds();
+            GroupQuotaSubscriptionCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptions();
 
             // Add a Subscription to the Group Quota Object
             var response = await collection.CreateOrUpdateAsync(WaitUntil.Started, defaultSubscriptionId);

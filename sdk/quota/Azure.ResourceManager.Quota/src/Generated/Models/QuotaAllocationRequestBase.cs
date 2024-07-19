@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </summary>
+        [WirePath("properties.limit")]
         public long? Limit { get; set; }
         /// <summary> The location for which the subscription is allocated. </summary>
+        [WirePath("properties.region")]
         public string Region { get; set; }
         /// <summary> Resource name. </summary>
+        [WirePath("properties.value")]
         public string Value { get; }
         /// <summary> Resource display name. </summary>
+        [WirePath("properties.localizedValue")]
         public string LocalizedValue { get; }
     }
 }

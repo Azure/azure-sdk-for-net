@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Quota
     /// A Class representing a GroupQuotaLimit along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GroupQuotaLimitResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetGroupQuotaLimitResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GroupQuotasEntityResource"/> using the GetGroupQuotaLimit method.
+    /// Otherwise you can get one from its parent resource <see cref="GroupQuotaEntityResource"/> using the GetGroupQuotaLimit method.
     /// </summary>
     public partial class GroupQuotaLimitResource : ArmResource
     {

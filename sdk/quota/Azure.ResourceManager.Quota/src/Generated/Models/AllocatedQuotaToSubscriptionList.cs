@@ -48,19 +48,20 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of <see cref="AllocatedQuotaToSubscriptionList"/>. </summary>
         internal AllocatedQuotaToSubscriptionList()
         {
-            Value = new ChangeTrackingList<AllocatedToSubscription>();
+            Value = new ChangeTrackingList<SubscriptionAllocatedQuota>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AllocatedQuotaToSubscriptionList"/>. </summary>
         /// <param name="value"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AllocatedQuotaToSubscriptionList(IReadOnlyList<AllocatedToSubscription> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AllocatedQuotaToSubscriptionList(IReadOnlyList<SubscriptionAllocatedQuota> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
-        public IReadOnlyList<AllocatedToSubscription> Value { get; }
+        [WirePath("value")]
+        public IReadOnlyList<SubscriptionAllocatedQuota> Value { get; }
     }
 }

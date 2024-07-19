@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A class representing a collection of <see cref="GroupQuotaLimitResource"/> and their operations.
-    /// Each <see cref="GroupQuotaLimitResource"/> in the collection will belong to the same instance of <see cref="GroupQuotasEntityResource"/>.
-    /// To get a <see cref="GroupQuotaLimitCollection"/> instance call the GetGroupQuotaLimits method from an instance of <see cref="GroupQuotasEntityResource"/>.
+    /// Each <see cref="GroupQuotaLimitResource"/> in the collection will belong to the same instance of <see cref="GroupQuotaEntityResource"/>.
+    /// To get a <see cref="GroupQuotaLimitCollection"/> instance call the GetGroupQuotaLimits method from an instance of <see cref="GroupQuotaEntityResource"/>.
     /// </summary>
     public partial class GroupQuotaLimitCollection : ArmCollection
     {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Quota
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != GroupQuotasEntityResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotasEntityResource.ResourceType), nameof(id));
+            if (id.ResourceType != GroupQuotaEntityResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), nameof(id));
         }
 
         /// <summary>

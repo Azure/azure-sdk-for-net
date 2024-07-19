@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="requestSubmitOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Status of this subscriptionId being associated with the GroupQuotasEntity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaSubscriptionRequestStatusProperties(string subscriptionId, DateTimeOffset? requestSubmitOn, RequestState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupQuotaSubscriptionRequestStatusProperties(string subscriptionId, DateTimeOffset? requestSubmitOn, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             RequestSubmitOn = requestSubmitOn;
@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The subscription Id. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
         /// <summary> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        [WirePath("requestSubmitTime")]
         public DateTimeOffset? RequestSubmitOn { get; set; }
         /// <summary> Status of this subscriptionId being associated with the GroupQuotasEntity. </summary>
-        public RequestState? ProvisioningState { get; }
+        [WirePath("provisioningState")]
+        public QuotaRequestStatus? ProvisioningState { get; }
     }
 }

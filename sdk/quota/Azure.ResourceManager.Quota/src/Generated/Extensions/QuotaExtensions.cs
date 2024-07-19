@@ -343,41 +343,41 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GroupQuotasEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GroupQuotasEntityResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotasEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GroupQuotaEntityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaEntityResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotasEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaEntityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GroupQuotasEntityResource"/> object. </returns>
-        public static GroupQuotasEntityResource GetGroupQuotasEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaEntityResource"/> object. </returns>
+        public static GroupQuotaEntityResource GetGroupQuotaEntityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetGroupQuotasEntityResource(id);
+            return GetMockableQuotaArmClient(client).GetGroupQuotaEntityResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GroupQuotaSubscriptionIdResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GroupQuotaSubscriptionIdResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaSubscriptionIdResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GroupQuotaSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaSubscriptionIdResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaSubscriptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GroupQuotaSubscriptionIdResource"/> object. </returns>
-        public static GroupQuotaSubscriptionIdResource GetGroupQuotaSubscriptionIdResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaSubscriptionResource"/> object. </returns>
+        public static GroupQuotaSubscriptionResource GetGroupQuotaSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetGroupQuotaSubscriptionIdResource(id);
+            return GetMockableQuotaArmClient(client).GetGroupQuotaSubscriptionResource(id);
         }
 
         /// <summary>
@@ -419,22 +419,22 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubmittedResourceRequestStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubmittedResourceRequestStatusResource.CreateResourceIdentifier" /> to create a <see cref="SubmittedResourceRequestStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GroupQuotaRequestStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaRequestStatusResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaRequestStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetSubmittedResourceRequestStatusResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaRequestStatusResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SubmittedResourceRequestStatusResource"/> object. </returns>
-        public static SubmittedResourceRequestStatusResource GetSubmittedResourceRequestStatusResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaRequestStatusResource"/> object. </returns>
+        public static GroupQuotaRequestStatusResource GetGroupQuotaRequestStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetSubmittedResourceRequestStatusResource(id);
+            return GetMockableQuotaArmClient(client).GetGroupQuotaRequestStatusResource(id);
         }
 
         /// <summary>
@@ -476,22 +476,22 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GroupQuotasEnforcementResponseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GroupQuotasEnforcementResponseResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotasEnforcementResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GroupQuotaEnforcementResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaEnforcementResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaEnforcementResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotasEnforcementResponseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetGroupQuotaEnforcementResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GroupQuotasEnforcementResponseResource"/> object. </returns>
-        public static GroupQuotasEnforcementResponseResource GetGroupQuotasEnforcementResponseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaEnforcementResource"/> object. </returns>
+        public static GroupQuotaEnforcementResource GetGroupQuotaEnforcementResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableQuotaArmClient(client).GetGroupQuotasEnforcementResponseResource(id);
+            return GetMockableQuotaArmClient(client).GetGroupQuotaEnforcementResource(id);
         }
 
         /// <summary>
@@ -552,20 +552,20 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Gets a collection of GroupQuotasEntityResources in the ManagementGroupResource.
+        /// Gets a collection of GroupQuotaEntityResources in the ManagementGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetGroupQuotasEntities()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetGroupQuotaEntities()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of GroupQuotasEntityResources and their operations over a GroupQuotasEntityResource. </returns>
-        public static GroupQuotasEntityCollection GetGroupQuotasEntities(this ManagementGroupResource managementGroupResource)
+        /// <returns> An object representing collection of GroupQuotaEntityResources and their operations over a GroupQuotaEntityResource. </returns>
+        public static GroupQuotaEntityCollection GetGroupQuotaEntities(this ManagementGroupResource managementGroupResource)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotasEntities();
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotaEntities();
         }
 
         /// <summary>
@@ -585,12 +585,12 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GroupQuotasEntityResource"/></description>
+        /// <description><see cref="GroupQuotaEntityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetGroupQuotasEntityAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetGroupQuotaEntityAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
@@ -599,11 +599,11 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> or <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<GroupQuotasEntityResource>> GetGroupQuotasEntityAsync(this ManagementGroupResource managementGroupResource, string groupQuotaName, CancellationToken cancellationToken = default)
+        public static async Task<Response<GroupQuotaEntityResource>> GetGroupQuotaEntityAsync(this ManagementGroupResource managementGroupResource, string groupQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return await GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotasEntityAsync(groupQuotaName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotaEntityAsync(groupQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -623,12 +623,12 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GroupQuotasEntityResource"/></description>
+        /// <description><see cref="GroupQuotaEntityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetGroupQuotasEntity(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaManagementGroupResource.GetGroupQuotaEntity(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
@@ -637,11 +637,11 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> or <paramref name="groupQuotaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<GroupQuotasEntityResource> GetGroupQuotasEntity(this ManagementGroupResource managementGroupResource, string groupQuotaName, CancellationToken cancellationToken = default)
+        public static Response<GroupQuotaEntityResource> GetGroupQuotaEntity(this ManagementGroupResource managementGroupResource, string groupQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotasEntity(groupQuotaName, cancellationToken);
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetGroupQuotaEntity(groupQuotaName, cancellationToken);
         }
 
         /// <summary>
