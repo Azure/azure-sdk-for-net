@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+* Fixed a bug in LiveMetrics that counted all manually created Dependencies as failures.
+  ([]())
+
 ### Other Changes
 
 ## 1.3.0-beta.1 (2024-07-12)

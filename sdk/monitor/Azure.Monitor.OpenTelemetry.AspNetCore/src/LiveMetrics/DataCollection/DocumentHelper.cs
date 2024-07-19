@@ -152,8 +152,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                     // TODO MESSAGING
                     break;
                 default:
-                    // Unknown or Unexpected Dependency Type
-                    remoteDependencyDocument.Name = liveMetricsTagsProcessor.ActivityType.ToString();
+                    // Unknown or Manual or Unexpected Dependency Type
+                    remoteDependencyDocument.Name = activity.DisplayName;
+
+                    remoteDependencyDocument.Properties.Add(new KeyValuePairString("ActivityType", liveMetricsTagsProcessor.ActivityType.ToString()));
+                    remoteDependencyDocument.Properties.Add(new KeyValuePairString("ActivitySource", activity.Source.Name));
+
+                    // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
+                    remoteDependencyDocument.Extension_IsSuccess = activity.Status != ActivityStatusCode.Error;
                     break;
             }
 
