@@ -50,7 +50,7 @@ Param (
 )
 
 function Log-Warning($message) {
-    Write-Host "##vso[task.logissue type=warning]$message"
+    Write-Host "##vso[task.logissue type=warning;]$message"
 }
 
 function UpdateDocIndexFiles([string]$docPath, [string] $mainJsPath) {
@@ -140,7 +140,7 @@ if ($LibType -eq 'client') {
 }
 
 Write-Verbose "Remove all unneeded artifacts from build output directory"
-Remove-Item –Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml" -Recurse -Force
+Remove-Item -Path "${ApiDir}/*" -Include * -Exclude "${ArtifactName}.dll", "${ArtifactName}.xml" -Recurse -Force
 
 Write-Verbose "Initialize Frameworks File"
 & "${MDocTool}" fx-bootstrap "${FrameworkDir}"
