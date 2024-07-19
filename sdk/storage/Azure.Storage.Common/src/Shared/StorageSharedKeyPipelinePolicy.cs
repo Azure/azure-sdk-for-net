@@ -222,9 +222,9 @@ namespace Azure.Storage
 
                 while (currentLevel < s_tables.Length)
                 {
-                    if (currentLevel < s_tables.Length - 1 && i != j)
+                    if (currentLevel == s_tables.Length - 1 && i != j)
                     {
-                        return i - j;
+                        return j - i;
                     }
 
                     int weight1 = i < x.Length ? s_tables[currentLevel][x[i]] : 0x1;
