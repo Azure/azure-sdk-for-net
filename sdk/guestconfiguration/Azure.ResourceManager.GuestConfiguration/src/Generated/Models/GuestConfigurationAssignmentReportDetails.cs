@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Details of the guest configuration assignment report. </summary>
+    /// <summary>
+    /// Details of the guest configuration assignment report.
+    /// Serialized Name: AssignmentReportDetails
+    /// </summary>
     public partial class GuestConfigurationAssignmentReportDetails
     {
         /// <summary>
@@ -52,12 +55,30 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportDetails"/>. </summary>
-        /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
-        /// <param name="startOn"> Start date and time of the guest configuration assignment compliance status check. </param>
-        /// <param name="endOn"> End date and time of the guest configuration assignment compliance status check. </param>
-        /// <param name="jobId"> GUID of the report. </param>
-        /// <param name="operationType"> Type of report, Consistency or Initial. </param>
-        /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
+        /// <param name="complianceStatus">
+        /// A value indicating compliance status of the machine for the assigned guest configuration.
+        /// Serialized Name: AssignmentReportDetails.complianceStatus
+        /// </param>
+        /// <param name="startOn">
+        /// Start date and time of the guest configuration assignment compliance status check.
+        /// Serialized Name: AssignmentReportDetails.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End date and time of the guest configuration assignment compliance status check.
+        /// Serialized Name: AssignmentReportDetails.endTime
+        /// </param>
+        /// <param name="jobId">
+        /// GUID of the report.
+        /// Serialized Name: AssignmentReportDetails.jobId
+        /// </param>
+        /// <param name="operationType">
+        /// Type of report, Consistency or Initial
+        /// Serialized Name: AssignmentReportDetails.operationType
+        /// </param>
+        /// <param name="resources">
+        /// The list of resources for which guest configuration assignment compliance is checked.
+        /// Serialized Name: AssignmentReportDetails.resources
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? jobId, GuestConfigurationAssignmentReportType? operationType, IReadOnlyList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,17 +91,41 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+        /// <summary>
+        /// A value indicating compliance status of the machine for the assigned guest configuration.
+        /// Serialized Name: AssignmentReportDetails.complianceStatus
+        /// </summary>
+        [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
-        /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
+        /// <summary>
+        /// Start date and time of the guest configuration assignment compliance status check.
+        /// Serialized Name: AssignmentReportDetails.startTime
+        /// </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
+        /// <summary>
+        /// End date and time of the guest configuration assignment compliance status check.
+        /// Serialized Name: AssignmentReportDetails.endTime
+        /// </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary> GUID of the report. </summary>
+        /// <summary>
+        /// GUID of the report.
+        /// Serialized Name: AssignmentReportDetails.jobId
+        /// </summary>
+        [WirePath("jobId")]
         public Guid? JobId { get; }
-        /// <summary> Type of report, Consistency or Initial. </summary>
+        /// <summary>
+        /// Type of report, Consistency or Initial
+        /// Serialized Name: AssignmentReportDetails.operationType
+        /// </summary>
+        [WirePath("operationType")]
         public GuestConfigurationAssignmentReportType? OperationType { get; }
-        /// <summary> The list of resources for which guest configuration assignment compliance is checked. </summary>
+        /// <summary>
+        /// The list of resources for which guest configuration assignment compliance is checked.
+        /// Serialized Name: AssignmentReportDetails.resources
+        /// </summary>
+        [WirePath("resources")]
         public IReadOnlyList<AssignmentReportResourceInfo> Resources { get; }
     }
 }

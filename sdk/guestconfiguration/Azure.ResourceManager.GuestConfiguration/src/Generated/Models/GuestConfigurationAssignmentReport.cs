@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>
+    /// <summary>
+    /// Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more.
+    /// Serialized Name: GuestConfigurationAssignmentReport
+    /// </summary>
     public partial class GuestConfigurationAssignmentReport
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReport"/>. </summary>
-        /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
-        /// <param name="name"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
-        /// <param name="properties"> Properties of the guest configuration report. </param>
+        /// <param name="id">
+        /// ARM resource id of the report for the guest configuration assignment.
+        /// Serialized Name: GuestConfigurationAssignmentReport.id
+        /// </param>
+        /// <param name="name">
+        /// GUID that identifies the guest configuration assignment report under a subscription, resource group.
+        /// Serialized Name: GuestConfigurationAssignmentReport.name
+        /// </param>
+        /// <param name="properties">
+        /// Properties of the guest configuration report.
+        /// Serialized Name: GuestConfigurationAssignmentReport.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationAssignmentReport(ResourceIdentifier id, string name, GuestConfigurationAssignmentReportProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +76,23 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ARM resource id of the report for the guest configuration assignment. </summary>
+        /// <summary>
+        /// ARM resource id of the report for the guest configuration assignment.
+        /// Serialized Name: GuestConfigurationAssignmentReport.id
+        /// </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
-        /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
+        /// <summary>
+        /// GUID that identifies the guest configuration assignment report under a subscription, resource group.
+        /// Serialized Name: GuestConfigurationAssignmentReport.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; }
-        /// <summary> Properties of the guest configuration report. </summary>
+        /// <summary>
+        /// Properties of the guest configuration report.
+        /// Serialized Name: GuestConfigurationAssignmentReport.properties
+        /// </summary>
+        [WirePath("properties")]
         public GuestConfigurationAssignmentReportProperties Properties { get; }
     }
 }

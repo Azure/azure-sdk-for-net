@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Information about the guest configuration assignment. </summary>
+    /// <summary>
+    /// Information about the guest configuration assignment.
+    /// Serialized Name: AssignmentInfo
+    /// </summary>
     public partial class GuestConfigurationAssignmentInfo
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentInfo"/>. </summary>
-        /// <param name="name"> Name of the guest configuration assignment. </param>
-        /// <param name="configuration"> Information about the configuration. </param>
+        /// <param name="name">
+        /// Name of the guest configuration assignment.
+        /// Serialized Name: AssignmentInfo.name
+        /// </param>
+        /// <param name="configuration">
+        /// Information about the configuration.
+        /// Serialized Name: AssignmentInfo.configuration
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationAssignmentInfo(string name, GuestConfigurationInfo configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the guest configuration assignment. </summary>
+        /// <summary>
+        /// Name of the guest configuration assignment.
+        /// Serialized Name: AssignmentInfo.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; }
-        /// <summary> Information about the configuration. </summary>
+        /// <summary>
+        /// Information about the configuration.
+        /// Serialized Name: AssignmentInfo.configuration
+        /// </summary>
+        [WirePath("configuration")]
         public GuestConfigurationInfo Configuration { get; set; }
     }
 }

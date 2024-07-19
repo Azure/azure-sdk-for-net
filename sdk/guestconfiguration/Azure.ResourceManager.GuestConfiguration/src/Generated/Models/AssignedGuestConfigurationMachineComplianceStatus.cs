@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+    /// <summary>
+    /// A value indicating compliance status of the machine for the assigned guest configuration.
+    /// Serialized Name: ComplianceStatus
+    /// </summary>
     public readonly partial struct AssignedGuestConfigurationMachineComplianceStatus : IEquatable<AssignedGuestConfigurationMachineComplianceStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         private const string NonCompliantValue = "NonCompliant";
         private const string PendingValue = "Pending";
 
-        /// <summary> Compliant. </summary>
+        /// <summary>
+        /// Compliant
+        /// Serialized Name: ComplianceStatus.Compliant
+        /// </summary>
         public static AssignedGuestConfigurationMachineComplianceStatus Compliant { get; } = new AssignedGuestConfigurationMachineComplianceStatus(CompliantValue);
-        /// <summary> NonCompliant. </summary>
+        /// <summary>
+        /// NonCompliant
+        /// Serialized Name: ComplianceStatus.NonCompliant
+        /// </summary>
         public static AssignedGuestConfigurationMachineComplianceStatus NonCompliant { get; } = new AssignedGuestConfigurationMachineComplianceStatus(NonCompliantValue);
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: ComplianceStatus.Pending
+        /// </summary>
         public static AssignedGuestConfigurationMachineComplianceStatus Pending { get; } = new AssignedGuestConfigurationMachineComplianceStatus(PendingValue);
         /// <summary> Determines if two <see cref="AssignedGuestConfigurationMachineComplianceStatus"/> values are the same. </summary>
         public static bool operator ==(AssignedGuestConfigurationMachineComplianceStatus left, AssignedGuestConfigurationMachineComplianceStatus right) => left.Equals(right);

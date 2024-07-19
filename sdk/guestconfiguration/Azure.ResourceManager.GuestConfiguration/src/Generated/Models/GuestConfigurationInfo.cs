@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Information about the configuration. </summary>
+    /// <summary>
+    /// Information about the configuration.
+    /// Serialized Name: ConfigurationInfo
+    /// </summary>
     public partial class GuestConfigurationInfo
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationInfo"/>. </summary>
-        /// <param name="name"> Name of the configuration. </param>
-        /// <param name="version"> Version of the configuration. </param>
+        /// <param name="name">
+        /// Name of the configuration.
+        /// Serialized Name: ConfigurationInfo.name
+        /// </param>
+        /// <param name="version">
+        /// Version of the configuration.
+        /// Serialized Name: ConfigurationInfo.version
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationInfo(string name, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the configuration. </summary>
+        /// <summary>
+        /// Name of the configuration.
+        /// Serialized Name: ConfigurationInfo.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; }
-        /// <summary> Version of the configuration. </summary>
+        /// <summary>
+        /// Version of the configuration.
+        /// Serialized Name: ConfigurationInfo.version
+        /// </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

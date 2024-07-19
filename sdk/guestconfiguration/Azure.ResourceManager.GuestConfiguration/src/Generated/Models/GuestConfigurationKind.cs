@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Kind of the guest configuration. For example:DSC. </summary>
+    /// <summary>
+    /// Kind of the guest configuration. For example:DSC
+    /// Serialized Name: Kind
+    /// </summary>
     public readonly partial struct GuestConfigurationKind : IEquatable<GuestConfigurationKind>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         private const string DscValue = "DSC";
 
-        /// <summary> DSC. </summary>
+        /// <summary>
+        /// DSC
+        /// Serialized Name: Kind.DSC
+        /// </summary>
         public static GuestConfigurationKind Dsc { get; } = new GuestConfigurationKind(DscValue);
         /// <summary> Determines if two <see cref="GuestConfigurationKind"/> values are the same. </summary>
         public static bool operator ==(GuestConfigurationKind left, GuestConfigurationKind right) => left.Equals(right);

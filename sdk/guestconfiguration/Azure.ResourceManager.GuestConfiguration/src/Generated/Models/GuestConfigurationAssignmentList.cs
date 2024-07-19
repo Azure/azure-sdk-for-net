@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> The response of the list guest configuration assignment operation. </summary>
+    /// <summary>
+    /// The response of the list guest configuration assignment operation.
+    /// Serialized Name: GuestConfigurationAssignmentList
+    /// </summary>
     internal partial class GuestConfigurationAssignmentList
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentList"/>. </summary>
-        /// <param name="value"> Result of the list guest configuration assignment operation. </param>
+        /// <param name="value">
+        /// Result of the list guest configuration assignment operation.
+        /// Serialized Name: GuestConfigurationAssignmentList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationAssignmentList(IReadOnlyList<GuestConfigurationAssignmentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of the list guest configuration assignment operation. </summary>
+        /// <summary>
+        /// Result of the list guest configuration assignment operation.
+        /// Serialized Name: GuestConfigurationAssignmentList.value
+        /// </summary>
         public IReadOnlyList<GuestConfigurationAssignmentData> Value { get; }
     }
 }

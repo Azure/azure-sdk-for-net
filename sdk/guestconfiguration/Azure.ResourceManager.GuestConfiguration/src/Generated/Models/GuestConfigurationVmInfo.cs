@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Information about the VM. </summary>
+    /// <summary>
+    /// Information about the VM.
+    /// Serialized Name: VMInfo
+    /// </summary>
     public partial class GuestConfigurationVmInfo
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmInfo"/>. </summary>
-        /// <param name="id"> Azure resource Id of the VM. </param>
-        /// <param name="uuid"> UUID(Universally Unique Identifier) of the VM. </param>
+        /// <param name="id">
+        /// Azure resource Id of the VM.
+        /// Serialized Name: VMInfo.id
+        /// </param>
+        /// <param name="uuid">
+        /// UUID(Universally Unique Identifier) of the VM.
+        /// Serialized Name: VMInfo.uuid
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationVmInfo(ResourceIdentifier id, Guid? uuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure resource Id of the VM. </summary>
+        /// <summary>
+        /// Azure resource Id of the VM.
+        /// Serialized Name: VMInfo.id
+        /// </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
-        /// <summary> UUID(Universally Unique Identifier) of the VM. </summary>
+        /// <summary>
+        /// UUID(Universally Unique Identifier) of the VM.
+        /// Serialized Name: VMInfo.uuid
+        /// </summary>
+        [WirePath("uuid")]
         public Guid? Uuid { get; }
     }
 }

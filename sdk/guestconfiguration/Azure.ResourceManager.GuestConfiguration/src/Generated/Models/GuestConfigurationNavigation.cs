@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Guest configuration is an artifact that encapsulates DSC configuration and its dependencies. The artifact is a zip file containing DSC configuration (as MOF) and dependent resources and other dependencies like modules. </summary>
+    /// <summary>
+    /// Guest configuration is an artifact that encapsulates DSC configuration and its dependencies. The artifact is a zip file containing DSC configuration (as MOF) and dependent resources and other dependencies like modules.
+    /// Serialized Name: GuestConfigurationNavigation
+    /// </summary>
     public partial class GuestConfigurationNavigation
     {
         /// <summary>
@@ -53,18 +56,54 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
-        /// <param name="kind"> Kind of the guest configuration. For example:DSC. </param>
-        /// <param name="name"> Name of the guest configuration. </param>
-        /// <param name="version"> Version of the guest configuration. </param>
-        /// <param name="contentUri"> Uri of the storage where guest configuration package is uploaded. </param>
-        /// <param name="contentHash"> Combined hash of the guest configuration package and configuration parameters. </param>
-        /// <param name="contentManagedIdentity"> Managed identity with storage access of the guest configuration package and configuration parameters. </param>
-        /// <param name="assignmentType"> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </param>
-        /// <param name="assignmentSource"> Specifies the origin of the configuration. </param>
-        /// <param name="contentType"> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </param>
-        /// <param name="configurationParameters"> The configuration parameters for the guest configuration. </param>
-        /// <param name="configurationProtectedParameters"> The protected configuration parameters for the guest configuration. </param>
-        /// <param name="configurationSetting"> The configuration setting for the guest configuration. </param>
+        /// <param name="kind">
+        /// Kind of the guest configuration. For example:DSC
+        /// Serialized Name: GuestConfigurationNavigation.kind
+        /// </param>
+        /// <param name="name">
+        /// Name of the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.name
+        /// </param>
+        /// <param name="version">
+        /// Version of the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.version
+        /// </param>
+        /// <param name="contentUri">
+        /// Uri of the storage where guest configuration package is uploaded.
+        /// Serialized Name: GuestConfigurationNavigation.contentUri
+        /// </param>
+        /// <param name="contentHash">
+        /// Combined hash of the guest configuration package and configuration parameters.
+        /// Serialized Name: GuestConfigurationNavigation.contentHash
+        /// </param>
+        /// <param name="contentManagedIdentity">
+        /// Managed identity with storage access of the guest configuration package and configuration parameters.
+        /// Serialized Name: GuestConfigurationNavigation.contentManagedIdentity
+        /// </param>
+        /// <param name="assignmentType">
+        /// Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor.
+        /// Serialized Name: GuestConfigurationNavigation.assignmentType
+        /// </param>
+        /// <param name="assignmentSource">
+        /// Specifies the origin of the configuration.
+        /// Serialized Name: GuestConfigurationNavigation.assignmentSource
+        /// </param>
+        /// <param name="contentType">
+        /// Specifies the content type of the configuration. Possible values could be Builtin or Custom.
+        /// Serialized Name: GuestConfigurationNavigation.contentType
+        /// </param>
+        /// <param name="configurationParameters">
+        /// The configuration parameters for the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.configurationParameter
+        /// </param>
+        /// <param name="configurationProtectedParameters">
+        /// The protected configuration parameters for the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.configurationProtectedParameter
+        /// </param>
+        /// <param name="configurationSetting">
+        /// The configuration setting for the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.configurationSetting
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationNavigation(GuestConfigurationKind? kind, string name, string version, Uri contentUri, string contentHash, string contentManagedIdentity, GuestConfigurationAssignmentType? assignmentType, string assignmentSource, string contentType, IList<GuestConfigurationParameter> configurationParameters, IList<GuestConfigurationParameter> configurationProtectedParameters, LcmConfigurationSetting configurationSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -83,29 +122,77 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Kind of the guest configuration. For example:DSC. </summary>
+        /// <summary>
+        /// Kind of the guest configuration. For example:DSC
+        /// Serialized Name: GuestConfigurationNavigation.kind
+        /// </summary>
+        [WirePath("kind")]
         public GuestConfigurationKind? Kind { get; set; }
-        /// <summary> Name of the guest configuration. </summary>
+        /// <summary>
+        /// Name of the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.name
+        /// </summary>
+        [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Version of the guest configuration. </summary>
+        /// <summary>
+        /// Version of the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.version
+        /// </summary>
+        [WirePath("version")]
         public string Version { get; set; }
-        /// <summary> Uri of the storage where guest configuration package is uploaded. </summary>
+        /// <summary>
+        /// Uri of the storage where guest configuration package is uploaded.
+        /// Serialized Name: GuestConfigurationNavigation.contentUri
+        /// </summary>
+        [WirePath("contentUri")]
         public Uri ContentUri { get; set; }
-        /// <summary> Combined hash of the guest configuration package and configuration parameters. </summary>
+        /// <summary>
+        /// Combined hash of the guest configuration package and configuration parameters.
+        /// Serialized Name: GuestConfigurationNavigation.contentHash
+        /// </summary>
+        [WirePath("contentHash")]
         public string ContentHash { get; set; }
-        /// <summary> Managed identity with storage access of the guest configuration package and configuration parameters. </summary>
+        /// <summary>
+        /// Managed identity with storage access of the guest configuration package and configuration parameters.
+        /// Serialized Name: GuestConfigurationNavigation.contentManagedIdentity
+        /// </summary>
+        [WirePath("contentManagedIdentity")]
         public string ContentManagedIdentity { get; set; }
-        /// <summary> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </summary>
+        /// <summary>
+        /// Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor.
+        /// Serialized Name: GuestConfigurationNavigation.assignmentType
+        /// </summary>
+        [WirePath("assignmentType")]
         public GuestConfigurationAssignmentType? AssignmentType { get; set; }
-        /// <summary> Specifies the origin of the configuration. </summary>
+        /// <summary>
+        /// Specifies the origin of the configuration.
+        /// Serialized Name: GuestConfigurationNavigation.assignmentSource
+        /// </summary>
+        [WirePath("assignmentSource")]
         public string AssignmentSource { get; }
-        /// <summary> Specifies the content type of the configuration. Possible values could be Builtin or Custom. </summary>
+        /// <summary>
+        /// Specifies the content type of the configuration. Possible values could be Builtin or Custom.
+        /// Serialized Name: GuestConfigurationNavigation.contentType
+        /// </summary>
+        [WirePath("contentType")]
         public string ContentType { get; }
-        /// <summary> The configuration parameters for the guest configuration. </summary>
+        /// <summary>
+        /// The configuration parameters for the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.configurationParameter
+        /// </summary>
+        [WirePath("configurationParameter")]
         public IList<GuestConfigurationParameter> ConfigurationParameters { get; }
-        /// <summary> The protected configuration parameters for the guest configuration. </summary>
+        /// <summary>
+        /// The protected configuration parameters for the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.configurationProtectedParameter
+        /// </summary>
+        [WirePath("configurationProtectedParameter")]
         public IList<GuestConfigurationParameter> ConfigurationProtectedParameters { get; }
-        /// <summary> The configuration setting for the guest configuration. </summary>
+        /// <summary>
+        /// The configuration setting for the guest configuration.
+        /// Serialized Name: GuestConfigurationNavigation.configurationSetting
+        /// </summary>
+        [WirePath("configurationSetting")]
         public LcmConfigurationSetting ConfigurationSetting { get; }
     }
 }

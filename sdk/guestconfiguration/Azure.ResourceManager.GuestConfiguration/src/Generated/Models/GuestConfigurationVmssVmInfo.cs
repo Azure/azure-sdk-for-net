@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Information about VMSS VM. </summary>
+    /// <summary>
+    /// Information about VMSS VM
+    /// Serialized Name: VmssvmInfo
+    /// </summary>
     public partial class GuestConfigurationVmssVmInfo
     {
         /// <summary>
@@ -52,11 +55,26 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmssVmInfo"/>. </summary>
-        /// <param name="vmId"> UUID of the VM. </param>
-        /// <param name="vmResourceId"> Azure resource Id of the VM. </param>
-        /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
-        /// <param name="latestReportId"> Id of the latest report for the guest configuration assignment. </param>
-        /// <param name="lastComplianceCheckedOn"> Date and time when last compliance status was checked. </param>
+        /// <param name="vmId">
+        /// UUID of the VM.
+        /// Serialized Name: VmssvmInfo.vmId
+        /// </param>
+        /// <param name="vmResourceId">
+        /// Azure resource Id of the VM.
+        /// Serialized Name: VmssvmInfo.vmResourceId
+        /// </param>
+        /// <param name="complianceStatus">
+        /// A value indicating compliance status of the machine for the assigned guest configuration.
+        /// Serialized Name: VmssvmInfo.complianceStatus
+        /// </param>
+        /// <param name="latestReportId">
+        /// Id of the latest report for the guest configuration assignment.
+        /// Serialized Name: VmssvmInfo.latestReportId
+        /// </param>
+        /// <param name="lastComplianceCheckedOn">
+        /// Date and time when last compliance status was checked.
+        /// Serialized Name: VmssvmInfo.lastComplianceChecked
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationVmssVmInfo(Guid? vmId, ResourceIdentifier vmResourceId, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, Guid? latestReportId, DateTimeOffset? lastComplianceCheckedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,15 +86,35 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> UUID of the VM. </summary>
+        /// <summary>
+        /// UUID of the VM.
+        /// Serialized Name: VmssvmInfo.vmId
+        /// </summary>
+        [WirePath("vmId")]
         public Guid? VmId { get; }
-        /// <summary> Azure resource Id of the VM. </summary>
+        /// <summary>
+        /// Azure resource Id of the VM.
+        /// Serialized Name: VmssvmInfo.vmResourceId
+        /// </summary>
+        [WirePath("vmResourceId")]
         public ResourceIdentifier VmResourceId { get; }
-        /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+        /// <summary>
+        /// A value indicating compliance status of the machine for the assigned guest configuration.
+        /// Serialized Name: VmssvmInfo.complianceStatus
+        /// </summary>
+        [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
-        /// <summary> Id of the latest report for the guest configuration assignment. </summary>
+        /// <summary>
+        /// Id of the latest report for the guest configuration assignment.
+        /// Serialized Name: VmssvmInfo.latestReportId
+        /// </summary>
+        [WirePath("latestReportId")]
         public Guid? LatestReportId { get; }
-        /// <summary> Date and time when last compliance status was checked. </summary>
+        /// <summary>
+        /// Date and time when last compliance status was checked.
+        /// Serialized Name: VmssvmInfo.lastComplianceChecked
+        /// </summary>
+        [WirePath("lastComplianceChecked")]
         public DateTimeOffset? LastComplianceCheckedOn { get; }
     }
 }

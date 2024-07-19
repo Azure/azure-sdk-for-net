@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Type of report, Consistency or Initial. </summary>
+    /// <summary>
+    /// Type of report, Consistency or Initial
+    /// Serialized Name: Type
+    /// </summary>
     public readonly partial struct GuestConfigurationAssignmentReportType : IEquatable<GuestConfigurationAssignmentReportType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         private const string ConsistencyValue = "Consistency";
         private const string InitialValue = "Initial";
 
-        /// <summary> Consistency. </summary>
+        /// <summary>
+        /// Consistency
+        /// Serialized Name: Type.Consistency
+        /// </summary>
         public static GuestConfigurationAssignmentReportType Consistency { get; } = new GuestConfigurationAssignmentReportType(ConsistencyValue);
-        /// <summary> Initial. </summary>
+        /// <summary>
+        /// Initial
+        /// Serialized Name: Type.Initial
+        /// </summary>
         public static GuestConfigurationAssignmentReportType Initial { get; } = new GuestConfigurationAssignmentReportType(InitialValue);
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentReportType"/> values are the same. </summary>
         public static bool operator ==(GuestConfigurationAssignmentReportType left, GuestConfigurationAssignmentReportType right) => left.Equals(right);

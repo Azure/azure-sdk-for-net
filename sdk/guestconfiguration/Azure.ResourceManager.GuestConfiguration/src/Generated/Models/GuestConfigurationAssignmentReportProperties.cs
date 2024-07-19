@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>
+    /// <summary>
+    /// Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more.
+    /// Serialized Name: GuestConfigurationAssignmentReportProperties
+    /// </summary>
     public partial class GuestConfigurationAssignmentReportProperties
     {
         /// <summary>
@@ -51,14 +54,38 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportProperties"/>. </summary>
-        /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
-        /// <param name="reportId"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
-        /// <param name="assignment"> Configuration details of the guest configuration assignment. </param>
-        /// <param name="vm"> Information about the VM. </param>
-        /// <param name="startOn"> Start date and time of the guest configuration assignment compliance status check. </param>
-        /// <param name="endOn"> End date and time of the guest configuration assignment compliance status check. </param>
-        /// <param name="details"> Details of the assignment report. </param>
-        /// <param name="vmssResourceId"> Azure resource Id of the VMSS. </param>
+        /// <param name="complianceStatus">
+        /// A value indicating compliance status of the machine for the assigned guest configuration.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.complianceStatus
+        /// </param>
+        /// <param name="reportId">
+        /// GUID that identifies the guest configuration assignment report under a subscription, resource group.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.reportId
+        /// </param>
+        /// <param name="assignment">
+        /// Configuration details of the guest configuration assignment.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.assignment
+        /// </param>
+        /// <param name="vm">
+        /// Information about the VM.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.vm
+        /// </param>
+        /// <param name="startOn">
+        /// Start date and time of the guest configuration assignment compliance status check.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End date and time of the guest configuration assignment compliance status check.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.endTime
+        /// </param>
+        /// <param name="details">
+        /// Details of the assignment report.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.details
+        /// </param>
+        /// <param name="vmssResourceId">
+        /// Azure resource Id of the VMSS.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.vmssResourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationAssignmentReportProperties(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, GuestConfigurationAssignmentReportDetails details, string vmssResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,21 +100,53 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+        /// <summary>
+        /// A value indicating compliance status of the machine for the assigned guest configuration.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.complianceStatus
+        /// </summary>
+        [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
-        /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
+        /// <summary>
+        /// GUID that identifies the guest configuration assignment report under a subscription, resource group.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.reportId
+        /// </summary>
+        [WirePath("reportId")]
         public Guid? ReportId { get; }
-        /// <summary> Configuration details of the guest configuration assignment. </summary>
+        /// <summary>
+        /// Configuration details of the guest configuration assignment.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.assignment
+        /// </summary>
+        [WirePath("assignment")]
         public GuestConfigurationAssignmentInfo Assignment { get; }
-        /// <summary> Information about the VM. </summary>
+        /// <summary>
+        /// Information about the VM.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.vm
+        /// </summary>
+        [WirePath("vm")]
         public GuestConfigurationVmInfo Vm { get; }
-        /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
+        /// <summary>
+        /// Start date and time of the guest configuration assignment compliance status check.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.startTime
+        /// </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
+        /// <summary>
+        /// End date and time of the guest configuration assignment compliance status check.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.endTime
+        /// </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary> Details of the assignment report. </summary>
+        /// <summary>
+        /// Details of the assignment report.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.details
+        /// </summary>
+        [WirePath("details")]
         public GuestConfigurationAssignmentReportDetails Details { get; }
-        /// <summary> Azure resource Id of the VMSS. </summary>
+        /// <summary>
+        /// Azure resource Id of the VMSS.
+        /// Serialized Name: GuestConfigurationAssignmentReportProperties.vmssResourceId
+        /// </summary>
+        [WirePath("vmssResourceId")]
         public string VmssResourceId { get; }
     }
 }

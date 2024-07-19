@@ -9,6 +9,7 @@ csharp: true
 library-name: GuestConfiguration
 namespace: Azure.ResourceManager.GuestConfiguration
 require: https://github.com/Azure/azure-rest-api-specs/blob/6dd7b1f0b4e62d1c2d78e1fa6ab3addd032d9920/specification/guestconfiguration/resource-manager/readme.md
+#tag: package-2024-04-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -22,6 +23,10 @@ modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
+
+mgmt-debug: 
+  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}: GuestConfigurationVmAssignment
