@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
         /// <param name="logScrubbing"> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </param>
         /// <returns> A new <see cref="Cdn.ProfileData"/> instance for mocking. </returns>
-        public static ProfileData ProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CdnSkuName? skuName = null, string kind = null, ManagedServiceIdentity identity = null, ProfileResourceState? resourceState = null, ProfileProvisioningState? provisioningState = null, IReadOnlyDictionary<string, string> extendedProperties = null, Guid? frontDoorId = null, int? originResponseTimeoutSeconds = null, ProfileLogScrubbing logScrubbing = null)
+        public static ProfileData ProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CdnSkuName? skuName = null, string kind = null, ManagedServiceIdentity identity = null, ProfileResourceState? resourceState = null, ProfileProvisioningState? provisioningState = null, IDictionary<string, string> extendedProperties = null, Guid? frontDoorId = null, int? originResponseTimeoutSeconds = null, ProfileLogScrubbing logScrubbing = null)
         {
             tags ??= new Dictionary<string, string>();
             extendedProperties ??= new Dictionary<string, string>();
