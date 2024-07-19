@@ -16,10 +16,17 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of <see cref="KeysResult"/>. </summary>
         /// <param name="clusters"> Object mapping clusterIds to a list of keys. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusters"/> is null. </exception>
-        internal KeysResult(IReadOnlyDictionary<string, IList<string>> clusters)
+        internal KeysResult(IDictionary<string, IList<string>> clusters)
         {
             Argument.AssertNotNull(clusters, nameof(clusters));
 
+            Clusters = clusters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeysResult"/>. </summary>
+        /// <param name="clusters"> Object mapping clusterIds to a list of keys. </param>
+        internal KeysResult(IReadOnlyDictionary<string, IList<string>> clusters)
+        {
             Clusters = clusters;
         }
 

@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterConfigurations"/>. </summary>
         /// <param name="configurations"> The configuration object for the specified configuration for the specified cluster. </param>
         /// <returns> A new <see cref="Models.HDInsightClusterConfigurations"/> instance for mocking. </returns>
-        public static HDInsightClusterConfigurations HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations = null)
+        public static HDInsightClusterConfigurations HDInsightClusterConfigurations(IDictionary<string, IDictionary<string, string>> configurations = null)
         {
             configurations ??= new Dictionary<string, IDictionary<string, string>>();
 
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="features"> The capability features. </param>
         /// <param name="quota"> The quota capability. </param>
         /// <returns> A new <see cref="Models.HDInsightCapabilitiesResult"/> instance for mocking. </returns>
-        public static HDInsightCapabilitiesResult HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = null, IReadOnlyDictionary<string, RegionsCapability> regions = null, IEnumerable<string> features = null, QuotaCapability quota = null)
+        public static HDInsightCapabilitiesResult HDInsightCapabilitiesResult(IDictionary<string, HDInsightVersionsCapability> versions = null, IDictionary<string, RegionsCapability> regions = null, IEnumerable<string> features = null, QuotaCapability quota = null)
         {
             versions ??= new Dictionary<string, HDInsightVersionsCapability>();
             regions ??= new Dictionary<string, RegionsCapability>();
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="isDefault"> Whether or not the version is the default version. </param>
         /// <param name="componentVersions"> The component version property. </param>
         /// <returns> A new <see cref="Models.HDInsightVersionSpec"/> instance for mocking. </returns>
-        public static HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = null, string displayName = null, bool? isDefault = null, IReadOnlyDictionary<string, string> componentVersions = null)
+        public static HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = null, string displayName = null, bool? isDefault = null, IDictionary<string, string> componentVersions = null)
         {
             componentVersions ??= new Dictionary<string, string>();
 

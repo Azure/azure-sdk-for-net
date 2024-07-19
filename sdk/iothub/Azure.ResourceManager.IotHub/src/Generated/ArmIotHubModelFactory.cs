@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="properties"> The tags. </param>
         /// <param name="etag"> The etag. </param>
         /// <returns> A new <see cref="IotHub.EventHubConsumerGroupInfoData"/> instance for mocking. </returns>
-        public static EventHubConsumerGroupInfoData EventHubConsumerGroupInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> properties = null, ETag? etag = null)
+        public static EventHubConsumerGroupInfoData EventHubConsumerGroupInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, BinaryData> properties = null, ETag? etag = null)
         {
             properties ??= new Dictionary<string, BinaryData>();
 

@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="serviceVersion"> API version used to create this document classifier. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="serviceVersion"/> or <paramref name="documentTypes"/> is null. </exception>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
+        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string serviceVersion, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
             Argument.AssertNotNull(classifierId, nameof(classifierId));
             Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));

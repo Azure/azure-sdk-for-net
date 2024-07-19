@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="isPreview"> Whether this version is in preview mode. </param>
         /// <param name="patchVersions"> Patch versions of a Kubernetes release. </param>
         /// <returns> A new <see cref="Models.KubernetesVersionProperties"/> instance for mocking. </returns>
-        public static KubernetesVersionProperties KubernetesVersionProperties(string version = null, bool? isPreview = null, IReadOnlyDictionary<string, KubernetesPatchVersions> patchVersions = null)
+        public static KubernetesVersionProperties KubernetesVersionProperties(string version = null, bool? isPreview = null, IDictionary<string, KubernetesPatchVersions> patchVersions = null)
         {
             patchVersions ??= new Dictionary<string, KubernetesPatchVersions>();
 

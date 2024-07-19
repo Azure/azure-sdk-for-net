@@ -387,7 +387,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="verifyResult"> The face verification output. Only available when the request is liveness with verify. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Face.LivenessResponseBody"/> instance for mocking. </returns>
-        public static LivenessResponseBody LivenessResponseBody(FaceLivenessDecision? livenessDecision = null, LivenessOutputsTarget target = null, LivenessModel? modelVersionUsed = null, LivenessWithVerifyOutputs verifyResult = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static LivenessResponseBody LivenessResponseBody(FaceLivenessDecision? livenessDecision = null, LivenessOutputsTarget target = null, LivenessModel? modelVersionUsed = null, LivenessWithVerifyOutputs verifyResult = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 

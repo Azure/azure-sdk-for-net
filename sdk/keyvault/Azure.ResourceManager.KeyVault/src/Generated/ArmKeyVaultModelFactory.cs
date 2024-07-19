@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="tags"> Tags of the original vault. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original vault. </param>
         /// <returns> A new <see cref="Models.DeletedKeyVaultProperties"/> instance for mocking. </returns>
-        public static DeletedKeyVaultProperties DeletedKeyVaultProperties(ResourceIdentifier vaultId = null, AzureLocation? location = null, DateTimeOffset? deletedOn = null, DateTimeOffset? scheduledPurgeOn = null, IReadOnlyDictionary<string, string> tags = null, bool? purgeProtectionEnabled = null)
+        public static DeletedKeyVaultProperties DeletedKeyVaultProperties(ResourceIdentifier vaultId = null, AzureLocation? location = null, DateTimeOffset? deletedOn = null, DateTimeOffset? scheduledPurgeOn = null, IDictionary<string, string> tags = null, bool? purgeProtectionEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, KeyVaultPrivateLinkServiceConnectionState connectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, KeyVaultPrivateLinkServiceConnectionState connectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <returns> A new <see cref="Models.KeyVaultPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        public static KeyVaultPrivateLinkResourceData KeyVaultPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original managed HSM. </param>
         /// <param name="tags"> Tags of the original managed HSM. </param>
         /// <returns> A new <see cref="Models.DeletedManagedHsmProperties"/> instance for mocking. </returns>
-        public static DeletedManagedHsmProperties DeletedManagedHsmProperties(ResourceIdentifier managedHsmId = null, AzureLocation? location = null, DateTimeOffset? deletedOn = null, DateTimeOffset? scheduledPurgeOn = null, bool? purgeProtectionEnabled = null, IReadOnlyDictionary<string, string> tags = null)
+        public static DeletedManagedHsmProperties DeletedManagedHsmProperties(ResourceIdentifier managedHsmId = null, AzureLocation? location = null, DateTimeOffset? deletedOn = null, DateTimeOffset? scheduledPurgeOn = null, bool? purgeProtectionEnabled = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultSecretData"/> instance for mocking. </returns>
-        public static KeyVaultSecretData KeyVaultSecretData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecretProperties properties = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        public static KeyVaultSecretData KeyVaultSecretData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecretProperties properties = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 

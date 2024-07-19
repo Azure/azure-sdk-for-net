@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="customKeys"> The custom keys. </param>
         /// <param name="defaultKeys"> The default keys. </param>
         /// <returns> A new <see cref="Models.ClusterServiceConfigResult"/> instance for mocking. </returns>
-        public static ClusterServiceConfigResult ClusterServiceConfigResult(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, IReadOnlyDictionary<string, string> customKeys = null, IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys = null)
+        public static ClusterServiceConfigResult ClusterServiceConfigResult(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, IDictionary<string, string> customKeys = null, IDictionary<string, ClusterServiceConfigValueEntity> defaultKeys = null)
         {
             customKeys ??= new Dictionary<string, string>();
             defaultKeys ??= new Dictionary<string, ClusterServiceConfigValueEntity>();

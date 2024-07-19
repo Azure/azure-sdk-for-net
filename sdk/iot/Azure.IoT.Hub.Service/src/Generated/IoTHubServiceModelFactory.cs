@@ -18,7 +18,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="targetConditionError"> The errors from running the target condition query. </param>
         /// <param name="customMetricQueryErrors"> The errors from running the custom metric query. </param>
         /// <returns> A new <see cref="Models.ConfigurationQueriesTestResponse"/> instance for mocking. </returns>
-        public static ConfigurationQueriesTestResponse ConfigurationQueriesTestResponse(string targetConditionError = null, IReadOnlyDictionary<string, string> customMetricQueryErrors = null)
+        public static ConfigurationQueriesTestResponse ConfigurationQueriesTestResponse(string targetConditionError = null, IDictionary<string, string> customMetricQueryErrors = null)
         {
             customMetricQueryErrors ??= new Dictionary<string, string>();
 
