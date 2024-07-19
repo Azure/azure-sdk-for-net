@@ -188,7 +188,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Initializes a new instance of <see cref="CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt"/>. </summary>
         /// <param name="requiredClaims"></param>
         /// <returns> A new <see cref="CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt"/> instance for mocking. </returns>
-        public static CodeTransparencyConfigurationAuthenticationJwt CodeTransparencyConfigurationAuthenticationJwt(IReadOnlyDictionary<string, string> requiredClaims = null)
+        public static CodeTransparencyConfigurationAuthenticationJwt CodeTransparencyConfigurationAuthenticationJwt(IDictionary<string, string> requiredClaims = null)
         {
             requiredClaims ??= new Dictionary<string, string>();
 

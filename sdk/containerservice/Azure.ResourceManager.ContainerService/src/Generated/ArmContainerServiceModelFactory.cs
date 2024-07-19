@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isPreview"> Whether this version is in preview mode. </param>
         /// <param name="patchVersions"> Patch versions of Kubernetes release. </param>
         /// <returns> A new <see cref="Models.KubernetesVersion"/> instance for mocking. </returns>
-        public static KubernetesVersion KubernetesVersion(string version = null, IEnumerable<KubernetesSupportPlan> capabilitiesSupportPlan = null, bool? isPreview = null, IReadOnlyDictionary<string, KubernetesPatchVersion> patchVersions = null)
+        public static KubernetesVersion KubernetesVersion(string version = null, IEnumerable<KubernetesSupportPlan> capabilitiesSupportPlan = null, bool? isPreview = null, IDictionary<string, KubernetesPatchVersion> patchVersions = null)
         {
             capabilitiesSupportPlan ??= new List<KubernetesSupportPlan>();
             patchVersions ??= new Dictionary<string, KubernetesPatchVersion>();

@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="errorDetails"> Error details of the alert. </param>
         /// <param name="detailedInformation"> Alert details. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeAlertData"/> instance for mocking. </returns>
-        public static DataBoxEdgeAlertData DataBoxEdgeAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string alertType = null, DateTimeOffset? appearedOn = null, string recommendation = null, DataBoxEdgeAlertSeverity? severity = null, DataBoxEdgeAlertErrorDetails errorDetails = null, IReadOnlyDictionary<string, string> detailedInformation = null)
+        public static DataBoxEdgeAlertData DataBoxEdgeAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string alertType = null, DateTimeOffset? appearedOn = null, string recommendation = null, DataBoxEdgeAlertSeverity? severity = null, DataBoxEdgeAlertErrorDetails errorDetails = null, IDictionary<string, string> detailedInformation = null)
         {
             detailedInformation ??= new Dictionary<string, string>();
 
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="cloudWitnessContainerName"> The Container for cloud witness in the storage account. </param>
         /// <param name="cloudWitnessStorageEndpoint"> The Azure service endpoint of the cloud witness storage account. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeDeviceExtendedInfo"/> instance for mocking. </returns>
-        public static DataBoxEdgeDeviceExtendedInfo DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string encryptionKeyThumbprint = null, string encryptionKey = null, string resourceKey = null, ResourceIdentifier clientSecretStoreId = null, Uri clientSecretStoreUri = null, string channelIntegrityKeyName = null, string channelIntegrityKeyVersion = null, EdgeKeyVaultSyncStatus? keyVaultSyncStatus = null, IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets = null, EdgeClusterWitnessType? clusterWitnessType = null, string fileShareWitnessLocation = null, string fileShareWitnessUsername = null, string cloudWitnessStorageAccountName = null, string cloudWitnessContainerName = null, string cloudWitnessStorageEndpoint = null)
+        public static DataBoxEdgeDeviceExtendedInfo DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string encryptionKeyThumbprint = null, string encryptionKey = null, string resourceKey = null, ResourceIdentifier clientSecretStoreId = null, Uri clientSecretStoreUri = null, string channelIntegrityKeyName = null, string channelIntegrityKeyVersion = null, EdgeKeyVaultSyncStatus? keyVaultSyncStatus = null, IDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets = null, EdgeClusterWitnessType? clusterWitnessType = null, string fileShareWitnessLocation = null, string fileShareWitnessUsername = null, string cloudWitnessStorageAccountName = null, string cloudWitnessContainerName = null, string cloudWitnessStorageEndpoint = null)
         {
             deviceSecrets ??= new Dictionary<string, DataBoxEdgeDeviceSecret>();
 
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// by the already existing properties
         /// </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeOrderStatus"/> instance for mocking. </returns>
-        public static DataBoxEdgeOrderStatus DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status = default, DateTimeOffset? updateOn = null, string comments = null, DataBoxEdgeTrackingInfo trackingInformation = null, IReadOnlyDictionary<string, string> additionalOrderDetails = null)
+        public static DataBoxEdgeOrderStatus DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status = default, DateTimeOffset? updateOn = null, string comments = null, DataBoxEdgeTrackingInfo trackingInformation = null, IDictionary<string, string> additionalOrderDetails = null)
         {
             additionalOrderDetails ??= new Dictionary<string, string>();
 

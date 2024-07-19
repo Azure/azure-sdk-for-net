@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="requestUri"> The URI used to send the event request message. </param>
         /// <param name="version"> The HTTP message version. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventRequestMessage"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookEventRequestMessage ContainerRegistryWebhookEventRequestMessage(ContainerRegistryWebhookEventContent content = null, IReadOnlyDictionary<string, string> headers = null, string method = null, Uri requestUri = null, string version = null)
+        public static ContainerRegistryWebhookEventRequestMessage ContainerRegistryWebhookEventRequestMessage(ContainerRegistryWebhookEventContent content = null, IDictionary<string, string> headers = null, string method = null, Uri requestUri = null, string version = null)
         {
             headers ??= new Dictionary<string, string>();
 
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="statusCode"> The status code of the event response message. </param>
         /// <param name="version"> The HTTP message version. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventResponseMessage"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookEventResponseMessage ContainerRegistryWebhookEventResponseMessage(string content = null, IReadOnlyDictionary<string, string> headers = null, string reasonPhrase = null, string statusCode = null, string version = null)
+        public static ContainerRegistryWebhookEventResponseMessage ContainerRegistryWebhookEventResponseMessage(string content = null, IDictionary<string, string> headers = null, string reasonPhrase = null, string statusCode = null, string version = null)
         {
             headers ??= new Dictionary<string, string>();
 
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
         /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookCallbackConfig"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookCallbackConfig ContainerRegistryWebhookCallbackConfig(Uri serviceUri = null, IReadOnlyDictionary<string, string> customHeaders = null)
+        public static ContainerRegistryWebhookCallbackConfig ContainerRegistryWebhookCallbackConfig(Uri serviceUri = null, IDictionary<string, string> customHeaders = null)
         {
             customHeaders ??= new Dictionary<string, string>();
 

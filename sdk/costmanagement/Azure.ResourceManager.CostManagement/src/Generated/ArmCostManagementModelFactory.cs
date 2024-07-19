@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ForecastResult"/> instance for mocking. </returns>
-        public static ForecastResult ForecastResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nextLink = null, IEnumerable<ForecastColumn> columns = null, IEnumerable<IList<BinaryData>> rows = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static ForecastResult ForecastResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nextLink = null, IEnumerable<ForecastColumn> columns = null, IEnumerable<IList<BinaryData>> rows = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IDictionary<string, string> tags = null)
         {
             columns ??= new List<ForecastColumn>();
             rows ??= new List<IList<BinaryData>>();
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.CostManagementDimension"/> instance for mocking. </returns>
-        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? isFilterEnabled = null, bool? isGroupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? isFilterEnabled = null, bool? isGroupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IDictionary<string, string> tags = null)
         {
             data ??= new List<string>();
             tags ??= new Dictionary<string, string>();
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.QueryResult"/> instance for mocking. </returns>
-        public static QueryResult QueryResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nextLink = null, IEnumerable<QueryColumn> columns = null, IEnumerable<IList<BinaryData>> rows = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static QueryResult QueryResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nextLink = null, IEnumerable<QueryColumn> columns = null, IEnumerable<IList<BinaryData>> rows = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IDictionary<string, string> tags = null)
         {
             columns ??= new List<QueryColumn>();
             rows ??= new List<IList<BinaryData>>();

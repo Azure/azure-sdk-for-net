@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static IntegrationRuntimeStatus IntegrationRuntimeStatus(string runtimeType = null, string dataFactoryName = null, IntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static IntegrationRuntimeStatus IntegrationRuntimeStatus(string runtimeType = null, string dataFactoryName = null, IntegrationRuntimeState? state = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="isIdentityCertExprired"> Whether the identity certificate is expired. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeConnectionInfo"/> instance for mocking. </returns>
-        public static IntegrationRuntimeConnectionInfo IntegrationRuntimeConnectionInfo(string serviceToken = null, string identityCertThumbprint = null, Uri hostServiceUri = null, string version = null, string publicKey = null, bool? isIdentityCertExprired = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static IntegrationRuntimeConnectionInfo IntegrationRuntimeConnectionInfo(string serviceToken = null, string identityCertThumbprint = null, Uri hostServiceUri = null, string version = null, string publicKey = null, bool? isIdentityCertExprired = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="receivedBytes"> Received bytes on the integration runtime node. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeNodeMonitoringData"/> instance for mocking. </returns>
-        public static IntegrationRuntimeNodeMonitoringData IntegrationRuntimeNodeMonitoringData(string nodeName = null, int? availableMemoryInMB = null, int? cpuUtilization = null, int? concurrentJobsLimit = null, int? concurrentJobsRunning = null, int? maxConcurrentJobs = null, float? sentBytes = null, float? receivedBytes = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static IntegrationRuntimeNodeMonitoringData IntegrationRuntimeNodeMonitoringData(string nodeName = null, int? availableMemoryInMB = null, int? cpuUtilization = null, int? concurrentJobsLimit = null, int? concurrentJobsRunning = null, int? maxConcurrentJobs = null, float? sentBytes = null, float? receivedBytes = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxConcurrentJobs"> The maximum concurrent jobs in this integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SelfHostedIntegrationRuntimeNode"/> instance for mocking. </returns>
-        public static SelfHostedIntegrationRuntimeNode SelfHostedIntegrationRuntimeNode(string nodeName = null, string machineName = null, Uri hostServiceUri = null, SelfHostedIntegrationRuntimeNodeStatus? status = null, IReadOnlyDictionary<string, string> capabilities = null, string versionStatus = null, string version = null, DateTimeOffset? registerOn = null, DateTimeOffset? lastConnectOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? lastStartOn = null, DateTimeOffset? lastStopOn = null, IntegrationRuntimeUpdateResult? lastUpdateResult = null, DateTimeOffset? lastStartUpdateOn = null, DateTimeOffset? lastEndUpdateOn = null, bool? isActiveDispatcher = null, int? concurrentJobsLimit = null, int? maxConcurrentJobs = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static SelfHostedIntegrationRuntimeNode SelfHostedIntegrationRuntimeNode(string nodeName = null, string machineName = null, Uri hostServiceUri = null, SelfHostedIntegrationRuntimeNodeStatus? status = null, IDictionary<string, string> capabilities = null, string versionStatus = null, string version = null, DateTimeOffset? registerOn = null, DateTimeOffset? lastConnectOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? lastStartOn = null, DateTimeOffset? lastStopOn = null, IntegrationRuntimeUpdateResult? lastUpdateResult = null, DateTimeOffset? lastStartUpdateOn = null, DateTimeOffset? lastEndUpdateOn = null, bool? isActiveDispatcher = null, int? concurrentJobsLimit = null, int? maxConcurrentJobs = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             capabilities ??= new Dictionary<string, string>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="message"> The message from a pipeline run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.DataFactoryPipelineRunInfo"/> instance for mocking. </returns>
-        public static DataFactoryPipelineRunInfo DataFactoryPipelineRunInfo(Guid? runId = null, string runGroupId = null, bool? isLatest = null, string pipelineName = null, IReadOnlyDictionary<string, string> parameters = null, IReadOnlyDictionary<string, string> runDimensions = null, DataFactoryPipelineRunEntityInfo invokedBy = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? runStartOn = null, DateTimeOffset? runEndOn = null, int? durationInMs = null, string status = null, string message = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static DataFactoryPipelineRunInfo DataFactoryPipelineRunInfo(Guid? runId = null, string runGroupId = null, bool? isLatest = null, string pipelineName = null, IDictionary<string, string> parameters = null, IDictionary<string, string> runDimensions = null, DataFactoryPipelineRunEntityInfo invokedBy = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? runStartOn = null, DateTimeOffset? runEndOn = null, int? durationInMs = null, string status = null, string message = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             parameters ??= new Dictionary<string, string>();
             runDimensions ??= new Dictionary<string, string>();
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="error"> The error if any from the activity run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.PipelineActivityRunInformation"/> instance for mocking. </returns>
-        public static PipelineActivityRunInformation PipelineActivityRunInformation(string pipelineName = null, Guid? pipelineRunId = null, string activityName = null, string activityType = null, Guid? activityRunId = null, string linkedServiceName = null, string status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, int? durationInMs = null, BinaryData input = null, BinaryData output = null, BinaryData error = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static PipelineActivityRunInformation PipelineActivityRunInformation(string pipelineName = null, Guid? pipelineRunId = null, string activityName = null, string activityType = null, Guid? activityRunId = null, string linkedServiceName = null, string status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, int? durationInMs = null, BinaryData input = null, BinaryData output = null, BinaryData error = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependencyStatus"> Status of the upstream pipelines. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.DataFactoryTriggerRun"/> instance for mocking. </returns>
-        public static DataFactoryTriggerRun DataFactoryTriggerRun(string triggerRunId = null, string triggerName = null, string triggerType = null, DateTimeOffset? triggerRunTimestamp = null, DataFactoryTriggerRunStatus? status = null, string message = null, IReadOnlyDictionary<string, string> properties = null, IReadOnlyDictionary<string, string> triggeredPipelines = null, IReadOnlyDictionary<string, string> runDimension = null, IReadOnlyDictionary<string, BinaryData> dependencyStatus = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static DataFactoryTriggerRun DataFactoryTriggerRun(string triggerRunId = null, string triggerName = null, string triggerType = null, DateTimeOffset? triggerRunTimestamp = null, DataFactoryTriggerRunStatus? status = null, string message = null, IDictionary<string, string> properties = null, IDictionary<string, string> triggeredPipelines = null, IDictionary<string, string> runDimension = null, IDictionary<string, BinaryData> dependencyStatus = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             properties ??= new Dictionary<string, string>();
             triggeredPipelines ??= new Dictionary<string, string>();
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="lastActivityOn"> Last activity time of data flow debug session. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.DataFlowDebugSessionInfo"/> instance for mocking. </returns>
-        public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = null, string computeType = null, int? coreCount = null, int? nodeCount = null, string integrationRuntimeName = null, Guid? sessionId = null, DateTimeOffset? startOn = null, int? timeToLiveInMinutes = null, DateTimeOffset? lastActivityOn = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static DataFlowDebugSessionInfo DataFlowDebugSessionInfo(string dataFlowName = null, string computeType = null, int? coreCount = null, int? nodeCount = null, string integrationRuntimeName = null, Guid? sessionId = null, DateTimeOffset? startOn = null, int? timeToLiveInMinutes = null, DateTimeOffset? lastActivityOn = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -1074,7 +1074,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="otherErrors"> The errors that occurred on this integration runtime. </param>
         /// <param name="lastOperation"> The last operation result that occurred on this integration runtime. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntimeStatus ManagedIntegrationRuntimeStatus(string dataFactoryName = null, IntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null, DateTimeOffset? createdOn = null, IEnumerable<ManagedIntegrationRuntimeNode> nodes = null, IEnumerable<ManagedIntegrationRuntimeError> otherErrors = null, ManagedIntegrationRuntimeOperationResult lastOperation = null)
+        public static ManagedIntegrationRuntimeStatus ManagedIntegrationRuntimeStatus(string dataFactoryName = null, IntegrationRuntimeState? state = null, IDictionary<string, BinaryData> additionalProperties = null, DateTimeOffset? createdOn = null, IEnumerable<ManagedIntegrationRuntimeNode> nodes = null, IEnumerable<ManagedIntegrationRuntimeError> otherErrors = null, ManagedIntegrationRuntimeOperationResult lastOperation = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
             nodes ??= new List<ManagedIntegrationRuntimeNode>();
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="errors"> The errors that occurred on this integration runtime node. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntimeNode"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntimeNode ManagedIntegrationRuntimeNode(string nodeId = null, ManagedIntegrationRuntimeNodeStatus? status = null, IEnumerable<ManagedIntegrationRuntimeError> errors = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static ManagedIntegrationRuntimeNode ManagedIntegrationRuntimeNode(string nodeId = null, ManagedIntegrationRuntimeNodeStatus? status = null, IEnumerable<ManagedIntegrationRuntimeError> errors = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             errors ??= new List<ManagedIntegrationRuntimeError>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -1112,7 +1112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="message"> Error message. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntimeError"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntimeError ManagedIntegrationRuntimeError(DateTimeOffset? time = null, string code = null, IEnumerable<string> parameters = null, string message = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static ManagedIntegrationRuntimeError ManagedIntegrationRuntimeError(DateTimeOffset? time = null, string code = null, IEnumerable<string> parameters = null, string message = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             parameters ??= new List<string>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -1129,7 +1129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="activityId"> The activity id for the operation request. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntimeOperationResult"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntimeOperationResult ManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType = null, DateTimeOffset? startOn = null, string result = null, string errorCode = null, IEnumerable<string> parameters = null, string activityId = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static ManagedIntegrationRuntimeOperationResult ManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType = null, DateTimeOffset? startOn = null, string result = null, string errorCode = null, IEnumerable<string> parameters = null, string activityId = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             parameters ??= new List<string>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -1166,7 +1166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="autoUpdateEta"> The estimated time when the self-hosted integration runtime will be updated. </param>
         /// <param name="isSelfContainedInteractiveAuthoringEnabled"> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </param>
         /// <returns> A new <see cref="Models.SelfHostedIntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static SelfHostedIntegrationRuntimeStatus SelfHostedIntegrationRuntimeStatus(string dataFactoryName = null, IntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null, DateTimeOffset? createdOn = null, Guid? taskQueueId = null, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption = null, string version = null, IEnumerable<SelfHostedIntegrationRuntimeNode> nodes = null, DateTimeOffset? scheduledUpdateOn = null, TimeSpan? updateDelayOffset = null, TimeSpan? localTimeZoneOffset = null, IReadOnlyDictionary<string, string> capabilities = null, IEnumerable<string> serviceUriStringList = null, IntegrationRuntimeAutoUpdateState? autoUpdate = null, string versionStatus = null, IEnumerable<LinkedIntegrationRuntime> links = null, string pushedVersion = null, string latestVersion = null, DateTimeOffset? autoUpdateEta = null, bool? isSelfContainedInteractiveAuthoringEnabled = null)
+        public static SelfHostedIntegrationRuntimeStatus SelfHostedIntegrationRuntimeStatus(string dataFactoryName = null, IntegrationRuntimeState? state = null, IDictionary<string, BinaryData> additionalProperties = null, DateTimeOffset? createdOn = null, Guid? taskQueueId = null, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption = null, string version = null, IEnumerable<SelfHostedIntegrationRuntimeNode> nodes = null, DateTimeOffset? scheduledUpdateOn = null, TimeSpan? updateDelayOffset = null, TimeSpan? localTimeZoneOffset = null, IDictionary<string, string> capabilities = null, IEnumerable<string> serviceUriStringList = null, IntegrationRuntimeAutoUpdateState? autoUpdate = null, string versionStatus = null, IEnumerable<LinkedIntegrationRuntime> links = null, string pushedVersion = null, string latestVersion = null, DateTimeOffset? autoUpdateEta = null, bool? isSelfContainedInteractiveAuthoringEnabled = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
             nodes ??= new List<SelfHostedIntegrationRuntimeNode>();

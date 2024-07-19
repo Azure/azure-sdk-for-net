@@ -2505,7 +2505,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="repairRunIds"> Dictionary of &lt;string&gt;. </param>
         /// <param name="repairSchedules"> Dictionary of &lt;string&gt;. </param>
         /// <returns> A new <see cref="Models.CassandraReaperStatus"/> instance for mocking. </returns>
-        public static CassandraReaperStatus CassandraReaperStatus(bool? isHealthy = null, IReadOnlyDictionary<string, string> repairRunIds = null, IReadOnlyDictionary<string, string> repairSchedules = null)
+        public static CassandraReaperStatus CassandraReaperStatus(bool? isHealthy = null, IDictionary<string, string> repairRunIds = null, IDictionary<string, string> repairSchedules = null)
         {
             repairRunIds ??= new Dictionary<string, string>();
             repairSchedules ??= new Dictionary<string, string>();

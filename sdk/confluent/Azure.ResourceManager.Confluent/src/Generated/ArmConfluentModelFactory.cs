@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Initializes a new instance of <see cref="Models.ConfluentOrganizationValidationResult"/>. </summary>
         /// <param name="info"> Info from the response. </param>
         /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
-        public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IReadOnlyDictionary<string, string> info = null)
+        public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IDictionary<string, string> info = null)
         {
             info ??= new Dictionary<string, string>();
 

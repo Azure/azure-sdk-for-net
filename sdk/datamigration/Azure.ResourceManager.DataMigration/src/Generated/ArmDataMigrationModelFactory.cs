@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sentBytes"> Sent bytes on the integration runtime node. </param>
         /// <param name="receivedBytes"> Received bytes on the integration runtime node. </param>
         /// <returns> A new <see cref="Models.NodeMonitoringData"/> instance for mocking. </returns>
-        public static NodeMonitoringData NodeMonitoringData(IReadOnlyDictionary<string, BinaryData> additionalProperties = null, string nodeName = null, int? availableMemoryInMB = null, int? cpuUtilization = null, int? concurrentJobsLimit = null, int? concurrentJobsRunning = null, int? maxConcurrentJobs = null, double? sentBytes = null, double? receivedBytes = null)
+        public static NodeMonitoringData NodeMonitoringData(IDictionary<string, BinaryData> additionalProperties = null, string nodeName = null, int? availableMemoryInMB = null, int? cpuUtilization = null, int? concurrentJobsLimit = null, int? concurrentJobsRunning = null, int? maxConcurrentJobs = null, double? sentBytes = null, double? receivedBytes = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="uri"> A URI that can be used to access the file content. </param>
         /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
         /// <returns> A new <see cref="Models.FileStorageInfo"/> instance for mocking. </returns>
-        public static FileStorageInfo FileStorageInfo(Uri uri = null, IReadOnlyDictionary<string, string> headers = null)
+        public static FileStorageInfo FileStorageInfo(Uri uri = null, IDictionary<string, string> headers = null)
         {
             headers ??= new Dictionary<string, string>();
 
@@ -1940,7 +1940,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="summaryResults"> Validation summary results for each database. </param>
         /// <param name="status"> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </param>
         /// <returns> A new <see cref="Models.MigrationValidationResult"/> instance for mocking. </returns>
-        public static MigrationValidationResult MigrationValidationResult(string id = null, string migrationId = null, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = null, ValidationStatus? status = null)
+        public static MigrationValidationResult MigrationValidationResult(string id = null, string migrationId = null, IDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = null, ValidationStatus? status = null)
         {
             summaryResults ??= new Dictionary<string, MigrationValidationDatabaseSummaryResult>();
 
@@ -2063,7 +2063,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="summaryResults"> Validation summary results for each database. </param>
         /// <param name="status"> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputValidationResult"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBTaskOutputValidationResult MigrateSqlServerSqlDBTaskOutputValidationResult(string id = null, string migrationId = null, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = null, ValidationStatus? status = null)
+        public static MigrateSqlServerSqlDBTaskOutputValidationResult MigrateSqlServerSqlDBTaskOutputValidationResult(string id = null, string migrationId = null, IDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = null, ValidationStatus? status = null)
         {
             summaryResults ??= new Dictionary<string, MigrationValidationDatabaseSummaryResult>();
 
@@ -2109,7 +2109,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="failedObjects"> List of failed table names of source and target pair. </param>
         /// <param name="validationErrors"> List of errors that happened while performing data integrity validation. </param>
         /// <returns> A new <see cref="Models.DataIntegrityValidationResult"/> instance for mocking. </returns>
-        public static DataIntegrityValidationResult DataIntegrityValidationResult(IReadOnlyDictionary<string, string> failedObjects = null, ValidationError validationErrors = null)
+        public static DataIntegrityValidationResult DataIntegrityValidationResult(IDictionary<string, string> failedObjects = null, ValidationError validationErrors = null)
         {
             failedObjects ??= new Dictionary<string, string>();
 
@@ -2131,7 +2131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceDatabaseObjectCount"> Count of source database objects. </param>
         /// <param name="targetDatabaseObjectCount"> Count of target database objects. </param>
         /// <returns> A new <see cref="Models.SchemaComparisonValidationResult"/> instance for mocking. </returns>
-        public static SchemaComparisonValidationResult SchemaComparisonValidationResult(SchemaComparisonValidationResultType schemaDifferences = null, ValidationError validationErrors = null, IReadOnlyDictionary<string, long> sourceDatabaseObjectCount = null, IReadOnlyDictionary<string, long> targetDatabaseObjectCount = null)
+        public static SchemaComparisonValidationResult SchemaComparisonValidationResult(SchemaComparisonValidationResultType schemaDifferences = null, ValidationError validationErrors = null, IDictionary<string, long> sourceDatabaseObjectCount = null, IDictionary<string, long> targetDatabaseObjectCount = null)
         {
             sourceDatabaseObjectCount ??= new Dictionary<string, long>();
             targetDatabaseObjectCount ??= new Dictionary<string, long>();
@@ -2177,7 +2177,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="hasErrors"> Indicates whether the query resulted in an error. </param>
         /// <param name="sqlErrors"> List of sql Errors. </param>
         /// <returns> A new <see cref="Models.ExecutionStatistics"/> instance for mocking. </returns>
-        public static ExecutionStatistics ExecutionStatistics(long? executionCount = null, float? cpuTimeMs = null, float? elapsedTimeMs = null, IReadOnlyDictionary<string, WaitStatistics> waitStats = null, bool? hasErrors = null, IEnumerable<string> sqlErrors = null)
+        public static ExecutionStatistics ExecutionStatistics(long? executionCount = null, float? cpuTimeMs = null, float? elapsedTimeMs = null, IDictionary<string, WaitStatistics> waitStats = null, bool? hasErrors = null, IEnumerable<string> sqlErrors = null)
         {
             waitStats ??= new Dictionary<string, WaitStatistics>();
             sqlErrors ??= new List<string>();
@@ -2630,7 +2630,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <returns> A new <see cref="Models.MongoDBCollectionProgress"/> instance for mocking. </returns>
-        public static MongoDBCollectionProgress MongoDBCollectionProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
+        public static MongoDBCollectionProgress MongoDBCollectionProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
         {
             errors ??= new Dictionary<string, MongoDBError>();
 
@@ -2668,7 +2668,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <returns> A new <see cref="Models.MongoDBProgress"/> instance for mocking. </returns>
-        public static MongoDBProgress MongoDBProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, string resultType = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
+        public static MongoDBProgress MongoDBProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, string resultType = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default)
         {
             errors ??= new Dictionary<string, MongoDBError>();
 
@@ -2717,7 +2717,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <param name="collections"> The progress of the collections in the database. The keys are the unqualified names of the collections. </param>
         /// <returns> A new <see cref="Models.MongoDBDatabaseProgress"/> instance for mocking. </returns>
-        public static MongoDBDatabaseProgress MongoDBDatabaseProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default, IReadOnlyDictionary<string, MongoDBCollectionProgress> collections = null)
+        public static MongoDBDatabaseProgress MongoDBDatabaseProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default, IDictionary<string, MongoDBCollectionProgress> collections = null)
         {
             errors ??= new Dictionary<string, MongoDBError>();
             collections ??= new Dictionary<string, MongoDBCollectionProgress>();
@@ -2769,7 +2769,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <param name="databases"> The progress of the databases in the migration. The keys are the names of the databases. </param>
         /// <returns> A new <see cref="Models.MongoDBMigrationProgress"/> instance for mocking. </returns>
-        public static MongoDBMigrationProgress MongoDBMigrationProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IReadOnlyDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default, IReadOnlyDictionary<string, MongoDBDatabaseProgress> databases = null)
+        public static MongoDBMigrationProgress MongoDBMigrationProgress(long bytesCopied = default, long documentsCopied = default, string elapsedTime = null, IDictionary<string, MongoDBError> errors = null, long eventsPending = default, long eventsReplayed = default, DateTimeOffset? lastEventOn = null, DateTimeOffset? lastReplayOn = null, string name = null, string qualifiedName = null, MongoDBMigrationState state = default, long totalBytes = default, long totalDocuments = default, IDictionary<string, MongoDBDatabaseProgress> databases = null)
         {
             errors ??= new Dictionary<string, MongoDBError>();
             databases ??= new Dictionary<string, MongoDBDatabaseProgress>();

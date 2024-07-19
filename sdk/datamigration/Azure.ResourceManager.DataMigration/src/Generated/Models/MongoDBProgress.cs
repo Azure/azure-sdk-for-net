@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="elapsedTime"/> or <paramref name="errors"/> is null. </exception>
-        protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, MongoDBMigrationState state, long totalBytes, long totalDocuments)
+        protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, MongoDBMigrationState state, long totalBytes, long totalDocuments)
         {
             Argument.AssertNotNull(elapsedTime, nameof(elapsedTime));
             Argument.AssertNotNull(errors, nameof(errors));

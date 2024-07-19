@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <param name="aliases"> The aliases. </param>
         /// <param name="extracts"> The KPI extracts. </param>
         /// <returns> A new <see cref="Models.KpiDefinition"/> instance for mocking. </returns>
-        public static KpiDefinition KpiDefinition(EntityType entityType = default, string entityTypeName = null, Guid? tenantId = null, string kpiName = null, IReadOnlyDictionary<string, string> displayName = null, IReadOnlyDictionary<string, string> description = null, CalculationWindowType calculationWindow = default, string calculationWindowFieldName = null, KpiFunction function = default, string expression = null, string unit = null, string filter = null, IEnumerable<string> groupBy = null, IEnumerable<KpiGroupByMetadata> groupByMetadata = null, IEnumerable<KpiParticipantProfilesMetadata> participantProfilesMetadata = null, ProvisioningState? provisioningState = null, KpiThresholds thresHolds = null, IEnumerable<KpiAlias> aliases = null, IEnumerable<KpiExtract> extracts = null)
+        public static KpiDefinition KpiDefinition(EntityType entityType = default, string entityTypeName = null, Guid? tenantId = null, string kpiName = null, IDictionary<string, string> displayName = null, IDictionary<string, string> description = null, CalculationWindowType calculationWindow = default, string calculationWindowFieldName = null, KpiFunction function = default, string expression = null, string unit = null, string filter = null, IEnumerable<string> groupBy = null, IEnumerable<KpiGroupByMetadata> groupByMetadata = null, IEnumerable<KpiParticipantProfilesMetadata> participantProfilesMetadata = null, ProvisioningState? provisioningState = null, KpiThresholds thresHolds = null, IEnumerable<KpiAlias> aliases = null, IEnumerable<KpiExtract> extracts = null)
         {
             displayName ??= new Dictionary<string, string>();
             description ??= new Dictionary<string, string>();
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <param name="fieldName"> The name of the field. </param>
         /// <param name="fieldType"> The type of the field. </param>
         /// <returns> A new <see cref="Models.KpiGroupByMetadata"/> instance for mocking. </returns>
-        public static KpiGroupByMetadata KpiGroupByMetadata(IReadOnlyDictionary<string, string> displayName = null, string fieldName = null, string fieldType = null)
+        public static KpiGroupByMetadata KpiGroupByMetadata(IDictionary<string, string> displayName = null, string fieldName = null, string fieldType = null)
         {
             displayName ??= new Dictionary<string, string>();
 
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <param name="generatedLinks"> Generated links. </param>
         /// <param name="generatedKpis"> Generated KPIs. </param>
         /// <returns> A new <see cref="Models.PredictionSystemGeneratedEntities"/> instance for mocking. </returns>
-        public static PredictionSystemGeneratedEntities PredictionSystemGeneratedEntities(IEnumerable<string> generatedInteractionTypes = null, IEnumerable<string> generatedLinks = null, IReadOnlyDictionary<string, string> generatedKpis = null)
+        public static PredictionSystemGeneratedEntities PredictionSystemGeneratedEntities(IEnumerable<string> generatedInteractionTypes = null, IEnumerable<string> generatedLinks = null, IDictionary<string, string> generatedKpis = null)
         {
             generatedInteractionTypes ??= new List<string>();
             generatedLinks ??= new List<string>();

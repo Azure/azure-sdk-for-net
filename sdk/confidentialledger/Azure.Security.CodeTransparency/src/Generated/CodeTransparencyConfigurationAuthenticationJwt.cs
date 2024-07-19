@@ -48,7 +48,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Initializes a new instance of <see cref="CodeTransparencyConfigurationAuthenticationJwt"/>. </summary>
         /// <param name="requiredClaims"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="requiredClaims"/> is null. </exception>
-        internal CodeTransparencyConfigurationAuthenticationJwt(IReadOnlyDictionary<string, string> requiredClaims)
+        internal CodeTransparencyConfigurationAuthenticationJwt(IDictionary<string, string> requiredClaims)
         {
             Argument.AssertNotNull(requiredClaims, nameof(requiredClaims));
 
