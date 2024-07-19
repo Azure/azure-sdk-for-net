@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// The core properties of guest configuration resources
-    /// Serialized Name: GuestConfigurationResourceData
-    /// </summary>
+    /// <summary> The core properties of guest configuration resources. </summary>
     public partial class GuestConfigurationResourceData
     {
         /// <summary>
@@ -56,26 +53,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
-        /// <param name="id">
-        /// ARM resource id of the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationResourceData.id
-        /// </param>
-        /// <param name="name">
-        /// Name of the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationResourceData.name
-        /// </param>
-        /// <param name="location">
-        /// Region where the VM is located.
-        /// Serialized Name: GuestConfigurationResourceData.location
-        /// </param>
-        /// <param name="resourceType">
-        /// The type of the resource.
-        /// Serialized Name: GuestConfigurationResourceData.type
-        /// </param>
-        /// <param name="systemData">
-        /// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-        /// Serialized Name: GuestConfigurationResourceData.systemData
-        /// </param>
+        /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
+        /// <param name="name"> Name of the guest configuration assignment. </param>
+        /// <param name="location"> Region where the VM is located. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationResourceData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,34 +69,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// ARM resource id of the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationResourceData.id
-        /// </summary>
+        /// <summary> ARM resource id of the guest configuration assignment. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// Name of the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationResourceData.name
-        /// </summary>
+        /// <summary> Name of the guest configuration assignment. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Region where the VM is located.
-        /// Serialized Name: GuestConfigurationResourceData.location
-        /// </summary>
+        /// <summary> Region where the VM is located. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// The type of the resource.
-        /// Serialized Name: GuestConfigurationResourceData.type
-        /// </summary>
+        /// <summary> The type of the resource. </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; }
-        /// <summary>
-        /// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-        /// Serialized Name: GuestConfigurationResourceData.systemData
-        /// </summary>
+        /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
         [WirePath("systemData")]
         public SystemData SystemData { get; }
     }

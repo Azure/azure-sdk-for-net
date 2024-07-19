@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// Specifies what happens after a reboot during the application of a configuration. The possible values are ContinueConfiguration and StopConfiguration
-    /// Serialized Name: ActionAfterReboot
-    /// </summary>
+    /// <summary> Specifies what happens after a reboot during the application of a configuration. The possible values are ContinueConfiguration and StopConfiguration. </summary>
     public readonly partial struct ActionAfterReboot : IEquatable<ActionAfterReboot>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         private const string ContinueConfigurationValue = "ContinueConfiguration";
         private const string StopConfigurationValue = "StopConfiguration";
 
-        /// <summary>
-        /// ContinueConfiguration
-        /// Serialized Name: ActionAfterReboot.ContinueConfiguration
-        /// </summary>
+        /// <summary> ContinueConfiguration. </summary>
         public static ActionAfterReboot ContinueConfiguration { get; } = new ActionAfterReboot(ContinueConfigurationValue);
-        /// <summary>
-        /// StopConfiguration
-        /// Serialized Name: ActionAfterReboot.StopConfiguration
-        /// </summary>
+        /// <summary> StopConfiguration. </summary>
         public static ActionAfterReboot StopConfiguration { get; } = new ActionAfterReboot(StopConfigurationValue);
         /// <summary> Determines if two <see cref="ActionAfterReboot"/> values are the same. </summary>
         public static bool operator ==(ActionAfterReboot left, ActionAfterReboot right) => left.Equals(right);

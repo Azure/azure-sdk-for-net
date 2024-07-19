@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// Reason and code for the compliance of the guest configuration assignment resource.
-    /// Serialized Name: AssignmentReportResourceComplianceReason
-    /// </summary>
+    /// <summary> Reason and code for the compliance of the guest configuration assignment resource. </summary>
     public partial class AssignmentReportResourceComplianceReason
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AssignmentReportResourceComplianceReason"/>. </summary>
-        /// <param name="phrase">
-        /// Reason for the compliance of the guest configuration assignment resource.
-        /// Serialized Name: AssignmentReportResourceComplianceReason.phrase
-        /// </param>
-        /// <param name="code">
-        /// Code for the compliance of the guest configuration assignment resource.
-        /// Serialized Name: AssignmentReportResourceComplianceReason.code
-        /// </param>
+        /// <param name="phrase"> Reason for the compliance of the guest configuration assignment resource. </param>
+        /// <param name="code"> Code for the compliance of the guest configuration assignment resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AssignmentReportResourceComplianceReason(string phrase, string code, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Reason for the compliance of the guest configuration assignment resource.
-        /// Serialized Name: AssignmentReportResourceComplianceReason.phrase
-        /// </summary>
+        /// <summary> Reason for the compliance of the guest configuration assignment resource. </summary>
         [WirePath("phrase")]
         public string Phrase { get; }
-        /// <summary>
-        /// Code for the compliance of the guest configuration assignment resource.
-        /// Serialized Name: AssignmentReportResourceComplianceReason.code
-        /// </summary>
+        /// <summary> Code for the compliance of the guest configuration assignment resource. </summary>
         [WirePath("code")]
         public string Code { get; }
     }

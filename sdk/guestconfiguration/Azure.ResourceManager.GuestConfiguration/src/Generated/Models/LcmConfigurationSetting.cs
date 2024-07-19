@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// Configuration setting of LCM (Local Configuration Manager).
-    /// Serialized Name: ConfigurationSetting
-    /// </summary>
+    /// <summary> Configuration setting of LCM (Local Configuration Manager). </summary>
     public partial class LcmConfigurationSetting
     {
         /// <summary>
@@ -54,30 +51,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LcmConfigurationSetting"/>. </summary>
-        /// <param name="configurationMode">
-        /// Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect.
-        /// Serialized Name: ConfigurationSetting.configurationMode
-        /// </param>
-        /// <param name="isModuleOverwriteAllowed">
-        /// If true - new configurations downloaded from the pull service are allowed to overwrite the old ones on the target node. Otherwise, false
-        /// Serialized Name: ConfigurationSetting.allowModuleOverwrite
-        /// </param>
-        /// <param name="actionAfterReboot">
-        /// Specifies what happens after a reboot during the application of a configuration. The possible values are ContinueConfiguration and StopConfiguration
-        /// Serialized Name: ConfigurationSetting.actionAfterReboot
-        /// </param>
-        /// <param name="refreshFrequencyInMins">
-        /// The time interval, in minutes, at which the LCM checks a pull service to get updated configurations. This value is ignored if the LCM is not configured in pull mode. The default value is 30.
-        /// Serialized Name: ConfigurationSetting.refreshFrequencyMins
-        /// </param>
-        /// <param name="rebootIfNeeded">
-        /// Set this to true to automatically reboot the node after a configuration that requires reboot is applied. Otherwise, you will have to manually reboot the node for any configuration that requires it. The default value is false. To use this setting when a reboot condition is enacted by something other than DSC (such as Windows Installer), combine this setting with the xPendingReboot module.
-        /// Serialized Name: ConfigurationSetting.rebootIfNeeded
-        /// </param>
-        /// <param name="configurationModeFrequencyInMins">
-        /// How often, in minutes, the current configuration is checked and applied. This property is ignored if the ConfigurationMode property is set to ApplyOnly. The default value is 15.
-        /// Serialized Name: ConfigurationSetting.configurationModeFrequencyMins
-        /// </param>
+        /// <param name="configurationMode"> Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect. </param>
+        /// <param name="isModuleOverwriteAllowed"> If true - new configurations downloaded from the pull service are allowed to overwrite the old ones on the target node. Otherwise, false. </param>
+        /// <param name="actionAfterReboot"> Specifies what happens after a reboot during the application of a configuration. The possible values are ContinueConfiguration and StopConfiguration. </param>
+        /// <param name="refreshFrequencyInMins"> The time interval, in minutes, at which the LCM checks a pull service to get updated configurations. This value is ignored if the LCM is not configured in pull mode. The default value is 30. </param>
+        /// <param name="rebootIfNeeded"> Set this to true to automatically reboot the node after a configuration that requires reboot is applied. Otherwise, you will have to manually reboot the node for any configuration that requires it. The default value is false. To use this setting when a reboot condition is enacted by something other than DSC (such as Windows Installer), combine this setting with the xPendingReboot module. </param>
+        /// <param name="configurationModeFrequencyInMins"> How often, in minutes, the current configuration is checked and applied. This property is ignored if the ConfigurationMode property is set to ApplyOnly. The default value is 15. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LcmConfigurationSetting(LcmConfigurationMode? configurationMode, bool? isModuleOverwriteAllowed, ActionAfterReboot? actionAfterReboot, float? refreshFrequencyInMins, bool? rebootIfNeeded, float? configurationModeFrequencyInMins, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,40 +69,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect.
-        /// Serialized Name: ConfigurationSetting.configurationMode
-        /// </summary>
+        /// <summary> Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect. </summary>
         [WirePath("configurationMode")]
         public LcmConfigurationMode? ConfigurationMode { get; }
-        /// <summary>
-        /// If true - new configurations downloaded from the pull service are allowed to overwrite the old ones on the target node. Otherwise, false
-        /// Serialized Name: ConfigurationSetting.allowModuleOverwrite
-        /// </summary>
+        /// <summary> If true - new configurations downloaded from the pull service are allowed to overwrite the old ones on the target node. Otherwise, false. </summary>
         [WirePath("allowModuleOverwrite")]
         public bool? IsModuleOverwriteAllowed { get; }
-        /// <summary>
-        /// Specifies what happens after a reboot during the application of a configuration. The possible values are ContinueConfiguration and StopConfiguration
-        /// Serialized Name: ConfigurationSetting.actionAfterReboot
-        /// </summary>
+        /// <summary> Specifies what happens after a reboot during the application of a configuration. The possible values are ContinueConfiguration and StopConfiguration. </summary>
         [WirePath("actionAfterReboot")]
         public ActionAfterReboot? ActionAfterReboot { get; }
-        /// <summary>
-        /// The time interval, in minutes, at which the LCM checks a pull service to get updated configurations. This value is ignored if the LCM is not configured in pull mode. The default value is 30.
-        /// Serialized Name: ConfigurationSetting.refreshFrequencyMins
-        /// </summary>
+        /// <summary> The time interval, in minutes, at which the LCM checks a pull service to get updated configurations. This value is ignored if the LCM is not configured in pull mode. The default value is 30. </summary>
         [WirePath("refreshFrequencyMins")]
         public float? RefreshFrequencyInMins { get; }
-        /// <summary>
-        /// Set this to true to automatically reboot the node after a configuration that requires reboot is applied. Otherwise, you will have to manually reboot the node for any configuration that requires it. The default value is false. To use this setting when a reboot condition is enacted by something other than DSC (such as Windows Installer), combine this setting with the xPendingReboot module.
-        /// Serialized Name: ConfigurationSetting.rebootIfNeeded
-        /// </summary>
+        /// <summary> Set this to true to automatically reboot the node after a configuration that requires reboot is applied. Otherwise, you will have to manually reboot the node for any configuration that requires it. The default value is false. To use this setting when a reboot condition is enacted by something other than DSC (such as Windows Installer), combine this setting with the xPendingReboot module. </summary>
         [WirePath("rebootIfNeeded")]
         public bool? RebootIfNeeded { get; }
-        /// <summary>
-        /// How often, in minutes, the current configuration is checked and applied. This property is ignored if the ConfigurationMode property is set to ApplyOnly. The default value is 15.
-        /// Serialized Name: ConfigurationSetting.configurationModeFrequencyMins
-        /// </summary>
+        /// <summary> How often, in minutes, the current configuration is checked and applied. This property is ignored if the ConfigurationMode property is set to ApplyOnly. The default value is 15. </summary>
         [WirePath("configurationModeFrequencyMins")]
         public float? ConfigurationModeFrequencyInMins { get; }
     }

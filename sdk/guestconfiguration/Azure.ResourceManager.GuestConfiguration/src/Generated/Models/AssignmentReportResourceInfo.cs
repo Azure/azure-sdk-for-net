@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// The guest configuration assignment resource.
-    /// Serialized Name: AssignmentReportResource
-    /// </summary>
+    /// <summary> The guest configuration assignment resource. </summary>
     public partial class AssignmentReportResourceInfo
     {
         /// <summary>
@@ -55,22 +52,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AssignmentReportResourceInfo"/>. </summary>
-        /// <param name="complianceStatus">
-        /// A value indicating compliance status of the machine for the assigned guest configuration.
-        /// Serialized Name: AssignmentReportResource.complianceStatus
-        /// </param>
-        /// <param name="assignmentResourceSettingName">
-        /// Name of the guest configuration assignment resource setting.
-        /// Serialized Name: AssignmentReportResource.resourceId
-        /// </param>
-        /// <param name="reasons">
-        /// Compliance reason and reason code for a resource.
-        /// Serialized Name: AssignmentReportResource.reasons
-        /// </param>
-        /// <param name="properties">
-        /// Properties of a guest configuration assignment resource.
-        /// Serialized Name: AssignmentReportResource.properties
-        /// </param>
+        /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
+        /// <param name="assignmentResourceSettingName"> Name of the guest configuration assignment resource setting. </param>
+        /// <param name="reasons"> Compliance reason and reason code for a resource. </param>
+        /// <param name="properties"> Properties of a guest configuration assignment resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AssignmentReportResourceInfo(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, string assignmentResourceSettingName, IList<AssignmentReportResourceComplianceReason> reasons, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,27 +66,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A value indicating compliance status of the machine for the assigned guest configuration.
-        /// Serialized Name: AssignmentReportResource.complianceStatus
-        /// </summary>
+        /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
         [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
-        /// <summary>
-        /// Name of the guest configuration assignment resource setting.
-        /// Serialized Name: AssignmentReportResource.resourceId
-        /// </summary>
+        /// <summary> Name of the guest configuration assignment resource setting. </summary>
         [WirePath("resourceId")]
         public string AssignmentResourceSettingName { get; }
-        /// <summary>
-        /// Compliance reason and reason code for a resource.
-        /// Serialized Name: AssignmentReportResource.reasons
-        /// </summary>
+        /// <summary> Compliance reason and reason code for a resource. </summary>
         [WirePath("reasons")]
         public IList<AssignmentReportResourceComplianceReason> Reasons { get; }
         /// <summary>
         /// Properties of a guest configuration assignment resource.
-        /// Serialized Name: AssignmentReportResource.properties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// Represents a configuration parameter.
-    /// Serialized Name: ConfigurationParameter
-    /// </summary>
+    /// <summary> Represents a configuration parameter. </summary>
     public partial class GuestConfigurationParameter
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationParameter"/>. </summary>
-        /// <param name="name">
-        /// Name of the configuration parameter.
-        /// Serialized Name: ConfigurationParameter.name
-        /// </param>
-        /// <param name="value">
-        /// Value of the configuration parameter.
-        /// Serialized Name: ConfigurationParameter.value
-        /// </param>
+        /// <param name="name"> Name of the configuration parameter. </param>
+        /// <param name="value"> Value of the configuration parameter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationParameter(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of the configuration parameter.
-        /// Serialized Name: ConfigurationParameter.name
-        /// </summary>
+        /// <summary> Name of the configuration parameter. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Value of the configuration parameter.
-        /// Serialized Name: ConfigurationParameter.value
-        /// </summary>
+        /// <summary> Value of the configuration parameter. </summary>
         [WirePath("value")]
         public string Value { get; set; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor.
-    /// Serialized Name: AssignmentType
-    /// </summary>
+    /// <summary> Specifies the assignment type and execution of the configuration. Possible values are Audit, DeployAndAutoCorrect, ApplyAndAutoCorrect and ApplyAndMonitor. </summary>
     public readonly partial struct GuestConfigurationAssignmentType : IEquatable<GuestConfigurationAssignmentType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         private const string ApplyAndAutoCorrectValue = "ApplyAndAutoCorrect";
         private const string ApplyAndMonitorValue = "ApplyAndMonitor";
 
-        /// <summary>
-        /// Audit
-        /// Serialized Name: AssignmentType.Audit
-        /// </summary>
+        /// <summary> Audit. </summary>
         public static GuestConfigurationAssignmentType Audit { get; } = new GuestConfigurationAssignmentType(AuditValue);
-        /// <summary>
-        /// DeployAndAutoCorrect
-        /// Serialized Name: AssignmentType.DeployAndAutoCorrect
-        /// </summary>
+        /// <summary> DeployAndAutoCorrect. </summary>
         public static GuestConfigurationAssignmentType DeployAndAutoCorrect { get; } = new GuestConfigurationAssignmentType(DeployAndAutoCorrectValue);
-        /// <summary>
-        /// ApplyAndAutoCorrect
-        /// Serialized Name: AssignmentType.ApplyAndAutoCorrect
-        /// </summary>
+        /// <summary> ApplyAndAutoCorrect. </summary>
         public static GuestConfigurationAssignmentType ApplyAndAutoCorrect { get; } = new GuestConfigurationAssignmentType(ApplyAndAutoCorrectValue);
-        /// <summary>
-        /// ApplyAndMonitor
-        /// Serialized Name: AssignmentType.ApplyAndMonitor
-        /// </summary>
+        /// <summary> ApplyAndMonitor. </summary>
         public static GuestConfigurationAssignmentType ApplyAndMonitor { get; } = new GuestConfigurationAssignmentType(ApplyAndMonitorValue);
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentType"/> values are the same. </summary>
         public static bool operator ==(GuestConfigurationAssignmentType left, GuestConfigurationAssignmentType right) => left.Equals(right);

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// Guest configuration assignment properties.
-    /// Serialized Name: GuestConfigurationAssignmentProperties
-    /// </summary>
+    /// <summary> Guest configuration assignment properties. </summary>
     public partial class GuestConfigurationAssignmentProperties
     {
         /// <summary>
@@ -56,54 +53,18 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentProperties"/>. </summary>
-        /// <param name="targetResourceId">
-        /// VM resource Id.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.targetResourceId
-        /// </param>
-        /// <param name="guestConfiguration">
-        /// The guest configuration to assign.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.guestConfiguration
-        /// </param>
-        /// <param name="complianceStatus">
-        /// A value indicating compliance status of the machine for the assigned guest configuration.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.complianceStatus
-        /// </param>
-        /// <param name="lastComplianceStatusCheckedOn">
-        /// Date and time when last compliance status was checked.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.lastComplianceStatusChecked
-        /// </param>
-        /// <param name="latestReportId">
-        /// Id of the latest report for the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.latestReportId
-        /// </param>
-        /// <param name="parameterHash">
-        /// parameter hash for the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.parameterHash
-        /// </param>
-        /// <param name="latestAssignmentReport">
-        /// Last reported guest configuration assignment report.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.latestAssignmentReport
-        /// </param>
-        /// <param name="context">
-        /// The source which initiated the guest configuration assignment. Ex: Azure Policy
-        /// Serialized Name: GuestConfigurationAssignmentProperties.context
-        /// </param>
-        /// <param name="assignmentHash">
-        /// Combined hash of the configuration package and parameters.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.assignmentHash
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state, which only appears in the response.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.provisioningState
-        /// </param>
-        /// <param name="resourceType">
-        /// Type of the resource - VMSS / VM
-        /// Serialized Name: GuestConfigurationAssignmentProperties.resourceType
-        /// </param>
-        /// <param name="vmssVmList">
-        /// The list of VM Compliance data for VMSS
-        /// Serialized Name: GuestConfigurationAssignmentProperties.vmssVMList
-        /// </param>
+        /// <param name="targetResourceId"> VM resource Id. </param>
+        /// <param name="guestConfiguration"> The guest configuration to assign. </param>
+        /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
+        /// <param name="lastComplianceStatusCheckedOn"> Date and time when last compliance status was checked. </param>
+        /// <param name="latestReportId"> Id of the latest report for the guest configuration assignment. </param>
+        /// <param name="parameterHash"> parameter hash for the guest configuration assignment. </param>
+        /// <param name="latestAssignmentReport"> Last reported guest configuration assignment report. </param>
+        /// <param name="context"> The source which initiated the guest configuration assignment. Ex: Azure Policy. </param>
+        /// <param name="assignmentHash"> Combined hash of the configuration package and parameters. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="resourceType"> Type of the resource - VMSS / VM. </param>
+        /// <param name="vmssVmList"> The list of VM Compliance data for VMSS. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVmList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -122,76 +83,40 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// VM resource Id.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.targetResourceId
-        /// </summary>
+        /// <summary> VM resource Id. </summary>
         [WirePath("targetResourceId")]
         public string TargetResourceId { get; }
-        /// <summary>
-        /// The guest configuration to assign.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.guestConfiguration
-        /// </summary>
+        /// <summary> The guest configuration to assign. </summary>
         [WirePath("guestConfiguration")]
         public GuestConfigurationNavigation GuestConfiguration { get; set; }
-        /// <summary>
-        /// A value indicating compliance status of the machine for the assigned guest configuration.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.complianceStatus
-        /// </summary>
+        /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
         [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
-        /// <summary>
-        /// Date and time when last compliance status was checked.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.lastComplianceStatusChecked
-        /// </summary>
+        /// <summary> Date and time when last compliance status was checked. </summary>
         [WirePath("lastComplianceStatusChecked")]
         public DateTimeOffset? LastComplianceStatusCheckedOn { get; }
-        /// <summary>
-        /// Id of the latest report for the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.latestReportId
-        /// </summary>
+        /// <summary> Id of the latest report for the guest configuration assignment. </summary>
         [WirePath("latestReportId")]
         public ResourceIdentifier LatestReportId { get; }
-        /// <summary>
-        /// parameter hash for the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.parameterHash
-        /// </summary>
+        /// <summary> parameter hash for the guest configuration assignment. </summary>
         [WirePath("parameterHash")]
         public string ParameterHash { get; }
-        /// <summary>
-        /// Last reported guest configuration assignment report.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.latestAssignmentReport
-        /// </summary>
+        /// <summary> Last reported guest configuration assignment report. </summary>
         [WirePath("latestAssignmentReport")]
         public GuestConfigurationAssignmentReportInfo LatestAssignmentReport { get; set; }
-        /// <summary>
-        /// The source which initiated the guest configuration assignment. Ex: Azure Policy
-        /// Serialized Name: GuestConfigurationAssignmentProperties.context
-        /// </summary>
+        /// <summary> The source which initiated the guest configuration assignment. Ex: Azure Policy. </summary>
         [WirePath("context")]
         public string Context { get; set; }
-        /// <summary>
-        /// Combined hash of the configuration package and parameters.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.assignmentHash
-        /// </summary>
+        /// <summary> Combined hash of the configuration package and parameters. </summary>
         [WirePath("assignmentHash")]
         public string AssignmentHash { get; }
-        /// <summary>
-        /// The provisioning state, which only appears in the response.
-        /// Serialized Name: GuestConfigurationAssignmentProperties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state, which only appears in the response. </summary>
         [WirePath("provisioningState")]
         public GuestConfigurationProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Type of the resource - VMSS / VM
-        /// Serialized Name: GuestConfigurationAssignmentProperties.resourceType
-        /// </summary>
+        /// <summary> Type of the resource - VMSS / VM. </summary>
         [WirePath("resourceType")]
         public string ResourceType { get; }
-        /// <summary>
-        /// The list of VM Compliance data for VMSS
-        /// Serialized Name: GuestConfigurationAssignmentProperties.vmssVMList
-        /// </summary>
+        /// <summary> The list of VM Compliance data for VMSS. </summary>
         [WirePath("vmssVMList")]
         public IList<GuestConfigurationVmssVmInfo> VmssVmList { get; set; }
     }

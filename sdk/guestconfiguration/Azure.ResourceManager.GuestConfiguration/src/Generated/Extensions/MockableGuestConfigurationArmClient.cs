@@ -265,16 +265,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
             return GetGuestConfigurationVmssAssignments(scope).Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GuestConfigurationVmwareSphereAssignmentResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of GuestConfigurationVMwarevSphereAssignmentResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of GuestConfigurationVmwareSphereAssignmentResources and their operations over a GuestConfigurationVmwareSphereAssignmentResource. </returns>
-        public virtual GuestConfigurationVmwareSphereAssignmentCollection GetGuestConfigurationVmwareSphereAssignments(ResourceIdentifier scope)
+        /// <returns> An object representing collection of GuestConfigurationVMwarevSphereAssignmentResources and their operations over a GuestConfigurationVMwarevSphereAssignmentResource. </returns>
+        public virtual GuestConfigurationVMwarevSphereAssignmentCollection GetGuestConfigurationVMwarevSphereAssignments(ResourceIdentifier scope)
         {
             if (!scope.ResourceType.Equals("Microsoft.ConnectedVMwarevSphere/virtualmachines"))
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0}, expected Microsoft.ConnectedVMwarevSphere/virtualmachines", scope.ResourceType));
             }
-            return new GuestConfigurationVmwareSphereAssignmentCollection(Client, scope);
+            return new GuestConfigurationVMwarevSphereAssignmentCollection(Client, scope);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestConfigurationVmwareSphereAssignmentResource"/></description>
+        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,9 +304,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GuestConfigurationVmwareSphereAssignmentResource>> GetGuestConfigurationVmwareSphereAssignmentAsync(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GuestConfigurationVMwarevSphereAssignmentResource>> GetGuestConfigurationVMwarevSphereAssignmentAsync(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetGuestConfigurationVmwareSphereAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetGuestConfigurationVMwarevSphereAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GuestConfigurationVmwareSphereAssignmentResource"/></description>
+        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GuestConfigurationVmwareSphereAssignmentResource> GetGuestConfigurationVmwareSphereAssignment(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<GuestConfigurationVMwarevSphereAssignmentResource> GetGuestConfigurationVMwarevSphereAssignment(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetGuestConfigurationVmwareSphereAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
+            return GetGuestConfigurationVMwarevSphereAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -378,15 +378,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GuestConfigurationVmwareSphereAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestConfigurationVmwareSphereAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmwareSphereAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestConfigurationVMwarevSphereAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestConfigurationVmwareSphereAssignmentResource"/> object. </returns>
-        public virtual GuestConfigurationVmwareSphereAssignmentResource GetGuestConfigurationVmwareSphereAssignmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> object. </returns>
+        public virtual GuestConfigurationVMwarevSphereAssignmentResource GetGuestConfigurationVMwarevSphereAssignmentResource(ResourceIdentifier id)
         {
-            GuestConfigurationVmwareSphereAssignmentResource.ValidateResourceId(id);
-            return new GuestConfigurationVmwareSphereAssignmentResource(Client, id);
+            GuestConfigurationVMwarevSphereAssignmentResource.ValidateResourceId(id);
+            return new GuestConfigurationVMwarevSphereAssignmentResource(Client, id);
         }
     }
 }

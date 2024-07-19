@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    public partial class GuestConfigurationVmwareSphereAssignmentResource : IJsonModel<GuestConfigurationAssignmentData>
+    public partial class GuestConfigurationVMwarevSphereAssignmentResource : IJsonModel<GuestConfigurationAssignmentData>
     {
         void IJsonModel<GuestConfigurationAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GuestConfigurationAssignmentData>)Data).Write(writer, options);
 

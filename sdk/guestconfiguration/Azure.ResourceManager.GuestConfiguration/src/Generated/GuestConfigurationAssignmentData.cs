@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// <summary>
     /// A class representing the GuestConfigurationAssignment data model.
     /// Guest configuration assignment is an association between a machine and guest configuration.
-    /// Serialized Name: GuestConfigurationAssignment
     /// </summary>
     public partial class GuestConfigurationAssignmentData : GuestConfigurationResourceData
     {
@@ -26,40 +25,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentData"/>. </summary>
-        /// <param name="id">
-        /// ARM resource id of the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationResourceData.id
-        /// </param>
-        /// <param name="name">
-        /// Name of the guest configuration assignment.
-        /// Serialized Name: GuestConfigurationResourceData.name
-        /// </param>
-        /// <param name="location">
-        /// Region where the VM is located.
-        /// Serialized Name: GuestConfigurationResourceData.location
-        /// </param>
-        /// <param name="resourceType">
-        /// The type of the resource.
-        /// Serialized Name: GuestConfigurationResourceData.type
-        /// </param>
-        /// <param name="systemData">
-        /// Azure Resource Manager metadata containing createdBy and modifiedBy information.
-        /// Serialized Name: GuestConfigurationResourceData.systemData
-        /// </param>
+        /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
+        /// <param name="name"> Name of the guest configuration assignment. </param>
+        /// <param name="location"> Region where the VM is located. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties">
-        /// Properties of the Guest configuration assignment.
-        /// Serialized Name: GuestConfigurationAssignment.properties
-        /// </param>
+        /// <param name="properties"> Properties of the Guest configuration assignment. </param>
         internal GuestConfigurationAssignmentData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, GuestConfigurationAssignmentProperties properties) : base(id, name, location, resourceType, systemData, serializedAdditionalRawData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// Properties of the Guest configuration assignment.
-        /// Serialized Name: GuestConfigurationAssignment.properties
-        /// </summary>
+        /// <summary> Properties of the Guest configuration assignment. </summary>
         [WirePath("properties")]
         public GuestConfigurationAssignmentProperties Properties { get; set; }
     }

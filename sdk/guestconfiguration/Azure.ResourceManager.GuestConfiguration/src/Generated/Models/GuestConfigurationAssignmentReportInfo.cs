@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// The GuestConfigurationAssignmentReportInfo.
-    /// Serialized Name: AssignmentReport
-    /// </summary>
+    /// <summary> The GuestConfigurationAssignmentReportInfo. </summary>
     public partial class GuestConfigurationAssignmentReportInfo
     {
         /// <summary>
@@ -56,42 +53,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportInfo"/>. </summary>
-        /// <param name="id">
-        /// ARM resource id of the report for the guest configuration assignment.
-        /// Serialized Name: AssignmentReport.id
-        /// </param>
-        /// <param name="reportId">
-        /// GUID that identifies the guest configuration assignment report under a subscription, resource group.
-        /// Serialized Name: AssignmentReport.reportId
-        /// </param>
-        /// <param name="assignment">
-        /// Configuration details of the guest configuration assignment.
-        /// Serialized Name: AssignmentReport.assignment
-        /// </param>
-        /// <param name="vm">
-        /// Information about the VM.
-        /// Serialized Name: AssignmentReport.vm
-        /// </param>
-        /// <param name="startOn">
-        /// Start date and time of the guest configuration assignment compliance status check.
-        /// Serialized Name: AssignmentReport.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End date and time of the guest configuration assignment compliance status check.
-        /// Serialized Name: AssignmentReport.endTime
-        /// </param>
-        /// <param name="complianceStatus">
-        /// A value indicating compliance status of the machine for the assigned guest configuration.
-        /// Serialized Name: AssignmentReport.complianceStatus
-        /// </param>
-        /// <param name="operationType">
-        /// Type of report, Consistency or Initial
-        /// Serialized Name: AssignmentReport.operationType
-        /// </param>
-        /// <param name="resources">
-        /// The list of resources for which guest configuration assignment compliance is checked.
-        /// Serialized Name: AssignmentReport.resources
-        /// </param>
+        /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
+        /// <param name="reportId"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
+        /// <param name="assignment"> Configuration details of the guest configuration assignment. </param>
+        /// <param name="vm"> Information about the VM. </param>
+        /// <param name="startOn"> Start date and time of the guest configuration assignment compliance status check. </param>
+        /// <param name="endOn"> End date and time of the guest configuration assignment compliance status check. </param>
+        /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
+        /// <param name="operationType"> Type of report, Consistency or Initial. </param>
+        /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationAssignmentReportInfo(ResourceIdentifier id, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, GuestConfigurationAssignmentReportType? operationType, IList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -107,58 +77,31 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// ARM resource id of the report for the guest configuration assignment.
-        /// Serialized Name: AssignmentReport.id
-        /// </summary>
+        /// <summary> ARM resource id of the report for the guest configuration assignment. </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// GUID that identifies the guest configuration assignment report under a subscription, resource group.
-        /// Serialized Name: AssignmentReport.reportId
-        /// </summary>
+        /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
         [WirePath("reportId")]
         public Guid? ReportId { get; }
-        /// <summary>
-        /// Configuration details of the guest configuration assignment.
-        /// Serialized Name: AssignmentReport.assignment
-        /// </summary>
+        /// <summary> Configuration details of the guest configuration assignment. </summary>
         [WirePath("assignment")]
         public GuestConfigurationAssignmentInfo Assignment { get; set; }
-        /// <summary>
-        /// Information about the VM.
-        /// Serialized Name: AssignmentReport.vm
-        /// </summary>
+        /// <summary> Information about the VM. </summary>
         [WirePath("vm")]
         public GuestConfigurationVmInfo Vm { get; set; }
-        /// <summary>
-        /// Start date and time of the guest configuration assignment compliance status check.
-        /// Serialized Name: AssignmentReport.startTime
-        /// </summary>
+        /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// End date and time of the guest configuration assignment compliance status check.
-        /// Serialized Name: AssignmentReport.endTime
-        /// </summary>
+        /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// A value indicating compliance status of the machine for the assigned guest configuration.
-        /// Serialized Name: AssignmentReport.complianceStatus
-        /// </summary>
+        /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
         [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
-        /// <summary>
-        /// Type of report, Consistency or Initial
-        /// Serialized Name: AssignmentReport.operationType
-        /// </summary>
+        /// <summary> Type of report, Consistency or Initial. </summary>
         [WirePath("operationType")]
         public GuestConfigurationAssignmentReportType? OperationType { get; }
-        /// <summary>
-        /// The list of resources for which guest configuration assignment compliance is checked.
-        /// Serialized Name: AssignmentReport.resources
-        /// </summary>
+        /// <summary> The list of resources for which guest configuration assignment compliance is checked. </summary>
         [WirePath("resources")]
         public IList<AssignmentReportResourceInfo> Resources { get; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// The provisioning state, which only appears in the response.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state, which only appears in the response. </summary>
     public readonly partial struct GuestConfigurationProvisioningState : IEquatable<GuestConfigurationProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         private const string CanceledValue = "Canceled";
         private const string CreatedValue = "Created";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static GuestConfigurationProvisioningState Succeeded { get; } = new GuestConfigurationProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static GuestConfigurationProvisioningState Failed { get; } = new GuestConfigurationProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static GuestConfigurationProvisioningState Canceled { get; } = new GuestConfigurationProvisioningState(CanceledValue);
-        /// <summary>
-        /// Created
-        /// Serialized Name: ProvisioningState.Created
-        /// </summary>
+        /// <summary> Created. </summary>
         public static GuestConfigurationProvisioningState Created { get; } = new GuestConfigurationProvisioningState(CreatedValue);
         /// <summary> Determines if two <see cref="GuestConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GuestConfigurationProvisioningState left, GuestConfigurationProvisioningState right) => left.Equals(right);

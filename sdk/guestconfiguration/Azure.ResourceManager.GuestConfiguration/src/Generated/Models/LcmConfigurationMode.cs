@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect.
-    /// Serialized Name: ConfigurationMode
-    /// </summary>
+    /// <summary> Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect. </summary>
     public readonly partial struct LcmConfigurationMode : IEquatable<LcmConfigurationMode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         private const string ApplyAndMonitorValue = "ApplyAndMonitor";
         private const string ApplyAndAutoCorrectValue = "ApplyAndAutoCorrect";
 
-        /// <summary>
-        /// ApplyOnly
-        /// Serialized Name: ConfigurationMode.ApplyOnly
-        /// </summary>
+        /// <summary> ApplyOnly. </summary>
         public static LcmConfigurationMode ApplyOnly { get; } = new LcmConfigurationMode(ApplyOnlyValue);
-        /// <summary>
-        /// ApplyAndMonitor
-        /// Serialized Name: ConfigurationMode.ApplyAndMonitor
-        /// </summary>
+        /// <summary> ApplyAndMonitor. </summary>
         public static LcmConfigurationMode ApplyAndMonitor { get; } = new LcmConfigurationMode(ApplyAndMonitorValue);
-        /// <summary>
-        /// ApplyAndAutoCorrect
-        /// Serialized Name: ConfigurationMode.ApplyAndAutoCorrect
-        /// </summary>
+        /// <summary> ApplyAndAutoCorrect. </summary>
         public static LcmConfigurationMode ApplyAndAutoCorrect { get; } = new LcmConfigurationMode(ApplyAndAutoCorrectValue);
         /// <summary> Determines if two <see cref="LcmConfigurationMode"/> values are the same. </summary>
         public static bool operator ==(LcmConfigurationMode left, LcmConfigurationMode right) => left.Equals(right);

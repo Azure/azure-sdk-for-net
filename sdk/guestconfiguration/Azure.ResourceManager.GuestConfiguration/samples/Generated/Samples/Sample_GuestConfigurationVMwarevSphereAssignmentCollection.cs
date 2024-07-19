@@ -13,7 +13,7 @@ using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Samples
 {
-    public partial class Sample_GuestConfigurationVmwareSphereAssignmentCollection
+    public partial class Sample_GuestConfigurationVMwarevSphereAssignmentCollection
     {
         // Create or update guest configuration assignment
         [NUnit.Framework.Test]
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmwareSphereAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmwareSphereAssignmentCollection collection = client.GetGuestConfigurationVmwareSphereAssignments(scopeId);
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation
             string guestConfigurationAssignmentName = "NotInstalledApplicationForWindows";
@@ -65,8 +65,8 @@ Value = "NotePad,sql",
                 Name = "NotInstalledApplicationForWindows",
                 Location = new AzureLocation("westcentralus"),
             };
-            ArmOperation<GuestConfigurationVmwareSphereAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, guestConfigurationAssignmentName, data);
-            GuestConfigurationVmwareSphereAssignmentResource result = lro.Value;
+            ArmOperation<GuestConfigurationVMwarevSphereAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, guestConfigurationAssignmentName, data);
+            GuestConfigurationVMwarevSphereAssignmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -91,16 +91,16 @@ Value = "NotePad,sql",
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmwareSphereAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmwareSphereAssignmentCollection collection = client.GetGuestConfigurationVmwareSphereAssignments(scopeId);
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
-            GuestConfigurationVmwareSphereAssignmentResource result = await collection.GetAsync(guestConfigurationAssignmentName);
+            GuestConfigurationVMwarevSphereAssignmentResource result = await collection.GetAsync(guestConfigurationAssignmentName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -125,12 +125,12 @@ Value = "NotePad,sql",
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmwareSphereAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmwareSphereAssignmentCollection collection = client.GetGuestConfigurationVmwareSphereAssignments(scopeId);
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
@@ -155,17 +155,17 @@ Value = "NotePad,sql",
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmwareSphereAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmwareSphereAssignmentCollection collection = client.GetGuestConfigurationVmwareSphereAssignments(scopeId);
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
-            NullableResponse<GuestConfigurationVmwareSphereAssignmentResource> response = await collection.GetIfExistsAsync(guestConfigurationAssignmentName);
-            GuestConfigurationVmwareSphereAssignmentResource result = response.HasValue ? response.Value : null;
+            NullableResponse<GuestConfigurationVMwarevSphereAssignmentResource> response = await collection.GetIfExistsAsync(guestConfigurationAssignmentName);
+            GuestConfigurationVMwarevSphereAssignmentResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -197,15 +197,15 @@ Value = "NotePad,sql",
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmwareSphereAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmwareSphereAssignmentCollection collection = client.GetGuestConfigurationVmwareSphereAssignments(scopeId);
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation and iterate over the result
-            await foreach (GuestConfigurationVmwareSphereAssignmentResource item in collection.GetAllAsync())
+            await foreach (GuestConfigurationVMwarevSphereAssignmentResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

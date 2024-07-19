@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary>
-    /// List of guest configuration assignment reports.
-    /// Serialized Name: GuestConfigurationAssignmentReportList
-    /// </summary>
+    /// <summary> List of guest configuration assignment reports. </summary>
     internal partial class GuestConfigurationAssignmentReportList
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportList"/>. </summary>
-        /// <param name="value">
-        /// List of reports for the guest configuration. Report contains information such as compliance status, reason and more.
-        /// Serialized Name: GuestConfigurationAssignmentReportList.value
-        /// </param>
+        /// <param name="value"> List of reports for the guest configuration. Report contains information such as compliance status, reason and more. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GuestConfigurationAssignmentReportList(IReadOnlyList<GuestConfigurationAssignmentReport> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of reports for the guest configuration. Report contains information such as compliance status, reason and more.
-        /// Serialized Name: GuestConfigurationAssignmentReportList.value
-        /// </summary>
+        /// <summary> List of reports for the guest configuration. Report contains information such as compliance status, reason and more. </summary>
         [WirePath("value")]
         public IReadOnlyList<GuestConfigurationAssignmentReport> Value { get; }
     }
