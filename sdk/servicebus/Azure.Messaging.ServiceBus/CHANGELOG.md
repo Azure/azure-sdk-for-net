@@ -1,15 +1,12 @@
 # Release History
 
-## 7.18.0-beta.2 (Unreleased)
+## 7.18.0 (2024-07-18)
 
 ### Acknowledgments
+
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Martin Costello _([GitHub](https://github.com/martincostello))_
-
-### Features Added
-
-### Breaking Changes
 
 ### Bugs Fixed
 
@@ -21,14 +18,17 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 - Fixed an issue that caused `ServiceBusMessageBatch` to accept more than the allowed 1mb batch limit when sending to Service Bus entities with large message sizes enabled.
 
+- Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
+
 ### Other Changes
 
 - The client will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigureed adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation.
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains a fix for decoding messages with a null format code as the body.
 
-- Improved efficiency of subclient creation, reducing allocations when no explicit options are passed.  - Fixed deserialization of the lock token to take into account endianness. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
+- Improved efficiency of subclient creation, reducing allocations when no explicit options are passed.
 
+- Fixed deserialization of the lock token to take into account endianness. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
 
 ## 7.18.0-beta.1 (2024-05-08)
 

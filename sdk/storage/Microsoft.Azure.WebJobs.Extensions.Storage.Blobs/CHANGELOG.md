@@ -2,6 +2,16 @@
 
 ## 5.4.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.3.1 (2024-07-17)
+
 ### Bugs Fixed
 - Rely on PeekMessagesAsync when calculating message queue length
 - Fixing target base scale instance concurrency for queues
@@ -9,7 +19,7 @@
 
 ## 5.3.0 (2024-04-18)
 - Includes all features from 5.3.0-beta.1.
-- Bumped Azure.Identity dependency to 1.11.1 to resolve secruity vulnerability.
+- Bumped Azure.Identity dependency to 1.11.1 to resolve security vulnerability.
 
 ## 5.3.0-beta.1 (2024-04-15)
 - This release contains bug fixes to improve quality.
