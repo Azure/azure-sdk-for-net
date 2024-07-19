@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         // CloudHsmCluster_Get_Backup_Status_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCloudHsmClusterBackupStatu_CloudHsmClusterGetBackupStatusMaximumSetGen()
+        public async Task GetCloudHsmClusterBackupStatus_CloudHsmClusterGetBackupStatusMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Backup_Pending_MaximumSet_Gen.json
             // this example is just showing the usage of "CloudHsmClusterBackupStatus_Get" operation, for the dependent resources, they will have to be created separately.
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
             // invoke the operation
             string jobId = "572a45927fc240e1ac075de27371680b";
-            BackupResult result = await cloudHsmCluster.GetCloudHsmClusterBackupStatuAsync(jobId);
+            BackupResult result = await cloudHsmCluster.GetCloudHsmClusterBackupStatusAsync(jobId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         // CloudHsmCluster_Get_Restore_Status_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCloudHsmClusterRestoreStatu_CloudHsmClusterGetRestoreStatusMaximumSetGen()
+        public async Task GetCloudHsmClusterRestoreStatus_CloudHsmClusterGetRestoreStatusMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Restore_Pending_MaximumSet_Gen.json
             // this example is just showing the usage of "CloudHsmClusterRestoreStatus_Get" operation, for the dependent resources, they will have to be created separately.
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
             // invoke the operation
             string jobId = "572a45927fc240e1ac075de27371680b";
-            RestoreResult result = await cloudHsmCluster.GetCloudHsmClusterRestoreStatuAsync(jobId);
+            RestoreResult result = await cloudHsmCluster.GetCloudHsmClusterRestoreStatusAsync(jobId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
