@@ -23,7 +23,7 @@
 - Added `200` to the response code of the `SyncFunctionTriggers`
 - SiteFunctionResource.GetFunctionKeysAsync /SiteSlotFunctionResource.GetFunctionKeysSlotAsync fixed: can not populated with function keys
 - Added more enum values for `TriggeredWebJobStatus`
-
+- add property 'Processid' to accept the value of the id(maybe a number or actual resoucdeidentifier) for issue #39126 and the property 'id'  leave as null.
 ## 1.1.0-beta.4 (2023-11-30)
 
 ### Features Added
