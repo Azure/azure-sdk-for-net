@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests;
-using ClientModel.Tests.Mocks;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using ClientModel.Tests;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Pipeline;
 
@@ -131,7 +130,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    // Retry-After header is larger - wait Retry-After
+    // Retry-After header is larger - wait Retry-After time
     [TestCase("Retry-After", "5", 5000)]
     // Retry-After header is shorter - wait exponential backoff time
     [TestCase("Retry-After", "1", 1600)]

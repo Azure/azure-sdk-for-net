@@ -11,6 +11,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class PipelineResponseHeaders : IEnumerable<KeyValuePair<string, string>>
 {
+    internal const string RetryAfter = "Retry-After";
+
     /// <summary>
     /// Attempts to retrieve the value associated with the specified header
     /// name.

@@ -87,9 +87,7 @@ public class MockRetryPolicy : ClientRetryPolicy
     }
 
     public double GetNextDelayMilliseconds(PipelineMessage message, int tryCount)
-    {
-        return GetNextDelay(message, tryCount).TotalMilliseconds;
-    }
+        => GetNextDelay(message, tryCount).TotalMilliseconds;
 
     protected override TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
     {

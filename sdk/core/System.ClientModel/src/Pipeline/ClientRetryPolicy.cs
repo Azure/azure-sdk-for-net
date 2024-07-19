@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -275,7 +276,7 @@ public class ClientRetryPolicy : PipelinePolicy
         double nextDelayMilliseconds = (1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds;
 
         if (message.Response is not null &&
-            message.Response.Headers.TryGetValue("Retry-After", out string? retryAfter) &&
+            message.Response.Headers.TryGetValue(PipelineResponseHeaders.RetryAfter, out string? retryAfter) &&
             double.TryParse(retryAfter, out double retryAfterSeconds))
         {
             double retryAfterMilliseconds = retryAfterSeconds * 1000;
