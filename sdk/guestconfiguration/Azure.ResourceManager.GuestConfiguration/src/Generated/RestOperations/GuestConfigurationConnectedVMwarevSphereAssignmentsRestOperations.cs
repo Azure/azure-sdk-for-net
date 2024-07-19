@@ -15,20 +15,20 @@ using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    internal partial class GuestConfigurationHcrpAssignmentsRestOperations
+    internal partial class GuestConfigurationConnectedVMwarevSphereAssignmentsRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of GuestConfigurationHcrpAssignmentsRestOperations. </summary>
+        /// <summary> Initializes a new instance of GuestConfigurationConnectedVMwarevSphereAssignmentsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public GuestConfigurationHcrpAssignmentsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public GuestConfigurationConnectedVMwarevSphereAssignmentsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
-            uri.AppendPath(machineName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/", false);
+            uri.AppendPath(vmName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
             uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
-            uri.AppendPath(machineName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/", false);
+            uri.AppendPath(vmName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
             uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -78,24 +78,24 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        /// <summary> Creates an association between a ARC machine and guest configuration. </summary>
+        /// <summary> Creates an association between a Connected VM Sphere machine and guest configuration. </summary>
         /// <param name="subscriptionId"> Subscription ID which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> Name of the guest configuration assignment. </param>
         /// <param name="data"> Parameters supplied to the create or update guest configuration assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GuestConfigurationAssignmentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GuestConfigurationAssignmentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -112,24 +112,24 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
         }
 
-        /// <summary> Creates an association between a ARC machine and guest configuration. </summary>
+        /// <summary> Creates an association between a Connected VM Sphere machine and guest configuration. </summary>
         /// <param name="subscriptionId"> Subscription ID which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> Name of the guest configuration assignment. </param>
         /// <param name="data"> Parameters supplied to the create or update guest configuration assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GuestConfigurationAssignmentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GuestConfigurationAssignmentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -154,15 +154,15 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
-            uri.AppendPath(machineName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/", false);
+            uri.AppendPath(vmName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
             uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
-            uri.AppendPath(machineName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/", false);
+            uri.AppendPath(vmName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
             uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -187,19 +187,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Get information about a guest configuration assignment. </summary>
         /// <param name="subscriptionId"> Subscription ID which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GuestConfigurationAssignmentData>> GetAsync(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GuestConfigurationAssignmentData>> GetAsync(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -220,19 +220,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Get information about a guest configuration assignment. </summary>
         /// <param name="subscriptionId"> Subscription ID which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GuestConfigurationAssignmentData> Get(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GuestConfigurationAssignmentData> Get(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -258,15 +258,15 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
-            uri.AppendPath(machineName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/", false);
+            uri.AppendPath(vmName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
             uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -277,8 +277,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
-            uri.AppendPath(machineName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/", false);
+            uri.AppendPath(vmName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
             uri.AppendPath(guestConfigurationAssignmentName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -291,23 +291,24 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Delete a guest configuration assignment. </summary>
         /// <param name="subscriptionId"> Subscription ID which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> Name of the guest configuration assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -317,30 +318,31 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Delete a guest configuration assignment. </summary>
         /// <param name="subscriptionId"> Subscription ID which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> Name of the guest configuration assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, machineName, guestConfigurationAssignmentName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vmName, guestConfigurationAssignmentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string machineName)
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string vmName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -348,14 +350,14 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
-            uri.AppendPath(machineName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/", false);
+            uri.AppendPath(vmName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string machineName)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string vmName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -366,8 +368,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
-            uri.AppendPath(machineName, true);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/", false);
+            uri.AppendPath(vmName, true);
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -379,17 +381,17 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> List all guest configuration assignments for an ARC machine. </summary>
         /// <param name="subscriptionId"> Subscription ID which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GuestConfigurationAssignmentList>> ListAsync(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GuestConfigurationAssignmentList>> ListAsync(string subscriptionId, string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, machineName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, vmName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -408,17 +410,17 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> List all guest configuration assignments for an ARC machine. </summary>
         /// <param name="subscriptionId"> Subscription ID which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="machineName"> The name of the ARC machine. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GuestConfigurationAssignmentList> List(string subscriptionId, string resourceGroupName, string machineName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GuestConfigurationAssignmentList> List(string subscriptionId, string resourceGroupName, string vmName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, machineName);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, vmName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

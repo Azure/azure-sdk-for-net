@@ -13,15 +13,15 @@ using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Samples
 {
-    public partial class Sample_GuestConfigurationVmssAssignmentCollection
+    public partial class Sample_GuestConfigurationVMwarevSphereAssignmentCollection
     {
         // Create or update guest configuration assignment
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateGuestConfigurationAssignment()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/createOrUpdateGuestConfigurationVMSSAssignment.json
-            // this example is just showing the usage of "GuestConfigurationAssignmentsVMSS_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/createOrUpdateGuestConfigurationConnectedVMwarevSphereAssignment.json
+            // this example is just showing the usage of "GuestConfigurationConnectedVMwarevSphereAssignments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmssAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
-            string vmssName = "myVMSSName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachineScaleSets/{2}", subscriptionId, resourceGroupName, vmssName));
-            GuestConfigurationVmssAssignmentCollection collection = client.GetGuestConfigurationVmssAssignments(scopeId);
+            string vmName = "myVMName";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation
-            string name = "NotInstalledApplicationForWindows";
+            string guestConfigurationAssignmentName = "NotInstalledApplicationForWindows";
             GuestConfigurationAssignmentData data = new GuestConfigurationAssignmentData()
             {
                 Properties = new GuestConfigurationAssignmentProperties()
@@ -47,10 +47,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
                     GuestConfiguration = new GuestConfigurationNavigation()
                     {
                         Name = "NotInstalledApplicationForWindows",
-                        Version = "1.0.0.3",
+                        Version = "1.0.0.0",
                         ContentUri = new Uri("https://thisisfake/pacakge"),
                         ContentHash = "123contenthash",
-                        ContentManagedIdentity = "test_identity",
                         AssignmentType = GuestConfigurationAssignmentType.ApplyAndAutoCorrect,
                         ConfigurationParameters =
 {
@@ -66,8 +65,8 @@ Value = "NotePad,sql",
                 Name = "NotInstalledApplicationForWindows",
                 Location = new AzureLocation("westcentralus"),
             };
-            ArmOperation<GuestConfigurationVmssAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            GuestConfigurationVmssAssignmentResource result = lro.Value;
+            ArmOperation<GuestConfigurationVMwarevSphereAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, guestConfigurationAssignmentName, data);
+            GuestConfigurationVMwarevSphereAssignmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -76,13 +75,13 @@ Value = "NotePad,sql",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a VMSS guest configuration assignment
+        // Get a guest configuration assignment
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVMSSGuestConfigurationAssignment()
+        public async Task Get_GetAGuestConfigurationAssignment()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getVMSSGuestConfigurationAssignment.json
-            // this example is just showing the usage of "GuestConfigurationAssignmentsVMSS_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationConnectedVMwarevSphereAssignment.json
+            // this example is just showing the usage of "GuestConfigurationConnectedVMwarevSphereAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,16 +91,16 @@ Value = "NotePad,sql",
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmssAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
-            string vmssName = "myVMSSName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachineScaleSets/{2}", subscriptionId, resourceGroupName, vmssName));
-            GuestConfigurationVmssAssignmentCollection collection = client.GetGuestConfigurationVmssAssignments(scopeId);
+            string vmName = "myVMName";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation
-            string name = "SecureProtocol";
-            GuestConfigurationVmssAssignmentResource result = await collection.GetAsync(name);
+            string guestConfigurationAssignmentName = "SecureProtocol";
+            GuestConfigurationVMwarevSphereAssignmentResource result = await collection.GetAsync(guestConfigurationAssignmentName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -110,13 +109,13 @@ Value = "NotePad,sql",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a VMSS guest configuration assignment
+        // Get a guest configuration assignment
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAVMSSGuestConfigurationAssignment()
+        public async Task Exists_GetAGuestConfigurationAssignment()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getVMSSGuestConfigurationAssignment.json
-            // this example is just showing the usage of "GuestConfigurationAssignmentsVMSS_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationConnectedVMwarevSphereAssignment.json
+            // this example is just showing the usage of "GuestConfigurationConnectedVMwarevSphereAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -126,27 +125,27 @@ Value = "NotePad,sql",
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmssAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
-            string vmssName = "myVMSSName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachineScaleSets/{2}", subscriptionId, resourceGroupName, vmssName));
-            GuestConfigurationVmssAssignmentCollection collection = client.GetGuestConfigurationVmssAssignments(scopeId);
+            string vmName = "myVMName";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation
-            string name = "SecureProtocol";
-            bool result = await collection.ExistsAsync(name);
+            string guestConfigurationAssignmentName = "SecureProtocol";
+            bool result = await collection.ExistsAsync(guestConfigurationAssignmentName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a VMSS guest configuration assignment
+        // Get a guest configuration assignment
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAVMSSGuestConfigurationAssignment()
+        public async Task GetIfExists_GetAGuestConfigurationAssignment()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getVMSSGuestConfigurationAssignment.json
-            // this example is just showing the usage of "GuestConfigurationAssignmentsVMSS_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationConnectedVMwarevSphereAssignment.json
+            // this example is just showing the usage of "GuestConfigurationConnectedVMwarevSphereAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -156,17 +155,17 @@ Value = "NotePad,sql",
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmssAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
-            string vmssName = "myVMSSName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachineScaleSets/{2}", subscriptionId, resourceGroupName, vmssName));
-            GuestConfigurationVmssAssignmentCollection collection = client.GetGuestConfigurationVmssAssignments(scopeId);
+            string vmName = "myVMName";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation
-            string name = "SecureProtocol";
-            NullableResponse<GuestConfigurationVmssAssignmentResource> response = await collection.GetIfExistsAsync(name);
-            GuestConfigurationVmssAssignmentResource result = response.HasValue ? response.Value : null;
+            string guestConfigurationAssignmentName = "SecureProtocol";
+            NullableResponse<GuestConfigurationVMwarevSphereAssignmentResource> response = await collection.GetIfExistsAsync(guestConfigurationAssignmentName);
+            GuestConfigurationVMwarevSphereAssignmentResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -182,13 +181,13 @@ Value = "NotePad,sql",
             }
         }
 
-        // List all guest configuration assignments for VMSS
+        // List all guest configuration assignments for a virtual machine
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAllGuestConfigurationAssignmentsForVMSS()
+        public async Task GetAll_ListAllGuestConfigurationAssignmentsForAVirtualMachine()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/listVMSSGuestConfigurationAssignments.json
-            // this example is just showing the usage of "GuestConfigurationAssignmentsVMSS_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/listGuestConfigurationConnectedVMwarevSphereAssignments.json
+            // this example is just showing the usage of "GuestConfigurationConnectedVMwarevSphereAssignments_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -198,15 +197,15 @@ Value = "NotePad,sql",
             // this example assumes you already have this ArmResource created on azure
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
-            // get the collection of this GuestConfigurationVmssAssignmentResource
+            // get the collection of this GuestConfigurationVMwarevSphereAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
-            string vmssName = "myVMSSName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachineScaleSets/{2}", subscriptionId, resourceGroupName, vmssName));
-            GuestConfigurationVmssAssignmentCollection collection = client.GetGuestConfigurationVmssAssignments(scopeId);
+            string vmName = "myVMName";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{2}", subscriptionId, resourceGroupName, vmName));
+            GuestConfigurationVMwarevSphereAssignmentCollection collection = client.GetGuestConfigurationVMwarevSphereAssignments(scopeId);
 
             // invoke the operation and iterate over the result
-            await foreach (GuestConfigurationVmssAssignmentResource item in collection.GetAllAsync())
+            await foreach (GuestConfigurationVMwarevSphereAssignmentResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
