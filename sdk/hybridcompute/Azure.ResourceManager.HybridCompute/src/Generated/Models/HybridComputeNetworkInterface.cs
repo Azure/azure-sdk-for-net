@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The list of IP addresses in this interface. </summary>
+        [WirePath("ipAddresses")]
         public IReadOnlyList<HybridComputeIPAddress> IPAddresses { get; }
     }
 }
