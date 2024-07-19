@@ -127,7 +127,6 @@ namespace Azure.Storage
         public const string DisableExpectContinueHeaderEnvVar = "AZURE_STORAGE_DISABLE_EXPECT_CONTINUE_HEADER";
 
         public const string DefaultScope = "/.default";
-        public const string EnUsCulture = "en-US";
 
         /// <summary>
         /// Storage Connection String constant values.

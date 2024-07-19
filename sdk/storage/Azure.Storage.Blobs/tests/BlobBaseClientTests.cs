@@ -5111,6 +5111,84 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task SetMetadataAsync_Sort()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            IDictionary<string, string> metadata = new Dictionary<string, string>() {
+                { "a0", "a" },
+                { "a1", "a" },
+                { "a2", "a" },
+                { "a3", "a" },
+                { "a4", "a" },
+                { "a5", "a" },
+                { "a6", "a" },
+                { "a7", "a" },
+                { "a8", "a" },
+                { "a9", "a" },
+                { "_", "a" },
+                { "_a", "a" },
+                { "a_", "a" },
+                { "__", "a" },
+                { "_a_", "a" },
+                { "b", "a" },
+                { "c", "a" },
+                { "y", "a" },
+                { "z", "z_" },
+                { "_z", "a" },
+                { "_F", "a" },
+                { "F", "a" },
+                { "F_", "a" },
+                { "_F_", "a" },
+                { "__F", "a" },
+                { "__a", "a" },
+                { "a__", "a" }
+             };
+
+            // Act
+            Response<BlobInfo> response = await blob.SetMetadataAsync(metadata);
+
+            // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure the value has been correctly set by doing a GetProperties call
+            Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
+        }
+
+        [RecordedTest]
+        public async Task SetMetadataAsync_Sort_InvalidMetadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            IDictionary<string, string> metadata = new Dictionary<string, string>() {
+                { "test", "val" },
+                { "test-", "val" },
+                { "test--", "val" },
+                { "test-_", "val" },
+                { "test_-", "val" },
+                { "test__", "val" },
+                { "test-a", "val" },
+                { "test-A", "val" },
+                { "test-_A", "val" },
+                { "test_a", "val" },
+                { "test_Z", "val" },
+                { "test_a_", "val" },
+                { "test_a-", "val" },
+                { "test_a-_", "val" },
+             };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetMetadataAsync(metadata),
+                e => Assert.AreEqual(BlobErrorCode.InvalidMetadata.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task CreateSnapshotAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
