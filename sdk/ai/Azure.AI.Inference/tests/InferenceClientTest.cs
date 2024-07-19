@@ -158,13 +158,6 @@ namespace Azure.AI.Inference.Tests
 
             var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
 
-            List<ChatRequestMessage> messages = new List<ChatRequestMessage>
-            {
-                new ChatRequestSystemMessage("You are a helpful assistant."),
-                new ChatRequestUserMessage("How many feet are in a mile?"),
-            };
-            Dictionary<string, BinaryData> additionalProperties = new Dictionary<string, BinaryData>() { { "foo", BinaryData.FromString("\"bar\"") } };
-
             var requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -381,7 +374,7 @@ namespace Azure.AI.Inference.Tests
                 followupOptions.Messages.Add(originalMessage);
             }
 
-            // And the tool call message just received back from the assistant
+            // Add the tool call message just received back from the assistant
             followupOptions.Messages.Add(new ChatRequestAssistantMessage(choice.Message));
 
             // And also the tool message that resolves the tool call
@@ -417,7 +410,8 @@ namespace Azure.AI.Inference.Tests
         public async Task TestChatCompletionsWithImages(ImageTestSourceKind imageSourceKind)
         {
             var aoaiEndpoint = new Uri(TestEnvironment.AoaiEndpoint);
-            var aoaiKey = new AzureKeyCredential(TestEnvironment.AoaiKey);
+            // This isn't used currently, but is necessary because of the header handling for the generated client
+            var aoaiKey = new AzureKeyCredential("foo");
 
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
             ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
