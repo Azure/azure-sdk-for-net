@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Azure resource Id. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </summary>
+        [WirePath("publicNetworkAccess")]
         public HybridComputePublicNetworkAccessType? PublicNetworkAccess { get; }
         /// <summary> List of Private Endpoint Connection details. </summary>
+        [WirePath("connectionDetails")]
         public IReadOnlyList<HybridComputeConnectionDetail> ConnectionDetails { get; }
     }
 }

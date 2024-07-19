@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateGuestConfigurationAssignment()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2022-01-25/examples/createOrUpdateGuestConfigurationAssignment.json
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/createOrUpdateGuestConfigurationAssignment.json
             // this example is just showing the usage of "GuestConfigurationAssignments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,9 +45,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
                     GuestConfiguration = new GuestConfigurationNavigation()
                     {
                         Name = "NotInstalledApplicationForWindows",
-                        Version = "1.*",
+                        Version = "1.0.0.3",
                         ContentUri = new Uri("https://thisisfake/pacakge"),
                         ContentHash = "123contenthash",
+                        ContentManagedIdentity = "test_identity",
                         AssignmentType = GuestConfigurationAssignmentType.ApplyAndAutoCorrect,
                         ConfigurationParameters =
 {
@@ -78,7 +79,7 @@ Value = "NotePad,sql",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGuestConfigurationAssignment()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2022-01-25/examples/getGuestConfigurationAssignment.json
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationAssignment.json
             // this example is just showing the usage of "GuestConfigurationAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +111,7 @@ Value = "NotePad,sql",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAnGuestConfigurationAssignment()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2022-01-25/examples/deleteGuestConfigurationAssignment.json
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/deleteGuestConfigurationAssignment.json
             // this example is just showing the usage of "GuestConfigurationAssignments_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +139,7 @@ Value = "NotePad,sql",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetReports_ListAllGuestConfigurationAssignmentsForAVirtualMachine()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2022-01-25/examples/listAllGuestConfigurationAssignmentReports.json
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/listAllGuestConfigurationAssignmentReports.json
             // this example is just showing the usage of "GuestConfigurationAssignmentReports_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +170,7 @@ Value = "NotePad,sql",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetReport_GetAGuestConfigurationAssignmentReportByIdForAVirtualMachine()
         {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2022-01-25/examples/getGuestConfigurationAssignmentReportById.json
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationAssignmentReportById.json
             // this example is just showing the usage of "GuestConfigurationAssignmentReports_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
