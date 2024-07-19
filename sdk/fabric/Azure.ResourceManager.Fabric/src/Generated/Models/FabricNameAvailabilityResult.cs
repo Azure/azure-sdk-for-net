@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    /// <summary> The check availability request body. </summary>
-    public partial class FabricCheckNameAvailabilityContent
+    /// <summary> The check availability result. </summary>
+    public partial class FabricNameAvailabilityResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,29 @@ namespace Azure.ResourceManager.Fabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FabricCheckNameAvailabilityContent"/>. </summary>
-        public FabricCheckNameAvailabilityContent()
+        /// <summary> Initializes a new instance of <see cref="FabricNameAvailabilityResult"/>. </summary>
+        internal FabricNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricCheckNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <summary> Initializes a new instance of <see cref="FabricNameAvailabilityResult"/>. </summary>
+        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCheckNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricNameAvailabilityResult(bool? nameAvailable, FabricNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            ResourceType = resourceType;
+            NameAvailable = nameAvailable;
+            Reason = reason;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the resource for which availability needs to be checked. </summary>
-        public string Name { get; set; }
-        /// <summary> The resource type. </summary>
-        public string ResourceType { get; set; }
+        /// <summary> Indicates if the resource name is available. </summary>
+        public bool? NameAvailable { get; }
+        /// <summary> The reason why the given name is not available. </summary>
+        public FabricNameUnavailableReason? Reason { get; }
+        /// <summary> Detailed reason why the given name is available. </summary>
+        public string Message { get; }
     }
 }

@@ -50,9 +50,13 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+override-operation-name:
+  FabricCapacities_CheckNameAvailability: CheckFabricCapacityNameAvailability
+
 rename-mapping:
-  CheckNameAvailabilityResponse: FabricCheckNameAvailabilityResult
-  CheckNameAvailabilityRequest: FabricCheckNameAvailabilityContent
+  CheckNameAvailabilityResponse: FabricNameAvailabilityResult
+  CheckNameAvailabilityRequest: FabricNameAvailabilityContent
+  CheckNameAvailabilityRequest.nameAvailable: IsNameAvailable
   CheckNameAvailabilityReason: FabricNameUnavailableReason
   ProvisioningState: FabricProvisioningState
   ResourceState: FabricResourceState

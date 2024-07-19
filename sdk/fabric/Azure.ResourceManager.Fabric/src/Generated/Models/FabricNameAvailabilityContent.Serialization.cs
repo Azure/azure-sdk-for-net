@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    public partial class FabricCheckNameAvailabilityContent : IUtf8JsonSerializable, IJsonModel<FabricCheckNameAvailabilityContent>
+    public partial class FabricNameAvailabilityContent : IUtf8JsonSerializable, IJsonModel<FabricNameAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricCheckNameAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricNameAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FabricCheckNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FabricNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricCheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricCheckNameAvailabilityContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricNameAvailabilityContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Fabric.Models
             writer.WriteEndObject();
         }
 
-        FabricCheckNameAvailabilityContent IJsonModel<FabricCheckNameAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FabricNameAvailabilityContent IJsonModel<FabricNameAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricCheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricCheckNameAvailabilityContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricNameAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFabricCheckNameAvailabilityContent(document.RootElement, options);
+            return DeserializeFabricNameAvailabilityContent(document.RootElement, options);
         }
 
-        internal static FabricCheckNameAvailabilityContent DeserializeFabricCheckNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FabricNameAvailabilityContent DeserializeFabricNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FabricCheckNameAvailabilityContent(name, type, serializedAdditionalRawData);
+            return new FabricNameAvailabilityContent(name, type, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FabricCheckNameAvailabilityContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FabricNameAvailabilityContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricCheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FabricCheckNameAvailabilityContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FabricCheckNameAvailabilityContent IPersistableModel<FabricCheckNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FabricNameAvailabilityContent IPersistableModel<FabricNameAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FabricCheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFabricCheckNameAvailabilityContent(document.RootElement, options);
+                        return DeserializeFabricNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricCheckNameAvailabilityContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FabricCheckNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FabricNameAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

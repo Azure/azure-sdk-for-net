@@ -54,23 +54,14 @@ namespace Azure.ResourceManager.Fabric.Models
             return new FabricCapacityProperties(provisioningState, state, administrationMembers != null ? new CapacityAdministration(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FabricCheckNameAvailabilityResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FabricNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <returns> A new <see cref="Models.FabricCheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static FabricCheckNameAvailabilityResult FabricCheckNameAvailabilityResult(bool? nameAvailable = null, FabricNameUnavailableReason? reason = null, string message = null)
+        /// <param name="message"> Detailed reason why the given name is available. </param>
+        /// <returns> A new <see cref="Models.FabricNameAvailabilityResult"/> instance for mocking. </returns>
+        public static FabricNameAvailabilityResult FabricNameAvailabilityResult(bool? nameAvailable = null, FabricNameUnavailableReason? reason = null, string message = null)
         {
-            return new FabricCheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FabricSkuDetailsForExistingCapacity"/>. </summary>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="sku"> The SKU details. </param>
-        /// <returns> A new <see cref="Models.FabricSkuDetailsForExistingCapacity"/> instance for mocking. </returns>
-        public static FabricSkuDetailsForExistingCapacity FabricSkuDetailsForExistingCapacity(string resourceType = null, FabricSku sku = null)
-        {
-            return new FabricSkuDetailsForExistingCapacity(resourceType, sku, serializedAdditionalRawData: null);
+            return new FabricNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FabricSkuDetailsForNewCapacity"/>. </summary>
@@ -83,6 +74,15 @@ namespace Azure.ResourceManager.Fabric.Models
             locations ??= new List<AzureLocation>();
 
             return new FabricSkuDetailsForNewCapacity(resourceType, name, locations?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FabricSkuDetailsForExistingCapacity"/>. </summary>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The SKU details. </param>
+        /// <returns> A new <see cref="Models.FabricSkuDetailsForExistingCapacity"/> instance for mocking. </returns>
+        public static FabricSkuDetailsForExistingCapacity FabricSkuDetailsForExistingCapacity(string resourceType = null, FabricSku sku = null)
+        {
+            return new FabricSkuDetailsForExistingCapacity(resourceType, sku, serializedAdditionalRawData: null);
         }
     }
 }
