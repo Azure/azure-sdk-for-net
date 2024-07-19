@@ -163,7 +163,9 @@ namespace ServiceBus.Tests.TestHelper
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
             Converters = new List<JsonConverter>
             {
+                #pragma warning disable 0618
                 new StringEnumConverter { CamelCaseText = false },
+                #pragma warning restore 0618
             },
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
         };

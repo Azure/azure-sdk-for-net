@@ -23,12 +23,14 @@ namespace Insights.Tests.Helpers
         {
             Converters = new List<JsonConverter>
             {
+                #pragma warning disable 0618
                 new TimeSpanConverter(),
                 new StringEnumConverter {CamelCaseText = false},
                 new IsoDateTimeConverter {DateTimeStyles = DateTimeStyles.AssumeUniversal},
                 new PolymorphicTypeConverter<RuleDataSource>(),
                 new PolymorphicTypeConverter<RuleCondition>(),
                 new PolymorphicTypeConverter<RuleAction>()
+                #pragma warning restore 0618
             },
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
