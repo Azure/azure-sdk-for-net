@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="properties"> The extended properties of Operation Results. </param>
         /// <returns> A new <see cref="Models.OperationStatusExtendedResult"/> instance for mocking. </returns>
-        public static OperationStatusExtendedResult OperationStatusExtendedResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, IReadOnlyDictionary<string, BinaryData> properties = null)
+        public static OperationStatusExtendedResult OperationStatusExtendedResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, IDictionary<string, BinaryData> properties = null)
         {
             operations ??= new List<OperationStatusResult>();
             properties ??= new Dictionary<string, BinaryData>();

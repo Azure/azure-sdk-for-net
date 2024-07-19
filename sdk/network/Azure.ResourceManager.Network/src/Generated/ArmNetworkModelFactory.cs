@@ -3993,7 +3993,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
         /// <param name="tagToIPAddresses"> Mapping of tags to list of IP Addresses included within the tag. </param>
         /// <returns> A new <see cref="Models.EffectiveNetworkSecurityGroup"/> instance for mocking. </returns>
-        public static EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId = null, EffectiveNetworkSecurityGroupAssociation association = null, IEnumerable<EffectiveNetworkSecurityRule> effectiveSecurityRules = null, IReadOnlyDictionary<string, IList<string>> tagToIPAddresses = null)
+        public static EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId = null, EffectiveNetworkSecurityGroupAssociation association = null, IEnumerable<EffectiveNetworkSecurityRule> effectiveSecurityRules = null, IDictionary<string, IList<string>> tagToIPAddresses = null)
         {
             effectiveSecurityRules ??= new List<EffectiveNetworkSecurityRule>();
             tagToIPAddresses ??= new Dictionary<string, IList<string>>();
@@ -5181,7 +5181,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="roundTripTimeAvg"> Average roundtrip time in milliseconds. </param>
         /// <param name="roundTripTimeMax"> Maximum roundtrip time in milliseconds. </param>
         /// <returns> A new <see cref="Models.HopLink"/> instance for mocking. </returns>
-        public static HopLink HopLink(string nextHopId = null, string linkType = null, IEnumerable<ConnectivityIssueInfo> issues = null, IReadOnlyDictionary<string, string> context = null, ResourceIdentifier resourceId = null, long? roundTripTimeMin = null, long? roundTripTimeAvg = null, long? roundTripTimeMax = null)
+        public static HopLink HopLink(string nextHopId = null, string linkType = null, IEnumerable<ConnectivityIssueInfo> issues = null, IDictionary<string, string> context = null, ResourceIdentifier resourceId = null, long? roundTripTimeMin = null, long? roundTripTimeAvg = null, long? roundTripTimeMax = null)
         {
             issues ??= new List<ConnectivityIssueInfo>();
             context ??= new Dictionary<string, string>();
@@ -5418,7 +5418,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
         /// <param name="connectionMonitorType"> Type of connection monitor. </param>
         /// <returns> A new <see cref="Network.ConnectionMonitorData"/> instance for mocking. </returns>
-        public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, ConnectionMonitorSource source = null, ConnectionMonitorDestination destination = null, bool? autoStart = null, int? monitoringIntervalInSeconds = null, IEnumerable<ConnectionMonitorEndpoint> endpoints = null, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = null, IEnumerable<ConnectionMonitorTestGroup> testGroups = null, IEnumerable<ConnectionMonitorOutput> outputs = null, string notes = null, NetworkProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, string monitoringStatus = null, ConnectionMonitorType? connectionMonitorType = null)
+        public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ConnectionMonitorSource source = null, ConnectionMonitorDestination destination = null, bool? autoStart = null, int? monitoringIntervalInSeconds = null, IEnumerable<ConnectionMonitorEndpoint> endpoints = null, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = null, IEnumerable<ConnectionMonitorTestGroup> testGroups = null, IEnumerable<ConnectionMonitorOutput> outputs = null, string notes = null, NetworkProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, string monitoringStatus = null, ConnectionMonitorType? connectionMonitorType = null)
         {
             tags ??= new Dictionary<string, string>();
             endpoints ??= new List<ConnectionMonitorEndpoint>();

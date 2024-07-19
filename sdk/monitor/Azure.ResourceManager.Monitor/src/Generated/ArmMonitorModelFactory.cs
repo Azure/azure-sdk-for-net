@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="subscriptionId"> the Azure subscription Id usually a GUID. </param>
         /// <param name="tenantId"> the Azure tenant Id. </param>
         /// <returns> A new <see cref="Models.EventDataInfo"/> instance for mocking. </returns>
-        public static EventDataInfo EventDataInfo(SenderAuthorization authorization = null, IReadOnlyDictionary<string, string> claims = null, string caller = null, string description = null, string id = null, string eventDataId = null, string correlationId = null, MonitorLocalizableString eventName = null, MonitorLocalizableString category = null, EventDataHttpRequestInfo httpRequest = null, MonitorEventLevel? level = null, string resourceGroupName = null, MonitorLocalizableString resourceProviderName = null, ResourceIdentifier resourceId = null, MonitorLocalizableString resourceType = null, string operationId = null, MonitorLocalizableString operationName = null, IReadOnlyDictionary<string, string> properties = null, MonitorLocalizableString status = null, MonitorLocalizableString subStatus = null, DateTimeOffset? eventTimestamp = null, DateTimeOffset? submissionTimestamp = null, string subscriptionId = null, Guid? tenantId = null)
+        public static EventDataInfo EventDataInfo(SenderAuthorization authorization = null, IDictionary<string, string> claims = null, string caller = null, string description = null, string id = null, string eventDataId = null, string correlationId = null, MonitorLocalizableString eventName = null, MonitorLocalizableString category = null, EventDataHttpRequestInfo httpRequest = null, MonitorEventLevel? level = null, string resourceGroupName = null, MonitorLocalizableString resourceProviderName = null, ResourceIdentifier resourceId = null, MonitorLocalizableString resourceType = null, string operationId = null, MonitorLocalizableString operationName = null, IDictionary<string, string> properties = null, MonitorLocalizableString status = null, MonitorLocalizableString subStatus = null, DateTimeOffset? eventTimestamp = null, DateTimeOffset? submissionTimestamp = null, string subscriptionId = null, Guid? tenantId = null)
         {
             claims ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="status"> status value. </param>
         /// <param name="timestamp"> UTC time when the status was checked. </param>
         /// <returns> A new <see cref="Models.MetricAlertStatusProperties"/> instance for mocking. </returns>
-        public static MetricAlertStatusProperties MetricAlertStatusProperties(IReadOnlyDictionary<string, string> dimensions = null, string status = null, DateTimeOffset? timestamp = null)
+        public static MetricAlertStatusProperties MetricAlertStatusProperties(IDictionary<string, string> dimensions = null, string status = null, DateTimeOffset? timestamp = null)
         {
             dimensions ??= new Dictionary<string, string>();
 

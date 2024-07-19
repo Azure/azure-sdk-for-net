@@ -213,7 +213,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="retrieval"> The key/value pairs produced by the retrieval tool. </param>
         /// <returns> A new <see cref="Assistants.RunStepRetrievalToolCall"/> instance for mocking. </returns>
-        public static RunStepRetrievalToolCall RunStepRetrievalToolCall(string id = null, IReadOnlyDictionary<string, string> retrieval = null)
+        public static RunStepRetrievalToolCall RunStepRetrievalToolCall(string id = null, IDictionary<string, string> retrieval = null)
         {
             retrieval ??= new Dictionary<string, string>();
 

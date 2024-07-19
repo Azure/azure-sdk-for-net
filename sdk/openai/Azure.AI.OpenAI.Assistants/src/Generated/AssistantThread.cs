@@ -50,7 +50,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal AssistantThread(string id, DateTimeOffset createdAt, IReadOnlyDictionary<string, string> metadata)
+        internal AssistantThread(string id, DateTimeOffset createdAt, IDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(id, nameof(id));
 

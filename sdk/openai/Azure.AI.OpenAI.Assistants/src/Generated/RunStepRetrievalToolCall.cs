@@ -20,7 +20,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="retrieval"> The key/value pairs produced by the retrieval tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="retrieval"/> is null. </exception>
-        internal RunStepRetrievalToolCall(string id, IReadOnlyDictionary<string, string> retrieval) : base(id)
+        internal RunStepRetrievalToolCall(string id, IDictionary<string, string> retrieval) : base(id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(retrieval, nameof(retrieval));
