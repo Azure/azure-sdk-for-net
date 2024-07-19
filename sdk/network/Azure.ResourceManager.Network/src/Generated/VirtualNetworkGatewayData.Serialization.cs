@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -38,11 +37,6 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Id))
             {
@@ -258,7 +252,6 @@ namespace Azure.ResourceManager.Network
             }
             ExtendedLocation extendedLocation = default;
             ETag? etag = default;
-            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType? type = default;
@@ -309,15 +302,6 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -629,7 +613,6 @@ namespace Azure.ResourceManager.Network
                 serializedAdditionalRawData,
                 extendedLocation,
                 etag,
-                identity,
                 autoScaleConfiguration,
                 ipConfigurations ?? new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>(),
                 gatewayType,

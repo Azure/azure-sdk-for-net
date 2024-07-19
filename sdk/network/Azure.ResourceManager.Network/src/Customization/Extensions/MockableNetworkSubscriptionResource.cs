@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(CancellationToken cancellationToken = default)
-            => GetExpressRouteCrossConnectionsAsync(null, cancellationToken);
+            => GetExpressRouteCrossConnectionsAsync(cancellationToken);
 
         /// <summary>
         /// Retrieves all the ExpressRouteCrossConnections in a subscription.
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(CancellationToken cancellationToken = default)
-            => GetExpressRouteCrossConnections(null, cancellationToken);
+            => GetExpressRouteCrossConnections( cancellationToken);
     }
 }

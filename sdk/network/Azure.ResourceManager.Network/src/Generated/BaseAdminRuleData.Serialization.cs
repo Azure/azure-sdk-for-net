@@ -28,11 +28,6 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);

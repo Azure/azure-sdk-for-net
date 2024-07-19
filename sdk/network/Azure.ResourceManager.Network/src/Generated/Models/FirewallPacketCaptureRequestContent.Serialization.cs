@@ -15,6 +15,18 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class FirewallPacketCaptureRequestContent : IUtf8JsonSerializable, IJsonModel<FirewallPacketCaptureRequestContent>
     {
+        public FirewallPacketCaptureRequestContent(int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            this.DurationInSeconds = durationInSeconds;
+            this.NumberOfPacketsToCapture = numberOfPacketsToCapture;
+            this.SasUri = sasUri;
+            this.FileName = fileName;
+            this.Protocol = protocol;
+            this.Flags = flags;
+            this.Filters = filters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPacketCaptureRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallPacketCaptureRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -25,6 +37,13 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(FirewallPacketCaptureRequestContent)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DurationInSeconds))
             {
@@ -71,6 +90,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -109,6 +129,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
+            ResourceIdentifier id = default;
             int? durationInSeconds = default;
             int? numberOfPacketsToCapture = default;
             Uri sasUrl = default;
@@ -120,73 +141,94 @@ namespace Azure.ResourceManager.Network.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("durationInSeconds"u8))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    durationInSeconds = property.Value.GetInt32();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("numberOfPacketsToCapture"u8))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    numberOfPacketsToCapture = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("sasUrl"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        continue;
+                        if (property0.NameEquals("durationInSeconds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            durationInSeconds = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfPacketsToCapture"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            numberOfPacketsToCapture = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("sasUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sasUrl = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("fileName"u8))
+                        {
+                            fileName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("protocol"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            protocol = new AzureFirewallNetworkRuleProtocol(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("flags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AzureFirewallPacketCaptureFlags> array = new List<AzureFirewallPacketCaptureFlags>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(AzureFirewallPacketCaptureFlags.DeserializeAzureFirewallPacketCaptureFlags(item, options));
+                            }
+                            flags = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("filters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AzureFirewallPacketCaptureRule> array = new List<AzureFirewallPacketCaptureRule>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(AzureFirewallPacketCaptureRule.DeserializeAzureFirewallPacketCaptureRule(item, options));
+                            }
+                            filters = array;
+                            continue;
+                        }
                     }
-                    sasUrl = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("fileName"u8))
-                {
-                    fileName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protocol"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    protocol = new AzureFirewallNetworkRuleProtocol(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("flags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AzureFirewallPacketCaptureFlags> array = new List<AzureFirewallPacketCaptureFlags>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AzureFirewallPacketCaptureFlags.DeserializeAzureFirewallPacketCaptureFlags(item, options));
-                    }
-                    flags = array;
-                    continue;
-                }
-                if (property.NameEquals("filters"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AzureFirewallPacketCaptureRule> array = new List<AzureFirewallPacketCaptureRule>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AzureFirewallPacketCaptureRule.DeserializeAzureFirewallPacketCaptureRule(item, options));
-                    }
-                    filters = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,14 +238,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new FirewallPacketCaptureRequestContent(
+                id,
+                serializedAdditionalRawData,
                 durationInSeconds,
                 numberOfPacketsToCapture,
                 sasUrl,
                 fileName,
                 protocol,
                 flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>(),
-                filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>(),
-                serializedAdditionalRawData);
+                filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>());
         }
 
         BinaryData IPersistableModel<FirewallPacketCaptureRequestContent>.Write(ModelReaderWriterOptions options)
