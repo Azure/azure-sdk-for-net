@@ -14,8 +14,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
     [TestFixture]
     public class GroupQuotaTests : QuotaManagementTestBase
     {
-        private const string canaryEnvironmentEndpoint = "https://eastus2euap.management.azure.com";
         private const string defaultSubscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
+
+        private const string managementGroupId = "testMgIdRoot";
 
         public GroupQuotaTests() : base(true)
         {
@@ -30,23 +31,17 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task SetGroupQuota()
         {
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
-            string managementGroupId = "testMgIdRoot";
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+
+            ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this GroupQuotasEntityResource
             GroupQuotasEntityCollection collection = managementGroupResource.GetGroupQuotasEntities();
 
             // invoke the operation
             string groupQuotaName = "sdk-test-group-quota-create";
+
+            // Builds the Group Quota Request Body
             GroupQuotasEntityData data = new GroupQuotasEntityData()
             {
                 Properties = new GroupQuotasEntityBase()
@@ -59,37 +54,30 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                     })
                 },
             };
+
+            //Performs the GroupQuota PUT operation
             var createResponse  = await collection.CreateOrUpdateAsync(WaitUntil.Started, groupQuotaName, data);
             Assert.IsNotNull(createResponse);
 
-            //Delete the createGroupQuota
+            // Delete the created Group Quota for cleanup
             ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
 
-            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
             await groupQuotasEntity.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
         public async Task GetGroupQuota()
         {
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
-            string managementGroupId = "testMgIdRoot";
-
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+
+            ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this GroupQuotasEntityResource
             var collection = managementGroupResource.GetGroupQuotasEntities();
 
-            // invoke the operation
-            string groupQuotaName = "testGroupQuotaTj";
+            // Performs the GET operation on a Group Quota resource
+            string groupQuotaName = "sdk-test-group-quota";
             var result = await collection.GetAsync(groupQuotaName);
             Assert.IsNotNull(result);
         }
@@ -97,27 +85,17 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task GetGroupQuotaList()
         {
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
-            string managementGroupId = "testMgIdRoot";
-
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+            ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this GroupQuotasEntityResource
             var collection =  managementGroupResource.GetGroupQuotasEntities();
+
+            // Get all the Group Quota Entities
             await foreach (GroupQuotasEntityResource item in collection.GetAllAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
+                // Ensure that the Group Quota Objects are non empty
                 GroupQuotasEntityData resourceData = item.Data;
-                // for demo we just print out the id
                 Assert.NotNull(resourceData);
             }
         }
@@ -125,7 +103,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task SetGroupQuotaLimit()
         {
-            // invoke the operation
+            // Create the Group Quota Limit Request Body
             SubmittedResourceRequestStatusData requestBody = new SubmittedResourceRequestStatusData()
             {
                 Properties = new SubmittedResourceRequestStatusProperties()
@@ -139,20 +117,14 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 },
             };
 
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
-            string managementGroupId = "testMgIdRoot";
             string groupQuotaName = "sdk-test-group-quota";
 
             ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
-            //"Microsoft.Compute", "standardDv4family", data= patch
 
+            // Get the Group Quota Resource
+            GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+
+            // Perform the QuotaLimit Request call
             var response = await groupQuotasEntity.CreateOrUpdateGroupQuotaLimitsRequestAsync(WaitUntil.Started, "Microsoft.Compute", "standarddv4family", requestBody);
             Assert.IsNotNull(response);
         }
@@ -160,39 +132,17 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task GetGroupQuotaLimit()
         {
-            // invoke the operation
-            SubmittedResourceRequestStatusData requestBody = new SubmittedResourceRequestStatusData()
-            {
-                Properties = new SubmittedResourceRequestStatusProperties()
-                {
-                    RequestedResource = new GroupQuotaRequestBase()
-                    {
-                        Limit = 225,
-                        Region = "westus",
-                        Comments = "ticketComments"
-                    }
-                },
-            };
-
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
-            string managementGroupId = "testMgIdRoot";
             string groupQuotaName = "sdk-test-group-quota";
 
             ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
-            //"Microsoft.Compute", "standardDv4family", data= patch
+
+            GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
 
             // get the collection of this GroupQuotaLimitResource
             string resourceProviderName = "Microsoft.Compute";
             GroupQuotaLimitCollection collection = groupQuotasEntity.GetGroupQuotaLimits(resourceProviderName);
 
-            // invoke the operation
+            // Perform the GET operation with the proper location filter
             string resourceName = "standarddv4family";
             string filter = "location eq westus";
             var result = await collection.GetAsync(resourceName, filter);
@@ -202,34 +152,22 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task SetSubscription()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
-            // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
-            // this example assumes you already have this GroupQuotaSubscriptionIdResource created on azure
-            // for more information of creating GroupQuotaSubscriptionIdResource, please refer to the document of GroupQuotaSubscriptionIdResource
-            string managementGroupId = "testMgIdRoot";
             string groupQuotaName = "sdk-test-group-quota";
-            string subscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
 
             ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+
+            GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
 
             // get the collection of this GroupQuotaSubscriptionIdResource
             GroupQuotaSubscriptionIdCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptionIds();
 
-            var response = await collection.CreateOrUpdateAsync(WaitUntil.Started, subscriptionId);
+            // Add a Subscription to the Group Quota Object
+            var response = await collection.CreateOrUpdateAsync(WaitUntil.Started, defaultSubscriptionId);
 
             //Clean up Sub
-            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionIdResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, subscriptionId);
+            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionIdResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, defaultSubscriptionId);
 
-            GroupQuotaSubscriptionIdResource groupQuotaSubscriptionId = client.GetGroupQuotaSubscriptionIdResource(groupQuotaSubscriptionIdResourceId);
+            GroupQuotaSubscriptionIdResource groupQuotaSubscriptionId = Client.GetGroupQuotaSubscriptionIdResource(groupQuotaSubscriptionIdResourceId);
 
             await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Started);
         }
@@ -237,32 +175,20 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task SetSubscriptionAllocationRequest()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
-            // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
             // invoke the operation
-            string subscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
             string groupQuotaName = "sdk-test-group-quota";
             string resourceProviderName = "Microsoft.Compute";
             string resourceName = "standarddv2family";
 
-            // this example assumes you already have this ManagementGroupResource created on azure
-            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
-            string managementGroupId = "testMgIdRoot";
-            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionIdResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, subscriptionId);
-            GroupQuotaSubscriptionIdResource groupQuotaSubscriptionId = client.GetGroupQuotaSubscriptionIdResource(groupQuotaSubscriptionIdResourceId);
+            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionIdResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, defaultSubscriptionId);
+
+            GroupQuotaSubscriptionIdResource groupQuotaSubscriptionId = Client.GetGroupQuotaSubscriptionIdResource(groupQuotaSubscriptionIdResourceId);
 
             // invoke the operation
             var subscriptionAddResponse = await groupQuotaSubscriptionId.UpdateAsync(WaitUntil.Started);
             Assert.IsNotNull(subscriptionAddResponse);
 
+            // Builds the Quota Allocation Request Body
             QuotaAllocationRequestStatusData data = new QuotaAllocationRequestStatusData()
             {
                 RequestedResource = new QuotaAllocationRequestBase()
@@ -272,40 +198,32 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 },
             };
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
 
-            var allocationResponse = await managementGroupResource.CreateOrUpdateGroupQuotaSubscriptionAllocationRequestAsync(WaitUntil.Started, subscriptionId, groupQuotaName, resourceProviderName, resourceName, data);
+            ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
+
+            var allocationResponse = await managementGroupResource.CreateOrUpdateGroupQuotaSubscriptionAllocationRequestAsync(WaitUntil.Started, defaultSubscriptionId, groupQuotaName, resourceProviderName, resourceName, data);
+
             Assert.IsNotNull(allocationResponse);
+
+            // Delete the Subscription as part of test cleanup
             await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Started);
         }
 
         [TestCase]
         public async Task GetSubscriptionAllocation()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PatchGroupQuotasSubscription.json
-            // this example is just showing the usage of "GroupQuotaSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
-            // this example assumes you already have this ManagementGroupResource created on azure
-            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
-            string managementGroupId = "testMgIdRoot";
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+
+            ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
 
             // invoke the operation
-            string subscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
             string groupQuotaName = "sdk-test-group-quota";
             string resourceName = "standarddv2family";
-            ResourceIdentifier subscriptionQuotaAllocationResourceId = SubscriptionQuotaAllocationResource.CreateResourceIdentifier(managementGroupId, subscriptionId, groupQuotaName, resourceName);
-            SubscriptionQuotaAllocationResource subscriptionQuotaAllocation = client.GetSubscriptionQuotaAllocationResource(subscriptionQuotaAllocationResourceId);
+            ResourceIdentifier subscriptionQuotaAllocationResourceId = SubscriptionQuotaAllocationResource.CreateResourceIdentifier(managementGroupId, defaultSubscriptionId, groupQuotaName, resourceName);
 
-            // invoke the operation
+            SubscriptionQuotaAllocationResource subscriptionQuotaAllocation = Client.GetSubscriptionQuotaAllocationResource(subscriptionQuotaAllocationResourceId);
+
+            // Get the Subscription Allocation Object with the given location filter
             string filter = "location eq westus2";
             var result = await subscriptionQuotaAllocation.GetAsync(filter);
             Assert.IsNotNull(result);
@@ -314,31 +232,20 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task GetSubscriptionAllocationList()
         {
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(canaryEnvironmentEndpoint), "https://management.azure.com/");
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred, defaultSubscriptionId, options);
-
-            // this example assumes you already have this ManagementGroupResource created on azure
-            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
-            string managementGroupId = "testMgIdRoot";
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+
+            ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this SubscriptionQuotaAllocationResource
-            string subscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
             string groupQuotaName = "sdk-test-group-quota";
-            SubscriptionQuotaAllocationCollection collection = managementGroupResource.GetSubscriptionQuotaAllocations(subscriptionId, groupQuotaName);
+            SubscriptionQuotaAllocationCollection collection = managementGroupResource.GetSubscriptionQuotaAllocations(defaultSubscriptionId, groupQuotaName);
 
-            // invoke the operation and iterate over the result
             string filter = "location eq westus2";
+
+            //Get all the SubAllocation Resources
             await foreach (SubscriptionQuotaAllocationResource item in collection.GetAllAsync(filter))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
+                //Ensure that all sub resources aren't null
                 var resourceData = item.Data;
 
                 Assert.IsNotNull(resourceData);
