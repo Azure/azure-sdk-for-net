@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             string displayName = default;
-            AdditionalAttributesPatch additionalAttributes = default;
-            RequestState? provisioningState = default;
+            GroupQuotaAdditionalAttributesPatch additionalAttributes = default;
+            QuotaRequestStatus? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    additionalAttributes = AdditionalAttributesPatch.DeserializeAdditionalAttributesPatch(property.Value, options);
+                    additionalAttributes = GroupQuotaAdditionalAttributesPatch.DeserializeGroupQuotaAdditionalAttributesPatch(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    provisioningState = new RequestState(property.Value.GetString());
+                    provisioningState = new QuotaRequestStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -118,6 +119,74 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotasEntityBasePatch(displayName, additionalAttributes, provisioningState, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("  displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalAttributes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  additionalAttributes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdditionalAttributes))
+                {
+                    builder.Append("  additionalAttributes: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AdditionalAttributes, options, 2, false, "  additionalAttributes: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GroupQuotasEntityBasePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEntityBasePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +195,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GroupQuotasEntityBasePatch)} does not support writing '{options.Format}' format.");
             }

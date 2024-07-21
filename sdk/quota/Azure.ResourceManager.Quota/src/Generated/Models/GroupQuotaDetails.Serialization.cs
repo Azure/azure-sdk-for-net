@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -201,6 +202,187 @@ namespace Azure.ResourceManager.Quota.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Region), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  region: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Region))
+                {
+                    builder.Append("  region: ");
+                    if (Region.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Region}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Region}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  limit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Limit))
+                {
+                    builder.Append("  limit: ");
+                    builder.AppendLine($"'{Limit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Comment), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  comment: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Comment))
+                {
+                    builder.Append("  comment: ");
+                    if (Comment.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Comment}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Comment}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    builder.Append("  unit: ");
+                    if (Unit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Unit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Unit}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailableLimit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  availableLimit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AvailableLimit))
+                {
+                    builder.Append("  availableLimit: ");
+                    builder.AppendLine($"'{AvailableLimit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AllocatedToSubscriptionsValue", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allocatedToSubscriptions: ");
+                builder.AppendLine("{");
+                builder.Append("    value: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AllocatedToSubscriptions))
+                {
+                    builder.Append("  allocatedToSubscriptions: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AllocatedToSubscriptions, options, 2, false, "  allocatedToSubscriptions: ");
+                }
+            }
+
+            builder.Append("  name:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
+                {
+                    builder.Append("    value: ");
+                    if (Value.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Value}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Value}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalizedValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    localizedValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocalizedValue))
+                {
+                    builder.Append("    localizedValue: ");
+                    if (LocalizedValue.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LocalizedValue}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LocalizedValue}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GroupQuotaDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -209,6 +391,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GroupQuotaDetails)} does not support writing '{options.Format}' format.");
             }

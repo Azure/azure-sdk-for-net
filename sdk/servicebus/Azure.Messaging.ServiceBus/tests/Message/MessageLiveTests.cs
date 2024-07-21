@@ -3,15 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
 using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
-using Azure.Messaging.ServiceBus.Primitives;
-using Microsoft.Azure.Amqp.Encoding;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Message
@@ -185,6 +183,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.ScheduledEnqueueTimeUtcName));
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.PartitionIdName));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
@@ -208,7 +207,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     Assert.AreEqual((string)received.ApplicationProperties["testProp"], (string)sentMessage.ApplicationProperties["testProp"]);
                     Assert.AreEqual(received.ReplyTo, sentMessage.ReplyTo);
                     Assert.AreEqual(received.ReplyToSessionId, sentMessage.ReplyToSessionId);
-                    Assert.AreEqual(received.ScheduledEnqueueTime.UtcDateTime.Second, sentMessage.ScheduledEnqueueTime.UtcDateTime.Second);
                     Assert.AreEqual(received.SessionId, sentMessage.SessionId);
                     Assert.AreEqual(received.TimeToLive, sentMessage.TimeToLive);
                     Assert.AreEqual(received.To, sentMessage.To);
@@ -431,10 +429,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             new double[] { 3.1415926 },
             new decimal(3.1415926),
             new decimal[] { new decimal(3.1415926) },
-            DateTimeOffset.Parse("3/24/21").UtcDateTime,
-            new DateTime[] {DateTimeOffset.Parse("3/24/21").UtcDateTime },
-            DateTimeOffset.Parse("3/24/21"),
-            new DateTimeOffset[] {DateTimeOffset.Parse("3/24/21") },
+            DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture).UtcDateTime,
+            new DateTime[] {DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture).UtcDateTime },
+            DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture),
+            new DateTimeOffset[] {DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture) },
             TimeSpan.FromSeconds(5),
             new TimeSpan[] {TimeSpan.FromSeconds(5)},
             new Uri("http://localHost"),
@@ -449,7 +447,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             new Dictionary<string, short> {{ "key", 1 } },
             new Dictionary<string, double> {{ "key", 3.1415926 } },
             new Dictionary<string, decimal> {{ "key", new decimal(3.1415926) } },
-            new Dictionary<string, DateTime> {{ "key", DateTimeOffset.Parse("3/24/21").UtcDateTime } },
+            new Dictionary<string, DateTime> {{ "key", DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture).UtcDateTime } },
             // for some reason dictionaries with DateTimeOffset, Timespan, or Uri values are not supported in AMQP lib
             // new Dictionary<string, DateTimeOffset> {{ "key", DateTimeOffset.Parse("3/24/21") } },
             // new Dictionary<string, TimeSpan> {{ "key", TimeSpan.FromSeconds(5) } },
@@ -494,7 +492,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Enumerable.Repeat(new object[] { long.MaxValue }, 2),
             Enumerable.Repeat(new object[] { 1 }, 2),
             Enumerable.Repeat(new object[] { 3.1415926, true }, 2),
-            Enumerable.Repeat(new object[] { DateTimeOffset.Parse("3/24/21").UtcDateTime, true }, 2),
+            Enumerable.Repeat(new object[] { DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture).UtcDateTime, true }, 2),
             new List<IList<object>> { new List<object> { "first", 1}, new List<object> { "second", 2 } }
         };
 

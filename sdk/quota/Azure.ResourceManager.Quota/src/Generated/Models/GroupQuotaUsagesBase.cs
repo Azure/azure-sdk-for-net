@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Quota/limits for the resource. </summary>
+        [WirePath("limit")]
         public long? Limit { get; set; }
         /// <summary> Usages for the resource. </summary>
+        [WirePath("usages")]
         public long? Usages { get; set; }
         /// <summary> Representing the units of the usage quota. Possible values are: Count, Bytes, Seconds, Percent, CountPerSecond, BytesPerSecond. Based on - https://armwiki.azurewebsites.net/api_contracts/UsagesAPIContract.html?q=usages . Different RPs may have different units, Count, type as int64 should work for most of the integer values. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> Resource name. </summary>
+        [WirePath("name.value")]
         public string Value { get; set; }
         /// <summary> Resource display name. </summary>
+        [WirePath("name.localizedValue")]
         public string LocalizedValue { get; }
     }
 }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            IReadOnlyList<AllocatedToSubscription> value = default;
+            IReadOnlyList<SubscriptionAllocatedQuota> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +87,10 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    List<AllocatedToSubscription> array = new List<AllocatedToSubscription>();
+                    List<SubscriptionAllocatedQuota> array = new List<SubscriptionAllocatedQuota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllocatedToSubscription.DeserializeAllocatedToSubscription(item, options));
+                        array.Add(SubscriptionAllocatedQuota.DeserializeSubscriptionAllocatedQuota(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +101,45 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AllocatedQuotaToSubscriptionList(value ?? new ChangeTrackingList<AllocatedToSubscription>(), serializedAdditionalRawData);
+            return new AllocatedQuotaToSubscriptionList(value ?? new ChangeTrackingList<SubscriptionAllocatedQuota>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
+                {
+                    if (Value.Any())
+                    {
+                        builder.Append("  value: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Value)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AllocatedQuotaToSubscriptionList>.Write(ModelReaderWriterOptions options)
@@ -110,6 +150,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AllocatedQuotaToSubscriptionList)} does not support writing '{options.Format}' format.");
             }

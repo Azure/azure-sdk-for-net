@@ -274,27 +274,27 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GroupQuotasEntityResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GroupQuotasEntityResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotasEntityResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="GroupQuotaEntityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaEntityResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaEntityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupQuotasEntityResource"/> object. </returns>
-        public virtual GroupQuotasEntityResource GetGroupQuotasEntityResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaEntityResource"/> object. </returns>
+        public virtual GroupQuotaEntityResource GetGroupQuotaEntityResource(ResourceIdentifier id)
         {
-            GroupQuotasEntityResource.ValidateResourceId(id);
-            return new GroupQuotasEntityResource(Client, id);
+            GroupQuotaEntityResource.ValidateResourceId(id);
+            return new GroupQuotaEntityResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GroupQuotaSubscriptionIdResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GroupQuotaSubscriptionIdResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaSubscriptionIdResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="GroupQuotaSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupQuotaSubscriptionIdResource"/> object. </returns>
-        public virtual GroupQuotaSubscriptionIdResource GetGroupQuotaSubscriptionIdResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaSubscriptionResource"/> object. </returns>
+        public virtual GroupQuotaSubscriptionResource GetGroupQuotaSubscriptionResource(ResourceIdentifier id)
         {
-            GroupQuotaSubscriptionIdResource.ValidateResourceId(id);
-            return new GroupQuotaSubscriptionIdResource(Client, id);
+            GroupQuotaSubscriptionResource.ValidateResourceId(id);
+            return new GroupQuotaSubscriptionResource(Client, id);
         }
 
         /// <summary>
@@ -322,15 +322,15 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubmittedResourceRequestStatusResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubmittedResourceRequestStatusResource.CreateResourceIdentifier" /> to create a <see cref="SubmittedResourceRequestStatusResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="GroupQuotaRequestStatusResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaRequestStatusResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaRequestStatusResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubmittedResourceRequestStatusResource"/> object. </returns>
-        public virtual SubmittedResourceRequestStatusResource GetSubmittedResourceRequestStatusResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaRequestStatusResource"/> object. </returns>
+        public virtual GroupQuotaRequestStatusResource GetGroupQuotaRequestStatusResource(ResourceIdentifier id)
         {
-            SubmittedResourceRequestStatusResource.ValidateResourceId(id);
-            return new SubmittedResourceRequestStatusResource(Client, id);
+            GroupQuotaRequestStatusResource.ValidateResourceId(id);
+            return new GroupQuotaRequestStatusResource(Client, id);
         }
 
         /// <summary>
@@ -358,15 +358,15 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GroupQuotasEnforcementResponseResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GroupQuotasEnforcementResponseResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotasEnforcementResponseResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="GroupQuotaEnforcementResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GroupQuotaEnforcementResource.CreateResourceIdentifier" /> to create a <see cref="GroupQuotaEnforcementResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupQuotasEnforcementResponseResource"/> object. </returns>
-        public virtual GroupQuotasEnforcementResponseResource GetGroupQuotasEnforcementResponseResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GroupQuotaEnforcementResource"/> object. </returns>
+        public virtual GroupQuotaEnforcementResource GetGroupQuotaEnforcementResource(ResourceIdentifier id)
         {
-            GroupQuotasEnforcementResponseResource.ValidateResourceId(id);
-            return new GroupQuotasEnforcementResponseResource(Client, id);
+            GroupQuotaEnforcementResource.ValidateResourceId(id);
+            return new GroupQuotaEnforcementResource(Client, id);
         }
 
         /// <summary>

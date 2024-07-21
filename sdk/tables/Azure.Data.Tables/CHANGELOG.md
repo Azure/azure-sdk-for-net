@@ -1,10 +1,9 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.9.0 (2024-07-18)
 
 ### Features Added
-
-### Breaking Changes
+- Overload the `DeleteEntity` method to allow an `ITableEntity` object as parameter.
 
 ### Bugs Fixed
 - Fixed an issue where custom models decorated with the `DataMemberAttribute` that didn't explicitly set a name caused the query filter to be malformed.

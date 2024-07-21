@@ -217,7 +217,12 @@
     {
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
-        "cifs"
+        "cifs",
+        "ocpdate",
+        "Reimage",
+        "Reimaging",
+        "reimaging",
+        "SSDLRS"
       ]
     },
     {
@@ -601,16 +606,24 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "filename": "**/sdk/informaticadatamanagement/**/*.cs",
       "words": [
-        "kustomization",
-        "kustomizations"
+        "cdie",
+        "infa",
+        "informatica"
       ]
     },
     {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization",
+        "kustomizations"
       ]
     },
     {
@@ -1205,7 +1218,8 @@
         "Ragzrs",
         "Rehydrated",
         "Undelete",
-        "Aadkerb"
+        "Aadkerb",
+        "Nfsv"
       ]
     },
     {
@@ -1223,7 +1237,8 @@
     {
       "filename": "**/sdk/storagemover/**/*.cs",
       "words": [
-        "Unregistering"
+        "Unregistering",
+        "Mbps"
       ]
     },
     {
@@ -1312,7 +1327,11 @@
         "Guage",
         "Plex",
         "Vstsrm",
-        "Localizable"
+        "Localizable",
+        "Dapr",
+        "TLSAES",
+        "Unregistering",
+        "Diffie"
       ]
     },
     {

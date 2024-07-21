@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GroupQuotasEntityResource created on azure
-            // for more information of creating GroupQuotasEntityResource, please refer to the document of GroupQuotasEntityResource
+            // this example assumes you already have this GroupQuotaEntityResource created on azure
+            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
             string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
             string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
 
             // get the collection of this GroupQuotaSubscriptionRequestStatusResource
-            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptionRequestStatuses();
+            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotaEntity.GetGroupQuotaSubscriptionRequestStatuses();
 
             // invoke the operation and iterate over the result
             await foreach (GroupQuotaSubscriptionRequestStatusResource item in collection.GetAllAsync())
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GroupQuotasEntityResource created on azure
-            // for more information of creating GroupQuotasEntityResource, please refer to the document of GroupQuotasEntityResource
+            // this example assumes you already have this GroupQuotaEntityResource created on azure
+            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
             string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
             string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
 
             // get the collection of this GroupQuotaSubscriptionRequestStatusResource
-            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptionRequestStatuses();
+            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotaEntity.GetGroupQuotaSubscriptionRequestStatuses();
 
             // invoke the operation
             string requestId = "00000000-0000-0000-0000-000000000000";
@@ -97,15 +97,15 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GroupQuotasEntityResource created on azure
-            // for more information of creating GroupQuotasEntityResource, please refer to the document of GroupQuotasEntityResource
+            // this example assumes you already have this GroupQuotaEntityResource created on azure
+            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
             string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
             string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
 
             // get the collection of this GroupQuotaSubscriptionRequestStatusResource
-            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptionRequestStatuses();
+            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotaEntity.GetGroupQuotaSubscriptionRequestStatuses();
 
             // invoke the operation
             string requestId = "00000000-0000-0000-0000-000000000000";
@@ -127,15 +127,15 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GroupQuotasEntityResource created on azure
-            // for more information of creating GroupQuotasEntityResource, please refer to the document of GroupQuotasEntityResource
+            // this example assumes you already have this GroupQuotaEntityResource created on azure
+            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
             string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
             string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotasEntityResource groupQuotasEntity = client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
 
             // get the collection of this GroupQuotaSubscriptionRequestStatusResource
-            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptionRequestStatuses();
+            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotaEntity.GetGroupQuotaSubscriptionRequestStatuses();
 
             // invoke the operation
             string requestId = "00000000-0000-0000-0000-000000000000";

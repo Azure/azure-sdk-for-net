@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="additionalAttributes"> Additional attributes to filter/restrict the subscriptions, which can be added to the subscriptionIds. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotasEntityBasePatch(string displayName, AdditionalAttributesPatch additionalAttributes, RequestState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupQuotasEntityBasePatch(string displayName, GroupQuotaAdditionalAttributesPatch additionalAttributes, QuotaRequestStatus? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             AdditionalAttributes = additionalAttributes;
@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Display name of the GroupQuota entity. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> Additional attributes to filter/restrict the subscriptions, which can be added to the subscriptionIds. </summary>
-        public AdditionalAttributesPatch AdditionalAttributes { get; set; }
+        [WirePath("additionalAttributes")]
+        public GroupQuotaAdditionalAttributesPatch AdditionalAttributes { get; set; }
         /// <summary> Provisioning state of the operation. </summary>
-        public RequestState? ProvisioningState { get; }
+        [WirePath("provisioningState")]
+        public QuotaRequestStatus? ProvisioningState { get; }
     }
 }

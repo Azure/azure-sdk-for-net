@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dayOfWeek"u8);
             writer.WriteObjectValue(DayOfWeek, options);
-            if (Optional.IsDefined(ScheduledStartTime))
+            if (Optional.IsDefined(AutoStartOn))
             {
                 writer.WritePropertyName("scheduledStartTime"u8);
-                writer.WriteStringValue(ScheduledStartTime);
+                writer.WriteStringValue(AutoStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ScheduledStopTime))
+            if (Optional.IsDefined(AutoStopOn))
             {
                 writer.WritePropertyName("scheduledStopTime"u8);
-                writer.WriteStringValue(ScheduledStopTime);
+                writer.WriteStringValue(AutoStopOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,26 +76,34 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            DayOfWeek dayOfWeek = default;
-            string scheduledStartTime = default;
-            string scheduledStopTime = default;
+            OracleDatabaseDayOfWeek dayOfWeek = default;
+            DateTimeOffset? scheduledStartTime = default;
+            DateTimeOffset? scheduledStopTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"u8))
                 {
-                    dayOfWeek = DayOfWeek.DeserializeDayOfWeek(property.Value, options);
+                    dayOfWeek = OracleDatabaseDayOfWeek.DeserializeOracleDatabaseDayOfWeek(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduledStartTime"u8))
                 {
-                    scheduledStartTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("scheduledStopTime"u8))
                 {
-                    scheduledStopTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledStopTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")

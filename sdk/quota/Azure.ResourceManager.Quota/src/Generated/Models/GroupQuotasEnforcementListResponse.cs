@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of <see cref="GroupQuotasEnforcementListResponse"/>. </summary>
         internal GroupQuotasEnforcementListResponse()
         {
-            Value = new ChangeTrackingList<GroupQuotasEnforcementResponseData>();
+            Value = new ChangeTrackingList<GroupQuotaEnforcementData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotasEnforcementListResponse"/>. </summary>
         /// <param name="value"> List of Azure Regions. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotasEnforcementListResponse(IReadOnlyList<GroupQuotasEnforcementResponseData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupQuotasEnforcementListResponse(IReadOnlyList<GroupQuotaEnforcementData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> List of Azure Regions. </summary>
-        public IReadOnlyList<GroupQuotasEnforcementResponseData> Value { get; }
+        public IReadOnlyList<GroupQuotaEnforcementData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

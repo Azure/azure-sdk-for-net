@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// The response of a CloudVmCluster list operation.
-    /// Serialized Name: CloudVmClusterListResult
-    /// </summary>
+    /// <summary> The response of a CloudVmCluster list operation. </summary>
     internal partial class CloudVmClusterListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterListResult"/>. </summary>
-        /// <param name="value">
-        /// The CloudVmCluster items on this page
-        /// Serialized Name: CloudVmClusterListResult.value
-        /// </param>
+        /// <param name="value"> The CloudVmCluster items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CloudVmClusterListResult(IEnumerable<CloudVmClusterData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterListResult"/>. </summary>
-        /// <param name="value">
-        /// The CloudVmCluster items on this page
-        /// Serialized Name: CloudVmClusterListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: CloudVmClusterListResult.nextLink
-        /// </param>
+        /// <param name="value"> The CloudVmCluster items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudVmClusterListResult(IReadOnlyList<CloudVmClusterData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary>
-        /// The CloudVmCluster items on this page
-        /// Serialized Name: CloudVmClusterListResult.value
-        /// </summary>
+        /// <summary> The CloudVmCluster items on this page. </summary>
         public IReadOnlyList<CloudVmClusterData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: CloudVmClusterListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

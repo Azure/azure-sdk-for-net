@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Optional.IsDefined(Error))
                 {
                     builder.Append("  error: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Error, options, 2, false, "  error: ");
+                    builder.AppendLine($"'{Error.ToString()}'");
                 }
             }
 
