@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             string groupQuotaName = "sdk-test-group-quota-create";
 
             // Builds the Group Quota Request Body
-            GroupQuotasEntityData data = new GroupQuotasEntityData()
+            GroupQuotaEntityData data = new GroupQuotaEntityData()
             {
                 Properties = new GroupQuotaEntityBase()
                 {
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             Assert.IsNotNull(createResponse);
 
             // Delete the created Group Quota for cleanup
-            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
 
-            GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            GroupQuotaEntityResource groupQuotasEntity = Client.GetGroupQuotaEntityResource(groupQuotasEntityResourceId);
             await groupQuotasEntity.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
 
             // get the collection of this GroupQuotasEntityResource
-            var collection =  managementGroupResource.GetGroupQuotasEntities();
+            var collection =  managementGroupResource.GetGroupQuotaEntities();
 
             // Get all the Group Quota Entities
-            await foreach (GroupQuotasEntityResource item in collection.GetAllAsync())
+            await foreach (GroupQuotaEntityResource item in collection.GetAllAsync())
             {
                 // Ensure that the Group Quota Objects are non empty
-                GroupQuotasEntityData resourceData = item.Data;
+                GroupQuotaEntityData resourceData = item.Data;
                 Assert.NotNull(resourceData);
             }
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         public async Task SetGroupQuotaLimit()
         {
             // Create the Group Quota Limit Request Body
-            SubmittedResourceRequestStatusData requestBody = new SubmittedResourceRequestStatusData()
+            GroupQuotaRequestStatusData requestBody = new GroupQuotaRequestStatusData()
             {
                 Properties = new GroupQuotaRequestStatusProperties()
                 {
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             string groupQuotaName = "sdk-test-group-quota";
 
-            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
 
             // Get the Group Quota Resource
-            GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            GroupQuotaEntityResource groupQuotasEntity = Client.GetGroupQuotaEntityResource(groupQuotasEntityResourceId);
 
             // Perform the QuotaLimit Request call
             var response = await groupQuotasEntity.CreateOrUpdateGroupQuotaLimitsRequestAsync(WaitUntil.Started, "Microsoft.Compute", "standarddv4family", requestBody);
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         {
             string groupQuotaName = "sdk-test-group-quota";
 
-            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
 
-            GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            GroupQuotaEntityResource groupQuotasEntity = Client.GetGroupQuotaEntityResource(groupQuotasEntityResourceId);
 
             // get the collection of this GroupQuotaLimitResource
             string resourceProviderName = "Microsoft.Compute";
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         {
             string groupQuotaName = "sdk-test-group-quota";
 
-            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            ResourceIdentifier groupQuotasEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
 
-            GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+            GroupQuotaEntityResource groupQuotasEntity = Client.GetGroupQuotaEntityResource(groupQuotasEntityResourceId);
 
             // get the collection of this GroupQuotaSubscriptionIdResource
             GroupQuotaSubscriptionCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptions();
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             var response = await collection.CreateOrUpdateAsync(WaitUntil.Started, defaultSubscriptionId);
 
             //Clean up Sub
-            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionIdResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, defaultSubscriptionId);
+            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, defaultSubscriptionId);
 
-            GroupQuotaSubscriptionIdResource groupQuotaSubscriptionId = Client.GetGroupQuotaSubscriptionIdResource(groupQuotaSubscriptionIdResourceId);
+            GroupQuotaSubscriptionResource groupQuotaSubscriptionId = Client.GetGroupQuotaSubscriptionResource(groupQuotaSubscriptionIdResourceId);
 
             await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Started);
         }
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             string resourceProviderName = "Microsoft.Compute";
             string resourceName = "standarddv2family";
 
-            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionIdResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, defaultSubscriptionId);
+            ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, defaultSubscriptionId);
 
-            GroupQuotaSubscriptionIdResource groupQuotaSubscriptionId = Client.GetGroupQuotaSubscriptionIdResource(groupQuotaSubscriptionIdResourceId);
+            GroupQuotaSubscriptionResource groupQuotaSubscriptionId = Client.GetGroupQuotaSubscriptionResource(groupQuotaSubscriptionIdResourceId);
 
             // invoke the operation
             var subscriptionAddResponse = await groupQuotaSubscriptionId.UpdateAsync(WaitUntil.Started);
