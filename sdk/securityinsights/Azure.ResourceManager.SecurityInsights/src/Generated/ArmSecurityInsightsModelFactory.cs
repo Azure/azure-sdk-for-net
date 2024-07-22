@@ -4377,7 +4377,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="logsState"> The available data types for the connector. </param>
+        /// <param name="logsState"> Logs data type. </param>
         /// <returns> A new <see cref="Models.MicrosoftPurviewInformationProtectionDataConnector"/> instance for mocking. </returns>
         public static MicrosoftPurviewInformationProtectionDataConnector MicrosoftPurviewInformationProtectionDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? logsState = null)
         {
@@ -4390,7 +4390,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData: null,
                 tenantId,
-                logsState.HasValue ? new MicrosoftPurviewInformationProtectionConnectorDataTypes(new MicrosoftPurviewInformationProtectionConnectorDataTypesLogs(logsState.Value, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null);
+                logsState.HasValue ? new MicrosoftPurviewInformationProtectionConnectorDataTypesLogs(logsState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Office365ProjectDataConnector"/>. </summary>

@@ -30,25 +30,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal MicrosoftPurviewInformationProtectionDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, MicrosoftPurviewInformationProtectionConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="logs"> Logs data type. </param>
+        internal MicrosoftPurviewInformationProtectionDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, MicrosoftPurviewInformationProtectionConnectorDataTypesLogs logs) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
-            DataTypes = dataTypes;
+            Logs = logs;
             Kind = kind;
         }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> The available data types for the connector. </summary>
-        internal MicrosoftPurviewInformationProtectionConnectorDataTypes DataTypes { get; set; }
+        /// <summary> Logs data type. </summary>
+        internal MicrosoftPurviewInformationProtectionConnectorDataTypesLogs Logs { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         public SecurityInsightsDataTypeConnectionState? LogsState
         {
-            get => DataTypes is null ? default : DataTypes.LogsState;
+            get => Logs is null ? default(SecurityInsightsDataTypeConnectionState?) : Logs.State;
             set
             {
-                DataTypes = value.HasValue ? new MicrosoftPurviewInformationProtectionConnectorDataTypes(value.Value) : null;
+                Logs = value.HasValue ? new MicrosoftPurviewInformationProtectionConnectorDataTypesLogs(value.Value) : null;
             }
         }
     }
