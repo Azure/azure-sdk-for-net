@@ -127,49 +127,10 @@ namespace Azure
 }
 namespace Azure.Core
 {
-    public partial interface ISupportsProofOfPossession
-    {
-        Azure.Core.AccessToken GetToken(Azure.Core.PopTokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
-        System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.PopTokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PopTokenRequestContext
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PopTokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = null, Azure.Core.Request? request = null) { throw null; }
-        public string? Claims { get { throw null; } }
-        public System.Net.Http.HttpMethod? HttpMethod { get { throw null; } }
-        public bool IsCaeEnabled { get { throw null; } }
-        public bool IsProofOfPossessionEnabled { get { throw null; } }
-        public string? ParentRequestId { get { throw null; } }
-        public string? ProofOfPossessionNonce { get { throw null; } }
-        public string[] Scopes { get { throw null; } }
-        public string? TenantId { get { throw null; } }
-        public System.Uri? Uri { get { throw null; } }
-        public static Azure.Core.PopTokenRequestContext FromTokenRequestContext(Azure.Core.TokenRequestContext context, Azure.Core.Request? request = null, bool? isProofOfPossessionEnabled = false) { throw null; }
-        public static implicit operator Azure.Core.TokenRequestContext (Azure.Core.PopTokenRequestContext context) { throw null; }
-        public Azure.Core.TokenRequestContext ToTokenRequestContext() { throw null; }
-    }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class, Inherited=false, AllowMultiple=true)]
     public partial class ProvisionableTemplateAttribute : System.Attribute
     {
         public ProvisionableTemplateAttribute(string resourceName) { }
         public string ResourceName { get { throw null; } }
-    }
-}
-namespace Azure.Core.Pipeline
-{
-    public partial class PopTokenAuthenticationPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
-    {
-        public PopTokenAuthenticationPolicy(Azure.Core.ISupportsProofOfPossession credential, string scope) { }
-        protected void AuthenticateAndAuthorizeRequest(Azure.Core.HttpMessage message, Azure.Core.PopTokenRequestContext context) { }
-        protected System.Threading.Tasks.ValueTask AuthenticateAndAuthorizeRequestAsync(Azure.Core.HttpMessage message, Azure.Core.PopTokenRequestContext context) { throw null; }
-        protected void AuthorizeRequest(Azure.Core.HttpMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask AuthorizeRequestAsync(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual bool AuthorizeRequestOnChallenge(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<bool> AuthorizeRequestOnChallengeAsync(Azure.Core.HttpMessage message) { throw null; }
-        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
 }

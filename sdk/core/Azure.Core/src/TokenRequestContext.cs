@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Net.Http;
+
 namespace Azure.Core
 {
     /// <summary>
@@ -58,13 +61,36 @@ namespace Azure.Core
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId"> The tenantId to be included in the token request.</param>
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false)
+        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId, bool isCaeEnabled)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
             Claims = claims;
             TenantId = tenantId;
             IsCaeEnabled = isCaeEnabled;
+        }
+
+        /// <summary>
+        /// Creates a new TokenRequest with the specified scopes.
+        /// </summary>
+        /// <param name="scopes">The scopes required for the token.</param>
+        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        /// <param name="claims">Additional claims to be included in the token.</param>
+        /// <param name="tenantId">The tenant ID to be included in the token request.</param>
+        /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
+        /// <param name="isProofOfPossessionEnabled">Indicates whether to enable Proof of Possession (PoP) for the requested token.</param>
+        /// <param name="proofOfPossessionNonce">The nonce value required for PoP token requests.</param>
+        /// <param name="request">The request to be authorized with a PoP token.</param>
+        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = default, Request? request = default)
+        {
+            Scopes = scopes;
+            ParentRequestId = parentRequestId;
+            Claims = claims;
+            TenantId = tenantId;
+            IsCaeEnabled = isCaeEnabled;
+            ProofOfPossessionNonce = proofOfPossessionNonce;
+            IsProofOfPossessionEnabled = isProofOfPossessionEnabled;
+            _request = request;
         }
 
         /// <summary>
@@ -96,5 +122,28 @@ namespace Azure.Core
         /// If you don't handle CAE responses in these API calls, your app could end up in a loop retrying an API call with a token that is still in the returned lifespan of the token but has been revoked due to CAE.
         /// </remarks>
         public bool IsCaeEnabled { get; }
+
+         /// <summary>
+        /// Indicates whether to enable Proof of Possession (PoP) for the requested token.
+        /// </summary>
+        public bool IsProofOfPossessionEnabled { get; }
+
+        /// <summary>
+        /// The nonce value required for PoP token requests. This is typically retrieved from teh WWW-Authenticate header of a 401 challenge response.
+        /// This is used in combination with <see cref="ResourceRequestUri"/> and <see cref="ResourceRequestMethod"/> to generate the PoP token.
+        /// </summary>
+        public string? ProofOfPossessionNonce { get; }
+
+        private readonly Request? _request;
+
+        /// <summary>
+        /// The HTTP method of the request. This is used in combination with <see cref="ResourceRequestUri"/> and <see cref="ProofOfPossessionNonce"/> to generate the PoP token.
+        /// </summary>
+        public HttpMethod? ResourceRequestMethod => new(_request!.Method.ToString());
+
+        /// <summary>
+        /// The URI of the request. This is used in combination with <see cref="ResourceRequestMethod"/> and <see cref="ProofOfPossessionNonce"/> to generate the PoP token.
+        /// </summary>
+        public Uri? ResourceRequestUri => _request?.Uri.ToUri();
     }
 }
