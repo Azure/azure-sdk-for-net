@@ -57,7 +57,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 new HealthcareOperationAction
                 {
-                    Name = "HealthcareOperationActionSample",
+                    Name = "HealthcareOperationActionSample", // Optional string for humans to identify action by name.
                 },
             };
 

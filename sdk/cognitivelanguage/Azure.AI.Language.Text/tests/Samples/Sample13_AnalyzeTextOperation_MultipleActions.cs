@@ -58,11 +58,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 new EntitiesOperationAction
                 {
-                    Name = "EntitiesOperationActionSample",
+                    Name = "EntitiesOperationActionSample", // Optional string for humans to identify action by name.
                 },
                 new KeyPhraseOperationAction
                 {
-                    Name = "KeyPhraseOperationActionSample",
+                    Name = "KeyPhraseOperationActionSample", // Optional string for humans to identify action by name.
                 },
             };
 

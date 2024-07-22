@@ -54,7 +54,7 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
     new HealthcareOperationAction
     {
-        Name = "HealthcareOperationActionSample",
+        Name = "HealthcareOperationActionSample", // Optional string for humans to identify action by name.
     },
 };
 

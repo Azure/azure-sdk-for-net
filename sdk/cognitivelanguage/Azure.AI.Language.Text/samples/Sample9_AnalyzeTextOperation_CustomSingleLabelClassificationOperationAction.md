@@ -44,7 +44,7 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
     new CustomSingleLabelClassificationOperationAction
     {
-        Name = "CSCOperationActionSample",
+        Name = "CSCOperationActionSample", // Optional string for humans to identify action by name.
         ActionContent = customSingleLabelClassificationActionContent
     },
 };

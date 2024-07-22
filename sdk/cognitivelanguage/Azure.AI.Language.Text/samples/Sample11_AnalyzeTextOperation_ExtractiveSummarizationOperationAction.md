@@ -70,7 +70,7 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
     new ExtractiveSummarizationOperationAction
     {
-        Name = "ExtractiveSummarizationOperationActionSample",
+        Name = "ExtractiveSummarizationOperationActionSample", // Optional string for humans to identify action by name.
     },
 };
 

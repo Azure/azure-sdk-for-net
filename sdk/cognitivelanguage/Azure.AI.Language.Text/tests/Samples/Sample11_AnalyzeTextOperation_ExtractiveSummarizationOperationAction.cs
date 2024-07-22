@@ -73,7 +73,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 new ExtractiveSummarizationOperationAction
                 {
-                    Name = "ExtractiveSummarizationOperationActionSample",
+                    Name = "ExtractiveSummarizationOperationActionSample", // Optional string for humans to identify action by name.
                 },
             };
 

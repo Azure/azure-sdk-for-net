@@ -59,7 +59,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 new CustomEntitiesOperationAction
                 {
-                    Name = "CustomEntitiesOperationActionSample",
+                    Name = "CustomEntitiesOperationActionSample", // Optional string for humans to identify action by name.
                     ActionContent = customEntitiesActionContent
                 },
             };

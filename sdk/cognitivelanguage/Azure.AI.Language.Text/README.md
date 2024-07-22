@@ -36,6 +36,48 @@ If your library requires authentication for use, such as for Azure services, inc
 
 For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
+#### Create a TextAnalysisClient
+
+To use the `TextAnalysisClient`, use the following namespace in addition to those above, if needed.
+
+```C# Snippet:ConversationAuthoringClient_Namespace
+using Azure.AI.Language.Conversations.Authoring;
+```
+
+With your **endpoint** and **API key**, you can instantiate a `TextAnalysisClient`:
+
+```C# Snippet:CreateTextClient
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+AzureKeyCredential credential = new("your apikey");
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+```
+
+#### Create a client using Azure Active Directory authentication
+
+You can also create a `TextAnalysisClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code.
+
+Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
+
+To use `DefaultAzureCredential` with a client ID and secret, you'll need to set the `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, and `AZURE_CLIENT_SECRET` environment variables; alternatively, you can pass those values
+to the `ClientSecretCredential` also in Azure.Identity.
+
+Make sure you use the right namespace for `DefaultAzureCredential` at the top of your source file:
+
+```C# Snippet:Text_Identity_Namespace
+using Azure.Identity;
+```
+
+Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
+
+```C# Snippet:TextAnalysisClient_CreateWithDefaultAzureCredential
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+```
+
+Note that regional endpoints do not support AAD authentication. Instead, create a [custom domain][custom_domain] name for your resource to use AAD authentication.
+
 ### Service API versions
 
 The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
@@ -103,5 +145,8 @@ This is a template, but your SDK readme should include details on how to contrib
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
+[azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package
+[custom_domain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/cognitivelanguage/Azure.AI.Language.Text/README.png)

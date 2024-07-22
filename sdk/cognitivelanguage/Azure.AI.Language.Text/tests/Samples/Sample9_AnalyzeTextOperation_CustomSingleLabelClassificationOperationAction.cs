@@ -51,7 +51,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 new CustomSingleLabelClassificationOperationAction
                 {
-                    Name = "CSCOperationActionSample",
+                    Name = "CSCOperationActionSample", // Optional string for humans to identify action by name.
                     ActionContent = customSingleLabelClassificationActionContent
                 },
             };

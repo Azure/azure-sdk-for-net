@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.AI.Language.Text;
-using Azure.AI.Language.Text.Models;
 using Azure.AI.Language.Text.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+#region Snippet:Text_Identity_Namespace
+using Azure.Identity;
+#endregion
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
@@ -39,6 +39,19 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
 #endif
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+            #endregion
+        }
+
+        [Test]
+        public void TextAnalysisClient_CreateWithDefaultAzureCredential()
+        {
+            #region Snippet:TextAnalysisClient_CreateWithDefaultAzureCredential
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+#if !SNIPPET
+            endpoint = TestEnvironment.Endpoint;
+#endif
+            DefaultAzureCredential credential = new DefaultAzureCredential();
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
             #endregion
         }
