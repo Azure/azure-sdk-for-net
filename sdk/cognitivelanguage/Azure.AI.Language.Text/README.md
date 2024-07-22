@@ -49,7 +49,7 @@ For example,
 ```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("<your endpoint>");
 AzureKeyCredential credential = new("your apikey");
-TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_0);
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);
 ```
 
