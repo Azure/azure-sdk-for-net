@@ -5,10 +5,10 @@ This sample demonstrates how to list files that were completed by a job.
 
 ## List Completed Files and iterate over in a for loop
 
-```C# Snippet:AzHealthDeidSample4_ListCompletedFiles
-AsyncPageable<HealthFileDetails> files = client.GetJobFilesAsync("job-name-1");
+```C# Snippet:AzHealthDeidSample4Async_ListCompletedFiles
+AsyncPageable<DocumentDetails> files = client.GetJobDocumentsAsync("job-name-1");
 
-await foreach (HealthFileDetails file in files)
+await foreach (DocumentDetails file in files)
 {
     Console.WriteLine($"File Name: {file.Input.Path}");
     Console.WriteLine($"File Status: {file.Status}");
