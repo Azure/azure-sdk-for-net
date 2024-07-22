@@ -188,4 +188,8 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.Throws<InvalidOperationException>(()
             => options.LoggingOptions.IsLoggingContentEnabled = true);
     }
+
+    #region Helpers
+
+    #endregion
 }
