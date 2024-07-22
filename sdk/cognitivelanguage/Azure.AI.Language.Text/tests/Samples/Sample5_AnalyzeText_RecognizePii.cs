@@ -17,11 +17,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [SyncOnly]
         public void RecognizePii()
         {
-            #region Snippet:Sample5_AnalyzeText_RecognizePii
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample5_AnalyzeText_RecognizePii
             string documentA =
                 "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
                 + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"

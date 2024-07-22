@@ -7,7 +7,7 @@ This sample demonstrates how to perform custom multi-label classification one or
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = new Uri("<your endpoint>");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
@@ -38,8 +38,8 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 
 // Specify the project and deployment names of the desired custom model. To train your own custom model to
 // recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
-string projectName = TestEnvironment.CMCProjectName;
-string deploymentName = TestEnvironment.CMCDeploymentName;
+string projectName = "<projectName>";
+string deploymentName = "<deploymentName>";
 
 CustomMultiLabelClassificationActionContent customMultiLabelClassificationActionContent = new CustomMultiLabelClassificationActionContent(projectName, deploymentName);
 

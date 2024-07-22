@@ -18,8 +18,12 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public void CreateTextAnalysisClientForSpecificApiVersion()
         {
             #region Snippet:CreateTextAnalysisClientForSpecificApiVersion
-            Uri endpoint = TestEnvironment.Endpoint;
-            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            AzureKeyCredential credential = new("your apikey");
+#if !SNIPPET
+            endpoint = TestEnvironment.Endpoint;
+            credential = new(TestEnvironment.ApiKey);
+#endif
             TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
             var client = new TextAnalysisClient(endpoint, credential, options);
             #endregion
@@ -29,8 +33,12 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public void CreateTextClient()
         {
             #region Snippet:CreateTextClient
-            Uri endpoint = TestEnvironment.Endpoint;
-            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            AzureKeyCredential credential = new("your apikey");
+#if !SNIPPET
+            endpoint = TestEnvironment.Endpoint;
+            credential = new(TestEnvironment.ApiKey);
+#endif
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
             #endregion
         }

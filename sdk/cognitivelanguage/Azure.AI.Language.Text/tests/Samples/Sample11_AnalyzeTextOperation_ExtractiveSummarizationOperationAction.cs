@@ -17,11 +17,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [SyncOnly]
         public void ExtractiveSummarizationOperationAction()
         {
-            #region Snippet:Sample11_AnalyzeTextOperation_ExtractiveSummarizationOperationAction
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample11_AnalyzeTextOperation_ExtractiveSummarizationOperationAction
             string documentA =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
                 + " solutions to support employees suddenly forced to work from home, but “what really put the"

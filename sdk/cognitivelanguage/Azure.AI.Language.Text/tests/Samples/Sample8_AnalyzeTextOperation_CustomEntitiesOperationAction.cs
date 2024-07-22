@@ -17,11 +17,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [SyncOnly]
         public void CustomEntitiesOperationAction()
         {
-            #region Snippet:Sample8_AnalyzeTextOperation_CustomEntitiesOperationAction
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample8_AnalyzeTextOperation_CustomEntitiesOperationAction
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
                 + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
@@ -46,8 +46,12 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             // Specify the project and deployment names of the desired custom model. To train your own custom model to
             // recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
-            string projectName = TestEnvironment.CTProjectName;
-            string deploymentName = TestEnvironment.CTDeploymentName;
+            string projectName = "<projectName>";
+            string deploymentName = "<deploymentName>";
+#if !SNIPPET
+            projectName = TestEnvironment.CTProjectName;
+            deploymentName = TestEnvironment.CTDeploymentName;
+#endif
 
             CustomEntitiesActionContent customEntitiesActionContent = new CustomEntitiesActionContent(projectName, deploymentName);
 

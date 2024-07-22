@@ -16,11 +16,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [SyncOnly]
         public void CustomMultiLabelClassificationOperationAction()
         {
-            #region Snippet:Sample10_AnalyzeTextOperation_CustomMultiLabelClassificationOperationAction
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample10_AnalyzeTextOperation_CustomMultiLabelClassificationOperationAction
             string documentA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
                 + " add it to my playlist.";
@@ -40,8 +40,12 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             // Specify the project and deployment names of the desired custom model. To train your own custom model to
             // recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
-            string projectName = TestEnvironment.CMCProjectName;
-            string deploymentName = TestEnvironment.CMCDeploymentName;
+            string projectName = "<projectName>";
+            string deploymentName = "<deploymentName>";
+#if !SNIPPET
+            projectName = TestEnvironment.CMCProjectName;
+            deploymentName = TestEnvironment.CMCDeploymentName;
+#endif
 
             CustomMultiLabelClassificationActionContent customMultiLabelClassificationActionContent = new CustomMultiLabelClassificationActionContent(projectName, deploymentName);
 

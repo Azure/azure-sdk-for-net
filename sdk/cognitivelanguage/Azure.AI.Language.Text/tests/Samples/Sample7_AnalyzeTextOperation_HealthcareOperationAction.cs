@@ -17,11 +17,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [SyncOnly]
         public void HealthcareOperationAction()
         {
-            #region Snippet:Sample7_AnalyzeTextOperation_HealthcareOperationAction
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample7_AnalyzeTextOperation_HealthcareOperationAction
             string documentA =
                 "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"
                 + " CORONARY ARTERY DISEASE | Signed | DIS |"

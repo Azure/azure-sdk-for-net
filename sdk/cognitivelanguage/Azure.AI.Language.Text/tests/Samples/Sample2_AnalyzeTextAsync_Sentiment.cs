@@ -19,11 +19,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [AsyncOnly]
         public async Task Sentiment()
         {
-            #region Snippet:Sample2_AnalyzeTextAsync_Sentiment
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample2_AnalyzeTextAsync_Sentiment
             string documentA =
                 "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
                 + " quality of the food and the process to get room service they refunded the money we spent at the"
@@ -87,11 +87,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [AsyncOnly]
         public async Task Sentiment_OpinionMining()
         {
-            #region Snippet:Sample2_AnalyzeTextAsync_Sentiment_OpinionMining
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample2_AnalyzeTextAsync_Sentiment_OpinionMining
             string reviewA =
                 "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
                 + " quality of the food and the process to get room service they refunded the money we spent at the"

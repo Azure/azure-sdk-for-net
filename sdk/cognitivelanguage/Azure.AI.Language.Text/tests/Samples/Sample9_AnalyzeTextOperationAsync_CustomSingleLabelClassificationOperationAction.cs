@@ -17,11 +17,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [AsyncOnly]
         public async Task CustomSingleLabelClassificationOperationAction()
         {
-            #region Snippet:Sample9_AnalyzeTextOperationAsync_CustomSingleLabelClassificationOperationAction
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample9_AnalyzeTextOperationAsync_CustomSingleLabelClassificationOperationAction
             string documentA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
                 + " add it to my playlist.";
@@ -41,8 +41,12 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             // Specify the project and deployment names of the desired custom model. To train your own custom model to
             // recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
-            string projectName = TestEnvironment.CSCProjectName;
-            string deploymentName = TestEnvironment.CSCDeploymentName;
+            string projectName = "<projectName>";
+            string deploymentName = "<deploymentName>";
+#if !SNIPPET
+            projectName = TestEnvironment.CSCProjectName;
+            deploymentName = TestEnvironment.CSCDeploymentName;
+#endif
 
             CustomSingleLabelClassificationActionContent customSingleLabelClassificationActionContent = new CustomSingleLabelClassificationActionContent(projectName, deploymentName);
 

@@ -17,11 +17,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [AsyncOnly]
         public async Task MultipleActions()
         {
-            #region Snippet:Sample13_AnalyzeTextSubmitJob_MultipleTasks
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample13_AnalyzeTextOperationAsync_MultipleActions
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
                 + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"

@@ -7,7 +7,7 @@ This sample demonstrates how to perform abstractive summarization, which can gen
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = new Uri("<your endpoint>");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
@@ -19,7 +19,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 To summarize one or more text documents using extractive summarization, call `AnalyzeTextOperation` on the `TextAnalysisClient` by passing the documents as `MultiLanguageTextInput` parameter and a `AnalyzeTextOperationAction` with a `AbstractiveSummarizationOperationAction` action. This returns a `Response<AnalyzeTextOperationState>` which you can extract the `AbstractiveSummarizationOperationResult`.
 
 ```C# Snippet:Sample12_AnalyzeTextOperation_AbstractiveSummarizationOperationAction
-string document =
+string documentA =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
     + " solutions to support employees suddenly forced to work from home, but “what really put the"
     + " firecracker behind it was the pandemic, it accelerated everything,” McKelvey said. She explained"
@@ -61,29 +61,28 @@ string document =
 MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 {
     Documents =
-        {
-            new MultiLanguageInput("A", documentA) { Language = "en" },
-        }
+    {
+        new MultiLanguageInput("A", documentA) { Language = "en" },
+    }
 };
 
-AnalyzeTextOperationInput analyzeTextOperationInput = new AnalyzeTextOperationInput(multiLanguageTextInput, new AnalyzeTextOperationAction[]
+var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new AbstractiveSummarizationLROTask()
-});
-Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, analyzeTextOperationInput);
-```
-
-Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the abstractive summarization, including any errors that might have occurred:
-
-```C# Snippet:Sample12_AnalyzeTextSubmitJob_AbstractiveSummarizationLROTask_ViewResults
-// View the operation results.
-AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
-
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
-{
-    if (analyzeTextLROResult.Kind == AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults)
+    new AbstractiveSummarizationOperationAction
     {
-        AbstractiveSummarizationLROResult abstractiveSummarizationLROResult = (AbstractiveSummarizationLROResult)analyzeTextLROResult;
+        Name = "AbsractiveSummarizationOperationActionSample",
+    },
+};
+
+Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
+
+AnalyzeTextOperationState analyzeTextJobState = response.Value;
+
+foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+{
+    if (analyzeTextLROResult is AbstractiveSummarizationOperationResult)
+    {
+        AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
         foreach (AbstractiveSummaryDocumentResultWithDetectedLanguage extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)

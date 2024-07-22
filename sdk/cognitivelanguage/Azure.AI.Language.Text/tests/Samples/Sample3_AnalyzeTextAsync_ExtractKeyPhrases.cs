@@ -17,11 +17,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [AsyncOnly]
         public async Task ExtractKeyPhrases()
         {
-            #region Snippet:Sample3_AnalyzeTextAsync_ExtractKeyPhrases
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample3_AnalyzeTextAsync_ExtractKeyPhrases
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
                 + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"

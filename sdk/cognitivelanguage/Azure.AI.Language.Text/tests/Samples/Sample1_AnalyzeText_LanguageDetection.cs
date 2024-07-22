@@ -16,11 +16,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [SyncOnly]
         public void LanguageDetection()
         {
-            #region Snippet:Sample1_AnalyzeTextAsync_LanguageDetection
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample1_AnalyzeText_LanguageDetection
             string documentA =
                 "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
                 + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."
@@ -79,11 +79,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         [SyncOnly]
         public void LanguageDetection_CountryHint()
         {
-            #region Snippet:Sample1_AnalyzeTextAsync_LanguageDetection_CountryHint
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
+            #region Snippet:Sample1_AnalyzeText_LanguageDetection_CountryHint
             string documentA =
                 "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
                 + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."

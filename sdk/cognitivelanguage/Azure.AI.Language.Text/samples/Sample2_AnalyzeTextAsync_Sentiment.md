@@ -7,7 +7,7 @@ This sample demonstrates how to analyze the sentiment in one or more documents.
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = new Uri("<your endpoint>");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
@@ -168,13 +168,13 @@ Implementation for calculating complaints:
 private Dictionary<string, int> GetComplaints(AnalyzeTextSentimentResult reviews)
 {
     Dictionary<string, int> complaints = new();
-    foreach (SentimentResponseWithDocumentDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
+    foreach (SentimentDocumentResultWithDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
     {
         foreach (SentenceSentiment sentence in sentimentResponseWithDocumentDetectedLanguage.Sentences)
         {
             foreach (SentenceTarget target in sentence.Targets)
             {
-                if (target.Sentiment == SentimentValue.Negative)
+                if (target.Sentiment == TokenSentiment.Negative)
                 {
                     complaints.TryGetValue(target.Text, out int value);
                     complaints[target.Text] = value + 1;

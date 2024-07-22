@@ -7,7 +7,7 @@ This sample demonstrates how to recognize Personally Identifiable Information (P
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = new Uri("<your endpoint>");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To recognize Personally Identifiable Information in multiple documents, call `AnalyzeText` on an `TextPiiEntitiesRecognitionInput`.  The results are returned as a `AnalyzeTextPiiResult`.
 
-```C# Snippet:Sample5_RecognizePiiEntitiesBatchConvenience
+```C# Snippet:Sample5_AnalyzeTextAsync_RecognizePii
 string documentA =
     "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
     + " use their phone number 800-102-1100. They are originally from Brazil and have document ID number"

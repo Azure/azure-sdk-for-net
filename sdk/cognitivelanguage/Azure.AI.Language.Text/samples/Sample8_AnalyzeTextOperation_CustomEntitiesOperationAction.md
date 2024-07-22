@@ -7,7 +7,7 @@ This sample demonstrates how to perform custom named entity recognition (NER) on
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = new Uri("<your endpoint>");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
@@ -19,7 +19,6 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 To perform custom NER on one or more text documents, call `AnalyzeTextOperation` on the `TextAnalysisClient` by passing the documents as `MultiLanguageTextInput` parameter and a `AnalyzeTextOperationAction` with a `CustomEntitiesOperationAction` action. This returns a `Response<AnalyzeTextOperationState>` which you can extract the `CustomEntityRecognitionOperationResult`.
 
 ```C# Snippet:Sample8_AnalyzeTextOperation_CustomEntitiesOperationAction
-
 string documentA =
     "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
     + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
