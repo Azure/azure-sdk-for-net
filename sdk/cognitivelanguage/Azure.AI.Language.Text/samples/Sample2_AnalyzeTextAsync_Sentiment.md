@@ -90,7 +90,7 @@ In order to do so, we will use the Sentiment Analysis feature of the Text Analyt
 
 To get a deeper analysis into which are the targets that people considered good or bad, we will need to set the `OpinionMining` type into the `SentimentAnalysisActionContent`.
 
-```C# Snippet:Sample2_AnalyzeSentimentWithOpinionMining
+```C# Snippet:Sample2_AnalyzeTextAsync_Sentiment_OpinionMining
 string reviewA =
     "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
     + " quality of the food and the process to get room service they refunded the money we spent at the"
@@ -164,7 +164,7 @@ Alert! major complaint is *toilet*
 
 Implementation for calculating complaints:
 
-```C# Snippet:Sample2_AnalyzeSentimentWithOpinionMining_GetComplaints
+```C# Snippet:Sample2_AnalyzeTextAsync_Sentiment_GetComplaints
 private Dictionary<string, int> GetComplaints(AnalyzeTextSentimentResult reviews)
 {
     Dictionary<string, int> complaints = new();

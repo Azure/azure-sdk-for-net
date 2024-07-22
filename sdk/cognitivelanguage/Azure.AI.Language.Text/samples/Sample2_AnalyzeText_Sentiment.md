@@ -164,7 +164,7 @@ Alert! major complaint is *toilet*
 
 Implementation for calculating complaints:
 
-```C# Snippet:Sample2_AnalyzeSentimentWithOpinionMining_GetComplaints
+```C# Snippet:Sample2_AnalyzeText_Sentiment_GetComplaints
 private Dictionary<string, int> GetComplaints(AnalyzeTextSentimentResult reviews)
 {
     Dictionary<string, int> complaints = new();

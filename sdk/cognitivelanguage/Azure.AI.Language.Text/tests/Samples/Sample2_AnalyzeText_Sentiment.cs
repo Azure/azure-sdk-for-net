@@ -150,7 +150,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #endregion
         }
 
-        #region Snippet:Sample2_AnalyzeText_Sentiment_OpinionMining_GetComplaints
+        #region Snippet:Sample2_AnalyzeText_Sentiment_GetComplaints
         private Dictionary<string, int> GetComplaints(AnalyzeTextSentimentResult reviews)
         {
             Dictionary<string, int> complaints = new();
