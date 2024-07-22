@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Process Thread Information. </summary>
     public partial class ProcessThreadInfo : ResourceData
     {
+        //Add property 'ProcessId' to accept the value of the id(maybe a number or actual resoucdeidentifier) for issue #39126 and the property 'id' leave as null.
         public string ProcessId { get { return _processid; } }
         private string _processid;
     }
