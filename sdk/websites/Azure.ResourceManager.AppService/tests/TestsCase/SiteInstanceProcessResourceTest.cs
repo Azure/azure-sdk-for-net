@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.AppService.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -22,9 +24,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             string resourceGroupName = "testRG";
             string serviceName = "testapplwm";
-            string subscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
+            string subscriptionId = DefaultSubscription.Data.SubscriptionId;
             ResourceGroupCollection rgCollection = DefaultSubscription.GetResourceGroups();
-            ResourceGroupResource rg = await rgCollection.GetAsync(resourceGroupName);
             var identifier = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             var credentials = new DefaultAzureCredential();
             var armClient = new ArmClient(credentials);
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
                     var threadsCollection = siteInsResource.GetInstanceProcessThreads();
                     foreach (ProcessThreadInfo treadIno in threadsCollection)
                     {
-                        var processid = treadIno.Processid;
+                        var processid = treadIno.ProcessId;
                         var process = treadIno.Process;
                         threadsInfoRecord++;
                     }

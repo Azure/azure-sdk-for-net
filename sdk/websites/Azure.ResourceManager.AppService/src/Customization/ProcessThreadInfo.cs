@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Process Thread Information. </summary>
     public partial class ProcessThreadInfo : ResourceData
     {
-        public string Processid { get { return _processid; } }
+        public string ProcessId { get { return _processid; } }
         private string _processid;
     }
 }
