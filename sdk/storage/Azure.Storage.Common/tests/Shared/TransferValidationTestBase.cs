@@ -1085,7 +1085,7 @@ namespace Azure.Storage.Test.Shared
                 PrecalculatedChecksum = hash
             };
 
-            var client = await GetResourceClientAsync(disposingContainer.Container, dataLength);
+            var client = await GetResourceClientAsync(disposingContainer.Container, dataLength, createResource: true);
 
             // Act
             await DoesNotThrowOrInconclusiveAsync(

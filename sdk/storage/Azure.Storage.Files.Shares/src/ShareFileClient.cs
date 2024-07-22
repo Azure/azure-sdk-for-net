@@ -2271,13 +2271,22 @@ namespace Azure.Storage.Files.Shares
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
                     async ValueTask<Response<ShareFileDownloadInfo>> Factory(long offset, bool async, CancellationToken cancellationToken)
-                        => (await StartDownloadAsync(
+                    {
+                        (Response<ShareFileDownloadInfo> response, Stream contentStream) = await StartDownloadAsync(
                             range,
                             validationOptions,
                             conditions,
                             offset,
                             async,
-                            cancellationToken).ConfigureAwait(false)).Response;
+                            cancellationToken).ConfigureAwait(false);
+                        if (etag != response.GetRawResponse().Headers.ETag)
+                        {
+                            throw new ShareFileModifiedException(
+                                "File has been modified concurrently",
+                                Uri, etag, response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
+                        }
+                        return response;
+                    }
                     async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> StructuredMessageFactory(
                         long offset, bool async, CancellationToken cancellationToken)
                     {
