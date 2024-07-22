@@ -101,5 +101,5 @@ See the [README] of the Text Analytics client library for more information, incl
 
 <!-- LINKS -->
 [train_model]: https://aka.ms/azsdk/textanalytics/customentityrecognition
-[README]: https://github.com/quentinRobinson/azure-sdk-for-net/blob/qrobinson/analyze-text-sdk/sdk/cognitivelanguage/Azure.AI.Language.TextAnalytics/samples/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples/README.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
