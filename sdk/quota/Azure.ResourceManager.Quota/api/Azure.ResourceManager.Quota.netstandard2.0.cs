@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Quota
     public partial class GroupQuotaEntityData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaEntityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotaEntityData>
     {
         public GroupQuotaEntityData() { }
-        public Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase Properties { get { throw null; } set { } }
         Azure.ResourceManager.Quota.GroupQuotaEntityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaEntityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaEntityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.GroupQuotaEntityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotaEntityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -576,9 +576,9 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.GroupQuotaDetails GroupQuotaDetails(string region = null, long? limit = default(long?), string comment = null, string unit = null, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaEnforcementData GroupQuotaEnforcementData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaEnforcementProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaEnforcementProperties GroupQuotaEnforcementProperties(Azure.ResourceManager.Quota.Models.GroupQuotaEnforcementState? enforcementEnabled = default(Azure.ResourceManager.Quota.Models.GroupQuotaEnforcementState?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), string faultCode = null) { throw null; }
-        public static Azure.ResourceManager.Quota.GroupQuotaEntityData GroupQuotaEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase GroupQuotaEntityBase(string displayName = null, Azure.ResourceManager.Quota.Models.GroupQuotaAdditionalAttributes additionalAttributes = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
+        public static Azure.ResourceManager.Quota.GroupQuotaEntityData GroupQuotaEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch GroupQuotaEntityPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch properties = null) { throw null; }
-        public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties GroupQuotaEntityProperties(string displayName = null, Azure.ResourceManager.Quota.Models.GroupQuotaAdditionalAttributes additionalAttributes = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaLimitData GroupQuotaLimitData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaDetails properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase GroupQuotaRequestBase(long? limit = default(long?), string region = null, string comments = null, string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaRequestStatusData GroupQuotaRequestStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties properties = null) { throw null; }
@@ -675,6 +675,18 @@ namespace Azure.ResourceManager.Quota.Models
         public static bool operator !=(Azure.ResourceManager.Quota.Models.GroupQuotaEnforcementState left, Azure.ResourceManager.Quota.Models.GroupQuotaEnforcementState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class GroupQuotaEntityBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>
+    {
+        public GroupQuotaEntityBase() { }
+        public Azure.ResourceManager.Quota.Models.GroupQuotaAdditionalAttributes AdditionalAttributes { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class GroupQuotaEntityPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch>
     {
         public GroupQuotaEntityPatch() { }
@@ -684,18 +696,6 @@ namespace Azure.ResourceManager.Quota.Models
         Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class GroupQuotaEntityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties>
-    {
-        public GroupQuotaEntityProperties() { }
-        public Azure.ResourceManager.Quota.Models.GroupQuotaAdditionalAttributes AdditionalAttributes { get { throw null; } set { } }
-        public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
-        Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GroupQuotaEnvironmentType : System.IEquatable<Azure.ResourceManager.Quota.Models.GroupQuotaEnvironmentType>
