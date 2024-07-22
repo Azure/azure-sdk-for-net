@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Describes the program year the volume license is for. </summary>
+        [WirePath("programYear")]
         public HybridComputeProgramYear? ProgramYear { get; set; }
         /// <summary> The invoice id for the volume license. </summary>
+        [WirePath("invoiceId")]
         public string InvoiceId { get; set; }
     }
 }

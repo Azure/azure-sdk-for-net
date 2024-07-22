@@ -203,6 +203,7 @@ begin {
         "azure-genomics",
         "azure-hdinsight",
         "azure-hdinsight-rserver",
+        "azure-health-data-services",
         "azure-health-insights",
         "azure-hpc-cache",
         "azure-immersive-reader",
