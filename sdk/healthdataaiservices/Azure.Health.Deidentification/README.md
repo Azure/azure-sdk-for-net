@@ -85,9 +85,14 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-## Next Steps
+## Examples
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthdataaiservices/Azure.Health.Deidentification/samples).
+
+## Next steps
+
+- Find a bug, or have feedback? Raise an issue with "Health Deidentification" Label.
+
 
 ## Troubleshooting
 
