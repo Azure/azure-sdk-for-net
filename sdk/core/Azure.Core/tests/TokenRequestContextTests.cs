@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure
 {
-    public class PopTokenRequestContextTests
+    public class TokenRequestContextTests
     {
         [Test]
         public void PopTokenRequestContextCtor()
@@ -25,7 +25,7 @@ namespace Azure
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("http://example.com"));
 
-            var context = new PopTokenRequestContext(scopes, parentRequestId, claims, tenantId, isCaeEnabled, isProofOfPossessionEnabled, proofOfPossessionNonce, request);
+            var context = new TokenRequestContext(scopes, parentRequestId, claims, tenantId, isCaeEnabled, isProofOfPossessionEnabled, proofOfPossessionNonce, request);
 
             Assert.AreEqual(scopes, context.Scopes);
             Assert.AreEqual(parentRequestId, context.ParentRequestId);
@@ -34,8 +34,8 @@ namespace Azure
             Assert.AreEqual(isCaeEnabled, context.IsCaeEnabled);
             Assert.AreEqual(isProofOfPossessionEnabled, context.IsProofOfPossessionEnabled);
             Assert.AreEqual(proofOfPossessionNonce, context.ProofOfPossessionNonce);
-            Assert.AreEqual(new HttpMethod(request.Method.ToString()), context.HttpMethod);
-            Assert.AreEqual(request.Uri.ToUri(), context.Uri);
+            Assert.AreEqual(new HttpMethod(request.Method.ToString()), context.ResourceRequestMethod);
+            Assert.AreEqual(request.Uri.ToUri(), context.ResourceRequestUri);
         }
     }
 }
