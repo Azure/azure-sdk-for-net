@@ -1,6 +1,6 @@
 # Release History
 
-## 12.9.0 (2024-07-18)
+## 12.9.0 (2024-07-22)
 
 ### Features Added
 - Overload the `DeleteEntity` method to allow an `ITableEntity` object as parameter.
