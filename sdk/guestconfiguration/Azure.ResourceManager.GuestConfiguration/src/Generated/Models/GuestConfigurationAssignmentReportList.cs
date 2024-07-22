@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> List of reports for the guest configuration. Report contains information such as compliance status, reason and more. </summary>
+        [WirePath("value")]
         public IReadOnlyList<GuestConfigurationAssignmentReport> Value { get; }
     }
 }

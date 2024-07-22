@@ -46,7 +46,7 @@ namespace Azure.Maps.Rendering
             _accept = accept;
         }
 
-        internal HttpMessage CreateGetMapTileRequest(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp, MapTileSize? tileSize, string language, LocalizedMapView? localizedMapView)
+        internal HttpMessage CreateGetMapTileRequest(MapTileSetId tilesetId, MapTileIndex mapTileIndex, DateTimeOffset? timeStamp, MapTileSize? tileSize, string language, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,9 +56,9 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/tile", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
-            uri.AppendQuery("zoom", tileIndex.Z, true);
-            uri.AppendQuery("x", tileIndex.X, true);
-            uri.AppendQuery("y", tileIndex.Y, true);
+            uri.AppendQuery("zoom", mapTileIndex.Z, true);
+            uri.AppendQuery("x", mapTileIndex.X, true);
+            uri.AppendQuery("y", mapTileIndex.Y, true);
             if (timeStamp != null)
             {
                 uri.AppendQuery("timeStamp", timeStamp.Value, "O", true);
@@ -86,7 +86,7 @@ namespace Azure.Maps.Rendering
 
         /// <summary> Use to request map tiles in vector or raster format. </summary>
         /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="timeStamp">
         /// The desired date and time of the requested tile. This parameter must be specified in the standard date-time format (e.g. 2019-11-14T16:03:00-08:00), as defined by [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). This parameter is only supported when tilesetId parameter is set to one of the values below.
         ///
@@ -112,12 +112,12 @@ namespace Azure.Maps.Rendering
         /// </remarks>
         public async Task<ResponseWithHeaders<Stream, RenderGetMapTileHeaders>> GetMapTileAsync(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetMapTileRequest(tilesetId, tileIndex, timeStamp, tileSize, language, localizedMapView);
+            using var message = CreateGetMapTileRequest(tilesetId, mapTileIndex, timeStamp, tileSize, language, localizedMapView);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new RenderGetMapTileHeaders(message.Response);
             switch (message.Response.Status)
@@ -134,7 +134,7 @@ namespace Azure.Maps.Rendering
 
         /// <summary> Use to request map tiles in vector or raster format. </summary>
         /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="timeStamp">
         /// The desired date and time of the requested tile. This parameter must be specified in the standard date-time format (e.g. 2019-11-14T16:03:00-08:00), as defined by [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). This parameter is only supported when tilesetId parameter is set to one of the values below.
         ///
@@ -160,12 +160,12 @@ namespace Azure.Maps.Rendering
         /// </remarks>
         public ResponseWithHeaders<Stream, RenderGetMapTileHeaders> GetMapTile(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetMapTileRequest(tilesetId, tileIndex, timeStamp, tileSize, language, localizedMapView);
+            using var message = CreateGetMapTileRequest(tilesetId, mapTileIndex, timeStamp, tileSize, language, localizedMapView);
             _pipeline.Send(message, cancellationToken);
             var headers = new RenderGetMapTileHeaders(message.Response);
             switch (message.Response.Status)
@@ -339,7 +339,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetMapStateTileRequest(string statesetId, MapTileIndex tileIndex)
+        internal HttpMessage CreateGetMapStateTileRequest(string statesetId, MapTileIndex mapTileIndex)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -348,9 +348,9 @@ namespace Azure.Maps.Rendering
             uri.Reset(_endpoint);
             uri.AppendPath("/map/statetile", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("zoom", tileIndex.Z, true);
-            uri.AppendQuery("x", tileIndex.X, true);
-            uri.AppendQuery("y", tileIndex.Y, true);
+            uri.AppendQuery("zoom", mapTileIndex.Z, true);
+            uri.AppendQuery("x", mapTileIndex.X, true);
+            uri.AppendQuery("y", mapTileIndex.Y, true);
             uri.AppendQuery("statesetId", statesetId, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -363,7 +363,7 @@ namespace Azure.Maps.Rendering
 
         /// <summary> Use to get state tiles in vector format that can then be used to display feature state information in an indoor map. </summary>
         /// <param name="statesetId"> The stateset id. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="tileIndex"/> is null. </exception>
         /// <remarks>
@@ -376,12 +376,12 @@ namespace Azure.Maps.Rendering
             {
                 throw new ArgumentNullException(nameof(statesetId));
             }
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetMapStateTileRequest(statesetId, tileIndex);
+            using var message = CreateGetMapStateTileRequest(statesetId, mapTileIndex);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new RenderGetMapStateTileHeaders(message.Response);
             switch (message.Response.Status)
@@ -398,7 +398,7 @@ namespace Azure.Maps.Rendering
 
         /// <summary> Use to get state tiles in vector format that can then be used to display feature state information in an indoor map. </summary>
         /// <param name="statesetId"> The stateset id. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="tileIndex"/> is null. </exception>
         /// <remarks>
@@ -411,12 +411,12 @@ namespace Azure.Maps.Rendering
             {
                 throw new ArgumentNullException(nameof(statesetId));
             }
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetMapStateTileRequest(statesetId, tileIndex);
+            using var message = CreateGetMapStateTileRequest(statesetId, mapTileIndex);
             _pipeline.Send(message, cancellationToken);
             var headers = new RenderGetMapStateTileHeaders(message.Response);
             switch (message.Response.Status)
@@ -1236,7 +1236,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetCopyrightForTileRequest(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText)
+        internal HttpMessage CreateGetCopyrightForTileRequest(ResponseFormat format, MapTileIndex mapTileIndex, IncludeText? includeText)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1246,9 +1246,9 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/copyright/tile/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("zoom", tileIndex.Z, true);
-            uri.AppendQuery("x", tileIndex.X, true);
-            uri.AppendQuery("y", tileIndex.Y, true);
+            uri.AppendQuery("zoom", mapTileIndex.Z, true);
+            uri.AppendQuery("x", mapTileIndex.X, true);
+            uri.AppendQuery("y", mapTileIndex.Y, true);
             if (includeText != null)
             {
                 uri.AppendQuery("text", includeText.Value.ToString(), true);
@@ -1264,7 +1264,7 @@ namespace Azure.Maps.Rendering
 
         /// <summary> Use to get copyright information. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
@@ -1276,12 +1276,12 @@ namespace Azure.Maps.Rendering
         /// </remarks>
         public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetCopyrightForTileRequest(format, tileIndex, includeText);
+            using var message = CreateGetCopyrightForTileRequest(format, mapTileIndex, includeText);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1299,7 +1299,7 @@ namespace Azure.Maps.Rendering
 
         /// <summary> Use to get copyright information. </summary>
         /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
-        /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
@@ -1311,12 +1311,12 @@ namespace Azure.Maps.Rendering
         /// </remarks>
         public Response<RenderCopyright> GetCopyrightForTile(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
-            if (tileIndex == null)
+            if (mapTileIndex == null)
             {
-                throw new ArgumentNullException(nameof(tileIndex));
+                throw new ArgumentNullException(nameof(mapTileIndex));
             }
 
-            using var message = CreateGetCopyrightForTileRequest(format, tileIndex, includeText);
+            using var message = CreateGetCopyrightForTileRequest(format, mapTileIndex, includeText);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
