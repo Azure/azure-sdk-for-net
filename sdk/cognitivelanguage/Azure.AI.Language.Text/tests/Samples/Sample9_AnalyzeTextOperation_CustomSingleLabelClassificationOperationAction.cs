@@ -20,7 +20,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample9_AnalyzeTextOperation_CustomSingleLabelClassificationOperationAction
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             string documentA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"

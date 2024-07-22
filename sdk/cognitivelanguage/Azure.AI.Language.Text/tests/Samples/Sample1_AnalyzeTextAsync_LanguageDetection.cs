@@ -20,7 +20,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample1_AnalyzeTextAsync_LanguageDetection
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             string documentA =
                 "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
@@ -83,7 +83,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample1_AnalyzeTextAsync_LanguageDetection_CountryHint
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             string documentA =
                 "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"

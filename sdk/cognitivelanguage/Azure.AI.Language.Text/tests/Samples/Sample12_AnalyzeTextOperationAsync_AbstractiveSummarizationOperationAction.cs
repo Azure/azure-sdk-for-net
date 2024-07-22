@@ -20,7 +20,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample12_AnalyzeTextOperationAsync_AbstractiveSummarizationOperationAction
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             string documentA =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"

@@ -18,7 +18,7 @@ To create a new `TextAnalysisClient`, you will need the service endpoint and cre
 ```C# Snippet:CreateTextClient
 Uri endpoint = new Uri("<your endpoint>");
 AzureKeyCredential credential = new("your apikey");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);;
+TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.

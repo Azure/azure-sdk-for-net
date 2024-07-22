@@ -46,7 +46,7 @@ You have the flexibility to explicitly select a supported service API version wh
 
 For example,
 
-```C# Snippet:Create<YourService>ClientForSpecificApiVersion
+```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("<your endpoint>");
 AzureKeyCredential credential = new("your apikey");
 TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_0);
