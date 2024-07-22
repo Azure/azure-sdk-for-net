@@ -141,6 +141,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 enumerator = _sourceResourceContainer.GetStorageResourcesAsync(
+                        destinationContainer: _destinationResourceContainer,
                         cancellationToken: _cancellationToken).GetAsyncEnumerator();
             }
             catch (Exception ex)

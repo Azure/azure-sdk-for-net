@@ -338,7 +338,7 @@ namespace Azure.Communication.CallingServer
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = await ServerCallingRestClient.CreateCallAsync(
-                    createCallRequest: request,
+                    createCallRequestInternal: request,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
@@ -391,7 +391,7 @@ namespace Azure.Communication.CallingServer
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = ServerCallingRestClient.CreateCall(
-                    createCallRequest: request,
+                    createCallRequestInternal: request,
                     cancellationToken: cancellationToken
                     );
 

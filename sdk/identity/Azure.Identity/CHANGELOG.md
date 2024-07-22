@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- The logging level passed to MSAL now correlates to the log level configured on your configured `AzureEventSourceListener`. Previously, the log level was always set to `Microsoft.Identity.Client.LogLevel.Info`.
 
 ## 1.12.0 (2024-06-17)
 

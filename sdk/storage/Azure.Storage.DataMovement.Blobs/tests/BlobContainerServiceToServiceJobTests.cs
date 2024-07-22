@@ -108,7 +108,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 GetMockBlockBlobResource("blob2").Object,
                 GetMockBlockBlobResource("blob3").Object,
             };
-            sourceMock.Setup(r => r.GetStorageResourcesAsync(It.IsAny<CancellationToken>()))
+            sourceMock.Setup(r => r.GetStorageResourcesAsync(
+                It.IsAny<StorageResourceContainer>(),
+                It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
             ServiceToServiceTransferJob transferJob = new ServiceToServiceTransferJob(
                 new DataTransfer(
@@ -165,7 +167,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 GetMockAppendBlobResource("appendblob2").Object,
                 GetMockBlockBlobResource("blockblob3").Object,
             };
-            sourceMock.Setup(r => r.GetStorageResourcesAsync(It.IsAny<CancellationToken>()))
+            sourceMock.Setup(r => r.GetStorageResourcesAsync(
+                It.IsAny<StorageResourceContainer>(),
+                It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
             ServiceToServiceTransferJob transferJob = new ServiceToServiceTransferJob(
                 new DataTransfer(

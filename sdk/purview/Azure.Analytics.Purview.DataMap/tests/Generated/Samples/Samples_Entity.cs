@@ -56,8 +56,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
-            Response<EntityMutationResult> response = client.CreateOrUpdate(atlasEntityWithExtInfo);
+            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
+            Response<EntityMutationResult> response = client.CreateOrUpdate(body);
         }
 
         [Test]
@@ -68,8 +68,8 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
-            Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(atlasEntityWithExtInfo);
+            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
+            Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body);
         }
 
         [Test]
@@ -404,7 +404,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
+            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
                 ReferredEntities =
 {
@@ -482,7 +482,7 @@ Info = "<info>",
 },
                 Entity = default,
             };
-            Response<EntityMutationResult> response = client.CreateOrUpdate(atlasEntityWithExtInfo, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
+            Response<EntityMutationResult> response = client.CreateOrUpdate(body, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
         }
 
         [Test]
@@ -493,7 +493,7 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
+            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
                 ReferredEntities =
 {
@@ -571,7 +571,7 @@ Info = "<info>",
 },
                 Entity = default,
             };
-            Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(atlasEntityWithExtInfo, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
+            Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
         }
 
         [Test]
@@ -866,8 +866,8 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo();
-            Response<EntityMutationResult> response = client.BatchCreateOrUpdate(atlasEntitiesWithExtInfo);
+            AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo();
+            Response<EntityMutationResult> response = client.BatchCreateOrUpdate(body);
         }
 
         [Test]
@@ -878,8 +878,8 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo();
-            Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(atlasEntitiesWithExtInfo);
+            AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo();
+            Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(body);
         }
 
         [Test]
@@ -1222,7 +1222,7 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo
+            AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
             {
                 ReferredEntities =
 {
@@ -1300,7 +1300,7 @@ Info = "<info>",
 },
                 Entities = { default },
             };
-            Response<EntityMutationResult> response = client.BatchCreateOrUpdate(atlasEntitiesWithExtInfo, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
+            Response<EntityMutationResult> response = client.BatchCreateOrUpdate(body, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
         }
 
         [Test]
@@ -1311,7 +1311,7 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo
+            AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
             {
                 ReferredEntities =
 {
@@ -1389,7 +1389,7 @@ Info = "<info>",
 },
                 Entities = { default },
             };
-            Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(atlasEntitiesWithExtInfo, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
+            Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(body, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
         }
 
         [Test]
@@ -1640,8 +1640,8 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
-            Response response = client.AddClassification(classificationAssociateConfig);
+            ClassificationAssociateConfig body = new ClassificationAssociateConfig();
+            Response response = client.AddClassification(body);
         }
 
         [Test]
@@ -1652,8 +1652,8 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
-            Response response = await client.AddClassificationAsync(classificationAssociateConfig);
+            ClassificationAssociateConfig body = new ClassificationAssociateConfig();
+            Response response = await client.AddClassificationAsync(body);
         }
 
         [Test]
@@ -1746,7 +1746,7 @@ timeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
+            ClassificationAssociateConfig body = new ClassificationAssociateConfig
             {
                 Classification = new AtlasClassification
                 {
@@ -1768,7 +1768,7 @@ TimeZone = "<timeZone>",
                 },
                 EntityGuids = { "<entityGuids>" },
             };
-            Response response = client.AddClassification(classificationAssociateConfig);
+            Response response = client.AddClassification(body);
         }
 
         [Test]
@@ -1779,7 +1779,7 @@ TimeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
+            ClassificationAssociateConfig body = new ClassificationAssociateConfig
             {
                 Classification = new AtlasClassification
                 {
@@ -1801,7 +1801,7 @@ TimeZone = "<timeZone>",
                 },
                 EntityGuids = { "<entityGuids>" },
             };
-            Response response = await client.AddClassificationAsync(classificationAssociateConfig);
+            Response response = await client.AddClassificationAsync(body);
         }
 
         [Test]
@@ -3452,8 +3452,8 @@ TimeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
-            Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", atlasEntityWithExtInfo);
+            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
+            Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", body);
         }
 
         [Test]
@@ -3464,8 +3464,8 @@ TimeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
-            Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", atlasEntityWithExtInfo);
+            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
+            Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", body);
         }
 
         [Test]
@@ -3800,7 +3800,7 @@ info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
+            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
                 ReferredEntities =
 {
@@ -3878,7 +3878,7 @@ Info = "<info>",
 },
                 Entity = default,
             };
-            Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", atlasEntityWithExtInfo, attribute: "<attribute>");
+            Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", body, attribute: "<attribute>");
         }
 
         [Test]
@@ -3889,7 +3889,7 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
+            AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
             {
                 ReferredEntities =
 {
@@ -3967,7 +3967,7 @@ Info = "<info>",
 },
                 Entity = default,
             };
-            Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", atlasEntityWithExtInfo, attribute: "<attribute>");
+            Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", body, attribute: "<attribute>");
         }
 
         [Test]
@@ -4668,8 +4668,8 @@ TimeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders();
-            Response<IReadOnlyList<string>> response = client.BatchSetClassifications(atlasEntityHeaders);
+            AtlasEntityHeaders body = new AtlasEntityHeaders();
+            Response<IReadOnlyList<string>> response = client.BatchSetClassifications(body);
         }
 
         [Test]
@@ -4680,8 +4680,8 @@ TimeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders();
-            Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(atlasEntityHeaders);
+            AtlasEntityHeaders body = new AtlasEntityHeaders();
+            Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(body);
         }
 
         [Test]
@@ -4860,7 +4860,7 @@ termGuid = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders
+            AtlasEntityHeaders body = new AtlasEntityHeaders
             {
                 GuidHeaderMap =
 {
@@ -4912,7 +4912,7 @@ Status = EntityStatus.Active,
 }
 },
             };
-            Response<IReadOnlyList<string>> response = client.BatchSetClassifications(atlasEntityHeaders);
+            Response<IReadOnlyList<string>> response = client.BatchSetClassifications(body);
         }
 
         [Test]
@@ -4923,7 +4923,7 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders
+            AtlasEntityHeaders body = new AtlasEntityHeaders
             {
                 GuidHeaderMap =
 {
@@ -4975,7 +4975,7 @@ Status = EntityStatus.Active,
 }
 },
             };
-            Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(atlasEntityHeaders);
+            Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(body);
         }
 
         [Test]
@@ -6074,8 +6074,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(null);
-            Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
+            BusinessMetadataOptions body = new BusinessMetadataOptions(null);
+            Response<BulkImportResult> response = client.ImportBusinessMetadata(body);
         }
 
         [Test]
@@ -6086,8 +6086,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(null);
-            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
+            BusinessMetadataOptions body = new BusinessMetadataOptions(null);
+            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(body);
         }
 
         [Test]
@@ -6148,8 +6148,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(null);
-            Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
+            BusinessMetadataOptions body = new BusinessMetadataOptions(null);
+            Response<BulkImportResult> response = client.ImportBusinessMetadata(body);
         }
 
         [Test]
@@ -6160,8 +6160,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(null);
-            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
+            BusinessMetadataOptions body = new BusinessMetadataOptions(null);
+            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(body);
         }
 
         [Test]
@@ -6838,8 +6838,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
-            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
+            MoveEntitiesConfig body = new MoveEntitiesConfig();
+            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", body);
         }
 
         [Test]
@@ -6850,8 +6850,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
-            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
+            MoveEntitiesConfig body = new MoveEntitiesConfig();
+            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", body);
         }
 
         [Test]
@@ -7016,11 +7016,11 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
+            MoveEntitiesConfig body = new MoveEntitiesConfig
             {
                 EntityGuids = { "<entityGuids>" },
             };
-            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
+            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", body);
         }
 
         [Test]
@@ -7031,11 +7031,11 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
+            MoveEntitiesConfig body = new MoveEntitiesConfig
             {
                 EntityGuids = { "<entityGuids>" },
             };
-            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
+            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", body);
         }
     }
 }
