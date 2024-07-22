@@ -286,7 +286,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task PlayMultipleTextSourcesWithPlayMediaTest()
         {
@@ -302,7 +301,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 {
                     // setup service bus
                     var uniqueId = await ServiceBusWithNewCall(user, target);
-                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
                     var callConnection = client.GetCallConnection(callConnectionId);
@@ -359,7 +358,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task PlayMultipleTextSourcesWithPlayMediaAllTest()
         {
@@ -375,7 +373,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 {
                     // setup service bus
                     var uniqueId = await ServiceBusWithNewCall(user, target);
-                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
                     var callConnection = client.GetCallConnection(callConnectionId);
@@ -432,7 +430,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task PlayCombinedTextAndFileSourcesWithPlayMediaTest()
         {
@@ -448,7 +445,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 {
                     // setup service bus
                     var uniqueId = await ServiceBusWithNewCall(user, target);
-                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
                     var callConnection = client.GetCallConnection(callConnectionId);
@@ -504,7 +501,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task PlayCombinedTextAndFileSourcesWithPlayMediaAllTest()
         {
@@ -520,7 +516,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 {
                     // setup service bus
                     var uniqueId = await ServiceBusWithNewCall(user, target);
-                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
                     var callConnection = client.GetCallConnection(callConnectionId);
@@ -862,9 +858,74 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
-        public async Task DtmfRecognizeWithMultipleSourcesTest()
+        public async Task DtmfRecognizeWithMultipleFileSourcesTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    RecognizeInputType recognizeInputType = RecognizeInputType.Dtmf;
+
+                    // Assert combination of text and file source
+                    var playMultipleSources = new List<PlaySource>() {
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl)),
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl))
+                    };
+
+                    await VerifyRecognizeFailedEventForMultipleSources(callConnectionId, client, playMultipleSources, target, recognizeInputType);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task DtmfRecognizeWithMultipleTextSourcesTest()
         {
             // create caller and receiver
             CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -894,6 +955,65 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     await VerifyRecognizeFailedEventForMultipleSources(callConnectionId, client, playTextSources, target, recognizeInputType);
 
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task DtmfRecognizeWithCombinationOfTextAndFileSourcesTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    string SpeechToTextVoice = "en-US-NancyNeural";
+                    RecognizeInputType recognizeInputType = RecognizeInputType.Dtmf;
+
                     // Assert combination of text and file source
                     var playMultipleSources = new List<PlaySource>() {
                         new FileSource(new Uri(TestEnvironment.FileSourceUrl)),
@@ -902,14 +1022,67 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     await VerifyRecognizeFailedEventForMultipleSources(callConnectionId, client, playMultipleSources, target, recognizeInputType);
 
-                    // Assert combination of text and file source along with single play source
-                    await VerifyRecognizeFailedEventForMultipleSources(callConnectionId, client, playMultipleSources, target, recognizeInputType,
-                        new FileSource(new Uri(TestEnvironment.FileSourceUrl)), expectedBadRequestCheck: true);
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task DtmfRecognizeWithInvalidFileSourcesTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    RecognizeInputType recognizeInputType = RecognizeInputType.Dtmf;
 
                     // Assert multiple Text Source with wrong file source
-                    playMultipleSources = new List<PlaySource>() {
-                        new FileSource(new Uri("https://dummy.com/dummyurl.wav")),
-                        new TextSource("Test prompt1") { VoiceName = SpeechToTextVoice }
+                    var playMultipleSources = new List<PlaySource>() {
+                        new FileSource(new Uri("https://dummy.com/dummyurl.wav"))
                     };
 
                     await VerifyRecognizeFailedEventForMultipleSources(callConnectionId, client, playMultipleSources, target, recognizeInputType, null, true);
@@ -950,7 +1123,72 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
+        [RecordedTest]
+        public async Task DtmfRecognizeWithInvalidFileSourceWithValidSourceTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, true);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    RecognizeInputType recognizeInputType = RecognizeInputType.Dtmf;
+
+                    // Assert multiple Text Source with wrong file source
+                    var playMultipleSources = new List<PlaySource>() {
+                        new FileSource(new Uri("https://dummy.com/dummyurl.wav")),
+                        new TextSource("Test prompt1") { VoiceName = "en-US-NancyNeural" }
+                    };
+
+                    await VerifyRecognizeFailedEventForMultipleSources(callConnectionId, client, playMultipleSources, target, recognizeInputType, null, true);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
+            }
+        }
+
         [RecordedTest]
         public async Task SpeechRecognizeWithMultipleSourcesTest()
         {
@@ -1038,7 +1276,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task ChoiceRecognizeWithMultipleSourcesTest()
         {
@@ -1126,7 +1363,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Receiving bad request on the cognitive service will investigate and enable")]
         [RecordedTest]
         public async Task SpeechOrDtmfRecognizeWithMultipleSourcesTest()
         {
@@ -1292,7 +1528,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Skipping this until live test is re-recorded with latest API")]
         [RecordedTest]
         public async Task CreateCallWithMediaStreamingTest()
         {
@@ -1488,7 +1723,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        // [Ignore(reason: "Skipping this until backend issue is fixed Bug 3761433: [Transcription] Transcription Subscription (callconnection properties object) state is showing as disabled instead of inactive for TranscriptionStopped event")]
         [RecordedTest]
         public async Task CreateCallAndTranscriptionTest()
         {
@@ -1552,7 +1786,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
-        [Ignore(reason: "Skipping this until backend issue is fixed Bug 3761433: [Transcription] Transcription Subscription (callconnection properties object) state is showing as disabled instead of inactive for TranscriptionStopped event")]
         [RecordedTest]
         public async Task AnswerCallAndTranscriptionTest()
         {
@@ -1681,7 +1914,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         createCallOptions.TranscriptionOptions = transcriptionOptions;
                         createCallOptions.CallIntelligenceOptions = new CallIntelligenceOptions()
                         {
-                            CognitiveServicesEndpoint = new Uri("https://acs-callautomationtestsupporter-eastus.cognitiveservices.azure.com/")
+                            CognitiveServicesEndpoint = new Uri(TestEnvironment.CognitiveServiceEndpoint)
                         };
                     }
                 }
