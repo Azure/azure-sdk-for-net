@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
+        [WirePath("complianceStatus")]
         public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
+        [WirePath("reportId")]
         public Guid? ReportId { get; }
         /// <summary> Configuration details of the guest configuration assignment. </summary>
+        [WirePath("assignment")]
         public GuestConfigurationAssignmentInfo Assignment { get; }
         /// <summary> Information about the VM. </summary>
+        [WirePath("vm")]
         public GuestConfigurationVmInfo Vm { get; }
         /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Details of the assignment report. </summary>
+        [WirePath("details")]
         public GuestConfigurationAssignmentReportDetails Details { get; }
         /// <summary> Azure resource Id of the VMSS. </summary>
+        [WirePath("vmssResourceId")]
         public string VmssResourceId { get; }
     }
 }

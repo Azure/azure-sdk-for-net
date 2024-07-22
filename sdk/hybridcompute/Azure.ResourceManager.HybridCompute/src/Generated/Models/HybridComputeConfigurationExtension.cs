@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Publisher of the extension. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; }
         /// <summary> Type of the extension. </summary>
+        [WirePath("type")]
         public string ConfigurationExtensionType { get; }
     }
 }

@@ -34,8 +34,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The assigned license resource. </summary>
+        [WirePath("assignedLicense")]
         public HybridComputeLicenseData AssignedLicense { get; set; }
         /// <summary> Describes the license assignment state (Assigned or NotAssigned). </summary>
+        [WirePath("licenseAssignmentState")]
         public LicenseAssignmentState? LicenseAssignmentState { get; set; }
     }
 }

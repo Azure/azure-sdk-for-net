@@ -84,12 +84,16 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
+        [WirePath("properties.provisioningState")]
         public HybridComputeProvisioningState? ProvisioningState { get; }
         /// <summary> Describes the tenant id. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> The type of the license resource. </summary>
+        [WirePath("properties.licenseType")]
         public HybridComputeLicenseType? LicenseType { get; set; }
         /// <summary> Describes the properties of a License. </summary>
+        [WirePath("properties.licenseDetails")]
         public HybridComputeLicenseDetails LicenseDetails { get; set; }
     }
 }
