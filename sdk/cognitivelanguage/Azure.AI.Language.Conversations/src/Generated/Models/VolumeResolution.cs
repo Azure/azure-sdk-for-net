@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the volume entity resolution model. </summary>
-    internal partial class VolumeResolution : ResolutionBase
+    public partial class VolumeResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="VolumeResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

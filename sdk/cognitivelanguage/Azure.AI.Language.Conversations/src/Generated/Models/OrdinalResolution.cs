@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A resolution for ordinal numbers entity instances. </summary>
-    internal partial class OrdinalResolution : ResolutionBase
+    public partial class OrdinalResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="OrdinalResolution"/>. </summary>
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>

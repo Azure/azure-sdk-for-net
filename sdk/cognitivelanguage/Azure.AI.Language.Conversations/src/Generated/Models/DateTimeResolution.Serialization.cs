@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    internal partial class DateTimeResolution : IUtf8JsonSerializable, IJsonModel<DateTimeResolution>
+    public partial class DateTimeResolution : IUtf8JsonSerializable, IJsonModel<DateTimeResolution>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DateTimeResolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

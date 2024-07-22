@@ -11,11 +11,11 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
-    /// The abstract base class for entity resolutions.
-    /// Please note <see cref="ResolutionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>, <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/> and <see cref="WeightResolution"/>.
+    /// The base class of a conversation input task result.
+    /// Please note <see cref="AnalyzeConversationActionResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ConversationActionResult"/>.
     /// </summary>
-    public abstract partial class ResolutionBase
+    public abstract partial class AnalyzeConversationActionResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,21 +49,21 @@ namespace Azure.AI.Language.Conversations.Models
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResolutionBase"/>. </summary>
-        protected ResolutionBase()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationActionResult"/>. </summary>
+        protected AnalyzeConversationActionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResolutionBase"/>. </summary>
-        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationActionResult"/>. </summary>
+        /// <param name="kind"> The base class of a conversation input task result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResolutionBase(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ResolutionKind = resolutionKind;
+            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The entity resolution object kind. </summary>
-        internal ResolutionKind ResolutionKind { get; set; }
+        /// <summary> The base class of a conversation input task result. </summary>
+        internal AnalyzeConversationResultKind Kind { get; set; }
     }
 }

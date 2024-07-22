@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The speed Unit of measurement. </summary>
-    internal readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
+    public readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
     {
         private readonly string _value;
 

@@ -90,33 +90,33 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Analyzes the input conversation utterance. </summary>
-        /// <param name="analyzeConversationInput"> The base class of a conversation input task. </param>
+        /// <param name="analyzeConversationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationInput"/> is null. </exception>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationAsync(AnalyzeConversationInput,CancellationToken)']/*" />
-        public virtual async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(AnalyzeConversationInput analyzeConversationInput, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeConversationActionResult>> AnalyzeConversationAsync(AnalyzeConversationInput analyzeConversationInput, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(analyzeConversationInput, nameof(analyzeConversationInput));
 
             using RequestContent content = analyzeConversationInput.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AnalyzeConversationAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeConversationResult.FromResponse(response), response);
+            return Response.FromValue(AnalyzeConversationActionResult.FromResponse(response), response);
         }
 
         /// <summary> Analyzes the input conversation utterance. </summary>
-        /// <param name="analyzeConversationInput"> The base class of a conversation input task. </param>
+        /// <param name="analyzeConversationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationInput"/> is null. </exception>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversation(AnalyzeConversationInput,CancellationToken)']/*" />
-        public virtual Response<AnalyzeConversationResult> AnalyzeConversation(AnalyzeConversationInput analyzeConversationInput, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeConversationActionResult> AnalyzeConversation(AnalyzeConversationInput analyzeConversationInput, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(analyzeConversationInput, nameof(analyzeConversationInput));
 
             using RequestContent content = analyzeConversationInput.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AnalyzeConversation(content, context);
-            return Response.FromValue(AnalyzeConversationResult.FromResponse(response), response);
+            return Response.FromValue(AnalyzeConversationActionResult.FromResponse(response), response);
         }
 
         /// <summary>

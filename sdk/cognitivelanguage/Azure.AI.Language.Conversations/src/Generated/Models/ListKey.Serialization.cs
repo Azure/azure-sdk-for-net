@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    internal partial class ListKey : IUtf8JsonSerializable, IJsonModel<ListKey>
+    public partial class ListKey : IUtf8JsonSerializable, IJsonModel<ListKey>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

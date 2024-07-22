@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Tags express similarities between entity categories for the extracted entity type. </summary>
-    internal partial class EntityTag
+    public partial class EntityTag
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

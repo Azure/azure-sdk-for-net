@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    internal partial class TemporalSpanResolution : IUtf8JsonSerializable, IJsonModel<TemporalSpanResolution>
+    public partial class TemporalSpanResolution : IUtf8JsonSerializable, IJsonModel<TemporalSpanResolution>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemporalSpanResolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

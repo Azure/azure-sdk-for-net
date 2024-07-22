@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the prediction section of a Conversation project. </summary>
-    internal partial class ConversationPrediction : PredictionBase
+    public partial class ConversationPrediction : PredictionBase
     {
         /// <summary> Initializes a new instance of <see cref="ConversationPrediction"/>. </summary>
         /// <param name="intents"> The intent classification results. </param>

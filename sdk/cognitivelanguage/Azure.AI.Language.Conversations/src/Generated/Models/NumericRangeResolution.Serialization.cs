@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    internal partial class NumericRangeResolution : IUtf8JsonSerializable, IJsonModel<NumericRangeResolution>
+    public partial class NumericRangeResolution : IUtf8JsonSerializable, IJsonModel<NumericRangeResolution>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumericRangeResolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The kind of range that the resolution object represents. </summary>
-    internal readonly partial struct RangeKind : IEquatable<RangeKind>
+    public readonly partial struct RangeKind : IEquatable<RangeKind>
     {
         private readonly string _value;
 

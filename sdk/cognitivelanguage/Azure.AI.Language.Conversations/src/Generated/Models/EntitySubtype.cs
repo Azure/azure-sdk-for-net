@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The concrete entity Subtype model of extra information. </summary>
-    internal partial class EntitySubtype : ConversationEntityExtraInformation
+    public partial class EntitySubtype : ConversationEntityExtraInformation
     {
         /// <summary> Initializes a new instance of <see cref="EntitySubtype"/>. </summary>
         internal EntitySubtype()

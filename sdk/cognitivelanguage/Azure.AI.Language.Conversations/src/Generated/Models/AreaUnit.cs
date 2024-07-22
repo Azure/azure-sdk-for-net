@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The area unit of measurement. </summary>
-    internal readonly partial struct AreaUnit : IEquatable<AreaUnit>
+    public readonly partial struct AreaUnit : IEquatable<AreaUnit>
     {
         private readonly string _value;
 

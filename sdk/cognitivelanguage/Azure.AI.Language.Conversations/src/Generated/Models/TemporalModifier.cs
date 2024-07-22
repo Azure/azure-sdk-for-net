@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> An optional modifier of a date/time instance. </summary>
-    internal readonly partial struct TemporalModifier : IEquatable<TemporalModifier>
+    public readonly partial struct TemporalModifier : IEquatable<TemporalModifier>
     {
         private readonly string _value;
 

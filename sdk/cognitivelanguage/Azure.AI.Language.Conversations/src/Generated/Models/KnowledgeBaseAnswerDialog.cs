@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Dialog associated with Answer. </summary>
-    internal partial class KnowledgeBaseAnswerDialog
+    public partial class KnowledgeBaseAnswerDialog
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

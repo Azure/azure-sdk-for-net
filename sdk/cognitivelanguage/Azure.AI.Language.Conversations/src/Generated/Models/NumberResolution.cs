@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A resolution for numeric entity instances. </summary>
-    internal partial class NumberResolution : ResolutionBase
+    public partial class NumberResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="NumberResolution"/>. </summary>
         /// <param name="numberKind"> The type of the extracted number entity. </param>

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    internal partial class TemperatureResolution : IUtf8JsonSerializable, IJsonModel<TemperatureResolution>
+    public partial class TemperatureResolution : IUtf8JsonSerializable, IJsonModel<TemperatureResolution>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemperatureResolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

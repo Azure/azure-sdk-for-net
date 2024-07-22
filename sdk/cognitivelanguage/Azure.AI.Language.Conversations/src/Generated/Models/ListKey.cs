@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The list key extra data kind. </summary>
-    internal partial class ListKey : ConversationEntityExtraInformation
+    public partial class ListKey : ConversationEntityExtraInformation
     {
         /// <summary> Initializes a new instance of <see cref="ListKey"/>. </summary>
         internal ListKey()

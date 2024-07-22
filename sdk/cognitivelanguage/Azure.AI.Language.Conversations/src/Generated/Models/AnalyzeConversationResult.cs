@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary>
-    /// The base class of a conversation input task result.
-    /// Please note <see cref="AnalyzeConversationResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AnalyzeConversationConversationalResult"/>.
-    /// </summary>
-    public abstract partial class AnalyzeConversationResult
+    /// <summary> Represents a conversation analysis response. </summary>
+    public partial class AnalyzeConversationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,56 @@ namespace Azure.AI.Language.Conversations.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationResult"/>. </summary>
-        protected AnalyzeConversationResult()
+        /// <param name="query"> The conversation utterance given by the caller. </param>
+        /// <param name="prediction">
+        /// The prediction result of a conversation project.
+        /// Please note <see cref="PredictionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConversationPrediction"/> and <see cref="OrchestrationPrediction"/>.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="prediction"/> is null. </exception>
+        internal AnalyzeConversationResult(string query, PredictionBase prediction)
         {
+            Argument.AssertNotNull(query, nameof(query));
+            Argument.AssertNotNull(prediction, nameof(prediction));
+
+            Query = query;
+            Prediction = prediction;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationResult"/>. </summary>
-        /// <param name="kind"> The base class of a conversation input task result. </param>
+        /// <param name="query"> The conversation utterance given by the caller. </param>
+        /// <param name="detectedLanguage"> The system detected language for the query in BCP 47 language representation.. </param>
+        /// <param name="prediction">
+        /// The prediction result of a conversation project.
+        /// Please note <see cref="PredictionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConversationPrediction"/> and <see cref="OrchestrationPrediction"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeConversationResult(string query, string detectedLanguage, PredictionBase prediction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Kind = kind;
+            Query = query;
+            DetectedLanguage = detectedLanguage;
+            Prediction = prediction;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The base class of a conversation input task result. </summary>
-        internal AnalyzeConversationResultKind Kind { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationResult"/> for deserialization. </summary>
+        internal AnalyzeConversationResult()
+        {
+        }
+
+        /// <summary> The conversation utterance given by the caller. </summary>
+        public string Query { get; }
+        /// <summary> The system detected language for the query in BCP 47 language representation.. </summary>
+        public string DetectedLanguage { get; }
+        /// <summary>
+        /// The prediction result of a conversation project.
+        /// Please note <see cref="PredictionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConversationPrediction"/> and <see cref="OrchestrationPrediction"/>.
+        /// </summary>
+        public PredictionBase Prediction { get; }
     }
 }

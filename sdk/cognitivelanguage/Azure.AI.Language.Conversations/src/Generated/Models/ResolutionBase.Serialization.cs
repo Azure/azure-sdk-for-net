@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.Language.Conversations.Models
 {
     [PersistableModelProxy(typeof(UnknownResolutionBase))]
-    internal partial class ResolutionBase : IUtf8JsonSerializable, IJsonModel<ResolutionBase>
+    public partial class ResolutionBase : IUtf8JsonSerializable, IJsonModel<ResolutionBase>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResolutionBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

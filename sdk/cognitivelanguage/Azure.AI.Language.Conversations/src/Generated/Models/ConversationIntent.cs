@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The intent classification result of a Conversation project. </summary>
-    internal partial class ConversationIntent
+    public partial class ConversationIntent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

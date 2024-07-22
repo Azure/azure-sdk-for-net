@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Answer span object of QnA. </summary>
-    internal partial class AnswerSpan
+    public partial class AnswerSpan
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

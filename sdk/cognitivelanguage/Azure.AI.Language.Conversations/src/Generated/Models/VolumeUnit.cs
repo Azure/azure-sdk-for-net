@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The Volume Unit of measurement. </summary>
-    internal readonly partial struct VolumeUnit : IEquatable<VolumeUnit>
+    public readonly partial struct VolumeUnit : IEquatable<VolumeUnit>
     {
         private readonly string _value;
 

@@ -91,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Samples
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
             AnalyzeConversationInput analyzeConversationInput = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")), new ConversationActionContent("<projectName>", "<deploymentName>"));
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(analyzeConversationInput);
+            Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Azure.AI.Language.Conversations.Samples
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
             AnalyzeConversationInput analyzeConversationInput = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem("<id>", "<participantId>", "<text>")), new ConversationActionContent("<projectName>", "<deploymentName>"));
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
+            Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
         }
 
         [Test]
@@ -257,7 +257,7 @@ ApiVersion = "<apiVersion>",
 }
 },
             });
-            Response<AnalyzeConversationResult> response = client.AnalyzeConversation(analyzeConversationInput);
+            Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
         }
 
         [Test]
@@ -297,7 +297,7 @@ ApiVersion = "<apiVersion>",
 }
 },
             });
-            Response<AnalyzeConversationResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
+            Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
         }
 
         [Test]
