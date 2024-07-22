@@ -117,7 +117,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
             await fileClient.CreateAsync(Constants.KB);
 
-            // Act - Create new blob client with the OAuth Credential and Audience
+            // Act - Create new Share client with the OAuth Credential and Audience
             ShareClientOptions options = GetOptionsWithAudience(ShareAudience.DefaultAudience);
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
@@ -137,7 +137,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -147,7 +146,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
             await fileClient.CreateAsync(Constants.KB);
 
-            // Act - Create new blob client with the OAuth Credential and Audience
+            // Act - Create new Share client with the OAuth Credential and Audience
             ShareClientOptions options = GetOptionsWithAudience(new ShareAudience($"https://{test.Share.AccountName}.file.core.windows.net/"));
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
@@ -167,7 +166,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -177,7 +175,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
             await fileClient.CreateAsync(Constants.KB);
 
-            // Act - Create new blob client with the OAuth Credential and Audience
+            // Act - Create new Share client with the OAuth Credential and Audience
             ShareClientOptions options = GetOptionsWithAudience(ShareAudience.CreateShareServiceAccountAudience(test.Share.AccountName));
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
@@ -197,6 +195,42 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task Ctor_EscapeFileName()
+        {
+            // Arrange
+            string fileName = "$=;!#öÖ";
+            await using DisposingShare test = await GetTestShareAsync();
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            ShareFileClient file = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(fileName));
+            ETag originalEtag;
+            await file.CreateAsync(size);
+            using (var stream = new MemoryStream(data))
+            {
+                ShareFileUploadInfo info = await file.UploadAsync(stream);
+                originalEtag = info.ETag;
+            }
+
+            // Act
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = fileName
+            };
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareFileClient freshFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                options));
+
+            // Assert
+            Assert.AreEqual(fileName, freshFileClient.Name);
+            ShareFileProperties propertiesResponse = await freshFileClient.GetPropertiesAsync();
+            Assert.AreEqual(originalEtag, propertiesResponse.ETag);
+        }
+
+        [RecordedTest]
         public async Task Ctor_AudienceError()
         {
             // Arrange
@@ -206,8 +240,8 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
             await fileClient.CreateAsync(Constants.KB);
 
-            // Act - Create new blob client with the OAuth Credential and Audience
-            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience("https://badaudience.blob.core.windows.net"));
+            // Act - Create new Share client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience("https://badaudience.Share.core.windows.net"));
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
             {
@@ -4037,7 +4071,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase(30 * Constants.KB)]
         [TestCase(50 * Constants.KB)]
         [TestCase(501 * Constants.KB)]
-        public async Task UploadAsync_SmallBlobs(int size) =>
+        public async Task UploadAsync_SmallShares(int size) =>
              // Use a 1KB threshold so we get a lot of individual blocks
              await UploadAndVerify(size, Constants.KB);
 
@@ -4047,7 +4081,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase(257 * Constants.MB)]
         [TestCase(1 * Constants.GB)]
         [Explicit("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
-        public async Task UploadAsync_LargeBlobs(int size) =>
+        public async Task UploadAsync_LargeShares(int size) =>
              // TODO: #6781 We don't want to add 1GB of random data in the recordings
              await UploadAndVerify(size, Constants.MB);
 
@@ -6342,19 +6376,19 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             var constants = TestConstants.Create(this);
-            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
-            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            var ShareEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var ShareSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (ShareEndpoint, ShareSecondaryEndpoint));
             string connectionString = storageConnectionString.ToString(true);
 
-            // Act - ShareDirectoryClient(string connectionString, string blobContainerName, string blobName)
+            // Act - ShareDirectoryClient(string connectionString, string ShareContainerName, string ShareName)
             ShareFileClient directory = InstrumentClient(new ShareFileClient(
                 connectionString,
                 GetNewShareName(),
                 GetNewDirectoryName()));
             Assert.IsTrue(directory.CanGenerateSasUri);
 
-            // Act - ShareFileClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            // Act - ShareFileClient(string connectionString, string ShareContainerName, string ShareName, ShareClientOptions options)
             ShareFileClient directory2 = InstrumentClient(new ShareFileClient(
                 connectionString,
                 GetNewShareName(),
@@ -6362,15 +6396,15 @@ namespace Azure.Storage.Files.Shares.Tests
                 GetOptions()));
             Assert.IsTrue(directory2.CanGenerateSasUri);
 
-            // Act - ShareFileClient(Uri blobContainerUri, BlobClientOptions options = default)
+            // Act - ShareFileClient(Uri ShareContainerUri, ShareClientOptions options = default)
             ShareFileClient directory3 = InstrumentClient(new ShareFileClient(
-                blobEndpoint,
+                ShareEndpoint,
                 GetOptions()));
             Assert.IsFalse(directory3.CanGenerateSasUri);
 
-            // Act - ShareFileClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
+            // Act - ShareFileClient(Uri ShareContainerUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
             ShareFileClient directory4 = InstrumentClient(new ShareFileClient(
-                blobEndpoint,
+                ShareEndpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
             Assert.IsTrue(directory4.CanGenerateSasUri);

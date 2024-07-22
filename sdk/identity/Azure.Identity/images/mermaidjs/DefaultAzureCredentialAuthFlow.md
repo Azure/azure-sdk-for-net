@@ -1,16 +1,29 @@
 ```mermaid
 %% STEPS TO GENERATE IMAGE
 %% =======================
-%% 1. Install mermaid CLI (see https://github.com/mermaid-js/mermaid-cli/blob/master/README.md)
-%%    v10.1.0 is known good for our process. npm install -g @mermaid-js/mermaid-cli@10.1.0
+%% 1. Install mermaid CLI v10.9.1 (see https://github.com/mermaid-js/mermaid-cli/blob/master/README.md):
+%%    npm i -g @mermaid-js/mermaid-cli@10.9.1
 %% 2. Run command: mmdc -i DefaultAzureCredentialAuthFlow.md -o DefaultAzureCredentialAuthFlow.svg
 
-flowchart LR;
-    A(Environment):::deployed --> B(Workload Identity):::deployed --> C(Managed Identity):::deployed --> D(Visual Studio):::developer --> E(VS Code):::developer --> F(Azure CLI):::developer --> G(Azure PowerShell):::developer --> H(Azure Developer CLI):::developer --> I(Interactive browser):::interactive;
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'tertiaryBorderColor': '#fff',
+      'tertiaryColor': '#fff'
+    }
+  }
+}%%
 
+flowchart LR;
     subgraph CREDENTIAL TYPES;
         direction LR;
-        Deployed(Deployed service):::deployed ~~~ Developer(Developer):::developer ~~~ Interactive(Interactive developer):::interactive;
+        Deployed(Deployed service):::deployed ~~~ Developer(Developer):::developer ~~~ Interactive(Interactive):::interactive;
+    end;
+
+    subgraph CREDENTIALS;
+        direction LR;
+        A(Environment):::deployed --> B(Workload Identity):::deployed --> C(Managed Identity):::deployed --> D(Visual Studio):::developer --> E(VS Code):::developer --> F(Azure CLI):::developer --> G(Azure PowerShell):::developer --> H(Azure Developer CLI):::developer --> I(Interactive browser):::interactive;
     end;
 
     %% Define styles for credential type boxes

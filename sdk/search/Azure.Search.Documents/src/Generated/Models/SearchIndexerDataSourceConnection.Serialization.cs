@@ -28,18 +28,6 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue<DataSourceCredentials>(CredentialsInternal);
             writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container);
-            if (Optional.IsDefined(Identity))
-            {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
-            }
             if (Optional.IsDefined(DataChangeDetectionPolicy))
             {
                 if (DataChangeDetectionPolicy != null)
@@ -95,7 +83,6 @@ namespace Azure.Search.Documents.Indexes.Models
             SearchIndexerDataSourceType type = default;
             DataSourceCredentials credentials = default;
             SearchIndexerDataContainer container = default;
-            SearchIndexerDataIdentity identity = default;
             DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
             DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
             string odataEtag = default;
@@ -125,16 +112,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (property.NameEquals("container"u8))
                 {
                     container = SearchIndexerDataContainer.DeserializeSearchIndexerDataContainer(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identity = null;
-                        continue;
-                    }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataChangeDetectionPolicy"u8))
@@ -179,7 +156,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 type,
                 credentials,
                 container,
-                identity,
                 dataChangeDetectionPolicy,
                 dataDeletionDetectionPolicy,
                 odataEtag,

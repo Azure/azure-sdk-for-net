@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -132,7 +133,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -160,7 +160,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -213,6 +212,32 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadDirClient.ExistsAsync(),
                 e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task Ctor_EscapeDirectoryName()
+        {
+            // Arrange
+            string directoryName = "$=;!#öÖ";
+            await using DisposingShare test = await GetTestShareAsync();
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+
+            // Act
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = directory.ShareName,
+                DirectoryOrFilePath = directoryName
+            };
+            ShareDirectoryClient freshDirectoryClient = InstrumentClient(new ShareDirectoryClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                GetOptions()));
+
+            // Assert
+            Assert.AreEqual(directoryName, freshDirectoryClient.Name);
         }
 
         [RecordedTest]

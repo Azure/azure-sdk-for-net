@@ -53,6 +53,8 @@ namespace Azure.ResourceManager.AppService.Models
             CustomDomains = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
+            LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackendInfo>();
+            DatabaseConnections = new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSitePatch"/>. </summary>
@@ -73,10 +75,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="contentDistributionEndpoint"> The content distribution endpoint for the static site. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site. </param>
+        /// <param name="linkedBackends"> Backends linked to the static side. </param>
         /// <param name="provider"> The provider that submitted the last deployment to the primary environment of the static site. </param>
+        /// <param name="enterpriseGradeCdnStatus"> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </param>
+        /// <param name="publicNetworkAccess"> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="databaseConnections"> Database connections for the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSitePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string defaultHostname, Uri repositoryUri, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplate templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, string provider, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSitePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string defaultHostname, Uri repositoryUri, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplate templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, string provider, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus, string publicNetworkAccess, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DefaultHostname = defaultHostname;
             RepositoryUri = repositoryUri;
@@ -91,7 +97,11 @@ namespace Azure.ResourceManager.AppService.Models
             ContentDistributionEndpoint = contentDistributionEndpoint;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             UserProvidedFunctionApps = userProvidedFunctionApps;
+            LinkedBackends = linkedBackends;
             Provider = provider;
+            EnterpriseGradeCdnStatus = enterpriseGradeCdnStatus;
+            PublicNetworkAccess = publicNetworkAccess;
+            DatabaseConnections = databaseConnections;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -135,9 +145,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> User provided function apps registered with the static site. </summary>
         [WirePath("properties.userProvidedFunctionApps")]
         public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get; }
+        /// <summary> Backends linked to the static side. </summary>
+        [WirePath("properties.linkedBackends")]
+        public IReadOnlyList<StaticSiteLinkedBackendInfo> LinkedBackends { get; }
         /// <summary> The provider that submitted the last deployment to the primary environment of the static site. </summary>
         [WirePath("properties.provider")]
-        public string Provider { get; }
+        public string Provider { get; set; }
+        /// <summary> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </summary>
+        [WirePath("properties.enterpriseGradeCdnStatus")]
+        public EnterpriseGradeCdnStatus? EnterpriseGradeCdnStatus { get; set; }
+        /// <summary> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+        /// <summary> Database connections for the static site. </summary>
+        [WirePath("properties.databaseConnections")]
+        public IReadOnlyList<StaticSiteDatabaseConnectionOverview> DatabaseConnections { get; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }

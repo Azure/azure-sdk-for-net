@@ -38,12 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             try
             {
                 {
-                    TokenCredential tokenCredential =
-                    new ClientSecretCredential(
-                        ActiveDirectoryTenantId,
-                        ActiveDirectoryApplicationId,
-                        ActiveDirectoryApplicationSecret,
-                        new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    TokenCredential tokenCredential = new DefaultAzureCredential();
 
                     TransferManager transferManager = new TransferManager();
 
@@ -612,12 +607,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
             // Create a token credential that can use our Azure Active
             // Directory application to authenticate with Azure Storage
-            TokenCredential credential =
-                new ClientSecretCredential(
-                    ActiveDirectoryTenantId,
-                    ActiveDirectoryApplicationId,
-                    ActiveDirectoryApplicationSecret,
-                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+            TokenCredential credential = new DefaultAzureCredential();
 
             // Create a client that can authenticate using our token credential
             BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);
@@ -882,12 +872,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create a token credential that can use our Azure Active
                 // Directory application to authenticate with Azure Storage
-                TokenCredential tokenCredential =
-                new ClientSecretCredential(
-                    ActiveDirectoryTenantId,
-                    ActiveDirectoryApplicationId,
-                    ActiveDirectoryApplicationSecret,
-                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                TokenCredential tokenCredential = new DefaultAzureCredential();
 
                 // Create transfer manager
                 #region Snippet:SetupTransferManagerForResume

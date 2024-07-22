@@ -10,10 +10,10 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
-    public partial class SearchIndexerKnowledgeStoreParameters
+    internal partial class SearchIndexerKnowledgeStoreParameters
     {
         /// <summary> Initializes a new instance of <see cref="SearchIndexerKnowledgeStoreParameters"/>. </summary>
-        public SearchIndexerKnowledgeStoreParameters()
+        internal SearchIndexerKnowledgeStoreParameters()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
@@ -21,15 +21,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="SearchIndexerKnowledgeStoreParameters"/>. </summary>
         /// <param name="synthesizeGeneratedKeyName"> Whether or not projections should synthesize a generated key name if one isn't already present. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SearchIndexerKnowledgeStoreParameters(bool? synthesizeGeneratedKeyName, IDictionary<string, object> additionalProperties)
+        internal SearchIndexerKnowledgeStoreParameters(bool? synthesizeGeneratedKeyName, IReadOnlyDictionary<string, object> additionalProperties)
         {
             SynthesizeGeneratedKeyName = synthesizeGeneratedKeyName;
             AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Whether or not projections should synthesize a generated key name if one isn't already present. </summary>
-        public bool? SynthesizeGeneratedKeyName { get; set; }
+        public bool? SynthesizeGeneratedKeyName { get; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

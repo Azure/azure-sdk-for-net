@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> ARM resource id of the report for the guest configuration assignment. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Properties of the guest configuration report. </summary>
+        [WirePath("properties")]
         public GuestConfigurationAssignmentReportProperties Properties { get; }
     }
 }
