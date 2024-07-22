@@ -84,22 +84,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             });
 
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
-            ConversationActionResult conversationResult = response.Value as ConversationActionResult;
-            OrchestrationPrediction orchestrationPrediction = conversationResult.Result.Prediction as OrchestrationPrediction;
+            ConversationActionResult conversationActionResult = response.Value as ConversationActionResult;
+            OrchestrationPrediction orchestrationPrediction = conversationActionResult.Result.Prediction as OrchestrationPrediction;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
             string respondingProjectName = orchestrationPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringTargetIntentResult)
+            if (targetIntentResult is ConversationTargetIntentResult conversationTargetIntent)
             {
-                AnswersResult questionAnsweringResult = questionAnsweringTargetIntentResult.Result;
+                ConversationResult conversationResult = conversationTargetIntent.Result;
+                ConversationPrediction conversationPrediction = conversationResult.Prediction;
 
-                Console.WriteLine($"Answers:");
-                foreach (KnowledgeBaseAnswer answer in questionAnsweringResult.Answers)
+                Console.WriteLine($"Top Intent: {conversationPrediction.TopIntent}");
+                Console.WriteLine($"Intents:");
+                foreach (ConversationIntent intent in conversationPrediction.Intents)
                 {
-                    Console.WriteLine($"{answer.Answer}");
-                    Console.WriteLine($"Confidence: {answer.Confidence}");
+                    Console.WriteLine($"Intent Category: {intent.Category}");
+                    Console.WriteLine($"Confidence: {intent.Confidence}");
                     Console.WriteLine();
                 }
             }

@@ -81,15 +81,17 @@ if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringT
 string respondingProjectName = orchestrationPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringTargetIntentResult)
+if (targetIntentResult is ConversationTargetIntentResult conversationTargetIntent)
 {
-    AnswersResult questionAnsweringResult = questionAnsweringTargetIntentResult.Result;
+    ConversationResult conversationResult = conversationTargetIntent.Result;
+    ConversationPrediction conversationPrediction = conversationResult.Prediction;
 
-    Console.WriteLine($"Answers:");
-    foreach (KnowledgeBaseAnswer answer in questionAnsweringResult.Answers)
+    Console.WriteLine($"Top Intent: {conversationPrediction.TopIntent}");
+    Console.WriteLine($"Intents:");
+    foreach (ConversationIntent intent in conversationPrediction.Intents)
     {
-        Console.WriteLine($"{answer.Answer}");
-        Console.WriteLine($"Confidence: {answer.Confidence}");
+        Console.WriteLine($"Intent Category: {intent.Category}");
+        Console.WriteLine($"Confidence: {intent.Confidence}");
         Console.WriteLine();
     }
 }
