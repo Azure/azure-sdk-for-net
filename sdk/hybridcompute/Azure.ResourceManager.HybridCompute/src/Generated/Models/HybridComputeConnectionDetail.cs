@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Azure resource Id. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> The private endpoint connection private ip address. </summary>
+        [WirePath("privateIpAddress")]
         public string PrivateIPAddress { get; }
         /// <summary> The private endpoint connection link identifier. </summary>
+        [WirePath("linkIdentifier")]
         public string LinkIdentifier { get; }
         /// <summary> The private endpoint connection group id. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
         /// <summary> The private endpoint connection member name. </summary>
+        [WirePath("memberName")]
         public string MemberName { get; }
     }
 }

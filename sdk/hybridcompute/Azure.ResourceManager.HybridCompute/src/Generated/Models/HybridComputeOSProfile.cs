@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Specifies the host OS name of the hybrid machine. </summary>
+        [WirePath("computerName")]
         public string ComputerName { get; }
         /// <summary> Specifies the windows configuration for update management. </summary>
+        [WirePath("windowsConfiguration")]
         public HybridComputeWindowsConfiguration WindowsConfiguration { get; set; }
         /// <summary> Specifies the linux configuration for update management. </summary>
+        [WirePath("linuxConfiguration")]
         public HybridComputeLinuxConfiguration LinuxConfiguration { get; set; }
     }
 }

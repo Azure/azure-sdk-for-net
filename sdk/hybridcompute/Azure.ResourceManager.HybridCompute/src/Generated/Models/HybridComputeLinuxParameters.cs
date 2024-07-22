@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The update classifications to select when installing patches for Linux. </summary>
+        [WirePath("classificationsToInclude")]
         public IList<VmGuestPatchClassificationLinux> ClassificationsToInclude { get; }
         /// <summary> packages to include in the patch operation. Format: packageName_packageVersion. </summary>
+        [WirePath("packageNameMasksToInclude")]
         public IList<string> PackageNameMasksToInclude { get; }
         /// <summary> packages to exclude in the patch operation. Format: packageName_packageVersion. </summary>
+        [WirePath("packageNameMasksToExclude")]
         public IList<string> PackageNameMasksToExclude { get; }
     }
 }
