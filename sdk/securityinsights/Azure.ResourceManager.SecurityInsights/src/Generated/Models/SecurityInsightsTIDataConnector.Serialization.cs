@@ -73,11 +73,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("tipLookbackPeriod");
                 }
             }
-            if (Optional.IsDefined(DataTypes))
+            writer.WritePropertyName("dataTypes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Indicators))
             {
-                writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes, options);
+                writer.WritePropertyName("indicators"u8);
+                writer.WriteObjectValue(Indicators, options);
             }
+            writer.WriteEndObject();
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SystemData systemData = default;
             Guid? tenantId = default;
             DateTimeOffset? tipLookbackPeriod = default;
-            TIDataConnectorDataTypes dataTypes = default;
+            TIDataConnectorDataTypesIndicators indicators = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,9 +203,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataTypes = TIDataConnectorDataTypes.DeserializeTIDataConnectorDataTypes(property0.Value, options);
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("indicators"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    indicators = TIDataConnectorDataTypesIndicators.DeserializeTIDataConnectorDataTypesIndicators(property1.Value, options);
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
@@ -224,7 +239,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData,
                 tenantId,
                 tipLookbackPeriod,
-                dataTypes);
+                indicators);
         }
 
         BinaryData IPersistableModel<SecurityInsightsTIDataConnector>.Write(ModelReaderWriterOptions options)

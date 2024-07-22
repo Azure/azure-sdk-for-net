@@ -116,6 +116,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(SubTechniques))
+            {
+                writer.WritePropertyName("subTechniques"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubTechniques)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SourceSettings))
+            {
+                writer.WritePropertyName("sourceSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in SourceSettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -170,6 +190,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SecurityInsightsAlertSeverity? severity = default;
             IList<SecurityInsightsAttackTactic> tactics = default;
             IList<string> techniques = default;
+            IList<string> subTechniques = default;
+            IList<FusionTemplateSourceSetting> sourceSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,6 +331,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             techniques = array;
                             continue;
                         }
+                        if (property0.NameEquals("subTechniques"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            subTechniques = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FusionTemplateSourceSetting> array = new List<FusionTemplateSourceSetting>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FusionTemplateSourceSetting.DeserializeFusionTemplateSourceSetting(item, options));
+                            }
+                            sourceSettings = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -334,7 +384,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 status,
                 severity,
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
-                techniques ?? new ChangeTrackingList<string>());
+                techniques ?? new ChangeTrackingList<string>(),
+                subTechniques ?? new ChangeTrackingList<string>(),
+                sourceSettings ?? new ChangeTrackingList<FusionTemplateSourceSetting>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsFusionAlertRuleTemplate>.Write(ModelReaderWriterOptions options)

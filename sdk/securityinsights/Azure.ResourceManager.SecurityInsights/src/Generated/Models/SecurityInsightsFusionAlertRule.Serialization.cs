@@ -76,6 +76,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (Optional.IsCollectionDefined(SourceSettings))
+            {
+                writer.WritePropertyName("sourceSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in SourceSettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ScenarioExclusionPatterns))
+            {
+                writer.WritePropertyName("scenarioExclusionPatterns"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScenarioExclusionPatterns)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
@@ -101,6 +121,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
                 foreach (var item in Techniques)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SubTechniques))
+            {
+                writer.WritePropertyName("subTechniques"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubTechniques)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -155,10 +185,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string description = default;
             string displayName = default;
             bool? enabled = default;
+            IList<FusionSourceSettings> sourceSettings = default;
+            IList<FusionScenarioExclusionPattern> scenarioExclusionPatterns = default;
             DateTimeOffset? lastModifiedUtc = default;
             SecurityInsightsAlertSeverity? severity = default;
             IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
             IReadOnlyList<string> techniques = default;
+            IReadOnlyList<string> subTechniques = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,6 +267,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("sourceSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FusionSourceSettings> array = new List<FusionSourceSettings>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FusionSourceSettings.DeserializeFusionSourceSettings(item, options));
+                            }
+                            sourceSettings = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("scenarioExclusionPatterns"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FusionScenarioExclusionPattern> array = new List<FusionScenarioExclusionPattern>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FusionScenarioExclusionPattern.DeserializeFusionScenarioExclusionPattern(item, options));
+                            }
+                            scenarioExclusionPatterns = array;
+                            continue;
+                        }
                         if (property0.NameEquals("lastModifiedUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -280,6 +341,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             techniques = array;
                             continue;
                         }
+                        if (property0.NameEquals("subTechniques"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            subTechniques = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -301,10 +376,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 description,
                 displayName,
                 enabled,
+                sourceSettings ?? new ChangeTrackingList<FusionSourceSettings>(),
+                scenarioExclusionPatterns ?? new ChangeTrackingList<FusionScenarioExclusionPattern>(),
                 lastModifiedUtc,
                 severity,
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
-                techniques ?? new ChangeTrackingList<string>());
+                techniques ?? new ChangeTrackingList<string>(),
+                subTechniques ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsFusionAlertRule>.Write(ModelReaderWriterOptions options)

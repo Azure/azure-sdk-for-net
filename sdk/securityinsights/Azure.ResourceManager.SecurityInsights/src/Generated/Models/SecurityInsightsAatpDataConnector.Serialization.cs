@@ -61,11 +61,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(DataTypes))
+            writer.WritePropertyName("dataTypes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Alerts))
             {
-                writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes, options);
+                writer.WritePropertyName("alerts"u8);
+                writer.WriteObjectValue(Alerts, options);
             }
+            writer.WriteEndObject();
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             SystemData systemData = default;
             Guid? tenantId = default;
-            SecurityInsightsAlertsDataTypeOfDataConnector dataTypes = default;
+            DataConnectorDataTypeCommon alerts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,9 +180,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataTypes = SecurityInsightsAlertsDataTypeOfDataConnector.DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(property0.Value, options);
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("alerts"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
@@ -200,7 +215,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData,
                 tenantId,
-                dataTypes);
+                alerts);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAatpDataConnector>.Write(ModelReaderWriterOptions options)

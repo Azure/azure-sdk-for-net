@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a dns entity. </summary>
-    public partial class SecurityInsightsDnsEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsDnsEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsDnsEntity"/>. </summary>
         public SecurityInsightsDnsEntity()

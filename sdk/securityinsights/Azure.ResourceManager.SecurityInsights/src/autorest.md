@@ -9,8 +9,8 @@ csharp: true
 library-name: SecurityInsights
 namespace: Azure.ResourceManager.SecurityInsights
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/e0aca4c32155a2568fdad5cb91028206930f0053/specification/securityinsights/resource-manager/readme.md
-tag: package-2022-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/securityinsights/resource-manager/readme.md
+tag: package-preview-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -290,8 +290,23 @@ directive:
       $.TIDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.TiTaxiiDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.CodelessUiConnectorConfigProperties.properties.dataTypes["x-ms-client-flatten"] = true;
+      $.MicrosoftPurviewInformationProtectionDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
   - from: AlertRules.json
     where: $.definitions
     transform: >
       $.ActionPropertiesBase.properties.logicAppResourceId['x-ms-format'] = 'arm-id';
+  # Reslove `Duplicate Schema` issue
+  - from: EnrichmentWithWorkspace.json
+    where: $.definitions
+    transform: >
+      $.EnrichmentIpGeodata['x-ms-client-name'] = 'WorkspaceEnrichmentIpGeodata';
+  - from: ThreatIntelligenceQuery.json
+    where: $.definitions
+    transform: >
+      $.Query['x-ms-client-name'] = 'ThreatIntelligenceQuery';
+      $.UserInfo['x-ms-client-name'] = 'ThreatIntelligenceUserInfo';   
+  - from: ThreatIntelligenceCount.json
+    where: $.definitions
+    transform: >
+      $.Query['x-ms-client-name'] = 'ThreatIntelligenceCountQuery';
 ```

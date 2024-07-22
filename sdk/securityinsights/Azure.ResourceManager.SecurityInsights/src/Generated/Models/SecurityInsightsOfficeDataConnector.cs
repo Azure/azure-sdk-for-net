@@ -30,17 +30,54 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal SecurityInsightsOfficeDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, SecurityInsightsOfficeDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="exchange"> Exchange data type connection. </param>
+        /// <param name="sharePoint"> SharePoint data type connection. </param>
+        /// <param name="teams"> Teams data type connection. </param>
+        internal SecurityInsightsOfficeDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, OfficeDataConnectorDataTypesExchange exchange, OfficeDataConnectorDataTypesSharePoint sharePoint, OfficeDataConnectorDataTypesTeams teams) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
-            DataTypes = dataTypes;
+            Exchange = exchange;
+            SharePoint = sharePoint;
+            Teams = teams;
             Kind = kind;
         }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> The available data types for the connector. </summary>
-        public SecurityInsightsOfficeDataConnectorDataTypes DataTypes { get; set; }
+        /// <summary> Exchange data type connection. </summary>
+        internal OfficeDataConnectorDataTypesExchange Exchange { get; set; }
+        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        public SecurityInsightsDataTypeConnectionState? ExchangeState
+        {
+            get => Exchange is null ? default(SecurityInsightsDataTypeConnectionState?) : Exchange.State;
+            set
+            {
+                Exchange = value.HasValue ? new OfficeDataConnectorDataTypesExchange(value.Value) : null;
+            }
+        }
+
+        /// <summary> SharePoint data type connection. </summary>
+        internal OfficeDataConnectorDataTypesSharePoint SharePoint { get; set; }
+        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        public SecurityInsightsDataTypeConnectionState? SharePointState
+        {
+            get => SharePoint is null ? default(SecurityInsightsDataTypeConnectionState?) : SharePoint.State;
+            set
+            {
+                SharePoint = value.HasValue ? new OfficeDataConnectorDataTypesSharePoint(value.Value) : null;
+            }
+        }
+
+        /// <summary> Teams data type connection. </summary>
+        internal OfficeDataConnectorDataTypesTeams Teams { get; set; }
+        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        public SecurityInsightsDataTypeConnectionState? TeamsState
+        {
+            get => Teams is null ? default(SecurityInsightsDataTypeConnectionState?) : Teams.State;
+            set
+            {
+                Teams = value.HasValue ? new OfficeDataConnectorDataTypesTeams(value.Value) : null;
+            }
+        }
     }
 }

@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string ModifyPropertiesValue = "ModifyProperties";
         private const string RunPlaybookValue = "RunPlaybook";
+        private const string AddIncidentTaskValue = "AddIncidentTask";
 
         /// <summary> Modify an object's properties. </summary>
         public static ActionType ModifyProperties { get; } = new ActionType(ModifyPropertiesValue);
         /// <summary> Run a playbook on an object. </summary>
         public static ActionType RunPlaybook { get; } = new ActionType(RunPlaybookValue);
+        /// <summary> Add a task to an incident object. </summary>
+        public static ActionType AddIncidentTask { get; } = new ActionType(AddIncidentTaskValue);
         /// <summary> Determines if two <see cref="ActionType"/> values are the same. </summary>
         public static bool operator ==(ActionType left, ActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionType"/> values are not the same. </summary>

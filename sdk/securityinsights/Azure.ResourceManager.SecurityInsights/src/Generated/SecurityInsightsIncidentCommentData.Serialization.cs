@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.SecurityInsights
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
@@ -64,11 +69,6 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
-            }
-            if (Optional.IsDefined(Message))
-            {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
             }
             if (options.Format != "W" && Optional.IsDefined(Author))
             {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.SecurityInsights
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            string message = default;
             DateTimeOffset? createdTimeUtc = default;
             DateTimeOffset? lastModifiedTimeUtc = default;
-            string message = default;
             SecurityInsightsClientInfo author = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -169,6 +169,11 @@ namespace Azure.ResourceManager.SecurityInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("message"u8))
+                        {
+                            message = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("createdTimeUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -185,11 +190,6 @@ namespace Azure.ResourceManager.SecurityInsights
                                 continue;
                             }
                             lastModifiedTimeUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("message"u8))
-                        {
-                            message = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("author"u8))
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 name,
                 type,
                 systemData,
+                message,
                 createdTimeUtc,
                 lastModifiedTimeUtc,
-                message,
                 author,
                 etag,
                 serializedAdditionalRawData);

@@ -14,14 +14,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class OfficeDataConnectorDataTypesSharePoint : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesSharePoint"/>. </summary>
-        public OfficeDataConnectorDataTypesSharePoint()
+        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        public OfficeDataConnectorDataTypesSharePoint(SecurityInsightsDataTypeConnectionState state) : base(state)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesSharePoint"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfficeDataConnectorDataTypesSharePoint(SecurityInsightsDataTypeConnectionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
+        internal OfficeDataConnectorDataTypesSharePoint(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesSharePoint"/> for deserialization. </summary>
+        internal OfficeDataConnectorDataTypesSharePoint()
         {
         }
     }

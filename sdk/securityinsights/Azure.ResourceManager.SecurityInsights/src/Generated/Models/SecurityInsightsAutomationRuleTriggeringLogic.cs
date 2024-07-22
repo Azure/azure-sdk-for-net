@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="conditions">
         /// The conditions to evaluate to determine if the automation rule should be triggered on a given object.
         /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
+        /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAutomationRuleTriggeringLogic(bool isEnabled, DateTimeOffset? expireOn, TriggersOn triggersOn, TriggersWhen triggersWhen, IList<SecurityInsightsAutomationRuleCondition> conditions, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary>
         /// The conditions to evaluate to determine if the automation rule should be triggered on a given object.
         /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
+        /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
         /// </summary>
         public IList<SecurityInsightsAutomationRuleCondition> Conditions { get; }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing the SecurityInsightsWatchlistItem data model.
-    /// Represents a Watchlist Item in Azure Security Insights.
+    /// Represents a Watchlist item in Azure Security Insights.
     /// </summary>
     public partial class SecurityInsightsWatchlistItemData : ResourceData
     {
@@ -54,6 +54,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistItemData"/>. </summary>
         public SecurityInsightsWatchlistItemData()
         {
+            ItemsKeyValue = new ChangeTrackingDictionary<string, BinaryData>();
+            EntityMapping = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistItemData"/>. </summary>
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="entityMapping"> key-value pairs for a watchlist item entity mapping. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsWatchlistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistItemType, string watchlistItemId, Guid? tenantId, bool? isDeleted, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, BinaryData itemsKeyValue, BinaryData entityMapping, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsWatchlistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistItemType, string watchlistItemId, Guid? tenantId, bool? isDeleted, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, IDictionary<string, BinaryData> itemsKeyValue, IDictionary<string, BinaryData> entityMapping, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WatchlistItemType = watchlistItemType;
             WatchlistItemId = watchlistItemId;
@@ -108,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// key-value pairs for a watchlist item
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -135,11 +137,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ItemsKeyValue { get; set; }
+        public IDictionary<string, BinaryData> ItemsKeyValue { get; }
         /// <summary>
         /// key-value pairs for a watchlist item entity mapping
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -166,7 +168,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData EntityMapping { get; set; }
+        public IDictionary<string, BinaryData> EntityMapping { get; }
         /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }

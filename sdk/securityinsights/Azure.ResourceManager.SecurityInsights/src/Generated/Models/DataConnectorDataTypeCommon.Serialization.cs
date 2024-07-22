@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class DataConnectorDataTypeCommon : IUtf8JsonSerializable, IJsonModel<DataConnectorDataTypeCommon>
+    public partial class DataConnectorDataTypeCommon : IUtf8JsonSerializable, IJsonModel<DataConnectorDataTypeCommon>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectorDataTypeCommon>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -26,11 +26,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -69,17 +66,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            SecurityInsightsDataTypeConnectionState? state = default;
+            SecurityInsightsDataTypeConnectionState state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = new SecurityInsightsDataTypeConnectionState(property.Value.GetString());
                     continue;
                 }

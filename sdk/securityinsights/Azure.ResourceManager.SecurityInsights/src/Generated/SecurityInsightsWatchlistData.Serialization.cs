@@ -73,7 +73,12 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source.Value.ToString());
+                writer.WriteStringValue(Source);
+            }
+            if (Optional.IsDefined(SourceType))
+            {
+                writer.WritePropertyName("sourceType"u8);
+                writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -207,7 +212,8 @@ namespace Azure.ResourceManager.SecurityInsights
             Guid? watchlistId = default;
             string displayName = default;
             string provider = default;
-            Source? source = default;
+            string source = default;
+            SourceType? sourceType = default;
             DateTimeOffset? created = default;
             DateTimeOffset? updated = default;
             SecurityInsightsUserInfo createdBy = default;
@@ -291,11 +297,16 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("source"u8))
                         {
+                            source = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceType"u8))
+                        {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            source = new Source(property0.Value.GetString());
+                            sourceType = new SourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("created"u8))
@@ -437,6 +448,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 displayName,
                 provider,
                 source,
+                sourceType,
                 created,
                 updated,
                 createdBy,

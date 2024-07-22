@@ -14,14 +14,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class OfficeDataConnectorDataTypesTeams : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesTeams"/>. </summary>
-        public OfficeDataConnectorDataTypesTeams()
+        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        public OfficeDataConnectorDataTypesTeams(SecurityInsightsDataTypeConnectionState state) : base(state)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesTeams"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfficeDataConnectorDataTypesTeams(SecurityInsightsDataTypeConnectionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
+        internal OfficeDataConnectorDataTypesTeams(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesTeams"/> for deserialization. </summary>
+        internal OfficeDataConnectorDataTypesTeams()
         {
         }
     }

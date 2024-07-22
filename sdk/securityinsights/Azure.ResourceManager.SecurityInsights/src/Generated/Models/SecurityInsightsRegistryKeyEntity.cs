@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a registry key entity. </summary>
-    public partial class SecurityInsightsRegistryKeyEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsRegistryKeyEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryKeyEntity"/>. </summary>
         public SecurityInsightsRegistryKeyEntity()

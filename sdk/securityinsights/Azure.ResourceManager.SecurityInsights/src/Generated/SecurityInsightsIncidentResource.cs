@@ -90,6 +90,75 @@ namespace Azure.ResourceManager.SecurityInsights
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of IncidentRelationResources in the SecurityInsightsIncident. </summary>
+        /// <returns> An object representing collection of IncidentRelationResources and their operations over a IncidentRelationResource. </returns>
+        public virtual IncidentRelationCollection GetIncidentRelations()
+        {
+            return GetCachedClient(client => new IncidentRelationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an incident relation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IncidentRelations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IncidentRelationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relationName"> Relation Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IncidentRelationResource>> GetIncidentRelationAsync(string relationName, CancellationToken cancellationToken = default)
+        {
+            return await GetIncidentRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an incident relation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IncidentRelations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IncidentRelationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relationName"> Relation Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IncidentRelationResource> GetIncidentRelation(string relationName, CancellationToken cancellationToken = default)
+        {
+            return GetIncidentRelations().Get(relationName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of SecurityInsightsIncidentCommentResources in the SecurityInsightsIncident. </summary>
         /// <returns> An object representing collection of SecurityInsightsIncidentCommentResources and their operations over a SecurityInsightsIncidentCommentResource. </returns>
         public virtual SecurityInsightsIncidentCommentCollection GetSecurityInsightsIncidentComments()
@@ -98,7 +167,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a comment for a given incident.
+        /// Gets an incident comment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -110,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +198,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a comment for a given incident.
+        /// Gets an incident comment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +210,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -159,77 +228,77 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetSecurityInsightsIncidentComments().Get(incidentCommentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SecurityInsightsIncidentRelationResources in the SecurityInsightsIncident. </summary>
-        /// <returns> An object representing collection of SecurityInsightsIncidentRelationResources and their operations over a SecurityInsightsIncidentRelationResource. </returns>
-        public virtual SecurityInsightsIncidentRelationCollection GetSecurityInsightsIncidentRelations()
+        /// <summary> Gets a collection of IncidentTaskResources in the SecurityInsightsIncident. </summary>
+        /// <returns> An object representing collection of IncidentTaskResources and their operations over a IncidentTaskResource. </returns>
+        public virtual IncidentTaskCollection GetIncidentTasks()
         {
-            return GetCachedClient(client => new SecurityInsightsIncidentRelationCollection(client, Id));
+            return GetCachedClient(client => new IncidentTaskCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets a relation for a given incident.
+        /// Gets an incident task.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/tasks/{incidentTaskId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IncidentRelations_Get</description>
+        /// <description>IncidentTasks_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentRelationResource"/></description>
+        /// <description><see cref="IncidentTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relationName"> Relation Name. </param>
+        /// <param name="incidentTaskId"> Incident task ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentTaskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentTaskId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityInsightsIncidentRelationResource>> GetSecurityInsightsIncidentRelationAsync(string relationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IncidentTaskResource>> GetIncidentTaskAsync(string incidentTaskId, CancellationToken cancellationToken = default)
         {
-            return await GetSecurityInsightsIncidentRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
+            return await GetIncidentTasks().GetAsync(incidentTaskId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a relation for a given incident.
+        /// Gets an incident task.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/tasks/{incidentTaskId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IncidentRelations_Get</description>
+        /// <description>IncidentTasks_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentRelationResource"/></description>
+        /// <description><see cref="IncidentTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relationName"> Relation Name. </param>
+        /// <param name="incidentTaskId"> Incident task ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentTaskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentTaskId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecurityInsightsIncidentRelationResource> GetSecurityInsightsIncidentRelation(string relationName, CancellationToken cancellationToken = default)
+        public virtual Response<IncidentTaskResource> GetIncidentTask(string incidentTaskId, CancellationToken cancellationToken = default)
         {
-            return GetSecurityInsightsIncidentRelations().Get(relationName, cancellationToken);
+            return GetIncidentTasks().Get(incidentTaskId, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a given incident.
+        /// Gets an incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -241,7 +310,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +338,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a given incident.
+        /// Gets an incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -281,7 +350,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,7 +378,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Deletes a given incident.
+        /// Delete the incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -321,7 +390,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +422,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Deletes a given incident.
+        /// Delete the incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -365,7 +434,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -397,7 +466,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates an incident.
+        /// Creates or updates the incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -409,7 +478,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,7 +514,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates an incident.
+        /// Creates or updates the incident.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -457,7 +526,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -493,7 +562,169 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets all alerts for an incident.
+        /// Triggers playbook on a specific incident
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentIdentifier}/runPlaybook</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Incidents_RunPlaybook</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestBody"> The <see cref="ManualTriggerRequestBody"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<BinaryData>> RunPlaybookAsync(ManualTriggerRequestBody requestBody = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.RunPlaybook");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsIncidentIncidentsRestClient.RunPlaybookAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, requestBody, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers playbook on a specific incident
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentIdentifier}/runPlaybook</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Incidents_RunPlaybook</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestBody"> The <see cref="ManualTriggerRequestBody"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BinaryData> RunPlaybook(ManualTriggerRequestBody requestBody = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.RunPlaybook");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsIncidentIncidentsRestClient.RunPlaybook(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, requestBody, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a Microsoft team to investigate the incident by sharing information and insights between participants.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/createTeam</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Incidents_CreateTeam</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="teamProperties"> Team properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="teamProperties"/> is null. </exception>
+        public virtual async Task<Response<TeamInformation>> CreateTeamAsync(TeamInformation teamProperties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(teamProperties, nameof(teamProperties));
+
+            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.CreateTeam");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsIncidentIncidentsRestClient.CreateTeamAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, teamProperties, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a Microsoft team to investigate the incident by sharing information and insights between participants.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/createTeam</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Incidents_CreateTeam</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="teamProperties"> Team properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="teamProperties"/> is null. </exception>
+        public virtual Response<TeamInformation> CreateTeam(TeamInformation teamProperties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(teamProperties, nameof(teamProperties));
+
+            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.CreateTeam");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsIncidentIncidentsRestClient.CreateTeam(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, teamProperties, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all incident alerts.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -505,7 +736,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,7 +753,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets all alerts for an incident.
+        /// Gets all incident alerts.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -534,7 +765,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -551,7 +782,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets all bookmarks for an incident.
+        /// Gets all incident bookmarks.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -563,7 +794,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -580,7 +811,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets all bookmarks for an incident.
+        /// Gets all incident bookmarks.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -592,7 +823,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -609,7 +840,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets all entities for an incident.
+        /// Gets all incident related entities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -621,7 +852,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -647,7 +878,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets all entities for an incident.
+        /// Gets all incident related entities.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -659,7 +890,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <description>2024-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

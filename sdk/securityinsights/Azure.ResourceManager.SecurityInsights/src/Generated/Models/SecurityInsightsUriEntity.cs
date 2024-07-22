@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a url entity. </summary>
-    public partial class SecurityInsightsUriEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsUriEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsUriEntity"/>. </summary>
         public SecurityInsightsUriEntity()

@@ -18,8 +18,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFusionAlertRule"/>. </summary>
         public SecurityInsightsFusionAlertRule()
         {
+            SourceSettings = new ChangeTrackingList<FusionSourceSettings>();
+            ScenarioExclusionPatterns = new ChangeTrackingList<FusionScenarioExclusionPattern>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
             Techniques = new ChangeTrackingList<string>();
+            SubTechniques = new ChangeTrackingList<string>();
             Kind = AlertRuleKind.Fusion;
         }
 
@@ -28,27 +31,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The alert rule kind. </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
         /// <param name="description"> The description of the alert rule. </param>
         /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
         /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="sourceSettings"> Configuration for all supported source signals in fusion detection. </param>
+        /// <param name="scenarioExclusionPatterns"> Configuration to exclude scenarios in fusion detection. </param>
         /// <param name="lastModifiedOn"> The last time that this alert has been modified. </param>
         /// <param name="severity"> The severity for alerts created by this alert rule. </param>
         /// <param name="tactics"> The tactics of the alert rule. </param>
         /// <param name="techniques"> The techniques of the alert rule. </param>
-        internal SecurityInsightsFusionAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
+        internal SecurityInsightsFusionAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, IList<FusionSourceSettings> sourceSettings, IList<FusionScenarioExclusionPattern> scenarioExclusionPatterns, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             AlertRuleTemplateName = alertRuleTemplateName;
             Description = description;
             DisplayName = displayName;
             IsEnabled = isEnabled;
+            SourceSettings = sourceSettings;
+            ScenarioExclusionPatterns = scenarioExclusionPatterns;
             LastModifiedOn = lastModifiedOn;
             Severity = severity;
             Tactics = tactics;
             Techniques = techniques;
+            SubTechniques = subTechniques;
             Kind = kind;
         }
 
@@ -60,6 +69,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string DisplayName { get; }
         /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
         public bool? IsEnabled { get; set; }
+        /// <summary> Configuration for all supported source signals in fusion detection. </summary>
+        public IList<FusionSourceSettings> SourceSettings { get; }
+        /// <summary> Configuration to exclude scenarios in fusion detection. </summary>
+        public IList<FusionScenarioExclusionPattern> ScenarioExclusionPatterns { get; }
         /// <summary> The last time that this alert has been modified. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The severity for alerts created by this alert rule. </summary>
@@ -68,5 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
         /// <summary> The techniques of the alert rule. </summary>
         public IReadOnlyList<string> Techniques { get; }
+        /// <summary> The sub-techniques of the alert rule. </summary>
+        public IReadOnlyList<string> SubTechniques { get; }
     }
 }

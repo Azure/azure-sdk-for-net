@@ -96,13 +96,28 @@ namespace Azure.ResourceManager.SecurityInsights
                 switch (discriminator.GetString())
                 {
                     case "AmazonWebServicesCloudTrail": return SecurityInsightsAwsCloudTrailDataConnector.DeserializeSecurityInsightsAwsCloudTrailDataConnector(element, options);
+                    case "AmazonWebServicesS3": return AwsS3DataConnector.DeserializeAwsS3DataConnector(element, options);
+                    case "APIPolling": return CodelessApiPollingDataConnector.DeserializeCodelessApiPollingDataConnector(element, options);
                     case "AzureActiveDirectory": return SecurityInsightsAadDataConnector.DeserializeSecurityInsightsAadDataConnector(element, options);
                     case "AzureAdvancedThreatProtection": return SecurityInsightsAatpDataConnector.DeserializeSecurityInsightsAatpDataConnector(element, options);
                     case "AzureSecurityCenter": return SecurityInsightsAscDataConnector.DeserializeSecurityInsightsAscDataConnector(element, options);
+                    case "Dynamics365": return Dynamics365DataConnector.DeserializeDynamics365DataConnector(element, options);
+                    case "GCP": return GCPDataConnector.DeserializeGCPDataConnector(element, options);
+                    case "GenericUI": return CodelessUiDataConnector.DeserializeCodelessUiDataConnector(element, options);
+                    case "IOT": return IotDataConnector.DeserializeIotDataConnector(element, options);
                     case "MicrosoftCloudAppSecurity": return McasDataConnector.DeserializeMcasDataConnector(element, options);
                     case "MicrosoftDefenderAdvancedThreatProtection": return MdatpDataConnector.DeserializeMdatpDataConnector(element, options);
+                    case "MicrosoftPurviewInformationProtection": return MicrosoftPurviewInformationProtectionDataConnector.DeserializeMicrosoftPurviewInformationProtectionDataConnector(element, options);
+                    case "MicrosoftThreatIntelligence": return MstiDataConnector.DeserializeMstiDataConnector(element, options);
+                    case "MicrosoftThreatProtection": return MTPDataConnector.DeserializeMTPDataConnector(element, options);
                     case "Office365": return SecurityInsightsOfficeDataConnector.DeserializeSecurityInsightsOfficeDataConnector(element, options);
+                    case "Office365Project": return Office365ProjectDataConnector.DeserializeOffice365ProjectDataConnector(element, options);
+                    case "OfficeATP": return OfficeATPDataConnector.DeserializeOfficeATPDataConnector(element, options);
+                    case "OfficeIRM": return OfficeIRMDataConnector.DeserializeOfficeIRMDataConnector(element, options);
+                    case "OfficePowerBI": return OfficePowerBIDataConnector.DeserializeOfficePowerBIDataConnector(element, options);
+                    case "RestApiPoller": return RestApiPollerDataConnector.DeserializeRestApiPollerDataConnector(element, options);
                     case "ThreatIntelligence": return SecurityInsightsTIDataConnector.DeserializeSecurityInsightsTIDataConnector(element, options);
+                    case "ThreatIntelligenceTaxii": return TiTaxiiDataConnector.DeserializeTiTaxiiDataConnector(element, options);
                 }
             }
             return UnknownDataConnector.DeserializeUnknownDataConnector(element, options);

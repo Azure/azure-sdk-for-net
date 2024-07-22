@@ -95,29 +95,51 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy, options);
             }
-            if (Optional.IsDefined(ItemsKeyValue))
+            if (Optional.IsCollectionDefined(ItemsKeyValue))
             {
                 writer.WritePropertyName("itemsKeyValue"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ItemsKeyValue);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ItemsKeyValue))
+                writer.WriteStartObject();
+                foreach (var item in ItemsKeyValue)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(EntityMapping))
+            if (Optional.IsCollectionDefined(EntityMapping))
             {
                 writer.WritePropertyName("entityMapping"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EntityMapping);
-#else
-                using (JsonDocument document = JsonDocument.Parse(EntityMapping))
+                writer.WriteStartObject();
+                foreach (var item in EntityMapping)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -171,8 +193,8 @@ namespace Azure.ResourceManager.SecurityInsights
             DateTimeOffset? updated = default;
             SecurityInsightsUserInfo createdBy = default;
             SecurityInsightsUserInfo updatedBy = default;
-            BinaryData itemsKeyValue = default;
-            BinaryData entityMapping = default;
+            IDictionary<string, BinaryData> itemsKeyValue = default;
+            IDictionary<string, BinaryData> entityMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -289,7 +311,19 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            itemsKeyValue = BinaryData.FromString(property0.Value.GetRawText());
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            itemsKeyValue = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("entityMapping"u8))
@@ -298,7 +332,19 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            entityMapping = BinaryData.FromString(property0.Value.GetRawText());
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            entityMapping = dictionary;
                             continue;
                         }
                     }
@@ -323,8 +369,8 @@ namespace Azure.ResourceManager.SecurityInsights
                 updated,
                 createdBy,
                 updatedBy,
-                itemsKeyValue,
-                entityMapping,
+                itemsKeyValue ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                entityMapping ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 etag,
                 serializedAdditionalRawData);
         }
