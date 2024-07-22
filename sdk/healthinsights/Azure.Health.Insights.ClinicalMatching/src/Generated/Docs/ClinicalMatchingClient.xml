@@ -9,11 +9,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
-Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
 TrialMatcherResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call MatchTrialsAsync with all parameters.
@@ -22,7 +22,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -101,7 +101,7 @@ TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
         IncludeEvidence = true,
     },
 };
-Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
 TrialMatcherResults responseData = operation.Value;
 ]]></code></example>
     </member>
@@ -113,11 +113,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
-Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
+Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
 TrialMatcherResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call MatchTrials with all parameters.
@@ -126,7 +126,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -205,7 +205,7 @@ TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
         IncludeEvidence = true,
     },
 };
-Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
+Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
 TrialMatcherResults responseData = operation.Value;
 ]]></code></example>
     </member>

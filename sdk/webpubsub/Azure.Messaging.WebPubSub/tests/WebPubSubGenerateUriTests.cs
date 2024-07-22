@@ -2,11 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
-
+using Azure.Core;
+using Azure.Identity;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.WebPubSub.Tests
@@ -17,6 +21,60 @@ namespace Azure.Messaging.WebPubSub.Tests
         private const string FakeAccessKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGH";
 
         private static readonly JwtSecurityTokenHandler s_jwtTokenHandler = new();
+
+        [TestCase(WebPubSubClientProtocol.Default, "/client")]
+        [TestCase(WebPubSubClientProtocol.Mqtt, "/clients/mqtt")]
+        public async Task GetClientAccessUri_AccessKey_Test(WebPubSubClientProtocol clientType, string clientUriPrefix)
+        {
+            var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
+            var expectedUriPrefix = $"ws://localhost:8080{clientUriPrefix}/hubs/hub?access_token=";
+            // Synchronize
+            Assert.True(serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), default, default, default, clientType, default).ToString().StartsWith(expectedUriPrefix));
+            Assert.True(serviceClient.GetClientAccessUri(DateTimeOffset.UtcNow.AddMinutes(1), default, default, default, clientType, default).ToString().StartsWith(expectedUriPrefix));
+            // Asynchronize
+            Assert.True((await serviceClient.GetClientAccessUriAsync(TimeSpan.FromMinutes(1), default, default, default, clientType, default)).ToString().StartsWith(expectedUriPrefix));
+            Assert.True((await serviceClient.GetClientAccessUriAsync(DateTimeOffset.Now, default, default, default, clientType, default)).ToString().StartsWith(expectedUriPrefix));
+        }
+
+        [TestCase(WebPubSubClientProtocol.Default, "/client", "default")]
+        [TestCase(WebPubSubClientProtocol.Mqtt, "/clients/mqtt", "mqtt")]
+        public async Task GetClientAccessUri_MicrosoftEntraId_DefaultClient_Test(WebPubSubClientProtocol clientType, string clientUriPrefix, string clientTypeString)
+        {
+            var serviceClient = new WebPubSubServiceSubClass(new Uri("https://localhost"), "hub", new DefaultAzureCredential());
+            var expectedUri = new Uri($"wss://localhost{clientUriPrefix}/hubs/hub?access_token=fakeToken");
+            Assert.AreEqual(expectedUri, serviceClient.GetClientAccessUri(TimeSpan.FromMinutes(1), default, default, default, clientType, default));
+            Assert.AreEqual(expectedUri, serviceClient.GetClientAccessUri(DateTime.UtcNow, default, default, default, clientType, default));
+            Assert.AreEqual(expectedUri, await serviceClient.GetClientAccessUriAsync(TimeSpan.FromMinutes(1), default, default, default, clientType, default));
+            Assert.AreEqual(expectedUri, await serviceClient.GetClientAccessUriAsync(DateTime.UtcNow, default, default, default, clientType, default));
+            for (var i = 0; i < 4; i++)
+            {
+                // Validate the "clientType" parameter passed to the GenerateClientTokenImpl(Async) method
+                Assert.True(clientTypeString == serviceClient.InvocationParameters[i][4].ToString());
+            }
+        }
+
+        /// <summary>
+        /// A subclass of WebPubSubServiceClient to mock method GenerateClientTokenImpl(Async)
+        /// </summary>
+        private class WebPubSubServiceSubClass : WebPubSubServiceClient
+        {
+            public WebPubSubServiceSubClass(Uri endpoint, string hub, TokenCredential credential)
+    : base(endpoint, hub, credential)
+            {
+            }
+            public List<object[]> InvocationParameters { get; } = new();
+            internal override Task<Response> GenerateClientTokenImplAsync(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, string clientType = null, RequestContext context = null)
+            {
+                InvocationParameters.Add(new object[] { userId, role, minutesToExpire, group, clientType, context });
+                return Task.FromResult(Mock.Of<Response>(r => r.Content == new BinaryData("{\"token\":\"fakeToken\"}")));
+            }
+
+            internal override Response GenerateClientTokenImpl(string userId = null, IEnumerable<string> role = null, int? minutesToExpire = null, IEnumerable<string> group = null, string clientType = null, RequestContext context = null)
+            {
+                InvocationParameters.Add(new object[] { userId, role, minutesToExpire, group, clientType, context });
+                return Mock.Of<Response>(r => r.Content == new BinaryData("{\"token\":\"fakeToken\"}"));
+            }
+        }
 
         [TestCase(0, 60)]
         [TestCase(1, 1)]
@@ -29,7 +87,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             var utcnow = DateTimeOffset.UtcNow;
             var expiresAfter = TimeSpan.FromMinutes(minutesToExpire);
 
-            Uri uri = serviceClient.GetClientAccessUri(expiresAfter, "foo", null );
+            Uri uri = serviceClient.GetClientAccessUri(expiresAfter, "foo", null);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
             Assert.NotNull(token);
             var jwt = s_jwtTokenHandler.ReadJwtToken(token);
@@ -48,7 +106,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             var serviceClient = new WebPubSubServiceClient(string.Format("Endpoint=http://localhost;Port=8080;AccessKey={0};Version=1.0;", FakeAccessKey), "hub");
             var expireAt = DateTimeOffset.UtcNow.Add(TimeSpan.FromMinutes(minutesToExpire));
 
-            Uri uri = serviceClient.GetClientAccessUri(expireAt, "foo", null );
+            Uri uri = serviceClient.GetClientAccessUri(expireAt, "foo", null);
             var token = HttpUtility.ParseQueryString(uri.Query).Get("access_token");
             Assert.NotNull(token);
             var jwt = s_jwtTokenHandler.ReadJwtToken(token);
@@ -94,7 +152,7 @@ namespace Azure.Messaging.WebPubSub.Tests
             var source = new CancellationTokenSource();
             RequestContext context = new() { CancellationToken = source.Token };
             var expectRoles = new[] { "a", "b" };
-            var request = client.CreateGenerateClientTokenImplRequest("foo", new[] {"a", "b"}, 1, null, context);
+            var request = client.CreateGenerateClientTokenImplRequest("foo", new[] { "a", "b" }, 1, null, "default", context);
 
             var url = request.Request.Uri.ToString();
             var queryString = url.Substring(url.IndexOf('?'));

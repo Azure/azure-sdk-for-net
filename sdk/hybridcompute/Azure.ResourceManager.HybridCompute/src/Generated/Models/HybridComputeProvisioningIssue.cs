@@ -72,16 +72,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Name of the provisioning issue. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Issue type. </summary>
+        [WirePath("properties.issueType")]
         public HybridComputeProvisioningIssueType? IssueType { get; }
         /// <summary> Severity of the provisioning issue. </summary>
+        [WirePath("properties.severity")]
         public HybridComputeProvisioningIssueSeverity? Severity { get; }
         /// <summary> Description of the provisioning issue. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> ARM Ids of the resources that can be associated to the same perimeter to remediate the issue. </summary>
+        [WirePath("properties.suggestedResourceIds")]
         public IReadOnlyList<string> SuggestedResourceIds { get; }
         /// <summary> Access rules that can be added to the perimeter to remediate the issue. </summary>
+        [WirePath("properties.suggestedAccessRules")]
         public IReadOnlyList<HybridComputeAccessRule> SuggestedAccessRules { get; }
     }
 }

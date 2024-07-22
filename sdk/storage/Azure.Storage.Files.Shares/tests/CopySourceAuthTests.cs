@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             BlobServiceClient blobServiceClient = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
-                Tenants.GetOAuthCredential(Tenants.TestConfigOAuth),
+                TestEnvironment.Credential,
                 GetBlobOptions()));
             BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(GetNewShareName()));
 
@@ -87,7 +87,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             BlobServiceClient blobServiceClient = InstrumentClient(new BlobServiceClient(
                 new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
-                Tenants.GetOAuthCredential(Tenants.TestConfigOAuth),
+                TestEnvironment.Credential,
                 GetBlobOptions()));
             BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(GetNewShareName()));
 
