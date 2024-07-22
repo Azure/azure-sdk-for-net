@@ -1733,7 +1733,7 @@ namespace Azure.Storage.Test.Shared
             var validationOptions = new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
 
             // Act
-            var dest = new MemoryStream();
+            using var dest = new MemoryStream();
             var response = await DownloadPartitionAsync(client, dest, validationOptions, new HttpRange(length: data.Length));
 
             // Assert
@@ -1750,7 +1750,8 @@ namespace Azure.Storage.Test.Shared
                     Assert.Fail("Test can't validate given algorithm type.");
                     break;
             }
-            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+            var result = dest.ToArray();
+            Assert.IsTrue(result.SequenceEqual(data));
         }
 
 #if BlobSDK || DataLakeSDK

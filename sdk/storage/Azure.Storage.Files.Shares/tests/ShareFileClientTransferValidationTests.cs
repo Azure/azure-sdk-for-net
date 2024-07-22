@@ -64,10 +64,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
         private void AssertSupportsHashAlgorithm(StorageChecksumAlgorithm algorithm)
         {
-            if (algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
-            {
-                TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "Azure File Share does not support CRC64.");
-            }
         }
 
         protected override async Task<Response> UploadPartitionAsync(ShareFileClient client, Stream source, UploadTransferValidationOptions transferValidation)
