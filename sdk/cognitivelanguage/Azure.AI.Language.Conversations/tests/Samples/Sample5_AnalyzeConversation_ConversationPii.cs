@@ -22,15 +22,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             List<NamedEntity> entitiesDetected = new();
 
             #region Snippet:AnalyzeConversation_ConversationPii
-            var data = new AnalyzeConversationOperationInput(
+            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
                 new MultiLanguageConversationInput(
                     new List<ConversationInput>
                     {
                         new TextConversation("1", "en", new List<TextConversationItem>()
                         {
-                            new TextConversationItem("1", "Agent_1", "Can you provide you name?"),
-                            new TextConversationItem("2", "Customer_1", "Hi, my name is John Doe."),
-                            new TextConversationItem("3", "Agent_1", "Thank you John, that has been updated in our system.")
+                            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
+                            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+                            new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
                         })
                     }),
                     new List<AnalyzeConversationOperationAction>
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     if (conversation.Warnings != null && conversation.Warnings.Any())
                     {
                         Console.WriteLine("Warnings:");
-                        foreach (dynamic warning in conversation.Warnings)
+                        foreach (InputWarning warning in conversation.Warnings)
                         {
                             Console.WriteLine($"Code: {warning.Code}");
                             Console.WriteLine($"Message: {warning.Message}");
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 if (operationResults.Errors != null && operationResults.Errors.Any())
                 {
                     Console.WriteLine("Errors:");
-                    foreach (dynamic error in operationResults.Errors)
+                    foreach (ConversationError error in operationResults.Errors)
                     {
                         Console.WriteLine($"Error: {error}");
                     }
@@ -104,16 +104,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             List<NamedEntity> entitiesDetected = new();
 
-            #region Snippet:AnalyzeConversationAsync_ConversationPii
-            var data = new AnalyzeConversationOperationInput(
+            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
                 new MultiLanguageConversationInput(
                     new List<ConversationInput>
                     {
                         new TextConversation("1", "en", new List<TextConversationItem>()
                         {
-                            new TextConversationItem("1", "Agent_1", "Can you provide you name?"),
-                            new TextConversationItem("2", "Customer_1", "Hi, my name is John Doe."),
-                            new TextConversationItem("3", "Agent_1", "Thank you John, that has been updated in our system.")
+                            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
+                            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+                            new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
                         })
                     }),
                     new List<AnalyzeConversationOperationAction>
@@ -125,8 +124,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         }
                     });
 
+            #region Snippet:AnalyzeConversationAsync_ConversationPii
+
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
             AnalyzeConversationOperationState operationResults = analyzeConversationOperation.Value;
+            #endregion
 
             foreach (ConversationPiiOperationResult task in operationResults.Actions.Items.Cast<ConversationPiiOperationResult>())
             {
@@ -155,7 +157,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     if (conversation.Warnings != null && conversation.Warnings.Any())
                     {
                         Console.WriteLine("Warnings:");
-                        foreach (dynamic warning in conversation.Warnings)
+                        foreach (InputWarning warning in conversation.Warnings)
                         {
                             Console.WriteLine($"Code: {warning.Code}");
                             Console.WriteLine($"Message: {warning.Message}");
@@ -166,13 +168,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 if (operationResults.Errors != null && operationResults.Errors.Any())
                 {
                     Console.WriteLine("Errors:");
-                    foreach (dynamic error in operationResults.Errors)
+                    foreach (ConversationError error in operationResults.Errors)
                     {
                         Console.WriteLine($"Error: {error}");
                     }
                 }
             }
-            #endregion
 
             Assert.NotZero(entitiesDetected.Count);
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));

@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             List<string> aspects = new();
 
             #region Snippet:AnalyzeConversation_ConversationSummarization
-            var data = new AnalyzeConversationOperationInput(
+            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
                 new MultiLanguageConversationInput(
                     new List<ConversationInput>
                     {
@@ -64,8 +64,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     });
 
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
-
             AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+
             foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
             {
                 Console.WriteLine($"Task name: {task.Name}");
@@ -116,9 +116,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             List<string> aspects = new();
 
-            #region Snippet:AnalyzeConversationAsync_ConversationSummarization
-
-            var data = new AnalyzeConversationOperationInput(
+            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
                 new MultiLanguageConversationInput(
                     new List<ConversationInput>
                     {
@@ -148,10 +146,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                             Name = "Resolution task",
                         }
                     });
+            #region Snippet:AnalyzeConversationAsync_ConversationSummarization
 
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
-
             AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+
+            #endregion
+
             foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
             {
                 Console.WriteLine($"Task name: {task.Name}");
@@ -188,7 +189,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            #endregion
 
             Assert.That(aspects, Contains.Item("issue").And.Contains("resolution"));
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
