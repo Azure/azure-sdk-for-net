@@ -1,4 +1,4 @@
-# Azure.AI.Language.Text client library for .NET
+# Azure AI Language Text client library for .NET
 
 Azure.AI.Language.Text is a managed service that helps developers get secret simply and securely.
 
