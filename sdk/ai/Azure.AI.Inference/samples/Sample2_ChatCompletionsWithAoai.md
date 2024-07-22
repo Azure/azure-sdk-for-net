@@ -1,0 +1,70 @@
+# Simple Chat Completions Targetting Azure OpenAI
+
+This sample demonstrates how to get a chat completions response from the service using a synchronous call, targetting an Azure OpenAI (AOAI) endpoint.
+
+## Usage
+
+Set these two environment variables before running the sample:
+
+1. AZURE_OPENAI_CHAT_ENDPOINT - Your AOAI endpoint URL, with partial path, in the form `https://<your-unique-resouce-name>.openai.azure.com/openai/deployments/<your-deployment-name>` where `your-unique-resource-name` is your globally unique AOAI resource name, and `your-deployment-name` is your AI Model deployment name. For example: `https://your-unique-host.openai.azure.com/openai/deployments/gpt-4-turbo`
+2. AZURE_OPENAI_CHAT_KEY - Your model key (a 32-character string). Keep it secret. This is only required for key authentication.
+
+In order to target AOAI, the auth key must currently be provided as a separate header. This can be done by creating a `HttpPipelinePolicy` like below:
+
+```C# Snippet:Azure_AI_Inference_AoaiAuthHeaderPolicy
+private class AddAoaiAuthHeaderPolicy : HttpPipelinePolicy
+{
+    public string AoaiKey { get; }
+
+    public AddAoaiAuthHeaderPolicy(string key)
+    {
+        AoaiKey = key;
+    }
+
+    public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+    {
+        // Add your desired header name and value
+        message.Request.Headers.Add("api-key", AoaiKey);
+
+        ProcessNext(message, pipeline);
+    }
+
+    public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+    {
+        // Add your desired header name and value
+        message.Request.Headers.Add("api-key", AoaiKey);
+
+        return ProcessNextAsync(message, pipeline);
+    }
+}
+```
+
+The policy can then be added to the `ChatCompletionsClientOptions` object, to configure the client to add the header at runtime.
+
+```C# Snippet:Azure_AI_Inference_HelloWorldAoaiScenario
+using Azure.AI.Inference;
+
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
+var key = System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_KEY");
+
+// For AOAI, currently the key is passed via a different header not directly handled by the client, however
+// the credential object is still required. So create with a dummy value.
+var credential = new AzureKeyCredential("foo");
+
+ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
+
+var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant."),
+        new ChatRequestUserMessage("How many feet are in a mile?"),
+    },
+};
+
+Response<ChatCompletions> response = client.Complete(requestOptions);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+```

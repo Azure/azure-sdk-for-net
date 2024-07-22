@@ -53,6 +53,12 @@ namespace Azure.AI.Inference.Tests.Samples
             Assert.IsTrue(exceptionThrown);
 #endif
             #endregion
+
+            #region Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioUnknownParams
+#if SNIPPET
+            Response<ChatCompletions> response = client.Complete(requestOptions, extraParams: ExtraParameters.PassThrough);
+#endif
+            #endregion
         }
     }
 }
