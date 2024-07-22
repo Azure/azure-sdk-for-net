@@ -122,62 +122,46 @@ To analyze a conversation, you can call the `AnalyzeConversations()` method:
 string projectName = "Menu";
 string deploymentName = "production";
 
-var data = new
+AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(projectName, deploymentName)
 {
-    AnalysisInput = new
-    {
-        ConversationItem = new
-        {
-            Text = "Send an email to Carol about tomorrow's demo",
-            Id = "1",
-            ParticipantId = "1",
-        }
-    },
-    Parameters = new
-    {
-        ProjectName = projectName,
-        DeploymentName = deploymentName,
+    // Use Utf16CodeUnit for strings in .NET.
+    StringIndexType = StringIndexType.Utf16CodeUnit,
+});
 
-        // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = "Utf16CodeUnit",
-    },
-    Kind = "Conversation",
-};
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
+ConversationActionResult conversationResult = response.Value as ConversationActionResult;
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
-
-dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
+ConversationPrediction conversationPrediction = conversationResult.Result.Prediction as ConversationPrediction;
 
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
-foreach (dynamic intent in conversationPrediction.Intents)
+foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category: {intent.Category}");
-    Console.WriteLine($"Confidence: {intent.ConfidenceScore}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
     Console.WriteLine();
 }
 
 Console.WriteLine("Entities:");
-foreach (dynamic entity in conversationPrediction.Entities)
+foreach (ConversationEntity entity in conversationPrediction.Entities)
 {
     Console.WriteLine($"Category: {entity.Category}");
     Console.WriteLine($"Text: {entity.Text}");
     Console.WriteLine($"Offset: {entity.Offset}");
     Console.WriteLine($"Length: {entity.Length}");
-    Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
     if (entity.Resolutions is not null)
     {
-        foreach (dynamic resolution in entity.Resolutions)
+        foreach (ResolutionBase resolution in entity.Resolutions)
         {
-            if (resolution.ResolutionKind == "DateTimeResolution")
+            if (resolution is DateTimeResolution dateTimeResolution)
             {
-                Console.WriteLine($"Datetime Sub Kind: {resolution.DateTimeSubKind}");
-                Console.WriteLine($"Timex: {resolution.Timex}");
-                Console.WriteLine($"Value: {resolution.Value}");
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
                 Console.WriteLine();
             }
         }
@@ -191,30 +175,14 @@ Additional options can be passed to `AnalyzeConversations` like enabling more ve
 string projectName = "Menu";
 string deploymentName = "production";
 
-var data = new
+AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(projectName, deploymentName)
 {
-    AnalysisInput = new
-    {
-        ConversationItem = new
-        {
-            Text = "Send an email to Carol about tomorrow's demo",
-            Id = "1",
-            ParticipantId = "1",
-        }
-    },
-    Parameters = new
-    {
-        ProjectName = projectName,
-        DeploymentName = deploymentName,
-        Verbose = true,
+    // Use Utf16CodeUnit for strings in .NET.
+    StringIndexType = StringIndexType.Utf16CodeUnit,
+    Verbose = true,
+});
 
-        // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = "Utf16CodeUnit",
-    },
-    Kind = "Conversation",
-};
-
-Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
 ### Analyze a conversation in a different language
@@ -225,31 +193,19 @@ The `language` property can be set to specify the language of the conversation:
 string projectName = "Menu";
 string deploymentName = "production";
 
-var data = new
-{
-    AnalysisInput = new
+AnalyzeConversationInput data =
+    new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Enviar un email a Carol acerca de la presentación de mañana")
     {
-        ConversationItem = new
-        {
-            Text = "Enviar un email a Carol acerca de la presentación de mañana",
-            Language = "es",
-            Id = "1",
-            ParticipantId = "1",
-        }
-    },
-    Parameters = new
+        Language = "es"
+    }),
+    new ConversationActionContent(projectName, deploymentName)
     {
-        ProjectName = projectName,
-        DeploymentName = deploymentName,
-        Verbose = true,
-
         // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = "Utf16CodeUnit",
-    },
-    Kind = "Conversation",
-};
+        StringIndexType = StringIndexType.Utf16CodeUnit,
+        Verbose = true
+    });
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
 ### Analyze a conversation using an orchestration project
@@ -260,33 +216,14 @@ To analyze a conversation using an orchestration project, you can call the `Anal
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
 string projectName = "DomainOrchestrator";
 string deploymentName = "production";
-
-var data = new
+AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "How are you?")), new ConversationActionContent(projectName, deploymentName)
 {
-    AnalysisInput = new
-    {
-        ConversationItem = new
-        {
-            Text = "How are you?",
-            Id = "1",
-            ParticipantId = "1",
-        }
-    },
-    Parameters = new
-    {
-        ProjectName = projectName,
-        DeploymentName = deploymentName,
+    StringIndexType = StringIndexType.Utf16CodeUnit,
+});
 
-        // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = "Utf16CodeUnit",
-    },
-    Kind = "Conversation",
-};
-
-Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
-
-dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-dynamic orchestrationPrediction = conversationalTaskResult.Result.Prediction;
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
+ConversationActionResult conversationResult = response.Value as ConversationActionResult;
+OrchestrationPrediction orchestrationPrediction = conversationResult.Result.Prediction as OrchestrationPrediction;
 ```
 
 #### Question Answering prediction
@@ -295,15 +232,15 @@ If your conversation was analyzed by Question Answering, it will include an inte
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
 string respondingProjectName = orchestrationPrediction.TopIntent;
-dynamic targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
+Console.WriteLine($"Top intent: {respondingProjectName}");
 
-if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringTargetIntentResult)
 {
-    Console.WriteLine($"Top intent: {respondingProjectName}");
-
-    dynamic questionAnsweringResponse = targetIntentResult.Result;
+    AnswersResult questionAnsweringResponse = questionAnsweringTargetIntentResult.Result;
     Console.WriteLine($"Question Answering Response:");
-    foreach (dynamic answer in questionAnsweringResponse.Answers)
+    foreach (KnowledgeBaseAnswer answer in questionAnsweringResponse.Answers)
     {
         Console.WriteLine(answer.Answer?.ToString());
     }
@@ -315,7 +252,7 @@ if (targetIntentResult.TargetProjectKind == "QuestionAnswering")
 To summarize a conversation, you can use the `AnalyzeConversationsOperation` method overload that returns an `Response<AnalyzeConversationJobState>`:
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
-var data = new AnalyzeConversationOperationInput(
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
     new MultiLanguageConversationInput(
         new List<ConversationInput>
         {
@@ -356,8 +293,8 @@ var data = new AnalyzeConversationOperationInput(
         });
 
 Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
-
 AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+
 foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
 {
     Console.WriteLine($"Task name: {task.Name}");
@@ -398,15 +335,15 @@ foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<Summ
 To detect and redact PII in a conversation, you can use the `AnalyzeConversationsOperation` method overload with an action of type `PiiOperationAction`:
 
 ```C# Snippet:AnalyzeConversation_ConversationPii
-var data = new AnalyzeConversationOperationInput(
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
     new MultiLanguageConversationInput(
         new List<ConversationInput>
         {
             new TextConversation("1", "en", new List<TextConversationItem>()
             {
-                new TextConversationItem("1", "Agent_1", "Can you provide you name?"),
-                new TextConversationItem("2", "Customer_1", "Hi, my name is John Doe."),
-                new TextConversationItem("3", "Agent_1", "Thank you John, that has been updated in our system.")
+                new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
+                new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+                new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
             })
         }),
         new List<AnalyzeConversationOperationAction>
@@ -446,7 +383,7 @@ foreach (ConversationPiiOperationResult task in operationResults.Actions.Items.C
         if (conversation.Warnings != null && conversation.Warnings.Any())
         {
             Console.WriteLine("Warnings:");
-            foreach (dynamic warning in conversation.Warnings)
+            foreach (InputWarning warning in conversation.Warnings)
             {
                 Console.WriteLine($"Code: {warning.Code}");
                 Console.WriteLine($"Message: {warning.Message}");
@@ -457,7 +394,7 @@ foreach (ConversationPiiOperationResult task in operationResults.Actions.Items.C
     if (operationResults.Errors != null && operationResults.Errors.Any())
     {
         Console.WriteLine("Errors:");
-        foreach (dynamic error in operationResults.Errors)
+        foreach (ConversationError error in operationResults.Errors)
         {
             Console.WriteLine($"Error: {error}");
         }

@@ -26,7 +26,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
-var data = new AnalyzeConversationOperationInput(
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
     new MultiLanguageConversationInput(
         new List<ConversationInput>
         {
@@ -67,8 +67,8 @@ var data = new AnalyzeConversationOperationInput(
         });
 
 Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
-
 AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+
 foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
 {
     Console.WriteLine($"Task name: {task.Name}");
@@ -109,71 +109,6 @@ foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<Summ
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationSummarization
-var data = new AnalyzeConversationOperationInput(
-    new MultiLanguageConversationInput(
-        new List<ConversationInput>
-        {
-            new TextConversation("1", "en", new List<TextConversationItem>()
-            {
-                new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
-                new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
-                new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.")
-            })
-        }),
-        new List<AnalyzeConversationOperationAction>
-        {
-            new SummarizationOperationAction()
-            {
-                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
-                {
-                    SummaryAspect.Issue,
-                }),
-                Name = "Issue task",
-            },
-            new SummarizationOperationAction()
-            {
-                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
-                {
-                    SummaryAspect.Resolution,
-                }),
-                Name = "Resolution task",
-            }
-        });
-
 Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
-
 AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
-foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
-{
-    Console.WriteLine($"Task name: {task.Name}");
-    SummaryResult results = task.Results;
-    foreach (ConversationsSummaryResult conversation in results.Conversations)
-    {
-        Console.WriteLine($"Conversation: #{conversation.Id}");
-        Console.WriteLine("Summaries:");
-        foreach (SummaryResultItem summary in conversation.Summaries)
-        {
-            Console.WriteLine($"Text: {summary.Text}");
-            Console.WriteLine($"Aspect: {summary.Aspect}");
-        }
-        if (conversation.Warnings != null && conversation.Warnings.Any())
-        {
-            Console.WriteLine("Warnings:");
-            foreach (InputWarning warning in conversation.Warnings)
-            {
-                Console.WriteLine($"Code: {warning.Code}");
-                Console.WriteLine($"Message: {warning.Message}");
-            }
-        }
-        Console.WriteLine();
-    }
-    if (results.Errors != null && results.Errors.Any())
-    {
-        Console.WriteLine("Errors:");
-        foreach (DocumentError error in results.Errors)
-        {
-            Console.WriteLine($"Error: {error}");
-        }
-    }
-}
 ```

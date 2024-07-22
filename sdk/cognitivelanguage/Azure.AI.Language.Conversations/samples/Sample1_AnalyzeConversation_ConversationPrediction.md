@@ -29,62 +29,46 @@ Once you have created a client, you can call synchronous or asynchronous methods
 string projectName = "Menu";
 string deploymentName = "production";
 
-var data = new
+AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(projectName, deploymentName)
 {
-    AnalysisInput = new
-    {
-        ConversationItem = new
-        {
-            Text = "Send an email to Carol about tomorrow's demo",
-            Id = "1",
-            ParticipantId = "1",
-        }
-    },
-    Parameters = new
-    {
-        ProjectName = projectName,
-        DeploymentName = deploymentName,
+    // Use Utf16CodeUnit for strings in .NET.
+    StringIndexType = StringIndexType.Utf16CodeUnit,
+});
 
-        // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = "Utf16CodeUnit",
-    },
-    Kind = "Conversation",
-};
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
+ConversationActionResult conversationResult = response.Value as ConversationActionResult;
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
-
-dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-dynamic conversationPrediction = conversationalTaskResult.Result.Prediction;
+ConversationPrediction conversationPrediction = conversationResult.Result.Prediction as ConversationPrediction;
 
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
-foreach (dynamic intent in conversationPrediction.Intents)
+foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
     Console.WriteLine($"Category: {intent.Category}");
-    Console.WriteLine($"Confidence: {intent.ConfidenceScore}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
     Console.WriteLine();
 }
 
 Console.WriteLine("Entities:");
-foreach (dynamic entity in conversationPrediction.Entities)
+foreach (ConversationEntity entity in conversationPrediction.Entities)
 {
     Console.WriteLine($"Category: {entity.Category}");
     Console.WriteLine($"Text: {entity.Text}");
     Console.WriteLine($"Offset: {entity.Offset}");
     Console.WriteLine($"Length: {entity.Length}");
-    Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
     if (entity.Resolutions is not null)
     {
-        foreach (dynamic resolution in entity.Resolutions)
+        foreach (ResolutionBase resolution in entity.Resolutions)
         {
-            if (resolution.ResolutionKind == "DateTimeResolution")
+            if (resolution is DateTimeResolution dateTimeResolution)
             {
-                Console.WriteLine($"Datetime Sub Kind: {resolution.DateTimeSubKind}");
-                Console.WriteLine($"Timex: {resolution.Timex}");
-                Console.WriteLine($"Value: {resolution.Value}");
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
                 Console.WriteLine();
             }
         }
@@ -97,5 +81,6 @@ foreach (dynamic entity in conversationPrediction.Entities)
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationAsync
-Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);
+ConversationActionResult conversationResult = response.Value as ConversationActionResult;
 ```

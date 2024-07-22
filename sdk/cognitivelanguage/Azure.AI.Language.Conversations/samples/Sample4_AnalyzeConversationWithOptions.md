@@ -29,30 +29,14 @@ Once you have created a client, you can call synchronous or asynchronous methods
 string projectName = "Menu";
 string deploymentName = "production";
 
-var data = new
+AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(projectName, deploymentName)
 {
-    AnalysisInput = new
-    {
-        ConversationItem = new
-        {
-            Text = "Send an email to Carol about tomorrow's demo",
-            Id = "1",
-            ParticipantId = "1",
-        }
-    },
-    Parameters = new
-    {
-        ProjectName = projectName,
-        DeploymentName = deploymentName,
-        Verbose = true,
+    // Use Utf16CodeUnit for strings in .NET.
+    StringIndexType = StringIndexType.Utf16CodeUnit,
+    Verbose = true,
+});
 
-        // Use Utf16CodeUnit for strings in .NET.
-        StringIndexType = "Utf16CodeUnit",
-    },
-    Kind = "Conversation",
-};
-
-Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
 ## Asynchronous
@@ -60,5 +44,5 @@ Response response = client.AnalyzeConversation(RequestContent.Create(data, JsonP
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
-Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data, JsonPropertyNames.CamelCase));
+Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);
 ```
