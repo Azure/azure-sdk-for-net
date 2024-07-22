@@ -882,7 +882,6 @@ namespace Azure.Storage.Blobs.Specialized
                     if (content != null &&
                         validationOptions != null &&
                         validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                        validationOptions.PrecalculatedChecksum.IsEmpty &&
                         ClientSideEncryption == null) // don't allow feature combination
                     {
                         // report progress in terms of caller bytes, not encoded bytes
