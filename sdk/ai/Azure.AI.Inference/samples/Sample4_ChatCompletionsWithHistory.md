@@ -34,3 +34,30 @@ messages.Add(new ChatRequestUserMessage("And what was the estimated cost to buil
 response = client.Complete(messages);
 System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
+
+An `async` option is also available.
+
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithHistoryScenarioAsync
+using Azure.AI.Inference;
+
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var messages = new List<ChatRequestMessage>()
+{
+    new ChatRequestSystemMessage("You are an AI assistant that helps people find information. Your replies are short, no more than two sentences."),
+    new ChatRequestUserMessage("What year was construction of the international space station mostly done?"),
+};
+
+var requestOptions = new ChatCompletionsOptions(messages);
+
+Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+
+messages.Add(new ChatRequestAssistantMessage(response.Value.Choices[0].Message));
+messages.Add(new ChatRequestUserMessage("And what was the estimated cost to build it?"));
+
+response = await client.CompleteAsync(messages);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+```

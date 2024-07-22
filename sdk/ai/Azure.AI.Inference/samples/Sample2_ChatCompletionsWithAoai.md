@@ -68,3 +68,33 @@ var requestOptions = new ChatCompletionsOptions()
 Response<ChatCompletions> response = client.Complete(requestOptions);
 System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
+
+An `async` option is also available.
+
+```C# Snippet:Azure_AI_Inference_HelloWorldAoaiScenarioAsync
+using Azure.AI.Inference;
+
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
+var key = System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_KEY");
+
+// For AOAI, currently the key is passed via a different header not directly handled by the client, however
+// the credential object is still required. So create with a dummy value.
+var credential = new AzureKeyCredential("foo");
+
+ChatCompletionsClientOptions clientOptions = new ChatCompletionsClientOptions();
+clientOptions.AddPolicy(new AddAoaiAuthHeaderPolicy(key), HttpPipelinePosition.PerCall);
+
+var client = new ChatCompletionsClient(endpoint, credential, clientOptions);
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant."),
+        new ChatRequestUserMessage("How many feet are in a mile?"),
+    },
+};
+
+Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+```

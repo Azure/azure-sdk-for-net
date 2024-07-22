@@ -81,3 +81,77 @@ followupOptions.Messages.Add(new ChatRequestToolMessage(
 Response<ChatCompletions> followupResponse = client.Complete(followupOptions);
 System.Console.WriteLine(followupResponse.Value.Choices[0].Message.Content);
 ```
+
+An `async` option is also available.
+
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithToolsScenarioAsync
+using Azure.AI.Inference;
+
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+
+FunctionDefinition futureTemperatureFunction = new FunctionDefinition("get_future_temperature")
+{
+    Description = "requests the anticipated future temperature at a provided location to help inform "
+    + "advice about topics like choice of attire",
+    Parameters = BinaryData.FromObjectAsJson(new
+    {
+        Type = "object",
+        Properties = new
+        {
+            LocationName = new
+            {
+                Type = "string",
+                Description = "the name or brief description of a location for weather information"
+            },
+            DaysInAdvance = new
+            {
+                Type = "integer",
+                Description = "the number of days in the future for which to retrieve weather information"
+            }
+        }
+    },
+    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
+};
+ChatCompletionsFunctionToolDefinition functionToolDef = new ChatCompletionsFunctionToolDefinition(futureTemperatureFunction);
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant."),
+        new ChatRequestUserMessage("What should I wear in Honolulu in 3 days?"),
+    },
+    Tools = { functionToolDef },
+};
+
+Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+
+ChatResponseMessage responseMessage = response.Value.Choices[0].Message;
+ChatCompletionsFunctionToolCall functionToolCall = responseMessage.ToolCalls[0] as ChatCompletionsFunctionToolCall;
+
+ChatCompletionsOptions followupOptions = new()
+{
+    Tools = { functionToolDef },
+};
+
+// Include all original messages
+foreach (ChatRequestMessage originalMessage in requestOptions.Messages)
+{
+    followupOptions.Messages.Add(originalMessage);
+}
+
+// Add the tool call message just received back from the assistant
+followupOptions.Messages.Add(new ChatRequestAssistantMessage(responseMessage));
+
+// And also the tool message that resolves the tool call
+followupOptions.Messages.Add(new ChatRequestToolMessage(
+    toolCallId: functionToolCall.Id,
+    content: "31 celsius"));
+
+Response<ChatCompletions> followupResponse = await client.CompleteAsync(followupOptions);
+System.Console.WriteLine(followupResponse.Value.Choices[0].Message.Content);
+```

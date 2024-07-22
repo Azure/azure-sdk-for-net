@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Inference.Tests.Samples
 {
-    public partial class Sample3_ChatCompletionsStreamingAsync : SamplesBase<InferenceClientTestEnvironment>
+    public class Sample3_ChatCompletionsStreaming : SamplesBase<InferenceClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]

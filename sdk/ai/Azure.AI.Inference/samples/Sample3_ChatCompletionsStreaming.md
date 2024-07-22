@@ -43,3 +43,25 @@ await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
 }
 System.Console.WriteLine(contentBuilder.ToString());
 ```
+
+An `async` option is also available for the initial streaming call.
+
+```C# Snippet:Azure_AI_Inference_HelloWorldStreamingScenarioAsync
+using Azure.AI.Inference;
+
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant."),
+        new ChatRequestUserMessage("How many feet are in a mile?"),
+    },
+};
+
+StreamingResponse<StreamingChatCompletionsUpdate> response = await client.CompleteStreamingAsync(requestOptions);
+```

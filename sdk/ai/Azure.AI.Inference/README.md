@@ -62,8 +62,25 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 You can create a client and call the client's `<operation>` method.
 
-```C# Snippet:Azure_AI_Inference_ScenarioAsync
-Console.WriteLine("Hello, world!");
+```C# Snippet:Azure_AI_Inference_HelloWorldScenarioAsync
+using Azure.AI.Inference;
+
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant."),
+        new ChatRequestUserMessage("How many feet are in a mile?"),
+    },
+};
+
+Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
 
 ## Troubleshooting

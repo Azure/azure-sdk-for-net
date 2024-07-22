@@ -40,3 +40,34 @@ var requestOptions = new ChatCompletionsOptions()
 Response<ChatCompletions> response = client.Complete(requestOptions);
 System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
+
+An `async` option is also available.
+
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithImageUrlScenarioAsync
+using Azure.AI.Inference;
+
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+
+ChatMessageImageContentItem imageContentItem =
+    new ChatMessageImageContentItem(
+        new Uri("https://example.com/image.jpg"),
+        ChatMessageImageDetailLevel.Low
+    );
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant that helps describe images."),
+        new ChatRequestUserMessage(
+            new ChatMessageTextContentItem("describe this image"),
+            imageContentItem),
+    },
+};
+
+Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+```

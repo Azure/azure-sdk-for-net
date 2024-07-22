@@ -33,6 +33,33 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 
 You can optionally configure the behavior of the service when receiving `AdditionalProperties` using the `extraParams` parameter of the `Complete` method. `ExtraParameters.PassThrough` is the default behavior.
 
-```C# Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioUnknownParams
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioExtraParams
 Response<ChatCompletions> response = client.Complete(requestOptions, extraParams: ExtraParameters.PassThrough);
+```
+
+An `async` option is also available.
+
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioAsync
+using Azure.AI.Inference;
+
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant."),
+        new ChatRequestUserMessage("How many feet are in a mile?"),
+    },
+    AdditionalProperties = { { "foo", BinaryData.FromString("\"bar\"") } }, // Optional, add additional properties to the request to pass to the model
+};
+Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+```
+
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioExtraParamsAsync
+Response<ChatCompletions> response = await client.CompleteAsync(requestOptions, extraParams: ExtraParameters.PassThrough);
 ```
