@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ProcessThreadInfo : IUtf8JsonSerializable, IJsonModel<ProcessThreadInfo>
     {
+        //Add property 'ProcessId' to accept the value of the id(maybe a number or actual resoucdeidentifier) for issue #39126 and the property 'id' leave as null.
         internal static ProcessThreadInfo DeserializeProcessThreadInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
