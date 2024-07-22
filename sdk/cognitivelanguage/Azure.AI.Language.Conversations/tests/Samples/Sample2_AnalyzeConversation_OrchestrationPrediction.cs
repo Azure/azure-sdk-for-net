@@ -63,7 +63,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void AnalyzeConversationOrchestrationPredictionConversation()
         {
             ConversationAnalysisClient client = Client;
-
+            string projectName = TestEnvironment.OrchestrationProjectName;
+            string deploymentName = TestEnvironment.OrchestrationDeploymentName;
             AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "How are you?")), new ConversationActionContent(projectName, deploymentName)
             {
                 // Use Utf16CodeUnit for strings in .NET.
