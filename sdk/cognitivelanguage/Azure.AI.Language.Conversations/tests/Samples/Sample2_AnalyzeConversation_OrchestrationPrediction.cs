@@ -27,10 +27,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             projectName = TestEnvironment.OrchestrationProjectName;
             deploymentName = TestEnvironment.OrchestrationDeploymentName;
 #endif
-            AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "How are you?")), new ConversationActionContent(projectName, deploymentName)
-            {
-                StringIndexType = StringIndexType.Utf16CodeUnit,
-            });
+            AnalyzeConversationInput data = new ConversationalInput(
+                new ConversationAnalysisInput(
+                    new TextConversationItem(
+                        id: "1",
+                        participantId: "1",
+                        text: "How are you?")),
+                new ConversationActionContent(projectName, deploymentName)
+                {
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
+                });
 
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
             ConversationActionResult conversationResult = response.Value as ConversationActionResult;
@@ -65,7 +71,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             string projectName = TestEnvironment.OrchestrationProjectName;
             string deploymentName = TestEnvironment.OrchestrationDeploymentName;
-            AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "How are you?")), new ConversationActionContent(projectName, deploymentName)
+            AnalyzeConversationInput data = new ConversationalInput(
+                new ConversationAnalysisInput(
+                    new TextConversationItem(
+                        id: "1",
+                        participantId: "1",
+                        text: "How are you?")),
+                new ConversationActionContent(projectName, deploymentName)
             {
                 // Use Utf16CodeUnit for strings in .NET.
                 StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -154,12 +166,17 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             string projectName = TestEnvironment.OrchestrationProjectName;
             string deploymentName = TestEnvironment.OrchestrationDeploymentName;
 
-
-            AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "How are you?")), new ConversationActionContent(projectName, deploymentName)
-            {
-                // Use Utf16CodeUnit for strings in .NET.
-                StringIndexType = StringIndexType.Utf16CodeUnit,
-            });
+            AnalyzeConversationInput data = new ConversationalInput(
+                new ConversationAnalysisInput(
+                    new TextConversationItem(
+                        id: "1",
+                        participantId: "1",
+                        text: "How are you?")),
+                new ConversationActionContent(projectName, deploymentName)
+                {
+                    // Use Utf16CodeUnit for strings in .NET.
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
+                });
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionAsync
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);
@@ -191,7 +208,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
             AnalyzeConversationInput data = new ConversationalInput(
-                new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName)
+                new ConversationAnalysisInput(
+                    new TextConversationItem(
+                        id: "1",
+                        participantId: "1",
+                        text: "Send an email to Carol about tomorrow's demo")),
+                new ConversationActionContent(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName)
                 {
                     StringIndexType = StringIndexType.Utf16CodeUnit,
                 });

@@ -29,7 +29,13 @@ Once you have created a client, you can call synchronous or asynchronous methods
 string projectName = "Menu";
 string deploymentName = "production";
 
-AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(projectName, deploymentName)
+AnalyzeConversationInput data = new ConversationalInput(
+    new ConversationAnalysisInput(
+        new TextConversationItem(
+            id: "1",
+            participantId: "1",
+            text: "Send an email to Carol about tomorrow's demo")),
+    new ConversationActionContent(projectName, deploymentName)
 {
     // Use Utf16CodeUnit for strings in .NET.
     StringIndexType = StringIndexType.Utf16CodeUnit,

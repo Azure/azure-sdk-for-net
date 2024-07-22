@@ -28,10 +28,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #endif
 
             AnalyzeConversationInput data =
-                new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Enviar un email a Carol acerca de la presentación de mañana")
-                {
-                    Language = "es"
-                }),
+                new ConversationalInput(
+                    new ConversationAnalysisInput(
+                        new TextConversationItem(
+                            id: "1",
+                            participantId: "1",
+                            text: "Enviar un email a Carol acerca de la presentación de mañana")
+                        {
+                            Language = "es"
+                        }),
                 new ConversationActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.
@@ -92,10 +97,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             string deploymentName = TestEnvironment.DeploymentName;
 
             AnalyzeConversationInput data =
-                new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Enviar un email a Carol acerca de la presentación de mañana")
-                {
-                    Language = "es"
-                }),
+                new ConversationalInput(
+                    new ConversationAnalysisInput(
+                        new TextConversationItem(
+                            id: "1",
+                            participantId: "1",
+                            text: "Enviar un email a Carol acerca de la presentación de mañana")
+                        {
+                            Language = "es"
+                        }),
                 new ConversationActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.

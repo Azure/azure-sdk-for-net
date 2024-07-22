@@ -25,7 +25,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             deploymentName = TestEnvironment.DeploymentName;
 #endif
 
-            AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(projectName, deploymentName)
+            AnalyzeConversationInput data = new ConversationalInput(
+                new ConversationAnalysisInput(
+                    new TextConversationItem(
+                        id: "1",
+                        participantId: "1",
+                        text: "Send an email to Carol about tomorrow's demo")),
+                new ConversationActionContent(projectName, deploymentName)
             {
                 // Use Utf16CodeUnit for strings in .NET.
                 StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -84,12 +90,18 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             string projectName = TestEnvironment.ProjectName;
             string deploymentName = TestEnvironment.DeploymentName;
 
-            AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(projectName, deploymentName)
-            {
-                // Use Utf16CodeUnit for strings in .NET.
-                StringIndexType = StringIndexType.Utf16CodeUnit,
-                Verbose = true,
-            });
+            AnalyzeConversationInput data = new ConversationalInput(
+                new ConversationAnalysisInput(
+                    new TextConversationItem(
+                        id: "1",
+                        participantId: "1",
+                        text: "Send an email to Carol about tomorrow's demo")),
+                new ConversationActionContent(projectName, deploymentName)
+                {
+                    // Use Utf16CodeUnit for strings in .NET.
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
+                    Verbose = true,
+                });
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithOptionsAsync
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);

@@ -127,8 +127,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:AnalyzeConversationAsync_ConversationPii
 
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
-            AnalyzeConversationOperationState operationResults = analyzeConversationOperation.Value;
             #endregion
+
+            AnalyzeConversationOperationState operationResults = analyzeConversationOperation.Value;
 
             foreach (ConversationPiiOperationResult task in operationResults.Actions.Items.Cast<ConversationPiiOperationResult>())
             {

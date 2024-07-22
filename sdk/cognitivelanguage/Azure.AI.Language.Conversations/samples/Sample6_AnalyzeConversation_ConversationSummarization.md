@@ -110,5 +110,4 @@ Using the same `data` definition above, you can make an asynchronous request by 
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationSummarization
 Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
-AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
 ```

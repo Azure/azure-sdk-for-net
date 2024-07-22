@@ -25,11 +25,17 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             deploymentName = TestEnvironment.DeploymentName;
 #endif
 
-            AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(projectName, deploymentName)
-            {
-                // Use Utf16CodeUnit for strings in .NET.
-                StringIndexType = StringIndexType.Utf16CodeUnit,
-            });
+            AnalyzeConversationInput data = new ConversationalInput(
+                new ConversationAnalysisInput(
+                    new TextConversationItem(
+                        id: "1",
+                        participantId: "1",
+                        text: "Send an email to Carol about tomorrow's demo")),
+                new ConversationActionContent(projectName, deploymentName)
+                {
+                    // Use Utf16CodeUnit for strings in .NET.
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
+                });
 
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
             ConversationActionResult conversationResult = response.Value as ConversationActionResult;
@@ -84,10 +90,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             string projectName = TestEnvironment.ProjectName;
             string deploymentName = TestEnvironment.DeploymentName;
 
-            AnalyzeConversationInput data = new ConversationalInput(new ConversationAnalysisInput(new TextConversationItem(id: "1", participantId: "1", text: "Send an email to Carol about tomorrow's demo")), new ConversationActionContent(projectName, deploymentName)
-            {
-                StringIndexType = StringIndexType.Utf16CodeUnit,
-            });
+            AnalyzeConversationInput data = new ConversationalInput(
+                new ConversationAnalysisInput(
+                    new TextConversationItem(
+                        id: "1",
+                        participantId: "1",
+                        text: "Send an email to Carol about tomorrow's demo")),
+                new ConversationActionContent(projectName, deploymentName)
+                {
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
+                });
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationAsync
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);

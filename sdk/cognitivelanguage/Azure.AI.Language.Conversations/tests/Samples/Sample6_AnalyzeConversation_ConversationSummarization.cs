@@ -147,11 +147,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         }
                     });
             #region Snippet:AnalyzeConversationAsync_ConversationSummarization
-
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
-            AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
-
             #endregion
+
+            AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
 
             foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
             {
