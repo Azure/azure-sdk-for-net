@@ -29,15 +29,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     {
                         new TextConversation("1", "en", new List<TextConversationItem>()
                         {
-                            new TextConversationItem("1", "Agent_1", "Hello, how can I help you?")
-                            {
-                                Role = ParticipantRole.Agent
-                            },
-                            new TextConversationItem("2", "Customer_1", "How to upgrade Office? I am getting error messages the whole day.")
+                            new TextConversationItem(
+                                id: "1",
+                                participantId: "Agent_1",
+                                text: "Hello, how can I help you?")
+                                {
+                                    Role = ParticipantRole.Agent
+                                },
+                            new TextConversationItem(
+                                id: "2",
+                                participantId: "Customer_1",
+                                text: "How to upgrade Office? I am getting error messages the whole day.")
                             {
                                 Role = ParticipantRole.Customer
                             },
-                            new TextConversationItem("3", "Agent_1", "Press the upgrade button please. Then sign in and follow the instructions.")
+                            new TextConversationItem(
+                                id : "3",
+                                participantId : "Agent_1",
+                                text : "Press the upgrade button please. Then sign in and follow the instructions.")
                             {
                                 Role = ParticipantRole.Agent
                             }
