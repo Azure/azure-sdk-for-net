@@ -27,17 +27,19 @@ namespace Azure.Core
             string[]? values;
             if (_accumulator.TryGetValue(key, out values))
             {
-                if (values != null && values.Length == 0)
+                var hasValues = values != null;
+
+                if (hasValues && values.Length == 0)
                 {
                     // Marker entry for this key to indicate entry already in expanding list dictionary
                     _expandingAccumulator[key].Add(value);
                 }
-                else if (values.Length == 1)
+                else if (hasValues && values.Length == 1)
                 {
                     // Second value for this key
                     _accumulator[key] = new string[] { values[0], value };
                 }
-                else if (values != null)
+                else if (hasValues)
                 {
                     // Third value for this key
                     // Add zero count entry and move to data to expanding list dictionary
