@@ -26,7 +26,7 @@ namespace Azure.Maps.Rendering
         internal Uri Endpoint { get; }
 
         /// <summary> The Accept header field can be used to specify preferences regarding response media types. Allowed media types include image/jpeg and image/png. Return image in image/png if Accept header is not specified. </summary>
-        public MediaType AcceptMediaType { get; set; }
+        public MediaType? AcceptMediaType { get; set; }
 
         /// <summary> Initializes new instance of MapsRenderClientOptions. </summary>
         /// <param name="version"> Azure Maps Render API version. </param>
@@ -40,7 +40,7 @@ namespace Azure.Maps.Rendering
                 _ => throw new NotSupportedException()
             };
             Endpoint = endpoint;
-            AcceptMediaType = (MediaType)acceptMediaType;
+            AcceptMediaType = acceptMediaType != null ? (MediaType)acceptMediaType : new MediaType("");
         }
     }
 }

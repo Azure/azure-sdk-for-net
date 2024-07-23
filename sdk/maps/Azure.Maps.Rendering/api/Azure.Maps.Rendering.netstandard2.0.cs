@@ -84,7 +84,8 @@ namespace Azure.Maps.Rendering
     }
     public partial class MapsRenderingClientOptions : Azure.Core.ClientOptions
     {
-        public MapsRenderingClientOptions(Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion version = Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion.V2024_04_01, System.Uri endpoint = null) { }
+        public MapsRenderingClientOptions(Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion version = Azure.Maps.Rendering.MapsRenderingClientOptions.ServiceVersion.V2024_04_01, System.Uri endpoint = null, Azure.Maps.Rendering.MediaType? acceptMediaType = default(Azure.Maps.Rendering.MediaType?)) { }
+        public Azure.Maps.Rendering.MediaType? AcceptMediaType { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2024_04_01 = 1,

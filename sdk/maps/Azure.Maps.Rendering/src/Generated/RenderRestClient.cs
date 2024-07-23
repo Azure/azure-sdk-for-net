@@ -105,12 +105,12 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
         /// <remarks>
         ///
         /// The `Get Map Tiles` API in an HTTP GET request that allows users to request map tiles in vector or raster formats typically to be integrated  into a map control or SDK. Some example tiles that can be requested are Azure Maps road tiles, real-time  Weather Radar tiles or the map tiles created using [Azure Maps Creator](https://aka.ms/amcreator). By default,  Azure Maps uses vector tiles for its web map control ([Web SDK](/azure/azure-maps/about-azure-maps#web-sdk)) and [Android SDK](/azure/azure-maps/about-azure-maps#android-sdk).
         /// </remarks>
-        public async Task<ResponseWithHeaders<Stream, RenderGetMapTileHeaders>> GetMapTileAsync(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapTileHeaders>> GetMapTileAsync(MapTileSetId tilesetId, MapTileIndex mapTileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (mapTileIndex == null)
             {
@@ -153,12 +153,12 @@ namespace Azure.Maps.Rendering
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
         /// <remarks>
         ///
         /// The `Get Map Tiles` API in an HTTP GET request that allows users to request map tiles in vector or raster formats typically to be integrated  into a map control or SDK. Some example tiles that can be requested are Azure Maps road tiles, real-time  Weather Radar tiles or the map tiles created using [Azure Maps Creator](https://aka.ms/amcreator). By default,  Azure Maps uses vector tiles for its web map control ([Web SDK](/azure/azure-maps/about-azure-maps#web-sdk)) and [Android SDK](/azure/azure-maps/about-azure-maps#android-sdk).
         /// </remarks>
-        public ResponseWithHeaders<Stream, RenderGetMapTileHeaders> GetMapTile(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, RenderGetMapTileHeaders> GetMapTile(MapTileSetId tilesetId, MapTileIndex mapTileIndex, DateTimeOffset? timeStamp = null, MapTileSize? tileSize = null, string language = null, LocalizedMapView? localizedMapView = null, CancellationToken cancellationToken = default)
         {
             if (mapTileIndex == null)
             {
@@ -365,12 +365,12 @@ namespace Azure.Maps.Rendering
         /// <param name="statesetId"> The stateset id. </param>
         /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="tileIndex"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="mapTileIndex"/> is null. </exception>
         /// <remarks>
         ///
         /// Fetches state tiles in vector format typically to be integrated into indoor maps module of map control or SDK. The map control will call this API after user turns on dynamic styling. For more information, see [Zoom Levels and Tile Grid](/azure/location-based-services/zoom-levels-and-tile-grid).
         /// </remarks>
-        public async Task<ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders>> GetMapStateTileAsync(string statesetId, MapTileIndex tileIndex, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders>> GetMapStateTileAsync(string statesetId, MapTileIndex mapTileIndex, CancellationToken cancellationToken = default)
         {
             if (statesetId == null)
             {
@@ -400,12 +400,12 @@ namespace Azure.Maps.Rendering
         /// <param name="statesetId"> The stateset id. </param>
         /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="tileIndex"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="statesetId"/> or <paramref name="mapTileIndex"/> is null. </exception>
         /// <remarks>
         ///
         /// Fetches state tiles in vector format typically to be integrated into indoor maps module of map control or SDK. The map control will call this API after user turns on dynamic styling. For more information, see [Zoom Levels and Tile Grid](/azure/location-based-services/zoom-levels-and-tile-grid).
         /// </remarks>
-        public ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders> GetMapStateTile(string statesetId, MapTileIndex tileIndex, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, RenderGetMapStateTileHeaders> GetMapStateTile(string statesetId, MapTileIndex mapTileIndex, CancellationToken cancellationToken = default)
         {
             if (statesetId == null)
             {
@@ -1267,14 +1267,14 @@ namespace Azure.Maps.Rendering
         /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
         /// <remarks>
         ///
         /// To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates. For more information, see [Zoom Levels and Tile Grid](/azure/azure-maps/zoom-levels-and-tile-grid).
         ///
         /// Copyrights API is designed to serve copyright information for Render service. In addition to basic copyright for the whole map, API is serving specific groups of copyrights for some countries/regions.
         /// </remarks>
-        public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(ResponseFormat format, MapTileIndex mapTileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (mapTileIndex == null)
             {
@@ -1302,14 +1302,14 @@ namespace Azure.Maps.Rendering
         /// <param name="mapTileIndex"> Parameter group. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mapTileIndex"/> is null. </exception>
         /// <remarks>
         ///
         /// To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates. For more information, see [Zoom Levels and Tile Grid](/azure/azure-maps/zoom-levels-and-tile-grid).
         ///
         /// Copyrights API is designed to serve copyright information for Render service. In addition to basic copyright for the whole map, API is serving specific groups of copyrights for some countries/regions.
         /// </remarks>
-        public Response<RenderCopyright> GetCopyrightForTile(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public Response<RenderCopyright> GetCopyrightForTile(ResponseFormat format, MapTileIndex mapTileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (mapTileIndex == null)
             {
