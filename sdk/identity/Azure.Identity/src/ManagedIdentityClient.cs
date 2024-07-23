@@ -18,8 +18,8 @@ namespace Azure.Identity
             "ManagedIdentityCredential authentication unavailable. No Managed Identity endpoint found.";
 
         internal Lazy<ManagedIdentitySource> _identitySource;
-        private MsalConfidentialClient _msal;
-        private MsalManagedIdentityClient _miMsal;
+        private MsalConfidentialClient _msalConfidentialClient;
+        private MsalManagedIdentityClient _msalManagedIdentityClient;
         private bool _enableLegacyMI;
         private bool _isChainedCredential;
 
@@ -50,9 +50,9 @@ namespace Azure.Identity
             Pipeline = options.Pipeline;
             _enableLegacyMI = options.EnableManagedIdentityLegacyBehavior;
             _isChainedCredential = options.Options?.IsChainedCredential ?? false;
-            _miMsal = new MsalManagedIdentityClient(options);
-            _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options, _enableLegacyMI, _miMsal));
-            _msal = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options);
+            _msalManagedIdentityClient = new MsalManagedIdentityClient(options);
+            _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options, _enableLegacyMI, _msalManagedIdentityClient));
+            _msalConfidentialClient = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options);
         }
 
         internal CredentialPipeline Pipeline { get; }
@@ -66,22 +66,28 @@ namespace Azure.Identity
             AuthenticationResult result;
             if (_enableLegacyMI)
             {
-                result = await _msal.AcquireTokenForClientAsync(context.Scopes, context.TenantId, context.Claims, context.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
+                result = await _msalConfidentialClient.AcquireTokenForClientAsync(context.Scopes, context.TenantId, context.Claims, context.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
             }
             else
             {
                 var availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+
+                // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
                 if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential)
                 {
                     return await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
                 }
+
+                // ServiceFabric does not support specifying user assigned identity by client id or resource id. The managed identity selected is based on the resource configuration.
                 if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ResourceIdentifier != null || ClientId != null))
                 {
                     throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
                 }
+
+                // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
                 result = async ?
-                    await _miMsal.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
-                    _miMsal.AcquireTokenForManagedIdentity(context, cancellationToken);
+                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false) :
+                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, cancellationToken);
             }
             return result.ToAccessToken();
         }

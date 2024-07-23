@@ -18,10 +18,10 @@ namespace Azure.Identity
         private readonly AsyncLockWithValue<IManagedIdentityApplication> _clientAsyncLock;
         private bool _isForceRefreshEnabled { get; }
 
-        protected internal bool IsSupportLoggingEnabled { get; }
+        internal bool IsSupportLoggingEnabled { get; }
         internal ManagedIdentityId ManagedIdentityId { get; }
-        protected internal bool DisableInstanceDiscovery { get; }
-        protected internal CredentialPipeline Pipeline { get; }
+        internal bool DisableInstanceDiscovery { get; }
+        internal CredentialPipeline Pipeline { get; }
         internal Uri AuthorityHost { get; }
 
         protected MsalManagedIdentityClient()

@@ -9,6 +9,7 @@ namespace Azure.Identity
     {
         public override bool IsRetriableResponse(HttpMessage message)
         {
+            // retriable error codes for IMDS: https://learn.microsoft.com/azure/virtual-machines/instance-metadata-service?tabs=windows#errors-and-debugging
             return message.Response.Status switch
             {
                 404 => true,
