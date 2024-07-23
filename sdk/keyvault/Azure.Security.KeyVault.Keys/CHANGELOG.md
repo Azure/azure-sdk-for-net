@@ -10,8 +10,6 @@
 
 ### Bugs Fixed
 
-- `KeyRotationPolicyAction` performs case-insensitive comparisons since Key Vault and Managed HSM return different cases for "rotate".
-
 ### Other Changes
 
 - The default service version is now "V7_6_Preview_1".
