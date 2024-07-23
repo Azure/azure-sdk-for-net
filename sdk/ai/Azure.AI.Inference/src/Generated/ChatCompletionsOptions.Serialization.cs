@@ -44,7 +44,7 @@ namespace Azure.AI.Inference
             float? temperature = default;
             float? topP = default;
             int? maxTokens = default;
-            ChatCompletionsResponseFormat? responseFormat = default;
+            ChatCompletionsResponseFormat responseFormat = default;
             IList<string> stop = default;
             IList<ChatCompletionsToolDefinition> tools = default;
             BinaryData toolChoice = default;
@@ -124,7 +124,7 @@ namespace Azure.AI.Inference
                     {
                         continue;
                     }
-                    responseFormat = new ChatCompletionsResponseFormat(property.Value.GetString());
+                    responseFormat = ChatCompletionsResponseFormat.DeserializeChatCompletionsResponseFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stop"u8))

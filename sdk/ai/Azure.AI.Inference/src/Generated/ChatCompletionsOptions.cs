@@ -80,7 +80,13 @@ namespace Azure.AI.Inference
         /// Supported range is [0, 1].
         /// </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
-        /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
+        /// <param name="responseFormat">
+        /// The format that the model must output. Use this to enable JSON mode instead of the default text mode.
+        /// Note that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON
+        /// via a system or user message.
+        /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatCompletionsResponseFormatJSON"/> and <see cref="ChatCompletionsResponseFormatText"/>.
+        /// </param>
         /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
         /// <param name="tools">
         /// The available tool definitions that the chat completions request can use, including caller-defined functions.
@@ -94,7 +100,7 @@ namespace Azure.AI.Inference
         /// </param>
         /// <param name="model"> ID of the specific AI model to use, if more than one model is available on the endpoint. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? internalShouldStreamResponse, float? presencePenalty, float? temperature, float? nucleusSamplingFactor, int? maxTokens, ChatCompletionsResponseFormat? responseFormat, IList<string> stopSequences, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice, long? seed, string model, IDictionary<string, BinaryData> additionalProperties)
+        internal ChatCompletionsOptions(IList<ChatRequestMessage> messages, float? frequencyPenalty, bool? internalShouldStreamResponse, float? presencePenalty, float? temperature, float? nucleusSamplingFactor, int? maxTokens, ChatCompletionsResponseFormat responseFormat, IList<string> stopSequences, IList<ChatCompletionsToolDefinition> tools, BinaryData internalSuppressedToolChoice, long? seed, string model, IDictionary<string, BinaryData> additionalProperties)
         {
             Messages = messages;
             FrequencyPenalty = frequencyPenalty;
@@ -160,8 +166,14 @@ namespace Azure.AI.Inference
         public float? NucleusSamplingFactor { get; set; }
         /// <summary> The maximum number of tokens to generate. </summary>
         public int? MaxTokens { get; set; }
-        /// <summary> An object specifying the format that the model must output. Used to enable JSON mode. </summary>
-        public ChatCompletionsResponseFormat? ResponseFormat { get; set; }
+        /// <summary>
+        /// The format that the model must output. Use this to enable JSON mode instead of the default text mode.
+        /// Note that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON
+        /// via a system or user message.
+        /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatCompletionsResponseFormatJSON"/> and <see cref="ChatCompletionsResponseFormatText"/>.
+        /// </summary>
+        public ChatCompletionsResponseFormat ResponseFormat { get; set; }
         /// <summary> A collection of textual sequences that will end completions generation. </summary>
         public IList<string> StopSequences { get; }
         /// <summary>

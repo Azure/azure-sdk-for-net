@@ -6,52 +6,66 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
     /// <summary>
-    /// An representation of a response format configuration usable by Chat Completions. Can be used to enable JSON
-    /// mode.
+    /// Represents the format that the model must output. Use this to enable JSON mode instead of the default text mode.
+    /// Note that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON
+    /// via a system or user message.
+    /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ChatCompletionsResponseFormatJSON"/> and <see cref="ChatCompletionsResponseFormatText"/>.
     /// </summary>
-    public readonly partial struct ChatCompletionsResponseFormat : IEquatable<ChatCompletionsResponseFormat>
+    public abstract partial class ChatCompletionsResponseFormat
     {
-        private readonly string _value;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsResponseFormat"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ChatCompletionsResponseFormat(string value)
+        protected ChatCompletionsResponseFormat()
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TextValue = "text";
-        private const string JsonObjectValue = "json_object";
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsResponseFormat"/>. </summary>
+        /// <param name="type"> The response format type to use for chat completions. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatCompletionsResponseFormat(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
 
-        /// <summary>
-        /// The standard Chat Completions response format that can freely generate text and is not guaranteed to produce response
-        /// content that adheres to a specific schema.
-        /// </summary>
-        public static ChatCompletionsResponseFormat Text { get; } = new ChatCompletionsResponseFormat(TextValue);
-        /// <summary> A response format for Chat Completions that restricts responses to emitting valid JSON objects. </summary>
-        public static ChatCompletionsResponseFormat JsonObject { get; } = new ChatCompletionsResponseFormat(JsonObjectValue);
-        /// <summary> Determines if two <see cref="ChatCompletionsResponseFormat"/> values are the same. </summary>
-        public static bool operator ==(ChatCompletionsResponseFormat left, ChatCompletionsResponseFormat right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ChatCompletionsResponseFormat"/> values are not the same. </summary>
-        public static bool operator !=(ChatCompletionsResponseFormat left, ChatCompletionsResponseFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChatCompletionsResponseFormat"/>. </summary>
-        public static implicit operator ChatCompletionsResponseFormat(string value) => new ChatCompletionsResponseFormat(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ChatCompletionsResponseFormat other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ChatCompletionsResponseFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> The response format type to use for chat completions. </summary>
+        internal string Type { get; set; }
     }
 }

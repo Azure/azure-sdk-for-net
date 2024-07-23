@@ -136,7 +136,11 @@ namespace Azure.AI.Inference
         /// Supported range is [0, 1].
         /// </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
-        /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
+        /// <param name="responseFormat">
+        /// The format that the model must output. Use this to enable JSON mode instead of the default text mode.
+        /// Note that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON
+        /// via a system or user message.
+        /// </param>
         /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
         /// <param name="tools"> The available tool definitions that the chat completions request can use, including caller-defined functions. </param>
         /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
@@ -152,7 +156,7 @@ namespace Azure.AI.Inference
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        public virtual async Task<Response<ChatCompletions>> CompleteAsync(IEnumerable<ChatRequestMessage> messages, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, float? presencePenalty = null, float? temperature = null, float? nucleusSamplingFactor = null, int? maxTokens = null, ChatCompletionsResponseFormat? responseFormat = null, IEnumerable<string> stopSequences = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, long? seed = null, string model = null, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChatCompletions>> CompleteAsync(IEnumerable<ChatRequestMessage> messages, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, float? presencePenalty = null, float? temperature = null, float? nucleusSamplingFactor = null, int? maxTokens = null, ChatCompletionsResponseFormat responseFormat = null, IEnumerable<string> stopSequences = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, long? seed = null, string model = null, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
@@ -221,7 +225,11 @@ namespace Azure.AI.Inference
         /// Supported range is [0, 1].
         /// </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
-        /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
+        /// <param name="responseFormat">
+        /// The format that the model must output. Use this to enable JSON mode instead of the default text mode.
+        /// Note that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON
+        /// via a system or user message.
+        /// </param>
         /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
         /// <param name="tools"> The available tool definitions that the chat completions request can use, including caller-defined functions. </param>
         /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
@@ -237,7 +245,7 @@ namespace Azure.AI.Inference
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        public virtual Response<ChatCompletions> Complete(IEnumerable<ChatRequestMessage> messages, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, float? presencePenalty = null, float? temperature = null, float? nucleusSamplingFactor = null, int? maxTokens = null, ChatCompletionsResponseFormat? responseFormat = null, IEnumerable<string> stopSequences = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, long? seed = null, string model = null, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
+        public virtual Response<ChatCompletions> Complete(IEnumerable<ChatRequestMessage> messages, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, float? presencePenalty = null, float? temperature = null, float? nucleusSamplingFactor = null, int? maxTokens = null, ChatCompletionsResponseFormat responseFormat = null, IEnumerable<string> stopSequences = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, long? seed = null, string model = null, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
