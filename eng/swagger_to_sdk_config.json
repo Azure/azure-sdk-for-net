@@ -2,7 +2,12 @@
   "$schema": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/documentation/sdkautomation/SwaggerToSdkConfigSchema.json",
   "generateOptions": {
     "generateScript": {
-      "path": "pwsh ./eng/scripts/Invoke-GenerateAndBuildV2.ps1"
+      "path": "pwsh ./eng/scripts/Invoke-GenerateAndBuildV2.ps1",
+      "logPrefix": "DotNet-Sdk-Automation",
+      "stderr": {
+        "showInComment": ".*(\\[ERROR\\]|error NU|(?!0\\b)\\d+ Error\\(s\\)|ExternalError).*",
+        "scriptError": "\\[ERROR\\]"
+      }
     }
   },
   "initOptions": {

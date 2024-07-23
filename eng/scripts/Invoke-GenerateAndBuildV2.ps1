@@ -79,7 +79,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
             $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
         }
     } else {
-        throw "No readme File path provided."
+        throw "[ERROR] No readme file path provided. swaggerDir:$swaggerDir, readmeFiles:$readmeFiles. Please report this issue through https://aka.ms/azsdk/support/specreview-channel and include this pull request."
     }
 
     if ($autorestConfigYaml) {
@@ -134,7 +134,7 @@ if ($relatedTypeSpecProjectFolder) {
         Invoke-Expression $tspclientCommand
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
-          Write-Error "Failed to generate typespec project. Exit code: $LASTEXITCODE"
+          Write-Error "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
           $generatedSDKPackages.Add(@{
             result = "failed";
             path=@("");

@@ -152,7 +152,7 @@ function CreateOrUpdateAutorestConfigFile() {
             $autorestConfigYaml = "# $namespace`n"  + '``` yaml' + "`n$autorestConfigYaml" + '```' + "`n";
             $autorestConfigYaml | Out-File $autorestFilePath
         } else {
-            Throw "autorest.md does not exist, and no autorest configuration to create one."
+            Throw "[ERROR] autorest.md does not exist, and no autorest configuration to create one. Please provide the necessary autorest configuration."
         }
     }
 }
@@ -265,7 +265,7 @@ function New-DataPlanePackageFolder() {
   } else {
     Write-Host "Path doesn't exist. create template."
     if ($inputfile -eq "" -And $readme -eq "") {
-        Throw "Error: input file should not be empty."
+        Throw "[ERROR] Input file should not be empty. Please provide a valid input file or readme file."
     }
     dotnet new -i $sdkPath/sdk/template
     Write-Host "Create project folder $projectFolder"
@@ -276,7 +276,7 @@ function New-DataPlanePackageFolder() {
     Push-Location $serviceFolder
     $namespaceArray = $namespace.Split(".")
     if ( $namespaceArray.Count -lt 3) {
-        Throw "Error: invalid namespace name."
+        Throw "[ERROR] Invalid namespace name provided: $namespace. Please provide valid namespace."
     }
 
     $endIndex = $namespaceArray.Count - 2
@@ -497,7 +497,7 @@ function New-TypeSpecPackageFolder() {
         Push-Location $serviceFolder
         $namespaceArray = $namespace.Split(".")
         if ( $namespaceArray.Count -lt 3) {
-            Throw "Error: invalid namespace name."
+            Throw "[ERROR] Invalid namespace name provided: $namespace. Please provide valid namespace."
         }
 
         $endIndex = $namespaceArray.Count - 2
@@ -561,7 +561,7 @@ function Get-ResourceProviderFromReadme($readmeFile) {
     $pathArray = $readmeFile.Split("/");
 
     if ( $pathArray.Count -lt 3) {
-        Throw "Error: invalid readme file path. A valid readme file path should contain specName and serviceType and be of the form <specName>/<serviceType>/readme.md, e.g. specification/deviceupdate/data-plane/readme.md"
+        Throw "[ERROR] Invalid readme file path: $readmeFile. A valid readme file path should contain specName and serviceType and be of the form <specName>/<serviceType>/readme.md, e.g. specification/deviceupdate/data-plane/readme.md"
     }
 
     $index = [array]::indexof($pathArray, "data-plane")
@@ -576,7 +576,7 @@ function Get-ResourceProviderFromReadme($readmeFile) {
         return $specName, $serviceType
     }
 
-    Throw "Fail to retrive the service name and type."
+    Throw "[ERROR] Fail to retrive the service name and type from $readmeFile. Please provide a valid readme file path, e.g. specification/deviceupdate/data-plane/readme.md"
 }
 
 <#
@@ -607,6 +607,8 @@ Run script with default parameters.
 Invoke-GenerateAndBuildSDK -readmeAbsolutePath <path-to-readme> -sdkRootPath <path-to-sdk-root-directory> -generatedSDKPackages <package-object-list>
 
 #>
+
+$DotNetSupportChannelLink = "https://teams.microsoft.com/l/channel/19%3A7b87fb348f224b37b6206fa9d89a105b%40thread.skype/Language%20-%20DotNet?groupId=3e17dcb0-4257-4a30-b843-77f47f1d4121&tenantId="
 function Invoke-GenerateAndBuildSDK () {
     param(
         [string]$readmeAbsolutePath,
@@ -621,7 +623,7 @@ function Invoke-GenerateAndBuildSDK () {
     Write-Host "service:$service, serviceType:$serviceType"
 
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
-        Write-Error "readme file '$readmeFile' does not exist."
+        Write-Error "[ERROR] readme file '$readmeFile' does not exist. Please provide a valid readme file path."
         exit 1
     }
 
@@ -635,7 +637,7 @@ function Invoke-GenerateAndBuildSDK () {
         }
         New-MgmtPackageFolder -service $service -packageName $package -sdkPath $sdkRootPath -commitid $commitid -readme $readmeFile -outputJsonFile $newpackageoutput
         if ( !$?) {
-            Write-Error "Failed to create sdk project folder. exit code: $?"
+            Write-Error "[ERROR] Failed to create sdk project folder.service:$service,package:$package,sdkPath:$sdkRootPath,readme:$readmeFile.exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             exit 1
         }
         $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
@@ -665,7 +667,7 @@ function Invoke-GenerateAndBuildSDK () {
 
             New-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkRootPath -readme $readmeFile -autorestConfigYaml "$autorestConfigYaml" -outputJsonFile $newpackageoutput
             if ( !$? ) {
-                Write-Error "Failed to create sdk project folder. exit code: $?"
+                Write-Error "[ERROR] Failed to create sdk project folder.service:$service,namespace:$namespace,sdkPath:$sdkRootPath,readme:$readmeFile,autorestConfigYaml:$autorestConfigYaml.exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 exit 1
             }
             $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
@@ -691,7 +693,7 @@ function Invoke-GenerateAndBuildSDK () {
                     if ($fileContent -match $regexForMatch) {
                         New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
                         if ( !$? ) {
-                            Write-Error "Failed to create sdk project folder. exit code: $?"
+                            Write-Error "[ERROR] Failed to create sdk project folder.service:$service,namespace:$folder,sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                             exit 1
                         }
                         $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
@@ -750,7 +752,7 @@ function GeneratePackage()
             dotnet build /t:GenerateCode $srcPath /p:SpecRepoRoot=$specRepoRoot
         }
         if ( !$?) {
-            Write-Error "Failed to generate sdk. exit code: $?"
+            Write-Error "[ERROR] Failed to generate sdk for package:$packageName. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
         }
     }
@@ -761,7 +763,7 @@ function GeneratePackage()
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
-            Write-Error "Failed to build project. exit code: $?"
+            Write-Error "[ERROR] Failed to build project:$srcPath. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
         } else {
             # Build the whole solution and generate artifacts if the project build successfully
@@ -770,29 +772,36 @@ function GeneratePackage()
             $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
             dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
             if ( !$? ) {
-                Write-Error "Failed to build sdk solution. exit code: $?"
+                Write-Error "[ERROR] Failed to build sdk solution:$serviceProjFilePath. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             }
             # pack
             Write-Host "Start to pack sdk"
             dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
-                Write-Error "Failed to pack sdk. exit code: $?"
+                Write-Error "[ERROR] Failed to pack sdk:$srcPath. exit code: $?. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             } else {
                 # artifacts
                 Push-Location $sdkRootPath
                 # check the artifact in Debug folder
                 $artifactsPath = (Join-Path "artifacts" "packages" "Debug" $packageName)
-                $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
-                if ($artifacts.count -le 0) {
-                    # check the artifact in Release folder
-                    $artifactsPath = (Join-Path "artifacts" "packages" "Release" $packageName)
+                if (Test-Path $artifactsPath) {
                     $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
                 }
+                if ($artifacts.count -eq 0) {
+                    # check the artifact in Release folder
+                    $artifactsPath = (Join-Path "artifacts" "packages" "Release" $packageName)
+                    if (-not (Test-Path $artifactsPath)) {
+                        Write-Error "[ERROR] Artifact folder not found for $artifactsPath. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                    }
+                    else {
+                        $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
+                    }
+                }
                 $apiViewArtifact = ""
-                if ( $artifacts.count -le 0) {
-                    Write-Error "Failed to generate sdk artifact"
+                if ( $artifacts.count -eq 0) {
+                    Write-Error "[ERROR] Failed to generate sdk artifact. Please review the detail errors for potential fixes. If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 } else {
                     $apiViewArtifact = $artifacts[0]
                 }
@@ -811,7 +820,7 @@ function GeneratePackage()
             Write-Host "Start to export api for $service"
             & $sdkRootPath/eng/scripts/Export-API.ps1 $service
             if ( !$? ) {
-                Write-Error "Failed to export api for sdk. exit code: $?"
+                Write-Error "[ERROR] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             }
             # breaking change validation
@@ -933,7 +942,7 @@ function GetSDKProjectFolder()
         }
     }
     if (!$service || !$packageDir) {
-        throw "Not provide service name or packageDir."
+        throw "[ERROR] 'serviceDir' or 'packageDir' not provided. Please configure these settings in the 'tspconfig.yaml' file."
     }
     $projectFolder = (Join-Path $sdkRepoRoot $service $packageDir)
     return $projectFolder
