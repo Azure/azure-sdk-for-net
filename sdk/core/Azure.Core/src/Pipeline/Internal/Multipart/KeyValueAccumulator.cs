@@ -27,19 +27,19 @@ namespace Azure.Core
             string[]? values;
             if (_accumulator.TryGetValue(key, out values))
             {
-                var hasValues = values != null;
+                var valuesIsNotNull = values != null;
 
-                if (hasValues && values.Length == 0)
+                if (valuesIsNotNull && values!.Length == 0)
                 {
                     // Marker entry for this key to indicate entry already in expanding list dictionary
                     _expandingAccumulator[key].Add(value);
                 }
-                else if (hasValues && values.Length == 1)
+                else if (valuesIsNotNull && values!.Length == 1)
                 {
                     // Second value for this key
                     _accumulator[key] = new string[] { values[0], value };
                 }
-                else if (hasValues)
+                else if (valuesIsNotNull)
                 {
                     // Third value for this key
                     // Add zero count entry and move to data to expanding list dictionary
@@ -53,8 +53,8 @@ namespace Azure.Core
                     // Already 3 entries so use starting allocated as 8; then use List's expansion mechanism for more
                     var list = new List<string>(8);
 
-                    list.Add(values[0]);
-                    list.Add(values[1]);
+                    list.Add(values![0]);
+                    list.Add(values![1]);
                     list.Add(value);
 
                     _expandingAccumulator[key] = list;
@@ -75,7 +75,7 @@ namespace Azure.Core
 
         public int ValueCount { get; private set; }
 
-        public Dictionary<string, string []?> GetResults()
+        public Dictionary<string, string[]?> GetResults()
         {
             if (_expandingAccumulator != null)
             {
