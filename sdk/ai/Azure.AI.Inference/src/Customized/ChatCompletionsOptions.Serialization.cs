@@ -84,7 +84,7 @@ namespace Azure.AI.Inference
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
-                writer.WriteObjectValue<ChatCompletionsResponseFormat?>(ResponseFormat, options);
+                writer.WriteObjectValue<ChatCompletionsResponseFormat>(ResponseFormat, options);
             }
             if (Optional.IsCollectionDefined(Tools))
             {

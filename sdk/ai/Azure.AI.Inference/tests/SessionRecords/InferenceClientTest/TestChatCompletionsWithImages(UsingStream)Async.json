@@ -9,8 +9,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "259",
         "Content-Type": "application/json",
-        "traceparent": "00-02b19f444f259b70e572aeb54be85f66-0a310c1a6c9205fa-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240716.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-2034708c81516c8dd60374c768052f70-cbd8a08528c9999d-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240723.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -41,23 +41,23 @@
       },
       "StatusCode": 429,
       "ResponseHeaders": {
-        "apim-request-id": "a03e47e3-5f36-40b5-8d47-2758adeaf38b",
+        "apim-request-id": "1804d710-53aa-4aaa-bbba-6f94ef123a38",
         "Content-Length": "349",
         "Content-Type": "application/json",
-        "Date": "Tue, 16 Jul 2024 17:48:32 GMT",
+        "Date": "Tue, 23 Jul 2024 21:26:51 GMT",
         "policy-id": "DeploymentRatelimit-Token",
-        "Retry-After": "40",
+        "Retry-After": "36",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-region": "Sweden Central",
         "x-ratelimit-remaining-requests": "8",
-        "x-ratelimit-reset-tokens": "40"
+        "x-ratelimit-reset-tokens": "36"
       },
       "ResponseBody": {
         "error": {
           "code": "429",
-          "message": "Requests to the ChatCompletions_Create Operation under Azure OpenAI API version 2024-05-01-preview have exceeded token rate limit of your current OpenAI S0 pricing tier. Please retry after 40 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit."
+          "message": "Requests to the ChatCompletions_Create Operation under Azure OpenAI API version 2024-05-01-preview have exceeded token rate limit of your current OpenAI S0 pricing tier. Please retry after 36 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would like to further increase the default rate limit."
         }
       }
     },
@@ -70,8 +70,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "259",
         "Content-Type": "application/json",
-        "traceparent": "00-02b19f444f259b70e572aeb54be85f66-0a310c1a6c9205fa-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240716.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-2034708c81516c8dd60374c768052f70-cbd8a08528c9999d-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240723.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -103,22 +103,22 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "1",
-        "apim-request-id": "2a278a00-6816-4ea2-950e-03e712a24465",
-        "azureml-model-session": "d004-20240713213546",
-        "Content-Length": "1439",
+        "apim-request-id": "2c9d6f7a-6633-4806-801e-98f66f9f343f",
+        "azureml-model-session": "d045-20240716034155",
+        "Content-Length": "1330",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 16 Jul 2024 17:49:13 GMT",
-        "request-id": "2a278a00-6816-4ea2-950e-03e712a24465",
+        "Date": "Tue, 23 Jul 2024 21:27:28 GMT",
+        "request-id": "2c9d6f7a-6633-4806-801e-98f66f9f343f",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "1769",
+        "x-envoy-upstream-service-time": "1257",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "Sweden Central",
         "x-ratelimit-remaining-requests": "9",
         "x-ratelimit-remaining-tokens": "1392",
-        "X-Request-ID": "6019fa51-70ba-4be1-8c62-87075fb8c888"
+        "X-Request-ID": "9bbe197c-5220-4c57-ba9b-b5f011d94926"
       },
       "ResponseBody": {
         "choices": [
@@ -145,13 +145,13 @@
             "index": 0,
             "logprobs": null,
             "message": {
-              "content": "The image shows three colorful juggling balls. Each ball is divided into four different colored sections: blue, red, green, and yellow. The pattern of colors on each ball is uniform, with each color occupying a quadrant. The balls are positioned on a wooden surface, stacked in a triangular arrangement with one ball on top and the other two at the base. The lighting is natural, giving a clear and vibrant appearance to the colors.",
+              "content": "The image shows three juggling balls placed on a wooden surface. Each ball is composed of multiple colored segments—red, green, blue, and yellow—arranged in a patchwork pattern. The balls appear to be made of a shiny, synthetic material. The wooden surface has a visible grain pattern, adding texture to the background.",
               "role": "assistant"
             }
           }
         ],
-        "created": 1721152153,
-        "id": "chatcmpl-9lgaXsGZgW5NtEgsN49LCxhpB0bTJ",
+        "created": 1721770048,
+        "id": "chatcmpl-9oHKaiEXpCe24oUkFcgGYQtsaw1Mw",
         "model": "gpt-4o-2024-05-13",
         "object": "chat.completion",
         "prompt_filter_results": [
@@ -196,9 +196,9 @@
         ],
         "system_fingerprint": "fp_abc28019ad",
         "usage": {
-          "completion_tokens": 86,
+          "completion_tokens": 66,
           "prompt_tokens": 90,
-          "total_tokens": 176
+          "total_tokens": 156
         }
       }
     }
@@ -207,6 +207,6 @@
     "AOAI_CHAT_COMPLETIONS_ENDPOINT": "https://openai-sdk-test-automation-account-sweden-central.openai.azure.com/openai/deployments/gpt-4o",
     "AOAI_CHAT_COMPLETIONS_KEY": "644e6b8b83b84596a8a3f1ae5d9f1e28",
     "AZUREAI_TEST_IMAGE_JPG_INPUT_PATH": "C:\\Repos\\AzureSdks\\azure-sdk-for-net\\sdk\\ai\\Azure.AI.Inference\\tests\\Data\\juggling_balls.png",
-    "RandomSeed": "66879935"
+    "RandomSeed": "2089432746"
   }
 }
