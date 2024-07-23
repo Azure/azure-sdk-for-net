@@ -9,7 +9,7 @@
 
 ### Bugs Fixed
 
-- Added property 'ProcessId' to accept the value of the id(maybe a number or actual resoucdeidentifier) for issue #39126 and the property 'id' leave as null.
+- Fixed https://github.com/Azure/azure-sdk-for-net/issues/39126.
 
 ### Other Changes
 
