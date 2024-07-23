@@ -120,7 +120,7 @@
 # ServiceOwners:                                                   @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @jorgerangel-msft @jsquire 
+/sdk/appconfiguration/                                             @jorgerangel-msft @jsquire
 
 # ServiceLabel: %App Configuration
 # AzureSdkOwners:                                                  @jsquire
@@ -530,6 +530,12 @@
 
 # ServiceLabel: %HDInsight
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
+
+# PRLabel: %Health Deidentification
+/sdk/healthdataaiservices/                                         @GrahamMThomas @danielszaniszlo
+
+# ServiceLabel: %Health Deidentification
+# ServiceOwners:                                                   @GrahamMThomas @danielszaniszlo
 
 # ServiceLabel: %HPC Cache
 # ServiceOwners:                                                   @romahamu @omzevall
@@ -986,6 +992,12 @@
 # ServiceLabel: %Oracle %Mgmt
 # ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @v-eelhomsi
 
+# PRLabel: %Quota
+/sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
+
+# ServiceLabel: %Quota %Mgmt
+# ServiceOwners:                                                   @tejasm-microsoft
+
 # PRLabel: %Recovery Services Backup
 /sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
 
@@ -1000,6 +1012,7 @@
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
+
 
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
