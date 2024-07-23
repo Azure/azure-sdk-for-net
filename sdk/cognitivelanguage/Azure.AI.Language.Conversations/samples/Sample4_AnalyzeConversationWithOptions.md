@@ -33,7 +33,7 @@ AnalyzeConversationInput data = new ConversationalInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
             id: "1",
-            participantId: "1",
+            participantId: "participant1",
             text: "Send an email to Carol about tomorrow's demo")),
     new ConversationActionContent(projectName, deploymentName)
 {

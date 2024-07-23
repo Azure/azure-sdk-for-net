@@ -34,7 +34,7 @@ AnalyzeConversationInput data =
         new ConversationAnalysisInput(
             new TextConversationItem(
                 id: "1",
-                participantId: "1",
+                participantId: "participant1",
                 text: "Enviar un email a Carol acerca de la presentación de mañana")
             {
                 Language = "es"

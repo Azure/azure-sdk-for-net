@@ -33,7 +33,7 @@ AnalyzeConversationInput data = new ConversationalInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
             id: "1",
-            participantId: "1",
+            participantId: "participant1",
             text: "Send an email to Carol about tomorrow's demo")),
     new ConversationActionContent(projectName, deploymentName)
     {
@@ -42,9 +42,8 @@ AnalyzeConversationInput data = new ConversationalInput(
     });
 
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
-ConversationActionResult conversationResult = response.Value as ConversationActionResult;
-
-ConversationPrediction conversationPrediction = conversationResult.Result.Prediction as ConversationPrediction;
+ConversationActionResult conversationActionResult = response.Value as ConversationActionResult;
+ConversationPrediction conversationPrediction = conversationActionResult.Result.Prediction as ConversationPrediction;
 
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
@@ -66,7 +65,7 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
     Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
-    if (entity.Resolutions is not null)
+    if (entity.Resolutions != null && entity.Resolutions.Any())
     {
         foreach (ResolutionBase resolution in entity.Resolutions)
         {

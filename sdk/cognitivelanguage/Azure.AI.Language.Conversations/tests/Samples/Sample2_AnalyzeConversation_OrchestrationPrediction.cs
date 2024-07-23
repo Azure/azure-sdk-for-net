@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 new ConversationAnalysisInput(
                     new TextConversationItem(
                         id: "1",
-                        participantId: "1",
+                        participantId: "participant1",
                         text: "How are you?")),
                 new ConversationActionContent(projectName, deploymentName)
                 {

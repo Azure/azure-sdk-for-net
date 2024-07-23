@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
@@ -11,8 +12,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 {
     public partial class ConversationAnalysisClientSamples
     {
-        //"",
-        //Language = "es",
         [SyncOnly]
         [RecordedTest]
         public void AnalyzeConversationWithLanguage()
@@ -32,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     new ConversationAnalysisInput(
                         new TextConversationItem(
                             id: "1",
-                            participantId: "1",
+                            participantId: "participant1",
                             text: "Enviar un email a Carol acerca de la presentación de mañana")
                         {
                             Language = "es"
@@ -70,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine($"Confidence: {entity.Confidence}");
                 Console.WriteLine();
 
-                if (entity.Resolutions is not null)
+                if (entity.Resolutions != null && entity.Resolutions.Any())
                 {
                     foreach (ResolutionBase resolution in entity.Resolutions)
                     {
