@@ -25,7 +25,7 @@ namespace Azure.Maps.Rendering
         public ImagePathStyle(IList<GeoPosition> pathPositions)
         {
             Argument.AssertNotNull(pathPositions, nameof(pathPositions));
-            if (pathPositions?.Count == 0)
+            if (pathPositions == null || pathPositions.Count == 0)
             {
                 throw new ArgumentException("pathPositions should not be empty list.");
             }
