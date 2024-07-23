@@ -26,6 +26,12 @@ namespace Azure.AI.Inference
         [CodeGenMember("ToolChoice")]
         internal BinaryData InternalSuppressedToolChoice { get; set; }
 
+        // CUSTOM CODE NOTE:
+        //  This property is set by our specific operator methods, not by users
+
+        /// <summary> A value indicating whether chat completions should be streamed for this request. </summary>
+        internal bool? InternalShouldStreamResponse { get; set; }
+
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
         public ChatCompletionsOptions()
         {

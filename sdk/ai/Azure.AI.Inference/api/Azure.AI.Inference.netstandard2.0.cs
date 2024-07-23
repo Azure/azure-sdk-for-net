@@ -48,9 +48,7 @@ namespace Azure.AI.Inference
         public ChatCompletionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Inference.ChatCompletionsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Inference.ChatCompletions> Complete(Azure.AI.Inference.ChatCompletionsOptions chatCompletionsOptions, Azure.AI.Inference.ExtraParameters? extraParams = default(Azure.AI.Inference.ExtraParameters?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Inference.ChatCompletions> Complete(System.Collections.Generic.IEnumerable<Azure.AI.Inference.ChatRequestMessage> messages, float? frequencyPenalty = default(float?), bool? internalShouldStreamResponse = default(bool?), float? presencePenalty = default(float?), float? temperature = default(float?), float? nucleusSamplingFactor = default(float?), int? maxTokens = default(int?), Azure.AI.Inference.ChatCompletionsResponseFormat? responseFormat = default(Azure.AI.Inference.ChatCompletionsResponseFormat?), System.Collections.Generic.IEnumerable<string> stopSequences = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.ChatCompletionsToolDefinition> tools = null, System.BinaryData internalSuppressedToolChoice = null, long? seed = default(long?), string model = null, Azure.AI.Inference.ExtraParameters? extraParams = default(Azure.AI.Inference.ExtraParameters?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Inference.ChatCompletions>> CompleteAsync(Azure.AI.Inference.ChatCompletionsOptions chatCompletionsOptions, Azure.AI.Inference.ExtraParameters? extraParams = default(Azure.AI.Inference.ExtraParameters?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Inference.ChatCompletions>> CompleteAsync(System.Collections.Generic.IEnumerable<Azure.AI.Inference.ChatRequestMessage> messages, float? frequencyPenalty = default(float?), bool? internalShouldStreamResponse = default(bool?), float? presencePenalty = default(float?), float? temperature = default(float?), float? nucleusSamplingFactor = default(float?), int? maxTokens = default(int?), Azure.AI.Inference.ChatCompletionsResponseFormat? responseFormat = default(Azure.AI.Inference.ChatCompletionsResponseFormat?), System.Collections.Generic.IEnumerable<string> stopSequences = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.ChatCompletionsToolDefinition> tools = null, System.BinaryData internalSuppressedToolChoice = null, long? seed = default(long?), string model = null, Azure.AI.Inference.ExtraParameters? extraParams = default(Azure.AI.Inference.ExtraParameters?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.Inference.StreamingResponse<Azure.AI.Inference.StreamingChatCompletionsUpdate> CompleteStreaming(Azure.AI.Inference.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.Inference.StreamingResponse<Azure.AI.Inference.StreamingChatCompletionsUpdate>> CompleteStreamingAsync(Azure.AI.Inference.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Inference.ModelInfo> GetModelInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -125,13 +123,12 @@ namespace Azure.AI.Inference
         public ChatCompletionsOptions(System.Collections.Generic.IEnumerable<Azure.AI.Inference.ChatRequestMessage> messages) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public float? FrequencyPenalty { get { throw null; } set { } }
-        public bool? InternalShouldStreamResponse { get { throw null; } set { } }
         public int? MaxTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Inference.ChatRequestMessage> Messages { get { throw null; } }
         public string Model { get { throw null; } set { } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }
         public float? PresencePenalty { get { throw null; } set { } }
-        public Azure.AI.Inference.ChatCompletionsResponseFormat? ResponseFormat { get { throw null; } set { } }
+        public Azure.AI.Inference.ChatCompletionsResponseFormat ResponseFormat { get { throw null; } set { } }
         public long? Seed { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StopSequences { get { throw null; } }
         public float? Temperature { get { throw null; } set { } }
@@ -143,23 +140,32 @@ namespace Azure.AI.Inference
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ChatCompletionsResponseFormat : System.IEquatable<Azure.AI.Inference.ChatCompletionsResponseFormat>
+    public abstract partial class ChatCompletionsResponseFormat : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormat>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ChatCompletionsResponseFormat(string value) { throw null; }
-        public static Azure.AI.Inference.ChatCompletionsResponseFormat JsonObject { get { throw null; } }
-        public static Azure.AI.Inference.ChatCompletionsResponseFormat Text { get { throw null; } }
-        public bool Equals(Azure.AI.Inference.ChatCompletionsResponseFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Inference.ChatCompletionsResponseFormat left, Azure.AI.Inference.ChatCompletionsResponseFormat right) { throw null; }
-        public static implicit operator Azure.AI.Inference.ChatCompletionsResponseFormat (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Inference.ChatCompletionsResponseFormat left, Azure.AI.Inference.ChatCompletionsResponseFormat right) { throw null; }
-        public override string ToString() { throw null; }
+        protected ChatCompletionsResponseFormat() { }
+        Azure.AI.Inference.ChatCompletionsResponseFormat System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatCompletionsResponseFormat System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormat>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormat>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChatCompletionsResponseFormatJSON : Azure.AI.Inference.ChatCompletionsResponseFormat, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>
+    {
+        public ChatCompletionsResponseFormatJSON() { }
+        Azure.AI.Inference.ChatCompletionsResponseFormatJSON System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatCompletionsResponseFormatJSON System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChatCompletionsResponseFormatText : Azure.AI.Inference.ChatCompletionsResponseFormat, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatText>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatText>
+    {
+        public ChatCompletionsResponseFormatText() { }
+        Azure.AI.Inference.ChatCompletionsResponseFormatText System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatText>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatText>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatCompletionsResponseFormatText System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatText>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatText>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatText>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class ChatCompletionsToolCall : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsToolCall>
     {

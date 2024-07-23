@@ -135,8 +135,6 @@ namespace Azure.AI.Inference
         /// Supported range is [-2, 2].
         /// </summary>
         public float? FrequencyPenalty { get; set; }
-        /// <summary> A value indicating whether chat completions should be streamed for this request. </summary>
-        public bool? InternalShouldStreamResponse { get; set; }
         /// <summary>
         /// A value that influences the probability of generated tokens appearing based on their existing
         /// presence in generated text.

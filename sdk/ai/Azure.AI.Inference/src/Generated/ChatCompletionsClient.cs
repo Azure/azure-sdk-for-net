@@ -156,7 +156,7 @@ namespace Azure.AI.Inference
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        public virtual async Task<Response<ChatCompletions>> CompleteAsync(IEnumerable<ChatRequestMessage> messages, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, float? presencePenalty = null, float? temperature = null, float? nucleusSamplingFactor = null, int? maxTokens = null, ChatCompletionsResponseFormat responseFormat = null, IEnumerable<string> stopSequences = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, long? seed = null, string model = null, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ChatCompletions>> CompleteAsync(IEnumerable<ChatRequestMessage> messages, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, float? presencePenalty = null, float? temperature = null, float? nucleusSamplingFactor = null, int? maxTokens = null, ChatCompletionsResponseFormat responseFormat = null, IEnumerable<string> stopSequences = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, long? seed = null, string model = null, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
@@ -245,7 +245,7 @@ namespace Azure.AI.Inference
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        public virtual Response<ChatCompletions> Complete(IEnumerable<ChatRequestMessage> messages, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, float? presencePenalty = null, float? temperature = null, float? nucleusSamplingFactor = null, int? maxTokens = null, ChatCompletionsResponseFormat responseFormat = null, IEnumerable<string> stopSequences = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, long? seed = null, string model = null, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
+        internal virtual Response<ChatCompletions> Complete(IEnumerable<ChatRequestMessage> messages, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, float? presencePenalty = null, float? temperature = null, float? nucleusSamplingFactor = null, int? maxTokens = null, ChatCompletionsResponseFormat responseFormat = null, IEnumerable<string> stopSequences = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, long? seed = null, string model = null, ExtraParameters? extraParams = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
@@ -278,6 +278,11 @@ namespace Azure.AI.Inference
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CompleteAsync(IEnumerable{ChatRequestMessage},float?,bool?,float?,float?,float?,int?,ChatCompletionsResponseFormat,IEnumerable{string},IEnumerable{ChatCompletionsToolDefinition},BinaryData,long?,string,ExtraParameters?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -319,6 +324,11 @@ namespace Azure.AI.Inference
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Complete(IEnumerable{ChatRequestMessage},float?,bool?,float?,float?,float?,int?,ChatCompletionsResponseFormat,IEnumerable{string},IEnumerable{ChatCompletionsToolDefinition},BinaryData,long?,string,ExtraParameters?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
