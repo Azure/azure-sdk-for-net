@@ -5,11 +5,11 @@
 ### Features Added
 
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
-- Upgraded api-version tag from 'package-2021-02' to 'package-2023-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/web/resource-manager/readme.md
+- Upgraded api-version tag from 'package-2021-02' to 'package-2023-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/web/resource-manager/readme.md.
 
 ### Bugs Fixed
 
-- Add property 'ProcessId' to accept the value of the id(maybe a number or actual resoucdeidentifier) for issue #39126 and the property 'id' leave as null.
+- Added property 'ProcessId' to accept the value of the id(maybe a number or actual resoucdeidentifier) for issue #39126 and the property 'id' leave as null.
 
 ### Other Changes
 
