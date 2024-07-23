@@ -8,9 +8,7 @@
 ### Breaking Changes
 - SecurityPostureReference.excludeExtensions takes in strings as input instead of VirtualMachineExtension objects. 
 
-### Bugs Fixed
-
-### Other Changes
+## 1.6.0-beta.1 (Not Released)
 
 ## 1.5.0 (2024-05-10)
 
