@@ -255,7 +255,7 @@ namespace Azure.Storage
                     }
                 }
 
-                return -1;
+                return 0;
             }
         }
     }
