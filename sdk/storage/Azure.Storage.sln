@@ -129,10 +129,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Storage.Blo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Perf", "Perf", "{FBC7A205-B57A-44E7-A7CA-2E82F79A4D9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Test.HttpRecorder", "..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{11D040BC-3A89-4BA1-A2C7-90A83A872555}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{AC65C1AC-82F8-482B-B88D-FA9E752D1BC7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Compute", "..\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj", "{AF72CEB5-9AED-42BF-8DF3-153F0AF3E7C5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{F8687F5E-8DE0-4A85-BE98-DA0C2B131129}"
