@@ -103,7 +103,7 @@
             "properties": {
                 "networkAcls": "[variables('networkAcls')]",
                 "supportsHttpsTrafficOnly": true,
-				"allowSharedKeyAccess": false, # Disabling "allow storage account key access" while creating storage accounts
+                "allowSharedKeyAccess": false, # Disabling "allow storage account key access" while creating storage accounts
                 "encryption": "[variables('encryption')]",
                 "accessTier": "Cool"
             }
