@@ -73,41 +73,44 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     });
 
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
-            AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+            AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
-            foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
+            foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
-                Console.WriteLine($"Task name: {task.Name}");
-                SummaryResult results = task.Results;
-                foreach (ConversationsSummaryResult conversation in results.Conversations)
+                Console.WriteLine($"Operation action name: {operationResult.Name}");
+                if (operationResult is SummarizationOperationResult summarizationOperationResult)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.Id}");
-                    Console.WriteLine("Summaries:");
-                    foreach (SummaryResultItem summary in conversation.Summaries)
+                    SummaryResult results = summarizationOperationResult.Results;
+                    foreach (ConversationsSummaryResult conversation in results.Conversations)
                     {
-                        Console.WriteLine($"Text: {summary.Text}");
-                        Console.WriteLine($"Aspect: {summary.Aspect}");
-#if !SNIPPET
-                        aspects.Add(summary.Aspect);
-#endif
-                    }
-                    if (conversation.Warnings != null && conversation.Warnings.Any())
-                    {
-                        Console.WriteLine("Warnings:");
-                        foreach (InputWarning warning in conversation.Warnings)
+                        Console.WriteLine($"Conversation: #{conversation.Id}");
+                        Console.WriteLine("Summaries:");
+                        foreach (SummaryResultItem summary in conversation.Summaries)
                         {
-                            Console.WriteLine($"Code: {warning.Code}");
-                            Console.WriteLine($"Message: {warning.Message}");
+                            Console.WriteLine($"Text: {summary.Text}");
+                            Console.WriteLine($"Aspect: {summary.Aspect}");
+#if !SNIPPET
+                            aspects.Add(summary.Aspect);
+#endif
                         }
+                        if (conversation.Warnings != null && conversation.Warnings.Any())
+                        {
+                            Console.WriteLine("Warnings:");
+                            foreach (InputWarning warning in conversation.Warnings)
+                            {
+                                Console.WriteLine($"Code: {warning.Code}");
+                                Console.WriteLine($"Message: {warning.Message}");
+                            }
+                        }
+                        Console.WriteLine();
                     }
-                    Console.WriteLine();
                 }
-                if (results.Errors != null && results.Errors.Any())
+                if (operationState.Errors != null && operationState.Errors.Any())
                 {
                     Console.WriteLine("Errors:");
-                    foreach (DocumentError error in results.Errors)
+                    foreach (ConversationError error in operationState.Errors)
                     {
-                        Console.WriteLine($"Error: {error}");
+                        Console.WriteLine($"Error: {error.Code} - {error}");
                     }
                 }
             }
@@ -159,41 +162,44 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
             #endregion
 
-            AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;
+            AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
-            foreach (SummarizationOperationResult task in jobResults.Actions.Items.Cast<SummarizationOperationResult>())
+            foreach (var operationResult in operationState.Actions.Items)
             {
-                Console.WriteLine($"Task name: {task.Name}");
-                SummaryResult results = task.Results;
-                foreach (ConversationsSummaryResult conversation in results.Conversations)
+                Console.WriteLine($"Operation action name: {operationResult.Name}");
+                if (operationResult is SummarizationOperationResult summarizationOperationResult)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.Id}");
-                    Console.WriteLine("Summaries:");
-                    foreach (SummaryResultItem summary in conversation.Summaries)
+                    SummaryResult results = summarizationOperationResult.Results;
+                    foreach (ConversationsSummaryResult conversation in results.Conversations)
                     {
-                        Console.WriteLine($"Text: {summary.Text}");
-                        Console.WriteLine($"Aspect: {summary.Aspect}");
-#if !SNIPPET
-                        aspects.Add(summary.Aspect);
-#endif
-                    }
-                    if (conversation.Warnings != null && conversation.Warnings.Any())
-                    {
-                        Console.WriteLine("Warnings:");
-                        foreach (InputWarning warning in conversation.Warnings)
+                        Console.WriteLine($"Conversation: #{conversation.Id}");
+                        Console.WriteLine("Summaries:");
+                        foreach (SummaryResultItem summary in conversation.Summaries)
                         {
-                            Console.WriteLine($"Code: {warning.Code}");
-                            Console.WriteLine($"Message: {warning.Message}");
+                            Console.WriteLine($"Text: {summary.Text}");
+                            Console.WriteLine($"Aspect: {summary.Aspect}");
+#if !SNIPPET
+                            aspects.Add(summary.Aspect);
+#endif
                         }
+                        if (conversation.Warnings != null && conversation.Warnings.Any())
+                        {
+                            Console.WriteLine("Warnings:");
+                            foreach (InputWarning warning in conversation.Warnings)
+                            {
+                                Console.WriteLine($"Code: {warning.Code}");
+                                Console.WriteLine($"Message: {warning.Message}");
+                            }
+                        }
+                        Console.WriteLine();
                     }
-                    Console.WriteLine();
                 }
-                if (results.Errors != null && results.Errors.Any())
+                if (operationState.Errors != null && operationState.Errors.Any())
                 {
                     Console.WriteLine("Errors:");
-                    foreach (DocumentError error in results.Errors)
+                    foreach (ConversationError error in operationState.Errors)
                     {
-                        Console.WriteLine($"Error: {error}");
+                        Console.WriteLine($"Error: {error.Code} - {error}");
                     }
                 }
             }

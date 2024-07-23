@@ -38,55 +38,58 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         new PiiOperationAction()
                         {
                             ActionContent = new ConversationPiiActionContent(),
-                            Name = "Conversation PII task",
+                            Name = "Conversation PII",
                         }
                     });
 
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
 
-            AnalyzeConversationOperationState operationResults = analyzeConversationOperation.Value;
+            AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
-            foreach (ConversationPiiOperationResult task in operationResults.Actions.Items.Cast<ConversationPiiOperationResult>())
+            foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
-                Console.WriteLine($"Operation name: {task.Name}");
+                Console.WriteLine($"Operation action name: {operationResult.Name}");
 
-                foreach (ConversationalPiiResultWithResultBase conversation in task.Results.Conversations)
+                if (operationResult is ConversationPiiOperationResult piiOperationResult)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.Id}");
-                    Console.WriteLine("Detected Entities:");
-                    foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+                    foreach (ConversationalPiiResultWithResultBase conversation in piiOperationResult.Results.Conversations)
                     {
-                        foreach (NamedEntity entity in item.Entities)
+                        Console.WriteLine($"Conversation: #{conversation.Id}");
+                        Console.WriteLine("Detected Entities:");
+                        foreach (ConversationPiiItemResult item in conversation.ConversationItems)
                         {
-                            Console.WriteLine($"Category: {entity.Category}");
-                            Console.WriteLine($"Subcategory: {entity.Subcategory}");
-                            Console.WriteLine($"Text: {entity.Text}");
-                            Console.WriteLine($"Offset: {entity.Offset}");
-                            Console.WriteLine($"Length: {entity.Length}");
-                            Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
-                            Console.WriteLine();
+                            foreach (NamedEntity entity in item.Entities)
+                            {
+                                Console.WriteLine($"Category: {entity.Category}");
+                                Console.WriteLine($"Subcategory: {entity.Subcategory}");
+                                Console.WriteLine($"Text: {entity.Text}");
+                                Console.WriteLine($"Offset: {entity.Offset}");
+                                Console.WriteLine($"Length: {entity.Length}");
+                                Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
+                                Console.WriteLine();
 #if !SNIPPET
-                            entitiesDetected.Add(entity);
+                                entitiesDetected.Add(entity);
 #endif
+                            }
                         }
-                    }
-                    if (conversation.Warnings != null && conversation.Warnings.Any())
-                    {
-                        Console.WriteLine("Warnings:");
-                        foreach (InputWarning warning in conversation.Warnings)
+                        if (conversation.Warnings != null && conversation.Warnings.Any())
                         {
-                            Console.WriteLine($"Code: {warning.Code}");
-                            Console.WriteLine($"Message: {warning.Message}");
+                            Console.WriteLine("Warnings:");
+                            foreach (InputWarning warning in conversation.Warnings)
+                            {
+                                Console.WriteLine($"Code: {warning.Code}");
+                                Console.WriteLine($"Message: {warning.Message}");
+                            }
                         }
+                        Console.WriteLine();
                     }
-                    Console.WriteLine();
                 }
-                if (operationResults.Errors != null && operationResults.Errors.Any())
+                if (operationState.Errors != null && operationState.Errors.Any())
                 {
                     Console.WriteLine("Errors:");
-                    foreach (ConversationError error in operationResults.Errors)
+                    foreach (ConversationError error in operationState.Errors)
                     {
-                        Console.WriteLine($"Error: {error}");
+                        Console.WriteLine($"Error: {error.Code} - {error}");
                     }
                 }
             }
@@ -120,7 +123,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         new PiiOperationAction()
                         {
                             ActionContent = new ConversationPiiActionContent(),
-                            Name = "Conversation PII task",
+                            Name = "Conversation PII",
                         }
                     });
 
@@ -129,49 +132,52 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
             #endregion
 
-            AnalyzeConversationOperationState operationResults = analyzeConversationOperation.Value;
+            AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
-            foreach (ConversationPiiOperationResult task in operationResults.Actions.Items.Cast<ConversationPiiOperationResult>())
+            foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
-                Console.WriteLine($"Operation name: {task.Name}");
+                Console.WriteLine($"Operation action name: {operationResult.Name}");
 
-                foreach (ConversationalPiiResultWithResultBase conversation in task.Results.Conversations)
+                if (operationResult is ConversationPiiOperationResult piiOperationResult)
                 {
-                    Console.WriteLine($"Conversation: #{conversation.Id}");
-                    Console.WriteLine("Detected Entities:");
-                    foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+                    foreach (ConversationalPiiResultWithResultBase conversation in piiOperationResult.Results.Conversations)
                     {
-                        foreach (NamedEntity entity in item.Entities)
+                        Console.WriteLine($"Conversation: #{conversation.Id}");
+                        Console.WriteLine("Detected Entities:");
+                        foreach (ConversationPiiItemResult item in conversation.ConversationItems)
                         {
-                            Console.WriteLine($"Category: {entity.Category}");
-                            Console.WriteLine($"Subcategory: {entity.Subcategory}");
-                            Console.WriteLine($"Text: {entity.Text}");
-                            Console.WriteLine($"Offset: {entity.Offset}");
-                            Console.WriteLine($"Length: {entity.Length}");
-                            Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
-                            Console.WriteLine();
+                            foreach (NamedEntity entity in item.Entities)
+                            {
+                                Console.WriteLine($"Category: {entity.Category}");
+                                Console.WriteLine($"Subcategory: {entity.Subcategory}");
+                                Console.WriteLine($"Text: {entity.Text}");
+                                Console.WriteLine($"Offset: {entity.Offset}");
+                                Console.WriteLine($"Length: {entity.Length}");
+                                Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
+                                Console.WriteLine();
 #if !SNIPPET
-                            entitiesDetected.Add(entity);
+                                entitiesDetected.Add(entity);
 #endif
+                            }
                         }
-                    }
-                    if (conversation.Warnings != null && conversation.Warnings.Any())
-                    {
-                        Console.WriteLine("Warnings:");
-                        foreach (InputWarning warning in conversation.Warnings)
+                        if (conversation.Warnings != null && conversation.Warnings.Any())
                         {
-                            Console.WriteLine($"Code: {warning.Code}");
-                            Console.WriteLine($"Message: {warning.Message}");
+                            Console.WriteLine("Warnings:");
+                            foreach (InputWarning warning in conversation.Warnings)
+                            {
+                                Console.WriteLine($"Code: {warning.Code}");
+                                Console.WriteLine($"Message: {warning.Message}");
+                            }
                         }
+                        Console.WriteLine();
                     }
-                    Console.WriteLine();
                 }
-                if (operationResults.Errors != null && operationResults.Errors.Any())
+                if (operationState.Errors != null && operationState.Errors.Any())
                 {
                     Console.WriteLine("Errors:");
-                    foreach (ConversationError error in operationResults.Errors)
+                    foreach (ConversationError error in operationState.Errors)
                     {
-                        Console.WriteLine($"Error: {error}");
+                        Console.WriteLine($"Error: {error.Code} - {error}");
                     }
                 }
             }
