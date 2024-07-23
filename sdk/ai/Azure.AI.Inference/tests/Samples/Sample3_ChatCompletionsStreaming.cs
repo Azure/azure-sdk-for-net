@@ -17,8 +17,6 @@ namespace Azure.AI.Inference.Tests.Samples
         {
             #region Snippet:Azure_AI_Inference_HelloWorldStreamingScenarioAsync
 #if SNIPPET
-            using Azure.AI.Inference;
-
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 #else

@@ -13,8 +13,6 @@ Set these two environment variables before running the sample:
 2. AZURE_AI_CHAT_KEY - Your model key (a 32-character string). Keep it secret.
 
 ```C# Snippet:Azure_AI_Inference_ChatCompletionsWithImageUrlScenario
-using Azure.AI.Inference;
-
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
@@ -44,8 +42,6 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 An `async` option is also available.
 
 ```C# Snippet:Azure_AI_Inference_ChatCompletionsWithImageUrlScenarioAsync
-using Azure.AI.Inference;
-
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 

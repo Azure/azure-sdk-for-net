@@ -42,8 +42,6 @@ private class AddAoaiAuthHeaderPolicy : HttpPipelinePolicy
 The policy can then be added to the `ChatCompletionsClientOptions` object, to configure the client to add the header at runtime.
 
 ```C# Snippet:Azure_AI_Inference_HelloWorldAoaiScenario
-using Azure.AI.Inference;
-
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
 var key = System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_KEY");
 
@@ -72,8 +70,6 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 An `async` option is also available.
 
 ```C# Snippet:Azure_AI_Inference_HelloWorldAoaiScenarioAsync
-using Azure.AI.Inference;
-
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
 var key = System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_KEY");
 

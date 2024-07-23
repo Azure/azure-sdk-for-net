@@ -18,8 +18,6 @@ namespace Azure.AI.Inference.Tests.Samples
         {
             #region Snippet:Azure_AI_Inference_ChatCompletionsWithHistoryScenario
 #if SNIPPET
-            using Azure.AI.Inference;
-
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 #else
@@ -42,7 +40,8 @@ namespace Azure.AI.Inference.Tests.Samples
             messages.Add(new ChatRequestAssistantMessage(response.Value.Choices[0].Message));
             messages.Add(new ChatRequestUserMessage("And what was the estimated cost to build it?"));
 
-            response = client.Complete(messages);
+            requestOptions = new ChatCompletionsOptions(messages);
+            response = client.Complete(requestOptions);
             System.Console.WriteLine(response.Value.Choices[0].Message.Content);
             #endregion
 
@@ -65,8 +64,6 @@ namespace Azure.AI.Inference.Tests.Samples
         {
             #region Snippet:Azure_AI_Inference_ChatCompletionsWithHistoryScenarioAsync
 #if SNIPPET
-            using Azure.AI.Inference;
-
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 #else
@@ -89,7 +86,8 @@ namespace Azure.AI.Inference.Tests.Samples
             messages.Add(new ChatRequestAssistantMessage(response.Value.Choices[0].Message));
             messages.Add(new ChatRequestUserMessage("And what was the estimated cost to build it?"));
 
-            response = await client.CompleteAsync(messages);
+            requestOptions = new ChatCompletionsOptions(messages);
+            response = await client.CompleteAsync(requestOptions);
             System.Console.WriteLine(response.Value.Choices[0].Message.Content);
             #endregion
 

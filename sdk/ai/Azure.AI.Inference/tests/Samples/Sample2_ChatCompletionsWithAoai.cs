@@ -18,8 +18,6 @@ namespace Azure.AI.Inference.Tests.Samples
         {
             #region Snippet:Azure_AI_Inference_HelloWorldAoaiScenario
 #if SNIPPET
-            using Azure.AI.Inference;
-
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
             var key = System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_KEY");
 #else
@@ -68,8 +66,6 @@ namespace Azure.AI.Inference.Tests.Samples
         {
             #region Snippet:Azure_AI_Inference_HelloWorldAoaiScenarioAsync
 #if SNIPPET
-            using Azure.AI.Inference;
-
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_ENDPOINT"));
             var key = System.Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_KEY");
 #else

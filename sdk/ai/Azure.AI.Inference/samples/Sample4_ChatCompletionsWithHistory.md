@@ -11,8 +11,6 @@ Set these two environment variables before running the sample:
 2. AZURE_AI_CHAT_KEY - Your model key (a 32-character string). Keep it secret.
 
 ```C# Snippet:Azure_AI_Inference_ChatCompletionsWithHistoryScenario
-using Azure.AI.Inference;
-
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
@@ -31,15 +29,14 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 messages.Add(new ChatRequestAssistantMessage(response.Value.Choices[0].Message));
 messages.Add(new ChatRequestUserMessage("And what was the estimated cost to build it?"));
 
-response = client.Complete(messages);
+requestOptions = new ChatCompletionsOptions(messages);
+response = client.Complete(requestOptions);
 System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
 
 An `async` option is also available.
 
 ```C# Snippet:Azure_AI_Inference_ChatCompletionsWithHistoryScenarioAsync
-using Azure.AI.Inference;
-
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
@@ -58,6 +55,7 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 messages.Add(new ChatRequestAssistantMessage(response.Value.Choices[0].Message));
 messages.Add(new ChatRequestUserMessage("And what was the estimated cost to build it?"));
 
-response = await client.CompleteAsync(messages);
+requestOptions = new ChatCompletionsOptions(messages);
+response = await client.CompleteAsync(requestOptions);
 System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
