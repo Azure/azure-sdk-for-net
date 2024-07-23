@@ -726,7 +726,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"UVcte8BfJP4d5ZzvVIYQFFXBqrBJhfbYi1/jn7F0jpY=\",\r\n  \"secondaryKey\": \"UQb8TwqmWhKEGWUyZMbX1zN71EF8VyFZIL8iBPkSQLQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=UVcte8BfJP4d5ZzvVIYQFFXBqrBJhfbYi1/jn7F0jpY=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=UQb8TwqmWhKEGWUyZMbX1zN71EF8VyFZIL8iBPkSQLQ=;Version=1.0;\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"REDATED\",\r\n  \"secondaryKey\": \"REDATED\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=REDATED;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=REDATED;Version=1.0;\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -795,7 +795,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"UVcte8BfJP4d5ZzvVIYQFFXBqrBJhfbYi1/jn7F0jpY=\",\r\n  \"secondaryKey\": \"UQb8TwqmWhKEGWUyZMbX1zN71EF8VyFZIL8iBPkSQLQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=UVcte8BfJP4d5ZzvVIYQFFXBqrBJhfbYi1/jn7F0jpY=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=UQb8TwqmWhKEGWUyZMbX1zN71EF8VyFZIL8iBPkSQLQ=;Version=1.0;\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"REDATED\",\r\n  \"secondaryKey\": \"REDATED\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=REDATED;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=REDATED;Version=1.0;\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -864,7 +864,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"RZpcltFdbjOLhxxALGQ8FZJrGxzVgoSpMzoHjlYaIZE=\",\r\n  \"secondaryKey\": \"UQb8TwqmWhKEGWUyZMbX1zN71EF8VyFZIL8iBPkSQLQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=RZpcltFdbjOLhxxALGQ8FZJrGxzVgoSpMzoHjlYaIZE=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=UQb8TwqmWhKEGWUyZMbX1zN71EF8VyFZIL8iBPkSQLQ=;Version=1.0;\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"RZpcltFdbjOLhxxALGQ8FZJrGxzVgoSpMzoHjlYaIZE=\",\r\n  \"secondaryKey\": \"REDATED\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=RZpcltFdbjOLhxxALGQ8FZJrGxzVgoSpMzoHjlYaIZE=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=REDATED;Version=1.0;\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1281,7 +1281,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"RZpcltFdbjOLhxxALGQ8FZJrGxzVgoSpMzoHjlYaIZE=\",\r\n  \"secondaryKey\": \"UQb8TwqmWhKEGWUyZMbX1zN71EF8VyFZIL8iBPkSQLQ=\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=RZpcltFdbjOLhxxALGQ8FZJrGxzVgoSpMzoHjlYaIZE=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=UQb8TwqmWhKEGWUyZMbX1zN71EF8VyFZIL8iBPkSQLQ=;Version=1.0;\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"RZpcltFdbjOLhxxALGQ8FZJrGxzVgoSpMzoHjlYaIZE=\",\r\n  \"secondaryKey\": \"REDATED\",\r\n  \"primaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=RZpcltFdbjOLhxxALGQ8FZJrGxzVgoSpMzoHjlYaIZE=;Version=1.0;\",\r\n  \"secondaryConnectionString\": \"Endpoint=https://signalr-test7472.service.signalr.net;AccessKey=REDATED;Version=1.0;\"\r\n}",
       "StatusCode": 202
     },
     {
