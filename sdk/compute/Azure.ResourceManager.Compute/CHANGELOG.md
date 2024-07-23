@@ -1,10 +1,12 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0 (2024-08-23)
 
 ### Features Added
+- LogicalSectorSize returned for RestorePoints.
 
 ### Breaking Changes
+- SecurityPostureReference.excludeExtensions takes in strings as input instead of VirtualMachineExtension objects. 
 
 ### Bugs Fixed
 
