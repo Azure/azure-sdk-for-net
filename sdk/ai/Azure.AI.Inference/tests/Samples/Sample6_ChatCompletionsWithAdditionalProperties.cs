@@ -55,7 +55,7 @@ namespace Azure.AI.Inference.Tests.Samples
 
             #region Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioExtraParams
 #if SNIPPET
-            Response<ChatCompletions> response = client.Complete(requestOptions, extraParams: ExtraParameters.PassThrough);
+            response = client.Complete(requestOptions, extraParams: ExtraParameters.PassThrough);
 #endif
             #endregion
         }
@@ -105,7 +105,7 @@ namespace Azure.AI.Inference.Tests.Samples
 
             #region Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioExtraParamsAsync
 #if SNIPPET
-            Response<ChatCompletions> response = await client.CompleteAsync(requestOptions, extraParams: ExtraParameters.PassThrough);
+            response = await client.CompleteAsync(requestOptions, extraParams: ExtraParameters.PassThrough);
 #endif
             #endregion
         }

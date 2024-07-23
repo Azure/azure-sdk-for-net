@@ -32,7 +32,7 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 You can optionally configure the behavior of the service when receiving `AdditionalProperties` using the `extraParams` parameter of the `Complete` method. `ExtraParameters.PassThrough` is the default behavior.
 
 ```C# Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioExtraParams
-Response<ChatCompletions> response = client.Complete(requestOptions, extraParams: ExtraParameters.PassThrough);
+response = client.Complete(requestOptions, extraParams: ExtraParameters.PassThrough);
 ```
 
 An `async` option is also available.
@@ -57,5 +57,5 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
 
 ```C# Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenarioExtraParamsAsync
-Response<ChatCompletions> response = await client.CompleteAsync(requestOptions, extraParams: ExtraParameters.PassThrough);
+response = await client.CompleteAsync(requestOptions, extraParams: ExtraParameters.PassThrough);
 ```
