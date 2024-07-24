@@ -5160,6 +5160,34 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task SetMetadataAsync_Sort_InvalidMetadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            IDictionary<string, string> metadata = new Dictionary<string, string>() {
+                { "test", "val" },
+                { "test-", "val" },
+                { "test--", "val" },
+                { "test-_", "val" },
+                { "test_-", "val" },
+                { "test__", "val" },
+                { "test-a", "val" },
+                { "test-_A", "val" },
+                { "test_a", "val" },
+                { "test_Z", "val" },
+                { "test_a_", "val" },
+                { "test_a-", "val" },
+                { "test_a-_", "val" },
+             };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetMetadataAsync(metadata),
+                e => Assert.AreEqual(BlobErrorCode.InvalidMetadata.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task CreateSnapshotAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
