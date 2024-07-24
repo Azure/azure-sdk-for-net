@@ -416,7 +416,7 @@ namespace Azure.Storage.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             // if structured message, this crc is validated in the decoding process. don't decode it here.
-            using IHasher hasher = response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader)
+            using IHasher hasher = response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader)
                 ? null
                 : ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
             using Stream rawSource = response.Value.Content;

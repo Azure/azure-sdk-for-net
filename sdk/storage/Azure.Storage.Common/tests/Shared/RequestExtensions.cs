@@ -14,7 +14,7 @@ public static partial class RequestExtensions
     {
         if (request.Headers.TryGetValue(headerName, out string value))
         {
-            return headerName == Constants.StructuredMessage.CrcStructuredMessageHeader ? null : value;
+            return headerName == Constants.StructuredMessage.StructuredMessageHeader ? null : value;
         }
         StringBuilder sb = new StringBuilder()
             .AppendLine($"`{headerName}` expected on request but was not found.")
