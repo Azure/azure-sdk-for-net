@@ -78,7 +78,7 @@ namespace Azure.Identity
                     return await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
                 }
 
-                // ServiceFabric does not support specifying user assigned identity by client id or resource id. The managed identity selected is based on the resource configuration.
+                // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
                 if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ResourceIdentifier != null || ClientId != null))
                 {
                     throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
