@@ -96,7 +96,7 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 
 ## Asynchronous
 
-Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
+Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationOperationAsync`:
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationPii
 Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);

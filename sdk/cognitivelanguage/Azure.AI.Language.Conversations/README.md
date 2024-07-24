@@ -116,7 +116,7 @@ The following examples show common scenarios using the `client` [created above](
 
 ### Analyze a conversation
 
-To analyze a conversation, you can call the `AnalyzeConversations()` method:
+To analyze a conversation, you can call the `AnalyzeConversation()` method:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
 string projectName = "Menu";
@@ -441,7 +441,7 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 
 ### Additional samples
 
-Browser our [samples][conversationanalysis_samples] for more examples of how to analyze conversations.
+Browse our [samples][conversationanalysis_samples] for more examples of how to analyze conversations.
 
 ## Troubleshooting
 
