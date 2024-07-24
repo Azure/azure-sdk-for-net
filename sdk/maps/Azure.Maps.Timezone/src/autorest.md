@@ -9,7 +9,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 input-file:
 - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a83c34348fbd25ad79a05e36816b91da0122b583/specification/maps/data-plane/Timezone/preview/1.0/timezone.json
-title: MapsTimezoneClient
+title: MapsTimeZoneClient
 openapi-type: data-plane
 tag: 2.0
 add-credentials: true
