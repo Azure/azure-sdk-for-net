@@ -256,8 +256,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [custom_domain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples
 [source_root]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/src
-[package]: https://www.nuget.org/packages/Azure.AI.Language.Text/
-[text_refdocs]: https://learn.microsoft.com/en-us/dotnet/api/azure.ai.text?view=azure-dotnet
+[package]: https://www.nuget.org/packages/ <!-- need to update link when nuget published -->
+[text_refdocs]: https://learn.microsoft.com/en-us/dotnet/ <!-- need to update link when docs are published -->
 [text_docs]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [textanalysisclient_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/src/TextAnalysisClient.cs
