@@ -63,7 +63,7 @@ public class ResourceExtensionsTests
     public void ServiceNameFromResource()
     {
         var resource = CreateTestResource(serviceName: "my-service");
-        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.Equal("my-service", azMonResource?.RoleName);
         Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
@@ -73,7 +73,7 @@ public class ResourceExtensionsTests
     public void ServiceInstanceFromResource()
     {
         var resource = CreateTestResource(serviceInstance: "my-instance");
-        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.StartsWith("unknown_service", azMonResource?.RoleName);
         Assert.Equal("my-instance", azMonResource?.RoleInstance);
@@ -83,7 +83,7 @@ public class ResourceExtensionsTests
     public void ServiceNamespaceFromResource()
     {
         var resource = CreateTestResource(serviceNamespace: "my-namespace");
-        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.StartsWith("[my-namespace]/unknown_service", azMonResource?.RoleName);
         Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
@@ -93,7 +93,7 @@ public class ResourceExtensionsTests
     public void ServiceNameAndInstanceFromResource()
     {
         var resource = CreateTestResource(serviceName: "my-service", serviceInstance: "my-instance");
-        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.Equal("my-service", azMonResource?.RoleName);
         Assert.Equal("my-instance", azMonResource?.RoleInstance);
@@ -103,7 +103,7 @@ public class ResourceExtensionsTests
     public void ServiceNameAndInstanceAndNamespaceFromResource()
     {
         var resource = CreateTestResource(serviceName: "my-service", serviceNamespace: "my-namespace", serviceInstance: "my-instance");
-        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.Equal("[my-namespace]/my-service", azMonResource?.RoleName);
         Assert.Equal("my-instance", azMonResource?.RoleInstance);
@@ -120,7 +120,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
-        _ = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.StartsWith("pre_", SdkVersionUtils.s_sdkVersion);
 
@@ -139,7 +139,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
-        _ = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.EndsWith("-d", SdkVersionUtils.s_sdkVersion);
 
@@ -158,7 +158,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
-        _ = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.DoesNotContain("-d", SdkVersionUtils.s_sdkVersion);
 
@@ -173,7 +173,7 @@ public class ResourceExtensionsTests
         var sdkVersion = SdkVersionUtils.s_sdkVersion;
 
         var resource = ResourceBuilder.CreateDefault().Build();
-        _ = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.NotNull(SdkVersionUtils.s_sdkVersion);
         Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
@@ -194,7 +194,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
-        _ = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         Assert.NotNull(SdkVersionUtils.s_sdkVersion);
         Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
@@ -283,7 +283,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         // Assert
         Assert.Equal("my-deployment", azMonResource?.RoleName);
@@ -304,7 +304,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         // Assert
         Assert.Equal("my-service", azMonResource?.RoleName);
@@ -322,7 +322,7 @@ public class ResourceExtensionsTests
         };
 
         var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
-        var azMonResource = resource.CreateAzureMonitorResource(platform: GetMockPlatform());
+        var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
 
         // Assert
         Assert.Null(azMonResource?.RoleName);

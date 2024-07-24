@@ -19,14 +19,20 @@ internal static class ResourceExtensions
     private const string DefaultServiceName = "unknown_service";
     private const int Version = 2;
 
-    internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey = null, IPlatform ? platform = null)
+    public static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey = null)
+    {
+        return resource.CreateAzureMonitorResource(instrumentationKey, DefaultPlatform.Instance);
+    }
+
+    /// <summary>
+    /// This overload is intended for unit testing purposes.
+    /// </summary>
+    internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey, IPlatform platform)
     {
         if (resource == null)
         {
             return null;
         }
-
-        platform ??= DefaultPlatform.Instance;
 
         MetricsData? metricsData = null;
         AksResourceProcessor? aksResourceProcessor = null;
