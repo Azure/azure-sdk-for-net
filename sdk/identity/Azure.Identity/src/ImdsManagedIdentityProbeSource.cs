@@ -58,7 +58,7 @@ namespace Azure.Identity
 
         protected override Request CreateRequest(string[] scopes)
         {
-            // covert the scopes to a resource string
+            // convert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
 
             Request request = Pipeline.HttpPipeline.CreateRequest();

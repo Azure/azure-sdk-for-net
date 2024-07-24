@@ -123,7 +123,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                // This exception pattern indicates that the MSI endpoint is not available after exhausting all retries.
+                // This exception pattern indicates that the MI endpoint is not available after exhausting all retries.
                 if (e.InnerException is AggregateException ae && ae.InnerExceptions.All(inner => inner is RequestFailedException))
                 {
                     throw scope.FailWrapAndThrow(new CredentialUnavailableException(ImdsManagedIdentityProbeSource.AggregateError, e), Troubleshooting);
