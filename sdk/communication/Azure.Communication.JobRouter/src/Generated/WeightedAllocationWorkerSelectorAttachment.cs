@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        internal WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<WorkerWeightedAllocation> allocations) : base(kind, serializedAdditionalRawData)
+        internal WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<WorkerWeightedAllocation> allocations) : base(kind, serializedAdditionalRawData)
         {
             Allocations = allocations;
         }
@@ -29,6 +29,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> A collection of percentage based weighted allocations. </summary>
-        public IList<WorkerWeightedAllocation> Allocations { get; }
+        public IReadOnlyList<WorkerWeightedAllocation> Allocations { get; }
     }
 }

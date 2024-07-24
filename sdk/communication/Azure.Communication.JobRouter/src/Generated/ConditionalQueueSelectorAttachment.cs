@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
         /// </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="queueSelectors"/> is null. </exception>
-        public ConditionalQueueSelectorAttachment(RouterRule condition, IEnumerable<RouterQueueSelector> queueSelectors)
+        internal ConditionalQueueSelectorAttachment(RouterRule condition, IEnumerable<RouterQueueSelector> queueSelectors)
         {
             Argument.AssertNotNull(condition, nameof(condition));
             Argument.AssertNotNull(queueSelectors, nameof(queueSelectors));
@@ -57,6 +57,6 @@ namespace Azure.Communication.JobRouter
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>
-        public RouterRule Condition { get; set; }
+        public RouterRule Condition { get; }
     }
 }

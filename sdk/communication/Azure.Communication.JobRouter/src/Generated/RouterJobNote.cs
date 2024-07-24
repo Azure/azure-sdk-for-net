@@ -62,6 +62,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> The message contained in the note. </summary>
-        public string Message { get; set; }
+        public string Message { get; }
     }
 }
