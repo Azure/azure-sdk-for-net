@@ -7,6 +7,9 @@
       "stderr": {
         "showInComment": ".*(\\[ERROR\\]|error NU|(?!0\\b)\\d+ Error\\(s\\)|ExternalError).*",
         "scriptError": "\\[ERROR\\]"
+      },
+      "stdout": {
+        "showInComment": "Start to.*"
       }
     }
   },

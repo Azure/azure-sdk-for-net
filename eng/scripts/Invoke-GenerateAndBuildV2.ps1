@@ -127,6 +127,7 @@ if ($relatedTypeSpecProjectFolder) {
             $serviceType = "resource-manager"
         }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
+        Write-host "Start to call tsp-client to generate package:$packageName"
         $tspclientCommand = "npx --package=@azure-tools/typespec-client-generator-cli --yes tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
         if ($swaggerDir) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
@@ -135,11 +136,12 @@ if ($relatedTypeSpecProjectFolder) {
         Invoke-Expression $tspclientCommand
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
-          Write-Error "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq. If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+          Write-Error "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE."
+          Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+          Write-Error "[ERROR] If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
           $generatedSDKPackages.Add(@{
             result = "failed";
             path=@("");
-            packageName="$packageName";
           })
           $exitCode = $LASTEXITCODE
         } else {
