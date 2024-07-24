@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Developer.Signing
 {
-    public partial class SigningPayloadOptions : IUtf8JsonSerializable, IJsonModel<SigningPayloadOptions>
+    internal partial class SigningPayloadOptions : IUtf8JsonSerializable, IJsonModel<SigningPayloadOptions>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SigningPayloadOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

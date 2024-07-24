@@ -44,19 +44,5 @@ namespace Azure.Developer.Signing
         {
             return new ExtendedKeyUsage(eku, serializedAdditionalRawData: null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Signing.SigningPayloadOptions"/>. </summary>
-        /// <param name="signatureAlgorithm"> The supported signature algorithm identifiers. </param>
-        /// <param name="digest"> Content digest to sign. </param>
-        /// <param name="fileHashList"> List of full file digital signatures. </param>
-        /// <param name="authenticodeHashList"> List of authenticode digital signatures. </param>
-        /// <returns> A new <see cref="Signing.SigningPayloadOptions"/> instance for mocking. </returns>
-        public static SigningPayloadOptions SigningPayloadOptions(SignatureAlgorithm signatureAlgorithm = default, BinaryData digest = null, IEnumerable<BinaryData> fileHashList = null, IEnumerable<BinaryData> authenticodeHashList = null)
-        {
-            fileHashList ??= new List<BinaryData>();
-            authenticodeHashList ??= new List<BinaryData>();
-
-            return new SigningPayloadOptions(signatureAlgorithm, digest, fileHashList?.ToList(), authenticodeHashList?.ToList(), serializedAdditionalRawData: null);
-        }
     }
 }

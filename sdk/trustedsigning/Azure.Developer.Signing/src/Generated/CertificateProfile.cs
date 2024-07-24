@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -407,23 +409,26 @@ namespace Azure.Developer.Signing
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="accountName"> Azure Developer Signing account name. </param>
         /// <param name="certificateProfile"> Azure Developer Signing certificate profile name under an account. </param>
-        /// <param name="signingPayloadOptions"> The artifact request information to be signed by the service. </param>
+        /// <param name="signatureAlgorithm"> The supported signature algorithm identifiers. </param>
+        /// <param name="digest"> Content digest to sign. </param>
+        /// <param name="fileHashList"> List of full file digital signatures. </param>
+        /// <param name="authenticodeHashList"> List of authenticode digital signatures. </param>
         /// <param name="clientVersion"> An optional client version. </param>
         /// <param name="xCorrelationId"> An identifier used to batch multiple requests. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="certificateProfile"/> or <paramref name="signingPayloadOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="certificateProfile"/> or <paramref name="digest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> or <paramref name="certificateProfile"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Submit a sign operation under the created account and profile name provided. </remarks>
-        /// <include file="Docs/CertificateProfile.xml" path="doc/members/member[@name='SignAsync(WaitUntil,string,string,SigningPayloadOptions,string,string,CancellationToken)']/*" />
-        public virtual async Task<Operation<SignResult>> SignAsync(WaitUntil waitUntil, string accountName, string certificateProfile, SigningPayloadOptions signingPayloadOptions, string clientVersion = null, string xCorrelationId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/CertificateProfile.xml" path="doc/members/member[@name='SignAsync(WaitUntil,string,string,SignatureAlgorithm,BinaryData,IEnumerable{BinaryData},IEnumerable{BinaryData},string,string,CancellationToken)']/*" />
+        public virtual async Task<Operation<SignResult>> SignAsync(WaitUntil waitUntil, string accountName, string certificateProfile, SignatureAlgorithm signatureAlgorithm, BinaryData digest, IEnumerable<BinaryData> fileHashList = null, IEnumerable<BinaryData> authenticodeHashList = null, string clientVersion = null, string xCorrelationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(certificateProfile, nameof(certificateProfile));
-            Argument.AssertNotNull(signingPayloadOptions, nameof(signingPayloadOptions));
+            Argument.AssertNotNull(digest, nameof(digest));
 
-            using RequestContent content = signingPayloadOptions.ToRequestContent();
+            SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(signatureAlgorithm, digest, fileHashList?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(), authenticodeHashList?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await SignAsync(waitUntil, accountName, certificateProfile, content, clientVersion, xCorrelationId, context).ConfigureAwait(false);
+            Operation<BinaryData> response = await SignAsync(waitUntil, accountName, certificateProfile, signingPayloadOptions.ToRequestContent(), clientVersion, xCorrelationId, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchSignResultFromOperationStatusSignResultError, ClientDiagnostics, "CertificateProfile.Sign");
         }
 
@@ -431,23 +436,26 @@ namespace Azure.Developer.Signing
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="accountName"> Azure Developer Signing account name. </param>
         /// <param name="certificateProfile"> Azure Developer Signing certificate profile name under an account. </param>
-        /// <param name="signingPayloadOptions"> The artifact request information to be signed by the service. </param>
+        /// <param name="signatureAlgorithm"> The supported signature algorithm identifiers. </param>
+        /// <param name="digest"> Content digest to sign. </param>
+        /// <param name="fileHashList"> List of full file digital signatures. </param>
+        /// <param name="authenticodeHashList"> List of authenticode digital signatures. </param>
         /// <param name="clientVersion"> An optional client version. </param>
         /// <param name="xCorrelationId"> An identifier used to batch multiple requests. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="certificateProfile"/> or <paramref name="signingPayloadOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="certificateProfile"/> or <paramref name="digest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> or <paramref name="certificateProfile"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Submit a sign operation under the created account and profile name provided. </remarks>
-        /// <include file="Docs/CertificateProfile.xml" path="doc/members/member[@name='Sign(WaitUntil,string,string,SigningPayloadOptions,string,string,CancellationToken)']/*" />
-        public virtual Operation<SignResult> Sign(WaitUntil waitUntil, string accountName, string certificateProfile, SigningPayloadOptions signingPayloadOptions, string clientVersion = null, string xCorrelationId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/CertificateProfile.xml" path="doc/members/member[@name='Sign(WaitUntil,string,string,SignatureAlgorithm,BinaryData,IEnumerable{BinaryData},IEnumerable{BinaryData},string,string,CancellationToken)']/*" />
+        public virtual Operation<SignResult> Sign(WaitUntil waitUntil, string accountName, string certificateProfile, SignatureAlgorithm signatureAlgorithm, BinaryData digest, IEnumerable<BinaryData> fileHashList = null, IEnumerable<BinaryData> authenticodeHashList = null, string clientVersion = null, string xCorrelationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(certificateProfile, nameof(certificateProfile));
-            Argument.AssertNotNull(signingPayloadOptions, nameof(signingPayloadOptions));
+            Argument.AssertNotNull(digest, nameof(digest));
 
-            using RequestContent content = signingPayloadOptions.ToRequestContent();
+            SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(signatureAlgorithm, digest, fileHashList?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(), authenticodeHashList?.ToList() as IList<BinaryData> ?? new ChangeTrackingList<BinaryData>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = Sign(waitUntil, accountName, certificateProfile, content, clientVersion, xCorrelationId, context);
+            Operation<BinaryData> response = Sign(waitUntil, accountName, certificateProfile, signingPayloadOptions.ToRequestContent(), clientVersion, xCorrelationId, context);
             return ProtocolOperationHelpers.Convert(response, FetchSignResultFromOperationStatusSignResultError, ClientDiagnostics, "CertificateProfile.Sign");
         }
 
@@ -461,7 +469,7 @@ namespace Azure.Developer.Signing
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SignAsync(WaitUntil,string,string,SigningPayloadOptions,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SignAsync(WaitUntil,string,string,SignatureAlgorithm,BinaryData,IEnumerable{BinaryData},IEnumerable{BinaryData},string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -508,7 +516,7 @@ namespace Azure.Developer.Signing
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Sign(WaitUntil,string,string,SigningPayloadOptions,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Sign(WaitUntil,string,string,SignatureAlgorithm,BinaryData,IEnumerable{BinaryData},IEnumerable{BinaryData},string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
