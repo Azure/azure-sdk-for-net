@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> Timezone names object. </summary>
     public partial class TimezoneNames

@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     internal partial class ErrorAdditionalInfo
     {

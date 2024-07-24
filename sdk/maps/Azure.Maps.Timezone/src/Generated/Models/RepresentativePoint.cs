@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> Representative point property. </summary>
     public partial class RepresentativePoint

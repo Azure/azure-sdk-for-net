@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> The JsonFormat. </summary>
     public readonly partial struct JsonFormat : IEquatable<JsonFormat>

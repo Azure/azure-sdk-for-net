@@ -1,4 +1,4 @@
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     public partial class CountryRecord
     {
@@ -15,65 +15,65 @@ namespace Azure.Maps.Timezone
         public bool? IsAlias { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JsonFormat : System.IEquatable<Azure.Maps.Timezone.JsonFormat>
+    public readonly partial struct JsonFormat : System.IEquatable<Azure.Maps.TimeZone.JsonFormat>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public JsonFormat(string value) { throw null; }
-        public static Azure.Maps.Timezone.JsonFormat Json { get { throw null; } }
-        public bool Equals(Azure.Maps.Timezone.JsonFormat other) { throw null; }
+        public static Azure.Maps.TimeZone.JsonFormat Json { get { throw null; } }
+        public bool Equals(Azure.Maps.TimeZone.JsonFormat other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Timezone.JsonFormat left, Azure.Maps.Timezone.JsonFormat right) { throw null; }
-        public static implicit operator Azure.Maps.Timezone.JsonFormat (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Timezone.JsonFormat left, Azure.Maps.Timezone.JsonFormat right) { throw null; }
+        public static bool operator ==(Azure.Maps.TimeZone.JsonFormat left, Azure.Maps.TimeZone.JsonFormat right) { throw null; }
+        public static implicit operator Azure.Maps.TimeZone.JsonFormat (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.TimeZone.JsonFormat left, Azure.Maps.TimeZone.JsonFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MapsTimezoneClient
+    public partial class MapsTimeZoneClient
     {
-        protected MapsTimezoneClient() { }
-        public MapsTimezoneClient(Azure.AzureKeyCredential credential) { }
-        public MapsTimezoneClient(Azure.AzureKeyCredential credential, Azure.Maps.Timezone.MapsTimezoneClientOptions options) { }
-        public MapsTimezoneClient(Azure.AzureSasCredential credential) { }
-        public MapsTimezoneClient(Azure.AzureSasCredential credential, Azure.Maps.Timezone.MapsTimezoneClientOptions options) { }
-        public MapsTimezoneClient(Azure.Core.TokenCredential credential, string clientId) { }
-        public MapsTimezoneClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Timezone.MapsTimezoneClientOptions options) { }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.IanaId>> ConvertWindowsTimezoneToIana(string windowsTimezoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.IanaId>>> ConvertWindowsTimezoneToIanaAsync(string windowsTimezoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.IanaId>> GetIanaTimezoneIds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.IanaId>>> GetIanaTimezoneIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Timezone.TimezoneIanaVersionResult> GetIanaVersion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Timezone.TimezoneIanaVersionResult>> GetIanaVersionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Timezone.TimezoneResult> GetTimezoneByCoordinates(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Timezone.Models.Options.TimezoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Timezone.TimezoneResult>> GetTimezoneByCoordinatesAsync(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.Timezone.Models.Options.TimezoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Timezone.TimezoneResult> GetTimezoneByID(string timezoneId, Azure.Maps.Timezone.Models.Options.TimezoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Timezone.TimezoneResult>> GetTimezoneByIDAsync(string timezoneId, Azure.Maps.Timezone.Models.Options.TimezoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.TimezoneWindows>> GetWindowsTimezoneIds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.TimezoneWindows>>> GetWindowsTimezoneIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected MapsTimeZoneClient() { }
+        public MapsTimeZoneClient(Azure.AzureKeyCredential credential) { }
+        public MapsTimeZoneClient(Azure.AzureKeyCredential credential, Azure.Maps.TimeZone.MapsTimeZoneClientOptions options) { }
+        public MapsTimeZoneClient(Azure.AzureSasCredential credential) { }
+        public MapsTimeZoneClient(Azure.AzureSasCredential credential, Azure.Maps.TimeZone.MapsTimeZoneClientOptions options) { }
+        public MapsTimeZoneClient(Azure.Core.TokenCredential credential, string clientId) { }
+        public MapsTimeZoneClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.TimeZone.MapsTimeZoneClientOptions options) { }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZone.IanaId>> ConvertWindowsTimeZoneToIana(string windowsTimezoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZone.IanaId>>> ConvertWindowsTimeZoneToIanaAsync(string windowsTimezoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZone.IanaId>> GetIanaTimeZoneIds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZone.IanaId>>> GetIanaTimeZoneIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.TimeZone.Models.TimeZoneIanaVersionResult> GetIanaVersion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.TimeZone.Models.TimeZoneIanaVersionResult>> GetIanaVersionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.TimeZone.Models.TimeZoneResult> GetTimeZoneByCoordinates(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.TimeZone.Models.Options.TimeZoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.TimeZone.Models.TimeZoneResult>> GetTimeZoneByCoordinatesAsync(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.TimeZone.Models.Options.TimeZoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.TimeZone.Models.TimeZoneResult> GetTimeZoneByID(string timezoneId, Azure.Maps.TimeZone.Models.Options.TimeZoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.TimeZone.Models.TimeZoneResult>> GetTimeZoneByIDAsync(string timezoneId, Azure.Maps.TimeZone.Models.Options.TimeZoneBaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZone.Models.TimeZoneWindows>> GetWindowsTimeZoneIds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZone.Models.TimeZoneWindows>>> GetWindowsTimeZoneIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MapsTimezoneClientOptions : Azure.Core.ClientOptions
+    public partial class MapsTimeZoneClientOptions : Azure.Core.ClientOptions
     {
-        public MapsTimezoneClientOptions(Azure.Maps.Timezone.MapsTimezoneClientOptions.ServiceVersion version = Azure.Maps.Timezone.MapsTimezoneClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
+        public MapsTimeZoneClientOptions(Azure.Maps.TimeZone.MapsTimeZoneClientOptions.ServiceVersion version = Azure.Maps.TimeZone.MapsTimeZoneClientOptions.ServiceVersion.V1_0, System.Uri endpoint = null) { }
         public System.Uri Endpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 1,
         }
     }
-    public static partial class MapsTimezoneModelFactory
+    public static partial class MapsTimeZoneModelFactory
     {
-        public static Azure.Maps.Timezone.CountryRecord CountryRecord(string name = null, string code = null) { throw null; }
-        public static Azure.Maps.Timezone.IanaId IanaId(string id = null, bool? isAlias = default(bool?), string aliasOf = null, bool? hasZone1970Location = default(bool?)) { throw null; }
-        public static Azure.Maps.Timezone.ReferenceTime ReferenceTime(string tag = null, string standardOffset = null, string daylightSavings = null, string wallTime = null, int? posixTzValidYear = default(int?), string posixTz = null, System.DateTimeOffset? sunrise = default(System.DateTimeOffset?), System.DateTimeOffset? sunset = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Maps.Timezone.RepresentativePoint RepresentativePoint(float? latitude = default(float?), float? longitude = default(float?)) { throw null; }
-        public static Azure.Maps.Timezone.TimeTransition TimeTransition(string tag = null, string standardOffset = null, string daylightSavings = null, System.DateTimeOffset? utcStart = default(System.DateTimeOffset?), System.DateTimeOffset? utcEnd = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Maps.Timezone.TimezoneIanaVersionResult TimezoneIanaVersionResult(string version = null) { throw null; }
-        public static Azure.Maps.Timezone.TimezoneId TimezoneId(string id = null, System.Collections.Generic.IEnumerable<string> aliases = null, System.Collections.Generic.IEnumerable<Azure.Maps.Timezone.CountryRecord> countries = null, Azure.Maps.Timezone.TimezoneNames names = null, Azure.Maps.Timezone.ReferenceTime referenceTime = null, Azure.Maps.Timezone.RepresentativePoint representativePoint = null, System.Collections.Generic.IEnumerable<Azure.Maps.Timezone.TimeTransition> timeTransitions = null) { throw null; }
-        public static Azure.Maps.Timezone.TimezoneNames TimezoneNames(string isO6391LanguageCode = null, string generic = null, string standard = null, string daylight = null) { throw null; }
-        public static Azure.Maps.Timezone.TimezoneResult TimezoneResult(string version = null, System.DateTimeOffset? referenceUtcTimestamp = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Maps.Timezone.TimezoneId> timeZones = null) { throw null; }
-        public static Azure.Maps.Timezone.TimezoneWindows TimezoneWindows(string windowsId = null, string territory = null, System.Collections.Generic.IEnumerable<string> ianaIds = null) { throw null; }
+        public static Azure.Maps.TimeZone.CountryRecord CountryRecord(string name = null, string code = null) { throw null; }
+        public static Azure.Maps.TimeZone.IanaId IanaId(string id = null, bool? isAlias = default(bool?), string aliasOf = null, bool? hasZone1970Location = default(bool?)) { throw null; }
+        public static Azure.Maps.TimeZone.ReferenceTime ReferenceTime(string tag = null, string standardOffset = null, string daylightSavings = null, string wallTime = null, int? posixTzValidYear = default(int?), string posixTz = null, System.DateTimeOffset? sunrise = default(System.DateTimeOffset?), System.DateTimeOffset? sunset = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Maps.TimeZone.RepresentativePoint RepresentativePoint(float? latitude = default(float?), float? longitude = default(float?)) { throw null; }
+        public static Azure.Maps.TimeZone.TimeTransition TimeTransition(string tag = null, string standardOffset = null, string daylightSavings = null, System.DateTimeOffset? utcStart = default(System.DateTimeOffset?), System.DateTimeOffset? utcEnd = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Maps.TimeZone.Models.TimeZoneIanaVersionResult TimeZoneIanaVersionResult(string version = null) { throw null; }
+        public static Azure.Maps.TimeZone.TimezoneId TimezoneId(string id = null, System.Collections.Generic.IEnumerable<string> aliases = null, System.Collections.Generic.IEnumerable<Azure.Maps.TimeZone.CountryRecord> countries = null, Azure.Maps.TimeZone.TimezoneNames names = null, Azure.Maps.TimeZone.ReferenceTime referenceTime = null, Azure.Maps.TimeZone.RepresentativePoint representativePoint = null, System.Collections.Generic.IEnumerable<Azure.Maps.TimeZone.TimeTransition> timeTransitions = null) { throw null; }
+        public static Azure.Maps.TimeZone.TimezoneNames TimezoneNames(string isO6391LanguageCode = null, string generic = null, string standard = null, string daylight = null) { throw null; }
+        public static Azure.Maps.TimeZone.Models.TimeZoneResult TimeZoneResult(string version = null, System.DateTimeOffset? referenceUtcTimestamp = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Maps.TimeZone.TimezoneId> timeZones = null) { throw null; }
+        public static Azure.Maps.TimeZone.Models.TimeZoneWindows TimeZoneWindows(string windowsId = null, string territory = null, System.Collections.Generic.IEnumerable<string> ianaIds = null) { throw null; }
     }
     public partial class ReferenceTime
     {
@@ -102,21 +102,16 @@ namespace Azure.Maps.Timezone
         public System.DateTimeOffset? UtcEnd { get { throw null; } }
         public System.DateTimeOffset? UtcStart { get { throw null; } }
     }
-    public partial class TimezoneIanaVersionResult
-    {
-        internal TimezoneIanaVersionResult() { }
-        public string Version { get { throw null; } }
-    }
     public partial class TimezoneId
     {
         internal TimezoneId() { }
         public System.Collections.Generic.IReadOnlyList<string> Aliases { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.CountryRecord> Countries { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZone.CountryRecord> Countries { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.Maps.Timezone.TimezoneNames Names { get { throw null; } }
-        public Azure.Maps.Timezone.ReferenceTime ReferenceTime { get { throw null; } }
-        public Azure.Maps.Timezone.RepresentativePoint RepresentativePoint { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.TimeTransition> TimeTransitions { get { throw null; } }
+        public Azure.Maps.TimeZone.TimezoneNames Names { get { throw null; } }
+        public Azure.Maps.TimeZone.ReferenceTime ReferenceTime { get { throw null; } }
+        public Azure.Maps.TimeZone.RepresentativePoint RepresentativePoint { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZone.TimeTransition> TimeTransitions { get { throw null; } }
     }
     public partial class TimezoneNames
     {
@@ -126,50 +121,58 @@ namespace Azure.Maps.Timezone
         public string ISO6391LanguageCode { get { throw null; } }
         public string Standard { get { throw null; } }
     }
+}
+namespace Azure.Maps.TimeZone.Models
+{
+    public partial class TimeZoneIanaVersionResult
+    {
+        internal TimeZoneIanaVersionResult() { }
+        public string Version { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TimezoneOptions : System.IEquatable<Azure.Maps.Timezone.TimezoneOptions>
+    public readonly partial struct TimeZoneOptions : System.IEquatable<Azure.Maps.TimeZone.Models.TimeZoneOptions>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TimezoneOptions(string value) { throw null; }
-        public static Azure.Maps.Timezone.TimezoneOptions All { get { throw null; } }
-        public static Azure.Maps.Timezone.TimezoneOptions None { get { throw null; } }
-        public static Azure.Maps.Timezone.TimezoneOptions Transitions { get { throw null; } }
-        public static Azure.Maps.Timezone.TimezoneOptions ZoneInfo { get { throw null; } }
-        public bool Equals(Azure.Maps.Timezone.TimezoneOptions other) { throw null; }
+        public TimeZoneOptions(string value) { throw null; }
+        public static Azure.Maps.TimeZone.Models.TimeZoneOptions All { get { throw null; } }
+        public static Azure.Maps.TimeZone.Models.TimeZoneOptions None { get { throw null; } }
+        public static Azure.Maps.TimeZone.Models.TimeZoneOptions Transitions { get { throw null; } }
+        public static Azure.Maps.TimeZone.Models.TimeZoneOptions ZoneInfo { get { throw null; } }
+        public bool Equals(Azure.Maps.TimeZone.Models.TimeZoneOptions other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Timezone.TimezoneOptions left, Azure.Maps.Timezone.TimezoneOptions right) { throw null; }
-        public static implicit operator Azure.Maps.Timezone.TimezoneOptions (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Timezone.TimezoneOptions left, Azure.Maps.Timezone.TimezoneOptions right) { throw null; }
+        public static bool operator ==(Azure.Maps.TimeZone.Models.TimeZoneOptions left, Azure.Maps.TimeZone.Models.TimeZoneOptions right) { throw null; }
+        public static implicit operator Azure.Maps.TimeZone.Models.TimeZoneOptions (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.TimeZone.Models.TimeZoneOptions left, Azure.Maps.TimeZone.Models.TimeZoneOptions right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TimezoneResult
+    public partial class TimeZoneResult
     {
-        internal TimezoneResult() { }
+        internal TimeZoneResult() { }
         public System.DateTimeOffset? ReferenceUtcTimestamp { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Maps.Timezone.TimezoneId> TimeZones { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZone.TimezoneId> TimeZones { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class TimezoneWindows
+    public partial class TimeZoneWindows
     {
-        internal TimezoneWindows() { }
+        internal TimeZoneWindows() { }
         public System.Collections.Generic.IReadOnlyList<string> IanaIds { get { throw null; } }
         public string Territory { get { throw null; } }
         public string WindowsId { get { throw null; } }
     }
 }
-namespace Azure.Maps.Timezone.Models.Options
+namespace Azure.Maps.TimeZone.Models.Options
 {
-    public partial class TimezoneBaseOptions
+    public partial class TimeZoneBaseOptions
     {
-        public TimezoneBaseOptions() { }
+        public TimeZoneBaseOptions() { }
         public string AcceptLanguage { get { throw null; } set { } }
         public System.DateTimeOffset? DaylightSavingsTimeFrom { get { throw null; } set { } }
         public int? DaylightSavingsTimeLastingYears { get { throw null; } set { } }
-        public Azure.Maps.Timezone.TimezoneOptions? Options { get { throw null; } set { } }
+        public Azure.Maps.TimeZone.Models.TimeZoneOptions? Options { get { throw null; } set { } }
         public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
     }
 }

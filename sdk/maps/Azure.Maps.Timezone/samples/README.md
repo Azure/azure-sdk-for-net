@@ -5,12 +5,12 @@ languages:
 products:
 - azure
 - azure-maps
-name: Azure.Maps.Timezone samples for .NET
-description: Samples for the Azure.Maps.Timezone client library.
+name: Azure.Maps.TimeZone samples for .NET
+description: Samples for the Azure.Maps.TimeZone client library.
 ---
 
-# Azure.Maps.Timezone Samples
+# Azure.Maps.TimeZone Samples
 
 For different APIs, please refer the following samples:
 
-[Timezone](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.Timezone/samples/MapsTimezoneSamples.md)
+[Timezone](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/maps/Azure.Maps.TimeZone/samples/MapsTimezoneSamples.md)

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> Details in effect at the local time. </summary>
     public partial class ReferenceTime

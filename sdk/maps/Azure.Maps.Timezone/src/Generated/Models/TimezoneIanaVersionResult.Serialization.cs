@@ -7,11 +7,11 @@
 
 using System.Text.Json;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone.Models
 {
-    public partial class TimezoneIanaVersionResult
+    public partial class TimeZoneIanaVersionResult
     {
-        internal static TimezoneIanaVersionResult DeserializeTimezoneIanaVersionResult(JsonElement element)
+        internal static TimeZoneIanaVersionResult DeserializeTimeZoneIanaVersionResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -26,15 +26,15 @@ namespace Azure.Maps.Timezone
                     continue;
                 }
             }
-            return new TimezoneIanaVersionResult(version);
+            return new TimeZoneIanaVersionResult(version);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TimezoneIanaVersionResult FromResponse(Response response)
+        internal static TimeZoneIanaVersionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTimezoneIanaVersionResult(document.RootElement);
+            return DeserializeTimeZoneIanaVersionResult(document.RootElement);
         }
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> The resource management error additional info. </summary>
     internal partial class ErrorAdditionalInfo

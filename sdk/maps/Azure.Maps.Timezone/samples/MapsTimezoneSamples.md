@@ -1,50 +1,56 @@
+using Azure.Maps.TimeZone;
+
+
 ## Examples
 
-You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Timezone/samples). 
 
-### Get Timezone By ID
+### Get TimeZone By ID
 
-```C# Snippet:GetTimezoneById
-TimezoneBaseOptions options = new TimezoneBaseOptions();
-options.Options = TimezoneOptions.All;
-var response = client.GetTimezoneByID("Asia/Bahrain", options);
-Console.WriteLine(response);
+```C# Snippet:GetTimeZoneById
+TimeZoneBaseOptions options = new TimeZoneBaseOptions();
+options.Options = TimeZoneOptions.All;
+Response<TimeZoneResult> response = client.GetTimeZoneByID("Asia/Bahrain", options);
+Console.WriteLine("Version: " + response.Value.Version);
+Console.WriteLine("Countires: " + response.Value.TimeZones[0].Countries);
 ```
 
-### Get Timezone By Coordinates
+### Get TimeZone By Coordinates
 
-```C# Snippet:GetTimezoneByCoordinates
-TimezoneBaseOptions options = new TimezoneBaseOptions();
-options.Options = TimezoneOptions.All;
+```C# Snippet:GetTimeZoneByCoordinates
+TimeZoneBaseOptions options = new TimeZoneBaseOptions();
+options.Options = TimeZoneOptions.All;
 GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
-var response =  client.GetTimezoneByCoordinates(coordinates, options);
-Console.WriteLine(response);
+Response<TimeZoneResult> response =  client.GetTimeZoneByCoordinates(coordinates, options);
+Console.WriteLine("Names: " + response.Value.TimeZones[0].Names);
 ```
 
-### Get Windows Timezone Ids
+### Get Windows TimeZone Ids
 
-```C# Snippet:GetWindowsTimezoneIds
-var response = client.GetWindowsTimezoneIds();
-Console.WriteLine(response);
+```C# Snippet:GetWindowsTimeZoneIds
+Response<IReadOnlyList<TimeZoneWindows>> response = client.GetWindowsTimeZoneIds();
+Console.WriteLine("Count: " + response.Value.Count);
+Console.WriteLine("WindowsId: " + response.Value[0].WindowsId);
+Console.WriteLine("Territory: " + response.Value[0].Territory);
 ```
 
-### Get Iana Timezone Ids
+### Get Iana TimeZone Ids
 
-```C# Snippet:GetIanaTimezoneIds
-var response = client.GetIanaTimezoneIds();
-Console.WriteLine(response);
+```C# Snippet:GetIanaTimeZoneIds
+Response<IReadOnlyList<IanaId>> response = client.GetIanaTimeZoneIds();
+Console.WriteLine("IsAlias: " + response.Value[0].IsAlias);
+Console.WriteLine("Id: " + response.Value[0].Id);
 ```
 
 ### Get Iana Version
 
 ```C# Snippet:GetIanaVersion
-var response = client.GetIanaVersion();
-Console.WriteLine(response);
+Response<TimeZoneIanaVersionResult> response = client.GetIanaVersion();
+Console.WriteLine("Version: " + response.Value.Version);
 ```
 
-### Convert Windows Timezone To Iana
+### Convert Windows TimeZone To Iana
 
-```C# Snippet:ConvertWindowsTimezoneToIana
-var response = client.ConvertWindowsTimezoneToIana("Dateline Standard Time");
-Console.WriteLine(response);
+```C# Snippet:ConvertWindowsTimeZoneToIana
+Response<IReadOnlyList<IanaId>> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
+Console.WriteLine("Id: " + response.Value[0].Id);
 ```

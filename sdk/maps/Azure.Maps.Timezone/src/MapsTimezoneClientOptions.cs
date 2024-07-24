@@ -7,10 +7,10 @@
 
 using System;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> Client options for MapsRenderClient. </summary>
-    public partial class MapsTimezoneClientOptions : Azure.Core.ClientOptions
+    public partial class MapsTimeZoneClientOptions : Azure.Core.ClientOptions
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
@@ -29,7 +29,7 @@ namespace Azure.Maps.Timezone
         /// <summary> Initializes new instance of MapsTimezoneClientOptions. </summary>
         /// <param name="version"> Azure Maps Timezone API version. </param>
         /// <param name="endpoint"> The endpoint for Azure Maps. </param>
-        public MapsTimezoneClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
+        public MapsTimeZoneClientOptions(ServiceVersion version = LatestVersion, Uri endpoint = null)
         {
             Version = version switch
             {

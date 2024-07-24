@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone.Models
 {
-    public partial class TimezoneWindows
+    public partial class TimeZoneWindows
     {
-        internal static TimezoneWindows DeserializeTimezoneWindows(JsonElement element)
+        internal static TimeZoneWindows DeserializeTimeZoneWindows(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -49,15 +49,15 @@ namespace Azure.Maps.Timezone
                     continue;
                 }
             }
-            return new TimezoneWindows(windowsId, territory, ianaIds ?? new ChangeTrackingList<string>());
+            return new TimeZoneWindows(windowsId, territory, ianaIds ?? new ChangeTrackingList<string>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TimezoneWindows FromResponse(Response response)
+        internal static TimeZoneWindows FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTimezoneWindows(document.RootElement);
+            return DeserializeTimeZoneWindows(document.RootElement);
         }
     }
 }

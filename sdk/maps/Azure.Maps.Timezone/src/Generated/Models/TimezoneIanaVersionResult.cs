@@ -5,19 +5,19 @@
 
 #nullable disable
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone.Models
 {
     /// <summary> This object is returned from a successful Timezone IANA Version call. </summary>
-    public partial class TimezoneIanaVersionResult
+    public partial class TimeZoneIanaVersionResult
     {
-        /// <summary> Initializes a new instance of <see cref="TimezoneIanaVersionResult"/>. </summary>
-        internal TimezoneIanaVersionResult()
+        /// <summary> Initializes a new instance of <see cref="TimeZoneIanaVersionResult"/>. </summary>
+        internal TimeZoneIanaVersionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimezoneIanaVersionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZoneIanaVersionResult"/>. </summary>
         /// <param name="version"> Version property. </param>
-        internal TimezoneIanaVersionResult(string version)
+        internal TimeZoneIanaVersionResult(string version)
         {
             Version = version;
         }

@@ -8,36 +8,38 @@ using Azure.ResourceManager.Maps.Models;
 using Azure.ResourceManager.Maps;
 using Azure.ResourceManager;
 using NUnit.Framework;
-using Azure.Maps.Timezone.Models.Options;
+using Azure.Maps.TimeZone.Models.Options;
+using Azure.Maps.TimeZone.Models;
+using Azure.Maps.TimeZone;
 using System.Collections.Generic;
 using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Timezone.Tests.Samples
 {
-    public class TimezoneClientSamples : SamplesBase<TimezoneClientTestEnvironment>
+    public class TimeZoneClientSamples : SamplesBase<TimeZoneClientTestEnvironment>
     {
-        public void TimezoneClientViaSubscriptionKey()
+        public void TimeZoneClientViaSubscriptionKey()
         {
-            #region Snippet:InstantiateTimezoneClientViaSubscriptionKey
+            #region Snippet:InstantiateTimeZoneClientViaSubscriptionKey
             // Create a SearchClient that will authenticate through Subscription Key (Shared key)
             AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
-            MapsTimezoneClient client = new MapsTimezoneClient(credential);
+            MapsTimeZoneClient client = new MapsTimeZoneClient(credential);
             #endregion
         }
 
-        public void TimezoneClientViaMicrosoftEntra()
+        public void TimeZoneClientViaMicrosoftEntra()
         {
-            #region Snippet:InstantiateTimezoneClientViaMicrosoftEntra
+            #region Snippet:InstantiateTimeZoneClientViaMicrosoftEntra
             // Create a MapsTimezoneClient that will authenticate through MicrosoftEntra
             DefaultAzureCredential credential = new DefaultAzureCredential();
             string clientId = "<My Map Account Client Id>";
-            MapsTimezoneClient client = new MapsTimezoneClient(credential, clientId);
+            MapsTimeZoneClient client = new MapsTimeZoneClient(credential, clientId);
             #endregion
         }
 
-        public void TimezoneClientViaSas()
+        public void TimeZoneClientViaSas()
         {
-            #region Snippet:InstantiateTimezoneClientViaSas
+            #region Snippet:InstantiateTimeZoneClientViaSas
             // Get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // Authenticate your client
@@ -66,102 +68,106 @@ namespace Azure.Maps.Timezone.Tests.Samples
 
             // Create a TimezoneClient that will authenticate via SAS token
             AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
-            MapsTimezoneClient client = new MapsTimezoneClient(sasCredential);
+            MapsTimeZoneClient client = new MapsTimeZoneClient(sasCredential);
             #endregion
         }
 
         [Test]
-        public void GetTimezoneById()
+        public void GetTimeZoneById()
         {
-            var clientOptions = new MapsTimezoneClientOptions()
+            var clientOptions = new MapsTimeZoneClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsTimezoneClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:GetTimezoneById
-            TimezoneBaseOptions options = new TimezoneBaseOptions();
-            options.Options = TimezoneOptions.All;
-            var response = client.GetTimezoneByID("Asia/Bahrain", options);
-            Console.WriteLine(response);
+            var client = new MapsTimeZoneClient(TestEnvironment.Credential, clientId, clientOptions);
+            #region Snippet:GetTimeZoneById
+            TimeZoneBaseOptions options = new TimeZoneBaseOptions();
+            options.Options = TimeZoneOptions.All;
+            Response<TimeZoneResult> response = client.GetTimeZoneByID("Asia/Bahrain", options);
+            Console.WriteLine("Version: " + response.Value.Version);
+            Console.WriteLine("Countires: " + response.Value.TimeZones[0].Countries);
             #endregion
         }
 
         [Test]
-        public void GetTimezoneByCoordinates()
+        public void GetTimeZoneByCoordinates()
         {
-            var clientOptions = new MapsTimezoneClientOptions()
+            var clientOptions = new MapsTimeZoneClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsTimezoneClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:GetTimezoneByCoordinates
-            TimezoneBaseOptions options = new TimezoneBaseOptions();
-            options.Options = TimezoneOptions.All;
+            var client = new MapsTimeZoneClient(TestEnvironment.Credential, clientId, clientOptions);
+            #region Snippet:GetTimeZoneByCoordinates
+            TimeZoneBaseOptions options = new TimeZoneBaseOptions();
+            options.Options = TimeZoneOptions.All;
             GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
-            var response =  client.GetTimezoneByCoordinates(coordinates, options);
-            Console.WriteLine(response);
+            Response<TimeZoneResult> response =  client.GetTimeZoneByCoordinates(coordinates, options);
+            Console.WriteLine("Names: " + response.Value.TimeZones[0].Names);
             #endregion
         }
 
         [Test]
-        public void GetWindowsTimezoneIds()
+        public void GetWindowsTimeZoneIds()
         {
-            var clientOptions = new MapsTimezoneClientOptions()
+            var clientOptions = new MapsTimeZoneClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsTimezoneClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:GetWindowsTimezoneIds
-            var response = client.GetWindowsTimezoneIds();
-            Console.WriteLine(response);
+            var client = new MapsTimeZoneClient(TestEnvironment.Credential, clientId, clientOptions);
+            #region Snippet:GetWindowsTimeZoneIds
+            Response<IReadOnlyList<TimeZoneWindows>> response = client.GetWindowsTimeZoneIds();
+            Console.WriteLine("Count: " + response.Value.Count);
+            Console.WriteLine("WindowsId: " + response.Value[0].WindowsId);
+            Console.WriteLine("Territory: " + response.Value[0].Territory);
             #endregion
         }
 
         [Test]
-        public void GetIanaTimezoneIds()
+        public void GetIanaTimeZoneIds()
         {
-            var clientOptions = new MapsTimezoneClientOptions()
+            var clientOptions = new MapsTimeZoneClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsTimezoneClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:GetIanaTimezoneIds
-            var response = client.GetIanaTimezoneIds();
-            Console.WriteLine(response);
+            var client = new MapsTimeZoneClient(TestEnvironment.Credential, clientId, clientOptions);
+            #region Snippet:GetIanaTimeZoneIds
+            Response<IReadOnlyList<IanaId>> response = client.GetIanaTimeZoneIds();
+            Console.WriteLine("IsAlias: " + response.Value[0].IsAlias);
+            Console.WriteLine("Id: " + response.Value[0].Id);
             #endregion
         }
 
         [Test]
         public void GetIanaVersion()
         {
-            var clientOptions = new MapsTimezoneClientOptions()
+            var clientOptions = new MapsTimeZoneClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsTimezoneClient(TestEnvironment.Credential, clientId, clientOptions);
+            var client = new MapsTimeZoneClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetIanaVersion
-            var response = client.GetIanaVersion();
-            Console.WriteLine(response);
+            Response<TimeZoneIanaVersionResult> response = client.GetIanaVersion();
+            Console.WriteLine("Version: " + response.Value.Version);
             #endregion
         }
 
         [Test]
-        public void ConvertWindowsTimezoneToIana()
+        public void ConvertWindowsTimeZoneToIana()
         {
-            var clientOptions = new MapsTimezoneClientOptions()
+            var clientOptions = new MapsTimeZoneClientOptions()
             {
                 Endpoint = TestEnvironment.Endpoint
             };
             var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsTimezoneClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:ConvertWindowsTimezoneToIana
-            var response = client.ConvertWindowsTimezoneToIana("Dateline Standard Time");
-            Console.WriteLine(response);
+            var client = new MapsTimeZoneClient(TestEnvironment.Credential, clientId, clientOptions);
+            #region Snippet:ConvertWindowsTimeZoneToIana
+            Response<IReadOnlyList<IanaId>> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
+            Console.WriteLine("Id: " + response.Value[0].Id);
             #endregion
         }
     }
