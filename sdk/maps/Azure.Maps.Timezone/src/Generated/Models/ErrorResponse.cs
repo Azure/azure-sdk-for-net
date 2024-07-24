@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
     internal partial class ErrorResponse

@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     public partial class ReferenceTime
     {

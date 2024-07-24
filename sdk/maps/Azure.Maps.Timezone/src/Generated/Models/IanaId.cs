@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> The IanaId. </summary>
     public partial class IanaId

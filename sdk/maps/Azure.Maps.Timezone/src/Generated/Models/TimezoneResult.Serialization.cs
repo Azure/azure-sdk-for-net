@@ -10,11 +10,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone.Models
 {
-    public partial class TimezoneResult
+    public partial class TimeZoneResult
     {
-        internal static TimezoneResult DeserializeTimezoneResult(JsonElement element)
+        internal static TimeZoneResult DeserializeTimeZoneResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,15 +54,15 @@ namespace Azure.Maps.Timezone
                     continue;
                 }
             }
-            return new TimezoneResult(version, referenceUtcTimestamp, timeZones ?? new ChangeTrackingList<TimezoneId>());
+            return new TimeZoneResult(version, referenceUtcTimestamp, timeZones ?? new ChangeTrackingList<TimezoneId>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TimezoneResult FromResponse(Response response)
+        internal static TimeZoneResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTimezoneResult(document.RootElement);
+            return DeserializeTimeZoneResult(document.RootElement);
         }
     }
 }

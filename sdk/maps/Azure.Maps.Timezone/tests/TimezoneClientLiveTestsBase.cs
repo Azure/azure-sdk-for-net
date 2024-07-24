@@ -2,20 +2,21 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using Azure.Maps.TimeZone;
 
 namespace Azure.Maps.Timezone.Tests
 {
-    public class TimezoneClientLiveTestsBase : RecordedTestBase
+    public class TimeZoneClientLiveTestsBase : RecordedTestBase
     {
-        public TimezoneClientLiveTestsBase(bool isAsync) : base(isAsync)
+        public TimeZoneClientLiveTestsBase(bool isAsync) : base(isAsync)
         {
         }
 
-        protected MapsTimezoneClient CreateClient()
+        protected MapsTimeZoneClient CreateClient()
         {
-            return InstrumentClient(new MapsTimezoneClient(
+            return InstrumentClient(new MapsTimeZoneClient(
                 credential: new AzureKeyCredential("<My Subscription Key>"),
-                options: InstrumentClientOptions(new MapsTimezoneClientOptions())
+                options: InstrumentClientOptions(new MapsTimeZoneClientOptions())
              ));
         }
     }

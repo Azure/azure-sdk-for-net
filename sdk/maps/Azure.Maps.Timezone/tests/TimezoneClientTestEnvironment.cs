@@ -6,7 +6,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Maps.Timezone.Tests
 {
-    public class TimezoneClientTestEnvironment : TestEnvironment
+    public class TimeZoneClientTestEnvironment : TestEnvironment
     {
         public Uri Endpoint
         {

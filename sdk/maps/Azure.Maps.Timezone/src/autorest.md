@@ -20,7 +20,7 @@ generation1-convenience-client: true
 model-namespace: false
 sync-methods: None
 license-header: MICROSOFT_MIT_NO_VERSION
-namespace: Azure.Maps.Timezone
+namespace: Azure.Maps.TimeZone
 public-clients: false
 clear-output-folder: true
 data-plane: true

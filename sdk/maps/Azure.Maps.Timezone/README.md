@@ -1,8 +1,8 @@
-# Azure Maps Timezone client library for .NET
+# Azure Maps TimeZone client library for .NET
 
-Azure Maps Timezone is a library which contains Azure Maps Timezone APIs.
+Azure Maps TimeZone is a library which contains Azure Maps TimeZone APIs.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Timezone/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/timezone) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/timezone) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
 
 ## Getting started
 
@@ -11,7 +11,7 @@ Azure Maps Timezone is a library which contains Azure Maps Timezone APIs.
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Maps.Timezone --prerelease
+dotnet add package Azure.Maps.TimeZone --prerelease
 ```
 
 ### Prerequisites
@@ -26,32 +26,32 @@ az maps account create --kind "Gen2" --account-name "myMapAccountName" --resourc
 
 ### Authenticate the client
 
-There are 2 ways to authenticate the client: Shared key authentication and Azure MicrosoftEntra.
+There are 3  ways to authenticate the client: Shared key authentication, Microsoft Entra and Shared Access Signature (SAS) Authentication.
 
 #### Shared Key authentication
 
 * Go to Azure Maps account > Authentication tab
 * Copy `Primary Key` or `Secondary Key` under **Shared Key authentication** section
 
-```C# Snippet:InstantiateTimezoneClientViaSubscriptionKey
+```C# Snippet:InstantiateTimeZoneClientViaSubscriptionKey
 // Create a SearchClient that will authenticate through Subscription Key (Shared key)
 AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
-MapsTimezoneClient client = new MapsTimezoneClient(credential);
+MapsTimeZoneClient client = new MapsTimeZoneClient(credential);
 ```
 
-#### Azure AD authentication
+#### Microsoft Entra authentication
 
-In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsTimezoneClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+In order to interact with the Azure Maps service, you'll need to create an instance of the `MapsTimeZoneClient` class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Microsoft Entra support for authenticating Azure SDK clients with their corresponding Azure services.
 
-To use MicrosoftEntra authentication, the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsTimezoneClient`.
+To use Microsoft Entra authentication, the environment variables as described in the [Azure Identity README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) and create a `DefaultAzureCredential` instance to use with the `MapsTimeZoneClient`.
 
-We also need an **Azure Maps Client ID** which can be found on the Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
+We also need an **Azure Maps Client ID** which can be found on the Azure Maps page > Authentication tab > "Client ID" in Microsoft Entra Authentication section.
 
-```C# Snippet:InstantiateTimezoneClientViaMicrosoftEntra
+```C# Snippet:InstantiateTimeZoneClientViaMicrosoftEntra
 // Create a MapsTimezoneClient that will authenticate through MicrosoftEntra
 DefaultAzureCredential credential = new DefaultAzureCredential();
 string clientId = "<My Map Account Client Id>";
-MapsTimezoneClient client = new MapsTimezoneClient(credential, clientId);
+MapsTimeZoneClient client = new MapsTimeZoneClient(credential, clientId);
 ```
 
 #### Shared Access Signature (SAS) Authentication
@@ -66,9 +66,9 @@ dotnet add package Azure.ResourceManager.Maps --prerelease
 ```
 
 
-And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsTimezoneClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
+And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsTimeZoneClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
 
-```C# Snippet:InstantiateTimezoneClientViaSas
+```C# Snippet:InstantiateTimeZoneClientViaSas
 // Get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
 TokenCredential cred = new DefaultAzureCredential();
 // Authenticate your client
@@ -97,7 +97,7 @@ Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
 
 // Create a TimezoneClient that will authenticate via SAS token
 AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
-MapsTimezoneClient client = new MapsTimezoneClient(sasCredential);
+MapsTimeZoneClient client = new MapsTimeZoneClient(sasCredential);
 ```
 
 ## Key concepts
@@ -119,53 +119,57 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Timezone/samples). 
+You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone/samples). 
 
-### Get Timezone By ID
+### Get TimeZone By ID
 
-```C# Snippet:GetTimezoneById
-TimezoneBaseOptions options = new TimezoneBaseOptions();
-options.Options = TimezoneOptions.All;
-var response = client.GetTimezoneByID("Asia/Bahrain", options);
-Console.WriteLine(response);
+```C# Snippet:GetTimeZoneById
+TimeZoneBaseOptions options = new TimeZoneBaseOptions();
+options.Options = TimeZoneOptions.All;
+Response<TimeZoneResult> response = client.GetTimeZoneByID("Asia/Bahrain", options);
+Console.WriteLine("Version: " + response.Value.Version);
+Console.WriteLine("Countires: " + response.Value.TimeZones[0].Countries);
 ```
 
-### Get Timezone By Coordinates
+### Get TimeZone By Coordinates
 
-```C# Snippet:GetTimezoneByCoordinates
-TimezoneBaseOptions options = new TimezoneBaseOptions();
-options.Options = TimezoneOptions.All;
+```C# Snippet:GetTimeZoneByCoordinates
+TimeZoneBaseOptions options = new TimeZoneBaseOptions();
+options.Options = TimeZoneOptions.All;
 GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
-var response =  client.GetTimezoneByCoordinates(coordinates, options);
-Console.WriteLine(response);
+Response<TimeZoneResult> response =  client.GetTimeZoneByCoordinates(coordinates, options);
+Console.WriteLine("Names: " + response.Value.TimeZones[0].Names);
 ```
 
-### Get Windows Timezone Ids
+### Get Windows TimeZone Ids
 
-```C# Snippet:GetWindowsTimezoneIds
-var response = client.GetWindowsTimezoneIds();
-Console.WriteLine(response);
+```C# Snippet:GetWindowsTimeZoneIds
+Response<IReadOnlyList<TimeZoneWindows>> response = client.GetWindowsTimeZoneIds();
+Console.WriteLine("Count: " + response.Value.Count);
+Console.WriteLine("WindowsId: " + response.Value[0].WindowsId);
+Console.WriteLine("Territory: " + response.Value[0].Territory);
 ```
 
-### Get Iana Timezone Ids
+### Get Iana TimeZone Ids
 
-```C# Snippet:GetIanaTimezoneIds
-var response = client.GetIanaTimezoneIds();
-Console.WriteLine(response);
+```C# Snippet:GetIanaTimeZoneIds
+Response<IReadOnlyList<IanaId>> response = client.GetIanaTimeZoneIds();
+Console.WriteLine("IsAlias: " + response.Value[0].IsAlias);
+Console.WriteLine("Id: " + response.Value[0].Id);
 ```
 
 ### Get Iana Version
 
 ```C# Snippet:GetIanaVersion
-var response = client.GetIanaVersion();
-Console.WriteLine(response);
+Response<TimeZoneIanaVersionResult> response = client.GetIanaVersion();
+Console.WriteLine("Version: " + response.Value.Version);
 ```
 
-### Convert Windows Timezone To Iana
+### Convert Windows TimeZone To Iana
 
-```C# Snippet:ConvertWindowsTimezoneToIana
-var response = client.ConvertWindowsTimezoneToIana("Dateline Standard Time");
-Console.WriteLine(response);
+```C# Snippet:ConvertWindowsTimeZoneToIana
+Response<IReadOnlyList<IanaId>> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
+Console.WriteLine("Id: " + response.Value[0].Id);
 ```
 
 
@@ -192,4 +196,4 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact <opencode@microsoft.com> with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.Timezone/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.TimeZone/README.png)

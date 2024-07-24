@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> The TimeTransition. </summary>
     public partial class TimeTransition

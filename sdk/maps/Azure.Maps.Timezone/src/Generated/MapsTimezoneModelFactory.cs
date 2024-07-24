@@ -8,25 +8,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Maps.TimeZone.Models;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class MapsTimezoneModelFactory
+    public static partial class MapsTimeZoneModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Timezone.TimezoneResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TimeZoneResult"/>. </summary>
         /// <param name="version"> Version property. </param>
         /// <param name="referenceUtcTimestamp"> Reference Utc Timestamp property. </param>
         /// <param name="timeZones"> TimeZoneId array. </param>
-        /// <returns> A new <see cref="Timezone.TimezoneResult"/> instance for mocking. </returns>
-        public static TimezoneResult TimezoneResult(string version = null, DateTimeOffset? referenceUtcTimestamp = null, IEnumerable<TimezoneId> timeZones = null)
+        /// <returns> A new <see cref="Models.TimeZoneResult"/> instance for mocking. </returns>
+        public static TimeZoneResult TimeZoneResult(string version = null, DateTimeOffset? referenceUtcTimestamp = null, IEnumerable<TimezoneId> timeZones = null)
         {
             timeZones ??= new List<TimezoneId>();
 
-            return new TimezoneResult(version, referenceUtcTimestamp, timeZones?.ToList());
+            return new TimeZoneResult(version, referenceUtcTimestamp, timeZones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Timezone.TimezoneId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZone.TimezoneId"/>. </summary>
         /// <param name="id"> Id property. </param>
         /// <param name="aliases">
         /// An array of time zone ID aliases. Only returned when [options]=*zoneinfo* or *all*.
@@ -38,7 +39,7 @@ namespace Azure.Maps.Timezone
         /// <param name="referenceTime"> Details in effect at the local time. </param>
         /// <param name="representativePoint"> Representative point property. </param>
         /// <param name="timeTransitions"> Time zone DST transitions from [transitionsFrom] until timestamp + 1 year. </param>
-        /// <returns> A new <see cref="Timezone.TimezoneId"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TimeZone.TimezoneId"/> instance for mocking. </returns>
         public static TimezoneId TimezoneId(string id = null, IEnumerable<string> aliases = null, IEnumerable<CountryRecord> countries = null, TimezoneNames names = null, ReferenceTime referenceTime = null, RepresentativePoint representativePoint = null, IEnumerable<TimeTransition> timeTransitions = null)
         {
             aliases ??= new List<string>();
@@ -55,27 +56,27 @@ namespace Azure.Maps.Timezone
                 timeTransitions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Timezone.CountryRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZone.CountryRecord"/>. </summary>
         /// <param name="name"> country/region Name. </param>
         /// <param name="code"> ISO-3166 2-letter country/region code for the country/region. </param>
-        /// <returns> A new <see cref="Timezone.CountryRecord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TimeZone.CountryRecord"/> instance for mocking. </returns>
         public static CountryRecord CountryRecord(string name = null, string code = null)
         {
             return new CountryRecord(name, code);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Timezone.TimezoneNames"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZone.TimezoneNames"/>. </summary>
         /// <param name="isO6391LanguageCode"> The ISO 639-1 language code of the Names. </param>
         /// <param name="generic"> Generic Name. </param>
         /// <param name="standard"> Standard Name. </param>
         /// <param name="daylight"> Daylight Name. </param>
-        /// <returns> A new <see cref="Timezone.TimezoneNames"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TimeZone.TimezoneNames"/> instance for mocking. </returns>
         public static TimezoneNames TimezoneNames(string isO6391LanguageCode = null, string generic = null, string standard = null, string daylight = null)
         {
             return new TimezoneNames(isO6391LanguageCode, generic, standard, daylight);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Timezone.ReferenceTime"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZone.ReferenceTime"/>. </summary>
         /// <param name="tag"> Time zone name in effect at the reference timestamp (i.e. PST or PDT depending whether Daylight Savings Time is in effect). </param>
         /// <param name="standardOffset"> UTC offset in effect at the `ReferenceUTCTimestamp`. </param>
         /// <param name="daylightSavings"> Time saving in minutes in effect at the `ReferenceUTCTimestamp`. </param>
@@ -84,7 +85,7 @@ namespace Azure.Maps.Timezone
         /// <param name="posixTz"> POSIX string used to set the time zone environment variable. </param>
         /// <param name="sunrise"> Sunrise at the given time zone as shown in the `Tag` property. The sunrise is described in the ISO8601 format. (Only be populated if the call is byCoordinates). </param>
         /// <param name="sunset"> Sunset at the given time zone as shown in the `Tag` property. The sunset is described in the ISO8601 format.(Only be populated if the call is byCoordinates). </param>
-        /// <returns> A new <see cref="Timezone.ReferenceTime"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TimeZone.ReferenceTime"/> instance for mocking. </returns>
         public static ReferenceTime ReferenceTime(string tag = null, string standardOffset = null, string daylightSavings = null, string wallTime = null, int? posixTzValidYear = null, string posixTz = null, DateTimeOffset? sunrise = null, DateTimeOffset? sunset = null)
         {
             return new ReferenceTime(
@@ -98,56 +99,56 @@ namespace Azure.Maps.Timezone
                 sunset);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Timezone.RepresentativePoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZone.RepresentativePoint"/>. </summary>
         /// <param name="latitude"> Latitude property. </param>
         /// <param name="longitude"> Longitude property. </param>
-        /// <returns> A new <see cref="Timezone.RepresentativePoint"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TimeZone.RepresentativePoint"/> instance for mocking. </returns>
         public static RepresentativePoint RepresentativePoint(float? latitude = null, float? longitude = null)
         {
             return new RepresentativePoint(latitude, longitude);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Timezone.TimeTransition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZone.TimeTransition"/>. </summary>
         /// <param name="tag"> Tag property. </param>
         /// <param name="standardOffset"> StandardOffset property. </param>
         /// <param name="daylightSavings"> DaylightSavings property. </param>
         /// <param name="utcStart"> Start date, start time for this transition period. </param>
         /// <param name="utcEnd"> End date, end time for this transition period. </param>
-        /// <returns> A new <see cref="Timezone.TimeTransition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TimeZone.TimeTransition"/> instance for mocking. </returns>
         public static TimeTransition TimeTransition(string tag = null, string standardOffset = null, string daylightSavings = null, DateTimeOffset? utcStart = null, DateTimeOffset? utcEnd = null)
         {
             return new TimeTransition(tag, standardOffset, daylightSavings, utcStart, utcEnd);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Timezone.TimezoneWindows"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TimeZoneWindows"/>. </summary>
         /// <param name="windowsId"> Windows Id property. </param>
         /// <param name="territory"> Territory property. </param>
         /// <param name="ianaIds"> IanaIds array. </param>
-        /// <returns> A new <see cref="Timezone.TimezoneWindows"/> instance for mocking. </returns>
-        public static TimezoneWindows TimezoneWindows(string windowsId = null, string territory = null, IEnumerable<string> ianaIds = null)
+        /// <returns> A new <see cref="Models.TimeZoneWindows"/> instance for mocking. </returns>
+        public static TimeZoneWindows TimeZoneWindows(string windowsId = null, string territory = null, IEnumerable<string> ianaIds = null)
         {
             ianaIds ??= new List<string>();
 
-            return new TimezoneWindows(windowsId, territory, ianaIds?.ToList());
+            return new TimeZoneWindows(windowsId, territory, ianaIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Timezone.IanaId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZone.IanaId"/>. </summary>
         /// <param name="id"> Id property. </param>
         /// <param name="isAlias"> IsAlias property. </param>
         /// <param name="aliasOf"> AliasOf property. </param>
         /// <param name="hasZone1970Location"> This attribute returns `True` if the IanaId has any country/zone associated with it. </param>
-        /// <returns> A new <see cref="Timezone.IanaId"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TimeZone.IanaId"/> instance for mocking. </returns>
         public static IanaId IanaId(string id = null, bool? isAlias = null, string aliasOf = null, bool? hasZone1970Location = null)
         {
             return new IanaId(id, isAlias, aliasOf, hasZone1970Location);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Timezone.TimezoneIanaVersionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TimeZoneIanaVersionResult"/>. </summary>
         /// <param name="version"> Version property. </param>
-        /// <returns> A new <see cref="Timezone.TimezoneIanaVersionResult"/> instance for mocking. </returns>
-        public static TimezoneIanaVersionResult TimezoneIanaVersionResult(string version = null)
+        /// <returns> A new <see cref="Models.TimeZoneIanaVersionResult"/> instance for mocking. </returns>
+        public static TimeZoneIanaVersionResult TimeZoneIanaVersionResult(string version = null)
         {
-            return new TimezoneIanaVersionResult(version);
+            return new TimeZoneIanaVersionResult(version);
         }
     }
 }

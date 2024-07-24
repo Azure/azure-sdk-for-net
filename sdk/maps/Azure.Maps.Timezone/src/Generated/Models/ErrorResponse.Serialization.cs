@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone
 {
     internal partial class ErrorResponse
     {

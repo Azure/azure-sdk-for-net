@@ -8,22 +8,22 @@
 using System.Collections.Generic;
 using Azure.Maps.Common;
 
-namespace Azure.Maps.Timezone
+namespace Azure.Maps.TimeZone.Models
 {
     /// <summary> The TimezoneWindows. </summary>
-    public partial class TimezoneWindows
+    public partial class TimeZoneWindows
     {
-        /// <summary> Initializes a new instance of <see cref="TimezoneWindows"/>. </summary>
-        internal TimezoneWindows()
+        /// <summary> Initializes a new instance of <see cref="TimeZoneWindows"/>. </summary>
+        internal TimeZoneWindows()
         {
             IanaIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimezoneWindows"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZoneWindows"/>. </summary>
         /// <param name="windowsId"> Windows Id property. </param>
         /// <param name="territory"> Territory property. </param>
         /// <param name="ianaIds"> IanaIds array. </param>
-        internal TimezoneWindows(string windowsId, string territory, IReadOnlyList<string> ianaIds)
+        internal TimeZoneWindows(string windowsId, string territory, IReadOnlyList<string> ianaIds)
         {
             WindowsId = windowsId;
             Territory = territory;
