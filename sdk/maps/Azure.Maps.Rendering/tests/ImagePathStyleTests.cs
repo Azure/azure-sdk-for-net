@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Drawing;
-using NUnit.Framework;
 using Azure.Core.GeoJson;
+using NUnit.Framework;
 
 // cspell:ignore fromargb
 namespace Azure.Maps.Rendering.Tests
@@ -38,6 +39,20 @@ namespace Azure.Maps.Rendering.Tests
             Assert.AreEqual("||12.56 22.56|14.561 19.801", simplePathStyle.ToQueryString());
             Assert.AreEqual("lcF5F5FF|lw5||12.56 22.56|14.561 19.801", complexPathStyle1.ToQueryString());
             Assert.AreEqual("lc802DC8|la0.784|fc1ED3E6|fa0.902|lw4||14.561 19.801|12.56 22.56", complexPathStyle2.ToQueryString());
+        }
+
+        [Test]
+        public void ImagePathStyleThrowsExceptionWhenNullOrEmptyList()
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                new ImagePathStyle(null);
+            });
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                new ImagePathStyle(new System.Collections.Generic.List<GeoPosition>());
+            });
         }
     }
 }
