@@ -365,8 +365,7 @@ namespace Azure.Developer.Signing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
-            SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()));
-            Operation<SignResult> operation = client.Sign(WaitUntil.Completed, "<accountName>", "<certificateProfile>", signingPayloadOptions);
+            Operation<SignResult> operation = client.Sign(WaitUntil.Completed, "<accountName>", "<certificateProfile>", SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()));
             SignResult responseData = operation.Value;
         }
 
@@ -377,8 +376,7 @@ namespace Azure.Developer.Signing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
-            SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()));
-            Operation<SignResult> operation = await client.SignAsync(WaitUntil.Completed, "<accountName>", "<certificateProfile>", signingPayloadOptions);
+            Operation<SignResult> operation = await client.SignAsync(WaitUntil.Completed, "<accountName>", "<certificateProfile>", SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()));
             SignResult responseData = operation.Value;
         }
 
@@ -445,12 +443,13 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
-            SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()))
+            Operation<SignResult> operation = client.Sign(WaitUntil.Completed, "<accountName>", "<certificateProfile>", SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()), fileHashList: new BinaryData[]
             {
-                FileHashList = { BinaryData.FromObjectAsJson(new object()) },
-                AuthenticodeHashList = { BinaryData.FromObjectAsJson(new object()) },
-            };
-            Operation<SignResult> operation = client.Sign(WaitUntil.Completed, "<accountName>", "<certificateProfile>", signingPayloadOptions, clientVersion: "<clientVersion>", xCorrelationId: "<xCorrelationId>");
+BinaryData.FromObjectAsJson(new object())
+            }, authenticodeHashList: new BinaryData[]
+            {
+BinaryData.FromObjectAsJson(new object())
+            }, clientVersion: "<clientVersion>", xCorrelationId: "<xCorrelationId>");
             SignResult responseData = operation.Value;
         }
 
@@ -461,12 +460,13 @@ new object()
             TokenCredential credential = new DefaultAzureCredential();
             CertificateProfile client = new SigningClient("<region>", credential).GetCertificateProfileClient(apiVersion: "2023-06-15-preview");
 
-            SigningPayloadOptions signingPayloadOptions = new SigningPayloadOptions(SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()))
+            Operation<SignResult> operation = await client.SignAsync(WaitUntil.Completed, "<accountName>", "<certificateProfile>", SignatureAlgorithm.RS256, BinaryData.FromObjectAsJson(new object()), fileHashList: new BinaryData[]
             {
-                FileHashList = { BinaryData.FromObjectAsJson(new object()) },
-                AuthenticodeHashList = { BinaryData.FromObjectAsJson(new object()) },
-            };
-            Operation<SignResult> operation = await client.SignAsync(WaitUntil.Completed, "<accountName>", "<certificateProfile>", signingPayloadOptions, clientVersion: "<clientVersion>", xCorrelationId: "<xCorrelationId>");
+BinaryData.FromObjectAsJson(new object())
+            }, authenticodeHashList: new BinaryData[]
+            {
+BinaryData.FromObjectAsJson(new object())
+            }, clientVersion: "<clientVersion>", xCorrelationId: "<xCorrelationId>");
             SignResult responseData = operation.Value;
         }
     }

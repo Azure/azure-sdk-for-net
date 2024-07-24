@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.Signing
 {
     /// <summary> The artifact request information to be signed by the service. </summary>
-    public partial class SigningPayloadOptions
+    internal partial class SigningPayloadOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
