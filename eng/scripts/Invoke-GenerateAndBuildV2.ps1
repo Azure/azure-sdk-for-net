@@ -79,7 +79,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
             $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
         }
     } else {
-        throw "[ERROR] Neither "specFolder" nor "headSha" is provided for `$readmeFile`. Please report this issue through https://aka.ms/azsdk/support/specreview-channel and include this pull request."
+        throw "[ERROR] Neither 'specFolder' nor 'headSha' is provided for `$readmeFile`. Please report this issue through https://aka.ms/azsdk/support/specreview-channel and include this pull request."
     }
 
     if ($autorestConfigYaml) {
@@ -109,6 +109,7 @@ if ($inputFileToGen) {
     UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
+$exitCode = 0
 # generate sdk from typespec file
 if ($relatedTypeSpecProjectFolder) {
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
@@ -134,11 +135,13 @@ if ($relatedTypeSpecProjectFolder) {
         Invoke-Expression $tspclientCommand
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
-          Write-Error "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+          Write-Error "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq. If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
           $generatedSDKPackages.Add(@{
             result = "failed";
             path=@("");
+            packageName="$packageName";
           })
+          $exitCode = $LASTEXITCODE
         } else {
             $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
             GeneratePackage `
@@ -157,3 +160,4 @@ $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages
 }
 $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
+exit $exitCode
