@@ -13,9 +13,13 @@ extends:
     SupportedClouds: 'Preview,UsGov'
     CloudConfig:
       Preview:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        ServiceConnection: azure-sdk-tests-preview
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePreviewMsft.json
         Location: 'westus'
       UsGov:
-        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ServiceConnection: usgov_azure-sdk-tests
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzureUsGovMsft.json
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live
