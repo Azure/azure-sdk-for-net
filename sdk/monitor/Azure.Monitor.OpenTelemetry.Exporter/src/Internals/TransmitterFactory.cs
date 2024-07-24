@@ -19,7 +19,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly Dictionary<string, ITransmitter> _transmitters = new();
         private readonly object _lockObj = new();
 
-        public ITransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions, IPlatform? platform = null)
+        public ITransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions)
+        {
+            return Get(azureMonitorExporterOptions, DefaultPlatform.Instance);
+        }
+
+        /// <summary>
+        /// This overload is intended for unit testing purposes.
+        /// </summary>
+        internal ITransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions, IPlatform platform)
         {
             var key = azureMonitorExporterOptions.ConnectionString ?? string.Empty;
 
