@@ -79,7 +79,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
             $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
         }
     } else {
-        throw "[ERROR] No readme file path provided. swaggerDir:$swaggerDir, readmeFiles:$readmeFiles. Please report this issue through https://aka.ms/azsdk/support/specreview-channel and include this pull request."
+        throw "[ERROR] Neither "specFolder" nor "headSha" is provided for `$readmeFile`. Please report this issue through https://aka.ms/azsdk/support/specreview-channel and include this pull request."
     }
 
     if ($autorestConfigYaml) {
