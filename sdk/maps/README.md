@@ -11,7 +11,7 @@ Below are the packages contained in Azure Maps:
 - [Azure.Maps.Routing][route] allows you to get the routing information for multiple origins and destinations.
 - [Azure.Maps.Search][search] supports many searching functionalities for entities, point of interests (POI) or streets, and also supports reverse geocode a coordinate to a place or an entity.
 - [Azure.Maps.Geolocation][geolocation] allows you to get the ISO country code for the provided IP address.
-- [Azure.Maps.Timezone][timezone]
+- [Azure.Maps.TimeZone][timezone]
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
@@ -21,7 +21,7 @@ dotnet add package Azure.Maps.Rendering --prerelease
 dotnet add package Azure.Maps.Routing --prerelease
 dotnet add package Azure.Maps.Search --prerelease
 dotnet add package Azure.Maps.Geolocation --prerelease
-dotnet add package Azure.Maps.Timezone --prerelease
+dotnet add package Azure.Maps.TimeZone --prerelease
 ```
 
 Azure.Maps.Common will be automatically installed when you install other packages.
