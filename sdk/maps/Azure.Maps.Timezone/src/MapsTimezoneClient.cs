@@ -28,7 +28,7 @@ namespace Azure.Maps.TimeZone
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics _clientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimeZoneClient. </summary>
         protected MapsTimeZoneClient()
         {
             _clientDiagnostics = null;
@@ -36,7 +36,7 @@ namespace Azure.Maps.TimeZone
             restClient = null;
         }
 
-        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimeZoneClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
         public MapsTimeZoneClient(AzureKeyCredential credential)
         {
@@ -49,7 +49,7 @@ namespace Azure.Maps.TimeZone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimeZoneClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public MapsTimeZoneClient(AzureKeyCredential credential, MapsTimeZoneClientOptions options)
@@ -63,7 +63,7 @@ namespace Azure.Maps.TimeZone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimeZoneClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         public MapsTimeZoneClient(TokenCredential credential, string clientId)
@@ -78,7 +78,7 @@ namespace Azure.Maps.TimeZone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimeZoneClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <param name="options"> The options for configuring the client. </param>
@@ -94,7 +94,7 @@ namespace Azure.Maps.TimeZone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimeZoneClient. </summary>
         /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
         /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
         public MapsTimeZoneClient(AzureSasCredential credential)
@@ -108,7 +108,7 @@ namespace Azure.Maps.TimeZone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimeZoneClient. </summary>
         /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
         /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
         /// <param name="options"> The options for configuring the client. </param>
@@ -123,7 +123,7 @@ namespace Azure.Maps.TimeZone
             restClient = new TimezoneRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of MapsTimezoneClient. </summary>
+        /// <summary> Initializes a new instance of MapsTimeZoneClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
@@ -147,7 +147,7 @@ namespace Azure.Maps.TimeZone
         /// <exception cref="ArgumentNullException"> <paramref name="timezoneId"/> is null. </exception>
         public virtual async Task<Response<TimeZoneResult>> GetTimeZoneByIDAsync(string timezoneId, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimezoneByID");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneByID");
             scope.Start();
             try
             {
@@ -169,7 +169,7 @@ namespace Azure.Maps.TimeZone
         /// <exception cref="ArgumentNullException"> <paramref name="timezoneId"/> is null. </exception>
         public virtual Response<TimeZoneResult> GetTimeZoneByID(string timezoneId, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimezoneByID");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneByID");
             scope.Start();
             try
             {
@@ -191,7 +191,7 @@ namespace Azure.Maps.TimeZone
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public virtual async Task<Response<TimeZoneResult>> GetTimeZoneByCoordinatesAsync(GeoPosition coordinates, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimezoneByCoordinates");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneByCoordinates");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.Maps.TimeZone
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public virtual Response<TimeZoneResult> GetTimeZoneByCoordinates(GeoPosition coordinates, TimeZoneBaseOptions options, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimezoneByCoordinates");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneByCoordinates");
             scope.Start();
             try
             {
@@ -242,7 +242,7 @@ namespace Azure.Maps.TimeZone
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IReadOnlyList<TimeZoneWindows>>> GetWindowsTimeZoneIdsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetWindowsTimezoneIds");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetWindowsTimeZoneIds");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.Maps.TimeZone
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IReadOnlyList<TimeZoneWindows>> GetWindowsTimeZoneIds(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetWindowsTimezoneIds");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetWindowsTimeZoneIds");
             scope.Start();
             try
             {
@@ -283,7 +283,7 @@ namespace Azure.Maps.TimeZone
         /// </remarks>
         public virtual async Task<Response<IReadOnlyList<IanaId>>> GetIanaTimeZoneIdsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetIanaTimezoneIds");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetIanaTimeZoneIds");
             scope.Start();
             try
             {
@@ -305,7 +305,7 @@ namespace Azure.Maps.TimeZone
         /// </remarks>
         public virtual Response<IReadOnlyList<IanaId>> GetIanaTimeZoneIds(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetIanaTimezoneIds");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetIanaTimeZoneIds");
             scope.Start();
             try
             {
@@ -374,7 +374,7 @@ namespace Azure.Maps.TimeZone
         /// </remarks>
         public virtual async Task<Response<IReadOnlyList<IanaId>>> ConvertWindowsTimeZoneToIanaAsync(string windowsTimezoneId, string windowsTerritoryCode = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.ConvertWindowsTimezoneToIana");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.ConvertWindowsTimeZoneToIana");
             scope.Start();
             try
             {
@@ -399,7 +399,7 @@ namespace Azure.Maps.TimeZone
         /// </remarks>
         public virtual Response<IReadOnlyList<IanaId>> ConvertWindowsTimeZoneToIana(string windowsTimezoneId, string windowsTerritoryCode = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.ConvertWindowsTimezoneToIana");
+            using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.ConvertWindowsTimeZoneToIana");
             scope.Start();
             try
             {

@@ -9,7 +9,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using Azure.Core.GeoJson;
 
-namespace Azure.Maps.Timezone.Tests
+namespace Azure.Maps.TimeZone.Tests
 {
     public class MapsTimeZoneTests : TimeZoneClientLiveTestsBase
     {
