@@ -14,7 +14,7 @@ using Azure.Maps.TimeZone;
 using System.Collections.Generic;
 using Azure.Core.GeoJson;
 
-namespace Azure.Maps.Timezone.Tests.Samples
+namespace Azure.Maps.TimeZone.Tests.Samples
 {
     public class TimeZoneClientSamples : SamplesBase<TimeZoneClientTestEnvironment>
     {
