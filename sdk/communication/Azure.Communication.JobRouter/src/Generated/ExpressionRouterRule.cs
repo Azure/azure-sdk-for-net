@@ -29,6 +29,6 @@ namespace Azure.Communication.JobRouter
         {
         }
         /// <summary> An expression to evaluate. Should contain return statement with calculated values. </summary>
-        public string Expression { get; }
+        public string Expression { get; set; }
     }
 }
