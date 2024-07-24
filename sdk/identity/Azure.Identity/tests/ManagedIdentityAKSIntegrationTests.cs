@@ -55,6 +55,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45127")]
         public void KubectlExecuteIdentityAKSTests()
         {
             SetupKubernetesEnvironment();
