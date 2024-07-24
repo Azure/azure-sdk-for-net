@@ -3,6 +3,7 @@
 
 using Castle.DynamicProxy;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using OpenAI.TestFramework.Mocks.Client;
 
 namespace OpenAI.TestFramework;
@@ -35,6 +36,8 @@ public abstract class SyncAsyncTestBase
     /// Gets whether or not we are running async tests.
     /// </summary>
     public virtual bool IsAsync { get; }
+
+    public virtual DateTimeOffset TestStartTime => TestExecutionContext.CurrentContext.StartTime.ToUniversalTime();
 
     /// <summary>
     /// Gets the <see cref="Castle.DynamicProxy.ProxyGenerator"/> instance to use to create proxies of classes

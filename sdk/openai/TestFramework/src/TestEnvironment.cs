@@ -3,7 +3,6 @@
 
 using System.Net;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using NUnit.Framework;
 
 namespace OpenAI.TestFramework;
@@ -16,7 +15,7 @@ public class TestEnvironment
     /// <summary>
     /// Creates a new instance
     /// </summary>
-    protected TestEnvironment()
+    public TestEnvironment()
     {
         RepositoryRoot = FindRepoRoot();
         IsFiddlerEnabled = CheckIfFiddlerEnabled();
@@ -35,7 +34,7 @@ public class TestEnvironment
     /// <summary>
     /// Determines whether or not we are currently running an CI/CD environment.
     /// </summary>
-    public virtual bool IsRunningInCI => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TF_BUILD"));
+    public static bool IsRunningInCI => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TF_BUILD"));
 
     /// <summary>
     /// Gets the path to where the source of the current assembly can be found on disk.
@@ -71,6 +70,11 @@ public class TestEnvironment
         return dir;
     }
 
+    /// <summary>
+    /// Gets the value of an optional variable.
+    /// </summary>
+    /// <param name="name">The name of the environment variable.</param>
+    /// <returns>The value of the variable, or null if it doesn't exist.</returns>
     public virtual string? GetOptionalVariable(string name)
     {
         name = name.ToUpperInvariant();
@@ -83,6 +87,12 @@ public class TestEnvironment
         return value;
     }
 
+    /// <summary>
+    /// Gets the value of a required variable.
+    /// </summary>
+    /// <param name="name">The name of the variable.</param>
+    /// <returns>The value of the variable. An exception will be thrown if it doesn't exist.</returns>
+    /// <exception cref="InvalidOperationException">If the variable doesn't exist.</exception>
     public virtual string GetRequiredVariable(string name)
     {
         return GetOptionalVariable(name)
@@ -106,7 +116,7 @@ public class TestEnvironment
          */
 
         DirectoryInfo? current = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
-        while (current != null && !current.GetDirectories(".git").Any())
+        while (current != null && !current.EnumerateDirectories(".git").Any())
         {
             current = current.Parent;
         }
