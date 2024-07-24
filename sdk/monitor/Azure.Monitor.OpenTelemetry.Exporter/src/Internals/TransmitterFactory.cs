@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     if (!_transmitters.TryGetValue(key, out transmitter))
                     {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform ?? DefaultPlatform.Instance);
+                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
 
                         _transmitters.Add(key, transmitter);
                     }
