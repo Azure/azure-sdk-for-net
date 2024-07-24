@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Language.Text;
-using Azure.AI.Language.Text.Models;
 using Azure.AI.Language.Text.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;

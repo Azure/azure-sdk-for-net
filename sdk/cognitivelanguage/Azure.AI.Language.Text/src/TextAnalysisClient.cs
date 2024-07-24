@@ -8,7 +8,6 @@ using System.Text;
 using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Language.Text.Models;
 
 namespace Azure.AI.Language.Text
 {

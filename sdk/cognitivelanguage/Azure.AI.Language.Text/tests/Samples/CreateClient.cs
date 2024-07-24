@@ -8,7 +8,6 @@ using Azure.AI.Language.Text;
 using Azure.AI.Language.Text.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Language.Text.Models;
 #region Snippet:Text_Identity_Namespace
 using Azure.Identity;
 #endregion

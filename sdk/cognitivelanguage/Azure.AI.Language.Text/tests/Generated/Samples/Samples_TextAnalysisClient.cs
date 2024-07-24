@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Language.Text.Models;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
