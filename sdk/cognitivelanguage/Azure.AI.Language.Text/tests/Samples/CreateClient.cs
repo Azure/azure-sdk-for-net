@@ -8,10 +8,9 @@ using Azure.AI.Language.Text;
 using Azure.AI.Language.Text.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Language.Text.Models;
 #region Snippet:Text_Identity_Namespace
 using Azure.Identity;
-using Azure.Core;
-using Azure.AI.Language.Text.Models;
 #endregion
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
@@ -88,7 +87,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     },
                     ActionContent = new EntitiesActionContent()
                     {
-                        ModelVersion = "NotValid",
+                        ModelVersion = "NotValid", // Invalid model version will is a bad request.
                     }
                 };
 

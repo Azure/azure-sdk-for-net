@@ -158,6 +158,36 @@ When you interact with the Cognitive Language Services Text client library using
 For example, if you submit a utterance to a non-existant project, a `400` error is returned indicating "Bad Request".
 
 ```C# Snippet:TextAnalysisClientt_BadRequest
+try
+{
+    string documentA =
+    "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+    + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+    + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+    + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+    + " offers services for childcare in case you want that.";
+
+    AnalyzeTextInput body = new TextEntityRecognitionInput()
+    {
+        TextInput = new MultiLanguageTextInput()
+        {
+            Documents =
+            {
+                new MultiLanguageInput("D", documentA),
+            }
+        },
+        ActionContent = new EntitiesActionContent()
+        {
+            ModelVersion = "NotValid", // Invalid model version will is a bad request.
+        }
+    };
+
+    Response<AnalyzeTextResult> response = client.AnalyzeText(body);
+}
+catch (RequestFailedException ex)
+{
+    Console.WriteLine(ex.ToString());
+}
 ```
 
 You will notice that additional information is logged, like the client request ID of the operation.
