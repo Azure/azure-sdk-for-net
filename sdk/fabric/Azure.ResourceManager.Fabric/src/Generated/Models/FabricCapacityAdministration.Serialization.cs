@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    public partial class CapacityAdministration : IUtf8JsonSerializable, IJsonModel<CapacityAdministration>
+    public partial class FabricCapacityAdministration : IUtf8JsonSerializable, IJsonModel<FabricCapacityAdministration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityAdministration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricCapacityAdministration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CapacityAdministration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FabricCapacityAdministration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityAdministration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricCapacityAdministration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityAdministration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricCapacityAdministration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Fabric.Models
             writer.WriteEndObject();
         }
 
-        CapacityAdministration IJsonModel<CapacityAdministration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FabricCapacityAdministration IJsonModel<FabricCapacityAdministration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityAdministration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricCapacityAdministration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityAdministration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricCapacityAdministration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCapacityAdministration(document.RootElement, options);
+            return DeserializeFabricCapacityAdministration(document.RootElement, options);
         }
 
-        internal static CapacityAdministration DeserializeCapacityAdministration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FabricCapacityAdministration DeserializeFabricCapacityAdministration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CapacityAdministration(members, serializedAdditionalRawData);
+            return new FabricCapacityAdministration(members, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CapacityAdministration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FabricCapacityAdministration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityAdministration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricCapacityAdministration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityAdministration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricCapacityAdministration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CapacityAdministration IPersistableModel<CapacityAdministration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FabricCapacityAdministration IPersistableModel<FabricCapacityAdministration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityAdministration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FabricCapacityAdministration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCapacityAdministration(document.RootElement, options);
+                        return DeserializeFabricCapacityAdministration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityAdministration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricCapacityAdministration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CapacityAdministration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FabricCapacityAdministration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> The administration properties of the Fabric capacity resource. </summary>
-    public partial class CapacityAdministration
+    public partial class FabricCapacityAdministration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.Fabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CapacityAdministration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricCapacityAdministration"/>. </summary>
         /// <param name="members"> An array of administrator user identities. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="members"/> is null. </exception>
-        public CapacityAdministration(IEnumerable<string> members)
+        public FabricCapacityAdministration(IEnumerable<string> members)
         {
             Argument.AssertNotNull(members, nameof(members));
 
             Members = members.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapacityAdministration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricCapacityAdministration"/>. </summary>
         /// <param name="members"> An array of administrator user identities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityAdministration(IList<string> members, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricCapacityAdministration(IList<string> members, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Members = members;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapacityAdministration"/> for deserialization. </summary>
-        internal CapacityAdministration()
+        /// <summary> Initializes a new instance of <see cref="FabricCapacityAdministration"/> for deserialization. </summary>
+        internal FabricCapacityAdministration()
         {
         }
 

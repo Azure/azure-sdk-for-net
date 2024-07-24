@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Fabric.Models
             {
                 return null;
             }
-            CapacityAdministration administration = default;
+            FabricCapacityAdministration administration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     {
                         continue;
                     }
-                    administration = CapacityAdministration.DeserializeCapacityAdministration(property.Value, options);
+                    administration = FabricCapacityAdministration.DeserializeFabricCapacityAdministration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

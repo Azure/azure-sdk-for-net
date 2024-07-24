@@ -46,14 +46,12 @@ namespace Azure.ResourceManager.Fabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FabricCapacityProperties"/>. </summary>
-        /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="administration"> The capacity administration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="administration"/> is null. </exception>
-        public FabricCapacityProperties(FabricResourceState state, CapacityAdministration administration)
+        public FabricCapacityProperties(FabricCapacityAdministration administration)
         {
             Argument.AssertNotNull(administration, nameof(administration));
 
-            State = state;
             Administration = administration;
         }
 
@@ -62,7 +60,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="administration"> The capacity administration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCapacityProperties(FabricProvisioningState? provisioningState, FabricResourceState state, CapacityAdministration administration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricCapacityProperties(FabricProvisioningState? provisioningState, FabricResourceState? state, FabricCapacityAdministration administration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             State = state;
@@ -78,14 +76,14 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </summary>
         public FabricProvisioningState? ProvisioningState { get; }
         /// <summary> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </summary>
-        public FabricResourceState State { get; }
+        public FabricResourceState? State { get; }
         /// <summary> The capacity administration. </summary>
-        internal CapacityAdministration Administration { get; set; }
+        internal FabricCapacityAdministration Administration { get; set; }
         /// <summary> An array of administrator user identities. </summary>
         public IList<string> AdministrationMembers
         {
             get => Administration is null ? default : Administration.Members;
-            set => Administration = new CapacityAdministration(value);
+            set => Administration = new FabricCapacityAdministration(value);
         }
     }
 }

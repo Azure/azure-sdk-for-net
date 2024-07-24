@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Fabric.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.ToString());
+                writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("administration"u8);
             writer.WriteObjectValue(Administration, options);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Fabric.Models
                 return null;
             }
             FabricProvisioningState? provisioningState = default;
-            FabricResourceState state = default;
-            CapacityAdministration administration = default;
+            FabricResourceState? state = default;
+            FabricCapacityAdministration administration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,12 +94,16 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
                 if (property.NameEquals("state"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     state = new FabricResourceState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("administration"u8))
                 {
-                    administration = CapacityAdministration.DeserializeCapacityAdministration(property.Value, options);
+                    administration = FabricCapacityAdministration.DeserializeFabricCapacityAdministration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

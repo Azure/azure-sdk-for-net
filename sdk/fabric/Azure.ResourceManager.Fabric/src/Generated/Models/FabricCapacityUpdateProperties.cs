@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> Initializes a new instance of <see cref="FabricCapacityUpdateProperties"/>. </summary>
         /// <param name="administration"> The capacity administration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricCapacityUpdateProperties(CapacityAdministration administration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FabricCapacityUpdateProperties(FabricCapacityAdministration administration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Administration = administration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The capacity administration. </summary>
-        internal CapacityAdministration Administration { get; set; }
+        internal FabricCapacityAdministration Administration { get; set; }
         /// <summary> An array of administrator user identities. </summary>
         public IList<string> AdministrationMembers
         {
             get => Administration is null ? default : Administration.Members;
-            set => Administration = new CapacityAdministration(value);
+            set => Administration = new FabricCapacityAdministration(value);
         }
     }
 }

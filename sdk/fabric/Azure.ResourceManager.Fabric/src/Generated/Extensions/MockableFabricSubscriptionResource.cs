@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
+        /// <description>FabricCapacities_CheckNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<FabricNameAvailabilityResult>> CheckFabricCapacityNameAvailabilityFabricCapacityAsync(string location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FabricNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(string location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = FabricCapacityClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailabilityFabricCapacity");
+            using var scope = FabricCapacityClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckNameAvailabilityFabricCapacity");
             scope.Start();
             try
             {
-                var response = await FabricCapacityRestClient.CheckFabricCapacityNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var response = await FabricCapacityRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
+        /// <description>FabricCapacities_CheckNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -173,16 +173,16 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<FabricNameAvailabilityResult> CheckFabricCapacityNameAvailabilityFabricCapacity(string location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<FabricNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(string location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = FabricCapacityClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailabilityFabricCapacity");
+            using var scope = FabricCapacityClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckNameAvailabilityFabricCapacity");
             scope.Start();
             try
             {
-                var response = FabricCapacityRestClient.CheckFabricCapacityNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
+                var response = FabricCapacityRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

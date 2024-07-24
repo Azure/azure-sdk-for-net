@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="administrationMembers"> The capacity administration. </param>
         /// <returns> A new <see cref="Models.FabricCapacityProperties"/> instance for mocking. </returns>
-        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = null, FabricResourceState state = default, IEnumerable<string> administrationMembers = null)
+        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = null, FabricResourceState? state = null, IEnumerable<string> administrationMembers = null)
         {
             administrationMembers ??= new List<string>();
 
-            return new FabricCapacityProperties(provisioningState, state, administrationMembers != null ? new CapacityAdministration(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new FabricCapacityProperties(provisioningState, state, administrationMembers != null ? new FabricCapacityAdministration(administrationMembers?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FabricNameAvailabilityResult"/>. </summary>
