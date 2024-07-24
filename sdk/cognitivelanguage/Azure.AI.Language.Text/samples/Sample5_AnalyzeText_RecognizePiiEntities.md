@@ -54,7 +54,7 @@ AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
-
+    Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
     Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
 
     foreach (NamedEntity entity in piiResult.Entities)

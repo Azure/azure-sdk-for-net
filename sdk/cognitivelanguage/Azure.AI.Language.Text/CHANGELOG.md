@@ -6,6 +6,11 @@
 
 ### Features Added
 
+- Added support for analyze-tex API Versions
+  - 2022-05-01
+  - 2023-04-01
+  - 2023-11-15-preview
+
 ### Breaking Changes
 
 ### Bugs Fixed
