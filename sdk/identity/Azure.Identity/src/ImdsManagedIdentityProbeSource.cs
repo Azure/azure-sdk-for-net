@@ -142,7 +142,7 @@ namespace Azure.Identity
             // handle error status codes indicating managed identity is not available
             string baseMessage = response.Status switch
             {
-                400 when IsProbRequest(message) => throw new ProbeRequestResponseException(),
+                400 when IsProbeRequest(message) => throw new ProbeRequestResponseException(),
                 400 => IdentityUnavailableError,
                 502 => GatewayError,
                 504 => GatewayError,
@@ -167,7 +167,7 @@ namespace Azure.Identity
             return token;
         }
 
-        public static bool IsProbRequest(HttpMessage message)
+        public static bool IsProbeRequest(HttpMessage message)
             => message.Request.Uri.Host == s_imdsEndpoint.Host &&
                 message.Request.Uri.Path == s_imdsEndpoint.AbsolutePath &&
                 !message.Request.Headers.TryGetValue(metadataHeaderName, out _);
