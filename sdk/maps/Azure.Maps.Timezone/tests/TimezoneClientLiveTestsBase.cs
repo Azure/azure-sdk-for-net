@@ -4,7 +4,7 @@
 using Azure.Core.TestFramework;
 using Azure.Maps.TimeZone;
 
-namespace Azure.Maps.Timezone.Tests
+namespace Azure.Maps.TimeZone.Tests
 {
     public class TimeZoneClientLiveTestsBase : RecordedTestBase
     {
