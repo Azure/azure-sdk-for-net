@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.SecurityInsights
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of EntityRelationResources in the SecurityInsightsEntity. </summary>
-        /// <returns> An object representing collection of EntityRelationResources and their operations over a EntityRelationResource. </returns>
-        public virtual EntityRelationCollection GetEntityRelations()
+        /// <summary> Gets a collection of SecurityInsightsEntityRelationResources in the SecurityInsightsEntity. </summary>
+        /// <returns> An object representing collection of SecurityInsightsEntityRelationResources and their operations over a SecurityInsightsEntityRelationResource. </returns>
+        public virtual SecurityInsightsEntityRelationCollection GetSecurityInsightsEntityRelations()
         {
-            return GetCachedClient(client => new EntityRelationCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsEntityRelationCollection(client, Id));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EntityRelationResource>> GetEntityRelationAsync(string relationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsEntityRelationResource>> GetSecurityInsightsEntityRelationAsync(string relationName, CancellationToken cancellationToken = default)
         {
-            return await GetEntityRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsEntityRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EntityRelationResource> GetEntityRelation(string relationName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsEntityRelationResource> GetSecurityInsightsEntityRelation(string relationName, CancellationToken cancellationToken = default)
         {
-            return GetEntityRelations().Get(relationName, cancellationToken);
+            return GetSecurityInsightsEntityRelations().Get(relationName, cancellationToken);
         }
 
         /// <summary>

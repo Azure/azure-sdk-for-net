@@ -18,33 +18,33 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EntityRelationResource"/> and their operations.
-    /// Each <see cref="EntityRelationResource"/> in the collection will belong to the same instance of <see cref="SecurityInsightsEntityResource"/>.
-    /// To get an <see cref="EntityRelationCollection"/> instance call the GetEntityRelations method from an instance of <see cref="SecurityInsightsEntityResource"/>.
+    /// A class representing a collection of <see cref="SecurityInsightsEntityRelationResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsEntityRelationResource"/> in the collection will belong to the same instance of <see cref="SecurityInsightsEntityResource"/>.
+    /// To get a <see cref="SecurityInsightsEntityRelationCollection"/> instance call the GetSecurityInsightsEntityRelations method from an instance of <see cref="SecurityInsightsEntityResource"/>.
     /// </summary>
-    public partial class EntityRelationCollection : ArmCollection, IEnumerable<EntityRelationResource>, IAsyncEnumerable<EntityRelationResource>
+    public partial class SecurityInsightsEntityRelationCollection : ArmCollection, IEnumerable<SecurityInsightsEntityRelationResource>, IAsyncEnumerable<SecurityInsightsEntityRelationResource>
     {
-        private readonly ClientDiagnostics _entityRelationClientDiagnostics;
-        private readonly EntityRelationsRestOperations _entityRelationRestClient;
-        private readonly ClientDiagnostics _entityRelationEntitiesRelationsClientDiagnostics;
-        private readonly EntitiesRelationsRestOperations _entityRelationEntitiesRelationsRestClient;
+        private readonly ClientDiagnostics _securityInsightsEntityRelationEntityRelationsClientDiagnostics;
+        private readonly EntityRelationsRestOperations _securityInsightsEntityRelationEntityRelationsRestClient;
+        private readonly ClientDiagnostics _securityInsightsEntityRelationEntitiesRelationsClientDiagnostics;
+        private readonly EntitiesRelationsRestOperations _securityInsightsEntityRelationEntitiesRelationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EntityRelationCollection"/> class for mocking. </summary>
-        protected EntityRelationCollection()
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityRelationCollection"/> class for mocking. </summary>
+        protected SecurityInsightsEntityRelationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EntityRelationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityRelationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal EntityRelationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityInsightsEntityRelationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _entityRelationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", EntityRelationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EntityRelationResource.ResourceType, out string entityRelationApiVersion);
-            _entityRelationRestClient = new EntityRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, entityRelationApiVersion);
-            _entityRelationEntitiesRelationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", EntityRelationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EntityRelationResource.ResourceType, out string entityRelationEntitiesRelationsApiVersion);
-            _entityRelationEntitiesRelationsRestClient = new EntitiesRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, entityRelationEntitiesRelationsApiVersion);
+            _securityInsightsEntityRelationEntityRelationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsEntityRelationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityInsightsEntityRelationResource.ResourceType, out string securityInsightsEntityRelationEntityRelationsApiVersion);
+            _securityInsightsEntityRelationEntityRelationsRestClient = new EntityRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsEntityRelationEntityRelationsApiVersion);
+            _securityInsightsEntityRelationEntitiesRelationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsEntityRelationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityInsightsEntityRelationResource.ResourceType, out string securityInsightsEntityRelationEntitiesRelationsApiVersion);
+            _securityInsightsEntityRelationEntitiesRelationsRestClient = new EntitiesRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsEntityRelationEntitiesRelationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,18 +81,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        public virtual async Task<Response<EntityRelationResource>> GetAsync(string relationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsEntityRelationResource>> GetAsync(string relationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationCollection.Get");
+            using var scope = _securityInsightsEntityRelationEntityRelationsClientDiagnostics.CreateScope("SecurityInsightsEntityRelationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _entityRelationRestClient.GetRelationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsEntityRelationEntityRelationsRestClient.GetRelationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EntityRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsEntityRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        public virtual Response<EntityRelationResource> Get(string relationName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsEntityRelationResource> Get(string relationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationCollection.Get");
+            using var scope = _securityInsightsEntityRelationEntityRelationsClientDiagnostics.CreateScope("SecurityInsightsEntityRelationCollection.Get");
             scope.Start();
             try
             {
-                var response = _entityRelationRestClient.GetRelation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken);
+                var response = _securityInsightsEntityRelationEntityRelationsRestClient.GetRelation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EntityRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsEntityRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EntityRelationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EntityRelationResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityInsightsEntityRelationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsEntityRelationResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _entityRelationEntitiesRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entityRelationEntitiesRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EntityRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _entityRelationEntitiesRelationsClientDiagnostics, Pipeline, "EntityRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsEntityRelationEntitiesRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsEntityRelationEntitiesRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsEntityRelationResource(Client, RelationData.DeserializeRelationData(e)), _securityInsightsEntityRelationEntitiesRelationsClientDiagnostics, Pipeline, "SecurityInsightsEntityRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EntityRelationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EntityRelationResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityInsightsEntityRelationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityInsightsEntityRelationResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _entityRelationEntitiesRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entityRelationEntitiesRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EntityRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _entityRelationEntitiesRelationsClientDiagnostics, Pipeline, "EntityRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsEntityRelationEntitiesRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsEntityRelationEntitiesRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsEntityRelationResource(Client, RelationData.DeserializeRelationData(e)), _securityInsightsEntityRelationEntitiesRelationsClientDiagnostics, Pipeline, "SecurityInsightsEntityRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationCollection.Exists");
+            using var scope = _securityInsightsEntityRelationEntityRelationsClientDiagnostics.CreateScope("SecurityInsightsEntityRelationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _entityRelationRestClient.GetRelationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsEntityRelationEntityRelationsRestClient.GetRelationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,11 +286,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationCollection.Exists");
+            using var scope = _securityInsightsEntityRelationEntityRelationsClientDiagnostics.CreateScope("SecurityInsightsEntityRelationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _entityRelationRestClient.GetRelation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken);
+                var response = _securityInsightsEntityRelationEntityRelationsRestClient.GetRelation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,18 +325,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        public virtual async Task<NullableResponse<EntityRelationResource>> GetIfExistsAsync(string relationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SecurityInsightsEntityRelationResource>> GetIfExistsAsync(string relationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationCollection.GetIfExists");
+            using var scope = _securityInsightsEntityRelationEntityRelationsClientDiagnostics.CreateScope("SecurityInsightsEntityRelationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _entityRelationRestClient.GetRelationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsEntityRelationEntityRelationsRestClient.GetRelationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<EntityRelationResource>(response.GetRawResponse());
-                return Response.FromValue(new EntityRelationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsEntityRelationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsEntityRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,18 +370,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        public virtual NullableResponse<EntityRelationResource> GetIfExists(string relationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SecurityInsightsEntityRelationResource> GetIfExists(string relationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationCollection.GetIfExists");
+            using var scope = _securityInsightsEntityRelationEntityRelationsClientDiagnostics.CreateScope("SecurityInsightsEntityRelationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _entityRelationRestClient.GetRelation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken);
+                var response = _securityInsightsEntityRelationEntityRelationsRestClient.GetRelation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<EntityRelationResource>(response.GetRawResponse());
-                return Response.FromValue(new EntityRelationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsEntityRelationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsEntityRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        IEnumerator<EntityRelationResource> IEnumerable<EntityRelationResource>.GetEnumerator()
+        IEnumerator<SecurityInsightsEntityRelationResource> IEnumerable<SecurityInsightsEntityRelationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<EntityRelationResource> IAsyncEnumerable<EntityRelationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityInsightsEntityRelationResource> IAsyncEnumerable<SecurityInsightsEntityRelationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

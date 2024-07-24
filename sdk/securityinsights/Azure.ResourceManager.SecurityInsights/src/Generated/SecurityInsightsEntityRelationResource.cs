@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing an EntityRelation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EntityRelationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetEntityRelationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityInsightsEntityResource"/> using the GetEntityRelation method.
+    /// A Class representing a SecurityInsightsEntityRelation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsEntityRelationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsEntityRelationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityInsightsEntityResource"/> using the GetSecurityInsightsEntityRelation method.
     /// </summary>
-    public partial class EntityRelationResource : ArmResource
+    public partial class SecurityInsightsEntityRelationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EntityRelationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsEntityRelationResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="workspaceName"> The workspaceName. </param>
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.SecurityInsights
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _entityRelationClientDiagnostics;
-        private readonly EntityRelationsRestOperations _entityRelationRestClient;
-        private readonly SecurityInsightsIncidentRelationData _data;
+        private readonly ClientDiagnostics _securityInsightsEntityRelationEntityRelationsClientDiagnostics;
+        private readonly EntityRelationsRestOperations _securityInsightsEntityRelationEntityRelationsRestClient;
+        private readonly RelationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/entities/relations";
 
-        /// <summary> Initializes a new instance of the <see cref="EntityRelationResource"/> class for mocking. </summary>
-        protected EntityRelationResource()
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityRelationResource"/> class for mocking. </summary>
+        protected SecurityInsightsEntityRelationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EntityRelationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EntityRelationResource(ArmClient client, SecurityInsightsIncidentRelationData data) : this(client, data.Id)
+        internal SecurityInsightsEntityRelationResource(ArmClient client, RelationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EntityRelationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EntityRelationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityInsightsEntityRelationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _entityRelationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string entityRelationApiVersion);
-            _entityRelationRestClient = new EntityRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, entityRelationApiVersion);
+            _securityInsightsEntityRelationEntityRelationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string securityInsightsEntityRelationEntityRelationsApiVersion);
+            _securityInsightsEntityRelationEntityRelationsRestClient = new EntityRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsEntityRelationEntityRelationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SecurityInsightsIncidentRelationData Data
+        public virtual RelationData Data
         {
             get
             {
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EntityRelationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsEntityRelationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationResource.Get");
+            using var scope = _securityInsightsEntityRelationEntityRelationsClientDiagnostics.CreateScope("SecurityInsightsEntityRelationResource.Get");
             scope.Start();
             try
             {
-                var response = await _entityRelationRestClient.GetRelationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsEntityRelationEntityRelationsRestClient.GetRelationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EntityRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsEntityRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,21 +146,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsEntityRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EntityRelationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsEntityRelationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationResource.Get");
+            using var scope = _securityInsightsEntityRelationEntityRelationsClientDiagnostics.CreateScope("SecurityInsightsEntityRelationResource.Get");
             scope.Start();
             try
             {
-                var response = _entityRelationRestClient.GetRelation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _securityInsightsEntityRelationEntityRelationsRestClient.GetRelation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EntityRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsEntityRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

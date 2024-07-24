@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a HuntRelation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HuntRelationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHuntRelationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HuntResource"/> using the GetHuntRelation method.
+    /// A Class representing a SecurityInsightsHuntRelation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsHuntRelationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsHuntRelationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HuntResource"/> using the GetSecurityInsightsHuntRelation method.
     /// </summary>
-    public partial class HuntRelationResource : ArmResource
+    public partial class SecurityInsightsHuntRelationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HuntRelationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsHuntRelationResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="workspaceName"> The workspaceName. </param>
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.SecurityInsights
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _huntRelationClientDiagnostics;
-        private readonly HuntRelationsRestOperations _huntRelationRestClient;
+        private readonly ClientDiagnostics _securityInsightsHuntRelationHuntRelationsClientDiagnostics;
+        private readonly HuntRelationsRestOperations _securityInsightsHuntRelationHuntRelationsRestClient;
         private readonly HuntRelationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/hunts/relations";
 
-        /// <summary> Initializes a new instance of the <see cref="HuntRelationResource"/> class for mocking. </summary>
-        protected HuntRelationResource()
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsHuntRelationResource"/> class for mocking. </summary>
+        protected SecurityInsightsHuntRelationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HuntRelationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsHuntRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HuntRelationResource(ArmClient client, HuntRelationData data) : this(client, data.Id)
+        internal SecurityInsightsHuntRelationResource(ArmClient client, HuntRelationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HuntRelationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsHuntRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HuntRelationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityInsightsHuntRelationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _huntRelationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string huntRelationApiVersion);
-            _huntRelationRestClient = new HuntRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, huntRelationApiVersion);
+            _securityInsightsHuntRelationHuntRelationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string securityInsightsHuntRelationHuntRelationsApiVersion);
+            _securityInsightsHuntRelationHuntRelationsRestClient = new HuntRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsHuntRelationHuntRelationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HuntRelationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsHuntRelationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _huntRelationClientDiagnostics.CreateScope("HuntRelationResource.Get");
+            using var scope = _securityInsightsHuntRelationHuntRelationsClientDiagnostics.CreateScope("SecurityInsightsHuntRelationResource.Get");
             scope.Start();
             try
             {
-                var response = await _huntRelationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsHuntRelationHuntRelationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HuntRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsHuntRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,21 +146,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HuntRelationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsHuntRelationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _huntRelationClientDiagnostics.CreateScope("HuntRelationResource.Get");
+            using var scope = _securityInsightsHuntRelationHuntRelationsClientDiagnostics.CreateScope("SecurityInsightsHuntRelationResource.Get");
             scope.Start();
             try
             {
-                var response = _huntRelationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _securityInsightsHuntRelationHuntRelationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HuntRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsHuntRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _huntRelationClientDiagnostics.CreateScope("HuntRelationResource.Delete");
+            using var scope = _securityInsightsHuntRelationHuntRelationsClientDiagnostics.CreateScope("SecurityInsightsHuntRelationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _huntRelationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _huntRelationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = await _securityInsightsHuntRelationHuntRelationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _securityInsightsHuntRelationHuntRelationsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _huntRelationClientDiagnostics.CreateScope("HuntRelationResource.Delete");
+            using var scope = _securityInsightsHuntRelationHuntRelationsClientDiagnostics.CreateScope("SecurityInsightsHuntRelationResource.Delete");
             scope.Start();
             try
             {
-                var response = _huntRelationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _huntRelationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = _securityInsightsHuntRelationHuntRelationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _securityInsightsHuntRelationHuntRelationsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,18 +282,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The hunt relation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HuntRelationResource>> UpdateAsync(WaitUntil waitUntil, HuntRelationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsHuntRelationResource>> UpdateAsync(WaitUntil waitUntil, HuntRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _huntRelationClientDiagnostics.CreateScope("HuntRelationResource.Update");
+            using var scope = _securityInsightsHuntRelationHuntRelationsClientDiagnostics.CreateScope("SecurityInsightsHuntRelationResource.Update");
             scope.Start();
             try
             {
-                var response = await _huntRelationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _huntRelationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var response = await _securityInsightsHuntRelationHuntRelationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _securityInsightsHuntRelationHuntRelationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<HuntRelationResource>(Response.FromValue(new HuntRelationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsHuntRelationResource>(Response.FromValue(new SecurityInsightsHuntRelationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,18 +330,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The hunt relation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HuntRelationResource> Update(WaitUntil waitUntil, HuntRelationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsHuntRelationResource> Update(WaitUntil waitUntil, HuntRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _huntRelationClientDiagnostics.CreateScope("HuntRelationResource.Update");
+            using var scope = _securityInsightsHuntRelationHuntRelationsClientDiagnostics.CreateScope("SecurityInsightsHuntRelationResource.Update");
             scope.Start();
             try
             {
-                var response = _huntRelationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _huntRelationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var response = _securityInsightsHuntRelationHuntRelationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _securityInsightsHuntRelationHuntRelationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<HuntRelationResource>(Response.FromValue(new HuntRelationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsHuntRelationResource>(Response.FromValue(new SecurityInsightsHuntRelationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

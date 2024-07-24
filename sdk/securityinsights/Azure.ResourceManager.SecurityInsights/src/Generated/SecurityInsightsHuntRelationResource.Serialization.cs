@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class HuntRelationResource : IJsonModel<HuntRelationData>
+    public partial class SecurityInsightsHuntRelationResource : IJsonModel<HuntRelationData>
     {
         void IJsonModel<HuntRelationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HuntRelationData>)Data).Write(writer, options);
 

@@ -131,39 +131,39 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BookmarkRelationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BookmarkRelationResource.CreateResourceIdentifier" /> to create a <see cref="BookmarkRelationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsBookmarkRelationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsBookmarkRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsBookmarkRelationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BookmarkRelationResource"/> object. </returns>
-        public virtual BookmarkRelationResource GetBookmarkRelationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsBookmarkRelationResource"/> object. </returns>
+        public virtual SecurityInsightsBookmarkRelationResource GetSecurityInsightsBookmarkRelationResource(ResourceIdentifier id)
         {
-            BookmarkRelationResource.ValidateResourceId(id);
-            return new BookmarkRelationResource(Client, id);
+            SecurityInsightsBookmarkRelationResource.ValidateResourceId(id);
+            return new SecurityInsightsBookmarkRelationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EntityRelationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EntityRelationResource.CreateResourceIdentifier" /> to create an <see cref="EntityRelationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsEntityRelationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsEntityRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsEntityRelationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EntityRelationResource"/> object. </returns>
-        public virtual EntityRelationResource GetEntityRelationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsEntityRelationResource"/> object. </returns>
+        public virtual SecurityInsightsEntityRelationResource GetSecurityInsightsEntityRelationResource(ResourceIdentifier id)
         {
-            EntityRelationResource.ValidateResourceId(id);
-            return new EntityRelationResource(Client, id);
+            SecurityInsightsEntityRelationResource.ValidateResourceId(id);
+            return new SecurityInsightsEntityRelationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IncidentRelationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IncidentRelationResource.CreateResourceIdentifier" /> to create an <see cref="IncidentRelationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsIncidentRelationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsIncidentRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsIncidentRelationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IncidentRelationResource"/> object. </returns>
-        public virtual IncidentRelationResource GetIncidentRelationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentRelationResource"/> object. </returns>
+        public virtual SecurityInsightsIncidentRelationResource GetSecurityInsightsIncidentRelationResource(ResourceIdentifier id)
         {
-            IncidentRelationResource.ValidateResourceId(id);
-            return new IncidentRelationResource(Client, id);
+            SecurityInsightsIncidentRelationResource.ValidateResourceId(id);
+            return new SecurityInsightsIncidentRelationResource(Client, id);
         }
 
         /// <summary>
@@ -263,15 +263,15 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HuntRelationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HuntRelationResource.CreateResourceIdentifier" /> to create a <see cref="HuntRelationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsHuntRelationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsHuntRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsHuntRelationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HuntRelationResource"/> object. </returns>
-        public virtual HuntRelationResource GetHuntRelationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsHuntRelationResource"/> object. </returns>
+        public virtual SecurityInsightsHuntRelationResource GetSecurityInsightsHuntRelationResource(ResourceIdentifier id)
         {
-            HuntRelationResource.ValidateResourceId(id);
-            return new HuntRelationResource(Client, id);
+            SecurityInsightsHuntRelationResource.ValidateResourceId(id);
+            return new SecurityInsightsHuntRelationResource(Client, id);
         }
 
         /// <summary>

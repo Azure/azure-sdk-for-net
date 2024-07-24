@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BookmarkRelationResource"/> and their operations.
-    /// Each <see cref="BookmarkRelationResource"/> in the collection will belong to the same instance of <see cref="SecurityInsightsBookmarkResource"/>.
-    /// To get a <see cref="BookmarkRelationCollection"/> instance call the GetBookmarkRelations method from an instance of <see cref="SecurityInsightsBookmarkResource"/>.
+    /// A class representing a collection of <see cref="SecurityInsightsBookmarkRelationResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsBookmarkRelationResource"/> in the collection will belong to the same instance of <see cref="SecurityInsightsBookmarkResource"/>.
+    /// To get a <see cref="SecurityInsightsBookmarkRelationCollection"/> instance call the GetSecurityInsightsBookmarkRelations method from an instance of <see cref="SecurityInsightsBookmarkResource"/>.
     /// </summary>
-    public partial class BookmarkRelationCollection : ArmCollection, IEnumerable<BookmarkRelationResource>, IAsyncEnumerable<BookmarkRelationResource>
+    public partial class SecurityInsightsBookmarkRelationCollection : ArmCollection, IEnumerable<SecurityInsightsBookmarkRelationResource>, IAsyncEnumerable<SecurityInsightsBookmarkRelationResource>
     {
-        private readonly ClientDiagnostics _bookmarkRelationClientDiagnostics;
-        private readonly BookmarkRelationsRestOperations _bookmarkRelationRestClient;
+        private readonly ClientDiagnostics _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics;
+        private readonly BookmarkRelationsRestOperations _securityInsightsBookmarkRelationBookmarkRelationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BookmarkRelationCollection"/> class for mocking. </summary>
-        protected BookmarkRelationCollection()
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsBookmarkRelationCollection"/> class for mocking. </summary>
+        protected SecurityInsightsBookmarkRelationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BookmarkRelationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsBookmarkRelationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal BookmarkRelationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityInsightsBookmarkRelationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _bookmarkRelationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", BookmarkRelationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BookmarkRelationResource.ResourceType, out string bookmarkRelationApiVersion);
-            _bookmarkRelationRestClient = new BookmarkRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bookmarkRelationApiVersion);
+            _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsBookmarkRelationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityInsightsBookmarkRelationResource.ResourceType, out string securityInsightsBookmarkRelationBookmarkRelationsApiVersion);
+            _securityInsightsBookmarkRelationBookmarkRelationsRestClient = new BookmarkRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsBookmarkRelationBookmarkRelationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BookmarkRelationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relationName, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsBookmarkRelationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relationName, RelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationCollection.CreateOrUpdate");
+            using var scope = _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics.CreateScope("SecurityInsightsBookmarkRelationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _bookmarkRelationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _bookmarkRelationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data);
+                var response = await _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<BookmarkRelationResource>(Response.FromValue(new BookmarkRelationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsBookmarkRelationResource>(Response.FromValue(new SecurityInsightsBookmarkRelationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BookmarkRelationResource> CreateOrUpdate(WaitUntil waitUntil, string relationName, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsBookmarkRelationResource> CreateOrUpdate(WaitUntil waitUntil, string relationName, RelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationCollection.CreateOrUpdate");
+            using var scope = _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics.CreateScope("SecurityInsightsBookmarkRelationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _bookmarkRelationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data, cancellationToken);
-                var uri = _bookmarkRelationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data);
+                var response = _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data, cancellationToken);
+                var uri = _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<BookmarkRelationResource>(Response.FromValue(new BookmarkRelationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsBookmarkRelationResource>(Response.FromValue(new SecurityInsightsBookmarkRelationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        public virtual async Task<Response<BookmarkRelationResource>> GetAsync(string relationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsBookmarkRelationResource>> GetAsync(string relationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationCollection.Get");
+            using var scope = _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics.CreateScope("SecurityInsightsBookmarkRelationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _bookmarkRelationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsBookmarkRelationBookmarkRelationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BookmarkRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsBookmarkRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        public virtual Response<BookmarkRelationResource> Get(string relationName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsBookmarkRelationResource> Get(string relationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationCollection.Get");
+            using var scope = _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics.CreateScope("SecurityInsightsBookmarkRelationCollection.Get");
             scope.Start();
             try
             {
-                var response = _bookmarkRelationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken);
+                var response = _securityInsightsBookmarkRelationBookmarkRelationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BookmarkRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsBookmarkRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BookmarkRelationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BookmarkRelationResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityInsightsBookmarkRelationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsBookmarkRelationResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _bookmarkRelationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bookmarkRelationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BookmarkRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _bookmarkRelationClientDiagnostics, Pipeline, "BookmarkRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkRelationResource(Client, RelationData.DeserializeRelationData(e)), _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics, Pipeline, "SecurityInsightsBookmarkRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,12 +303,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BookmarkRelationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BookmarkRelationResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityInsightsBookmarkRelationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityInsightsBookmarkRelationResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _bookmarkRelationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bookmarkRelationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BookmarkRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _bookmarkRelationClientDiagnostics, Pipeline, "BookmarkRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkRelationResource(Client, RelationData.DeserializeRelationData(e)), _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics, Pipeline, "SecurityInsightsBookmarkRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationCollection.Exists");
+            using var scope = _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics.CreateScope("SecurityInsightsBookmarkRelationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _bookmarkRelationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsBookmarkRelationBookmarkRelationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,11 +383,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationCollection.Exists");
+            using var scope = _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics.CreateScope("SecurityInsightsBookmarkRelationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _bookmarkRelationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken);
+                var response = _securityInsightsBookmarkRelationBookmarkRelationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,18 +422,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        public virtual async Task<NullableResponse<BookmarkRelationResource>> GetIfExistsAsync(string relationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SecurityInsightsBookmarkRelationResource>> GetIfExistsAsync(string relationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationCollection.GetIfExists");
+            using var scope = _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics.CreateScope("SecurityInsightsBookmarkRelationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _bookmarkRelationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsBookmarkRelationBookmarkRelationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<BookmarkRelationResource>(response.GetRawResponse());
-                return Response.FromValue(new BookmarkRelationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsBookmarkRelationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsBookmarkRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,18 +467,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        public virtual NullableResponse<BookmarkRelationResource> GetIfExists(string relationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SecurityInsightsBookmarkRelationResource> GetIfExists(string relationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _bookmarkRelationClientDiagnostics.CreateScope("BookmarkRelationCollection.GetIfExists");
+            using var scope = _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics.CreateScope("SecurityInsightsBookmarkRelationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _bookmarkRelationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken);
+                var response = _securityInsightsBookmarkRelationBookmarkRelationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, relationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<BookmarkRelationResource>(response.GetRawResponse());
-                return Response.FromValue(new BookmarkRelationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsBookmarkRelationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsBookmarkRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        IEnumerator<BookmarkRelationResource> IEnumerable<BookmarkRelationResource>.GetEnumerator()
+        IEnumerator<SecurityInsightsBookmarkRelationResource> IEnumerable<SecurityInsightsBookmarkRelationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BookmarkRelationResource> IAsyncEnumerable<BookmarkRelationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityInsightsBookmarkRelationResource> IAsyncEnumerable<SecurityInsightsBookmarkRelationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

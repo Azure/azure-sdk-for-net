@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SecurityInsights
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of BookmarkRelationResources in the SecurityInsightsBookmark. </summary>
-        /// <returns> An object representing collection of BookmarkRelationResources and their operations over a BookmarkRelationResource. </returns>
-        public virtual BookmarkRelationCollection GetBookmarkRelations()
+        /// <summary> Gets a collection of SecurityInsightsBookmarkRelationResources in the SecurityInsightsBookmark. </summary>
+        /// <returns> An object representing collection of SecurityInsightsBookmarkRelationResources and their operations over a SecurityInsightsBookmarkRelationResource. </returns>
+        public virtual SecurityInsightsBookmarkRelationCollection GetSecurityInsightsBookmarkRelations()
         {
-            return GetCachedClient(client => new BookmarkRelationCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsBookmarkRelationCollection(client, Id));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BookmarkRelationResource>> GetBookmarkRelationAsync(string relationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsBookmarkRelationResource>> GetSecurityInsightsBookmarkRelationAsync(string relationName, CancellationToken cancellationToken = default)
         {
-            return await GetBookmarkRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsBookmarkRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BookmarkRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BookmarkRelationResource> GetBookmarkRelation(string relationName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsBookmarkRelationResource> GetSecurityInsightsBookmarkRelation(string relationName, CancellationToken cancellationToken = default)
         {
-            return GetBookmarkRelations().Get(relationName, cancellationToken);
+            return GetSecurityInsightsBookmarkRelations().Get(relationName, cancellationToken);
         }
 
         /// <summary>

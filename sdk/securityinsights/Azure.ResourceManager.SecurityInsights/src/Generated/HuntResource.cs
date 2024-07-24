@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.SecurityInsights
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of HuntRelationResources in the Hunt. </summary>
-        /// <returns> An object representing collection of HuntRelationResources and their operations over a HuntRelationResource. </returns>
-        public virtual HuntRelationCollection GetHuntRelations()
+        /// <summary> Gets a collection of SecurityInsightsHuntRelationResources in the Hunt. </summary>
+        /// <returns> An object representing collection of SecurityInsightsHuntRelationResources and their operations over a SecurityInsightsHuntRelationResource. </returns>
+        public virtual SecurityInsightsHuntRelationCollection GetSecurityInsightsHuntRelations()
         {
-            return GetCachedClient(client => new HuntRelationCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsHuntRelationCollection(client, Id));
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="huntRelationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="huntRelationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HuntRelationResource>> GetHuntRelationAsync(string huntRelationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsHuntRelationResource>> GetSecurityInsightsHuntRelationAsync(string huntRelationId, CancellationToken cancellationToken = default)
         {
-            return await GetHuntRelations().GetAsync(huntRelationId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsHuntRelations().GetAsync(huntRelationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntRelationResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="huntRelationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="huntRelationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HuntRelationResource> GetHuntRelation(string huntRelationId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsHuntRelationResource> GetSecurityInsightsHuntRelation(string huntRelationId, CancellationToken cancellationToken = default)
         {
-            return GetHuntRelations().Get(huntRelationId, cancellationToken);
+            return GetSecurityInsightsHuntRelations().Get(huntRelationId, cancellationToken);
         }
 
         /// <summary> Gets a collection of HuntCommentResources in the Hunt. </summary>
