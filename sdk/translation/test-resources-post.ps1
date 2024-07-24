@@ -10,7 +10,7 @@ param (
 	[string] $ResourceGroupName, # this is the resourceGroup name where the Translator resource is created
 	[string] $BaseName, # this is the Translator resource name
 	[string] $TestApplicationId, # this is the TestApplicationId
-	[string] $TenantId, # this is the TenantId
+	[string] $TenantId # this is the TenantId
 )
 
 if($DeploymentOutputs.ContainsKey('DOCUMENT_TRANSLATION_STORAGE_NAME')){
