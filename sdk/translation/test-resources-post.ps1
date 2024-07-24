@@ -8,7 +8,7 @@
 param (
     [hashtable] $DeploymentOutputs,
 	[string] $ResourceGroupName, # this is the resourceGroup name where the Translator resource is created
-	[string] $BaseName, # this is the Translator resource name
+	[string] $BaseName # this is the Translator resource name
 )
 
 if($DeploymentOutputs.ContainsKey('DOCUMENT_TRANSLATION_STORAGE_NAME')){
