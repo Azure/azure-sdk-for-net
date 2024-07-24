@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
 
         private async Task<FabricCapacityResource> CreateFabricCapacityAsync(string capacityName)
         {
-            var capacityData = new FabricCapacityData(DefaultLocation, new RpSku() { Name = "F2", Tier = "Fabric"})
+            var capacityData = new FabricCapacityData(DefaultLocation, new FabricSku() { Name = "F2", Tier = "Fabric"})
             {
-                AdministrationMembers = new List<string> { "VsavTest@pbiotest.onmicrosoft.com" }
+                Properties = new FabricCapacityProperties(new FabricCapacityAdministration(new[] { "VsavTest@pbiotest.onmicrosoft.com" }))
             };
             var capacity = await _fabricCapacityCollection.CreateOrUpdateAsync(WaitUntil.Completed, capacityName, capacityData);
             return capacity.Value;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
         public async Task TestCheckNameAvailability_NotAvailable()
         {
             // Act
-            var content = new FabricCheckNameAvailabilityContent()
+            var content = new FabricNameAvailabilityContent()
             {
                 Name = TestEnvironment.CapacityName,
                 ResourceType = ResourceType
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
 
             // Assert
             Assert.IsNotNull(result?.Value);
-            Assert.IsFalse(result.Value.NameAvailable);
+            Assert.IsFalse(result.Value.IsNameAvailable);
         }
 
         [TestCase]
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
         public async Task TestCheckNameAvailability_Available()
         {
             // Act
-            var content = new FabricCheckNameAvailabilityContent()
+            var content = new FabricNameAvailabilityContent()
             {
                 Name = TestEnvironment.CapacityName + "1",
                 ResourceType = ResourceType
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
 
             // Assert
             Assert.IsNotNull(result?.Value);
-            Assert.IsTrue(result.Value.NameAvailable);
+            Assert.IsTrue(result.Value.IsNameAvailable);
         }
 
         [TestCase]
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             Assert.IsTrue(result.Any(sku => sku.Sku.Name.Equals("F128")));
             Assert.IsTrue(result.Any(sku => sku.Sku.Name.Equals("F512")));
             Assert.IsTrue(result.All(sku => sku.ResourceType == ResourceType));
-            Assert.IsTrue(result.All(sku => sku.Sku.Tier == RpSkuTier.Fabric));
+            Assert.IsTrue(result.All(sku => sku.Sku.Tier == FabricSkuTier.Fabric));
         }
 
         [TestCase]
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             var fabricCapacity = Client.GetFabricCapacityResource(new ResourceIdentifier(TestEnvironment.CapacityId));
             var fabricCapacityPatch = new FabricCapacityPatch()
             {
-                Sku = new RpSkuUpdate()
+                Sku = new FabricSku()
                 {
                     Name = "F8",
-                    Tier = RpSkuTier.Fabric,
+                    Tier = FabricSkuTier.Fabric,
                 }
             };
 
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             // Revert
             await fabricCapacity.UpdateAsync(WaitUntil.Completed, new FabricCapacityPatch()
             {
-                Sku = new RpSkuUpdate()
+                Sku = new FabricSku()
                 {
                     Name = "F2",
-                    Tier = RpSkuTier.Fabric,
+                    Tier = FabricSkuTier.Fabric,
                 }
             });
         }
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
             // Act
             var suspendResult = await fabricCapacity.SuspendAsync(WaitUntil.Completed);
             fabricCapacity = (await fabricCapacities.GetAsync(TestEnvironment.CapacityName)).Value;
-            Assert.AreEqual(fabricCapacity.Data.State, FabricResourceState.Paused);
+            Assert.AreEqual(fabricCapacity.Data.Properties.State, FabricResourceState.Paused);
 
             var resumeResult = await fabricCapacity.ResumeAsync(WaitUntil.Completed);
             fabricCapacity = (await fabricCapacities.GetAsync(TestEnvironment.CapacityName)).Value;
-            Assert.AreEqual(fabricCapacity.Data.State, FabricResourceState.Active);
+            Assert.AreEqual(fabricCapacity.Data.Properties.State, FabricResourceState.Active);
         }
 
         private void AssertTrackedResource(TrackedResourceData r1, TrackedResourceData r2)
