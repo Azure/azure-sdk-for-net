@@ -22,6 +22,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -101,7 +102,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = default,
-            TransferPropertiesTestType propertiesTestType = default)
+            TransferPropertiesTestType propertiesTestType = default,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             AppendBlobClient blobClient = container.GetAppendBlobClient(objectName);
@@ -115,29 +117,44 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
                 if (contents != default)
                 {
-                    await UploadAppendBlocksAsync(blobClient, contents);
+                    await UploadAppendBlocksAsync(blobClient, contents, cancellationToken);
                 }
                 else
                 {
                     var data = GetRandomBuffer(objectLength.Value);
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await UploadAppendBlocksAsync(blobClient, originalStream);
+                    await UploadAppendBlocksAsync(blobClient, originalStream, cancellationToken);
                 }
             }
             Uri sourceUri = blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new AppendBlobClient(sourceUri, GetBlobOptions()));
         }
 
-        private async Task UploadAppendBlocksAsync(AppendBlobClient blobClient, Stream contents)
+        private async Task UploadAppendBlocksAsync(
+            AppendBlobClient blobClient,
+            Stream contents,
+            CancellationToken cancellationToken)
         {
-            await blobClient.CreateIfNotExistsAsync();
+            await blobClient.CreateIfNotExistsAsync(
+                new AppendBlobCreateOptions()
+                {
+                    Metadata = _defaultMetadata,
+                    HttpHeaders = new BlobHttpHeaders()
+                    {
+                        ContentType = _defaultContentType,
+                        ContentLanguage = _defaultContentLanguage,
+                        ContentDisposition = _defaultContentDisposition,
+                        CacheControl = _defaultCacheControl,
+                    }
+                },
+                cancellationToken: cancellationToken);
             long offset = 0;
             long size = contents.Length;
             long blockSize = Math.Min(Constants.DefaultBufferSize, size);
             while (offset < size)
             {
                 Stream partStream = WindowStream.GetWindow(contents, blockSize);
-                await blobClient.AppendBlockAsync(partStream);
+                await blobClient.AppendBlockAsync(partStream, cancellationToken: cancellationToken);
                 offset += blockSize;
             }
         }
@@ -145,7 +162,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
 
-        protected override async Task<ShareFileClient> GetDestinationObjectClientAsync(ShareClient container, long? objectLength = null, bool createResource = false, string objectName = null, ShareClientOptions options = null, Stream contents = null)
+        protected override async Task<ShareFileClient> GetDestinationObjectClientAsync(
+            ShareClient container,
+            long? objectLength = null,
+            bool createResource = false,
+            string objectName = null,
+            ShareClientOptions options = null,
+            Stream contents = null,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
@@ -155,7 +179,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 {
                     throw new InvalidOperationException($"Cannot create share file without size specified. Either set {nameof(createResource)} to false or specify a {nameof(objectLength)}.");
                 }
-                await fileClient.CreateAsync(objectLength.Value);
+                await fileClient.CreateAsync(objectLength.Value, cancellationToken: cancellationToken);
 
                 if (contents != default)
                 {
@@ -224,7 +248,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             AppendBlobClient sourceClient,
-            ShareFileClient destinationClient)
+            ShareFileClient destinationClient,
+            CancellationToken cancellationToken)
         {
             // Verify completion
             Assert.NotNull(transfer);
@@ -232,13 +257,13 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
-            using Stream sourceStream = await sourceClient.OpenReadAsync();
-            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
+            using Stream destinationStream = await destinationClient.OpenReadAsync(cancellationToken: cancellationToken);
             Assert.AreEqual(sourceStream, destinationStream);
 
             if (transferPropertiesTestType == TransferPropertiesTestType.NoPreserve)
             {
-                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationToken);
 
                 Assert.IsEmpty(destinationProperties.Metadata);
                 Assert.IsNull(destinationProperties.ContentDisposition);
@@ -247,7 +272,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
             else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
             {
-                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationToken);
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
                 Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
@@ -261,8 +286,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
                  //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
             {
-                BlobProperties sourceProperties = await sourceClient.GetPropertiesAsync();
-                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+                BlobProperties sourceProperties = await sourceClient.GetPropertiesAsync(cancellationToken: cancellationToken);
+                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync(cancellationToken: cancellationToken);
 
                 Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
                 Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);

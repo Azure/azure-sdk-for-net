@@ -2841,6 +2841,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            await srcBlob.SetAccessTierAsync(AccessTier.Cold);
             Uri srcBlobSasUri = srcBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1));
             srcBlob = InstrumentClient(new BlobBaseClient(srcBlobSasUri, GetOptions()));
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2849,11 +2850,13 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri);
 
             // Check that destBlob actually exists
-            await destBlob.GetPropertiesAsync();
+            BlobProperties srcProperties = await srcBlob.GetPropertiesAsync();
+            BlobProperties destProperties = await destBlob.GetPropertiesAsync();
 
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(copyResponse.Value.ETag.ToString(), $"\"{copyResponse.GetRawResponse().Headers.ETag.ToString()}\"");
+            Assert.AreEqual(srcProperties.AccessTier, destProperties.AccessTier);
             Assert.IsNotNull(copyResponse.Value.LastModified);
             Assert.IsNotNull(copyResponse.Value.CopyId);
             Assert.AreEqual(CopyStatus.Success, copyResponse.Value.CopyStatus);

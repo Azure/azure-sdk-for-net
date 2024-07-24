@@ -59,6 +59,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             long? objectLength = null,
             string objectName = null,
             Stream contents = default,
+            TransferPropertiesTestType propertiesType = default,
             CancellationToken cancellationToken = default)
             => await CreateShareFileAsync(
                 container: container,
@@ -433,24 +434,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 destinationContainer,
                 destPrefix,
                 propertiesType);
-        }
-
-        [Test]
-        [TestCase(TransferPropertiesTestType.NewProperties)]
-        [TestCase(TransferPropertiesTestType.Preserve)]
-        [TestCase(TransferPropertiesTestType.NoPreserve)]
-        [TestCase(TransferPropertiesTestType.Default)]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
-        public async Task DirectoryToDirectoryAsync_PreservePermissionKey(TransferPropertiesTestType propertiesTestType)
-        {
-            // Arrange
-            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
-            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
-
-            await CopyRemoteObjects_VerifyProperties(
-                source.Container,
-                destination.Container,
-                propertiesTestType);
         }
     }
 }

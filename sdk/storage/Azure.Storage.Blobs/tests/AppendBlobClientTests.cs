@@ -348,9 +348,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase(nameof(AppendBlobRequestConditions.IfAppendPositionEqual))]
-        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual))]
-        public async Task CreateAsync_InvalidRequestConditions(string invalidCondition)
+        [TestCase(nameof(AppendBlobRequestConditions.IfAppendPositionEqual), null)]
+        [TestCase(nameof(AppendBlobRequestConditions.IfMaxSizeLessThanOrEqual), "somevalue")]
+        public async Task CreateAsync_InvalidRequestConditions(string invalidCondition, string result)
         {
             // Arrange
             Uri uri = new Uri("https://www.doesntmatter.com");
