@@ -27,4 +27,3 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 * [Extractive Summarization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples/Sample11_AnalyzeTextOperation_ExtractiveSummarizationOperationAction.md)
 * [Abstractive Summarization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples/Sample12_AnalyzeTextOperation_AbstractiveSummarizationOperationAction.md)
 * [Perform multiple text analysis actions](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples/Sample13_AnalyzeTextOperation_MultipleActions.md)
-

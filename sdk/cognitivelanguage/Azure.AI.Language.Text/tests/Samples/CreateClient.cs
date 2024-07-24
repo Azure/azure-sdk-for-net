@@ -2,12 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+#region Snippet:TextAnalysisClient_Namespace
 using Azure.AI.Language.Text;
+#endregion
 using Azure.AI.Language.Text.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 #region Snippet:Text_Identity_Namespace
 using Azure.Identity;
+using Azure.Core;
+using Azure.AI.Language.Text.Models;
 #endregion
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
@@ -53,6 +57,47 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 #endif
             DefaultAzureCredential credential = new DefaultAzureCredential();
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+            #endregion
+        }
+
+        [Test]
+        public void BadArgument()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            #region Snippet:TextAnalysisClientt_BadRequest
+            try
+            {
+                string documentA =
+                "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+                + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+                + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+                + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+                + " offers services for childcare in case you want that.";
+
+                AnalyzeTextInput body = new TextEntityRecognitionInput()
+                {
+                    TextInput = new MultiLanguageTextInput()
+                    {
+                        Documents =
+                        {
+                            new MultiLanguageInput("D", documentA),
+                        }
+                    },
+                    ActionContent = new EntitiesActionContent()
+                    {
+                        ModelVersion = "NotValid",
+                    }
+                };
+
+                Response<AnalyzeTextResult> response = client.AnalyzeText(body);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             #endregion
         }
     }
