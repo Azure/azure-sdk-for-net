@@ -106,11 +106,11 @@ namespace Azure.Storage
         public static RequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
             => new RequestFailedException(response.Status, $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.", null);
 
-        public static RequestFailedException StructuredMessageNotAcknowledgedGET(Response response)
-            => new RequestFailedException(response.Status, $"Response does not acknowledge structured message was requested. Unknown data structure in response body.");
+        public static InvalidDataException StructuredMessageNotAcknowledgedGET(Response response)
+            => new InvalidDataException($"Response does not acknowledge structured message was requested. Unknown data structure in response body.");
 
-        public static RequestFailedException StructuredMessageNotAcknowledgedPUT(Response response)
-            => new RequestFailedException(response.Status, $"Response does not acknowledge structured message was sent. Unexpected data may have been persisted to storage.");
+        public static InvalidDataException StructuredMessageNotAcknowledgedPUT(Response response)
+            => new InvalidDataException($"Response does not acknowledge structured message was sent. Unexpected data may have been persisted to storage.");
 
         public static ArgumentException TransactionalHashingNotSupportedWithClientSideEncryption()
             => new ArgumentException("Client-side encryption and transactional hashing are not supported at the same time.");

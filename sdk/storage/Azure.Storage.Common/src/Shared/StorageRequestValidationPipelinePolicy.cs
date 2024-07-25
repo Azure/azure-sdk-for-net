@@ -34,16 +34,29 @@ namespace Azure.Storage
                 throw Errors.ClientRequestIdMismatch(message.Response, echo.First(), original);
             }
 
-            // Structured message PUT
             if (message.Request.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader) &&
-                message.Request.Headers.Contains(Constants.StructuredMessage.StructuredContentLength) &&
+                message.Request.Headers.Contains(Constants.StructuredMessage.StructuredContentLength))
+            {
+                AssertStructuredMessageAcknowledgedPUT(message);
+            }
+            else if (message.Request.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+            {
+                AssertStructuredMessageAcknowledgedGET(message);
+            }
+        }
+
+        private static void AssertStructuredMessageAcknowledgedPUT(HttpMessage message)
+        {
+            if (!message.Response.IsError &&
                 !message.Response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
             {
                 throw Errors.StructuredMessageNotAcknowledgedPUT(message.Response);
             }
+        }
 
-            // Structured message GET
-            if (message.Request.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader) &&
+        private static void AssertStructuredMessageAcknowledgedGET(HttpMessage message)
+        {
+            if (!message.Response.IsError &&
                 !(message.Response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader) &&
                   message.Response.Headers.Contains(Constants.StructuredMessage.StructuredContentLength)))
             {
