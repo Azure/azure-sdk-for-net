@@ -834,7 +834,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var query = new LabelSelector();
             int keyIndex = 0;
 
-            await foreach (ConfigurationLabel label in service.GetLabelsAsync(query, CancellationToken.None))
+            await foreach (Label label in service.GetLabelsAsync(query, CancellationToken.None))
             {
                 Assert.AreEqual("label" + keyIndex, label.Name);
                 keyIndex++;
@@ -1056,9 +1056,9 @@ namespace Azure.Data.AppConfiguration.Tests
             return new ConfigurationSetting($"key{i}", "val") { Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text" };
         }
 
-        private static ConfigurationLabel CreateLabel(int i)
+        private static Label CreateLabel(int i)
         {
-            return new ConfigurationLabel($"label{i}");
+            return new Label($"label{i}");
         }
 
         private void SerializeRequestSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
@@ -1125,7 +1125,7 @@ namespace Azure.Data.AppConfiguration.Tests
             json.WriteEndObject();
         }
 
-        private void SerializeLabel(ref Utf8JsonWriter json, ConfigurationLabel label)
+        private static void SerializeLabel(ref Utf8JsonWriter json, Label label)
         {
             json.WriteStartObject();
             json.WritePropertyName("name"u8);
@@ -1133,7 +1133,7 @@ namespace Azure.Data.AppConfiguration.Tests
             json.WriteEndObject();
         }
 
-        private void SerializeLabels(ref Utf8JsonWriter json, (ConfigurationLabel[] Labels, string NextLink) content)
+        private void SerializeLabels(ref Utf8JsonWriter json, (Label[] Labels, string NextLink) content)
         {
             json.WriteStartObject();
             if (content.NextLink != null)
@@ -1141,9 +1141,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 json.WriteString("@nextLink", content.NextLink);
             }
             json.WriteStartArray("items");
-            foreach (ConfigurationLabel label in content.Labels)
+            foreach (Label label in content.Labels)
             {
-                SerializeLabel(ref json, label);
+                ConfigurationMockTests.SerializeLabel(ref json, label);
             }
             json.WriteEndArray();
             json.WriteEndObject();

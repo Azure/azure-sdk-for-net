@@ -55,7 +55,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var labelsSelector = new LabelSelector { NameFilter = "production*" };
 
             Console.WriteLine("Labels for Production environment:");
-            await foreach (ConfigurationLabel label in client.GetLabelsAsync(labelsSelector))
+            await foreach (Label label in client.GetLabelsAsync(labelsSelector))
             {
                 Console.WriteLine(label.Name);
             }

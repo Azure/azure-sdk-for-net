@@ -7,15 +7,15 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
-    public class ConfigurationLabelTests
+    public class LabelTests
     {
-        [TestCaseSource(nameof(DeserializeConfigurationLabelTestCases))]
-        public void DeserializeConfigurationLabel(string json, bool hasName)
+        [TestCaseSource(nameof(DeserializeLabelTestCases))]
+        public void DeserializeLabel(string json, bool hasName)
         {
             var element = JsonDocument.Parse(json).RootElement;
 
             // Act
-            var label = ConfigurationLabel.DeserializeLabel(element);
+            var label = Label.DeserializeLabel(element);
 
             if (hasName)
             {
@@ -28,7 +28,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        public static IEnumerable<TestCaseData> DeserializeConfigurationLabelTestCases
+        public static IEnumerable<TestCaseData> DeserializeLabelTestCases
         {
             get
             {

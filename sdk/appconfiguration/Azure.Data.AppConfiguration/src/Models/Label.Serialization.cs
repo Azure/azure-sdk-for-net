@@ -6,7 +6,9 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    public partial class ConfigurationLabel : IUtf8JsonSerializable
+#pragma warning disable AZC0012 // Avoid single word type names
+    public partial class Label : IUtf8JsonSerializable
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -16,7 +18,7 @@ namespace Azure.Data.AppConfiguration
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationLabel DeserializeLabel(JsonElement element)
+        internal static Label DeserializeLabel(JsonElement element)
         {
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +29,7 @@ namespace Azure.Data.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationLabel(name);
+            return new Label(name);
         }
     }
 }

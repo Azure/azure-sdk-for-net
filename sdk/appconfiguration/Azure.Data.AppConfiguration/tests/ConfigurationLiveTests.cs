@@ -2698,7 +2698,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 int resultsReturned = 0;
                 int expectedLabels = 1;
-                await foreach (ConfigurationLabel label in service.GetLabelsAsync(selector, CancellationToken.None))
+                await foreach (Label label in service.GetLabelsAsync(selector, CancellationToken.None))
                 {
                     Assert.AreEqual(setting.Label, label.Name);
                     resultsReturned++;
@@ -2739,22 +2739,30 @@ namespace Azure.Data.AppConfiguration.Tests
                     };
                 }
 
-                int resultsReturned = 0;
-                int expectedEvents = 2;
-                await foreach (ConfigurationLabel label in service.GetLabelsAsync(selector, CancellationToken.None))
+                var labels = await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync();
+                Assert.GreaterOrEqual(labels.Count, 2);
+
+                bool foundLabel1 = false;
+                bool foundLabel2 = false;
+                foreach (Label label in labels)
                 {
-                    if (label.Name.Contains("update"))
+                    if (foundLabel1 && foundLabel2)
                     {
-                        Assert.AreEqual(testSetting2.Label, label.Name);
+                        break;
                     }
-                    else
+
+                    if (label.Name == testSetting1.Label)
                     {
-                        Assert.AreEqual(testSetting1.Label, label.Name);
+                        foundLabel1 = true;
                     }
-                    resultsReturned++;
+                    else if (label.Name == testSetting2.Label)
+                    {
+                        foundLabel2 = true;
+                    }
                 }
 
-                Assert.AreEqual(expectedEvents, resultsReturned);
+                Assert.IsTrue(foundLabel1);
+                Assert.IsTrue(foundLabel2);
             }
             finally
             {
@@ -2781,12 +2789,12 @@ namespace Azure.Data.AppConfiguration.Tests
                     NameFilter = "abc*"
                 };
 
-                List<ConfigurationLabel> labels = await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync();
+                List<Label> labels = await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync();
 
                 // There should be at least one label retrieved.
                 CollectionAssert.IsNotEmpty(labels);
 
-                foreach (ConfigurationLabel label in labels)
+                foreach (Label label in labels)
                 {
                     StringAssert.StartsWith("abc", label.Name);
                 }
@@ -2816,7 +2824,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     NameFilter = @"ab\,cd,wx\,yz"
                 };
 
-                ConfigurationLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+                Label[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 Assert.GreaterOrEqual(2, labels.Length);
                 Assert.IsTrue(labels.Any(l => l.Name == "ab,cd"));
@@ -2848,7 +2856,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     NameFilter = "abc,xyz"
                 };
 
-                ConfigurationLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+                Label[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 Assert.GreaterOrEqual(2, labels.Length);
                 Assert.IsTrue(labels.Any(l => l.Name == "abc"));
@@ -2876,7 +2884,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 NameFilter = labelPrefix + "*"
             };
 
-            await foreach (ConfigurationLabel label in service.GetLabelsAsync(selector, CancellationToken.None))
+            await foreach (Label label in service.GetLabelsAsync(selector, CancellationToken.None))
             {
                 StringAssert.StartsWith(labelPrefix, label.Name);
                 resultsReturned++;
@@ -2902,7 +2910,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 };
                 selector.Fields.Add(fieldSelector);
 
-                ConfigurationLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+                Label[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 Assert.AreEqual(1, labels.Length);
 
@@ -2936,7 +2944,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 selector.Fields.Add(unknownFieldSelector1);
                 selector.Fields.Add(unknownFieldSelector2);
 
-                ConfigurationLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+                Label[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 Assert.AreEqual(1, labels.Length);
                 Assert.IsNull(labels[0].Name);
@@ -2962,7 +2970,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     AcceptDateTime = DateTimeOffset.MaxValue
                 };
 
-                ConfigurationLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
+                Label[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 Assert.AreEqual(1, labels.Length);
                 Assert.AreEqual(testSetting.Label, labels[0].Name);

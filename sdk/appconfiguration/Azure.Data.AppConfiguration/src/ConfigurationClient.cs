@@ -1365,10 +1365,10 @@ namespace Azure.Data.AppConfiguration
             return SetReadOnlyAsync(setting.Key, setting.Label, requestOptions, isReadOnly, false, cancellationToken).EnsureCompleted();
         }
 
-        /// <summary> Gets a list of configuration labels. </summary>
-        /// <param name="selector">Set of options for selecting <see cref="ConfigurationLabel"/>.</param>
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="selector">Set of options for selecting <see cref="Label"/>.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ConfigurationLabel> GetLabelsAsync(LabelSelector selector, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Label> GetLabelsAsync(LabelSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
@@ -1385,13 +1385,13 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Label.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
-        /// <summary> Gets a list of configuration labels. </summary>
-        /// <param name="selector">Set of options for selecting <see cref="ConfigurationLabel"/>.</param>
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="selector">Set of options for selecting <see cref="Label"/>.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ConfigurationLabel> GetLabels(LabelSelector selector, CancellationToken cancellationToken = default)
+        public virtual Pageable<Label> GetLabels(LabelSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
@@ -1408,7 +1408,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Label.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)

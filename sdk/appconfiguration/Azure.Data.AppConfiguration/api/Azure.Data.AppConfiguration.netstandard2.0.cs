@@ -38,8 +38,8 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationLabel> GetLabels(Azure.Data.AppConfiguration.LabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationLabel> GetLabelsAsync(Azure.Data.AppConfiguration.LabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.AppConfiguration.Label> GetLabels(Azure.Data.AppConfiguration.LabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.Label> GetLabelsAsync(Azure.Data.AppConfiguration.LabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisions(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisions(string keyFilter, string labelFilter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisionsAsync(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -80,11 +80,6 @@ namespace Azure.Data.AppConfiguration
             V2023_10_01 = 1,
             V2023_11_01 = 2,
         }
-    }
-    public partial class ConfigurationLabel
-    {
-        internal ConfigurationLabel() { }
-        public string Name { get { throw null; } }
     }
     public static partial class ConfigurationModelFactory
     {
@@ -183,6 +178,11 @@ namespace Azure.Data.AppConfiguration
         public FeatureFlagFilter(string name, System.Collections.Generic.IDictionary<string, object> parameters) { }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Parameters { get { throw null; } }
+    }
+    public partial class Label
+    {
+        internal Label() { }
+        public string Name { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LabelFields : System.IEquatable<Azure.Data.AppConfiguration.LabelFields>

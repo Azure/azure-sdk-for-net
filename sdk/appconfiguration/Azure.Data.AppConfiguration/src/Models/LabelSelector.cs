@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// <see cref="LabelSelector"/> is a set of options that allows selecting a filtered set of <see cref="ConfigurationLabel"/> entities.
+    /// <see cref="LabelSelector"/> is a set of options that allows selecting a filtered set of <see cref="Label"/> entities.
     /// </summary>
     public class LabelSelector
     {
@@ -30,8 +30,8 @@ namespace Azure.Data.AppConfiguration
         public IList<LabelFields> Fields { get; }
 
         /// <summary>
-        /// Indicates the point in time in the revision history of the selected <see cref="ConfigurationLabel"/> entities to retrieve.
-        /// If set, all properties of the <see cref="ConfigurationLabel"/> entities in the returned group will be exactly what they
+        /// Indicates the point in time in the revision history of the selected <see cref="Label"/> entities to retrieve.
+        /// If set, all properties of the <see cref="Label"/> entities in the returned group will be exactly what they
         /// were at this time.
         /// </summary>
         public DateTimeOffset? AcceptDateTime { get; set; }
