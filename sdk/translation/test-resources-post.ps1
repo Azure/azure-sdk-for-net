@@ -30,7 +30,7 @@ Log 'Starting sdk\translation\test-resources-post.ps1'
 Log 'Login to azure'
 # PowerShell cmd : az login --service-principal -u $TestApplicationId --tenant $TenantId --allow-no-subscriptions --federated-token $env:ARM_OIDC_TOKEN
 # az login --service-principal -u $TestApplicationId --tenant $TenantId --allow-no-subscriptions # --federated-token $env:ARM_OIDC_TOKEN
-Connect-AzAccount -ServicePrincipal -Tenant $TenantId -ApplicationId $TestApplicationId -FederatedToken $env:ARM_OIDC_TOKEN -Environment AzureCloud -Scope Process
+# Connect-AzAccount -ServicePrincipal -Tenant $TenantId -ApplicationId $TestApplicationId -FederatedToken $env:ARM_OIDC_TOKEN -Environment AzureCloud -Scope Process
 
 Log 'Enable Managed identity on the Translator resource'
 # PowerShell cmd : az cognitiveservices account identity assign --name <TranslatorResourceName> --resource-group <ResourceGroupName>
