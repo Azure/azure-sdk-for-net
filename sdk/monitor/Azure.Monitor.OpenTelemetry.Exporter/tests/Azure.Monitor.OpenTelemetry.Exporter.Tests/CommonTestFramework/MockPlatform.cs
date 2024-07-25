@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
     internal class MockPlatform : IPlatform
     {
-        private readonly Dictionary<string, string> environmentVariables = new Dictionary<string, string>();
+        private readonly Dictionary<string, string?> environmentVariables = new();
 
         public string OSPlatformName { get; set; } = "UnitTest";
         public Func<OSPlatform, bool> IsOsPlatformFunc { get; set; } = (OSPlatform) => false;
@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public string ProcessName { get; set; } = "UnitTestProcess";
         public string ApplicationBaseDirectory { get; set; } = "UnitTestDirectory";
 
-        public void SetEnvironmentVariable(string key, string value) => environmentVariables.Add(key, value);
+        public void SetEnvironmentVariable(string key, string? value) => environmentVariables.Add(key, value);
 
         public string? GetEnvironmentVariable(string name) => environmentVariables.TryGetValue(name, out var value) ? value : null;
 
