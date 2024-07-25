@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
         {
         }
 
-        [Theory]
+        [Theory]//(Skip = "investigating test failure")]
         [InlineData("http", "example.com", 8080, "/search", "?q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")]
         [InlineData("http", "example.com", 80, "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")] // as a sideeffect of setting as new Uri, the default port is removed from the Absolute Uri.
         [InlineData("http", "example.com", 443, "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")] // we do not record the 443 port.
@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
             // TODO: Replace this ActivityListener with an OpenTelemetry provider.
-            var listener = new ActivityListener
+            using var listener = new ActivityListener
             {
                 ShouldListenTo = _ => true,
                 Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
