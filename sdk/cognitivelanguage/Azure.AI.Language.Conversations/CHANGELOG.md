@@ -6,9 +6,10 @@
 - Added support for service version 2024-05-15-preview.
 
 ### Features Added
+- Added classes to represent all the models in the service definition.
 
 ### Breaking Changes
-- Deprecated `ConversationAuthoringClient`.  This will be moved to a separate package in the future.
+- Deprecated `ConversationAuthoringClient`.
 
 ### Bugs Fixed
 
