@@ -13,15 +13,15 @@ namespace Azure.Storage.Files.Shares.Models
     {
         public static string ToSerialString(this FilePermissionFormat value) => value switch
         {
-            FilePermissionFormat.Sddl => "SDDL",
-            FilePermissionFormat.Binary => "binary",
+            FilePermissionFormat.Sddl => "Sddl",
+            FilePermissionFormat.Binary => "Binary",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilePermissionFormat value.")
         };
 
         public static FilePermissionFormat ToFilePermissionFormat(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SDDL")) return FilePermissionFormat.Sddl;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "binary")) return FilePermissionFormat.Binary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sddl")) return FilePermissionFormat.Sddl;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Binary")) return FilePermissionFormat.Binary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilePermissionFormat value.");
         }
     }
