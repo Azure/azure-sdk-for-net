@@ -48,7 +48,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="ResearchStudyArm"/>. </summary>
         /// <param name="name"> Label for study arm. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResearchStudyArm(string name)
+        internal ResearchStudyArm(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -74,10 +74,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Label for study arm. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Categorization of study arm. </summary>
-        public FhirR4CodeableConcept Type { get; set; }
+        public FhirR4CodeableConcept Type { get; }
         /// <summary> Short explanation of study path. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
     }
 }
