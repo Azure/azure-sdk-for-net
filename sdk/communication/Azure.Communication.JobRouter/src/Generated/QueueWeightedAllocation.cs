@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueueWeightedAllocation(double weight, IReadOnlyList<RouterQueueSelector> queueSelectors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QueueWeightedAllocation(double weight, IList<RouterQueueSelector> queueSelectors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Weight = weight;
             QueueSelectors = queueSelectors;
@@ -63,8 +63,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> The percentage of this weight, expressed as a fraction of 1. </summary>
-        public double Weight { get; }
+        public double Weight { get; set; }
         /// <summary> A collection of queue selectors that will be applied if this allocation is selected. </summary>
-        public IReadOnlyList<RouterQueueSelector> QueueSelectors { get; }
+        public IList<RouterQueueSelector> QueueSelectors { get; }
     }
 }
