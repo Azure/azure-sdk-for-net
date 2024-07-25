@@ -271,7 +271,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.4.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.20.0" />
-    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.19.0" />
+    <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.8.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.4" />
     <PackageReference Update="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.4" />
     <PackageReference Update="Castle.Core" Version="5.1.0" />
