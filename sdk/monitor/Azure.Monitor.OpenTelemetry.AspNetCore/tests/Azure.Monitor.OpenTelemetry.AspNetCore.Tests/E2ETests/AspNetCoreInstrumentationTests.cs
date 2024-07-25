@@ -147,7 +147,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                         ? traceTelemetryItems.Any()
                         : traceTelemetryItems.Any(predicate);
                 },
-                timeout: TimeSpan.FromSeconds(20));
+                timeout: TimeSpan.FromSeconds(10));
 
             Assert.True(result, $"{nameof(WaitForActivityExport)} failed.");
         }
