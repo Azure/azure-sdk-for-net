@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class ProcessThreadInfoListResult : IUtf8JsonSerializable, IJsonModel<ProcessThreadInfoListResult>
+    internal partial class WebAppProcessThreadInfoListResult : IUtf8JsonSerializable, IJsonModel<WebAppProcessThreadInfoListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcessThreadInfoListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppProcessThreadInfoListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProcessThreadInfoListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WebAppProcessThreadInfoListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppProcessThreadInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProcessThreadInfoListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppProcessThreadInfoListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        ProcessThreadInfoListResult IJsonModel<ProcessThreadInfoListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebAppProcessThreadInfoListResult IJsonModel<WebAppProcessThreadInfoListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppProcessThreadInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProcessThreadInfoListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppProcessThreadInfoListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProcessThreadInfoListResult(document.RootElement, options);
+            return DeserializeWebAppProcessThreadInfoListResult(document.RootElement, options);
         }
 
-        internal static ProcessThreadInfoListResult DeserializeProcessThreadInfoListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WebAppProcessThreadInfoListResult DeserializeWebAppProcessThreadInfoListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<ProcessThreadInfo> value = default;
+            IReadOnlyList<WebAppProcessThreadInfo> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ProcessThreadInfo> array = new List<ProcessThreadInfo>();
+                    List<WebAppProcessThreadInfo> array = new List<WebAppProcessThreadInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item, options));
+                        array.Add(WebAppProcessThreadInfo.DeserializeWebAppProcessThreadInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProcessThreadInfoListResult(value, nextLink, serializedAdditionalRawData);
+            return new WebAppProcessThreadInfoListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ProcessThreadInfoListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WebAppProcessThreadInfoListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppProcessThreadInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -180,26 +180,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ProcessThreadInfoListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppProcessThreadInfoListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProcessThreadInfoListResult IPersistableModel<ProcessThreadInfoListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WebAppProcessThreadInfoListResult IPersistableModel<WebAppProcessThreadInfoListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppProcessThreadInfoListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProcessThreadInfoListResult(document.RootElement, options);
+                        return DeserializeWebAppProcessThreadInfoListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProcessThreadInfoListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppProcessThreadInfoListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProcessThreadInfoListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WebAppProcessThreadInfoListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

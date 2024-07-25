@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of Kudu thread information elements. </summary>
-    internal partial class ProcessThreadInfoListResult
+    /// <summary> Process Thread Information. </summary>
+    public partial class WebAppProcessThreadInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,32 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProcessThreadInfoListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ProcessThreadInfoListResult(IEnumerable<ProcessThreadInfo> value)
+        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadInfo"/>. </summary>
+        public WebAppProcessThreadInfo()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProcessThreadInfoListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadInfo"/>. </summary>
+        /// <param name="id"> Thread ID. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="state"> Thread state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessThreadInfoListResult(IReadOnlyList<ProcessThreadInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebAppProcessThreadInfo(int? id, Uri href, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Id = id;
+            Href = href;
+            State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProcessThreadInfoListResult"/> for deserialization. </summary>
-        internal ProcessThreadInfoListResult()
-        {
-        }
-
-        /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<ProcessThreadInfo> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> Thread ID. </summary>
+        [WirePath("id")]
+        public int? Id { get; }
+        /// <summary> HRef URI. </summary>
+        [WirePath("href")]
+        public Uri Href { get; set; }
+        /// <summary> Thread state. </summary>
+        [WirePath("state")]
+        public string State { get; set; }
     }
 }
