@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityInsightsBookmarkRelationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relationName, RelationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsBookmarkRelationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relationName, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
             Argument.AssertNotNull(data, nameof(data));
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SecurityInsightsBookmarkRelationResource> CreateOrUpdate(WaitUntil waitUntil, string relationName, RelationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsBookmarkRelationResource> CreateOrUpdate(WaitUntil waitUntil, string relationName, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
             Argument.AssertNotNull(data, nameof(data));
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkRelationResource(Client, RelationData.DeserializeRelationData(e)), _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics, Pipeline, "SecurityInsightsBookmarkRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics, Pipeline, "SecurityInsightsBookmarkRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkRelationBookmarkRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkRelationResource(Client, RelationData.DeserializeRelationData(e)), _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics, Pipeline, "SecurityInsightsBookmarkRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkRelationResource(Client, SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(e)), _securityInsightsBookmarkRelationBookmarkRelationsClientDiagnostics, Pipeline, "SecurityInsightsBookmarkRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

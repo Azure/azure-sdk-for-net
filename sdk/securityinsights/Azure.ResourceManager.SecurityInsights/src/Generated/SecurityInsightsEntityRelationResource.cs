@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         private readonly ClientDiagnostics _securityInsightsEntityRelationEntityRelationsClientDiagnostics;
         private readonly EntityRelationsRestOperations _securityInsightsEntityRelationEntityRelationsRestClient;
-        private readonly RelationData _data;
+        private readonly SecurityInsightsIncidentRelationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/entities/relations";
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityInsightsEntityRelationResource(ArmClient client, RelationData data) : this(client, data.Id)
+        internal SecurityInsightsEntityRelationResource(ArmClient client, SecurityInsightsIncidentRelationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RelationData Data
+        public virtual SecurityInsightsIncidentRelationData Data
         {
             get
             {

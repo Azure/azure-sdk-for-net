@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         private readonly ClientDiagnostics _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics;
         private readonly IncidentRelationsRestOperations _securityInsightsIncidentRelationIncidentRelationsRestClient;
-        private readonly RelationData _data;
+        private readonly SecurityInsightsIncidentRelationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/incidents/relations";
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityInsightsIncidentRelationResource(ArmClient client, RelationData data) : this(client, data.Id)
+        internal SecurityInsightsIncidentRelationResource(ArmClient client, SecurityInsightsIncidentRelationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RelationData Data
+        public virtual SecurityInsightsIncidentRelationData Data
         {
             get
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The relation model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityInsightsIncidentRelationResource>> UpdateAsync(WaitUntil waitUntil, RelationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsIncidentRelationResource>> UpdateAsync(WaitUntil waitUntil, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The relation model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SecurityInsightsIncidentRelationResource> Update(WaitUntil waitUntil, RelationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsIncidentRelationResource> Update(WaitUntil waitUntil, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

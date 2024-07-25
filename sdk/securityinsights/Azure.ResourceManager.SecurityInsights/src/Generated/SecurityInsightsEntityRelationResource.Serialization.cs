@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsEntityRelationResource : IJsonModel<RelationData>
+    public partial class SecurityInsightsEntityRelationResource : IJsonModel<SecurityInsightsIncidentRelationData>
     {
-        void IJsonModel<RelationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelationData>)Data).Write(writer, options);
+        void IJsonModel<SecurityInsightsIncidentRelationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentRelationData>)Data).Write(writer, options);
 
-        RelationData IJsonModel<RelationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelationData>)Data).Create(ref reader, options);
+        SecurityInsightsIncidentRelationData IJsonModel<SecurityInsightsIncidentRelationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentRelationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RelationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsIncidentRelationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        RelationData IPersistableModel<RelationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelationData>(data, options);
+        SecurityInsightsIncidentRelationData IPersistableModel<SecurityInsightsIncidentRelationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsIncidentRelationData>(data, options);
 
-        string IPersistableModel<RelationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsIncidentRelationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsIncidentRelationData>)Data).GetFormatFromOptions(options);
     }
 }

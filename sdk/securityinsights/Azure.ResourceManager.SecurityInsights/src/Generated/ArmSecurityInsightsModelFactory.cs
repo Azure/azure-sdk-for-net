@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsUserInfo(email, name, objectId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.RelationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentRelationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="relatedResourceType"> The resource type of the related resource. </param>
         /// <param name="relatedResourceKind"> The resource kind of the related resource. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.RelationData"/> instance for mocking. </returns>
-        public static RelationData RelationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier relatedResourceId = null, string relatedResourceName = null, ResourceType? relatedResourceType = null, string relatedResourceKind = null, ETag? etag = null)
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentRelationData"/> instance for mocking. </returns>
+        public static SecurityInsightsIncidentRelationData SecurityInsightsIncidentRelationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier relatedResourceId = null, string relatedResourceName = null, ResourceType? relatedResourceType = null, string relatedResourceKind = null, ETag? etag = null)
         {
-            return new RelationData(
+            return new SecurityInsightsIncidentRelationData(
                 id,
                 name,
                 resourceType,
