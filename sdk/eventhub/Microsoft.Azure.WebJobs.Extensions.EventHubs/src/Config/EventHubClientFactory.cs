@@ -201,7 +201,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 }
 
                 // Not found
-                throw new InvalidOperationException($"EventHub account connection '{connection}' does not exist." +
+                throw new InvalidOperationException($"EventHub account connection string with name '{connection}' does not exist in the settings. " +
                                                     $"Make sure that it is a defined App Setting.");
             }
 
