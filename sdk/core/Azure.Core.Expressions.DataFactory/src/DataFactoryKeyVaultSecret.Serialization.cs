@@ -46,7 +46,8 @@ namespace Azure.Core.Expressions.DataFactory
                 }
                 if (property.NameEquals("secretName"u8))
                 {
-                    secretName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    string jsonText = property.Value.GetRawText();
+                    secretName = JsonSerializer.Deserialize<DataFactoryElement<string>>(jsonText);
                     continue;
                 }
                 if (property.NameEquals("secretVersion"u8))
