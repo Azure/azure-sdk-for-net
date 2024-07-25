@@ -36,7 +36,7 @@
    ],
    "Description": "The type of message. Supports text, image, template.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "Input,Json"
   },
   {
    "$id": "7",
@@ -87,7 +87,7 @@
    ],
    "Description": "The type of the template parameter.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "Input,Json"
   },
   {
    "$id": "15",
@@ -108,7 +108,7 @@
    ],
    "Description": "The type of the message template.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "Input,Json"
   },
   {
    "$id": "18",
@@ -135,7 +135,7 @@
    ],
    "Description": "The WhatsApp button sub type.",
    "IsExtensible": true,
-   "Usage": "Input"
+   "Usage": "Input,Json"
   },
   {
    "$id": "22",
@@ -162,7 +162,7 @@
    ],
    "Description": "Repeatability Result header options",
    "IsExtensible": false,
-   "Usage": "Output"
+   "Usage": "None"
   },
   {
    "$id": "26",
@@ -201,7 +201,7 @@
    ],
    "Description": "The aggregated template status.",
    "IsExtensible": true,
-   "Usage": "Output"
+   "Usage": "Output,Json"
   },
   {
    "$id": "32",
@@ -222,7 +222,7 @@
    ],
    "Description": "The type of the communication messages channel.",
    "IsExtensible": true,
-   "Usage": "Output"
+   "Usage": "Output,Json"
   },
   {
    "$id": "35",
@@ -243,7 +243,7 @@
    ],
    "Description": "Azure Communication Messages Versions",
    "IsExtensible": false,
-   "Usage": "None"
+   "Usage": "ApiVersionEnum"
   }
  ],
  "Models": [
@@ -252,7 +252,7 @@
    "Kind": "model",
    "Name": "NotificationContent",
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent",
-   "Usage": "Input",
+   "Usage": "Input,Json",
    "Description": "Details of the message to send.",
    "DiscriminatorProperty": {
     "$id": "39",
@@ -309,7 +309,7 @@
      "Kind": "model",
      "Name": "TextNotificationContent",
      "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.TextNotificationContent",
-     "Usage": "Input",
+     "Usage": "Input,Json",
      "Description": "A request to send a text notification.",
      "DiscriminatorValue": "text",
      "BaseModel": {
@@ -353,7 +353,7 @@
      "Kind": "model",
      "Name": "MediaNotificationContent",
      "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent",
-     "Usage": "Input",
+     "Usage": "Input,Json",
      "Description": "A request to send a media notification.",
      "DiscriminatorValue": "image",
      "BaseModel": {
@@ -409,7 +409,7 @@
      "Kind": "model",
      "Name": "TemplateNotificationContent",
      "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.TemplateNotificationContent",
-     "Usage": "Input",
+     "Usage": "Input,Json",
      "Description": "A request to send a template notification.",
      "DiscriminatorValue": "template",
      "BaseModel": {
@@ -444,7 +444,7 @@
         "Kind": "model",
         "Name": "MessageTemplate",
         "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate",
-        "Usage": "Input",
+        "Usage": "Input,Json",
         "Description": "The template object used to create templates.",
         "Properties": [
          {
@@ -485,7 +485,7 @@
             "Kind": "model",
             "Name": "MessageTemplateValue",
             "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue",
-            "Usage": "Input",
+            "Usage": "Input,Json",
             "Description": "The class describes a parameter of a template.",
             "DiscriminatorProperty": {
              "$id": "73",
@@ -523,7 +523,7 @@
               "Kind": "model",
               "Name": "MessageTemplateText",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateText",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's text value information.",
               "DiscriminatorValue": "text",
               "BaseModel": {
@@ -567,7 +567,7 @@
               "Kind": "model",
               "Name": "MessageTemplateImage",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's image value information.",
               "DiscriminatorValue": "image",
               "BaseModel": {
@@ -635,7 +635,7 @@
               "Kind": "model",
               "Name": "MessageTemplateDocument",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's document value information.",
               "DiscriminatorValue": "document",
               "BaseModel": {
@@ -703,7 +703,7 @@
               "Kind": "model",
               "Name": "MessageTemplateVideo",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's video value information.",
               "DiscriminatorValue": "video",
               "BaseModel": {
@@ -771,7 +771,7 @@
               "Kind": "model",
               "Name": "MessageTemplateLocation",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's location value information.",
               "DiscriminatorValue": "location",
               "BaseModel": {
@@ -851,7 +851,7 @@
               "Kind": "model",
               "Name": "MessageTemplateQuickAction",
               "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction",
-              "Usage": "Input",
+              "Usage": "Input,Json",
               "Description": "The message template's quick action value information.",
               "DiscriminatorValue": "quickAction",
               "BaseModel": {
@@ -919,7 +919,7 @@
            "Kind": "model",
            "Name": "MessageTemplateBindings",
            "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindings",
-           "Usage": "Input",
+           "Usage": "Input,Json",
            "Description": "The binding object to link values to the template specific locations",
            "DiscriminatorProperty": {
             "$id": "135",
@@ -945,7 +945,7 @@
              "Kind": "model",
              "Name": "WhatsAppMessageTemplateBindings",
              "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings",
-             "Usage": "Input",
+             "Usage": "Input,Json",
              "Description": "The template bindings for WhatsApp",
              "DiscriminatorValue": "whatsApp",
              "BaseModel": {
@@ -984,7 +984,7 @@
                  "Kind": "model",
                  "Name": "WhatsAppMessageTemplateBindingsComponent",
                  "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsComponent",
-                 "Usage": "Input",
+                 "Usage": "Input,Json",
                  "Description": "The template bindings component for WhatsApp",
                  "Properties": [
                   {
@@ -1054,7 +1054,7 @@
                  "Kind": "model",
                  "Name": "WhatsAppMessageTemplateBindingsButton",
                  "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton",
-                 "Usage": "Input",
+                 "Usage": "Input,Json",
                  "Description": "The template bindings component button for WhatsApp",
                  "Properties": [
                   {
@@ -1153,7 +1153,7 @@
    "Kind": "model",
    "Name": "SendMessageResult",
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.SendMessageResult",
-   "Usage": "Output",
+   "Usage": "Output,Json",
    "Description": "Result of the send message operation.",
    "Properties": [
     {
@@ -1170,7 +1170,7 @@
        "Kind": "model",
        "Name": "MessageReceipt",
        "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt",
-       "Usage": "Output",
+       "Usage": "Output,Json",
        "Description": "Receipt of the sending one message.",
        "Properties": [
         {
@@ -1214,7 +1214,7 @@
    "Kind": "model",
    "Name": "PagedMessageTemplateItem",
    "CrossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
-   "Usage": "Output",
+   "Usage": "None",
    "Description": "Paged collection of MessageTemplateItem items",
    "Properties": [
     {
@@ -1231,7 +1231,7 @@
        "Kind": "model",
        "Name": "MessageTemplateItem",
        "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem",
-       "Usage": "Output",
+       "Usage": "Output,Json",
        "Description": "The message template as returned from the service.",
        "DiscriminatorProperty": {
         "$id": "168",
@@ -1292,7 +1292,7 @@
          "Kind": "model",
          "Name": "WhatsAppMessageTemplateItem",
          "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem",
-         "Usage": "Output",
+         "Usage": "Output,Json",
          "Description": "The WhatsApp-specific template response contract",
          "DiscriminatorValue": "whatsApp",
          "BaseModel": {
