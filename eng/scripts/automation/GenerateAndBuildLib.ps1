@@ -762,7 +762,7 @@ function GeneratePackage()
             dotnet build /t:GenerateCode $srcPath /p:SpecRepoRoot=$specRepoRoot
         }
         if ( !$?) {
-            Write-Host "[ERROR] Failed to generate sdk for package:$packageName. exit code: $?."
+            Write-Host "[ERROR] Failed to generate sdk for package:$packageName. Exit code: $?."
             Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
             Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
@@ -775,7 +775,7 @@ function GeneratePackage()
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
-            Write-Host "[ERROR] Failed to build the sdk project for service: $service with exit code: $?."
+            Write-Host "[ERROR] Failed to build the sdk project: $packageName for service: $service. Exit code: $?."
             Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
             Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
@@ -786,7 +786,7 @@ function GeneratePackage()
             $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
             dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to build sdk solution:$packageName. exit code: $?."
+                Write-Host "[ERROR] Failed to build sdk solution:$packageName. Exit code: $?."
                 Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
                 Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
@@ -795,8 +795,7 @@ function GeneratePackage()
             Write-Host "Start to pack sdk"
             dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to pack the following sdk with exit code: $?."
-                Write-Host "[ERROR] $srcPath."
+                Write-Host "[ERROR] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?."
                 Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
                 Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
