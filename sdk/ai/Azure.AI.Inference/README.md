@@ -35,6 +35,14 @@ Install the client library for .NET with [NuGet](https://aka.ms/azsdk/azure-ai-i
 dotnet add package Azure.AI.Inference --prerelease
 ```
 
+### Authenticate the client
+
+The package makes use of common Azure credential providers. To use credential providers provided with the Azure SDK, please install the Azure.Identity package:
+
+```dotnetcli
+dotnet add package Azure.Identity
+```
+
 ## Key concepts
 
 ### Create and authenticate a client directly, using key
