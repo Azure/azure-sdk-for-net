@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
 
         /// <returns>An Azure client builder for Conversation Authoring Client.</returns>
-        [Obsolete]
+        [Obsolete("This method is obsolete and will be removed in a future release.", true)]
         public static IAzureClientBuilder<ConversationAuthoringClient, ConversationsClientOptions> AddConversationAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
@@ -29,7 +29,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="ConversationAuthoringClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        [Obsolete]
+        [Obsolete("This method is obsolete and will be removed in a future release.", true)]
         public static IAzureClientBuilder<ConversationAuthoringClient, ConversationsClientOptions> AddConversationAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {

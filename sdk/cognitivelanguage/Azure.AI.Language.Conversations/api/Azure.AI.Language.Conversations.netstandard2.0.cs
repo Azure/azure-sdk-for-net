@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationActionResult>> AnalyzeConversationAsync(Azure.AI.Language.Conversations.Models.AnalyzeConversationInput analyzeConversationInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeConversationAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState> AnalyzeConversations(Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions, string displayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> AnalyzeConversations(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> AnalyzeConversations(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState>> AnalyzeConversationsAsync(Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions, string displayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeConversationsAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeConversationsAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation AnalyzeConversationSubmitOperation(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions, string displayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation AnalyzeConversationSubmitOperation(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeConversationSubmitOperationAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions, string displayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -116,7 +116,7 @@ namespace Azure.AI.Language.Conversations
 }
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    [System.ObsoleteAttribute("This client is no longer supported as part of the Conversations SDK. This will be released independently.")]
+    [System.ObsoleteAttribute("This class is obsolete and and will be removed in a future release. ConversationAuthoringClient will no longer be supported as part of the Conversations SDK.", true)]
     public partial class ConversationAuthoringClient
     {
         protected ConversationAuthoringClient() { }
@@ -2043,9 +2043,9 @@ namespace Microsoft.Extensions.Azure
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.ConversationAnalysisClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.ConversationAnalysisClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.ConversationAnalysisClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-        [System.ObsoleteAttribute]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", true)]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        [System.ObsoleteAttribute]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", true)]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

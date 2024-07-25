@@ -14,8 +14,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// <remarks>
     /// See <see href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring"/> for more information about models you can pass to this client.
     /// </remarks>
-    /// <seealso href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring"/>
-    [Obsolete("This client is no longer supported as part of the Conversations SDK. This will be released independently.")]
+    [Obsolete("This class is obsolete and and will be removed in a future release. ConversationAuthoringClient will no longer be supported as part of the Conversations SDK.", true)]
     public class ConversationAuthoringClient
     {
         /// <summary> Initializes a new instance of ConversationAuthoringClient. </summary>
