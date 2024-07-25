@@ -8,7 +8,6 @@ azure-arm: true
 csharp: true
 library-name: SecurityInsights
 namespace: Azure.ResourceManager.SecurityInsights
-# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/securityinsights/resource-manager/readme.md
 tag: package-preview-2024-01
 output-folder: $(this-folder)/Generated
@@ -20,6 +19,7 @@ use-model-reader-writer: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}: SecurityInsightsThreatIntelligenceIndicator
+  # Added these relation resource due to new added type in 2024-01-01-preview version
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/relations/{relationName}: SecurityInsightsBookmarkRelation
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}/relations/{relationName}: SecurityInsightsEntityRelation
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}/relations/{huntRelationId}: SecurityInsightsHuntRelation
@@ -211,6 +211,11 @@ rename-mapping:
   TIDataConnector: SecurityInsightsTIDataConnector
   TIDataConnector.properties.tipLookbackPeriod: TipLookbackOn
   UrlEntity: SecurityInsightsUriEntity
+  # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
+  WatchlistItem.properties.itemsKeyValue: ItemsKeyValueDictionary
+  WatchlistItem.properties.entityMapping: EntityMappingDictionary
+  # Added property renaming due to api compat check with property breaking chang to string type in 2024-01-01-preview version
+  Watchlist.properties.source: SourceString
 
 override-operation-name:
   DomainWhois_Get: GetDomainWhoisInformation
@@ -258,7 +263,7 @@ suppress-abstract-base-class:
 - SecurityInsightsDataConnectorData
 - SecurityInsightsThreatIntelligenceIndicatorBaseData
 - SecurityMLAnalyticsSettingData
-- SecurityInsightsEntity
+- SecurityInsightsEntityData
 
 directive:
   - rename-operation:
@@ -286,7 +291,6 @@ directive:
       $.AwsCloudTrailDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.MSTIDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.AwsS3DataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
-      $.MCASDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.Dynamics365DataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.Office365ProjectDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
       $.OfficePowerBIDataConnectorProperties.properties.dataTypes["x-ms-client-flatten"] = true;
@@ -298,7 +302,7 @@ directive:
     where: $.definitions
     transform: >
       $.ActionPropertiesBase.properties.logicAppResourceId['x-ms-format'] = 'arm-id';
-  # Reslove `Duplicate Schema` issue
+  # Reslove `Duplicate Schema` issue for 2024-01-01-preview version
   - from: EnrichmentWithWorkspace.json
     where: $.definitions
     transform: >
@@ -312,4 +316,34 @@ directive:
     where: $.definitions
     transform: >
       $.Query['x-ms-client-name'] = 'ThreatIntelligenceCountQuery';
+  # Add this because the parameter order is mismatch in 2024-01-01-preview version
+  - from: ThreatIntelligence.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators"].get
+    transform: >
+      $["parameters"] = [
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "../../../common/2.0/types.json#/parameters/WorkspaceName"
+          },
+          {
+            "$ref": "../../../common/2.0/types.json#/parameters/ODataFilter"
+          },
+          {
+            "$ref": "../../../common/2.0/types.json#/parameters/ODataTop"
+          },
+          {
+            "$ref": "../../../common/2.0/types.json#/parameters/ODataSkipToken"
+          },
+          {
+            "$ref": "../../../common/2.0/types.json#/parameters/ODataOrderBy"
+          }
+        ]
 ```

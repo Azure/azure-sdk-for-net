@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/> for deserialization. </summary>
-        internal SecurityInsightsOfficeDataConnectorDataTypes()
-        {
-        }
-
         /// <summary> Exchange data type connection. </summary>
         internal OfficeDataConnectorDataTypesExchange Exchange { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>

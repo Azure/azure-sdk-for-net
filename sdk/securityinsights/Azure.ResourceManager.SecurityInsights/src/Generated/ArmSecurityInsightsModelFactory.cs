@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsEntityData"/> instance for mocking. </returns>
         public static SecurityInsightsEntityData SecurityInsightsEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new UnknownEntity(
+            return new SecurityInsightsEntityData(
                 id,
                 name,
                 resourceType,
@@ -2330,7 +2330,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="watchlistId"> The id (a Guid) of the watchlist. </param>
         /// <param name="displayName"> The display name of the watchlist. </param>
         /// <param name="provider"> The provider of the watchlist. </param>
-        /// <param name="source"> The filename of the watchlist, called 'source'. </param>
+        /// <param name="sourceString"> The filename of the watchlist, called 'source'. </param>
         /// <param name="sourceType"> The sourceType of the watchlist. </param>
         /// <param name="createdOn"> The time the watchlist was created. </param>
         /// <param name="updatedOn"> The last time the watchlist was updated. </param>
@@ -2350,7 +2350,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="uploadStatus"> The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistData"/> instance for mocking. </returns>
-        public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? watchlistId = null, string displayName = null, string provider = null, string source = null, SourceType? sourceType = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, string description = null, string watchlistType = null, string watchlistAlias = null, bool? isDeleted = null, IEnumerable<string> labels = null, TimeSpan? defaultDuration = null, Guid? tenantId = null, int? numberOfLinesToSkip = null, string rawContent = null, string itemsSearchKey = null, string contentType = null, string uploadStatus = null, ETag? etag = null)
+        public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? watchlistId = null, string displayName = null, string provider = null, string sourceString = null, SourceType? sourceType = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, string description = null, string watchlistType = null, string watchlistAlias = null, bool? isDeleted = null, IEnumerable<string> labels = null, TimeSpan? defaultDuration = null, Guid? tenantId = null, int? numberOfLinesToSkip = null, string rawContent = null, string itemsSearchKey = null, string contentType = null, string uploadStatus = null, ETag? etag = null)
         {
             labels ??= new List<string>();
 
@@ -2362,7 +2362,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 watchlistId,
                 displayName,
                 provider,
-                source,
+                sourceString,
                 sourceType,
                 createdOn,
                 updatedOn,
@@ -2397,14 +2397,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="updatedOn"> The last time the watchlist item was updated. </param>
         /// <param name="createdBy"> Describes a user that created the watchlist item. </param>
         /// <param name="updatedBy"> Describes a user that updated the watchlist item. </param>
-        /// <param name="itemsKeyValue"> key-value pairs for a watchlist item. </param>
-        /// <param name="entityMapping"> key-value pairs for a watchlist item entity mapping. </param>
+        /// <param name="itemsKeyValueDictionary"> key-value pairs for a watchlist item. </param>
+        /// <param name="entityMappingDictionary"> key-value pairs for a watchlist item entity mapping. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistItemData"/> instance for mocking. </returns>
-        public static SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, Guid? tenantId = null, bool? isDeleted = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, IDictionary<string, BinaryData> itemsKeyValue = null, IDictionary<string, BinaryData> entityMapping = null, ETag? etag = null)
+        public static SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, Guid? tenantId = null, bool? isDeleted = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, IDictionary<string, BinaryData> itemsKeyValueDictionary = null, IDictionary<string, BinaryData> entityMappingDictionary = null, ETag? etag = null)
         {
-            itemsKeyValue ??= new Dictionary<string, BinaryData>();
-            entityMapping ??= new Dictionary<string, BinaryData>();
+            itemsKeyValueDictionary ??= new Dictionary<string, BinaryData>();
+            entityMappingDictionary ??= new Dictionary<string, BinaryData>();
 
             return new SecurityInsightsWatchlistItemData(
                 id,
@@ -2419,8 +2419,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 updatedOn,
                 createdBy,
                 updatedBy,
-                itemsKeyValue,
-                entityMapping,
+                itemsKeyValueDictionary,
+                entityMappingDictionary,
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -4306,10 +4306,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="alertsState"> Alerts data type connection. </param>
-        /// <param name="discoveryLogsState"> Discovery log data type connection. </param>
+        /// <param name="dataTypes"> The available data types for the connector. </param>
         /// <returns> A new <see cref="Models.McasDataConnector"/> instance for mocking. </returns>
-        public static McasDataConnector McasDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, SecurityInsightsDataTypeConnectionState? alertsState = null, SecurityInsightsDataTypeConnectionState? discoveryLogsState = null)
+        public static McasDataConnector McasDataConnector(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, Guid? tenantId = null, McasDataConnectorDataTypes dataTypes = null)
         {
             return new McasDataConnector(
                 id,
@@ -4320,8 +4319,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 serializedAdditionalRawData: null,
                 tenantId,
-                alertsState.HasValue ? new DataConnectorDataTypeCommon(alertsState.Value, serializedAdditionalRawData: null) : null,
-                discoveryLogsState.HasValue ? new DataConnectorDataTypeCommon(discoveryLogsState.Value, serializedAdditionalRawData: null) : null);
+                dataTypes);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Dynamics365DataConnector"/>. </summary>

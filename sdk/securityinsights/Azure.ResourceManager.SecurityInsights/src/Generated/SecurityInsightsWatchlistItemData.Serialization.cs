@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy, options);
             }
-            if (Optional.IsCollectionDefined(ItemsKeyValue))
+            if (Optional.IsCollectionDefined(ItemsKeyValueDictionary))
             {
                 writer.WritePropertyName("itemsKeyValue"u8);
                 writer.WriteStartObject();
-                foreach (var item in ItemsKeyValue)
+                foreach (var item in ItemsKeyValueDictionary)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(EntityMapping))
+            if (Optional.IsCollectionDefined(EntityMappingDictionary))
             {
                 writer.WritePropertyName("entityMapping"u8);
                 writer.WriteStartObject();
-                foreach (var item in EntityMapping)
+                foreach (var item in EntityMappingDictionary)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)

@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistItemData"/>. </summary>
         public SecurityInsightsWatchlistItemData()
         {
-            ItemsKeyValue = new ChangeTrackingDictionary<string, BinaryData>();
-            EntityMapping = new ChangeTrackingDictionary<string, BinaryData>();
+            ItemsKeyValueDictionary = new ChangeTrackingDictionary<string, BinaryData>();
+            EntityMappingDictionary = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistItemData"/>. </summary>
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="updatedOn"> The last time the watchlist item was updated. </param>
         /// <param name="createdBy"> Describes a user that created the watchlist item. </param>
         /// <param name="updatedBy"> Describes a user that updated the watchlist item. </param>
-        /// <param name="itemsKeyValue"> key-value pairs for a watchlist item. </param>
-        /// <param name="entityMapping"> key-value pairs for a watchlist item entity mapping. </param>
+        /// <param name="itemsKeyValueDictionary"> key-value pairs for a watchlist item. </param>
+        /// <param name="entityMappingDictionary"> key-value pairs for a watchlist item entity mapping. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsWatchlistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistItemType, string watchlistItemId, Guid? tenantId, bool? isDeleted, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, IDictionary<string, BinaryData> itemsKeyValue, IDictionary<string, BinaryData> entityMapping, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsWatchlistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string watchlistItemType, string watchlistItemId, Guid? tenantId, bool? isDeleted, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, IDictionary<string, BinaryData> itemsKeyValueDictionary, IDictionary<string, BinaryData> entityMappingDictionary, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WatchlistItemType = watchlistItemType;
             WatchlistItemId = watchlistItemId;
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.SecurityInsights
             UpdatedOn = updatedOn;
             CreatedBy = createdBy;
             UpdatedBy = updatedBy;
-            ItemsKeyValue = itemsKeyValue;
-            EntityMapping = entityMapping;
+            ItemsKeyValueDictionary = itemsKeyValueDictionary;
+            EntityMappingDictionary = entityMappingDictionary;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> ItemsKeyValue { get; }
+        public IDictionary<string, BinaryData> ItemsKeyValueDictionary { get; }
         /// <summary>
         /// key-value pairs for a watchlist item entity mapping
         /// <para>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> EntityMapping { get; }
+        public IDictionary<string, BinaryData> EntityMappingDictionary { get; }
         /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }

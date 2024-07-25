@@ -30,40 +30,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="alerts"> Alerts data type connection. </param>
-        /// <param name="discoveryLogs"> Discovery log data type connection. </param>
-        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, DataConnectorDataTypeCommon alerts, DataConnectorDataTypeCommon discoveryLogs) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="dataTypes"> The available data types for the connector. </param>
+        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, McasDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
-            Alerts = alerts;
-            DiscoveryLogs = discoveryLogs;
+            DataTypes = dataTypes;
             Kind = kind;
         }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> Alerts data type connection. </summary>
-        internal DataConnectorDataTypeCommon Alerts { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public SecurityInsightsDataTypeConnectionState? AlertsState
-        {
-            get => Alerts is null ? default(SecurityInsightsDataTypeConnectionState?) : Alerts.State;
-            set
-            {
-                Alerts = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
-            }
-        }
-
-        /// <summary> Discovery log data type connection. </summary>
-        internal DataConnectorDataTypeCommon DiscoveryLogs { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public SecurityInsightsDataTypeConnectionState? DiscoveryLogsState
-        {
-            get => DiscoveryLogs is null ? default(SecurityInsightsDataTypeConnectionState?) : DiscoveryLogs.State;
-            set
-            {
-                DiscoveryLogs = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
-            }
-        }
+        /// <summary> The available data types for the connector. </summary>
+        public McasDataConnectorDataTypes DataTypes { get; set; }
     }
 }

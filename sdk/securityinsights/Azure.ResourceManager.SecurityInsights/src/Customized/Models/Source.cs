@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    // Added due to api compat check
+    // Added due to api compat check in 2024-01-01-preview version
     /// <summary> The source of the watchlist. </summary>
     public readonly partial struct Source : IEquatable<Source>
     {

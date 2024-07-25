@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(SourceString))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source);
+                writer.WriteStringValue(SourceString);
             }
             if (Optional.IsDefined(SourceType))
             {

@@ -13,7 +13,6 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    [PersistableModelProxy(typeof(UnknownEntity))]
     public partial class SecurityInsightsEntityData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsEntityData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsEntityData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
