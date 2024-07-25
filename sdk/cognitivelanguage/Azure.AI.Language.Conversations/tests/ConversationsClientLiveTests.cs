@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations.Tests
 {
     public class ConversationsClientLiveTests : ConversationAnalysisTestBase<ConversationAnalysisClient>
     {
-        public ConversationsClientLiveTests(bool isAsync, ConversationAnalysisClientOptions.ServiceVersion serviceVersion)
+        public ConversationsClientLiveTests(bool isAsync, ConversationsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
@@ -229,14 +229,14 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Max = ConversationAnalysisClientOptions.ServiceVersion.V2022_05_01)] // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29600
+        [ServiceVersion(Max = ConversationsClientOptions.ServiceVersion.V2022_05_01)] // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29600
         public async Task SupportsAadAuthentication()
         {
             ConversationAnalysisClient client = CreateClient<ConversationAnalysisClient>(
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(
-                    new ConversationAnalysisClientOptions(ServiceVersion)));
+                    new ConversationsClientOptions(ServiceVersion)));
 
             var data = new
             {
@@ -264,11 +264,10 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ConversationAnalysisClientOptions.ServiceVersion.V2023_04_01)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeConversation_ConversationSummarization()
         {
-            var data = new AnalyzeConversationOperationInput(
-                new MultiLanguageConversationInput(
+            MultiLanguageConversationInput data = new MultiLanguageConversationInput(
                     new List<ConversationInput>
                     {
                         new TextConversation("1", "en", new List<TextConversationItem>()
@@ -277,8 +276,8 @@ namespace Azure.AI.Language.Conversations.Tests
                             new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
                             new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.")
                         })
-                    }),
-                    new List<AnalyzeConversationOperationAction>
+                    });
+            List<AnalyzeConversationOperationAction> actions =  new List<AnalyzeConversationOperationAction>
                     {
                         new SummarizationOperationAction()
                         {
@@ -296,9 +295,9 @@ namespace Azure.AI.Language.Conversations.Tests
                             }),
                             Name = "Resolution task",
                         }
-                    });
+                    };
 
-            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await Client.AnalyzeConversationOperationAsync(data);
+            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await Client.AnalyzeConversationsAsync(data, actions);
             Assert.NotNull(analyzeConversationOperation);
 
             AnalyzeConversationOperationState jobResults = analyzeConversationOperation.Value;

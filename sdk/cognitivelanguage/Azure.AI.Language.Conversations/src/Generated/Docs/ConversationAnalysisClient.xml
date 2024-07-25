@@ -271,53 +271,53 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code></example>
     </member>
-    <member name="AnalyzeConversationOperationStatusAsync(Guid,bool?,CancellationToken)">
+    <member name="GetAnalyzeConversationJobStatusAsync(Guid,bool?,CancellationToken)">
       <example>
-This sample shows how to call AnalyzeConversationOperationStatusAsync.
+This sample shows how to call GetAnalyzeConversationJobStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Response<AnalyzeConversationOperationState> response = await client.AnalyzeConversationOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
-This sample shows how to call AnalyzeConversationOperationStatusAsync with all parameters.
+This sample shows how to call GetAnalyzeConversationJobStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Response<AnalyzeConversationOperationState> response = await client.AnalyzeConversationOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
+Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
 ]]></code></example>
     </member>
-    <member name="AnalyzeConversationOperationStatus(Guid,bool?,CancellationToken)">
+    <member name="GetAnalyzeConversationJobStatus(Guid,bool?,CancellationToken)">
       <example>
-This sample shows how to call AnalyzeConversationOperationStatus.
+This sample shows how to call GetAnalyzeConversationJobStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Response<AnalyzeConversationOperationState> response = client.AnalyzeConversationOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
-This sample shows how to call AnalyzeConversationOperationStatus with all parameters.
+This sample shows how to call GetAnalyzeConversationJobStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Response<AnalyzeConversationOperationState> response = client.AnalyzeConversationOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
+Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
 ]]></code></example>
     </member>
-    <member name="AnalyzeConversationOperationStatusAsync(Guid,bool?,RequestContext)">
+    <member name="GetAnalyzeConversationJobStatusAsync(Guid,bool?,RequestContext)">
       <example>
-This sample shows how to call AnalyzeConversationOperationStatusAsync and parse the result.
+This sample shows how to call GetAnalyzeConversationJobStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Response response = await client.AnalyzeConversationOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null);
+Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -329,13 +329,13 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
-This sample shows how to call AnalyzeConversationOperationStatusAsync with all parameters and parse the result.
+This sample shows how to call GetAnalyzeConversationJobStatusAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Response response = await client.AnalyzeConversationOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, null);
+Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -369,15 +369,15 @@ Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversatio
 Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
 ]]></code></example>
     </member>
-    <member name="AnalyzeConversationOperationStatus(Guid,bool?,RequestContext)">
+    <member name="GetAnalyzeConversationJobStatus(Guid,bool?,RequestContext)">
       <example>
-This sample shows how to call AnalyzeConversationOperationStatus and parse the result.
+This sample shows how to call GetAnalyzeConversationJobStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Response response = client.AnalyzeConversationOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null);
+Response response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -389,13 +389,13 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
 Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
-This sample shows how to call AnalyzeConversationOperationStatus with all parameters and parse the result.
+This sample shows how to call GetAnalyzeConversationJobStatus with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Response response = client.AnalyzeConversationOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, null);
+Response response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -755,42 +755,42 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Completed, content);
 ]]></code></example>
     </member>
-    <member name="AnalyzeConversationCancelOperationAsync(WaitUntil,Guid,RequestContext)">
+    <member name="CancelAnalyzeConversationsAsync(WaitUntil,Guid,RequestContext)">
       <example>
-This sample shows how to call AnalyzeConversationCancelOperationAsync.
+This sample shows how to call CancelAnalyzeConversationsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Operation operation = await client.AnalyzeConversationCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Operation operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
-This sample shows how to call AnalyzeConversationCancelOperationAsync with all parameters.
+This sample shows how to call CancelAnalyzeConversationsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Operation operation = await client.AnalyzeConversationCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Operation operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>
     </member>
-    <member name="AnalyzeConversationCancelOperation(WaitUntil,Guid,RequestContext)">
+    <member name="CancelAnalyzeConversations(WaitUntil,Guid,RequestContext)">
       <example>
-This sample shows how to call AnalyzeConversationCancelOperation.
+This sample shows how to call CancelAnalyzeConversations.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Operation operation = client.AnalyzeConversationCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Operation operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
-This sample shows how to call AnalyzeConversationCancelOperation with all parameters.
+This sample shows how to call CancelAnalyzeConversations with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-Operation operation = client.AnalyzeConversationCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+Operation operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>
     </member>
   </members>

@@ -302,13 +302,13 @@ ApiVersion = "<apiVersion>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversationJobState_AnalyzeConversationOperationStatus_ShortVersion()
+        public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response response = client.AnalyzeConversationOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null);
+            Response response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -323,13 +323,13 @@ ApiVersion = "<apiVersion>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversationJobState_AnalyzeConversationOperationStatus_ShortVersion_Async()
+        public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response response = await client.AnalyzeConversationOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null);
+            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -344,77 +344,35 @@ ApiVersion = "<apiVersion>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversationJobState_AnalyzeConversationOperationStatus_ShortVersion_Convenience()
+        public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeConversationOperationState> response = client.AnalyzeConversationOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversationJobState_AnalyzeConversationOperationStatus_ShortVersion_Convenience_Async()
+        public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeConversationOperationState> response = await client.AnalyzeConversationOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversationJobState_AnalyzeConversationOperationStatus_AllParameters()
+        public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response response = client.AnalyzeConversationOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("nextLink").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
-            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
-            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
-            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
-            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
-            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
-            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversationJobState_AnalyzeConversationOperationStatus_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
-
-            Response response = await client.AnalyzeConversationOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, null);
+            Response response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -450,24 +408,66 @@ ApiVersion = "<apiVersion>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversationJobState_AnalyzeConversationOperationStatus_AllParameters_Convenience()
+        public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeConversationOperationState> response = client.AnalyzeConversationOperationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
+            Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), true, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("nextLink").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversationJobState_AnalyzeConversationOperationStatus_AllParameters_Convenience_Async()
+        public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Response<AnalyzeConversationOperationState> response = await client.AnalyzeConversationOperationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
+            Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversationJobStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
+
+            Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeConversationJobStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), showStats: true);
         }
 
         [Test]
@@ -810,46 +810,46 @@ Name = "<taskName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Conversations_AnalyzeConversationCancelOperation_ShortVersion()
+        public void Example_Conversations_CancelAnalyzeConversations_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Operation operation = client.AnalyzeConversationCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Operation operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Conversations_AnalyzeConversationCancelOperation_ShortVersion_Async()
+        public async Task Example_Conversations_CancelAnalyzeConversations_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Operation operation = await client.AnalyzeConversationCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Operation operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Conversations_AnalyzeConversationCancelOperation_AllParameters()
+        public void Example_Conversations_CancelAnalyzeConversations_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Operation operation = client.AnalyzeConversationCancelOperation(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Operation operation = client.CancelAnalyzeConversations(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Conversations_AnalyzeConversationCancelOperation_AllParameters_Async()
+        public async Task Example_Conversations_CancelAnalyzeConversations_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            Operation operation = await client.AnalyzeConversationCancelOperationAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+            Operation operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Completed, Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
     }
 }

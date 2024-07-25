@@ -274,56 +274,55 @@ if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringT
 To summarize a conversation, you can use the `AnalyzeConversationsOperation` method overload that returns an `Response<AnalyzeConversationJobState>`:
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
-AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
-    new MultiLanguageConversationInput(
-        new List<ConversationInput>
+MultiLanguageConversationInput data = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>()
         {
-            new TextConversation("1", "en", new List<TextConversationItem>()
-            {
-                new TextConversationItem(
-                    id: "1",
-                    participantId: "Agent_1",
-                    text: "Hello, how can I help you?")
-                    {
-                        Role = ParticipantRole.Agent
-                    },
-                new TextConversationItem(
-                    id: "2",
-                    participantId: "Customer_1",
-                    text: "How to upgrade Office? I am getting error messages the whole day.")
-                {
-                    Role = ParticipantRole.Customer
-                },
-                new TextConversationItem(
-                    id : "3",
-                    participantId : "Agent_1",
-                    text : "Press the upgrade button please. Then sign in and follow the instructions.")
+            new TextConversationItem(
+                id: "1",
+                participantId: "Agent_1",
+                text: "Hello, how can I help you?")
                 {
                     Role = ParticipantRole.Agent
-                }
-            })
-        }),
-        new List<AnalyzeConversationOperationAction>
-        {
-            new SummarizationOperationAction()
+                },
+            new TextConversationItem(
+                id: "2",
+                participantId: "Customer_1",
+                text: "How to upgrade Office? I am getting error messages the whole day.")
             {
-                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
-                {
-                    SummaryAspect.Issue,
-                }),
-                Name = "Issue task",
+                Role = ParticipantRole.Customer
             },
-            new SummarizationOperationAction()
+            new TextConversationItem(
+                id : "3",
+                participantId : "Agent_1",
+                text : "Press the upgrade button please. Then sign in and follow the instructions.")
             {
-                ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
-                {
-                    SummaryAspect.Resolution,
-                }),
-                Name = "Resolution task",
+                Role = ParticipantRole.Agent
             }
-        });
+        })
+    });
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+    {
+        new SummarizationOperationAction()
+        {
+            ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+            {
+                SummaryAspect.Issue,
+            }),
+            Name = "Issue task",
+        },
+        new SummarizationOperationAction()
+        {
+            ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
+            {
+                SummaryAspect.Resolution,
+            }),
+            Name = "Resolution task",
+        }
+    };
 
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data, actions);
 AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
 foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
@@ -369,27 +368,26 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 To detect and redact PII in a conversation, you can use the `AnalyzeConversationsOperation` method overload with an action of type `PiiOperationAction`:
 
 ```C# Snippet:AnalyzeConversation_ConversationPii
-AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
-    new MultiLanguageConversationInput(
-        new List<ConversationInput>
+MultiLanguageConversationInput data = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>()
         {
-            new TextConversation("1", "en", new List<TextConversationItem>()
-            {
-                new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
-                new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
-                new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
-            })
-        }),
-        new List<AnalyzeConversationOperationAction>
+            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
+            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+            new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
+        })
+    });
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+    {
+        new PiiOperationAction()
         {
-            new PiiOperationAction()
-            {
-                ActionContent = new ConversationPiiActionContent(),
-                Name = "Conversation PII",
-            }
-        });
+            ActionContent = new ConversationPiiActionContent(),
+            Name = "Conversation PII",
+        }
+    };
 
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data, actions);
 
 AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 

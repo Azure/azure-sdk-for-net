@@ -24,27 +24,26 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:AnalyzeConversation_ConversationPii
-AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
-    new MultiLanguageConversationInput(
-        new List<ConversationInput>
+MultiLanguageConversationInput data = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>()
         {
-            new TextConversation("1", "en", new List<TextConversationItem>()
-            {
-                new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
-                new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
-                new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
-            })
-        }),
-        new List<AnalyzeConversationOperationAction>
+            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
+            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+            new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
+        })
+    });
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+    {
+        new PiiOperationAction()
         {
-            new PiiOperationAction()
-            {
-                ActionContent = new ConversationPiiActionContent(),
-                Name = "Conversation PII",
-            }
-        });
+            ActionContent = new ConversationPiiActionContent(),
+            Name = "Conversation PII",
+        }
+    };
 
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data, actions);
 
 AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
@@ -99,5 +98,5 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationOperationAsync`:
 
 ```C# Snippet:AnalyzeConversationAsync_ConversationPii
-Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data, actions);
 ```

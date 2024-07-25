@@ -15,34 +15,33 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationAnalysisClientOptions.ServiceVersion.V2024_05_01)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_05_01)]
         public void AnalyzeConversation_ConversationPii()
         {
             ConversationAnalysisClient client = Client;
             List<NamedEntity> entitiesDetected = new();
 
             #region Snippet:AnalyzeConversation_ConversationPii
-            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
-                new MultiLanguageConversationInput(
-                    new List<ConversationInput>
+            MultiLanguageConversationInput data = new MultiLanguageConversationInput(
+                new List<ConversationInput>
+                {
+                    new TextConversation("1", "en", new List<TextConversationItem>()
                     {
-                        new TextConversation("1", "en", new List<TextConversationItem>()
-                        {
-                            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
-                            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
-                            new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
-                        })
-                    }),
-                    new List<AnalyzeConversationOperationAction>
+                        new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
+                        new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+                        new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
+                    })
+                });
+            List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+                {
+                    new PiiOperationAction()
                     {
-                        new PiiOperationAction()
-                        {
-                            ActionContent = new ConversationPiiActionContent(),
-                            Name = "Conversation PII",
-                        }
-                    });
+                        ActionContent = new ConversationPiiActionContent(),
+                        Name = "Conversation PII",
+                    }
+                };
 
-            Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversationOperation(data);
+            Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data, actions);
 
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
@@ -101,35 +100,34 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationAnalysisClientOptions.ServiceVersion.V2024_05_01)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_05_01)]
         public async Task AnalyzeConversationAsync_ConversationPii()
         {
             ConversationAnalysisClient client = Client;
             List<NamedEntity> entitiesDetected = new();
 
-            AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(
-                new MultiLanguageConversationInput(
-                    new List<ConversationInput>
+            var data = new MultiLanguageConversationInput(
+                new List<ConversationInput>
+                {
+                    new TextConversation("1", "en", new List<TextConversationItem>()
                     {
-                        new TextConversation("1", "en", new List<TextConversationItem>()
-                        {
-                            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
-                            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
-                            new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
-                        })
-                    }),
-                    new List<AnalyzeConversationOperationAction>
+                        new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
+                        new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+                        new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
+                    })
+                });
+            var actions = new List<AnalyzeConversationOperationAction>
+                {
+                    new PiiOperationAction()
                     {
-                        new PiiOperationAction()
-                        {
-                            ActionContent = new ConversationPiiActionContent(),
-                            Name = "Conversation PII",
-                        }
-                    });
+                        ActionContent = new ConversationPiiActionContent(),
+                        Name = "Conversation PII",
+                    }
+                };
 
             #region Snippet:AnalyzeConversationAsync_ConversationPii
 
-            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationOperationAsync(data);
+            Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data, actions);
             #endregion
 
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;

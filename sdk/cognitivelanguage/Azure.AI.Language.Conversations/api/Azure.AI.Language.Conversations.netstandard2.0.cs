@@ -4,30 +4,33 @@ namespace Azure.AI.Language.Conversations
     {
         protected ConversationAnalysisClient() { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
+        public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationsClientOptions options) { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public ConversationAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
+        public ConversationAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.Conversations.ConversationsClientOptions options) { }
+        public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationActionResult> AnalyzeConversation(Azure.AI.Language.Conversations.Models.AnalyzeConversationInput analyzeConversationInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response AnalyzeConversation(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationActionResult>> AnalyzeConversationAsync(Azure.AI.Language.Conversations.Models.AnalyzeConversationInput analyzeConversationInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeConversationAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation AnalyzeConversationCancelOperation(Azure.WaitUntil waitUntil, System.Guid jobId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeConversationCancelOperationAsync(Azure.WaitUntil waitUntil, System.Guid jobId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState> AnalyzeConversationOperation(Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput analyzeConversationOperationInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState>> AnalyzeConversationOperationAsync(Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput analyzeConversationOperationInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response AnalyzeConversationOperationStatus(System.Guid jobId, bool? showStats, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState> AnalyzeConversationOperationStatus(System.Guid jobId, bool? showStats = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeConversationOperationStatusAsync(System.Guid jobId, bool? showStats, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState>> AnalyzeConversationOperationStatusAsync(System.Guid jobId, bool? showStats = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState> AnalyzeConversations(Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions, string displayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> AnalyzeConversations(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState>> AnalyzeConversationsAsync(Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions, string displayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeConversationsAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
         public virtual Azure.Operation AnalyzeConversationSubmitOperation(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions, string displayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation AnalyzeConversationSubmitOperation(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeConversationSubmitOperationAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions, string displayName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeConversationSubmitOperationAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation CancelAnalyzeConversations(Azure.WaitUntil waitUntil, System.Guid jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> CancelAnalyzeConversationsAsync(Azure.WaitUntil waitUntil, System.Guid jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetAnalyzeConversationJobStatus(System.Guid jobId, bool? showStats, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState> GetAnalyzeConversationJobStatus(System.Guid jobId, bool? showStats = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAnalyzeConversationJobStatusAsync(System.Guid jobId, bool? showStats, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState>> GetAnalyzeConversationJobStatusAsync(System.Guid jobId, bool? showStats = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ConversationAnalysisClientOptions : Azure.Core.ClientOptions
+    public partial class ConversationsClientOptions : Azure.Core.ClientOptions
     {
-        public ConversationAnalysisClientOptions(Azure.AI.Language.Conversations.ConversationAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationAnalysisClientOptions.ServiceVersion.V2024_05_15_Preview) { }
+        public ConversationsClientOptions(Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.ConversationsClientOptions.ServiceVersion.V2024_05_15_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_01 = 1,
@@ -36,45 +39,9 @@ namespace Azure.AI.Language.Conversations
             V2024_05_15_Preview = 4,
         }
     }
-}
-namespace Azure.AI.Language.Conversations.Models
-{
-    public partial class AgeResolution : Azure.AI.Language.Conversations.Models.ResolutionBase, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AgeResolution>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AgeResolution>
-    {
-        internal AgeResolution() { }
-        public Azure.AI.Language.Conversations.Models.AgeUnit Unit { get { throw null; } }
-        public double Value { get { throw null; } }
-        Azure.AI.Language.Conversations.Models.AgeResolution System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AgeResolution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AgeResolution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.AgeResolution System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AgeResolution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AgeResolution>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AgeResolution>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AgeUnit : System.IEquatable<Azure.AI.Language.Conversations.Models.AgeUnit>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AgeUnit(string value) { throw null; }
-        public static Azure.AI.Language.Conversations.Models.AgeUnit Day { get { throw null; } }
-        public static Azure.AI.Language.Conversations.Models.AgeUnit Month { get { throw null; } }
-        public static Azure.AI.Language.Conversations.Models.AgeUnit Unspecified { get { throw null; } }
-        public static Azure.AI.Language.Conversations.Models.AgeUnit Week { get { throw null; } }
-        public static Azure.AI.Language.Conversations.Models.AgeUnit Year { get { throw null; } }
-        public bool Equals(Azure.AI.Language.Conversations.Models.AgeUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Language.Conversations.Models.AgeUnit left, Azure.AI.Language.Conversations.Models.AgeUnit right) { throw null; }
-        public static implicit operator Azure.AI.Language.Conversations.Models.AgeUnit (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Language.Conversations.Models.AgeUnit left, Azure.AI.Language.Conversations.Models.AgeUnit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public static partial class AILanguageConversationsModelFactory
+    public static partial class ConversationsModelFactory
     {
         public static Azure.AI.Language.Conversations.Models.AgeResolution AgeResolution(double value = 0, Azure.AI.Language.Conversations.Models.AgeUnit unit = default(Azure.AI.Language.Conversations.Models.AgeUnit)) { throw null; }
-        public static Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput AnalyzeConversationOperationInput(string displayName = null, Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResult AnalyzeConversationOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Conversations.Models.ConversationActionState status = default(Azure.AI.Language.Conversations.Models.ConversationActionState), string name = null, string kind = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = null, System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? expirationDateTime = default(System.DateTimeOffset?), System.Guid jobId = default(System.Guid), System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), Azure.AI.Language.Conversations.Models.ConversationActionState status = default(Azure.AI.Language.Conversations.Models.ConversationActionState), System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.ConversationError> errors = null, string nextLink = null, Azure.AI.Language.Conversations.Models.ConversationActions actions = null, Azure.AI.Language.Conversations.Models.ConversationRequestStatistics statistics = null) { throw null; }
         public static Azure.AI.Language.Conversations.Models.AnalyzeConversationResult AnalyzeConversationResult(string query = null, string detectedLanguage = null, Azure.AI.Language.Conversations.Models.PredictionBase prediction = null) { throw null; }
@@ -146,6 +113,119 @@ namespace Azure.AI.Language.Conversations.Models
         public static Azure.AI.Language.Conversations.Models.VolumeResolution VolumeResolution(double value = 0, Azure.AI.Language.Conversations.Models.VolumeUnit unit = default(Azure.AI.Language.Conversations.Models.VolumeUnit)) { throw null; }
         public static Azure.AI.Language.Conversations.Models.WeightResolution WeightResolution(double value = 0, Azure.AI.Language.Conversations.Models.WeightUnit unit = default(Azure.AI.Language.Conversations.Models.WeightUnit)) { throw null; }
     }
+}
+namespace Azure.AI.Language.Conversations.Authoring
+{
+    [System.ObsoleteAttribute("This client is no longer supported as part of the Conversations SDK. This will be released independently.")]
+    public partial class ConversationAuthoringClient
+    {
+        protected ConversationAuthoringClient() { }
+        public ConversationAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public ConversationAuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationsClientOptions options) { }
+        public ConversationAuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ConversationAuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.Conversations.ConversationsClientOptions options) { }
+        public virtual System.Uri Endpoint { get { throw null; } }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Operation<System.BinaryData> CancelTrainingJob(Azure.WaitUntil waitUntil, string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CancelTrainingJobAsync(Azure.WaitUntil waitUntil, string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response CreateProject(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateProjectAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeleteDeployment(Azure.WaitUntil waitUntil, string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteDeploymentAsync(Azure.WaitUntil waitUntil, string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeleteProject(Azure.WaitUntil waitUntil, string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteProjectAsync(Azure.WaitUntil waitUntil, string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteTrainedModel(string projectName, string trainedModelLabel, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeployProject(Azure.WaitUntil waitUntil, string projectName, string deploymentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeployProjectAsync(Azure.WaitUntil waitUntil, string projectName, string deploymentName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Operation<System.BinaryData> ExportProject(Azure.WaitUntil waitUntil, string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> ExportProject(Azure.WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, Azure.RequestContext context = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ExportProjectAsync(Azure.WaitUntil waitUntil, string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ExportProjectAsync(Azure.WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetDeployment(string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDeploymentAsync(string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetDeploymentJobStatus(string projectName, string deploymentName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetDeploymentJobStatusAsync(string projectName, string deploymentName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetDeployments(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetDeploymentsAsync(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetExportProjectJobStatus(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetExportProjectJobStatusAsync(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetImportProjectJobStatus(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetImportProjectJobStatusAsync(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetLoadSnapshotJobStatus(string projectName, string trainedModelLabel, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLoadSnapshotJobStatusAsync(string projectName, string trainedModelLabel, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetProject(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetProjectAsync(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetProjectDeletionJobStatus(string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetProjectDeletionJobStatusAsync(string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetProjects(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetProjectsAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetSupportedLanguages(string projectKind, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetSupportedLanguagesAsync(string projectKind, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetSupportedPrebuiltEntities(string language = null, bool? multilingual = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetSupportedPrebuiltEntitiesAsync(string language = null, bool? multilingual = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetSwapDeploymentsJobStatus(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSwapDeploymentsJobStatusAsync(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetTrainedModel(string projectName, string trainedModelLabel, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTrainedModels(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTrainedModelsAsync(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTrainingConfigVersions(string projectKind, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTrainingConfigVersionsAsync(string projectKind, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTrainingJobs(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTrainingJobsAsync(string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetTrainingJobStatus(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTrainingJobStatusAsync(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> ImportProject(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string exportedProjectFormat = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportProjectAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string exportedProjectFormat = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation LoadSnapshot(Azure.WaitUntil waitUntil, string projectName, string trainedModelLabel, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> LoadSnapshotAsync(Azure.WaitUntil waitUntil, string projectName, string trainedModelLabel, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> SwapDeployments(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> SwapDeploymentsAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Train(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> TrainAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+}
+namespace Azure.AI.Language.Conversations.Models
+{
+    public partial class AgeResolution : Azure.AI.Language.Conversations.Models.ResolutionBase, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AgeResolution>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AgeResolution>
+    {
+        internal AgeResolution() { }
+        public Azure.AI.Language.Conversations.Models.AgeUnit Unit { get { throw null; } }
+        public double Value { get { throw null; } }
+        Azure.AI.Language.Conversations.Models.AgeResolution System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AgeResolution>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AgeResolution>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.AgeResolution System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AgeResolution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AgeResolution>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AgeResolution>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgeUnit : System.IEquatable<Azure.AI.Language.Conversations.Models.AgeUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgeUnit(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.Models.AgeUnit Day { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.AgeUnit Month { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.AgeUnit Unspecified { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.AgeUnit Week { get { throw null; } }
+        public static Azure.AI.Language.Conversations.Models.AgeUnit Year { get { throw null; } }
+        public bool Equals(Azure.AI.Language.Conversations.Models.AgeUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.Conversations.Models.AgeUnit left, Azure.AI.Language.Conversations.Models.AgeUnit right) { throw null; }
+        public static implicit operator Azure.AI.Language.Conversations.Models.AgeUnit (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.Conversations.Models.AgeUnit left, Azure.AI.Language.Conversations.Models.AgeUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public abstract partial class AnalysisConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AnalysisConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AnalysisConfig>
     {
         protected AnalysisConfig() { }
@@ -183,18 +263,6 @@ namespace Azure.AI.Language.Conversations.Models
         Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AnalyzeConversationOperationInput : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput>
-    {
-        public AnalyzeConversationOperationInput(Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput conversationInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> actions) { }
-        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationAction> Actions { get { throw null; } }
-        public Azure.AI.Language.Conversations.Models.MultiLanguageConversationInput ConversationInput { get { throw null; } }
-        public string DisplayName { get { throw null; } set { } }
-        Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class AnalyzeConversationOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.AnalyzeConversationOperationResult>
     {
@@ -1970,10 +2038,14 @@ namespace Azure.AI.Language.Conversations.Models
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class AILanguageConversationsClientBuilderExtensions
+    public static partial class ConversationAnalysisClientExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.ConversationAnalysisClient, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.ConversationAnalysisClient, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.ConversationAnalysisClient, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions> AddConversationAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.ConversationAnalysisClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.ConversationAnalysisClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.ConversationAnalysisClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        [System.ObsoleteAttribute]
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.ObsoleteAttribute]
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.ConversationAuthoringClient, Azure.AI.Language.Conversations.ConversationsClientOptions> AddConversationAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

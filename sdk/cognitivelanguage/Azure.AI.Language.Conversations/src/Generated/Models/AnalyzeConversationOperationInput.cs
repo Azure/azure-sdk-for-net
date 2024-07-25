@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> It is a wrap up a Question Answering KB response. </summary>
-    public partial class AnalyzeConversationOperationInput
+    internal partial class AnalyzeConversationOperationInput
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
