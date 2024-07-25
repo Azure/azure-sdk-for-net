@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 {
     public static partial class NetworkManagerHelperExtensions
     {
-        public static async Task<(RoutingConfigurationResource Configuration, List<RoutingRuleCollectionResource> Collections, List<RoutingRuleResource> Rules)> CreateRoutingConfigurationAsync(
+        public static async Task<(NetworkManagerRoutingConfigurationResource Configuration, List<RoutingRuleCollectionResource> Collections, List<RoutingRuleResource> Rules)> CreateRoutingConfigurationAsync(
             this NetworkManagerResource networkManager,
             List<ResourceIdentifier> networkGroupIds)
         {
             string routingConfigurationName = "routingConfiguration-1";
 
-            RoutingConfigurationData routingConfigurationData = new()
+            NetworkManagerRoutingConfigurationData routingConfigurationData = new()
             {
                 Description = "My Test Routing Configuration",
             };
 
-            RoutingConfigurationCollection routingConfigurationResources = networkManager.GetRoutingConfigurations();
-            ArmOperation<RoutingConfigurationResource> routingConfigurationResource = await routingConfigurationResources.CreateOrUpdateAsync(WaitUntil.Completed, routingConfigurationName, routingConfigurationData);
+            NetworkManagerRoutingConfigurationCollection routingConfigurationResources = networkManager.GetNetworkManagerRoutingConfigurations();
+            ArmOperation<NetworkManagerRoutingConfigurationResource> routingConfigurationResource = await routingConfigurationResources.CreateOrUpdateAsync(WaitUntil.Completed, routingConfigurationName, routingConfigurationData);
 
             // Create a routing rule collection
             List<RoutingRuleCollectionResource> collections = new();
@@ -47,6 +47,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 routingCollection.CreateRoutingRuleAsync("rule2", "10.2.2.0/24", RoutingRuleDestinationType.AddressPrefix, string.Empty, RoutingRuleNextHopType.VirtualNetworkGateway),
                 routingCollection.CreateRoutingRuleAsync("rule3", "ApiManagement", RoutingRuleDestinationType.ServiceTag, string.Empty, RoutingRuleNextHopType.Internet),
                 routingCollection.CreateRoutingRuleAsync("rule4", "2001::1/128", RoutingRuleDestinationType.AddressPrefix, "2001::2", RoutingRuleNextHopType.VirtualAppliance),
+                // routingCollection.CreateRoutingRuleAsync("rule5", "2001::1/128", RoutingRuleDestinationType.AddressPrefix, "", RoutingRuleNextHopType.NoNextHop),
+                routingCollection.CreateRoutingRuleAsync("rule6", "10.1.5.0/24", RoutingRuleDestinationType.AddressPrefix, string.Empty, RoutingRuleNextHopType.VnetLocal),
             };
             List<RoutingRuleResource> routingRules = (await Task.WhenAll(routingRuleTasks)).ToList();
 
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         }
 
         public static async Task<RoutingRuleCollectionResource> CreateRoutingRuleCollectionAsync(
-            this RoutingConfigurationResource routingConfiguration,
+            this NetworkManagerRoutingConfigurationResource routingConfiguration,
             List<ResourceIdentifier> networkGroupIds)
         {
             string routingCollectionName = "routingCollection-1";
@@ -62,8 +64,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             RoutingRuleCollectionData routingRuleCollectionData = new()
             {
                 Description = "My Test Routing Rule Collection",
-                DisableBgpRoutePropagation = "True",
-                LocalRouteSetting = RoutingRuleCollectionLocalRouteSetting.NotSpecified,
+                DisableBgpRoutePropagation = "False",
             };
 
             foreach (ResourceIdentifier networkGroupId in networkGroupIds)
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
         public static async Task DeleteRoutingConfigurationAsync(
             this NetworkManagerResource networkManager,
-            RoutingConfigurationResource routingConfiguration)
+            NetworkManagerRoutingConfigurationResource routingConfiguration)
         {
             RoutingRuleCollectionCollection collections = routingConfiguration.GetRoutingRuleCollections();
 
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             await Task.WhenAll(deleteCollectionTasks);
 
             // Delete the routing configuration
-            await DeleteAndVerifyResourceAsync(networkManager.GetRoutingConfigurations(), routingConfiguration.Data.Name);
+            await DeleteAndVerifyResourceAsync(networkManager.GetNetworkManagerRoutingConfigurations(), routingConfiguration.Data.Name);
         }
 
         public static void ValidateRoutingRule(

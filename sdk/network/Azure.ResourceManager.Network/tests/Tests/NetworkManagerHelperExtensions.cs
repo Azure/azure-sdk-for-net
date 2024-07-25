@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 }
                 else
                 {
-                    var deleteTask = (Task)deleteMethod.Invoke(resource, new object[] { WaitUntil.Completed, CancellationToken.None });
+                    var deleteTask = (Task)deleteMethod.Invoke(resource, new object[] { WaitUntil.Completed, true, CancellationToken.None });
                     await deleteTask.ConfigureAwait(false);
                 }
             }
             else
             {
-                var deleteTask = (Task)deleteMethod.Invoke(resource, new object[] { WaitUntil.Completed, null, CancellationToken.None });
+                var deleteTask = (Task)deleteMethod.Invoke(resource, new object[] { WaitUntil.Completed, true, CancellationToken.None });
                 await deleteTask.ConfigureAwait(false);
             }
         }

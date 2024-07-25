@@ -83,12 +83,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(DisableBgpRoutePropagation))
             {
                 writer.WritePropertyName("disableBgpRoutePropagation"u8);
-                writer.WriteStringValue(DisableBgpRoutePropagation);
-            }
-            if (Optional.IsDefined(LocalRouteSetting))
-            {
-                writer.WritePropertyName("localRouteSetting"u8);
-                writer.WriteStringValue(LocalRouteSetting.Value.ToString());
+                writer.WriteStringValue(DisableBgpRoutePropagation.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -138,8 +133,7 @@ namespace Azure.ResourceManager.Network
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             IList<NetworkManagerRoutingGroupItem> appliesTo = default;
-            string disableBgpRoutePropagation = default;
-            RoutingRuleCollectionLocalRouteSetting? localRouteSetting = default;
+            DisableBgpRoutePropagation? disableBgpRoutePropagation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,16 +219,11 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("disableBgpRoutePropagation"u8))
                         {
-                            disableBgpRoutePropagation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("localRouteSetting"u8))
-                        {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            localRouteSetting = new RoutingRuleCollectionLocalRouteSetting(property0.Value.GetString());
+                            disableBgpRoutePropagation = new DisableBgpRoutePropagation(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -256,7 +245,6 @@ namespace Azure.ResourceManager.Network
                 resourceGuid,
                 appliesTo ?? new ChangeTrackingList<NetworkManagerRoutingGroupItem>(),
                 disableBgpRoutePropagation,
-                localRouteSetting,
                 etag,
                 serializedAdditionalRawData);
         }

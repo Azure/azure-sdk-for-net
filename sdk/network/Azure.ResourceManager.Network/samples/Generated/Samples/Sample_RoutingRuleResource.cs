@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsRoutingRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2023-03-01-preview/examples/NetworkManagerRoutingRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerRoutingRuleGet.json
             // this example is just showing the usage of "RoutingRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateADefaultRoutingRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2023-03-01-preview/examples/NetworkManagerRoutingRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerRoutingRulePut.json
             // this example is just showing the usage of "RoutingRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateAnRoutingRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2023-03-01-preview/examples/NetworkManagerRoutingRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerRoutingRulePut.json
             // this example is just showing the usage of "RoutingRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeletesARoutingRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2023-03-01-preview/examples/NetworkManagerRoutingRuleDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerRoutingRuleDelete.json
             // this example is just showing the usage of "RoutingRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,7 +156,8 @@ namespace Azure.ResourceManager.Network.Samples
             RoutingRuleResource routingRule = client.GetRoutingRuleResource(routingRuleResourceId);
 
             // invoke the operation
-            await routingRule.DeleteAsync(WaitUntil.Completed);
+            bool? force = false;
+            await routingRule.DeleteAsync(WaitUntil.Completed, force: force);
 
             Console.WriteLine($"Succeeded");
         }

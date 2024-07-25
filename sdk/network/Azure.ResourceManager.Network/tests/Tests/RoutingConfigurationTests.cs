@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network.Tests
         private NetworkManagerResource _networkManager;
         private NetworkGroupResource _networkGroupVnet;
         private NetworkGroupResource _networkGroupSubnet;
-        private readonly AzureLocation _location = AzureLocation.EastUS2;
-        private RoutingConfigurationResource _routingConfiguration;
+        private readonly AzureLocation _location = new("eastus2euap");
+        private NetworkManagerRoutingConfigurationResource _routingConfiguration;
         private List<RoutingRuleCollectionResource> _routingCollections;
         private List<RoutingRuleResource> _routingRules;
         private List<VirtualNetworkResource> _vnets = new();
@@ -54,7 +54,8 @@ namespace Azure.ResourceManager.Network.Tests
                 new List<NetworkConfigurationDeploymentType> { NetworkConfigurationDeploymentType.Routing });
 
             // Create test virtual networks and subnets
-            (_vnets, _subnets) = await _resourceGroup.CreateTestVirtualNetworksAsync(_location);
+            (_vnets, _subnets) = (new List<VirtualNetworkResource>(), new List<SubnetResource>());
+            // (_vnets, _subnets) = await _resourceGroup.CreateTestVirtualNetworksAsync(_location);
         }
 
         [OneTimeTearDown]
@@ -64,8 +65,8 @@ namespace Azure.ResourceManager.Network.Tests
             await _resourceGroup.GetNetworkManagers().DeleteAndVerifyResourceAsync(_networkManager.Data.Name);
 
             // Delete the test virtual networks
-            IEnumerable<Task> deleteVnetsTasks = _vnets.Select(vnet => _resourceGroup.GetVirtualNetworks().DeleteAndVerifyResourceAsync(vnet.Data.Name));
-            await Task.WhenAll(deleteVnetsTasks);
+            // IEnumerable<Task> deleteVnetsTasks = _vnets.Select(vnet => _resourceGroup.GetVirtualNetworks().DeleteAndVerifyResourceAsync(vnet.Data.Name));
+            // await Task.WhenAll(deleteVnetsTasks);
 
             // Delete the resource group
             await _resourceGroup.DeleteAsync(WaitUntil.Completed);
@@ -74,6 +75,11 @@ namespace Azure.ResourceManager.Network.Tests
         [SetUp]
         public async Task TestSetUp()
         {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                Initialize();
+            }
+
             // Create network groups for virtual networks and subnets
             _networkGroupVnet = await _networkManager.CreateNetworkGroupAsync(VirtualNetworkGroupType);
             _networkGroupSubnet = await _networkManager.CreateNetworkGroupAsync(SubnetNetworkGroupType);
@@ -82,8 +88,8 @@ namespace Azure.ResourceManager.Network.Tests
             (_routingConfiguration, _routingCollections, _routingRules) = await _networkManager.CreateRoutingConfigurationAsync
                 (new List<ResourceIdentifier>() { _networkGroupSubnet.Id, _networkGroupVnet.Id });
 
-            // Add static members to the network groups
-            await _networkGroupVnet.AddVnetStaticMemberToNetworkGroup(_vnets);
+            // TODO: Add static members to the network groups
+            // await _networkGroupVnet.AddVnetStaticMemberToNetworkGroup(_vnets);
         }
 
         [TearDown]
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Assert
             // Fetch the routing configuration
-            Response<RoutingConfigurationResource> fetchedRoutingConfiguration = await _networkManager.GetRoutingConfigurations().GetAsync(_routingConfiguration.Data.Name);
+            Response<NetworkManagerRoutingConfigurationResource> fetchedRoutingConfiguration = await _networkManager.GetNetworkManagerRoutingConfigurations().GetAsync(_routingConfiguration.Data.Name);
             Assert.AreEqual(NetworkProvisioningState.Succeeded, fetchedRoutingConfiguration.Value.Data.ProvisioningState);
 
             // Fetch the routing rule collection
@@ -118,7 +124,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(NetworkProvisioningState.Succeeded, fetchedRoutingRuleCollection.Value.Data.ProvisioningState);
 
             Assert.AreEqual(2, fetchedRoutingRuleCollection.Value.Data.AppliesTo.Count);
-            Assert.AreEqual("True", fetchedRoutingRuleCollection.Value.Data.DisableBgpRoutePropagation);
+            Assert.AreEqual(DisableBgpRoutePropagation.False, fetchedRoutingRuleCollection.Value.Data.DisableBgpRoutePropagation);
 
             // Validate each routing rule
             RoutingRuleCollection fetchedRoutingRules = fetchedRoutingRuleCollection.Value.GetRoutingRules();

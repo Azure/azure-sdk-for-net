@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01-preview";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, bool? force)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -403,10 +403,14 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/ruleCollections/", false);
             uri.AppendPath(ruleCollectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", force.Value, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, bool? force)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -424,6 +428,10 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/ruleCollections/", false);
             uri.AppendPath(ruleCollectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", force.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -436,10 +444,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager routing Configuration rule collection. </param>
+        /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -447,7 +456,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, force);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -466,10 +475,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
         /// <param name="ruleCollectionName"> The name of the network manager routing Configuration rule collection. </param>
+        /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="configurationName"/> or <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -477,7 +487,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, force);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

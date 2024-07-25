@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Samples
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListSecurityUserConfigurationsInANetworkManager()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2022-02-01-preview/examples/NetworkManagerSecurityUserConfigurationList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserConfigurationList.json
             // this example is just showing the usage of "SecurityUserConfigurations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkManagerResource created on azure
             // for more information of creating NetworkManagerResource, please refer to the document of NetworkManagerResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetSecurityUserConfigurations()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2022-02-01-preview/examples/NetworkManagerSecurityUserConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserConfigurationGet.json
             // this example is just showing the usage of "SecurityUserConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkManagerResource created on azure
             // for more information of creating NetworkManagerResource, please refer to the document of NetworkManagerResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetSecurityUserConfigurations()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2022-02-01-preview/examples/NetworkManagerSecurityUserConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserConfigurationGet.json
             // this example is just showing the usage of "SecurityUserConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkManagerResource created on azure
             // for more information of creating NetworkManagerResource, please refer to the document of NetworkManagerResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetSecurityUserConfigurations()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2022-02-01-preview/examples/NetworkManagerSecurityUserConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserConfigurationGet.json
             // this example is just showing the usage of "SecurityUserConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkManagerResource created on azure
             // for more information of creating NetworkManagerResource, please refer to the document of NetworkManagerResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateNetworkManagerSecurityUserConfiguration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2022-02-01-preview/examples/NetworkManagerSecurityUserConfigurationPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserConfigurationPut.json
             // this example is just showing the usage of "SecurityUserConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkManagerResource created on azure
             // for more information of creating NetworkManagerResource, please refer to the document of NetworkManagerResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
@@ -190,7 +189,6 @@ namespace Azure.ResourceManager.Network.Samples
             SecurityUserConfigurationData data = new SecurityUserConfigurationData()
             {
                 Description = "A sample policy",
-                DeleteExistingNSGs = DeleteExistingNSG.True,
             };
             ArmOperation<SecurityUserConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
             SecurityUserConfigurationResource result = lro.Value;

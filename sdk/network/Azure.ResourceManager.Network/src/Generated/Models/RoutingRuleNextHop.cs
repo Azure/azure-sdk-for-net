@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="RoutingRuleNextHop"/>. </summary>
         /// <param name="nextHopType"> Next hop type. </param>
-        /// <param name="nextHopAddress"> Next hop address. Only relevant if the next hop type is VirtualAppliance. </param>
+        /// <param name="nextHopAddress"> Next hop address. Only required if the next hop type is VirtualAppliance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RoutingRuleNextHop(RoutingRuleNextHopType nextHopType, string nextHopAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Next hop type. </summary>
         public RoutingRuleNextHopType NextHopType { get; set; }
-        /// <summary> Next hop address. Only relevant if the next hop type is VirtualAppliance. </summary>
+        /// <summary> Next hop address. Only required if the next hop type is VirtualAppliance. </summary>
         public string NextHopAddress { get; set; }
     }
 }

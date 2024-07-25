@@ -19,160 +19,6 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Network.SecurityUserConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description of the security user configuration. </param>
-        /// <param name="deleteExistingNSGs"> Flag if need to delete existing network security groups. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.SecurityUserConfigurationData"/> instance for mocking. </returns>
-        public static SecurityUserConfigurationData SecurityUserConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, DeleteExistingNSG? deleteExistingNSGs = null, NetworkProvisioningState? provisioningState = null, ETag? etag = null)
-        {
-            return new SecurityUserConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description,
-                deleteExistingNSGs,
-                provisioningState,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.UserRuleCollectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description of the user rule collection. </param>
-        /// <param name="appliesToGroups"> Groups for configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.UserRuleCollectionData"/> instance for mocking. </returns>
-        public static UserRuleCollectionData UserRuleCollectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, ETag? etag = null)
-        {
-            appliesToGroups ??= new List<NetworkManagerSecurityGroupItem>();
-
-            return new UserRuleCollectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description,
-                appliesToGroups?.ToList(),
-                provisioningState,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.BaseUserRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Whether the rule is custom or default. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.BaseUserRuleData"/> instance for mocking. </returns>
-        public static BaseUserRuleData BaseUserRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
-        {
-            return new UnknownBaseUserRule(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind == null ? default : new UserRuleKind(kind),
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.RoutingConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description of the routing configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.RoutingConfigurationData"/> instance for mocking. </returns>
-        public static RoutingConfigurationData RoutingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
-        {
-            return new RoutingConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description,
-                provisioningState,
-                resourceGuid,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.RoutingRuleCollectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description of the routing rule collection. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="appliesTo"> Groups for configuration. </param>
-        /// <param name="disableBgpRoutePropagation"> Determines whether BGP route propagation is enabled. Defaults to true. </param>
-        /// <param name="localRouteSetting"> Indicates local route setting for this particular rule collection. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.RoutingRuleCollectionData"/> instance for mocking. </returns>
-        public static RoutingRuleCollectionData RoutingRuleCollectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, IEnumerable<NetworkManagerRoutingGroupItem> appliesTo = null, string disableBgpRoutePropagation = null, RoutingRuleCollectionLocalRouteSetting? localRouteSetting = null, ETag? etag = null)
-        {
-            appliesTo ??= new List<NetworkManagerRoutingGroupItem>();
-
-            return new RoutingRuleCollectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description,
-                provisioningState,
-                resourceGuid,
-                appliesTo?.ToList(),
-                disableBgpRoutePropagation,
-                localRouteSetting,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.RoutingRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description for this rule. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="destination"> Indicates the destination for this particular rule. </param>
-        /// <param name="nextHop"> Indicates the next hop for this particular rule. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.RoutingRuleData"/> instance for mocking. </returns>
-        public static RoutingRuleData RoutingRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, RoutingRuleRouteDestination destination = null, RoutingRuleNextHop nextHop = null, ETag? etag = null)
-        {
-            return new RoutingRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description,
-                provisioningState,
-                resourceGuid,
-                destination,
-                nextHop,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Network.ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -4370,12 +4216,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="Models.NetworkConfigurationGroup"/>. </summary>
         /// <param name="id"> Network group ID. </param>
         /// <param name="description"> A description of the network group. </param>
-        /// <param name="memberType"> Group member type. </param>
-        /// <param name="provisioningState"> Resource type. </param>
+        /// <param name="memberType"> The type of the group member. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <returns> A new <see cref="Models.NetworkConfigurationGroup"/> instance for mocking. </returns>
-        public static NetworkConfigurationGroup NetworkConfigurationGroup(string id = null, string description = null, string memberType = null, NetworkProvisioningState? provisioningState = null)
+        public static NetworkConfigurationGroup NetworkConfigurationGroup(string id = null, string description = null, GroupMemberType? memberType = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null)
         {
-            return new NetworkConfigurationGroup(id, description, memberType, provisioningState, serializedAdditionalRawData: null);
+            return new NetworkConfigurationGroup(
+                id,
+                description,
+                memberType,
+                provisioningState,
+                resourceGuid,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ActiveBaseSecurityAdminRule"/>. </summary>
@@ -4495,11 +4348,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> A description of the network group. </param>
-        /// <param name="memberType"> Group member type. </param>
-        /// <param name="provisioningState"> Resource type. </param>
+        /// <param name="memberType"> The type of the group member. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkGroupData"/> instance for mocking. </returns>
-        public static NetworkGroupData NetworkGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string memberType = null, NetworkProvisioningState? provisioningState = null, ETag? etag = null)
+        public static NetworkGroupData NetworkGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, GroupMemberType? memberType = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
         {
             return new NetworkGroupData(
                 id,
@@ -4509,6 +4363,7 @@ namespace Azure.ResourceManager.Network.Models
                 description,
                 memberType,
                 provisioningState,
+                resourceGuid,
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -4635,6 +4490,181 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 systemData,
                 kind == null ? default : new AdminRuleKind(kind),
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.SecurityUserConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description of the security user configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.SecurityUserConfigurationData"/> instance for mocking. </returns>
+        public static SecurityUserConfigurationData SecurityUserConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
+        {
+            return new SecurityUserConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                provisioningState,
+                resourceGuid,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.SecurityUserRuleCollectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description of the security user rule collection. </param>
+        /// <param name="appliesToGroups"> Groups for configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.SecurityUserRuleCollectionData"/> instance for mocking. </returns>
+        public static SecurityUserRuleCollectionData SecurityUserRuleCollectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<SecurityUserGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
+        {
+            appliesToGroups ??= new List<SecurityUserGroupItem>();
+
+            return new SecurityUserRuleCollectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                appliesToGroups?.ToList(),
+                provisioningState,
+                resourceGuid,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.SecurityUserRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description for this rule. </param>
+        /// <param name="protocol"> Network protocol this rule applies to. </param>
+        /// <param name="sources"> The CIDR or source IP ranges. </param>
+        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
+        /// <param name="sourcePortRanges"> The source port ranges. </param>
+        /// <param name="destinationPortRanges"> The destination port ranges. </param>
+        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
+        /// <param name="provisioningState"> The provisioning state of the security configuration user rule resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.SecurityUserRuleData"/> instance for mocking. </returns>
+        public static SecurityUserRuleData SecurityUserRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
+        {
+            sources ??= new List<AddressPrefixItem>();
+            destinations ??= new List<AddressPrefixItem>();
+            sourcePortRanges ??= new List<string>();
+            destinationPortRanges ??= new List<string>();
+
+            return new SecurityUserRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                protocol,
+                sources?.ToList(),
+                destinations?.ToList(),
+                sourcePortRanges?.ToList(),
+                destinationPortRanges?.ToList(),
+                direction,
+                provisioningState,
+                resourceGuid,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkManagerRoutingConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description of the routing configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.NetworkManagerRoutingConfigurationData"/> instance for mocking. </returns>
+        public static NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
+        {
+            return new NetworkManagerRoutingConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                provisioningState,
+                resourceGuid,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.RoutingRuleCollectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description of the routing rule collection. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="appliesTo"> Groups for configuration. </param>
+        /// <param name="disableBgpRoutePropagation"> Determines whether BGP route propagation is enabled. Defaults to true. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.RoutingRuleCollectionData"/> instance for mocking. </returns>
+        public static RoutingRuleCollectionData RoutingRuleCollectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, IEnumerable<NetworkManagerRoutingGroupItem> appliesTo = null, DisableBgpRoutePropagation? disableBgpRoutePropagation = null, ETag? etag = null)
+        {
+            appliesTo ??= new List<NetworkManagerRoutingGroupItem>();
+
+            return new RoutingRuleCollectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                provisioningState,
+                resourceGuid,
+                appliesTo?.ToList(),
+                disableBgpRoutePropagation,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.RoutingRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description for this rule. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="destination"> Indicates the destination for this particular rule. </param>
+        /// <param name="nextHop"> Indicates the next hop for this particular rule. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.RoutingRuleData"/> instance for mocking. </returns>
+        public static RoutingRuleData RoutingRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, RoutingRuleRouteDestination destination = null, RoutingRuleNextHop nextHop = null, ETag? etag = null)
+        {
+            return new RoutingRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                provisioningState,
+                resourceGuid,
+                destination,
+                nextHop,
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -7061,7 +7091,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
         /// <returns> A new <see cref="Models.P2SConnectionConfiguration"/> instance for mocking. </returns>
-        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<string> vpnClientAddressPrefixes = null, RoutingConfigurationAutoGenerated routingConfiguration = null, bool? enableInternetSecurity = null, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = null, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = null, NetworkProvisioningState? provisioningState = null)
+        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<string> vpnClientAddressPrefixes = null, RoutingConfiguration routingConfiguration = null, bool? enableInternetSecurity = null, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = null, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = null, NetworkProvisioningState? provisioningState = null)
         {
             vpnClientAddressPrefixes ??= new List<string>();
             configurationPolicyGroupAssociations ??= new List<WritableSubResource>();
@@ -7286,7 +7316,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
         /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
-        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier remoteVirtualNetworkId = null, bool? allowHubToRemoteVnetTransit = null, bool? allowRemoteVnetToUseHubVnetGateways = null, bool? enableInternetSecurity = null, RoutingConfigurationAutoGenerated routingConfiguration = null, NetworkProvisioningState? provisioningState = null)
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier remoteVirtualNetworkId = null, bool? allowHubToRemoteVnetTransit = null, bool? allowRemoteVnetToUseHubVnetGateways = null, bool? enableInternetSecurity = null, RoutingConfiguration routingConfiguration = null, NetworkProvisioningState? provisioningState = null)
         {
             return new HubVirtualNetworkConnectionData(
                 id,
@@ -7370,7 +7400,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnLinkConnections"> List of all vpn site link connections to the gateway. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <returns> A new <see cref="Network.VpnConnectionData"/> instance for mocking. </returns>
-        public static VpnConnectionData VpnConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier remoteVpnSiteId = null, int? routingWeight = null, int? dpdTimeoutSeconds = null, VpnConnectionStatus? connectionStatus = null, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = null, long? ingressBytesTransferred = null, long? egressBytesTransferred = null, int? connectionBandwidth = null, string sharedKey = null, bool? enableBgp = null, bool? usePolicyBasedTrafficSelectors = null, IEnumerable<IPsecPolicy> ipsecPolicies = null, IEnumerable<TrafficSelectorPolicy> trafficSelectorPolicies = null, bool? enableRateLimiting = null, bool? enableInternetSecurity = null, bool? useLocalAzureIPAddress = null, NetworkProvisioningState? provisioningState = null, IEnumerable<VpnSiteLinkConnectionData> vpnLinkConnections = null, RoutingConfigurationAutoGenerated routingConfiguration = null)
+        public static VpnConnectionData VpnConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier remoteVpnSiteId = null, int? routingWeight = null, int? dpdTimeoutSeconds = null, VpnConnectionStatus? connectionStatus = null, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = null, long? ingressBytesTransferred = null, long? egressBytesTransferred = null, int? connectionBandwidth = null, string sharedKey = null, bool? enableBgp = null, bool? usePolicyBasedTrafficSelectors = null, IEnumerable<IPsecPolicy> ipsecPolicies = null, IEnumerable<TrafficSelectorPolicy> trafficSelectorPolicies = null, bool? enableRateLimiting = null, bool? enableInternetSecurity = null, bool? useLocalAzureIPAddress = null, NetworkProvisioningState? provisioningState = null, IEnumerable<VpnSiteLinkConnectionData> vpnLinkConnections = null, RoutingConfiguration routingConfiguration = null)
         {
             ipsecPolicies ??= new List<IPsecPolicy>();
             trafficSelectorPolicies ??= new List<TrafficSelectorPolicy>();
@@ -7581,7 +7611,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <returns> A new <see cref="Network.ExpressRouteConnectionData"/> instance for mocking. </returns>
-        public static ExpressRouteConnectionData ExpressRouteConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier expressRouteCircuitPeeringId = null, string authorizationKey = null, int? routingWeight = null, bool? enableInternetSecurity = null, bool? expressRouteGatewayBypass = null, bool? enablePrivateLinkFastPath = null, RoutingConfigurationAutoGenerated routingConfiguration = null)
+        public static ExpressRouteConnectionData ExpressRouteConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier expressRouteCircuitPeeringId = null, string authorizationKey = null, int? routingWeight = null, bool? enableInternetSecurity = null, bool? expressRouteGatewayBypass = null, bool? enablePrivateLinkFastPath = null, RoutingConfiguration routingConfiguration = null)
         {
             return new ExpressRouteConnectionData(
                 id,
@@ -7610,7 +7640,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="connectionRoutingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <returns> A new <see cref="Network.NetworkVirtualApplianceConnectionData"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string namePropertiesName = null, NetworkProvisioningState? provisioningState = null, long? asn = null, long? tunnelIdentifier = null, IEnumerable<string> bgpPeerAddress = null, bool? enableInternetSecurity = null, RoutingConfigurationAutoGenerated connectionRoutingConfiguration = null)
+        public static NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string namePropertiesName = null, NetworkProvisioningState? provisioningState = null, long? asn = null, long? tunnelIdentifier = null, IEnumerable<string> bgpPeerAddress = null, bool? enableInternetSecurity = null, RoutingConfiguration connectionRoutingConfiguration = null)
         {
             bgpPeerAddress ??= new List<string>();
 
@@ -7877,88 +7907,6 @@ namespace Azure.ResourceManager.Network.Models
                 groupByUserSession?.ToList(),
                 action,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.UserRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="description"> A description for this rule. </param>
-        /// <param name="protocol"> Network protocol this rule applies to. </param>
-        /// <param name="sources"> The CIDR or source IP ranges. </param>
-        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
-        /// <param name="provisioningState"> The provisioning state of the security configuration user rule resource. </param>
-        /// <returns> A new <see cref="Models.UserRule"/> instance for mocking. </returns>
-        public static UserRule UserRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null)
-        {
-            sources ??= new List<AddressPrefixItem>();
-            destinations ??= new List<AddressPrefixItem>();
-            sourcePortRanges ??= new List<string>();
-            destinationPortRanges ??= new List<string>();
-
-            return new UserRule(
-                id,
-                name,
-                resourceType,
-                systemData,
-                UserRuleKind.Custom,
-                etag,
-                serializedAdditionalRawData: null,
-                description,
-                protocol,
-                sources?.ToList(),
-                destinations?.ToList(),
-                sourcePortRanges?.ToList(),
-                destinationPortRanges?.ToList(),
-                direction,
-                provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefaultUserRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
-        /// <param name="flag"> Default rule flag. </param>
-        /// <param name="protocol"> Network protocol this rule applies to. </param>
-        /// <param name="sources"> The CIDR or source IP ranges. </param>
-        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
-        /// <param name="provisioningState"> The provisioning state of the security configuration user rule resource. </param>
-        /// <returns> A new <see cref="Models.DefaultUserRule"/> instance for mocking. </returns>
-        public static DefaultUserRule DefaultUserRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, string flag = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null)
-        {
-            sources ??= new List<AddressPrefixItem>();
-            destinations ??= new List<AddressPrefixItem>();
-            sourcePortRanges ??= new List<string>();
-            destinationPortRanges ??= new List<string>();
-
-            return new DefaultUserRule(
-                id,
-                name,
-                resourceType,
-                systemData,
-                UserRuleKind.Default,
-                etag,
-                serializedAdditionalRawData: null,
-                description,
-                flag,
-                protocol,
-                sources?.ToList(),
-                destinations?.ToList(),
-                sourcePortRanges?.ToList(),
-                destinationPortRanges?.ToList(),
-                direction,
-                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ActiveSecurityAdminRule"/>. </summary>
@@ -8346,6 +8294,34 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteCircuitData ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IEnumerable<ExpressRouteCircuitAuthorizationData> authorizations, IEnumerable<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, ResourceIdentifier expressRoutePortId, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus)
         {
             return ExpressRouteCircuitData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, sku: sku, etag: etag, allowClassicOperations: allowClassicOperations, circuitProvisioningState: circuitProvisioningState, serviceProviderProvisioningState: serviceProviderProvisioningState, authorizations: authorizations, peerings: peerings, serviceKey: serviceKey, serviceProviderNotes: serviceProviderNotes, serviceProviderProperties: serviceProviderProperties, expressRoutePortId: expressRoutePortId, bandwidthInGbps: bandwidthInGbps, stag: stag, provisioningState: provisioningState, gatewayManagerETag: gatewayManagerETag, globalReachEnabled: globalReachEnabled, authorizationKey: authorizationKey, authorizationStatus: authorizationStatus, enableDirectPortRateLimit: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.NetworkConfigurationGroup" />. </summary>
+        /// <param name="id"> Network group ID. </param>
+        /// <param name="description"> A description of the network group. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.NetworkConfigurationGroup" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkConfigurationGroup NetworkConfigurationGroup(string id, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid)
+        {
+            return NetworkConfigurationGroup(id: id, description: description, memberType: default, provisioningState: provisioningState, resourceGuid: resourceGuid);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NetworkGroupData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description of the network group. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.NetworkGroupData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkGroupData NetworkGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag)
+        {
+            return NetworkGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, memberType: default, provisioningState: provisioningState, resourceGuid: resourceGuid, etag: etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NetworkVirtualApplianceData" />. </summary>

@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of UserRuleCollectionResources in the SecurityUserConfiguration. </summary>
-        /// <returns> An object representing collection of UserRuleCollectionResources and their operations over a UserRuleCollectionResource. </returns>
-        public virtual UserRuleCollectionCollection GetUserRuleCollections()
+        /// <summary> Gets a collection of SecurityUserRuleCollectionResources in the SecurityUserConfiguration. </summary>
+        /// <returns> An object representing collection of SecurityUserRuleCollectionResources and their operations over a SecurityUserRuleCollectionResource. </returns>
+        public virtual SecurityUserRuleCollectionCollection GetSecurityUserRuleCollections()
         {
-            return GetCachedClient(client => new UserRuleCollectionCollection(client, Id));
+            return GetCachedClient(client => new SecurityUserRuleCollectionCollection(client, Id));
         }
 
         /// <summary>
@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>UserRuleCollections_Get</description>
+        /// <description>SecurityUserRuleCollections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="UserRuleCollectionResource"/></description>
+        /// <description><see cref="SecurityUserRuleCollectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<UserRuleCollectionResource>> GetUserRuleCollectionAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityUserRuleCollectionResource>> GetSecurityUserRuleCollectionAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            return await GetUserRuleCollections().GetAsync(ruleCollectionName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityUserRuleCollections().GetAsync(ruleCollectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -135,15 +135,15 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>UserRuleCollections_Get</description>
+        /// <description>SecurityUserRuleCollections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="UserRuleCollectionResource"/></description>
+        /// <description><see cref="SecurityUserRuleCollectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<UserRuleCollectionResource> GetUserRuleCollection(string ruleCollectionName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityUserRuleCollectionResource> GetSecurityUserRuleCollection(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
-            return GetUserRuleCollections().Get(ruleCollectionName, cancellationToken);
+            return GetSecurityUserRuleCollections().Get(ruleCollectionName, cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,9 +268,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _securityUserConfigurationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var uri = _securityUserConfigurationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation(response, rehydrationToken);
+                var operation = new NetworkArmOperation(_securityUserConfigurationClientDiagnostics, Pipeline, _securityUserConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -295,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,9 +311,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _securityUserConfigurationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken);
-                var uri = _securityUserConfigurationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation(response, rehydrationToken);
+                var operation = new NetworkArmOperation(_securityUserConfigurationClientDiagnostics, Pipeline, _securityUserConfigurationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -340,7 +336,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -388,7 +384,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

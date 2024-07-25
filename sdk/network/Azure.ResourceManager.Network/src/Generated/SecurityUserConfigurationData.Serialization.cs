@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DeleteExistingNSGs))
-            {
-                writer.WritePropertyName("deleteExistingNSGs"u8);
-                writer.WriteStringValue(DeleteExistingNSGs.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            {
+                writer.WritePropertyName("resourceGuid"u8);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Network
             ResourceType type = default;
             SystemData systemData = default;
             string description = default;
-            DeleteExistingNSG? deleteExistingNSGs = default;
             NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,15 +168,6 @@ namespace Azure.ResourceManager.Network
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deleteExistingNSGs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deleteExistingNSGs = new DeleteExistingNSG(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -184,6 +175,15 @@ namespace Azure.ResourceManager.Network
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceGuid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                     }
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.Network
                 type,
                 systemData,
                 description,
-                deleteExistingNSGs,
                 provisioningState,
+                resourceGuid,
                 etag,
                 serializedAdditionalRawData);
         }

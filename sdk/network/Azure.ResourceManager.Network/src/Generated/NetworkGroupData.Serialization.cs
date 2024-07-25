@@ -63,12 +63,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MemberType))
             {
                 writer.WritePropertyName("memberType"u8);
-                writer.WriteStringValue(MemberType);
+                writer.WriteStringValue(MemberType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            {
+                writer.WritePropertyName("resourceGuid"u8);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -115,8 +120,9 @@ namespace Azure.ResourceManager.Network
             ResourceType type = default;
             SystemData systemData = default;
             string description = default;
-            string memberType = default;
+            GroupMemberType? memberType = default;
             NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +176,11 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("memberType"u8))
                         {
-                            memberType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            memberType = new GroupMemberType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -180,6 +190,15 @@ namespace Azure.ResourceManager.Network
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceGuid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                     }
@@ -199,6 +218,7 @@ namespace Azure.ResourceManager.Network
                 description,
                 memberType,
                 provisioningState,
+                resourceGuid,
                 etag,
                 serializedAdditionalRawData);
         }

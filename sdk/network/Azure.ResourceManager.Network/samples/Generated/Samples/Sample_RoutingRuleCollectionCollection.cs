@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListRoutingRuleCollections()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2023-03-01-preview/examples/NetworkManagerRoutingRuleCollectionList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerRoutingRuleCollectionList.json
             // this example is just showing the usage of "RoutingRuleCollections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RoutingConfigurationResource created on azure
-            // for more information of creating RoutingConfigurationResource, please refer to the document of RoutingConfigurationResource
+            // this example assumes you already have this NetworkManagerRoutingConfigurationResource created on azure
+            // for more information of creating NetworkManagerRoutingConfigurationResource, please refer to the document of NetworkManagerRoutingConfigurationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestRoutingConfig";
-            ResourceIdentifier routingConfigurationResourceId = RoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
-            RoutingConfigurationResource routingConfiguration = client.GetRoutingConfigurationResource(routingConfigurationResourceId);
+            ResourceIdentifier networkManagerRoutingConfigurationResourceId = NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
+            NetworkManagerRoutingConfigurationResource networkManagerRoutingConfiguration = client.GetNetworkManagerRoutingConfigurationResource(networkManagerRoutingConfigurationResourceId);
 
             // get the collection of this RoutingRuleCollectionResource
-            RoutingRuleCollectionCollection collection = routingConfiguration.GetRoutingRuleCollections();
+            RoutingRuleCollectionCollection collection = networkManagerRoutingConfiguration.GetRoutingRuleCollections();
 
             // invoke the operation and iterate over the result
             await foreach (RoutingRuleCollectionResource item in collection.GetAllAsync())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsRoutingRuleCollection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2023-03-01-preview/examples/NetworkManagerRoutingRuleCollectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerRoutingRuleCollectionGet.json
             // this example is just showing the usage of "RoutingRuleCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RoutingConfigurationResource created on azure
-            // for more information of creating RoutingConfigurationResource, please refer to the document of RoutingConfigurationResource
+            // this example assumes you already have this NetworkManagerRoutingConfigurationResource created on azure
+            // for more information of creating NetworkManagerRoutingConfigurationResource, please refer to the document of NetworkManagerRoutingConfigurationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestRoutingConfig";
-            ResourceIdentifier routingConfigurationResourceId = RoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
-            RoutingConfigurationResource routingConfiguration = client.GetRoutingConfigurationResource(routingConfigurationResourceId);
+            ResourceIdentifier networkManagerRoutingConfigurationResourceId = NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
+            NetworkManagerRoutingConfigurationResource networkManagerRoutingConfiguration = client.GetNetworkManagerRoutingConfigurationResource(networkManagerRoutingConfigurationResourceId);
 
             // get the collection of this RoutingRuleCollectionResource
-            RoutingRuleCollectionCollection collection = routingConfiguration.GetRoutingRuleCollections();
+            RoutingRuleCollectionCollection collection = networkManagerRoutingConfiguration.GetRoutingRuleCollections();
 
             // invoke the operation
             string ruleCollectionName = "testRuleCollection";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetsRoutingRuleCollection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2023-03-01-preview/examples/NetworkManagerRoutingRuleCollectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerRoutingRuleCollectionGet.json
             // this example is just showing the usage of "RoutingRuleCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RoutingConfigurationResource created on azure
-            // for more information of creating RoutingConfigurationResource, please refer to the document of RoutingConfigurationResource
+            // this example assumes you already have this NetworkManagerRoutingConfigurationResource created on azure
+            // for more information of creating NetworkManagerRoutingConfigurationResource, please refer to the document of NetworkManagerRoutingConfigurationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestRoutingConfig";
-            ResourceIdentifier routingConfigurationResourceId = RoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
-            RoutingConfigurationResource routingConfiguration = client.GetRoutingConfigurationResource(routingConfigurationResourceId);
+            ResourceIdentifier networkManagerRoutingConfigurationResourceId = NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
+            NetworkManagerRoutingConfigurationResource networkManagerRoutingConfiguration = client.GetNetworkManagerRoutingConfigurationResource(networkManagerRoutingConfigurationResourceId);
 
             // get the collection of this RoutingRuleCollectionResource
-            RoutingRuleCollectionCollection collection = routingConfiguration.GetRoutingRuleCollections();
+            RoutingRuleCollectionCollection collection = networkManagerRoutingConfiguration.GetRoutingRuleCollections();
 
             // invoke the operation
             string ruleCollectionName = "testRuleCollection";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetsRoutingRuleCollection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2023-03-01-preview/examples/NetworkManagerRoutingRuleCollectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerRoutingRuleCollectionGet.json
             // this example is just showing the usage of "RoutingRuleCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,17 +134,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RoutingConfigurationResource created on azure
-            // for more information of creating RoutingConfigurationResource, please refer to the document of RoutingConfigurationResource
+            // this example assumes you already have this NetworkManagerRoutingConfigurationResource created on azure
+            // for more information of creating NetworkManagerRoutingConfigurationResource, please refer to the document of NetworkManagerRoutingConfigurationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestRoutingConfig";
-            ResourceIdentifier routingConfigurationResourceId = RoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
-            RoutingConfigurationResource routingConfiguration = client.GetRoutingConfigurationResource(routingConfigurationResourceId);
+            ResourceIdentifier networkManagerRoutingConfigurationResourceId = NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
+            NetworkManagerRoutingConfigurationResource networkManagerRoutingConfiguration = client.GetNetworkManagerRoutingConfigurationResource(networkManagerRoutingConfigurationResourceId);
 
             // get the collection of this RoutingRuleCollectionResource
-            RoutingRuleCollectionCollection collection = routingConfiguration.GetRoutingRuleCollections();
+            RoutingRuleCollectionCollection collection = networkManagerRoutingConfiguration.GetRoutingRuleCollections();
 
             // invoke the operation
             string ruleCollectionName = "testRuleCollection";
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateARoutingRuleCollection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/preview/2023-03-01-preview/examples/NetworkManagerRoutingRuleCollectionPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerRoutingRuleCollectionPut.json
             // this example is just showing the usage of "RoutingRuleCollections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,17 +178,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RoutingConfigurationResource created on azure
-            // for more information of creating RoutingConfigurationResource, please refer to the document of RoutingConfigurationResource
+            // this example assumes you already have this NetworkManagerRoutingConfigurationResource created on azure
+            // for more information of creating NetworkManagerRoutingConfigurationResource, please refer to the document of NetworkManagerRoutingConfigurationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestRoutingConfig";
-            ResourceIdentifier routingConfigurationResourceId = RoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
-            RoutingConfigurationResource routingConfiguration = client.GetRoutingConfigurationResource(routingConfigurationResourceId);
+            ResourceIdentifier networkManagerRoutingConfigurationResourceId = NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
+            NetworkManagerRoutingConfigurationResource networkManagerRoutingConfiguration = client.GetNetworkManagerRoutingConfigurationResource(networkManagerRoutingConfigurationResourceId);
 
             // get the collection of this RoutingRuleCollectionResource
-            RoutingRuleCollectionCollection collection = routingConfiguration.GetRoutingRuleCollections();
+            RoutingRuleCollectionCollection collection = networkManagerRoutingConfiguration.GetRoutingRuleCollections();
 
             // invoke the operation
             string ruleCollectionName = "testRuleCollection";
@@ -199,7 +199,6 @@ namespace Azure.ResourceManager.Network.Samples
 {
 new NetworkManagerRoutingGroupItem("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/testGroup")
 },
-                LocalRouteSetting = RoutingRuleCollectionLocalRouteSetting.NotSpecified,
             };
             ArmOperation<RoutingRuleCollectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionName, data);
             RoutingRuleCollectionResource result = lro.Value;

@@ -67,17 +67,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="appliesTo"> Groups for configuration. </param>
         /// <param name="disableBgpRoutePropagation"> Determines whether BGP route propagation is enabled. Defaults to true. </param>
-        /// <param name="localRouteSetting"> Indicates local route setting for this particular rule collection. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingRuleCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IList<NetworkManagerRoutingGroupItem> appliesTo, string disableBgpRoutePropagation, RoutingRuleCollectionLocalRouteSetting? localRouteSetting, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RoutingRuleCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, IList<NetworkManagerRoutingGroupItem> appliesTo, DisableBgpRoutePropagation? disableBgpRoutePropagation, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
             AppliesTo = appliesTo;
             DisableBgpRoutePropagation = disableBgpRoutePropagation;
-            LocalRouteSetting = localRouteSetting;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -91,9 +89,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Groups for configuration. </summary>
         public IList<NetworkManagerRoutingGroupItem> AppliesTo { get; }
         /// <summary> Determines whether BGP route propagation is enabled. Defaults to true. </summary>
-        public string DisableBgpRoutePropagation { get; set; }
-        /// <summary> Indicates local route setting for this particular rule collection. </summary>
-        public RoutingRuleCollectionLocalRouteSetting? LocalRouteSetting { get; set; }
+        public DisableBgpRoutePropagation? DisableBgpRoutePropagation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
     }

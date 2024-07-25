@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VpnGatewayGet.json
             // this example is just showing the usage of "VpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_VpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VpnGatewayGet.json
             // this example is just showing the usage of "VpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_VpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VpnGatewayGet.json
             // this example is just showing the usage of "VpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_VpnGatewayPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VpnGatewayPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VpnGatewayPut.json
             // this example is just showing the usage of "VpnGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,7 +247,7 @@ Name = "nat03",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_VpnGatewayListByResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/VpnGatewayListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VpnGatewayListByResourceGroup.json
             // this example is just showing the usage of "VpnGateways_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
