@@ -291,7 +291,7 @@ namespace Azure.AI.Inference
         /// <param name="extraParams">
         /// Controls what happens if extra parameters, undefined by the REST API,
         /// are passed in the JSON request payload.
-        /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass_through"
+        /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass-through"
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -337,7 +337,7 @@ namespace Azure.AI.Inference
         /// <param name="extraParams">
         /// Controls what happens if extra parameters, undefined by the REST API,
         /// are passed in the JSON request payload.
-        /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass_through"
+        /// This sets the HTTP request header `extra-parameters`. Allowed values: "error" | "drop" | "pass-through"
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>

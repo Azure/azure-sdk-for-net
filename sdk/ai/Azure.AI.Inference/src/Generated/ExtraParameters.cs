@@ -24,7 +24,7 @@ namespace Azure.AI.Inference
 
         private const string ErrorValue = "error";
         private const string DropValue = "drop";
-        private const string PassThroughValue = "pass_through";
+        private const string PassThroughValue = "pass-through";
 
         /// <summary> The service will error if it detected extra parameters in the request payload. This is the service default. </summary>
         public static ExtraParameters Error { get; } = new ExtraParameters(ErrorValue);

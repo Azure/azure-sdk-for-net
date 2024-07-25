@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "685",
         "Content-Type": "application/json",
-        "traceparent": "00-ec517306a625fc59be59485863f16ef0-0a0c08cb453d68ff-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240723.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-50da3091a8650886f0770d3708b4245e-68444c3069d964d7-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240725.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -52,16 +52,16 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240705001",
-        "Content-Length": "565",
+        "azureml-model-session": "dep-eus-mis-bundle-240705002",
+        "Content-Length": "616",
         "Content-Type": "application/json",
-        "Date": "Tue, 23 Jul 2024 21:26:43 GMT",
+        "Date": "Thu, 25 Jul 2024 23:41:46 GMT",
         "prompt_token_len": "143",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
-        "sampling_token_len": "72",
+        "sampling_token_len": "83",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "1fd1e68d-2f4e-49ab-b522-8bd6469031c7"
+        "X-Request-ID": "2802dbc4-6f4f-451a-9f65-6ca50b53405c"
       },
       "ResponseBody": {
         "choices": [
@@ -69,20 +69,20 @@
             "finish_reason": "stop",
             "index": 0,
             "message": {
-              "content": "To help you with that, I need to know the anticipated future temperature in Honolulu. I can request that information for you. Would you like me to do that?\n\n[{\"name\": \"get_future_temperature\", \"arguments\": {\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}}]",
+              "content": "To provide you with the most suitable advice, I need to know the anticipated future temperature in Honolulu. I can request this information for you. Would you like me to do that?\n\nAssistant's function call:\n[{\"name\": \"get_future_temperature\", \"arguments\": {\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}}]",
               "role": "assistant",
               "tool_calls": null
             }
           }
         ],
-        "created": 1721770003,
-        "id": "714f38472bb04b64ad8c2ac11beb924e",
+        "created": 1721950904,
+        "id": "093e77eac0254b6e894ae25d31f2dcd8",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
-          "completion_tokens": 72,
+          "completion_tokens": 83,
           "prompt_tokens": 143,
-          "total_tokens": 215
+          "total_tokens": 226
         }
       }
     }
@@ -90,6 +90,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "965800486"
+    "RandomSeed": "600036332"
   }
 }

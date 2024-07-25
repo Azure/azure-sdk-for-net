@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "685",
         "Content-Type": "application/json",
-        "traceparent": "00-af6036d688097d4c74eddc3f7591bd0a-23f4bd76e7c743b6-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240723.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-f64bfa0ab00861828d64f6fc8e0ccdd9-8fc45df9c7edf405-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240725.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -53,15 +53,15 @@
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
         "azureml-model-session": "dep-eus-mis-bundle-240705001",
-        "Content-Length": "538",
+        "Content-Length": "532",
         "Content-Type": "application/json",
-        "Date": "Tue, 23 Jul 2024 21:26:19 GMT",
+        "Date": "Thu, 25 Jul 2024 23:41:22 GMT",
         "prompt_token_len": "143",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
-        "sampling_token_len": "67",
+        "sampling_token_len": "62",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "4c638232-2ed3-4ef9-b52b-cc696d11fce1"
+        "X-Request-ID": "6c937170-cdf0-490d-a0b9-d660ca20e67b"
       },
       "ResponseBody": {
         "choices": [
@@ -69,20 +69,20 @@
             "finish_reason": "stop",
             "index": 0,
             "message": {
-              "content": "To help you with that, I can request the anticipated future temperature in Honolulu for 3 days in advance. Let me check for you.\n\n[{\"name\": \"get_future_temperature\", \"arguments\": {\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}}]",
+              "content": "To help you with that, I need to know the anticipated future temperature in Honolulu. I can request this information for you. [{\"name\": \"get_future_temperature\", \"arguments\": {\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}}]",
               "role": "assistant",
               "tool_calls": null
             }
           }
         ],
-        "created": 1721769979,
-        "id": "5c60e20459e94bda93002d00541e789e",
+        "created": 1721950881,
+        "id": "953ce924e1b541ceba8dbcc4ccaf1955",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
-          "completion_tokens": 67,
+          "completion_tokens": 62,
           "prompt_tokens": 143,
-          "total_tokens": 210
+          "total_tokens": 205
         }
       }
     }
@@ -90,6 +90,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "1962026422"
+    "RandomSeed": "2027826051"
   }
 }

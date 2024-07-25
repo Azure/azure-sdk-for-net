@@ -131,8 +131,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 #else
             var endpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
-            // var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
-            var credential = new AzureKeyCredential("foo");
+            var credential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
 #endif
 
             var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());

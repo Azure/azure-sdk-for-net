@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "130",
         "Content-Type": "application/json",
-        "traceparent": "00-ed94737e04ecd1543dc6ee0fcd186fd6-40cf9f849fb7fec7-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240723.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-52e34dbe6d6bd4b8b9c75983c42b73be-79e9ecd09494f36f-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240725.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -28,16 +28,16 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240705002",
-        "Content-Length": "323",
+        "azureml-model-session": "dep-eus-mis-bundle-240705001",
+        "Content-Length": "324",
         "Content-Type": "application/json",
-        "Date": "Tue, 23 Jul 2024 21:27:31 GMT",
+        "Date": "Thu, 25 Jul 2024 23:42:35 GMT",
         "prompt_token_len": "19",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
-        "sampling_token_len": "12",
+        "sampling_token_len": "13",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "9c6991bd-9d29-47e4-86d2-8078f96d2909"
+        "X-Request-ID": "87b13f63-6d04-4109-8a07-18d9df8d47f9"
       },
       "ResponseBody": {
         "choices": [
@@ -45,20 +45,20 @@
             "finish_reason": "stop",
             "index": 0,
             "message": {
-              "content": "There are 5280 feet in a mile.",
+              "content": "There are 5,280 feet in a mile.",
               "role": "assistant",
               "tool_calls": null
             }
           }
         ],
-        "created": 1721770051,
-        "id": "dc0b5dc53d704b2bbf5cad4b4e5b9e11",
+        "created": 1721950955,
+        "id": "87149a35bfa9404e869ab7027353f33f",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
-          "completion_tokens": 12,
+          "completion_tokens": 13,
           "prompt_tokens": 19,
-          "total_tokens": 31
+          "total_tokens": 32
         }
       }
     }
@@ -66,6 +66,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "991164555"
+    "RandomSeed": "1877754220"
   }
 }
