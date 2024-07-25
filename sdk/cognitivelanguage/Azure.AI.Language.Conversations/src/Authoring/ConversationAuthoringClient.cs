@@ -4,12 +4,13 @@
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member as it is obsolete.
+
     /// <remarks>
     /// See <see href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring"/> for more information about models you can pass to this client.
     /// </remarks>
@@ -17,17 +18,40 @@ namespace Azure.AI.Language.Conversations.Authoring
     [Obsolete("This client is no longer supported as part of the Conversations SDK. This will be released independently.")]
     public class ConversationAuthoringClient
     {
+        /// <summary> Initializes a new instance of ConversationAuthoringClient. </summary>
         public ConversationAuthoringClient(Uri endpoint, TokenCredential credential)
         {
             throw new NotSupportedException();
         }
 
+        /// <summary> Initializes a new instance of ConversationAuthoringClient </summary>
         public ConversationAuthoringClient(Uri endpoint, TokenCredential credential, ConversationsClientOptions options)
         {
             throw new NotSupportedException();
         }
 
-        public virtual Uri Endpoint => throw new NotSupportedException();
+        /// <summary> Initializes a new instance of ConversationAuthoringClient for mocking. </summary>
+        protected ConversationAuthoringClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+
+        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential, ConversationsClientOptions options)
+        {
+        }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, RequestContext context)
@@ -42,48 +66,64 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
         public virtual HttpPipeline Pipeline { get; }
 
-        protected ConversationAuthoringClient()
-        {
-        }
+        public virtual Uri Endpoint => throw new NotSupportedException();
 
-        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential)
-        {
-        }
-
-        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential, ConversationsClientOptions options)
-        {
-        }
-
+        /// <summary>
+        /// [Protocol Method] Creates a new project or updates an existing one.
+        /// </summary>
         public virtual Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new project or updates an existing one.
+        /// </summary>
 
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
 
+        /// <summary>
+        /// [Protocol Method] Gets the details of the projects.
+        /// </summary>
+
         public virtual Task<Response> GetProjectAsync(string projectName, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
 
+        /// <summary>
+        /// [Protocol Method] Gets the details of the projects.
+        /// </summary>
         public virtual Response GetProject(string projectName, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
 
+        /// <summary>
+        /// Asynchronously gets the deployment details for a specified project and deployment name.
+        /// </summary>
+        /// <param name="projectName">The name of the project.</param>
+        /// <param name="deploymentName">The name of the deployment.</param>
+        /// <param name="context">The request context.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the response.</returns>
         public virtual Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
-
+        /// <summary>
+        /// Gets the deployment details for a specified project and deployment name.
+        /// </summary>
+        /// <param name="projectName">The name of the project.</param>
+        /// <param name="deploymentName">The name of the deployment.</param>
+        /// <param name="context">The request context.</param>
+        /// <returns>A <see cref="Response"/> containing the deployment details.</returns>
         public virtual Response GetDeployment(string projectName, string deploymentName, RequestContext context = null)
         {
             throw new NotSupportedException();
         }
-
         public virtual Task<Response> GetDeploymentJobStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
             throw new NotSupportedException();
@@ -353,4 +393,5 @@ namespace Azure.AI.Language.Conversations.Authoring
             throw new NotSupportedException();
         }
     }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member as it is obsolete.
 }
