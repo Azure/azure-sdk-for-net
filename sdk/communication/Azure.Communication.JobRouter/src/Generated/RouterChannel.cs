@@ -64,8 +64,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Id of a channel. </summary>
-        public string ChannelId { get; set; }
+        public string ChannelId { get; }
         /// <summary> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </summary>
-        public int CapacityCostPerJob { get; set; }
+        public int CapacityCostPerJob { get; }
     }
 }
