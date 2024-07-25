@@ -11,9 +11,12 @@
     <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0' ">
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>
