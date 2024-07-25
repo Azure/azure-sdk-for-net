@@ -197,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 // leaking sensitive information.
                 if (IsEventHubsConnectionString(connection))
                 {
-                    connection =  "<< REDACTED >> (a full connection string was incorrectly used instead of a connection name)";
+                    connection =  "<< REDACTED >> (a full connection string was incorrectly used instead of a connection setting name)";
                 }
 
                 // Not found
