@@ -113,11 +113,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 {
                     using var response = await client.GetAsync(url);
                 }
-                catch (Exception ex)
+                catch
                 {
-                    throw new Exception(client.BaseAddress!.ToString() + ex.Message);
-
-                    //throw ex;
                     // Ignore exceptions
                 }
 
