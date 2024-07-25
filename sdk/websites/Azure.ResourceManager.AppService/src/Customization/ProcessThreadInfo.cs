@@ -5,12 +5,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Process Thread Information. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ProcessThreadInfo : ResourceData
     {
         /// <summary>

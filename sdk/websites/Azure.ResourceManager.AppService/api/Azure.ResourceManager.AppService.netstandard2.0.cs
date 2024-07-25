@@ -10407,6 +10407,7 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ProcessThreadInfo : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ProcessThreadInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ProcessThreadInfo>
     {
         public ProcessThreadInfo() { }
