@@ -254,6 +254,8 @@ namespace Azure.AI.Translation.Document
     public partial class SingleDocumentTranslationClient
     {
         protected SingleDocumentTranslationClient() { }
+        public SingleDocumentTranslationClient(System.Uri endpoint) { }
+        public SingleDocumentTranslationClient(System.Uri endpoint, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -314,6 +316,7 @@ namespace Azure.AI.Translation.Document
     public partial class TranslationSource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.TranslationSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.TranslationSource>
     {
         public TranslationSource(System.Uri sourceUri) { }
+        public TranslationSource(System.Uri sourceUri, string languageCode = null, string storageSource = null, string prefix = null, string suffix = null) { }
         public string LanguageCode { get { throw null; } set { } }
         public string Prefix { get { throw null; } set { } }
         public System.Uri SourceUri { get { throw null; } }

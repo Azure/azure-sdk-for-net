@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Tag name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
     }
 }

@@ -13,6 +13,9 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
+using System.Threading;
+using Azure.Storage.Files.Shares.Specialized;
+using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
@@ -32,9 +35,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         private const string _fileResourcePrefix = "test-file-";
         private const string _expectedOverwriteExceptionMessage = "Cannot overwrite file.";
         private const string _defaultContentType = "text/plain";
-        private const string _defaultContentLanguage = "en-US";
+        private readonly string[] _defaultContentLanguage = new[] { "en-US", "en-CA" };
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
+        private const string _defaultShortPermissions = "O:SYG:SYD:(A;;FA;;;BA)(A;;FA;;;SY)(A;;0x1200a9;;;BU)(A;;0x1301bf;;;AU)(A;;FA;;;SY)";
+        private const string _defaultPermissions = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+        private const NtfsFileAttributes _defaultFileAttributes = NtfsFileAttributes.None;
+        private const NtfsFileAttributes _defaultDirectoryAttributes = NtfsFileAttributes.Directory;
         private readonly Metadata _defaultMetadata = DataProvider.BuildMetadata();
         private readonly DateTimeOffset _defaultFileCreatedOn = new DateTimeOffset(2024, 4, 1, 9, 5, 55, default);
         private readonly DateTimeOffset _defaultFileLastWrittenOn = new DateTimeOffset(2024, 4, 1, 12, 16, 6, default);
@@ -61,13 +68,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
 
-        private async Task<ShareFileClient> CreateFileClientAsync(
+        private async Task<ShareFileClient> CreateFileClientWithShortPermissionsAsync(
             ShareClient container,
             long? objectLength = null,
             bool createResource = false,
             string objectName = null,
             ShareClientOptions options = null,
-            Stream contents = null)
+            Stream contents = null,
+            TransferPropertiesTestType propertiesType = TransferPropertiesTestType.Default)
         {
             objectName ??= GetNewObjectName();
             ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
@@ -77,15 +85,94 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 {
                     throw new InvalidOperationException($"Cannot create share file without size specified. Either set {nameof(createResource)} to false or specify a {nameof(objectLength)}.");
                 }
-                await fileClient.CreateAsync(objectLength.Value);
+                string permissions = default;
+                if (propertiesType == TransferPropertiesTestType.Preserve)
+                {
+                    permissions = _defaultPermissions;
+                }
+                await fileClient.CreateAsync(
+                    maxSize: objectLength.Value,
+                    httpHeaders: new ShareFileHttpHeaders()
+                    {
+                        ContentLanguage = _defaultContentLanguage,
+                        ContentDisposition = _defaultContentDisposition,
+                        CacheControl = _defaultCacheControl
+                    },
+                    metadata: _defaultMetadata,
+                    smbProperties: new FileSmbProperties()
+                    {
+                        FileAttributes = _defaultFileAttributes,
+                        FileCreatedOn = _defaultFileCreatedOn,
+                        FileChangedOn = _defaultFileChangedOn,
+                        FileLastWrittenOn = _defaultFileLastWrittenOn,
+                    },
+                    filePermission: permissions);
 
                 if (contents != default)
                 {
                     await fileClient.UploadAsync(contents);
                 }
             }
-            Uri sourceUri = fileClient.GenerateSasUri(Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
-            return InstrumentClient(new ShareFileClient(sourceUri, GetOptions()));
+            Uri containerSas = container.GenerateSasUri(ShareSasPermissions.All, Recording.UtcNow.AddDays(1));
+            ShareUriBuilder sasBuilder = new ShareUriBuilder(containerSas)
+            {
+                DirectoryOrFilePath = fileClient.Path
+            };
+            return InstrumentClient(new ShareFileClient(sasBuilder.ToUri(), GetOptions()));
+        }
+
+        private async Task<ShareFileClient> CreateFileClientWithPermissionKeyAsync(
+            ShareClient container,
+            long? objectLength = null,
+            bool createResource = false,
+            string objectName = null,
+            ShareClientOptions options = null,
+            Stream contents = null,
+            TransferPropertiesTestType propertiesType = TransferPropertiesTestType.Default)
+        {
+            objectName ??= GetNewObjectName();
+            ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
+            if (createResource)
+            {
+                if (!objectLength.HasValue)
+                {
+                    throw new InvalidOperationException($"Cannot create share file without size specified. Either set {nameof(createResource)} to false or specify a {nameof(objectLength)}.");
+                }
+                string permissionKey = default;
+                if (propertiesType == TransferPropertiesTestType.Preserve)
+                {
+                    PermissionInfo permissionInfo = await container.CreatePermissionAsync(_defaultPermissions);
+                    permissionKey = permissionInfo.FilePermissionKey;
+                }
+                await fileClient.CreateAsync(
+                    maxSize: objectLength.Value,
+                    httpHeaders: new ShareFileHttpHeaders()
+                    {
+                        ContentLanguage = _defaultContentLanguage,
+                        ContentDisposition = _defaultContentDisposition,
+                        CacheControl = _defaultCacheControl
+                    },
+                    metadata: _defaultMetadata,
+                    smbProperties: new FileSmbProperties()
+                    {
+                        FileAttributes = _defaultFileAttributes,
+                        FilePermissionKey = permissionKey,
+                        FileCreatedOn = _defaultFileCreatedOn,
+                        FileChangedOn = _defaultFileChangedOn,
+                        FileLastWrittenOn = _defaultFileLastWrittenOn,
+                    });
+
+                if (contents != default)
+                {
+                    await fileClient.UploadAsync(contents);
+                }
+            }
+            Uri containerSas = container.GenerateSasUri(ShareSasPermissions.All, Recording.UtcNow.AddDays(1));
+            ShareUriBuilder sasBuilder = new ShareUriBuilder(containerSas)
+            {
+                DirectoryOrFilePath = fileClient.Path
+            };
+            return InstrumentClient(new ShareFileClient(sasBuilder.ToUri(), GetOptions()));
         }
 
         protected override Task<ShareFileClient> GetSourceObjectClientAsync(
@@ -96,7 +183,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClientOptions options = null,
             Stream contents = null,
             TransferPropertiesTestType propertiesTestType = default)
-            => CreateFileClientAsync(
+            => CreateFileClientWithPermissionKeyAsync(
                 container,
                 objectLength,
                 createResource,
@@ -117,7 +204,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string objectName = null,
             ShareClientOptions options = null,
             Stream contents = null)
-            => CreateFileClientAsync(
+            => CreateFileClientWithPermissionKeyAsync(
                 container,
                 objectLength,
                 createResource,
@@ -128,7 +215,55 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         protected override StorageResourceItem GetDestinationStorageResourceItem(
             ShareFileClient objectClient,
             TransferPropertiesTestType type = TransferPropertiesTestType.Default)
-            => new ShareFileStorageResource(objectClient);
+        {
+            ShareFileStorageResourceOptions options = default;
+            if (type == TransferPropertiesTestType.NewProperties)
+            {
+                options = new ShareFileStorageResourceOptions
+                {
+                    ContentDisposition = new(_defaultContentDisposition),
+                    ContentLanguage = new(_defaultContentLanguage),
+                    CacheControl = new(_defaultCacheControl),
+                    ContentType = new(_defaultContentType),
+                    FileMetadata = new(_defaultMetadata),
+                    FileAttributes = new(_defaultFileAttributes),
+                    FileCreatedOn = new(_defaultFileCreatedOn),
+                    FileChangedOn = new(_defaultFileChangedOn),
+                    FileLastWrittenOn = new(_defaultFileLastWrittenOn)
+                };
+            }
+            else if (type == TransferPropertiesTestType.NoPreserve)
+            {
+                options = new ShareFileStorageResourceOptions
+                {
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    ContentType = new(false),
+                    FileMetadata = new(false),
+                    FileAttributes = new(false),
+                    FileCreatedOn = new(false),
+                    FileLastWrittenOn = new(false),
+                    FilePermissions = new(false)
+                };
+            }
+            else if (type == TransferPropertiesTestType.Preserve)
+            {
+                options = new ShareFileStorageResourceOptions
+                {
+                    ContentDisposition = new(true),
+                    ContentLanguage = new(true),
+                    CacheControl = new(true),
+                    ContentType = new(true),
+                    FileMetadata = new(true),
+                    FileAttributes = new(true),
+                    FileCreatedOn = new(true),
+                    FileLastWrittenOn = new(true),
+                    FilePermissions = new(true)
+                };
+            }
+            return new ShareFileStorageResource(objectClient, options);
+        }
 
         protected override Task<Stream> DestinationOpenReadAsync(ShareFileClient objectClient)
             => objectClient.OpenReadAsync();
@@ -193,8 +328,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
                 Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
             }
-            else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
-                 //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
+            else if (transferPropertiesTestType == TransferPropertiesTestType.Preserve)
             {
                 ShareFileProperties sourceProperties = await sourceClient.GetPropertiesAsync();
                 ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
@@ -207,6 +341,202 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
                 Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+
+                // Check if the permissions are the same. Permission Keys will be different as they are defined by the share service.
+                ShareClient sourceShareClient = sourceClient.GetParentShareClient();
+                string sourcePermission = await sourceShareClient.GetPermissionAsync(sourceProperties.SmbProperties.FilePermissionKey);
+
+                ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
+                string fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
+                Assert.AreEqual(sourcePermission, fullPermission);
+            }
+            else // Default properties
+            {
+                ShareFileProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+            }
+        }
+
+        private async Task CopyRemoteObjects_VerifyProperties(
+            ShareClient sourceContainer,
+            ShareClient destinationContainer,
+            TransferPropertiesTestType propertiesType)
+        {
+            // Create file with properties
+            ShareFileClient sourceClient = await CreateFileClientWithPermissionKeyAsync(
+                container: sourceContainer,
+                objectLength: 0,
+                createResource: true,
+                propertiesType: propertiesType);
+            StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
+
+            // Destination client - Set Properties
+            ShareFileClient destinationClient = await GetDestinationObjectClientAsync(
+                container: destinationContainer,
+                createResource: false);
+            StorageResourceItem destinationResource = GetDestinationStorageResourceItem(
+                destinationClient,
+                type: propertiesType);
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Act - Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            await VerifyPropertiesCopyAsync(
+                transfer,
+                propertiesType,
+                testEventsRaised,
+                sourceClient,
+                destinationClient);
+        }
+
+        [RecordedTest]
+        public async Task ShareFileToShareFile_PermissionKeyDefault()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.Default);
+        }
+
+        [RecordedTest]
+        public async Task ShareFileToShareFile_PermissionKeyPreserve()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.Preserve);
+        }
+
+        [RecordedTest]
+        public async Task ShareFileToShareFile_PermissionKeyNoPreserve()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.NoPreserve);
+        }
+
+        [RecordedTest]
+        [TestCase(TransferPropertiesTestType.NewProperties)]
+        [TestCase(TransferPropertiesTestType.Preserve)]
+        public async Task ShareFileToShareFile_PermissionValue(TransferPropertiesTestType propertiesType)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            // Create file with properties
+            ShareFileClient sourceClient = await CreateFileClientWithShortPermissionsAsync(
+                container: source.Container,
+                objectLength: 0,
+                createResource: true,
+                propertiesType: propertiesType);
+            StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
+
+            // Destination client - Set Properties
+            ShareFileClient destinationClient = await GetDestinationObjectClientAsync(
+                container: destination.Container,
+                createResource: false);
+            StorageResourceItem destinationResource = GetDestinationStorageResourceItem(
+                destinationClient,
+                type: propertiesType);
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Act - Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
+            if (propertiesType == TransferPropertiesTestType.NewProperties)
+            {
+                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+                Assert.AreEqual(_defaultFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(_defaultFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(_defaultFileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+
+                ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
+                string actualPermissions = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
+                Assert.AreEqual(_defaultShortPermissions, actualPermissions);
+            }
+            else if (propertiesType == TransferPropertiesTestType.Preserve)
+            {
+                ShareFileProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+                Assert.AreEqual(sourceProperties.SmbProperties.FileChangedOn, destinationProperties.SmbProperties.FileChangedOn);
+
+                // Check if the permissions are the same. Permission Keys will be different as they are defined by the share service.
+                ShareClient sourceShareClient = sourceClient.GetParentShareClient();
+                string sourcePermission = await sourceShareClient.GetPermissionAsync(sourceProperties.SmbProperties.FilePermissionKey);
+
+                ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
+                string fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
+                Assert.AreEqual(sourcePermission, fullPermission);
             }
         }
     }
