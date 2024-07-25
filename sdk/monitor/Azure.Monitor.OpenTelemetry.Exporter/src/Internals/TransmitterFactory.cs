@@ -24,9 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return Get(azureMonitorExporterOptions, DefaultPlatform.Instance);
         }
 
-        /// <summary>
-        /// This overload is intended for unit testing purposes.
-        /// </summary>
+        /// <remarks>
+        /// This method should not be called directly in product code.
+        /// This method is primarially intended for unit testing scenarios where providing a mock platform is necessary.
+        /// </remarks>
         internal ITransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions, IPlatform platform)
         {
             var key = azureMonitorExporterOptions.ConnectionString ?? string.Empty;

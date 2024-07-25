@@ -24,9 +24,10 @@ internal static class ResourceExtensions
         return resource.CreateAzureMonitorResource(instrumentationKey, DefaultPlatform.Instance);
     }
 
-    /// <summary>
-    /// This overload is intended for unit testing purposes.
-    /// </summary>
+    /// <remarks>
+    /// This method should not be called directly in product code.
+    /// This method is primarially intended for unit testing scenarios where providing a mock platform is necessary.
+    /// </remarks>
     internal static AzureMonitorResource? CreateAzureMonitorResource(this Resource resource, string? instrumentationKey, IPlatform platform)
     {
         if (resource == null)
