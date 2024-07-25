@@ -60,8 +60,8 @@ public abstract class OperationResult : ClientResult
     // say if you want to configure that you need to call the subtype directly.
 
     // TODO: use Core methods/Template pattern instead?
-    public abstract Task WaitAsync(CancellationToken cancellationToken = default);
-    public abstract void Wait(CancellationToken cancellationToken = default);
+    public abstract Task<WaitReturnReason> WaitAsync(CancellationToken cancellationToken = default);
+    public abstract WaitReturnReason Wait(CancellationToken cancellationToken = default);
 
     // Returns false if operation has completed, or if continuing to poll for updates
     // would cause an infinite loop.  "CanContinue"/"Has more updates" -> can MoveNext
