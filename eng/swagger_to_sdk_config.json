@@ -9,7 +9,7 @@
         "scriptError": "\\[ERROR\\]"
       },
       "stdout": {
-        "showInComment": "Start to.*"
+        "showInComment": "(Start to|\\[ERROR\\]).*"
       }
     }
   },
