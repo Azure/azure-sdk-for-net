@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 ConnectionString = ConnectionString
             };
 
-            var manager = new Manager(azureMonitorOptions, new DefaultPlatform());
+            var manager = new Manager(azureMonitorOptions, new DefaultPlatformDistro());
 
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(ActivitySourceName)
@@ -145,7 +145,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
                 _logger?.Log(
                     logLevel: LogLevel.Information,
-                    eventId: 0,
+                    eventId: 1,
                     exception: null,
                     message: "Hello {name}.",
                     args: new object[] { "World" });
@@ -162,7 +162,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                     {
                         _logger?.Log(
                             logLevel: LogLevel.Error,
-                            eventId: 0,
+                            eventId: 2,
                             exception: ex,
                             message: "Hello {name}.",
                             args: new object[] { "World" });

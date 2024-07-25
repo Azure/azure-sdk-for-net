@@ -38,8 +38,7 @@ Alternatively, Email clients can also be authenticated using a valid token crede
 
 ```C# Snippet:Azure_Communication_Email_CreateEmailClientWithToken
 string endpoint = "<endpoint_url>";
-TokenCredential tokenCredential = new DefaultAzureCredential();
-tokenCredential = new DefaultAzureCredential();
+var tokenCredential = new DefaultAzureCredential();
 EmailClient emailClient = new EmailClient(new Uri(endpoint), tokenCredential);
 ```
 ## Examples

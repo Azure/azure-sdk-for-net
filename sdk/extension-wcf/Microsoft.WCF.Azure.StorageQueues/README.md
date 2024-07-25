@@ -9,7 +9,7 @@ WCF Azure Queue Storage client is the client side library that will enable WCF c
 Install the Microsoft.WCF.Azure.StorageQueues.Client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.WCF.Azure.StorageQueues.Client
+dotnet add package Microsoft.WCF.Azure.StorageQueues.Client --prerelease
 ```
 
 ### Prerequisites

@@ -31,10 +31,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             internal const int FileAttributesOffsetIndex = PreserveFileAttributesIndex + PreserveEncodedSize;
             internal const int FileAttributesLengthIndex = FileAttributesOffsetIndex + OffsetLengthEncodedSize;
 
-            internal const int FilePermissionKeyOffsetIndex = FileAttributesLengthIndex + OffsetLengthEncodedSize;
-            internal const int FilePermissionKeyLengthIndex = FilePermissionKeyOffsetIndex + OffsetLengthEncodedSize;
+            internal const int PreserveFilePermissionIndex = FileAttributesLengthIndex + PreserveEncodedSize;
 
-            internal const int PreserveFileCreatedOnIndex = FilePermissionKeyLengthIndex + OffsetLengthEncodedSize;
+            internal const int PreserveFileCreatedOnIndex = PreserveFilePermissionIndex + OffsetLengthEncodedSize;
             internal const int FileCreatedOnIndex = PreserveFileCreatedOnIndex + PreserveEncodedSize;
             internal const int FileCreatedOnLengthIndex = FileCreatedOnIndex + OffsetLengthEncodedSize;
 

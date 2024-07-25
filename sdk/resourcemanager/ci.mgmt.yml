@@ -81,6 +81,7 @@ trigger:
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations
+    - sdk/fabric/Azure.ResourceManager.Fabric
     - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
@@ -97,6 +98,7 @@ trigger:
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -276,6 +278,7 @@ pr:
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations
+    - sdk/fabric/Azure.ResourceManager.Fabric
     - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
@@ -292,6 +295,7 @@ pr:
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub

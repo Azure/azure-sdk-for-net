@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </summary>
+        [WirePath("vnetid")]
         public Guid? VnetId { get; }
         /// <summary> The name of the subnet. </summary>
+        [WirePath("subnetname")]
         public string Subnetname { get; }
         /// <summary> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </summary>
+        [WirePath("subnetResourceId")]
         public ResourceIdentifier SubnetResourceId { get; set; }
     }
 }

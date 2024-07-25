@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/ad997e99eccc15b7ab4cd66ae3f1f9534a1e2628/specification/app/resource-manager/readme.md
-# tag: package-2023-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/07f22664203dc215a564e00329b81a8a94cc11ee/specification/app/resource-manager/readme.md
+#tag: package-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -231,6 +231,10 @@ rename-mapping:
   JobScale.pollingInterval: PollingIntervalInSeconds
   JobScaleRule: ContainerAppJobScaleRule
   JobConfigurationEventTriggerConfig: EventTriggerConfiguration
+  TokenStore: ContainerAppTokenStore
+  Usage: ContainerAppUsage
+  UsageName: ContainerAppUsageName
+  UsageUnit: ContainerAppUsageUnit
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -240,6 +244,9 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}: ContainerAppManagedEnvironmentDaprComponent
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}: ContainerAppManagedEnvironmentDetector
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi: ContainerAppManagedEnvironmentDetectorResourceProperty
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}: ContainerAppJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectors/{detectorName}: ContainerAppJobDetector
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}: ContainerAppJobDetectorProperty
 
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability

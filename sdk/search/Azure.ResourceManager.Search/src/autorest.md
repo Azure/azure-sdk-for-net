@@ -92,6 +92,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
   NSP: Nsp|nsp
 
 override-operation-name:

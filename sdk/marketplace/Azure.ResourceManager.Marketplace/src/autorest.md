@@ -124,6 +124,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 directive:
   - from: Marketplace.json
