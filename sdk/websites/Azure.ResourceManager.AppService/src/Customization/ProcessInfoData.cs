@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 List<ProcessThreadInfo> threads = new List<ProcessThreadInfo>();
-                foreach (WebAppProcessThreadInfo thread in ProcessThreads)
+                foreach (WebAppProcessThreadProperties thread in ProcessThreads)
                 {
                     ProcessThreadInfo processThread = new ProcessThreadInfo(default, default, default, default, thread.Id, thread.Href.AbsoluteUri, default, default, default, default, default, default, default, default, thread.State, default, default, new Dictionary<string, BinaryData>());
                     threads.Add(processThread);

@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Process Thread Information. </summary>
-    public partial class WebAppProcessThreadInfo : ResourceData
+    /// <summary> Process Thread properties. </summary>
+    public partial class WebAppProcessThreadProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +45,32 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadInfo"/>. </summary>
-        public WebAppProcessThreadInfo()
+        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadProperties"/>. </summary>
+        public WebAppProcessThreadProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> ProcessThreadInfo resource specific properties. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadProperties"/>. </summary>
+        /// <param name="id"> Thread ID. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="state"> Thread state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppProcessThreadInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebAppProcessThreadProperties properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppProcessThreadProperties(int? id, Uri href, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
-            Kind = kind;
+            Id = id;
+            Href = href;
+            State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ProcessThreadInfo resource specific properties. </summary>
-        [WirePath("properties")]
-        public WebAppProcessThreadProperties Properties { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> Thread ID. </summary>
+        [WirePath("id")]
+        public int? Id { get; }
+        /// <summary> HRef URI. </summary>
+        [WirePath("href")]
+        public Uri Href { get; set; }
+        /// <summary> Thread state. </summary>
+        [WirePath("state")]
+        public string State { get; set; }
     }
 }
