@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using OpenAI.TestFramework.Recording;
-using OpenAI.TestFramework.Recording.RecordingProxy;
+using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework;
@@ -21,7 +21,7 @@ public abstract class RecordingTestBase<TEnvironment> : RecordingTestBase where 
 
     public TEnvironment TestEnvironment { get; }
 
-    protected override ProxyOptions CreateProxyOptions() => new ProxyOptions()
+    protected override ProxyServiceOptions CreateProxyOptions() => new ProxyServiceOptions()
     {
         StorageLocationDir = TestEnvironment.RepositoryRoot.FullName,
         DevCertFile = TestEnvironment.DevCertPath?.FullName,

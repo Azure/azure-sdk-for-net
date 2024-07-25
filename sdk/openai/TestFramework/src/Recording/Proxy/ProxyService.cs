@@ -4,14 +4,15 @@
 using System.Diagnostics;
 using System.Text;
 using NUnit.Framework;
+using OpenAI.TestFramework.Recording.RecordingProxy;
 
-namespace OpenAI.TestFramework.Recording.RecordingProxy;
+namespace OpenAI.TestFramework.Recording.Proxy;
 
 /// <summary>
 /// Represents the test proxy. See here for more information:
 /// https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md
 /// </summary>
-public class Proxy : IDisposable
+public class ProxyService : IDisposable
 {
     private const int c_maxLines = 50;
 
@@ -28,7 +29,7 @@ public class Proxy : IDisposable
     /// </summary>
     /// <param name="options">The options to use.</param>
     /// <exception cref="ArgumentNullException"><paramref name="options"/> was null.</exception>
-    private Proxy(ProxyOptions options)
+    private ProxyService(ProxyServiceOptions options)
     {
         if (options == null)
         {
@@ -103,11 +104,11 @@ public class Proxy : IDisposable
     /// <param name="options">The options to use for the proxy.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The initialized recording test proxy instance.</returns>
-    public static async Task<Proxy> CreateNewAsync(ProxyOptions options, CancellationToken token = default)
+    public static async Task<ProxyService> CreateNewAsync(ProxyServiceOptions options, CancellationToken token = default)
     {
         token.ThrowIfCancellationRequested();
 
-        Proxy proxy = new Proxy(options);
+        ProxyService proxy = new ProxyService(options);
 
         // Try to make sure the test proxy process is terminated when we exit
         AppDomain.CurrentDomain.DomainUnload += (_, _) => proxy.Dispose();
@@ -122,7 +123,7 @@ public class Proxy : IDisposable
     /// </summary>
     public void Dispose()
     {
-        _portsAvailableTcs.TrySetException(new ObjectDisposedException(nameof(Proxy)));
+        _portsAvailableTcs.TrySetException(new ObjectDisposedException(nameof(ProxyService)));
         _testProxyProcess.Kill();
     }
 

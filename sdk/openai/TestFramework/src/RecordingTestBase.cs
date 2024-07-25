@@ -7,17 +7,18 @@ using NUnit.Framework;
 using OpenAI.TestFramework.Recording;
 using OpenAI.TestFramework.Recording.Common;
 using OpenAI.TestFramework.Recording.Matchers;
+using OpenAI.TestFramework.Recording.Proxy;
+using OpenAI.TestFramework.Recording.Proxy.Service;
 using OpenAI.TestFramework.Recording.RecordingProxy;
-using OpenAI.TestFramework.Recording.RecordingProxy.Models;
 using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework;
 
 [NonParallelizable]
-public abstract class RecordingTestBase : SyncAsyncTestBase
+public abstract class RecordingTestBase : ClientTestBase
 {
     private static readonly object s_lock = new();
-    private static Proxy? s_proxy;
+    private static ProxyService? s_proxy;
 
     // Using Windows version as it is the most restrictive of all platforms:
     // https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
@@ -73,7 +74,7 @@ public abstract class RecordingTestBase : SyncAsyncTestBase
         // TODO FIXME: Add logic to ignore certain tests here by throwing IgnoreException()?
 
         using CancellationTokenSource cts = new(TestProxyWaitTime);
-        Proxy proxy = await StartTestProxyAsync(cts.Token).ConfigureAwait(false);
+        ProxyService proxy = await StartTestProxyAsync(cts.Token).ConfigureAwait(false);
         Recording = await StartAndConfigureRecordingSessionAsync(proxy, cts.Token).ConfigureAwait(false);
 
         // don't include test proxy overhead as part of the test time
@@ -137,10 +138,10 @@ public abstract class RecordingTestBase : SyncAsyncTestBase
         return options;
     }
 
-    protected virtual ProxyOptions CreateProxyOptions()
+    protected virtual ProxyServiceOptions CreateProxyOptions()
     {
         RecordedTestEnvironment env = new();
-        return new ProxyOptions(/* auto detect dotnet and test proxy dll */)
+        return new ProxyServiceOptions(/* auto detect dotnet and test proxy dll */)
         {
             StorageLocationDir = env.RepositoryRoot.FullName,
             DevCertFile = env.DevCertPath.FullName,
@@ -148,7 +149,7 @@ public abstract class RecordingTestBase : SyncAsyncTestBase
         };
     }
 
-    protected virtual Task<Proxy> StartTestProxyAsync(CancellationToken token)
+    protected virtual Task<ProxyService> StartTestProxyAsync(CancellationToken token)
     {
         // For now, we want to treat the proxy like a singleton and only create one instance for all tests
         if (s_proxy != null)
@@ -156,7 +157,7 @@ public abstract class RecordingTestBase : SyncAsyncTestBase
             return Task.FromResult(s_proxy);
         }
 
-        Task<Proxy> returnTask;
+        Task<ProxyService> returnTask;
 
         lock (s_lock)
         {
@@ -166,16 +167,16 @@ public abstract class RecordingTestBase : SyncAsyncTestBase
             }
             else
             {
-                ProxyOptions options = CreateProxyOptions();
+                ProxyServiceOptions options = CreateProxyOptions();
                 returnTask = Create(options, token);
             }
         }
 
         return returnTask;
 
-        static async Task<Proxy> Create(ProxyOptions options, CancellationToken token)
+        static async Task<ProxyService> Create(ProxyServiceOptions options, CancellationToken token)
         {
-            s_proxy = await Proxy.CreateNewAsync(options, token).ConfigureAwait(false);
+            s_proxy = await ProxyService.CreateNewAsync(options, token).ConfigureAwait(false);
             return s_proxy;
         }
     }
@@ -203,7 +204,7 @@ public abstract class RecordingTestBase : SyncAsyncTestBase
 
     protected abstract string GetRecordingFileRelativePath();
 
-    protected virtual async Task<TestRecording> StartAndConfigureRecordingSessionAsync(Proxy proxy, CancellationToken token)
+    protected virtual async Task<TestRecording> StartAndConfigureRecordingSessionAsync(ProxyService proxy, CancellationToken token)
     {
         var client = proxy.Client ?? throw new InvalidOperationException("Test proxy client was null");
         IDictionary<string, string>? variables = null;

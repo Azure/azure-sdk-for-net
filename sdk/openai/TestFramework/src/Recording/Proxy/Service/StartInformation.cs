@@ -3,10 +3,10 @@
 
 using System.Text.Json.Serialization;
 
-namespace OpenAI.TestFramework.Recording.RecordingProxy.Models;
+namespace OpenAI.TestFramework.Recording.Proxy.Service;
 
 /// <summary>
-/// Information for starting a recoring or playback session with the recording test proxy.
+/// Information for starting a recording or playback session with the recording test proxy.
 /// </summary>
 public class StartInformation
 {

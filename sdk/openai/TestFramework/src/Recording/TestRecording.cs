@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Security.Cryptography;
+using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.RecordingProxy;
 
 namespace OpenAI.TestFramework.Recording;
@@ -15,7 +16,7 @@ public class TestRecording : IAsyncDisposable
     private SortedDictionary<string, string> _variables;
     private TestRandom? _random;
 
-    public TestRecording(string id, RecordedTestMode mode, Proxy proxy, IDictionary<string, string>? variables = null)
+    public TestRecording(string id, RecordedTestMode mode, ProxyService proxy, IDictionary<string, string>? variables = null)
     {
         ID = id ?? throw new ArgumentNullException(nameof(id));
         Mode = mode;
@@ -74,7 +75,7 @@ public class TestRecording : IAsyncDisposable
         }
     }
 
-    protected internal Proxy Proxy { get; }
+    protected internal ProxyService Proxy { get; }
 
     public IDictionary<string, string> Variables => _variables;
 

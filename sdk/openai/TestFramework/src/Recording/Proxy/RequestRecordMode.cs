@@ -16,7 +16,6 @@ public enum RequestRecordMode
     /// Records the request headers but skips the request body.
     /// </summary>
     RecordWithoutRequestBody,
-
     /// <summary>
     /// Does not record the request (nor the response).
     /// </summary>

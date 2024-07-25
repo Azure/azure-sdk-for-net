@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace OpenAI.TestFramework.Recording.RecordingProxy.Models;
+namespace OpenAI.TestFramework.Recording.Proxy.Service;
 
 /// <summary>
 /// Settings for the test proxy transport.

@@ -4,12 +4,12 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace OpenAI.TestFramework.Recording.RecordingProxy;
+namespace OpenAI.TestFramework.Recording.Proxy;
 
 /// <summary>
 /// Options for starting the recording test proxy.
 /// </summary>
-public class ProxyOptions
+public class ProxyServiceOptions
 {
     /// <summary>
     /// Creates a new instance.
@@ -19,7 +19,7 @@ public class ProxyOptions
     /// <param name="testProxyDll">(Optional) The full path to the test proxy DLL. This will attempt to read the path
     /// from the assembly metadata if not specified.</param>
     /// <exception cref="InvalidOperationException">The DOTNET executable or test proxy DLL paths could not be determined.</exception>
-    public ProxyOptions(string? dotnetExecutable = null, string? testProxyDll = null)
+    public ProxyServiceOptions(string? dotnetExecutable = null, string? testProxyDll = null)
     {
         if (string.IsNullOrWhiteSpace(dotnetExecutable))
         {
@@ -49,7 +49,7 @@ public class ProxyOptions
 
         if (string.IsNullOrWhiteSpace(testProxyDll))
         {
-            testProxyDll = typeof(ProxyOptions).Assembly
+            testProxyDll = typeof(ProxyServiceOptions).Assembly
                 .GetCustomAttributes<AssemblyMetadataAttribute>()
                 .FirstOrDefault(attrib => attrib.Key == "TestProxyPath" && !string.IsNullOrWhiteSpace(attrib.Value))
                 ?.Value;

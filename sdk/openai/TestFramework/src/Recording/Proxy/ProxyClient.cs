@@ -7,7 +7,8 @@ using System.Net.Http;
 using System.Text.Json;
 using OpenAI.TestFramework.Recording.Common;
 using OpenAI.TestFramework.Recording.Matchers;
-using OpenAI.TestFramework.Recording.RecordingProxy.Models;
+using OpenAI.TestFramework.Recording.Proxy;
+using OpenAI.TestFramework.Recording.Proxy.Service;
 using OpenAI.TestFramework.Recording.Sanitizers;
 using OpenAI.TestFramework.Recording.Transforms;
 
@@ -209,7 +210,7 @@ public class ProxyClient
     /// <param name="options">The options to set.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public ProxyClientResult SetRecordingTransportOptions(string recordingId, ProxyOptions options, CancellationToken token = default)
+    public ProxyClientResult SetRecordingTransportOptions(string recordingId, ProxyServiceOptions options, CancellationToken token = default)
     {
         if (string.IsNullOrWhiteSpace(recordingId))
         {
@@ -234,7 +235,7 @@ public class ProxyClient
     /// <param name="options">The options to set.</param>
     /// <param name="token">The cancellation token to use.</param>
     /// <returns>The client result.</returns>
-    public async Task<ProxyClientResult> SetRecordingTransportOptionsAsync(string recordingId, ProxyOptions options, CancellationToken token = default)
+    public async Task<ProxyClientResult> SetRecordingTransportOptionsAsync(string recordingId, ProxyServiceOptions options, CancellationToken token = default)
     {
         if (string.IsNullOrWhiteSpace(recordingId))
         {
