@@ -28,6 +28,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Requested schedule time. </summary>
-        public DateTimeOffset ScheduleAt { get; set; }
+        public DateTimeOffset ScheduleAt { get; }
     }
 }

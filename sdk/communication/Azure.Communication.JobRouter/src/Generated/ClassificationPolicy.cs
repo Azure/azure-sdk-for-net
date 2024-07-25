@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ClassificationPolicy"/>. </summary>
-        public ClassificationPolicy()
+        internal ClassificationPolicy()
         {
             QueueSelectorAttachments = new ChangeTrackingList<QueueSelectorAttachment>();
             WorkerSelectorAttachments = new ChangeTrackingList<WorkerSelectorAttachment>();
