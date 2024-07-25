@@ -1,43 +1,124 @@
 # Azure Inference client library for .NET
 
-This section should give out brief introduction of the client library.
+The client Library (in preview) does inference, including chat completions, for AI models deployed by [Azure AI Studio](https://ai.azure.com) and [Azure Machine Learning Studio](https://ml.azure.com/). It supports Serverless API endpoints and Managed Compute endpoints (formerly known as Managed Online Endpoints). The client library makes services calls using REST API version `2024-05-01-preview`, as documented in [Azure AI Model Inference API](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-api). For more information see [Overview: Deploy models, flows, and web apps with Azure AI Studio](https://learn.microsoft.com/azure/ai-studio/concepts/deployments-overview).
 
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
+Use the model inference client library to:
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Inference) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+* Authenticate against the service
+* Get information about the model
+* Do chat completions
+<!-- * Get text embeddings -->
+<!-- * Get image embeddings -->
+
+With some minor adjustments, this client library can also be configured to do inference for Azure OpenAI endpoints. See samples with `azure_openai` in their name, in the [samples folder](https://aka.ms/azsdk/azure-ai-inference/csharp/samples).
+
+[Product documentation](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-api)
+| [Samples](https://aka.ms/azsdk/azure-ai-inference/csharp/samples)
+| [API reference documentation](https://aka.ms/azsdk/azure-ai-inference/csharp/reference)
+| [Package (NuGet)](https://aka.ms/azsdk/azure-ai-inference/csharp/package)
+| [SDK source code](https://aka.ms/azsdk/azure-ai-inference/csharp/source)
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
+### Prerequisites
+
+* An [Azure subscription](https://azure.microsoft.com/free).
+* An [AI Model from the catalog](https://ai.azure.com/explore/models) deployed through Azure AI Studio.
+* To construct the client library, you will need to pass in the endpoint URL. The endpoint URL has the form `https://your-host-name.your-azure-region.inference.ai.azure.com`, where `your-host-name` is your unique model deployment host name and `your-azure-region` is the Azure region where the model is deployed (e.g. `eastus2`).
+* Depending on your model deployment and authentication preference, you either need a key to authenticate against the service, or Entra ID credentials. The key is a 32-character string.
 
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
-
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the client library for .NET with [NuGet](https://aka.ms/azsdk/azure-ai-inference/csharp/package):
 
 ```dotnetcli
 dotnet add package Azure.AI.Inference --prerelease
 ```
 
-### Prerequisites
-
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
-
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
-
-### Authenticate the client
-
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
-
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
-
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+### Create and authenticate a client directly, using key
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+The package includes `ChatCompletionsClient` <!-- and `EmbeddingsClient`and `ImageGenerationClients`-->. It is created by providing your endpoint and credential information to the object:
+
+```C# Snippet:Azure_AI_Inference_InitializeChatCompletionsClient
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+```
+
+<!--
+### Create and authenticate a client directly, using Entra ID
+
+_Note: At the time of this package release, not all deployments support Entra ID authentication. For those who do, follow the instructions below._
+
+To use an Entra ID token credential, first install the [azure-identity](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity) package:
+
+```python
+pip install azure.identity
+```
+
+You will need to provide the desired credential type obtained from that package. A common selection is [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity#defaultazurecredential) and it can be used as follows:
+
+```python
+from azure.ai.inference import ChatCompletionsClient
+from azure.identity import DefaultAzureCredential
+
+client = ChatCompletionsClient(
+    endpoint=endpoint,
+    credential=DefaultAzureCredential(exclude_interactive_browser_credential=False)
+)
+```
+
+During application development, you would typically set up the environment for authentication using Entra ID by first [Installing the Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli), running `az login` in your console window, then entering your credentials in the browser window that was opened. The call to `DefaultAzureCredential()` will then succeed. Setting `exclude_interactive_browser_credential=False` in that call will enable launching a browser window if the user isn't already logged in.
+-->
+
+### Get AI model information
+
+All clients provide a `get_model_info` method to retrive AI model information. This makes a REST call to the `/info` route on the provided endpoint, as documented in [the REST API reference](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-info).
+
+```C# Snippet:Azure_AI_Inference_GetModelInfo
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+Response<ModelInfo> modelInfo = client.GetModelInfo();
+
+Console.WriteLine($"Model name: {modelInfo.Value.ModelName}");
+Console.WriteLine($"Model type: {modelInfo.Value.ModelType}");
+Console.WriteLine($"Model provider name: {modelInfo.Value.ModelProviderName}");
+```
+
+AI model information is cached in the client, and futher calls to `get_model_info` will access the cached value and wil not result in a REST API call.
+
+### Chat Completions
+
+The `ChatCompletionsClient` has a method named `complete`. The method makes a REST API call to the `/chat/completions` route on the provided endpoint, as documented in [the REST API reference](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-chat-completions).
+
+See simple chat completion examples below. More can be found in the [samples](https://aka.ms/azsdk/azure-ai-inference/csharp/samples) folder.
+
+<!--
+### Text Embeddings
+
+The `EmbeddingsClient` has a method named `embedding`. The method makes a REST API call to the `/embeddings` route on the provided endpoint, as documented in [the REST API reference](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-embeddings).
+
+See simple text embedding example below. More can be found in the [samples](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/ai/azure-ai-inference/samples) folder.
+
+### Image Embeddings
+
+TODO: Add overview and link to explain image embeddings.
+
+Embeddings operations target the URL route `images/embeddings` on the provided endpoint.
+-->
+
+### Sending proprietary model parameters
+
+The REST API defines common model parameters for chat completions<!--, text embeddings, etc-->. If the model you are targeting has additional parameters you would like to set, the client library allows you easily do so. See [Chat completions with additional model-specific parameters](#chat-completions-with-additional-model-specific-parameters).
+
+### Inference using Azure OpenAI endpoints
+
+The request and response payloads of the [Azure AI Model Inference API](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-api) is mostly compatible with OpenAI REST APIs for chat completions. Therefore, with some minor adjustments, this client library can be configured to do inference using Azure OpenAI endpoints. See samples with `azure_openai` in their name, in the [samples folder](https://aka.ms/azsdk/azure-ai-inference/csharp/samples), and the comments there.
 
 ### Thread safety
 
@@ -56,13 +137,23 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Inference/samples).
+In the following sections you will find simple examples of:
 
-### <scenario>
+* [Chat completions](#chat-completions-example)
+* [Streaming chat completions](#streaming-chat-completions-example)
+* [Chat completions with additional model-specific parameters](#chat-completions-with-additional-model-specific-parameters)
+<!-- * [Text Embeddings](#text-embeddings-example) -->
+<!-- * [Image Embeddings](#image-embeddings-example) -->
 
-You can create a client and call the client's `<operation>` method.
+The examples create a client as mentioned in [Create and authenticate a client directly, using key](#create-and-authenticate-a-client-directly-using-key). Only mandatory input settings are shown for simplicity.
 
-```C# Snippet:Azure_AI_Inference_HelloWorldScenarioAsync
+See the [Samples](https://aka.ms/azsdk/azure-ai-inference/csharp/samples) folder for full working samples for synchronous and asynchronous handling.
+
+### Chat completions example
+
+This example demonstrates how to generate a single chat completions, with key authentication.
+
+```C# Snippet:Azure_AI_Inference_HelloWorldScenario
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
@@ -77,27 +168,210 @@ var requestOptions = new ChatCompletionsOptions()
     },
 };
 
-Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+Response<ChatCompletions> response = client.Complete(requestOptions);
 System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
 
+The following types or messages are supported: `SystemMessage`,`UserMessage`, `AssistantMessage`, `ToolMessage`. See also samples:
+
+* [Sample5_ChatCompletionsWithImageUrl.md](https://aka.ms/azsdk/azure-ai-inference/csharp/samples) for usage of `UserMessage` that includes sending an image URL.
+* [Sample7_ChatCompletionsWithTools.md](https://aka.ms/azsdk/azure-ai-inference/csharp/samples) for usage of `ToolMessage`.
+
+Alternatively, you can read a `BinaryData` object based on a JSON string instead of using the strongly typed classes like `ChatRequestSystemMessage` and `ChatRequestUserMessage`:
+
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithJsonInput
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant."),
+        new ChatRequestUserMessage("How many feet are in a mile?"),
+    },
+};
+
+string jsonMessages = "{\"messages\": [{\"Role\": \"system\", \"Content\": \"You are a helpful assistant.\"}, {\"Role\": \"user\", \"Content\": \"How many feet are in a mile?\"}]}";
+requestOptions = ModelReaderWriter.Read<ChatCompletionsOptions>(BinaryData.FromString(jsonMessages));
+
+Response<ChatCompletions> response = client.Complete(requestOptions);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+```
+
+To generate completions for additional messages, simply call `client.Complete` multiple times using the same `client`.
+
+### Streaming chat completions example
+
+This example demonstrates how to generate a single chat completions with streaming response, with key authentication.
+
+```C# Snippet:Azure_AI_Inference_ReadmeStreamingChatCompletions
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant."),
+        new ChatRequestUserMessage("How many feet are in a mile?"),
+    },
+};
+
+StreamingResponse<StreamingChatCompletionsUpdate> response = await client.CompleteStreamingAsync(requestOptions);
+
+StringBuilder contentBuilder = new();
+await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
+{
+    if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+    {
+        contentBuilder.Append(chatUpdate.ContentUpdate);
+    }
+}
+
+System.Console.WriteLine(contentBuilder.ToString());
+```
+
+In the above `foreach` loop, the updates are progressively added to a string builder as they are streamed in, and then printed out once complete. The updates could be printed as they come in as well.
+
+To generate completions for additional messages, simply call `client.complete` multiple times using the same `client`.
+
+### Chat completions with additional model-specific parameters
+
+In this example, extra JSON elements are inserted at the root of the request body by setting `AdditonalProperties` when calling the `Complete` method. These are intended for AI models that require extra parameters beyond what is defined in the REST API.
+
+Note that by default, the service will reject any request payload that includes unknown parameters (ones that are not defined in the REST API [Request Body table](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-chat-completions#request-body)). In order to change the default service behaviour, when the `Complete` method includes `AdditonalProperties`, the client library will automatically add the HTTP request header `"unknown_params": "pass-through"`.
+
+<!-- The input argument `Additional` is not restricted to chat completions. It is suppored on other client methods as well. -->
+
+Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenario
+
+```C# Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenario
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
+
+var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+
+var requestOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant."),
+        new ChatRequestUserMessage("How many feet are in a mile?"),
+    },
+    AdditionalProperties = { { "foo", BinaryData.FromString("\"bar\"") } }, // Optional, add additional properties to the request to pass to the model
+};
+Response<ChatCompletions> response = client.Complete(requestOptions);
+System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+```
+
+<!--
+### Text Embeddings example
+
+This example demonstrates how to get text embeddings, with key authentication, assuming `endpoint` and `key` are already defined.
+
+```C#
+
+```
+
+The length of the embedding vector depends on the model, but you should see something like this:
+
+```text
+data[0]: length=1024, [0.0013399124, -0.01576233, ..., 0.007843018, 0.000238657]
+data[1]: length=1024, [0.036590576, -0.0059547424, ..., 0.011405945, 0.004863739]
+data[2]: length=1024, [0.04196167, 0.029083252, ..., -0.0027484894, 0.0073127747]
+```
+
+To generate embeddings for additional phrases, simply call `client.embed` multiple times using the same `client`.
+-->
+
+<!--
+### Image Embeddings example
+
+This example demonstrates how to get image embeddings.
+
+ <! -- SNIPPET:sample_image_embeddings.image_embeddings -- >
+
+```python
+from azure.ai.inference import ImageEmbeddingsClient
+from azure.ai.inference.models import EmbeddingInput
+from azure.core.credentials import AzureKeyCredential
+
+with open("sample1.png", "rb") as f:
+    image1: str = base64.b64encode(f.read()).decode("utf-8")
+with open("sample2.png", "rb") as f:
+    image2: str = base64.b64encode(f.read()).decode("utf-8")
+
+client = ImageEmbeddingsClient(endpoint=endpoint, credential=AzureKeyCredential(key))
+
+response = client.embed(input=[EmbeddingInput(image=image1), EmbeddingInput(image=image2)])
+
+for item in response.data:
+    length = len(item.embedding)
+    print(
+        f"data[{item.index}]: length={length}, [{item.embedding[0]}, {item.embedding[1]}, "
+        f"..., {item.embedding[length-2]}, {item.embedding[length-1]}]"
+    )
+```
+
+-- END SNIPPET --
+
+The printed result of course depends on the model, but you should see something like this:
+
+```txt
+TBD
+```
+
+To generate embeddings for additional phrases, simply call `client.embed` multiple times using the same `client`.
+-->
+
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+### Exceptions
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
+The `complete`, `get_model_info` methods raise a `RequestFailedException` for a non-success HTTP status code response from the service. The exception's `code` will hold the HTTP response status code. The exception's `message` contains a detailed message that may be helpful in diagnosing the issue:
 
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+```C# Snippet:Azure_AI_Inference_ChatCompletionsExceptionHandling
+try
+{
+    client.Complete(requestOptions);
+}
+catch (RequestFailedException e)
+{
+    Console.WriteLine($"Exception status code: {e.Status}");
+    Console.WriteLine($"Exception message: {e.Message}");
+    Assert.IsTrue(e.Message.Contains("Extra inputs are not permitted"));
+}
+```
+
+### Reporting issues
+
+To report issues with the client library, or request additional features, please open a GitHub issue [here](https://github.com/Azure/azure-sdk-for-net/issues)
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+Have a look at the [Samples](https://aka.ms/azsdk/azure-ai-inference/csharp/samples) folder, containing fully runnable C# code for doing inference using synchronous and asynchronous methods.
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+This project welcomes contributions and suggestions. Most contributions require
+you to agree to a Contributor License Agreement (CLA) declaring that you have
+the right to, and actually do, grant us the rights to use your contribution.
+For details, visit [https://cla.microsoft.com](https://cla.microsoft.com).
+
+When you submit a pull request, a CLA-bot will automatically determine whether
+you need to provide a CLA and decorate the PR appropriately (e.g., label,
+comment). Simply follow the instructions provided by the bot. You will only
+need to do this once across all repos using our CLA.
+
+This project has adopted the
+[Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct). For more information,
+see the Code of Conduct FAQ or contact opencode@microsoft.com with any
+additional questions or comments.
 
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization

@@ -43,7 +43,7 @@ namespace Azure.AI.Inference.Tests
             UsingBinaryData,
         }
 
-        public InferenceClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public InferenceClientTest(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
         }
