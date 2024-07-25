@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
                 // leaking sensitive information.
                 if (IsServiceBusConnectionString(connectionSetting))
                 {
-                    connectionSetting = "<< REDACTED >> (a full connection string was incorrectly used instead of a connection name)";
+                    connectionSetting =  "<< REDACTED >> (a full connection string was incorrectly used instead of a connection setting name)";
                 }
 
                 // Not found
